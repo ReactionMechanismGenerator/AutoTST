@@ -27,7 +27,7 @@
 
 import os
 import re
-import external.cclib as cclib
+import external_packages.cclib as cclib
 import logging
 from subprocess import Popen, PIPE
 import distutils.spawn

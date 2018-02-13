@@ -28,7 +28,7 @@
 import os
 
 import distutils.spawn
-import external.cclib as cclib
+import external_packages.cclib as cclib
 import itertools
 import logging
 import re
