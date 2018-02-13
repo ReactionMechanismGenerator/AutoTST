@@ -84,6 +84,9 @@ class QMSettings:
                 symmetryPath = 'symmetry'
         self.symmetryPath = symmetryPath
 
+        symmetry_path = os.path.join(os.pardir(qm.get_path()), 'external_packages', 'symmetry')
+        self.symmetryPath = symmetry_path
+
     def __reduce__(self):
         """
         A helper function used when pickling an object.
