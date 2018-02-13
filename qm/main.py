@@ -31,8 +31,8 @@ import os
 import logging
 import copy
 
-import rmgpy.qm.mopac
-import rmgpy.qm.gaussian
+import qm.mopac
+import qm.gaussian
 from rmgpy.data.thermo import ThermoLibrary
 
 
@@ -208,20 +208,20 @@ class QMCalculator:
         settings = copy.deepcopy(self.settings)
         if self.settings.software == 'mopac':
             if self.settings.method == 'pm3':
-                qm_molecule_calculator = rmgpy.qm.mopac.MopacMolPM3(molecule, settings)
+                qm_molecule_calculator = qm.mopac.MopacMolPM3(molecule, settings)
             elif self.settings.method == 'pm6':
-                qm_molecule_calculator = rmgpy.qm.mopac.MopacMolPM6(molecule, settings)
+                qm_molecule_calculator = qm.mopac.MopacMolPM6(molecule, settings)
             elif self.settings.method == 'pm7':
-                qm_molecule_calculator = rmgpy.qm.mopac.MopacMolPM7(molecule, settings)
+                qm_molecule_calculator = qm.mopac.MopacMolPM7(molecule, settings)
             else:
                 raise Exception("Unknown QM method '{0}' for mopac".format(settings.method))
         elif self.settings.software == 'gaussian':
             if self.settings.method == 'pm3':
-                qm_molecule_calculator = rmgpy.qm.gaussian.GaussianMolPM3(molecule, settings)
+                qm_molecule_calculator = qm.gaussian.GaussianMolPM3(molecule, settings)
             elif self.settings.method == 'pm6':
-                qm_molecule_calculator = rmgpy.qm.gaussian.GaussianMolPM6(molecule, settings)
+                qm_molecule_calculator = qm.gaussian.GaussianMolPM6(molecule, settings)
             elif self.settings.method == 'b3lyp':
-                qm_molecule_calculator = rmgpy.qm.gaussian.GaussianMolB3LYP(molecule, settings)
+                qm_molecule_calculator = qm.gaussian.GaussianMolB3LYP(molecule, settings)
             else:
                 raise Exception("Unknown QM method '{0}' for gaussian".format(settings.method))
         else:
@@ -237,9 +237,9 @@ class QMCalculator:
             raise Exception("Unknown QM kinetics method '{0}' for mopac".format(self.settings.method))
         elif self.settings.software == 'gaussian':
             if self.settings.method == 'b3lyp':
-                qm_reaction_calculator = rmgpy.qm.gaussian.GaussianTSB3LYP(reaction, self.settings, tsDatabase)
+                qm_reaction_calculator = qm.gaussian.GaussianTSB3LYP(reaction, self.settings, tsDatabase)
             elif self.settings.method == 'm062x':
-                qm_reaction_calculator = rmgpy.qm.gaussian.GaussianTSM062X(reaction, self.settings, tsDatabase)
+                qm_reaction_calculator = qm.gaussian.GaussianTSM062X(reaction, self.settings, tsDatabase)
             else:
                 raise Exception("Unknown QM kinetics method '{0}' for gaussian".format(self.settings.method, tsDatabase))
         else:
