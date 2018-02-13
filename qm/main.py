@@ -31,13 +31,12 @@ import os
 import logging
 import copy
 
-from rmgpy.qm.molecule import QMMolecule
-from rmgpy.qm.reaction import QMReaction
 import rmgpy.qm.mopac
 import rmgpy.qm.gaussian
 from rmgpy.data.thermo import ThermoLibrary
 
-class QMSettings():
+
+class QMSettings:
     """
     A minimal class to store settings related to quantum mechanics calculations.
     
@@ -106,7 +105,6 @@ class QMSettings():
         """
         from types import BooleanType, IntType
         assert self.fileStore
-        #assert self.scratchDirectory
         assert self.software
         assert self.method
         assert self.onlyCyclics is not None # but it can be False
@@ -114,7 +112,8 @@ class QMSettings():
         assert self.maxRadicalNumber is not None # but it can be 0
         assert type(self.maxRadicalNumber) is IntType
 
-class QMCalculator():
+
+class QMCalculator:
     """
     A Quantum Mechanics calculator object, to store settings. 
     
@@ -152,8 +151,7 @@ class QMCalculator():
         """
         A helper function used when pickling an object.
         """
-        return (QMCalculator, (self.settings, self.database))
-
+        return QMCalculator, (self.settings, self.database)
 
     def setDefaultOutputDirectory(self, outputDirectory):
         """
@@ -257,6 +255,7 @@ def save(rmg):
         logging.info('Saving the QM generated thermo to qmThermoLibrary.py ...')
         rmg.quantumMechanics.database.save(os.path.join(rmg.outputDirectory,'qmThermoLibrary.py'))    
 
+
 class QMDatabaseWriter(object):
     """
     This class listens to a RMG subject
@@ -285,5 +284,3 @@ class QMDatabaseWriter(object):
     def update(self, rmg):
         save(rmg)
 
-        
-    
