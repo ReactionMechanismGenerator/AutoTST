@@ -29,9 +29,9 @@ from rmgpy.reaction import Reaction
 import ase
 from ase import Atom, Atoms
 
-from multi_molecule import *
-from multi_reaction import *
-from utilities import *
+from autotst.molecule import *
+from autotst.reaction import *
+from autotst.utilities import *
 
 from ase.calculators.morse import * #chosing this calculator for now because it's fast
 from ase.calculators.dftb import *
@@ -45,17 +45,17 @@ def perform_brute_force(multi_object,
                         delta=float(30),
                         store_directory="."):
 
-    if "Multi_Molecule" in str(multi_object.__class__):
+    if "AutoTST_Molecule" in str(multi_object.__class__):
         ase_object = multi_object.ase_molecule
         torsions = multi_object.torsions
         file_name = "mol_brute_force.pkl"
 
-    elif "Multi_Reaction" in str(multi_object.__class__):
-        ase_object = multi_object.multi_ts.ase_ts
-        torsions = multi_object.multi_ts.torsions
+    elif "AutoTST_Reaction" in str(multi_object.__class__):
+        ase_object = multi_object.ts.ase_ts
+        torsions = multi_object.ts.torsions
         file_name = "rxn_brute_force.pkl"
 
-    elif "Multi_TS" in str(multi_object.__class__):
+    elif "AutoTST_TS" in str(multi_object.__class__):
         ase_object = multi_object.ase_ts
         torsions = multi_object.torsions
         file_name = "ts_brute_force.pkl"
@@ -101,4 +101,4 @@ def perform_brute_force(multi_object,
     f = open(os.path.join(store_directory, file_name), "w")
     pickle.dump(brute_force, f)
 
-    return
+    return brute_force

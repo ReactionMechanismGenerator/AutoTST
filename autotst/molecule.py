@@ -7,36 +7,43 @@ import ase
 from ase import Atom, Atoms
 import rmgpy
 from rmgpy.molecule import Molecule
-import py3Dmol
+#import py3Dmol
 import numpy as np
 
 from geometry import *
 
 
-class Multi_Molecule():
+class AutoTST_Molecule():
     """
     A class that allows for one to create RMG, RDKit and ASE
     molecules from a single string with identical atom indicies
 
     Inputs:
     * smiles (str): a SMILES string that describes the molecule of interest
+    * rmg_molecule (RMG Molecule object): an rmg molecule that we can extract information from
     """
-    def __init__(self, smiles):
+    def __init__(self, smiles=None, rmg_molecule=None):
 
-        self.smiles = smiles
-        self.get_rmg_molecule()
+        assert (smiles or rmg_molecule), "Please provide a SMILES string and / or an RMG Molecule object."
+
+        if smiles and rmg_molecule:
+            assert rmg_molecule.isIsomorphic(Molecule(SMILES=smiles)), "SMILES string did not match RMG Molecule object"
+            self.smiles = smiles
+            self.rmg_molecule = rmg_molecule
+
+        elif rmg_molecule:
+            self.rmg_molecule = rmg_molecule
+            self.smiles = rmg_molecule.toSMILES()
+
+        else:
+            self.smiles = smiles
+            self.rmg_molecule = Molecule(SMILES=smiles)
+
         self.get_rdkit_molecule()
         self.set_rmg_coords("RDKit")
         self.get_ase_molecule()
         self.get_torsion_list()
         self.get_torsions()
-
-
-    def get_rmg_molecule(self):
-        """
-        A method to obtain and set the RMG Molecule
-        """
-        self.rmg_molecule = Molecule(SMILES=self.smiles)
 
     def get_rdkit_molecule(self):
         """
@@ -60,7 +67,6 @@ class Multi_Molecule():
         for i, line in enumerate(mol_list):
 
             if i > 3:
-
                 try:
                     atom0, atom1, bond, rest = line
                     atom0 = int(atom0)
@@ -76,7 +82,6 @@ class Multi_Molecule():
                         #print symbol
 
                         ase_atoms.append(Atom(symbol=symbol, position=(x,y,z)))
-
                     except:
                         continue
 
@@ -85,7 +90,7 @@ class Multi_Molecule():
 
     def view_mol(self):
         """
-        A method designed to create a 3D figure of the Multi_Molecule with py3Dmol
+        A method designed to create a 3D figure of the AutoTST_Molecule with py3Dmol from the rdkit_molecule
         """
         mb  = Chem.MolToMolBlock(self.rdkit_molecule)
         p = py3Dmol.view(width=400, height=400)

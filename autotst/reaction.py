@@ -21,7 +21,7 @@ from rdkit import rdBase
 from rdkit.Chem.rdMolTransforms import *
 from rdkit.Chem.rdChemReactions import ChemicalReaction
 
-import py3Dmol
+#import py3Dmol
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
@@ -35,7 +35,7 @@ from rmgpy.qm.qmdata import QMData
 from rmgpy.qm.reaction import QMReaction
 from rmgpy.qm.molecule import QMMolecule
 
-from multi_molecule import *
+from molecule import *
 from geometry import *
 
 
@@ -49,8 +49,8 @@ rmg_database.load(database_path,
                  thermoLibraries=['primaryThermoLibrary', 'KlippensteinH2O2', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR' ],
                  solvation=False,
                  )
-home = os.path.expandvars("$HOME")
-ts_file = home + "/Code/ga_conformer/python_code/ts_database.pkl"
+#home = os.path.expandvars("$HOME")
+ts_file = "ts_database.pkl"
 f = open(ts_file, "r")
 ts_database = pkl.load(f)
 
@@ -61,9 +61,24 @@ settings = QMSettings(
     scratchDirectory=os.path.expandvars('.'),
     )
 
-class Multi_Reaction():
+class AutoTST_Reaction():
 
-    def __init__(self, label, reaction_family, rmg_reaction = None):
+    """
+    A class to describe reactions in 3D in ase, rdkit and rmg.
+
+    INPUTS:
+    * label (str): a label to describe the reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products.
+    * reaction_family (str): a string to describe the rmg_reaction family
+    * rmg_reaction (RMG Reaction) [optional]: an RMG Reaction object that describes the reaction of interest
+
+    """
+
+
+    def __init__(self, label=None, reaction_family=None, rmg_reaction=None):
+
+        assert label, "Please provde a reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products."
+        assert reaction_family, "Please provide a reaction family."
+
         self.label = label
         self.reaction_family = reaction_family
 
@@ -76,10 +91,16 @@ class Multi_Reaction():
             products = rmg_reaction.products
 
             for reactant in reactants:
-                reactant_mols.append(Multi_Molecule(reactant.SMILES))
+                if type(reactant) == rmgpy.species.Species:
+                    reactant_mols.append(AutoTST_Molecule(rmg_molecule=reactant.molecule[0]))
+                elif type(reactant) == rmgpy.molecule.molecule.Molecule:
+                    reactant_mols.append(AutoTST_Molecule(rmg_molecule=reactant))
 
             for product in products:
-                product_mols.append(Multi_Molecule(product))
+                if type(product) == rmgpy.species.Species:
+                    product_mols.append(AutoTST_Molecule(rmg_molecule=product.molecule[0]))
+                elif type(product) == rmgpy.molecule.molecule.Molecule:
+                    product_mols.append(AutoTST_Molecule(rmg_molecule=product))
 
             self.reactant_mols = reactant_mols
             self.product_mols = product_mols
@@ -137,10 +158,14 @@ class Multi_Reaction():
 
         reaction_list = rmg_database.kinetics.generateReactionsFromFamilies(
             rmg_reactants,
-            rmg_products,
-            only_families=self.reaction_family)
+            rmg_products)
+
+        print rmg_reactants
+
+        print reaction_list
 
         for reaction in reaction_list:
+            print reaction
             # Check if any of the RMG proposed reactions matches the reaction in the mechanism
             if test_reaction.isIsomorphic(reaction):
                 atom_labels_reactants = dict([(lbl[0], False) for lbl in reaction.labeledAtoms])
@@ -177,14 +202,14 @@ class Multi_Reaction():
         self.multi_ts: a multi_ts object that contains geometries of a ts in
                         rdkit, ase, and rmg molecules
         """
-        self.multi_ts = Multi_TS(self)
+        self.ts = AutoTST_TS(self)
 
 
-class Multi_TS():
-    def __init__(self, Multi_Reaction):
+class AutoTST_TS():
+    def __init__(self, autotst_reaction):
 
-        self.multi_reaction = Multi_Reaction
-        self.label = Multi_Reaction.label  # make sure that both the reaction and TS have same label
+        self.autotst_reaction = autotst_reaction
+        self.label = autotst_reaction.label  # make sure that both the reaction and TS have same label
 
         self.create_rdkit_ts_geometry()
         self.create_ase_ts_geometry()
@@ -213,19 +238,19 @@ class Multi_TS():
                                          a4=l,
                                          mask=r_mask,
                                          angle=float(180))
-        self.update_ts_from_ase_ts()
+        self.update_from_ase_ts()
 
     def create_rdkit_ts_geometry(self):
 
-        self.rmg_ts, product = self.multi_reaction.rmg_qm_reaction.setupMolecules()
+        self.rmg_ts, product = self.autotst_reaction.rmg_qm_reaction.setupMolecules()
 
-        labels, atom_match = self.multi_reaction.rmg_qm_reaction.getLabels(self.rmg_ts)
+        labels, atom_match = self.autotst_reaction.rmg_qm_reaction.getLabels(self.rmg_ts)
 
-        self.rdkit_ts, bm, self.multi_reaction.rmg_qm_reaction.reactantGeom = self.multi_reaction.rmg_qm_reaction.generateBoundsMatrix(self.rmg_ts)
+        self.rdkit_ts, bm, self.autotst_reaction.rmg_qm_reaction.reactantGeom = self.autotst_reaction.rmg_qm_reaction.generateBoundsMatrix(self.rmg_ts)
 
-        bm = self.multi_reaction.rmg_qm_reaction.editMatrix(self.rmg_ts, bm, labels)
+        bm = self.autotst_reaction.rmg_qm_reaction.editMatrix(self.rmg_ts, bm, labels)
 
-        self.rdkit_ts = self.multi_reaction.rmg_qm_reaction.reactantGeom.rd_embed(self.rdkit_ts, 1000, bm=bm, match=atom_match)[0]
+        self.rdkit_ts = self.autotst_reaction.rmg_qm_reaction.reactantGeom.rd_embed(self.rdkit_ts, 10000, bm=bm, match=atom_match)[0]
 
     def create_ase_ts_geometry(self):
 
@@ -526,7 +551,7 @@ class Multi_TS():
             for i, position in enumerate(self.ase_ts.get_positions()):
                 self.rmg_ts.atoms[i].coords = position
 
-    def update_ts_from_rdkit_ts(self):
+    def update_from_rdkit_ts(self):
         # In order to update the ase molecule you simply need to rerun the get_ase_molecule method
         self.create_ase_ts_geometry()
         self.set_rmg_ts_coords("RDKit")
@@ -534,7 +559,7 @@ class Multi_TS():
         # Getting the new torsion angles
         self.get_ts_torsions()
 
-    def update_ts_from_ase_ts(self):
+    def update_from_ase_ts(self):
 
         self.set_rmg_ts_coords("ASE")
 
@@ -551,7 +576,7 @@ class Multi_TS():
         self.get_ts_torsions()
 
 
-    def update_ts_from_rmg_ts(self):
+    def update_from_rmg_ts(self):
 
         conf = self.rdkit_ts.GetConformers()[0]
         ase_atoms = []

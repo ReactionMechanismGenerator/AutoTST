@@ -117,13 +117,13 @@ def perform_ga(multi_object,
                                         mask=right_mask)
 
                 # Updating the molecule
-                if "Multi_Molecule" in str(multi_object.__class__):
+                if "AutoTST_Molecule" in str(multi_object.__class__):
                     multi_object.update_geometry_from_ase_mol()
 
-                elif "Multi_Reaction" in str(multi_object.__class__):
+                elif "AutoTST_Reaction" in str(multi_object.__class__):
                     multi_object.multi_ts.update_ts_from_ase_ts()
 
-                elif "Multi_TS" in str(multi_object.__class__):
+                elif "AutoTST_TS" in str(multi_object.__class__):
                     multi_object.update_ts_from_ase_ts()
 
             e = ase_object.get_potential_energy()
@@ -143,13 +143,13 @@ def perform_ga(multi_object,
             # This portion stores each generation if desired
             logging.info("Pickling the DataFrame")
 
-            if "Multi_Reaction" in str(multi_object.__class__):
+            if "AutoTST_Reaction" in str(multi_object.__class__):
                 generation_name = "rxn_ga_generation_{}.pkl".format(gen_number)
 
-            elif "Multi_Molecule" in str(multi_object.__class__):
+            elif "AutoTST_Molecule" in str(multi_object.__class__):
                 generation_name = "mol_ga_generation_{}.pkl".format(gen_number)
 
-            elif "Multi_TS" in str(multi_object.__class__):
+            elif "AutoTST_TS" in str(multi_object.__class__):
                 generation_name = "ts_ga_generation_{}.pkl".format(gen_number)
 
             else:
