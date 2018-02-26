@@ -2,7 +2,7 @@
 #
 #   RMG - Reaction Mechanism Generator
 #
-#   Copyright (c) 2002-2017 Prof. William H. Green (whgreen@mit.edu), 
+#   Copyright (c) 2002-2017 Prof. William H. Green (whgreen@mit.edu),
 #   Prof. Richard H. West (r.west@neu.edu) and the RMG Team (rmg_dev@mit.edu)
 #
 #   Permission is hereby granted, free of charge, to any person obtaining a
@@ -45,7 +45,7 @@ from rmgpy.thermo import ThermoData
 import rmgpy.statmech
 import rmgpy.thermo
 import rmgpy.molecule
-import symmetry
+#import external_packages.symmetry
 import qmdata
 from qmdata import parseCCLibData
 from rmgpy.molecule import parser
@@ -82,7 +82,7 @@ class Geometry:
         else:
             #: Long, truly unique, ID, such as the augmented InChI.
             self.uniqueIDlong = uniqueIDlong
-        
+
         # ToDo: why do we copy self.settings.fileStore into self.fileStore ?
         # (and same for .scratchDirectory)
         if self.settings:
@@ -475,7 +475,7 @@ class QMMolecule:
     def checkPaths(self):
         """
         Check the paths in the settings are OK. Make folders as necessary.
-        """        
+        """
 
         self.settings.fileStore = os.path.expandvars(self.settings.fileStore) # to allow things like $HOME or $RMGpy
         self.settings.scratchDirectory = os.path.expandvars(self.settings.scratchDirectory)
@@ -568,7 +568,7 @@ class QMMolecule:
         Try loading a thermo data from a previous run.
         """
         filePath = self.getThermoFilePath()
-        
+
         local_context = loadThermoDataFile(filePath)
         if local_context is None:
             # file does not exist or is invalid

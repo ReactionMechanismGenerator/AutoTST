@@ -20,11 +20,12 @@ from rmgpy.species import Species, TransitionState
 from rmgpy.reaction import Reaction
 from rmgpy.kinetics import Arrhenius, Eckart
 from rmgpy.statmech import Conformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
-from molecule import QMMolecule, Geometry
+from qm.molecule import QMMolecule, Geometry
+from qm.transitionstates import DistanceData
 from rmgpy.cantherm.main import CanTherm
 from rmgpy.cantherm.kinetics import KineticsJob
 import qmdata
-import symmetry
+#import external_packages.symmetry
 
 try:
     import rdkit
@@ -46,7 +47,7 @@ def loadTSDataFile(filePath):
 
     Checks that the returned dictionary contains at least rxnLabel, method, qmData.
     """
-    
+
     if not os.path.exists(filePath):
         return None
     try:
@@ -60,6 +61,10 @@ def loadTSDataFile(filePath):
                 'QMData': qmdata.QMData,
                 'array': numpy.array,
                 'int32': numpy.int32,
+                'entry': rmgpy.data.base.Entry,
+                'distances': DistanceData
+                #'DistanceData': DistanceData
+                #'distances': dict
             }
             exec resultFile in global_context, local_context
     except IOError, e:
@@ -88,7 +93,7 @@ def loadKineticsDataFile(filePath):
 
     Checks that the returned dictionary contains at least method, Reaction.
     """
-    
+
     if not os.path.exists(filePath):
         return None
     try:
@@ -215,7 +220,7 @@ class QMReaction:
     def ircInputFilePath(self):
         """Get the irc input file name."""
         return self.getFilePath('IRC' + self.inputFileExtension)
-        
+
     @property
     def duplicateFam(self):
         """Get reacton families that should are it's own reverse."""
@@ -226,17 +231,17 @@ class QMReaction:
             'Disproportionation': False,
         }
         return duplicateFam
-    
+
     @property
     def getTSFilePath(self):
         "Returns the path the transition state data file."
         return self.getFilePath('.ts', scratch=False)
-    
+
     @property
     def getCanThermFilePath(self):
         "Returns the path the cantherm file."
         return self.getFilePath('.canth.py')
-        
+
     @property
     def getKineticsFilePath(self):
         "Returns the path the kinetics data file."
@@ -444,7 +449,7 @@ class QMReaction:
             self.createInputFile(1, optEst=optRC)
             converged, internalCoord = self.run()
             shutil.copy(self.outputFilePath, self.outputFilePath+'.TS1.log')
-        
+
             if os.path.exists(self.ircOutputFilePath):# Remove it
                 os.remove(self.ircOutputFilePath)
 
@@ -453,7 +458,7 @@ class QMReaction:
             self.createInputFile(2)
             converged = self.run()
             shutil.copy(self.outputFilePath, self.outputFilePath+'.TS2.log')
-            
+
         if not converged:
             # Check for convergence failures
             complete, convergenceFailure = self.checkComplete(self.outputFilePath)
@@ -483,7 +488,7 @@ class QMReaction:
                 rightTS = False
             else:
                 rightTS = self.verifyIRCOutputFile()
-        
+
         if not rightTS:
             # Check for convergence failures
             complete, convergenceFailure = self.checkComplete(self.ircOutputFilePath)
@@ -491,7 +496,7 @@ class QMReaction:
                 # Rerun the calculation with `scf=qc`
                 self.createIRCFile(scf=True)
                 rightTS = self.runIRC()
-        
+
         return rightTS
 
     def tsSearch(self, labels):
@@ -509,7 +514,7 @@ class QMReaction:
             self.saveTSData()
 
         return validTS
-            
+
     def generateTSGeometryDirectGuess(self):
         """
         Generate a transition state geometry, using the direct guess (group additive) method.
@@ -524,7 +529,7 @@ class QMReaction:
             """
             diff = (coordinates1.coords - coordinates2.coords)
             return math.sqrt(sum(diff * diff))
-            
+
         reactant, product = self.setupMolecules()
 
         tsRDMol, tsBM, self.reactantGeom = self.generateBoundsMatrix(reactant)
@@ -532,12 +537,12 @@ class QMReaction:
         self.reactantGeom.uniqueID = self.uniqueID
 
         labels, atomMatch = self.getLabels(reactant)
-        
+
         if os.path.exists(self.getTSFilePath):
             logging.info("TS file {} exists. Loading it to save time.".format(self.getTSFilePath))
             self.loadTSData()
             return True
-        
+
         tsBM = self.editMatrix(reactant, tsBM, labels)
         atoms = len(reactant.atoms)
         if atoms>3:
@@ -560,9 +565,9 @@ class QMReaction:
         atomSymbols, atomCoords = self.reactantGeom.parseMOL(self.reactantGeom.getRefinedMolFilePath())
         logging.info("TS estimate made. About to try the search...")
         check =  self.tsSearch(labels)
-        
+
         return check
-    
+
     def saveTSData(self):
         """
         Save the generated TS data.
@@ -572,19 +577,19 @@ class QMReaction:
             resultFile.write('rxnLabel = "{0!s}"\n'.format(self.uniqueID))
             resultFile.write('method = "{0!s}"\n'.format(self.method))
             resultFile.write("qmData = {0!r}\n".format(self.parse()))
-    
+
     def loadTSData(self):
         """
         Try loading TS data from a previous run.
         """
         filePath = self.getTSFilePath
-        
+
         local_context = loadTSDataFile(filePath)
         if local_context is None:
             # file does not exist or is invalid
             logging.warning("TS data file {} does not exist or is invalid".format(filePath))
             return None
-        
+
         if local_context['rxnLabel'] != self.uniqueID:
             if local_context['rxnLabel'] != self.revID:
                 logging.error('The rxnLabel in the ts file {0} did not match the current reaction {1}'.format(filePath,self.uniqueID))
@@ -594,9 +599,9 @@ class QMReaction:
             return None
 
         self.qmData = local_context['qmData']
-        
+
         return self.qmData
-    
+
     def saveKineticsData(self, reaction):
         """
         Save the calculated kinetics. `reaction` is a CanTherm reaction object that
@@ -606,32 +611,32 @@ class QMReaction:
         with open(self.getKineticsFilePath, 'w') as resultFile:
             resultFile.write('method = "{0!s}"\n'.format(self.method))
             resultFile.write('reaction = {0!r}\n'.format(reaction))
-    
+
     def loadKineticsData(self):
         """
         Try loading kinetics from a previous run.
         """
         filePath = self.getKineticsFilePath
-        
+
         local_context = loadKineticsDataFile(filePath)
         if local_context is None:
             # file does not exist or is invalid
             logging.info("Kinetics results file {} does not exist or is invalid".format(filePath))
             return None
-        
+
         if local_context['method'] != self.method:
             logging.error('The method in the ts file {0} did not match the current method {1}'.format(filePath,self.method))
             return None
-        
+
         if local_context['reaction'].label != self.uniqueID:
             if local_context['reaction'].label != self.revID:
                 logging.error('The reaction in the ts file {0} did not match the current reaction {1}'.format(filePath,self.uniqueID))
                 return None
 
         self.reaction = local_context['reaction']
-        
+
         return self.reaction
-        
+
     def writeXYZ(self, atomSymbols, atomCoords):
         """
         Takes a list of atom symbols stings, and an array of coordiantes and
@@ -769,7 +774,7 @@ class QMReaction:
 
         if not self.fileStore.startswith('/'):
             fileStore = os.path.abspath(self.fileStore)
-            
+
         speciesList = [] # Check if species path already specified. If so, DON'T put it again.
         for reactant in reactants:
             if reactant.uniqueID not in speciesList:
@@ -832,9 +837,9 @@ class QMReaction:
         """
         if self.loadKineticsData():
             return self.reaction
-        
+
         self.initialize()
-        
+
         tsFound = self.generateTSGeometryDirectGuess()
 
         if not tsFound:
@@ -862,7 +867,7 @@ class QMReaction:
             os.makedirs(canThermJob.outputDirectory)
         canThermJob.inputFile = self.getCanThermFilePath
         canThermJob.plot = False
-        
+
         try:
             canThermJob.execute()
             jobResult = "Successful kinetics calculation in CanTherm."
