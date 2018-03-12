@@ -4,7 +4,7 @@
 #
 #   RMG - Reaction Mechanism Generator
 #
-#   Copyright (c) 2002-2017 Prof. William H. Green (whgreen@mit.edu), 
+#   Copyright (c) 2002-2017 Prof. William H. Green (whgreen@mit.edu),
 #   Prof. Richard H. West (r.west@neu.edu) and the RMG Team (rmg_dev@mit.edu)
 #
 #   Permission is hereby granted, free of charge, to any person obtaining a
@@ -39,7 +39,7 @@ from rmgpy.data.thermo import ThermoLibrary
 class QMSettings:
     """
     A minimal class to store settings related to quantum mechanics calculations.
-    
+
     =================== ======================= ====================================
     Attribute           Type                    Description
     =================== ======================= ====================================
@@ -50,13 +50,13 @@ class QMSettings:
     `onlyCyclics`       ``bool``                ``True`` if to run QM only on ringed species
     `maxRadicalNumber`  ``int``                 Radicals larger than this are saturated before applying HBI
     =================== ======================= ====================================
-    
+
     """
     def __init__(self,
                  software = None,
                  method = 'pm3',
-                 fileStore = None,
-                 scratchDirectory = None,
+                 fileStore = ".",
+                 scratchDirectory = ".",
                  onlyCyclics = True,
                  maxRadicalNumber = 0,
                  ):
@@ -73,10 +73,10 @@ class QMSettings:
         self.onlyCyclics = onlyCyclics
         self.maxRadicalNumber = maxRadicalNumber
 
-        symmetry_path = os.path.join(os.pardir(qm.get_path()), 'symmetry')
-        self.symmetryPath = symmetry_path
+        """symmetry_path = os.path.join(os.pardir(qm.get_path()), 'symmetry')
+        self.symmetryPath = symmetry_path"""
 
-        symmetry_path = os.path.join(os.pardir(qm.get_path()), 'external_packages', 'symmetry')
+        symmetry_path = os.path.join("..", 'external_packages', 'symmetry')
         self.symmetryPath = symmetry_path
 
     def __reduce__(self):
@@ -110,8 +110,8 @@ class QMSettings:
 
 class QMCalculator:
     """
-    A Quantum Mechanics calculator object, to store settings. 
-    
+    A Quantum Mechanics calculator object, to store settings.
+
     The attributes are:
 
     =================== ======================= ====================================
@@ -122,7 +122,7 @@ class QMCalculator:
     =================== ======================= ====================================
 
     """
-    
+
     def __init__(self,
                  software = None,
                  method = 'pm3',
@@ -131,7 +131,7 @@ class QMCalculator:
                  onlyCyclics = True,
                  maxRadicalNumber = 0,
                  ):
-                 
+
         self.settings = QMSettings(software = software,
                                    method = method,
                                    fileStore = fileStore,
@@ -139,9 +139,9 @@ class QMCalculator:
                                    onlyCyclics = onlyCyclics,
                                    maxRadicalNumber = maxRadicalNumber,
                                    )
-            
+
         self.database = ThermoLibrary(name='QM Thermo Library')
-    
+
     def __reduce__(self):
         """
         A helper function used when pickling an object.
@@ -152,14 +152,14 @@ class QMCalculator:
         """
         IF the fileStore or scratchDirectory are not already set, put them in here.
         """
-        
+
         if not self.settings.fileStore:
             self.settings.fileStore = os.path.abspath(os.path.join(outputDirectory, 'QMfiles'))
             logging.info("Setting the quantum mechanics fileStore to {0}".format(self.settings.fileStore))
         if not self.settings.scratchDirectory:
             self.settings.scratchDirectory = os.path.abspath(os.path.join(outputDirectory, 'QMscratch'))
             logging.info("Setting the quantum mechanics scratchDirectory to {0}".format(self.settings.scratchDirectory))
-    
+
     def initialize(self):
         """
         Do any startup tasks.
@@ -172,7 +172,7 @@ class QMCalculator:
         """
         self.settings.checkAllSet()
         self.checkPaths()
-        
+
     def checkPaths(self):
         """
         Check the paths in the settings are OK. Make folders as necessary.
@@ -195,7 +195,7 @@ class QMCalculator:
     def getThermoData(self, molecule):
         """
         Generate thermo data for the given :class:`Molecule` via a quantum mechanics calculation.
-        
+
         Ignores the settings onlyCyclics and maxRadicalNumber and does the calculation anyway if asked.
         (I.e. the code that chooses whether to call this method should consider those settings).
         """
@@ -223,7 +223,7 @@ class QMCalculator:
             raise Exception("Unknown QM software '{0}'".format(settings.software))
         thermo0 = qm_molecule_calculator.generateThermoData()
         return thermo0
-    
+
     def getKineticData(self, reaction, tsDatabase):
         """
         Generate kinetic data for the given :class:`Reaction` via a quantum mechanics calculation.
@@ -239,27 +239,27 @@ class QMCalculator:
                 raise Exception("Unknown QM kinetics method '{0}' for gaussian".format(self.settings.method, tsDatabase))
         else:
             raise Exception("Unknown QM software '{0}'".format(self.settings.software))
-        
+
         reaction = qm_reaction_calculator.generateKineticData()
         return reaction
-    
+
 
 def save(rmg):
     # Save the QM thermo to a library if QM was turned on
     if rmg.quantumMechanics:
         logging.info('Saving the QM generated thermo to qmThermoLibrary.py ...')
-        rmg.quantumMechanics.database.save(os.path.join(rmg.outputDirectory,'qmThermoLibrary.py'))    
+        rmg.quantumMechanics.database.save(os.path.join(rmg.outputDirectory,'qmThermoLibrary.py'))
 
 
 class QMDatabaseWriter(object):
     """
     This class listens to a RMG subject
-    and saves the thermochemistry of species computed via the 
+    and saves the thermochemistry of species computed via the
     QMTPmethods.
 
 
     A new instance of the class can be appended to a subject as follows:
-    
+
     rmg = ...
     listener = QMDatabaseWriter()
     rmg.attach(listener)
@@ -271,11 +271,10 @@ class QMDatabaseWriter(object):
     from its subject:
 
     rmg.detach(listener)
-    
+
     """
     def __init__(self):
         super(QMDatabaseWriter, self).__init__()
-    
+
     def update(self, rmg):
         save(rmg)
-

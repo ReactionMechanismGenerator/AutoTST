@@ -373,8 +373,9 @@ class QMReaction:
         of the two reactants.
         """
         lbl1, lbl2, lbl3 = labels
+        distanceData = self.tsDatabase.groups.descendTree(reactant, reactant.getLabeledAtoms()).data
 
-        distanceData = self.tsDatabase.estimateDistances(self.reaction)
+        #distanceData = self.tsDatabase.estimateDistances(self.reaction)
 
         sect = []
         for atom in reactant.split()[0].atoms: sect.append(atom.sortingLabel)

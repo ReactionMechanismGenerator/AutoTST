@@ -124,9 +124,9 @@ class TransitionStates(Database):
         self.depository = depository
 
         fpath = os.path.join(path,'TS_groups.py')
-        logging.debug("Loading transitions state family groups from {0}".format(fpath))
+        logging.info("Loading transitions state family groups from {0}".format(fpath))
         groups = TSGroups(label='{0}/TS_groups'.format(path.split('/')[-1]))#'intra_H_migration/TS_groups')
-        groups.load(fpath , local_context, global_context )
+        groups.load(fpath, local_context, global_context )
 
         self.family.forwardTemplate.reactants = [groups.entries[entry.label] for entry in self.family.forwardTemplate.reactants]
         # self.family.forwardTemplate.products = [groups.entries[entry.label] for entry in self.family.forwardTemplate.products]
@@ -590,7 +590,7 @@ class TSGroups(Database):
         Determine the appropriate transition state distances for a reaction
         with the given `template` using group additivity.
         """
-        template = self.getReactionTemplate(reaction)
+        template = reaction.template
         referenceDistances = self.top[0].data # or something like that
 
         # Start with the generic distances of the top-level nodes
@@ -599,7 +599,8 @@ class TSGroups(Database):
 
         # Now add in more specific corrections if possible
         for node in template:
-            entry = node
+            #print node
+            entry = self.entries[node]
             comment_line = "Matched node "
             while not entry.data.distances and entry not in self.top:
                 # Keep climbing tree until you find a (non-top) node with distances.

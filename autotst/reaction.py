@@ -20,6 +20,7 @@ from rdkit.Chem import AllChem
 from rdkit import rdBase
 from rdkit.Chem.rdMolTransforms import *
 from rdkit.Chem.rdChemReactions import ChemicalReaction
+from rdkit.Chem import AllChem, Pharm3D
 
 #import py3Dmol
 
@@ -27,13 +28,16 @@ from rmgpy.molecule import Molecule
 from rmgpy.species import Species
 from rmgpy.reaction import Reaction
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
-
 from rmgpy.data.rmg import RMGDatabase
 from rmgpy.data.kinetics import KineticsDepository, KineticsRules
-from rmgpy.qm.main import QMCalculator, QMSettings
-from rmgpy.qm.qmdata import QMData
-from rmgpy.qm.reaction import QMReaction
-from rmgpy.qm.molecule import QMMolecule
+
+from qm.main import QMSettings
+from qm.qmdata import QMData
+from qm.reaction import QMReaction
+#from rmgpy.qm.molecule import QMMolecule
+
+from qm.molecule import QMMolecule, Geometry
+from qm.transitionstates import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
 
 from molecule import *
 from geometry import *
@@ -49,17 +53,18 @@ rmg_database.load(database_path,
                  thermoLibraries=['primaryThermoLibrary', 'KlippensteinH2O2', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR' ],
                  solvation=False,
                  )
-#home = os.path.expandvars("$HOME")
-ts_file = "ts_database.pkl"
-f = open(ts_file, "r")
-ts_database = pkl.load(f)
 
-settings = QMSettings(
-    software='gaussian',
-    method='m062x',
-    fileStore=os.path.expandvars('.'),
-    scratchDirectory=os.path.expandvars('.'),
-    )
+ts_database = TransitionStates()
+path = "database/H_Abstraction"
+global_context = { '__builtins__': None }
+local_context={'DistanceData': DistanceData}
+family = rmg_database.kinetics.families.values()[0]
+ts_database.family = family
+ts_database.load(path, local_context, global_context)
+
+
+
+settings = QMSettings()
 
 class AutoTST_Reaction():
 
@@ -129,10 +134,10 @@ class AutoTST_Reaction():
         product_mols = []
 
         for reactant in reactants:
-            reactant_mols.append(Multi_Molecule(reactant))
+            reactant_mols.append(AutoTST_Molecule(reactant))
 
         for product in products:
-            product_mols.append(Multi_Molecule(product))
+            product_mols.append(AutoTST_Molecule(product))
 
         self.reactant_mols = reactant_mols
         self.product_mols = product_mols
@@ -191,6 +196,7 @@ class AutoTST_Reaction():
                     # We successfully labeled all of the atoms
                     break
         self.rmg_reaction = reaction
+        self.distance_data = ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
         self.rmg_qm_reaction = QMReaction(reaction=reaction, settings=settings, tsDatabase=ts_database)
 
     def create_ts_geometries(self):
@@ -242,15 +248,149 @@ class AutoTST_TS():
 
     def create_rdkit_ts_geometry(self):
 
-        self.rmg_ts, product = self.autotst_reaction.rmg_qm_reaction.setupMolecules()
+        self.rmg_ts, product = self.setup_molecules()
 
-        labels, atom_match = self.autotst_reaction.rmg_qm_reaction.getLabels(self.rmg_ts)
+        labels, atom_match = self.get_labels(self.rmg_ts)
 
-        self.rdkit_ts, bm, self.autotst_reaction.rmg_qm_reaction.reactantGeom = self.autotst_reaction.rmg_qm_reaction.generateBoundsMatrix(self.rmg_ts)
+        self.rdkit_ts = self.rmg_ts.toRDKitMol(removeHs=False)
 
-        bm = self.autotst_reaction.rmg_qm_reaction.editMatrix(self.rmg_ts, bm, labels)
+        bm =  rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(self.rdkit_ts)
 
-        self.rdkit_ts = self.autotst_reaction.rmg_qm_reaction.reactantGeom.rd_embed(self.rdkit_ts, 10000, bm=bm, match=atom_match)[0]
+        bm = self.edit_matrix(self.rmg_ts, bm, labels)
+
+        self.rdkit_ts = self.rd_embed(self.rdkit_ts, 10000, bm=bm, match=atom_match)[0]
+
+    def setup_molecules(self):
+
+        merged_reacts = None
+        merged_prods = None
+
+        if len(self.autotst_reaction.rmg_reaction.reactants) == 2:
+            merged_reacts = Molecule.merge(self.autotst_reaction.rmg_reaction.reactants[0],
+                                           self.autotst_reaction.rmg_reaction.reactants[1])
+
+        if len(self.autotst_reaction.rmg_reaction.products) == 2:
+            merged_prods = Molecule.merge(self.autotst_reaction.rmg_reaction.products[0],
+                                           self.autotst_reaction.rmg_reaction.products[1])
+
+        return merged_reacts, merged_prods
+
+    def get_labels(self, reactants):
+
+        if self.autotst_reaction.rmg_reaction.family.lower() in ['h_abstraction', 'r_addition_multiplebond', 'intra_h_migration']:
+            lbl1 = reactants.getLabeledAtom('*1').sortingLabel
+            lbl2 = reactants.getLabeledAtom('*2').sortingLabel
+            lbl3 = reactants.getLabeledAtom('*3').sortingLabel
+            labels = [lbl1, lbl2, lbl3]
+            atomMatch = ((lbl1,), (lbl2,), (lbl3,))
+        elif self.autotst_reaction.rmg_reaction.family.lower() in ['disproportionation']:
+            lbl1 = reactants.getLabeledAtom('*2').sortingLabel
+            lbl2 = reactants.getLabeledAtom('*4').sortingLabel
+            lbl3 = reactants.getLabeledAtom('*1').sortingLabel
+            labels = [lbl1, lbl2, lbl3]
+            atomMatch = ((lbl1,), (lbl2,), (lbl3,))
+
+        return labels, atomMatch
+
+    def set_limits(self, bm, lbl1, lbl2, value, uncertainty):
+        if lbl1 > lbl2:
+            bm[lbl2][lbl1] = value + uncertainty / 2
+            bm[lbl1][lbl2] = max(0, value - uncertainty / 2)
+        else:
+            bm[lbl2][lbl1] = max(0, value - uncertainty / 2)
+            bm[lbl1][lbl2] = value + uncertainty / 2
+
+        return bm
+
+
+    def edit_matrix(self, rmg_ts, bm, labels):
+        lbl1, lbl2, lbl3 = labels
+
+        if self.autotst_reaction.distance_data:
+            #  TODO: Need to address why the uncertanities are just set to 0.02
+            pass
+
+        uncertainties = {'d12': 0.02, 'd13': 0.02, 'd23': 0.02}  # distanceData.uncertainties or {'d12':0.1, 'd13':0.1, 'd23':0.1 } # default if uncertainty is None
+        bm = self.set_limits(bm, lbl1, lbl2, self.autotst_reaction.distance_data.distances['d12'], uncertainties['d12'])
+        bm = self.set_limits(bm, lbl2, lbl3, self.autotst_reaction.distance_data.distances['d23'], uncertainties['d23'])
+        bm = self.set_limits(bm, lbl1, lbl3, self.autotst_reaction.distance_data.distances['d13'], uncertainties['d13'])
+        return bm
+
+    def optimize(self, rdmol, boundsMatrix=None, atomMatch=None):
+        """
+
+        Optimizes the rdmol object using UFF.
+        Determines the energy level for each of the conformers identified in rdmol.GetConformer.
+
+
+        :param rdmol:
+        :param boundsMatrix:
+        :param atomMatch:
+        :return rdmol, minEid (index of the lowest energy conformer)
+        """
+
+        energy = 0.0
+        minEid = 0;
+        lowestE = 9.999999e99;  # start with a very high number, which would never be reached
+        crude = Chem.Mol(rdmol.ToBinary())
+
+        for conf in rdmol.GetConformers():
+            if boundsMatrix is None:
+                AllChem.UFFOptimizeMolecule(rdmol, confId=conf.GetId())
+                energy = AllChem.UFFGetMoleculeForceField(rdmol, confId=conf.GetId()).CalcEnergy()
+            else:
+                eBefore, energy = Pharm3D.EmbedLib.OptimizeMol(rdmol, boundsMatrix, atomMatches=atomMatch,
+                                                               forceConstant=100000.0)
+
+            if energy < lowestE:
+                minEid = conf.GetId()
+                lowestE = energy
+
+        return rdmol, minEid
+
+    def rd_embed(self, rdmol, numConfAttempts, bm=None, match=None):
+        """
+        This portion of the script is literally taken from rmgpy but hacked to work without defining a geometry object
+
+        Embed the RDKit molecule and create the crude molecule file.
+        """
+        if bm is None:  # bm = bounds matrix?
+            AllChem.EmbedMultipleConfs(rdmol, numConfAttempts, randomSeed=1)
+            crude = Chem.Mol(rdmol.ToBinary())
+            rdmol, minEid = self.optimize(rdmol)
+        else:
+            """
+            Embed the molecule according to the bounds matrix. Built to handle possible failures
+            of some of the embedding attempts.
+            """
+            rdmol.RemoveAllConformers()
+            for i in range(0, numConfAttempts):
+                try:
+                    Pharm3D.EmbedLib.EmbedMol(rdmol, bm, atomMatch=match)
+                    break
+                except ValueError:
+                    logging.info("RDKit failed to embed on attempt {0} of {1}".format(i + 1, numConfAttempts))
+                    # What to do next (what if they all fail?) !!!!!
+                except RuntimeError:
+                    logging.info("RDKit failed to embed.")
+            else:
+                logging.error("RDKit failed all attempts to embed")
+                return None, None
+
+            """
+            RDKit currently embeds the conformers and sets the id as 0, so even though multiple
+            conformers have been generated, only 1 can be called. Below the id's are resolved.
+            """
+            for i in range(len(rdmol.GetConformers())):
+                rdmol.GetConformers()[i].SetId(i)
+
+
+            #rdmol, minEid = self.optimize(rdmol, boundsMatrix=bm, atomMatch=match)
+            minEid = None
+
+        return rdmol, minEid
+
+
 
     def create_ase_ts_geometry(self):
 

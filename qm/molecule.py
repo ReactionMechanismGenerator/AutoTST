@@ -48,7 +48,7 @@ import rmgpy.molecule
 #import external_packages.symmetry
 import qmdata
 from qmdata import parseCCLibData
-from rmgpy.molecule import parser
+#from rmgpy.molecule import parser
 
 class RDKitFailedError(Exception):
     """For when RDkit failed. try the next reaction """

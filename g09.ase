@@ -1,0 +1,5 @@
+dict(basis='6-31g*',
+     charge=0,
+     force='force',
+     initial_magmoms=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+     method='hf')
