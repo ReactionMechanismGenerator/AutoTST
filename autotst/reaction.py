@@ -27,12 +27,12 @@ import py3Dmol
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
-from rmgpy.reaction import Reaction
+from rmgpy.reaction import Reaction, _isomorphicSpeciesList
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
-from qm.transitionstates import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
-
+# AutoTST imports
+from database import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
 from molecule import *
 from geometry import *
 
@@ -44,15 +44,17 @@ rmg_database.load(database_path,
                  transportLibraries=[],
                  reactionLibraries=[],
                  seedMechanisms=[],
-                 thermoLibraries=['primaryThermoLibrary', 'KlippensteinH2O2', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR' ],
+                 thermoLibraries=['primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR' ],
                  solvation=False,
                  )
+
+# TODO: Edit this so it works with multiple databases
 
 ts_database = TransitionStates()
 path = "database/H_Abstraction"
 global_context = { '__builtins__': None }
 local_context={'DistanceData': DistanceData}
-family = rmg_database.kinetics.families.values()[0]
+family = rmg_database.kinetics.families["H_Abstraction"]
 ts_database.family = family
 ts_database.load(path, local_context, global_context)
 
@@ -153,9 +155,27 @@ class AutoTST_Reaction():
 
         test_reaction = Reaction(reactants=rmg_reactants, products=rmg_products, reversible=True)
 
+        labeled_r, labeled_p = family.getLabeledReactantsAndProducts(rmg_reactants, rmg_products)
+
+        test_reaction = Reaction(reactants=labeled_r, products=labeled_p, reversible=True)
+
+
         reaction_list = rmg_database.kinetics.generate_reactions_from_families(
             rmg_reactants,
             rmg_products)
+
+        for reaction in reaction_list:
+            if reaction.isIsomorphic(test_reaction):
+                if (_isomorphicSpeciesList(reaction.reactants, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.products, test_reaction.products)):
+                    reaction.reactants = test_reaction.reactants
+                    reaction.products = test_reaction.products
+
+                elif (_isomorphicSpeciesList(reaction.products, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.reactants, test_reaction.products)):
+                    reaction.products = test_reaction.reactants
+                    reaction.reactants = test_reaction.products
+
+        """
+        #NOTE::: This was how we did it before, but now it should be working for master
 
         print rmg_reactants
 
@@ -187,9 +207,9 @@ class AutoTST_Reaction():
                 if all(atom_labels_reactants.values()) and all(atom_labels_products.values()):
                     # We successfully labeled all of the atoms
                     break
+        """
         self.rmg_reaction = reaction
         self.distance_data = ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
-        #self.rmg_qm_reaction = QMReaction(reaction=reaction, settings=settings, tsDatabase=ts_database)
 
     def create_ts_geometries(self):
         """
@@ -258,12 +278,12 @@ class AutoTST_TS():
         merged_prods = None
 
         if len(self.autotst_reaction.rmg_reaction.reactants) == 2:
-            merged_reacts = Molecule.merge(self.autotst_reaction.rmg_reaction.reactants[0].molecule[0],
-                                           self.autotst_reaction.rmg_reaction.reactants[1].molecule[0])
+            merged_reacts = Molecule.merge(self.autotst_reaction.rmg_reaction.reactants[0],
+                                           self.autotst_reaction.rmg_reaction.reactants[1])
 
         if len(self.autotst_reaction.rmg_reaction.products) == 2:
-            merged_prods = Molecule.merge(self.autotst_reaction.rmg_reaction.products[0].molecule[0],
-                                           self.autotst_reaction.rmg_reaction.products[1].molecule[0])
+            merged_prods = Molecule.merge(self.autotst_reaction.rmg_reaction.products[0],
+                                           self.autotst_reaction.rmg_reaction.products[1])
 
         return merged_reacts, merged_prods
 
