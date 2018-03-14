@@ -20,23 +20,17 @@ from rdkit.Chem import AllChem
 from rdkit import rdBase
 from rdkit.Chem.rdMolTransforms import *
 from rdkit.Chem.rdChemReactions import ChemicalReaction
-from rdkit.Chem import AllChem, Pharm3D
+from rdkit.Chem import AllChem
+from rdkit.Chem.Pharm3D import EmbedLib
 
-#import py3Dmol
+import py3Dmol
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
 from rmgpy.reaction import Reaction
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
-from rmgpy.data.kinetics import KineticsDepository, KineticsRules
 
-from qm.main import QMSettings
-from qm.qmdata import QMData
-from qm.reaction import QMReaction
-#from rmgpy.qm.molecule import QMMolecule
-
-from qm.molecule import QMMolecule, Geometry
 from qm.transitionstates import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
 
 from molecule import *
@@ -63,8 +57,6 @@ ts_database.family = family
 ts_database.load(path, local_context, global_context)
 
 
-
-settings = QMSettings()
 
 class AutoTST_Reaction():
 
@@ -197,7 +189,7 @@ class AutoTST_Reaction():
                     break
         self.rmg_reaction = reaction
         self.distance_data = ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
-        self.rmg_qm_reaction = QMReaction(reaction=reaction, settings=settings, tsDatabase=ts_database)
+        #self.rmg_qm_reaction = QMReaction(reaction=reaction, settings=settings, tsDatabase=ts_database)
 
     def create_ts_geometries(self):
         """
@@ -252,9 +244,9 @@ class AutoTST_TS():
 
         labels, atom_match = self.get_labels(self.rmg_ts)
 
-        self.rdkit_ts = self.rmg_ts.toRDKitMol(removeHs=False)
-
-        bm =  rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(self.rdkit_ts)
+        pre_edit_mol = self.rmg_ts.toRDKitMol(removeHs=False)#, returnMapping=True)
+        self.rdkit_ts = pre_edit_mol
+        bm = rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(pre_edit_mol)
 
         bm = self.edit_matrix(self.rmg_ts, bm, labels)
 
@@ -276,6 +268,13 @@ class AutoTST_TS():
         return merged_reacts, merged_prods
 
     def get_labels(self, reactants):
+        """
+        A method to get the labeled atoms from a reaction
+
+        :param reactants: a combined rmg_molecule object
+        :return labels: the atom labels corresponding to the reaction center
+        :return atomMatch: a tuple of tuples the atoms labels corresponding to the reaction center
+        """
 
         if self.autotst_reaction.rmg_reaction.family.lower() in ['h_abstraction', 'r_addition_multiplebond', 'intra_h_migration']:
             lbl1 = reactants.getLabeledAtom('*1').sortingLabel
@@ -293,6 +292,16 @@ class AutoTST_TS():
         return labels, atomMatch
 
     def set_limits(self, bm, lbl1, lbl2, value, uncertainty):
+        """
+        A method to set the limits of a particular distance between two atoms
+
+        :param bm: an array of arrays corresponding to the bounds matrix
+        :param lbl1: the label of one atom
+        :param lbl2: the label of another atom
+        :param value: the distance from a distance data object (float)
+        :param uncertainty: the uncertainty of the `value` distance (float)
+        :return bm: an array of arrays corresponding to the edited bounds matrix
+        """
         if lbl1 > lbl2:
             bm[lbl2][lbl1] = value + uncertainty / 2
             bm[lbl1][lbl2] = max(0, value - uncertainty / 2)
@@ -304,10 +313,18 @@ class AutoTST_TS():
 
 
     def edit_matrix(self, rmg_ts, bm, labels):
+        """
+        A method to set the limits of the reaction center using the `set_limits` method
+
+        :param rmg_ts: an rmg_molecule corresponding the the combined reactants or products (i.e. r1 and r2 or p1 and p2)
+        :param bm: an array of arrays that corresponds to the bounds matrix
+        :param labels: the atom indices corresponding to the reaction center
+        :return bm: the edited bounds matrix
+        """
         lbl1, lbl2, lbl3 = labels
 
         if self.autotst_reaction.distance_data:
-            #  TODO: Need to address why the uncertanities are just set to 0.02
+            # TODO: Need to address why the uncertanities are just set to 0.02
             pass
 
         uncertainties = {'d12': 0.02, 'd13': 0.02, 'd23': 0.02}  # distanceData.uncertainties or {'d12':0.1, 'd13':0.1, 'd23':0.1 } # default if uncertainty is None
@@ -339,8 +356,8 @@ class AutoTST_TS():
                 AllChem.UFFOptimizeMolecule(rdmol, confId=conf.GetId())
                 energy = AllChem.UFFGetMoleculeForceField(rdmol, confId=conf.GetId()).CalcEnergy()
             else:
-                eBefore, energy = Pharm3D.EmbedLib.OptimizeMol(rdmol, boundsMatrix, atomMatches=atomMatch,
-                                                               forceConstant=100000.0)
+                eBefore, energy = EmbedLib.OptimizeMol(rdmol, boundsMatrix, atomMatches=atomMatch,
+                                                       forceConstant=100000.0)
 
             if energy < lowestE:
                 minEid = conf.GetId()
@@ -356,7 +373,7 @@ class AutoTST_TS():
         """
         if bm is None:  # bm = bounds matrix?
             AllChem.EmbedMultipleConfs(rdmol, numConfAttempts, randomSeed=1)
-            crude = Chem.Mol(rdmol.ToBinary())
+
             rdmol, minEid = self.optimize(rdmol)
         else:
             """
@@ -366,7 +383,7 @@ class AutoTST_TS():
             rdmol.RemoveAllConformers()
             for i in range(0, numConfAttempts):
                 try:
-                    Pharm3D.EmbedLib.EmbedMol(rdmol, bm, atomMatch=match)
+                    EmbedLib.EmbedMol(rdmol, bm, atomMatch=match)
                     break
                 except ValueError:
                     logging.info("RDKit failed to embed on attempt {0} of {1}".format(i + 1, numConfAttempts))
@@ -385,8 +402,7 @@ class AutoTST_TS():
                 rdmol.GetConformers()[i].SetId(i)
 
 
-            #rdmol, minEid = self.optimize(rdmol, boundsMatrix=bm, atomMatch=match)
-            minEid = None
+            rdmol, minEid = self.optimize(rdmol, boundsMatrix=bm, atomMatch=match)
 
         return rdmol, minEid
 
@@ -426,11 +442,14 @@ class AutoTST_TS():
         for i, position in enumerate(self.ase_ts.get_positions()):
             self.rmg_ts.atoms[i].coords = position
 
-    def view_ts(self):
+    def view_ts(self, mol=None):
         """
         A method designed to create a 3D figure of the Multi_Molecule with py3Dmol
         """
-        mb = Chem.MolToMolBlock(self.rdkit_ts)
+        if not mol:
+            mol = self.rdkit_ts
+
+        mb = Chem.MolToMolBlock(mol)
         p = py3Dmol.view(width=400, height=400)
         p.addModel(mb, "sdf")
         p.setStyle({'stick':{}})
