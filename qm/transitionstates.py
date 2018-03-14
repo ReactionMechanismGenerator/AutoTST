@@ -49,7 +49,7 @@ from rmgpy.reaction import Reaction, ReactionError
 from rmgpy.molecule import Bond, GroupBond, Group
 from rmgpy.species import Species
 
-from rmgpy.data.kinetics.common import KineticsError, UndeterminableKineticsError, saveEntry
+from rmgpy.data.kinetics.common import KineticsError, saveEntry
 
 ################################################################################
 
@@ -576,7 +576,7 @@ class TSGroups(Database):
             for n,product in enumerate(reaction.products):
                 print "Product", n
                 print product.toAdjacencyList() + '\n'
-            raise UndeterminableKineticsError(reaction)
+            raise KineticsError(reaction)
 
         for reactant in reaction.reactants:
             if isinstance(reactant, Species):

@@ -153,7 +153,7 @@ class AutoTST_Reaction():
 
         test_reaction = Reaction(reactants=rmg_reactants, products=rmg_products, reversible=True)
 
-        reaction_list = rmg_database.kinetics.generateReactionsFromFamilies(
+        reaction_list = rmg_database.kinetics.generate_reactions_from_families(
             rmg_reactants,
             rmg_products)
 
@@ -258,12 +258,12 @@ class AutoTST_TS():
         merged_prods = None
 
         if len(self.autotst_reaction.rmg_reaction.reactants) == 2:
-            merged_reacts = Molecule.merge(self.autotst_reaction.rmg_reaction.reactants[0],
-                                           self.autotst_reaction.rmg_reaction.reactants[1])
+            merged_reacts = Molecule.merge(self.autotst_reaction.rmg_reaction.reactants[0].molecule[0],
+                                           self.autotst_reaction.rmg_reaction.reactants[1].molecule[0])
 
         if len(self.autotst_reaction.rmg_reaction.products) == 2:
-            merged_prods = Molecule.merge(self.autotst_reaction.rmg_reaction.products[0],
-                                           self.autotst_reaction.rmg_reaction.products[1])
+            merged_prods = Molecule.merge(self.autotst_reaction.rmg_reaction.products[0].molecule[0],
+                                           self.autotst_reaction.rmg_reaction.products[1].molecule[0])
 
         return merged_reacts, merged_prods
 
