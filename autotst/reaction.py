@@ -51,7 +51,7 @@ rmg_database.load(database_path,
 # TODO: Edit this so it works with multiple databases
 
 ts_database = TransitionStates()
-path = "database/H_Abstraction"
+path = "../database/H_Abstraction"
 global_context = { '__builtins__': None }
 local_context={'DistanceData': DistanceData}
 family = rmg_database.kinetics.families["H_Abstraction"]
@@ -264,13 +264,54 @@ class AutoTST_TS():
 
         labels, atom_match = self.get_labels(self.rmg_ts)
 
-        pre_edit_mol = self.rmg_ts.toRDKitMol(removeHs=False)#, returnMapping=True)
-        self.rdkit_ts = pre_edit_mol
-        bm = rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(pre_edit_mol)
+        """combined = rdkit.Chem.Mol()
 
+        for mol in self.autotst_reaction.reactant_mols:
+            combined = rdkit.Chem.CombineMols(combined, mol.rdkit_molecule)"""
+
+        combined = self.rmg_ts.toRDKitMol(removeHs=False)#, returnMapping=True)
+        Chem.rdDistGeom.EmbedMolecule(combined)
+        self.rdkit_ts = combined
+        bm = rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(combined)
+        #print "Before editing"
+        #print bm
+        #print
         bm = self.edit_matrix(self.rmg_ts, bm, labels)
+        #print "After editing"
+        #print bm
+        #print
+
+        #rdkit.DistanceGeometry.DoTriangleSmoothing(bm)
+        #print "After smoothing"
+        #print bm
 
         self.rdkit_ts = self.rd_embed(self.rdkit_ts, 10000, bm=bm, match=atom_match)[0]
+
+    def bm_pre_edit(self, bm, sect):
+        """
+        Clean up some of the atom distance limits before attempting triangle smoothing.
+        This ensures any edits made do not lead to unsolvable scenarios for the molecular
+        embedding algorithm.
+
+        sect is the list of atom indices belonging to one species.
+        """
+        others = range(len(bm))
+        for idx in sect: others.remove(idx)
+
+        for i in range(len(bm)):#sect:
+            for j in range(i):#others:
+                if i<j: continue
+                for k in range(len(bm)):
+                    if k==i or k==j or i==j: continue
+                    Uik = bm[i,k] if k>i else bm[k,i]
+                    Ukj = bm[j,k] if k>j else bm[k,j]
+
+                    maxLij = Uik + Ukj - 0.1
+                    if bm[i,j] >  maxLij:
+                        logging.info("Changing lower limit {0} to {1}".format(bm[i, j], maxLij))
+                        bm[i,j] = maxLij
+
+        return bm
 
     def setup_molecules(self):
 
@@ -343,14 +384,16 @@ class AutoTST_TS():
         """
         lbl1, lbl2, lbl3 = labels
 
-        if self.autotst_reaction.distance_data:
-            # TODO: Need to address why the uncertanities are just set to 0.02
-            pass
+        sect = []
+        for atom in rmg_ts.split()[1].atoms: sect.append(atom.sortingLabel)
 
         uncertainties = {'d12': 0.02, 'd13': 0.02, 'd23': 0.02}  # distanceData.uncertainties or {'d12':0.1, 'd13':0.1, 'd23':0.1 } # default if uncertainty is None
         bm = self.set_limits(bm, lbl1, lbl2, self.autotst_reaction.distance_data.distances['d12'], uncertainties['d12'])
         bm = self.set_limits(bm, lbl2, lbl3, self.autotst_reaction.distance_data.distances['d23'], uncertainties['d23'])
         bm = self.set_limits(bm, lbl1, lbl3, self.autotst_reaction.distance_data.distances['d13'], uncertainties['d13'])
+
+        bm = self.bm_pre_edit(bm, sect)
+        bm = (bm < 5) * bm + (bm >= 5) * 5
         return bm
 
     def optimize(self, rdmol, boundsMatrix=None, atomMatch=None):
@@ -406,7 +449,8 @@ class AutoTST_TS():
                     EmbedLib.EmbedMol(rdmol, bm, atomMatch=match)
                     break
                 except ValueError:
-                    logging.info("RDKit failed to embed on attempt {0} of {1}".format(i + 1, numConfAttempts))
+                    x = 3
+                    #logging.info("RDKit failed to embed on attempt {0} of {1}".format(i + 1, numConfAttempts))
                     # What to do next (what if they all fail?) !!!!!
                 except RuntimeError:
                     logging.info("RDKit failed to embed.")
