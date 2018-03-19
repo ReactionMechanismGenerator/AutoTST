@@ -1,6 +1,6 @@
 import os
-import sys
-import cPickle as pkl
+#import sys
+#import cPickle as pkl
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -21,6 +21,7 @@ from rdkit import rdBase
 from rdkit.Chem.rdMolTransforms import *
 from rdkit.Chem.rdChemReactions import ChemicalReaction
 from rdkit.Chem import AllChem
+
 from rdkit.Chem.Pharm3D import EmbedLib
 
 import py3Dmol
@@ -38,7 +39,7 @@ from geometry import *
 
 
 rmg_database = RMGDatabase()
-database_path = os.path.abspath(os.path.join(os.getenv('RMGpy', '..'), '..', 'RMG-database', 'input'))
+database_path = os.path.join(os.path.expanduser('~'), 'Code',  'RMG-database', 'input')
 rmg_database.load(database_path,
                  kineticsFamilies=['H_Abstraction'],
                  transportLibraries=[],
@@ -164,6 +165,8 @@ class AutoTST_Reaction():
             rmg_reactants,
             rmg_products)
 
+        assert reaction_list
+
         for reaction in reaction_list:
             if reaction.isIsomorphic(test_reaction):
                 if (_isomorphicSpeciesList(reaction.reactants, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.products, test_reaction.products)):
@@ -281,9 +284,10 @@ class AutoTST_TS():
         #print bm
         #print
 
-        #rdkit.DistanceGeometry.DoTriangleSmoothing(bm)
+        rdkit.DistanceGeometry.DoTriangleSmoothing(bm)
         #print "After smoothing"
         #print bm
+        self.bm = bm
 
         self.rdkit_ts = self.rd_embed(self.rdkit_ts, 10000, bm=bm, match=atom_match)[0]
 
@@ -338,15 +342,23 @@ class AutoTST_TS():
         """
 
         if self.autotst_reaction.rmg_reaction.family.lower() in ['h_abstraction', 'r_addition_multiplebond', 'intra_h_migration']:
-            lbl1 = reactants.getLabeledAtom('*1').sortingLabel
-            lbl2 = reactants.getLabeledAtom('*2').sortingLabel
-            lbl3 = reactants.getLabeledAtom('*3').sortingLabel
+            for i, atom in enumerate(reactants.atoms):
+                if atom.label == "*1":
+                    lbl1 = i
+                if atom.label == "*2":
+                    lbl2 = i
+                if atom.label == "*3":
+                    lbl3 = i
             labels = [lbl1, lbl2, lbl3]
             atomMatch = ((lbl1,), (lbl2,), (lbl3,))
         elif self.autotst_reaction.rmg_reaction.family.lower() in ['disproportionation']:
-            lbl1 = reactants.getLabeledAtom('*2').sortingLabel
-            lbl2 = reactants.getLabeledAtom('*4').sortingLabel
-            lbl3 = reactants.getLabeledAtom('*1').sortingLabel
+            for i, atom in enumerate(reactants.atoms):
+                if atom.label == "*2":
+                    lbl1 = i
+                if atom.label == "*4":
+                    lbl2 = i
+                if atom.label == "*1":
+                    lbl3 = i
             labels = [lbl1, lbl2, lbl3]
             atomMatch = ((lbl1,), (lbl2,), (lbl3,))
 
@@ -393,7 +405,7 @@ class AutoTST_TS():
         bm = self.set_limits(bm, lbl1, lbl3, self.autotst_reaction.distance_data.distances['d13'], uncertainties['d13'])
 
         bm = self.bm_pre_edit(bm, sect)
-        bm = (bm < 5) * bm + (bm >= 5) * 5
+        #bm = (bm < 5) * bm + (bm >= 5) * 5
         return bm
 
     def optimize(self, rdmol, boundsMatrix=None, atomMatch=None):
@@ -450,7 +462,7 @@ class AutoTST_TS():
                     break
                 except ValueError:
                     x = 3
-                    #logging.info("RDKit failed to embed on attempt {0} of {1}".format(i + 1, numConfAttempts))
+                    logging.info("RDKit failed to embed on attempt {0} of {1}".format(i + 1, numConfAttempts))
                     # What to do next (what if they all fail?) !!!!!
                 except RuntimeError:
                     logging.info("RDKit failed to embed.")
