@@ -1,6 +1,4 @@
 import os
-#import sys
-#import cPickle as pkl
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -76,11 +74,12 @@ class AutoTST_Reaction():
 
     def __init__(self, label=None, reaction_family=None, rmg_reaction=None):
 
-        assert label, "Please provde a reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products."
-        assert reaction_family, "Please provide a reaction family."
+        #assert label, "Please provde a reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products."
+        #assert reaction_family, "Please provide a reaction family."
 
         self.label = label
         self.reaction_family = reaction_family
+
 
         if rmg_reaction:
 
@@ -104,8 +103,9 @@ class AutoTST_Reaction():
 
             self.reactant_mols = reactant_mols
             self.product_mols = product_mols
-        else:
+        elif label and reaction_family:
             self.get_reactants_and_products()
+
 
         self.get_rmg_reactions()
         self.create_ts_geometries()
@@ -154,7 +154,7 @@ class AutoTST_Reaction():
         for product_mol in self.product_mols:
             rmg_products.append(product_mol.rmg_molecule)
 
-        test_reaction = Reaction(reactants=rmg_reactants, products=rmg_products, reversible=True)
+
 
         labeled_r, labeled_p = family.getLabeledReactantsAndProducts(rmg_reactants, rmg_products)
 
@@ -265,6 +265,8 @@ class AutoTST_TS():
 
         self.rmg_ts, product = self.setup_molecules()
 
+        self.rmg_ts.updateMultiplicity()
+
         labels, atom_match = self.get_labels(self.rmg_ts)
 
         """combined = rdkit.Chem.Mol()
@@ -290,32 +292,6 @@ class AutoTST_TS():
         self.bm = bm
 
         self.rdkit_ts = self.rd_embed(self.rdkit_ts, 10000, bm=bm, match=atom_match)[0]
-
-    def bm_pre_edit(self, bm, sect):
-        """
-        Clean up some of the atom distance limits before attempting triangle smoothing.
-        This ensures any edits made do not lead to unsolvable scenarios for the molecular
-        embedding algorithm.
-
-        sect is the list of atom indices belonging to one species.
-        """
-        others = range(len(bm))
-        for idx in sect: others.remove(idx)
-
-        for i in range(len(bm)):#sect:
-            for j in range(i):#others:
-                if i<j: continue
-                for k in range(len(bm)):
-                    if k==i or k==j or i==j: continue
-                    Uik = bm[i,k] if k>i else bm[k,i]
-                    Ukj = bm[j,k] if k>j else bm[k,j]
-
-                    maxLij = Uik + Ukj - 0.1
-                    if bm[i,j] >  maxLij:
-                        logging.info("Changing lower limit {0} to {1}".format(bm[i, j], maxLij))
-                        bm[i,j] = maxLij
-
-        return bm
 
     def setup_molecules(self):
 
@@ -408,6 +384,32 @@ class AutoTST_TS():
         #bm = (bm < 5) * bm + (bm >= 5) * 5
         return bm
 
+    def bm_pre_edit(self, bm, sect):
+        """
+        Clean up some of the atom distance limits before attempting triangle smoothing.
+        This ensures any edits made do not lead to unsolvable scenarios for the molecular
+        embedding algorithm.
+
+        sect is the list of atom indices belonging to one species.
+        """
+        others = range(len(bm))
+        for idx in sect: others.remove(idx)
+
+        for i in range(len(bm)):#sect:
+            for j in range(i):#others:
+                if i<j: continue
+                for k in range(len(bm)):
+                    if k==i or k==j or i==j: continue
+                    Uik = bm[i,k] if k>i else bm[k,i]
+                    Ukj = bm[j,k] if k>j else bm[k,j]
+
+                    maxLij = Uik + Ukj - 0.1
+                    if bm[i,j] >  maxLij:
+                        logging.info("Changing lower limit {0} to {1}".format(bm[i, j], maxLij))
+                        bm[i,j] = maxLij
+
+        return bm
+
     def optimize(self, rdmol, boundsMatrix=None, atomMatch=None):
         """
 
@@ -481,8 +483,6 @@ class AutoTST_TS():
             rdmol, minEid = self.optimize(rdmol, boundsMatrix=bm, atomMatch=match)
 
         return rdmol, minEid
-
-
 
     def create_ase_ts_geometry(self):
 
