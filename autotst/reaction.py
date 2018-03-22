@@ -22,7 +22,7 @@ from rdkit.Chem import AllChem
 
 from rdkit.Chem.Pharm3D import EmbedLib
 
-import py3Dmol
+#import py3Dmol
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
@@ -50,7 +50,7 @@ rmg_database.load(database_path,
 # TODO: Edit this so it works with multiple databases
 
 ts_database = TransitionStates()
-path = "../database/H_Abstraction"
+path = os.path.join(os.path.expanduser("~"), "Code", "AutoTST", "database", "H_Abstraction")
 global_context = { '__builtins__': None }
 local_context={'DistanceData': DistanceData}
 family = rmg_database.kinetics.families["H_Abstraction"]

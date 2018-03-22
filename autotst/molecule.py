@@ -7,7 +7,7 @@ import ase
 from ase import Atom, Atoms
 import rmgpy
 from rmgpy.molecule import Molecule
-import py3Dmol
+#import py3Dmol
 import numpy as np
 
 from geometry import *
