@@ -26,9 +26,9 @@ from rmgpy.species import Species
 from rmgpy.reaction import Reaction
 
 
-from multi_molecule import *
-from multi_reaction import *
-from utilities import *
+from autotst.molecule import *
+from autotst.reaction import *
+from autotst.conformer.utilities import *
 
 from ase.calculators.morse import * #chosing this calculator for now because it's fast
 from ase.calculators.dftb import *
@@ -71,15 +71,15 @@ def perform_ga(multi_object,
     population_size = df.shape[0]
 
     # Takes each of the molecule objects
-    if "Multi_Molecule" in str(multi_object.__class__):
+    if "AutoTST_Molecule" in str(multi_object.__class__):
         ase_object = multi_object.ase_molecule
         torsions = multi_object.torsions
 
-    elif "Multi_Reaction" in str(multi_object.__class__):
-        ase_object = multi_object.multi_ts.ase_ts
-        torsions = multi_object.multi_ts.torsions
+    elif "AutoTST_Reaction" in str(multi_object.__class__):
+        ase_object = multi_object.ts.ase_ts
+        torsions = multi_object.ts.torsions
 
-    elif "Multi_TS" in str(multi_object.__class__):
+    elif "AutoTST_TS" in str(multi_object.__class__):
         ase_object = multi_object.ase_ts
         torsions = multi_object.torsions
 
@@ -118,13 +118,13 @@ def perform_ga(multi_object,
 
                 # Updating the molecule
                 if "AutoTST_Molecule" in str(multi_object.__class__):
-                    multi_object.update_geometry_from_ase_mol()
+                    multi_object.update_from_ase_mol()
 
                 elif "AutoTST_Reaction" in str(multi_object.__class__):
-                    multi_object.multi_ts.update_ts_from_ase_ts()
+                    multi_object.ts.update_from_ase_ts()
 
                 elif "AutoTST_TS" in str(multi_object.__class__):
-                    multi_object.update_ts_from_ase_ts()
+                    multi_object.update_from_ase_ts()
 
             e = ase_object.get_potential_energy()
             results.append([e] + dihedrals)

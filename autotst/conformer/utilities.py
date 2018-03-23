@@ -25,8 +25,8 @@ from rmgpy.molecule import Molecule
 from rmgpy.species import Species
 from rmgpy.reaction import Reaction
 
-from multi_molecule import *
-from multi_reaction import *
+from autotst.molecule import *
+from autotst.reaction import *
 
 from ase.calculators.morse import *
 from ase.calculators.dftb import *
@@ -55,7 +55,7 @@ def create_initial_population(multi_object, delta=30, population_size=200):
     possible_dihedrals = np.arange(0, 360, delta)
     population = []
 
-    if "Multi_Molecule" in str(multi_object.__class__):
+    if "AutoTST_Molecule" in str(multi_object.__class__):
         logging.info("The object given is a `Multi_Molecule` object")
 
         torsion_object = multi_object
@@ -77,16 +77,16 @@ def create_initial_population(multi_object, delta=30, population_size=200):
                     mask=right_mask
                 )
 
-            torsion_object.update_geometry_from_ase_mol()
+            torsion_object.update_from_ase_mol()
 
             e = torsion_object.ase_molecule.get_potential_energy()
 
             population.append([e] + dihedrals)
 
-    elif "Multi_Reaction" in str(multi_object.__class__):
+    elif "AutoTST_Reaction" in str(multi_object.__class__):
         logging.info("The object given is a `Multi_Reaction` object")
 
-        torsion_object = multi_object.multi_ts
+        torsion_object = multi_object.ts
 
         for i in range(population_size):
             dihedrals = []
@@ -106,13 +106,13 @@ def create_initial_population(multi_object, delta=30, population_size=200):
                     mask=right_mask
                 )
 
-            torsion_object.update_ts_from_ase_ts()
+            torsion_object.update_from_ase_ts()
 
             e = torsion_object.ase_ts.get_potential_energy()
 
             population.append([e] + dihedrals)
 
-    elif "Multi_TS" in str(multi_object.__class__):
+    elif "AutoTST_TS" in str(multi_object.__class__):
         logging.info("The object given is a `Multi_TS` object")
 
         torsion_object = multi_object
@@ -135,7 +135,7 @@ def create_initial_population(multi_object, delta=30, population_size=200):
                     mask=right_mask
                 )
 
-            torsion_object.update_ts_from_ase_ts()
+            torsion_object.update_from_ase_ts()
 
             e = torsion_object.ase_ts.get_potential_energy()
 
@@ -164,6 +164,8 @@ def select_top_population(df=None, top_percent=0.30):
     """
 
     logging.info("Selecting the top population")
+    assert "Energy" in df.columns
+    df.sort_values("Energy")
     population_size = df.shape[0]
     top_population = population_size * top_percent
     top = df.iloc[:int(top_population), :]

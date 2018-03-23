@@ -256,7 +256,7 @@ class AutoTST_Molecule():
             for i, position in enumerate(self.ase_molecule.get_positions()):
                 self.rmg_molecule.atoms[i].coords = position
 
-    def update_geometry_from_rdkit_mol(self):
+    def update_from_rdkit_mol(self):
 
         # In order to update the ase molecule you simply need to rerun the get_ase_molecule method
         self.get_ase_molecule()
@@ -264,7 +264,7 @@ class AutoTST_Molecule():
         # Getting the new torsion angles
         self.get_torsions()
 
-    def update_geometry_from_ase_mol(self):
+    def update_from_ase_mol(self):
 
         self.set_rmg_coords("ASE")
         # setting the geometries of the rdkit molecule
@@ -276,7 +276,7 @@ class AutoTST_Molecule():
         # Getting the new torsion angles
         self.get_torsions()
 
-    def update_geometry_from_rmg_mol(self):
+    def update_from_rmg_mol(self):
 
         conf = self.rdkit_molecule.GetConformers()[0]
         ase_atoms = []

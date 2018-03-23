@@ -67,7 +67,7 @@ class AutoTST_Reaction():
     INPUTS:
     * label (str): a label to describe the reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products.
     * reaction_family (str): a string to describe the rmg_reaction family
-    * rmg_reaction (RMG Reaction) [optional]: an RMG Reaction object that describes the reaction of interest
+    * rmg_reaction (RMG Reaction): an RMG Reaction object that describes the reaction of interest
 
     """
 
@@ -75,7 +75,8 @@ class AutoTST_Reaction():
     def __init__(self, label=None, reaction_family=None, rmg_reaction=None):
 
         #assert label, "Please provde a reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products."
-        #assert reaction_family, "Please provide a reaction family."
+        assert reaction_family, "Please provide a reaction family."
+        assert (label or rmg_reaction), "An rmg_reaction or label needs to be provided."
 
         self.label = label
         self.reaction_family = reaction_family
@@ -89,20 +90,34 @@ class AutoTST_Reaction():
             reactants = rmg_reaction.reactants
             products = rmg_reaction.products
 
-            for reactant in reactants:
+            label = ""
+
+            for i, reactant in enumerate(reactants):
                 if type(reactant) == rmgpy.species.Species:
                     reactant_mols.append(AutoTST_Molecule(rmg_molecule=reactant.molecule[0]))
+                    label += reactant.molecule[0].toSMILES()
                 elif type(reactant) == rmgpy.molecule.molecule.Molecule:
                     reactant_mols.append(AutoTST_Molecule(rmg_molecule=reactant))
+                    label += reactant.toSMILES()
+                if i+1 != len(reactants):
+                    label += "+"
 
-            for product in products:
+            label += "_"
+
+            for i, product in enumerate(products):
                 if type(product) == rmgpy.species.Species:
                     product_mols.append(AutoTST_Molecule(rmg_molecule=product.molecule[0]))
+                    label += product.molecule[0].toSMILES()
                 elif type(product) == rmgpy.molecule.molecule.Molecule:
                     product_mols.append(AutoTST_Molecule(rmg_molecule=product))
+                    label += product.toSMILES()
+
+                if i+1 != len(products):
+                    label += "+"
 
             self.reactant_mols = reactant_mols
             self.product_mols = product_mols
+            self.label = label
         elif label and reaction_family:
             self.get_reactants_and_products()
 

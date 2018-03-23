@@ -31,7 +31,7 @@ from ase import Atom, Atoms
 
 from autotst.molecule import *
 from autotst.reaction import *
-from autotst.utilities import *
+from autotst.conformer.utilities import *
 
 from ase.calculators.morse import * #chosing this calculator for now because it's fast
 from ase.calculators.dftb import *
@@ -96,7 +96,7 @@ def perform_brute_force(multi_object,
 
     brute_force.columns = columns
 
-    brute_force = brute_force.sort("Energy")
+    brute_force = brute_force.sort_values("Energy")
 
     f = open(os.path.join(store_directory, file_name), "w")
     pickle.dump(brute_force, f)

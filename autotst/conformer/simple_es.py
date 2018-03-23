@@ -31,7 +31,7 @@ from ase import Atom, Atoms
 
 from autotst.molecule import *
 from autotst.reaction import *
-from autotst.utilities import *
+from autotst.conformer.utilities import *
 
 from ase.calculators.morse import * #chosing this calculator for now because it's fast
 from ase.calculators.dftb import *
@@ -105,13 +105,13 @@ def perform_simple_es(multi_object,
 
                 # Updating the molecule
                 if "AutoTST_Molecule" in str(multi_object.__class__):
-                    multi_object.update_geometry_from_ase_mol()
+                    multi_object.update_from_ase_mol()
 
                 elif "AutoTST_Reaction" in str(multi_object.__class__):
-                    multi_object.multi_ts.update_ts_from_ase_ts()
+                    multi_object.ts.update_from_ase_ts()
 
                 elif "AutoTST_TS" in str(multi_object.__class__):
-                    multi_object.update_ts_from_ase_ts()
+                    multi_object.update_from_ase_ts()
 
             e = ase_object.get_potential_energy()
             results.append([e] + dihedrals)
