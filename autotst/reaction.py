@@ -283,11 +283,12 @@ class AutoTST_TS():
         self.rmg_ts.updateMultiplicity()
 
         labels, atom_match = self.get_labels(self.rmg_ts)
-
-        """combined = rdkit.Chem.Mol()
+        """
+        combined = rdkit.Chem.Mol()
 
         for mol in self.autotst_reaction.reactant_mols:
-            combined = rdkit.Chem.CombineMols(combined, mol.rdkit_molecule)"""
+            combined = rdkit.Chem.CombineMols(combined, mol.rdkit_molecule)
+        """
 
         combined = self.rmg_ts.toRDKitMol(removeHs=False)#, returnMapping=True)
         Chem.rdDistGeom.EmbedMolecule(combined)
