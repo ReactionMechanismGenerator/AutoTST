@@ -37,7 +37,7 @@ from geometry import *
 
 
 rmg_database = RMGDatabase()
-database_path = os.path.join(os.path.expanduser('~'), 'Code',  'RMG-database', 'input')
+database_path = os.path.join(os.path.expandvars('$RMGpy'), "..",  'RMG-database', 'input')
 rmg_database.load(database_path,
                  kineticsFamilies=['H_Abstraction'],
                  transportLibraries=[],
@@ -50,7 +50,7 @@ rmg_database.load(database_path,
 # TODO: Edit this so it works with multiple databases
 
 ts_database = TransitionStates()
-path = os.path.join(os.path.expanduser("~"), "Code", "AutoTST", "database", "H_Abstraction")
+path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", "H_Abstraction")
 global_context = { '__builtins__': None }
 local_context={'DistanceData': DistanceData}
 family = rmg_database.kinetics.families["H_Abstraction"]
