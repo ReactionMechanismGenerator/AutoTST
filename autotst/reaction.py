@@ -260,8 +260,9 @@ class AutoTST_TS():
 
         self.ase_ts.set_angle(a1=i, a2=j, a3=k, angle=float(180), mask=r_mask)
         labels = []
-        for label, atom in self.rmg_ts.getLabeledAtoms().iteritems():
-            labels.append(atom.sortingLabel)
+        for i, atom in enumerate(self.rmg_ts.atoms):
+            if atom.label != "":
+                labels.append(i)
 
         for torsion in self.torsions:
             if set(labels).issubset(torsion.indices[:3]):
@@ -283,12 +284,10 @@ class AutoTST_TS():
         self.rmg_ts.updateMultiplicity()
 
         labels, atom_match = self.get_labels(self.rmg_ts)
-        """
+
         combined = rdkit.Chem.Mol()
 
-        for mol in self.autotst_reaction.reactant_mols:
-            combined = rdkit.Chem.CombineMols(combined, mol.rdkit_molecule)
-        """
+
 
         combined = self.rmg_ts.toRDKitMol(removeHs=False)#, returnMapping=True)
         Chem.rdDistGeom.EmbedMolecule(combined)
