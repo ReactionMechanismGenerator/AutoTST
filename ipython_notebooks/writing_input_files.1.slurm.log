@@ -1,0 +1,116 @@
+1
+thermo.py:839 loadLibraries INFO Loading thermodynamics library from primaryThermoLibrary.py in /home/harms.n/Code/RMG-database/input/thermo/libraries...
+thermo.py:839 loadLibraries INFO Loading thermodynamics library from thermo_DFT_CCSDTF12_BAC.py in /home/harms.n/Code/RMG-database/input/thermo/libraries...
+thermo.py:839 loadLibraries INFO Loading thermodynamics library from CBS_QB3_1dHR.py in /home/harms.n/Code/RMG-database/input/thermo/libraries...
+thermo.py:856 loadGroups INFO Loading thermodynamics group database from /home/harms.n/Code/RMG-database/input/thermo/groups...
+transport.py:294 loadGroups INFO Loading transport group database from /home/harms.n/Code/RMG-database/input/transport/groups...
+database.py:167 loadFamilies INFO Loading the user-specified kinetics families from /home/harms.n/Code/RMG-database/input/kinetics/families
+statmech.py:526 loadGroups INFO Loading frequencies group database from /home/harms.n/Code/RMG-database/input/statmech/groups...
+database.py:127 load INFO Loading transitions state family groups from /home/harms.n/Code/AutoTST/database/H_Abstraction/TS_groups.py
+reaction.py:423 bm_pre_edit INFO Changing lower limit 3.65 to 3.56891279488
+reaction.py:423 bm_pre_edit INFO Changing lower limit 3.65 to 2.15685279488
+reaction.py:423 bm_pre_edit INFO Changing lower limit 2.9 to 2.88941758085
+reaction.py:423 bm_pre_edit INFO Changing lower limit 2.9 to 2.88941758085
+reaction.py:423 bm_pre_edit INFO Changing lower limit 2.529512 to 2.462845
+reaction.py:423 bm_pre_edit INFO Changing lower limit 2.4 to 2.037706204
+reaction.py:423 bm_pre_edit INFO Changing lower limit 2.9 to 2.88941758085
+[10:20:27] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[10:20:27] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[10:20:27] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[10:20:27] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[10:20:27] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[10:20:27] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[10:20:27] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+writing_input_files.py:169 <module> INFO Optimizing intital guess
+C+[O]O_[CH3]+OO_shell
+C+[O]O_[CH3]+OO_center
+C+[O]O_[CH3]+OO_irc
+[10:31:21] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[10:31:21] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+writing_input_files.py:174 <module> INFO Optimizing reaction center
+Error: segmentation violation
+   rax 0000000000000000, rbx ffffffffffffffff, rcx ffffffffffffffff
+   rdx 0000000000003d43, rsp 00007fffca4b0c48, rbp 00007fffca4b1220
+   rsi 000000000000000b, rdi 0000000000003d43, r8  00002ab95da87620
+   r9  0000000000000000, r10 00007fffca4b09d0, r11 0000000000000206
+   r12 0000000000000000, r13 0000000000000000, r14 00007fffca4b1268
+   r15 000000000000004c
+  --- traceback not available
+Traceback (most recent call last):
+  File "writing_input_files.py", line 175, in <module>
+    calc2.calculate(test_reaction.ts.ase_ts)
+  File "/home/harms.n/Code/ase/ase/calculators/calculator.py", line 649, in calculate
+    .format(self.name, self.directory, errorcode))
+RuntimeError: Gaussian in . returned an error: 1
