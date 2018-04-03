@@ -119,8 +119,8 @@ class AutoTST_Reaction():
             self.product_mols = product_mols
             self.label = label
         elif label and reaction_family:
-            print "Label provided: {}".format(label)
-            print "Family provided: {}".format(reaction_family)
+            logging.info("Label provided: {}".format(label))
+            logging.info("Family provided: {}".format(reaction_family))
             self.get_reactants_and_products()
 
 
@@ -230,8 +230,7 @@ class AutoTST_Reaction():
         """
         self.rmg_reaction = reaction
         self.distance_data = ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
-        print "The distance data is as follows:"
-        print self.distance_data
+        logging.info("The distance data is as follows: \n{}".format(self.distance_data))
 
     def create_ts_geometries(self):
         """
@@ -286,38 +285,29 @@ class AutoTST_TS():
         self.rmg_ts, product = self.setup_molecules()
 
         self.rmg_ts.updateMultiplicity()
+        combined = self.rmg_ts.toRDKitMol(removeHs=False)
 
         labels, atom_match = self.get_labels(self.rmg_ts)
-        print "The labeled atoms are: {}".format(labels)
-        print "The atom matches are: {}".format(atom_match)
 
+        for i, atom in enumerate(self.rmg_ts.atoms):
+            assert atom.number == combined.GetAtoms()[i].GetAtomicNum()
 
-
-        combined = self.rmg_ts.toRDKitMol(removeHs=False)#, returnMapping=True)
         Chem.rdDistGeom.EmbedMolecule(combined)
-        print "Initially embedded molecule"
-        self.rdkit_ts = combined
+        logging.info("Initially embedded molecule")
         bm = rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(combined)
-        print "The bounds matrix before editing is as follows:"
-        print bm
-        print
 
+        logging.info("Editing bounds matrix")
         bm = self.edit_matrix(self.rmg_ts, bm, labels)
-        print "The bounds matrix AFTER editing is as follows:"
-        print bm
-        print
 
 
+        logging.info("Performing triangle smoothing on bounds matrix.")
         rdkit.DistanceGeometry.DoTriangleSmoothing(bm)
-        print "The bounds matrix AFTER smoothing is as follows:"
-        print bm
-        print
 
         self.bm = bm
 
-        print "Now attempting to embed"
+        logging.info("Now attempting to embed using edited bounds matrix.")
 
-        self.rdkit_ts = self.rd_embed(self.rdkit_ts, 10000, bm=bm, match=atom_match)[0]
+        self.rdkit_ts = self.rd_embed(combined, 10000, bm=bm, match=atom_match)[0]
 
     def setup_molecules(self):
 
@@ -344,30 +334,21 @@ class AutoTST_TS():
         """
 
         if self.autotst_reaction.rmg_reaction.family.lower() in ['h_abstraction', 'r_addition_multiplebond', 'intra_h_migration']:
-            for i, atom in enumerate(reactants.atoms):
-                if atom.label == "*1":
-                    print "The {}th atom is the *1 atom".format(i)
-                    lbl1 = i
-                if atom.label == "*2":
-                    print "The {}th atom is the *2 atom".format(i)
-                    lbl2 = i
-                if atom.label == "*3":
-                    print "The {}th atom is the *3 atom".format(i)
-                    lbl3 = i
+            #for i, atom in enumerate(reactants.atoms):
+            lbl1 = reactants.getLabeledAtoms()["*1"].sortingLabel
+            lbl2 = reactants.getLabeledAtoms()["*2"].sortingLabel
+            lbl3 = reactants.getLabeledAtoms()["*3"].sortingLabel
             labels = [lbl1, lbl2, lbl3]
             atomMatch = ((lbl1,), (lbl2,), (lbl3,))
         elif self.autotst_reaction.rmg_reaction.family.lower() in ['disproportionation']:
-            for i, atom in enumerate(reactants.atoms):
-                if atom.label == "*2":
-                    lbl1 = i
-                if atom.label == "*4":
-                    lbl2 = i
-                if atom.label == "*1":
-                    lbl3 = i
+            lbl1 = reactants.getLabeledAtoms()["*2"].sortingLabel
+            lbl2 = reactants.getLabeledAtoms()["*4"].sortingLabel
+            lbl3 = reactants.getLabeledAtoms()["*1"].sortingLabel
+
             labels = [lbl1, lbl2, lbl3]
             atomMatch = ((lbl1,), (lbl2,), (lbl3,))
 
-        print "The labels are as follows: {}".format(labels)
+        logging.info("The labled atoms are {}.".format(labels))
 
         return labels, atomMatch
 
@@ -382,7 +363,7 @@ class AutoTST_TS():
         :param uncertainty: the uncertainty of the `value` distance (float)
         :return bm: an array of arrays corresponding to the edited bounds matrix
         """
-        print "For atoms {0} and {1}: \n We have a distance of: \t {2}".format(lbl1, lbl2, value)
+        logging.info("For atoms {0} and {1} we have a distance of: \t {2}".format(lbl1, lbl2, value))
         if lbl1 > lbl2:
             bm[lbl2][lbl1] = value + uncertainty / 2
             bm[lbl1][lbl2] = max(0, value - uncertainty / 2)
@@ -536,7 +517,6 @@ class AutoTST_TS():
                         x = float(x)
                         y = float(y)
                         z = float(z)
-                        # print symbol
 
                         ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
 
