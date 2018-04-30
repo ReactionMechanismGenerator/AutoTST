@@ -1,20 +1,26 @@
 1
-thermo.py:839 loadLibraries INFO Loading thermodynamics library from primaryThermoLibrary.py in /home/harms.n/Code/RMG-database/input/thermo/libraries...
-thermo.py:839 loadLibraries INFO Loading thermodynamics library from thermo_DFT_CCSDTF12_BAC.py in /home/harms.n/Code/RMG-database/input/thermo/libraries...
-thermo.py:839 loadLibraries INFO Loading thermodynamics library from CBS_QB3_1dHR.py in /home/harms.n/Code/RMG-database/input/thermo/libraries...
-thermo.py:856 loadGroups INFO Loading thermodynamics group database from /home/harms.n/Code/RMG-database/input/thermo/groups...
-transport.py:294 loadGroups INFO Loading transport group database from /home/harms.n/Code/RMG-database/input/transport/groups...
-database.py:167 loadFamilies INFO Loading the user-specified kinetics families from /home/harms.n/Code/RMG-database/input/kinetics/families
-statmech.py:526 loadGroups INFO Loading frequencies group database from /home/harms.n/Code/RMG-database/input/statmech/groups...
-database.py:127 load INFO Loading transitions state family groups from /home/harms.n/Code/AutoTST/database/H_Abstraction/TS_groups.py
-reaction.py:423 bm_pre_edit INFO Changing lower limit 3.65 to 3.56891279488
-reaction.py:423 bm_pre_edit INFO Changing lower limit 3.65 to 2.15685279488
-reaction.py:423 bm_pre_edit INFO Changing lower limit 2.9 to 2.88941758085
-reaction.py:423 bm_pre_edit INFO Changing lower limit 2.9 to 2.88941758085
-reaction.py:423 bm_pre_edit INFO Changing lower limit 2.529512 to 2.462845
-reaction.py:423 bm_pre_edit INFO Changing lower limit 2.4 to 2.037706204
-reaction.py:423 bm_pre_edit INFO Changing lower limit 2.9 to 2.88941758085
-[10:20:27] 
+thermo.py:839 loadLibraries INFO Loading thermodynamics library from primaryThermoLibrary.py in /home/harms.n/Code/RMG-master/../RMG-database/input/thermo/libraries...
+thermo.py:839 loadLibraries INFO Loading thermodynamics library from thermo_DFT_CCSDTF12_BAC.py in /home/harms.n/Code/RMG-master/../RMG-database/input/thermo/libraries...
+thermo.py:839 loadLibraries INFO Loading thermodynamics library from CBS_QB3_1dHR.py in /home/harms.n/Code/RMG-master/../RMG-database/input/thermo/libraries...
+thermo.py:856 loadGroups INFO Loading thermodynamics group database from /home/harms.n/Code/RMG-master/../RMG-database/input/thermo/groups...
+transport.py:294 loadGroups INFO Loading transport group database from /home/harms.n/Code/RMG-master/../RMG-database/input/transport/groups...
+database.py:167 loadFamilies INFO Loading the user-specified kinetics families from /home/harms.n/Code/RMG-master/../RMG-database/input/kinetics/families
+statmech.py:526 loadGroups INFO Loading frequencies group database from /home/harms.n/Code/RMG-master/../RMG-database/input/statmech/groups...
+database.py:127 load INFO Loading transitions state family groups from /home/harms.n/Code/RMG-master/../AutoTST/database/H_Abstraction/TS_groups.py
+reaction.py:233 get_rmg_reactions INFO The distance data is as follows: 
+DistanceData(distances={'d12': 1.322228,'d13': 2.547443,'d23': 1.235329,}, uncertainties={'d12': 0.368943,'d13': 0.209844,'d23': 0.312795,}, comment=u'Matched node C/H3/Cd ([<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">])\nMatched node OjO ([<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">])\n')
+reaction.py:351 get_labels INFO The labled atoms are [4, 9, 0].
+reaction.py:296 create_rdkit_ts_geometry INFO Initially embedded molecule
+reaction.py:299 create_rdkit_ts_geometry INFO Editing bounds matrix
+reaction.py:366 set_limits INFO For atoms 4 and 9 we have a distance of: 	 1.322228
+reaction.py:366 set_limits INFO For atoms 9 and 0 we have a distance of: 	 1.235329
+reaction.py:366 set_limits INFO For atoms 4 and 0 we have a distance of: 	 2.547443
+reaction.py:421 bm_pre_edit INFO Changing lower limit 3.65 to 3.31857083943
+reaction.py:421 bm_pre_edit INFO Changing lower limit 2.537443 to 2.477557
+reaction.py:421 bm_pre_edit INFO Changing lower limit 2.9 to 2.471329
+reaction.py:303 create_rdkit_ts_geometry INFO Performing triangle smoothing on bounds matrix.
+reaction.py:308 create_rdkit_ts_geometry INFO Now attempting to embed using edited bounds matrix.
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -23,7 +29,7 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-[10:20:27] 
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -32,7 +38,7 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-[10:20:27] 
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -41,7 +47,7 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-[10:20:27] 
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -50,7 +56,7 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-[10:20:27] 
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -59,7 +65,7 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-[10:20:27] 
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -68,7 +74,7 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-[10:20:27] 
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -77,11 +83,7 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-writing_input_files.py:169 <module> INFO Optimizing intital guess
-C+[O]O_[CH3]+OO_shell
-C+[O]O_[CH3]+OO_center
-C+[O]O_[CH3]+OO_irc
-[10:31:21] 
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -90,7 +92,7 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-[10:31:21] 
+[21:13:19] 
 
 ****
 Pre-condition Violation
@@ -99,18 +101,524 @@ Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/
 Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
 ****
 
-writing_input_files.py:174 <module> INFO Optimizing reaction center
-Error: segmentation violation
-   rax 0000000000000000, rbx ffffffffffffffff, rcx ffffffffffffffff
-   rdx 0000000000003d43, rsp 00007fffca4b0c48, rbp 00007fffca4b1220
-   rsi 000000000000000b, rdi 0000000000003d43, r8  00002ab95da87620
-   r9  0000000000000000, r10 00007fffca4b09d0, r11 0000000000000206
-   r12 0000000000000000, r13 0000000000000000, r14 00007fffca4b1268
-   r15 000000000000004c
-  --- traceback not available
-Traceback (most recent call last):
-  File "writing_input_files.py", line 175, in <module>
-    calc2.calculate(test_reaction.ts.ase_ts)
-  File "/home/harms.n/Code/ase/ase/calculators/calculator.py", line 649, in calculate
-    .format(self.name, self.directory, errorcode))
-RuntimeError: Gaussian in . returned an error: 1
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+[21:13:19] 
+
+****
+Pre-condition Violation
+bond already exists
+Violation occurred on line 278 in file /opt/conda/conda-bld/rdkit_1516515305555/work/Code/GraphMol/RWMol.cpp
+Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
+****
+
+utilities.py:51 create_initial_population INFO Creating initial population of 200 individuals from random guesses
+utilities.py:59 create_initial_population INFO The object given is a `Multi_Molecule` object
+utilities.py:145 create_initial_population INFO Creating a dataframe of the initial population
+utilities.py:166 select_top_population INFO Selecting the top population
+ga.py:90 perform_ga INFO Performing GA on generation 1
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 0th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 1th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 2th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 3th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 4th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 5th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 6th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 7th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 8th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 9th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 10th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 11th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 12th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 13th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 14th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 15th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 16th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 17th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 18th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 19th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 20th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 21th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 22th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 23th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 24th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 25th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 26th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 27th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 28th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 29th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 30th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 31th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 32th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 33th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 34th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 35th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 36th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 37th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 38th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 39th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 40th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 41th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 42th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 43th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 44th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 45th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 46th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 47th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 48th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 49th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 50th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 51th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 52th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 53th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 54th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 55th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 56th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 57th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 58th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 59th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 60th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 61th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 62th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 63th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 64th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 65th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 66th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 67th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 68th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 69th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 70th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 71th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 72th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 73th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 74th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 75th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 76th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 77th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 78th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 79th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 80th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 81th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 82th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 83th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 84th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 85th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 86th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 87th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 88th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 89th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 90th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 91th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 92th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 93th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 94th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 95th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 96th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 97th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 98th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 99th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 100th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 101th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 102th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 103th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 104th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 105th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 106th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 107th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 108th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 109th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 110th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 111th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 112th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 113th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 114th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 115th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 116th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 117th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 118th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 119th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 120th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 121th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 122th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 123th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 124th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 125th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 126th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 127th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 128th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 129th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 130th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 131th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 132th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 133th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 134th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 135th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 136th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 137th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 138th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 139th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 140th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 141th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 142th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 143th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 144th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 145th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 146th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 147th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 148th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 149th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 150th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 151th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 152th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 153th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 154th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 155th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 156th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 157th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 158th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 159th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 160th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 161th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 162th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 163th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 164th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 165th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 166th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 167th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 168th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 169th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 170th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 171th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 172th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 173th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 174th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 175th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 176th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 177th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 178th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 179th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 180th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 181th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 182th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 183th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 184th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 185th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 186th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 187th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 188th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 189th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 190th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 191th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 192th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 193th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 194th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 195th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 196th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 197th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 198th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 199th individual
+ga.py:133 perform_ga INFO Creating the DataFrame of results for the 1th generation
+ga.py:168 perform_ga INFO Cutoff criteria reached. GA complete.
+/home/harms.n/Code/ase/ase/atoms.py:1429: UserWarning: Please use new API: atoms_obj.set_dihedral(a1,a2,a3,a4,angle) where angle is given in degrees
+  'Please use new API: '
+utilities.py:51 create_initial_population INFO Creating initial population of 200 individuals from random guesses
+utilities.py:59 create_initial_population INFO The object given is a `Multi_Molecule` object
+utilities.py:145 create_initial_population INFO Creating a dataframe of the initial population
+utilities.py:166 select_top_population INFO Selecting the top population
+ga.py:90 perform_ga INFO Performing GA on generation 1
+ga.py:133 perform_ga INFO Creating the DataFrame of results for the 1th generation
+ga.py:168 perform_ga INFO Cutoff criteria reached. GA complete.
+utilities.py:51 create_initial_population INFO Creating initial population of 200 individuals from random guesses
+utilities.py:59 create_initial_population INFO The object given is a `Multi_Molecule` object
+utilities.py:145 create_initial_population INFO Creating a dataframe of the initial population
+utilities.py:166 select_top_population INFO Selecting the top population
+ga.py:90 perform_ga INFO Performing GA on generation 1
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 0th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 1th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 2th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 3th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 4th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 5th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 6th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 7th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 8th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 9th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 10th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 11th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 12th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 13th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 14th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 15th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 16th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 17th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 18th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 19th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 20th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 21th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 22th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 23th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 24th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 25th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 26th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 27th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 28th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 29th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 30th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 31th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 32th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 33th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 34th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 35th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 36th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 37th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 38th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 39th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 40th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 41th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 42th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 43th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 44th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 45th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 46th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 47th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 48th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 49th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 50th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 51th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 52th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 53th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 54th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 55th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 56th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 57th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 58th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 59th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 60th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 61th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 62th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 63th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 64th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 65th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 66th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 67th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 68th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 69th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 70th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 71th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 72th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 73th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 74th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 75th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 76th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 77th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 78th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 79th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 80th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 81th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 82th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 83th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 84th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 85th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 86th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 87th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 88th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 89th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 90th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 91th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 92th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 93th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 94th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 95th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 96th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 97th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 98th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 99th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 100th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 101th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 102th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 103th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 104th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 105th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 106th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 107th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 108th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 109th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 110th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 111th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 112th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 113th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 114th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 115th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 116th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 117th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 118th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 119th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 120th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 121th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 122th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 123th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 124th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 125th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 126th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 127th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 128th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 129th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 130th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 131th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 132th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 133th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 134th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 135th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 136th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 137th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 138th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 139th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 140th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 141th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 142th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 143th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 144th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 145th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 146th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 147th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 148th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 149th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 150th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 151th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 152th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 153th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 154th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 155th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 156th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 157th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 158th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 159th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 160th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 161th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 162th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 163th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 164th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 165th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 166th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 167th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 168th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 169th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 170th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 171th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 172th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 173th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 174th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 175th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 176th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 177th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 178th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 179th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 180th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 181th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 182th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 183th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 184th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 185th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 186th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 187th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 188th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 189th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 190th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 191th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 192th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 193th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 194th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 195th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 196th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 197th individual
+ga.py:100 perform_ga INFO Mutation on the 0th torsion of the 198th individual
+ga.py:102 perform_ga INFO Crossover on the 0th torsion of the 199th individual
+ga.py:133 perform_ga INFO Creating the DataFrame of results for the 1th generation
+ga.py:168 perform_ga INFO Cutoff criteria reached. GA complete.
+utilities.py:51 create_initial_population INFO Creating initial population of 200 individuals from random guesses
+utilities.py:59 create_initial_population INFO The object given is a `Multi_Molecule` object
+utilities.py:145 create_initial_population INFO Creating a dataframe of the initial population
+utilities.py:166 select_top_population INFO Selecting the top population
+ga.py:90 perform_ga INFO Performing GA on generation 1
+ga.py:133 perform_ga INFO Creating the DataFrame of results for the 1th generation
+ga.py:168 perform_ga INFO Cutoff criteria reached. GA complete.
+Complete!!!

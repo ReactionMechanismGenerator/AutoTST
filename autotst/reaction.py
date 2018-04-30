@@ -261,7 +261,7 @@ class AutoTST_TS():
         i, j, k =self.angle_indices
         r_mask = self.angle.right_mask
 
-        self.ase_ts.set_angle(a1=i, a2=j, a3=k, angle=float(180), mask=r_mask)
+        """self.ase_ts.set_angle(a1=i, a2=j, a3=k, angle=float(180), mask=r_mask)
         labels = []
         for i, atom in enumerate(self.rmg_ts.atoms):
             if atom.label != "":
@@ -277,7 +277,7 @@ class AutoTST_TS():
                                          a3=k,
                                          a4=l,
                                          mask=r_mask,
-                                         angle=float(180))
+                                         angle=float(180))"""
         self.update_from_ase_ts()
 
     def create_rdkit_ts_geometry(self):
