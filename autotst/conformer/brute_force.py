@@ -20,7 +20,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit import rdBase
 
-import py3Dmol
+#import py3Dmol
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
@@ -48,17 +48,17 @@ def perform_brute_force(multi_object,
     if "AutoTST_Molecule" in str(multi_object.__class__):
         ase_object = multi_object.ase_molecule
         torsions = multi_object.torsions
-        file_name = "mol_brute_force.pkl"
+        file_name = "mol_brute_force.csv"
 
     elif "AutoTST_Reaction" in str(multi_object.__class__):
         ase_object = multi_object.ts.ase_ts
         torsions = multi_object.ts.torsions
-        file_name = "rxn_brute_force.pkl"
+        file_name = "rxn_brute_force.csv"
 
     elif "AutoTST_TS" in str(multi_object.__class__):
         ase_object = multi_object.ase_ts
         torsions = multi_object.torsions
-        file_name = "ts_brute_force.pkl"
+        file_name = "ts_brute_force.csv"
 
     torsion_angles = np.arange(0, 360, delta)
     torsion_combos = list(itertools.combinations_with_replacement(torsion_angles, len(torsions)))
@@ -98,7 +98,7 @@ def perform_brute_force(multi_object,
 
     brute_force = brute_force.sort_values("Energy")
 
-    f = open(os.path.join(store_directory, file_name), "w")
-    pickle.dump(brute_force, f)
+    f = os.path.join(store_directory,filename)
+    df.to_csv(f)
 
     return brute_force

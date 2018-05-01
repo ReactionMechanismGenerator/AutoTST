@@ -19,7 +19,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit import rdBase
 
-import py3Dmol
+#import py3Dmol
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
@@ -144,19 +144,19 @@ def perform_ga(multi_object,
             logging.info("Pickling the DataFrame")
 
             if "AutoTST_Reaction" in str(multi_object.__class__):
-                generation_name = "rxn_ga_generation_{}.pkl".format(gen_number)
+                generation_name = "rxn_ga_generation_{}.csv".format(gen_number)
 
             elif "AutoTST_Molecule" in str(multi_object.__class__):
-                generation_name = "mol_ga_generation_{}.pkl".format(gen_number)
+                generation_name = "mol_ga_generation_{}.csv".format(gen_number)
 
             elif "AutoTST_TS" in str(multi_object.__class__):
-                generation_name = "ts_ga_generation_{}.pkl".format(gen_number)
+                generation_name = "ts_ga_generation_{}.csv".format(gen_number)
 
             else:
-                generation_name = "ga_generation_{}.pkl".format(gen_number)
+                generation_name = "ga_generation_{}.csv".format(gen_number)
 
-            f = open(os.path.join(store_directory, generation_name), "w")
-            pickle.dump(df, f)
+            f = os.path.join(store_directory, generation_name)
+            df.to_csv(f)
 
         top = df.iloc[:int(top_population), :]
 

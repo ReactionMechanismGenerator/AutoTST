@@ -19,7 +19,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit import rdBase
 
-import py3Dmol
+#import py3Dmol
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
