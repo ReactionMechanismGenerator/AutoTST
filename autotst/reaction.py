@@ -54,7 +54,7 @@ from rdkit.Chem.Pharm3D import EmbedLib
 try:
     import py3Dmol
 except ImportError:
-    print("Error importing py3Dmol")
+    logging.info("Error importing py3Dmol")
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
@@ -240,40 +240,6 @@ class AutoTST_Reaction():
                     reaction.products = test_reaction.reactants
                     reaction.reactants = test_reaction.products
 
-        """
-        #NOTE::: This was how we did it before, but now it should be working for master
-
-        print rmg_reactants
-
-        print reaction_list
-
-        for reaction in reaction_list:
-            print reaction
-            # Check if any of the RMG proposed reactions matches the reaction in the mechanism
-            if test_reaction.isIsomorphic(reaction):
-                atom_labels_reactants = dict([(lbl[0], False) for lbl in reaction.labeledAtoms])
-                atom_labels_products = dict([(lbl[0], False) for lbl in reaction.labeledAtoms])
-
-                for reactant in reaction.reactants:
-                    reactant.clearLabeledAtoms()
-                    for atom in reactant.atoms:
-                        for atom_label in reaction.labeledAtoms:
-                            if atom == atom_label[1]:
-                                atom.label = atom_label[0]
-                                atom_labels_reactants[atom_label[0]] = True
-
-                for product in reaction.products:
-                    product.clearLabeledAtoms()
-                    for atom in product.atoms:
-                        for atom_label in reaction.labeledAtoms:
-                            if atom == atom_label[1]:
-                                atom.label = atom_label[0]
-                                atom_labels_products[atom_label[0]] = True
-
-                if all(atom_labels_reactants.values()) and all(atom_labels_products.values()):
-                    # We successfully labeled all of the atoms
-                    break
-        """
         self.rmg_reaction = reaction
         self.distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
         logging.info("The distance data is as follows: \n{}".format(self.distance_data))
@@ -299,31 +265,10 @@ class AutoTST_TS():
         self.create_rdkit_ts_geometry()
         self.create_ase_ts_geometry()
         self.create_rmg_ts_geometry()
-        self.get_ts_torsion_list()
-        self.get_ts_torsions()
-        self.get_ts_angle_list()
-        self.get_ts_angles()
-        self.get_ts_bond_list()
         self.get_ts_bonds()
+        self.get_ts_angles()
+        self.get_ts_torsions()
 
-        """self.ase_ts.set_angle(a1=i, a2=j, a3=k, angle=float(180), mask=r_mask)
-        labels = []
-        for i, atom in enumerate(self.rmg_ts.atoms):
-            if atom.label != "":
-                labels.append(i)
-
-        for torsion in self.torsions:
-            if set(labels).issubset(torsion.indices[:3]):
-                i, j, k, l = torsion.indices
-                r_mask = torsion.right_mask
-
-                self.ase_ts.set_dihedral(a1=i,
-                                         a2=j,
-                                         a3=k,
-                                         a4=l,
-                                         mask=r_mask,
-                                         angle=float(180))"""
-        self.update_from_ase_ts()
 
     def create_rdkit_ts_geometry(self):
 
@@ -615,17 +560,15 @@ class AutoTST_TS():
 
         return rdmol_copy
 
-    def get_ts_bond_list(self):
+    def get_ts_bonds(self):
+
         rdmol_copy = self.create_pseudo_geometry()
         bond_list=[]
         for bond in rdmol_copy.GetBonds():
             bond_list.append((bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()))
 
-        self.bond_list=bond_list
-
-    def get_ts_bonds(self):
         bonds = []
-        for indices in self.bond_list:
+        for indices in bond_list:
             i, j = indices
 
             length = self.ase_ts.get_distance(i, j)
@@ -640,14 +583,15 @@ class AutoTST_TS():
                 (self.rmg_ts.atoms[i].label == "" and self.rmg_ts.atoms[j].label != "")):
                 reaction_center = "Close"
 
-            bon = Bond(indices=indices, length=length, reaction_center=reaction_center)
+            bond = Bond(indices=indices, length=length, reaction_center=reaction_center)
 
-            bonds.append(bon)
+            bonds.append(bond)
         self.bonds = bonds
         return self.bonds
 
 
-    def get_ts_angle_list(self):
+    def get_ts_angles(self):
+
         rdmol_copy = self.create_pseudo_geometry()
 
         angle_list = []
@@ -662,11 +606,8 @@ class AutoTST_TS():
                         continue
                     angle_list.append(to_add)
 
-        self.angle_list = angle_list
-
-    def get_ts_angles(self):
         angles = []
-        for indices in self.angle_list:
+        for indices in angle_list:
             i, j, k = indices
 
             degree = self.ase_ts.get_angle(i, j, k)
@@ -693,8 +634,7 @@ class AutoTST_TS():
         return self.angles
 
 
-    def get_ts_torsion_list(self):
-
+    def get_ts_torsions(self):
         rdmol_copy = self.create_pseudo_geometry()
 
         torsion_list = []
@@ -752,11 +692,8 @@ class AutoTST_TS():
                 torsion_tup = (atom0.GetIdx(), atom1.GetIdx(), atom2.GetIdx(), atom3.GetIdx())
                 torsion_list.append(torsion_tup)
 
-        self.torsion_list = torsion_list
-
-    def get_ts_torsions(self):
         torsions = []
-        for indices in self.torsion_list:
+        for indices in torsion_list:
             i, j, k, l = indices
 
             dihedral = self.ase_ts.get_dihedral(i, j, k, l)
