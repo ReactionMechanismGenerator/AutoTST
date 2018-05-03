@@ -31,7 +31,7 @@
 #####################################################
 
 
-source activate tst_env
+source activate rmg_env
 #python $RMGpy/scripts/filterReactions.py /scratch/westgroup/Importer/RMG-models/
 ## that creates the kineticsDict files, and doesn't need repeating until the imported models change significantly
 echo $SLURM_ARRAY_TASK_ID

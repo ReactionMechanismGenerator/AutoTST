@@ -1,3 +1,32 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+################################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+################################################################################
+
 import os
 from autotst.reaction import *
 from autotst.molecule import *
@@ -13,6 +42,13 @@ from ase.optimize import BFGS
 class AutoTST_Gaussian:
 
     def __init__(self, autotst_reaction, scratch="."):
+        """
+        A method to create all of the calculators needed for AutoTST
+
+        :params:
+        autotst_reaction: (AutoTST_Reaction) The reaction of interest
+        scratch: (str) The directory that you would like to use for calculations
+        """
 
         self.reaction = autotst_reaction
 
@@ -27,7 +63,11 @@ class AutoTST_Gaussian:
 
         self.completed_irc = False
 
+    def __repr__(self):
+        return '<AutoTST Gaussian Calculators "{0}">'.format(self.reaction.label)
+
     def reactants_or_products_calc(self, autotst_mol, scratch="."):
+        "A method that creates a calculator for a reactant or product"
 
         autotst_mol.rmg_molecule.updateMultiplicity()
 
@@ -45,6 +85,7 @@ class AutoTST_Gaussian:
         return calc
 
     def get_reactant_and_product_calcs(self, scratch="."):
+        "A method that collects all of the calculators for reactants and prods"
 
         self.reactant_calcs = {}
         self.product_calcs = {}
@@ -59,6 +100,7 @@ class AutoTST_Gaussian:
 
 
     def get_shell_calc(self, scratch="."):
+        "A method to create a calculator that optimizes the reaction shell"
 
         indicies = []
         for i, atom in enumerate(self.reaction.ts.rmg_ts.atoms):
@@ -86,6 +128,7 @@ class AutoTST_Gaussian:
         return calc
 
     def get_center_calc(self, scratch="."):
+        "A method to create the calculator to perform the reaction center opt"
 
         indicies = []
         for i, atom in enumerate(self.reaction.ts.rmg_ts.atoms):
@@ -113,6 +156,7 @@ class AutoTST_Gaussian:
         return calc
 
     def get_overall_calc(self, scratch="."):
+        "A method to create the calculator to perform the full TS optimization"
 
         self.reaction.ts.rmg_ts.updateMultiplicity()
 
@@ -129,6 +173,7 @@ class AutoTST_Gaussian:
         return calc
 
     def get_irc_calc(self, scratch="."):
+        "A method to create the IRC calculator object"
 
         self.reaction.ts.rmg_ts.updateMultiplicity()
         label = self.reaction.label.replace("(", "left").replace(")", "right") + "_irc"
@@ -146,6 +191,15 @@ class AutoTST_Gaussian:
 
     def calculate(self, autotst_object, calc):
 
+        """
+        A method to perform a calculation given a calculator and an AutoTST
+        object. If the corresponding log file already exists, we will skip it
+
+        :params:
+        autotst_object: (AutoTST_Molecule, AutoTST_TS, AutoTST_Reaction) an
+        AutoTST object that you want to run calculations on
+        calc: (ase.calculators.calculator) the calculator that you want to run
+        """
         if isinstance(autotst_object, AutoTST_Molecule):
             if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
                 calc.calculate(autotst_object.ase_molecule)
@@ -167,6 +221,7 @@ class AutoTST_Gaussian:
         return autotst_object
 
     def run_reactants_and_products(self):
+        "A method to run the calculations for all reactants and products"
         for mol, calc in self.reactant_calcs.iteritems():
             mol = self.calculate(mol, calc)
 
@@ -174,21 +229,25 @@ class AutoTST_Gaussian:
             mol = self.calculate(mol, calc)
 
     def run_shell(self):
+        "A method to run the shell optimization with the reaction center frozen"
         logging.info("Running shell optimization with center frozen...")
         self.reaction = self.calculate(self.reaction, self.shell_calc)
         logging.info("Shell optimization complete!")
 
     def run_center(self):
+        "A method to run the reaction center optimization with the shell frozen"
         logging.info("Running center optimization with shell frozen...")
         self.reaction = self.calculate(self.reaction, self.center_calc)
         logging.info("Center optimization complete!")
 
     def run_overall(self):
+        "A method to run the optimization of the entire TS"
         logging.info("Running overall optimization...")
         self.reaction = self.calculate(self.reaction, self.overall_calc)
         logging.info("Overall optimization complete!")
 
     def run_irc(self):
+        "A method to run the IRC calculation"
         logging.info("Running IRC calculation")
         try:
             self.irc_calc.calculate(self.reaction.ts.ase_ts)
@@ -226,9 +285,25 @@ class AutoTST_Gaussian:
 
 
     def run_all(self, vibrational_analysis=True):
+        """
+        A method that is designed to run all of the automated quantum
+        calculations for AutoTST. These can be run independently as well.
+
+        :params:
+        vibrational_analysis: (bool) A bool to tell AutoTST if you want to use
+        vibrational analysis instead of IRC calcs to speed up calculations
+
+        :returns:
+        result: (bool) A bool to tell you if an AutoTST run successfully
+        converged on a verified TS.
+        """
+
         self.run_shell()
         self.run_center()
         self.run_overall()
+
+        logging.info("Fixing file names...")
+        self.fix_io_files()
 
         vib = Vibrational_Analysis(self.reaction)
         logging.info("Performing Vibrational Analysis...")
@@ -244,8 +319,7 @@ class AutoTST_Gaussian:
             self.run_irc()
             result = self.validate_irc()
 
-        logging.info("Fixing file names...")
-        self.fix_io_files()
+        self.fix_io_file(self.irc_calc)
 
         if result:
             logging.info("Arrived at a TS!")
@@ -256,6 +330,10 @@ class AutoTST_Gaussian:
             return result
 
     def fix_io_file(self, calc):
+        """
+        A method that removes the `left` and `right` text from a log, ase, and
+        com files and turns it back into a smiles structure
+        """
         old_log_file = calc.label + ".log"
         old_log_path = os.path.join(calc.scratch, old_log_file)
         if os.path.exists(old_log_path):
@@ -276,7 +354,10 @@ class AutoTST_Gaussian:
 
 
     def fix_io_files(self):
-
+        """
+        A method that removes the `left` and `right` text from a log, ase, and
+        com files and turns it back into a smiles structure for ALL files.
+        """
         for calc in self.reactant_calcs.values:
             self.fix_io_file(calc)
 
@@ -286,4 +367,3 @@ class AutoTST_Gaussian:
         self.fix_io_file(self.shell_calc)
         self.fix_io_file(self.center_calc)
         self.fix_io_file(self.overall_calc)
-        self.fix_io_file(self.irc_calc)

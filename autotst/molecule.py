@@ -79,6 +79,9 @@ class AutoTST_Molecule():
         self.get_torsion_list()
         self.get_torsions()
 
+    def __repr__(self):
+        return '<AutoTST Molecule "{0}">'.format(self.smiles)
+
     def get_rdkit_molecule(self):
         """
         A method to create an RDKit Molecule from the rmg_molecule.

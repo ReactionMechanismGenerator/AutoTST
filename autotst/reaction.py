@@ -143,6 +143,9 @@ class AutoTST_Reaction():
         self.get_rmg_reactions()
         self.create_ts_geometries()
 
+    def __repr__(self):
+        return '<AutoTST Reaction "{0}">'.format(self.label)
+
     def load_database(self):
 
         possible_families = [
@@ -268,6 +271,9 @@ class AutoTST_TS():
         self.get_ts_bonds()
         self.get_ts_angles()
         self.get_ts_torsions()
+
+    def __repr__(self):
+        return '<AutoTST TS "{0}">'.format(self.label)
 
 
     def create_rdkit_ts_geometry(self):
