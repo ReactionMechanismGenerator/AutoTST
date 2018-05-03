@@ -3,10 +3,9 @@
 
 ################################################################################
 #
-#   RMG - Reaction Mechanism Generator
+#   AutoTST - Automated Transition State Theory
 #
-#   Copyright (c) 2002-2010 Prof. William H. Green (whgreen@mit.edu) and the
-#   RMG Team (rmg_dev@mit.edu)
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
 #
 #   Permission is hereby granted, free of charge, to any person obtaining a
 #   copy of this software and associated documentation files (the 'Software'),
