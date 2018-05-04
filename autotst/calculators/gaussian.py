@@ -41,7 +41,13 @@ from ase.optimize import BFGS
 
 class AutoTST_Gaussian:
 
-    def __init__(self, autotst_reaction, scratch="."):
+    def __init__(self,
+                 autotst_reaction,
+                 mem="5GB",
+                 nprocshared=20,
+                 scratch=".",
+                 method="m062x",
+                 basis="6-311+g(2df,2p)"):
         """
         A method to create all of the calculators needed for AutoTST
 
@@ -51,32 +57,37 @@ class AutoTST_Gaussian:
         """
 
         self.reaction = autotst_reaction
-
+        self.mem = mem
+        self.nprocshared = nprocshared
         self.scratch = scratch
+        self.method = method
+        self.basis = basis
 
-        self.get_reactant_and_product_calcs(self.scratch)
+        self.get_reactant_and_product_calcs(self.mem, self.nprocshared, self.scratch, self.method, self.basis)
 
-        self.shell_calc = self.get_shell_calc(self.scratch)
-        self.center_calc = self.get_center_calc(self.scratch)
-        self.overall_calc = self.get_overall_calc(self.scratch)
-        self.irc_calc = self.get_irc_calc(self.scratch)
+        self.shell_calc = self.get_shell_calc(self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+        self.center_calc = self.get_center_calc(self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+        self.overall_calc = self.get_overall_calc(self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+        self.irc_calc = self.get_irc_calc(self.mem, self.nprocshared, self.scratch, self.method, self.basis)
 
         self.completed_irc = False
 
     def __repr__(self):
         return '<AutoTST Gaussian Calculators "{0}">'.format(self.reaction.label)
 
-    def reactants_or_products_calc(self, autotst_mol, scratch="."):
+    def reactants_or_products_calc(self, autotst_mol, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method that creates a calculator for a reactant or product"
 
         autotst_mol.rmg_molecule.updateMultiplicity()
 
         label = autotst_mol.rmg_molecule.toSMILES().replace("(", "left").replace(")", "right")
 
-        calc = Gaussian(mem="5GB",
-                        nprocshared="20",
+        calc = Gaussian(mem=mem,
+                        nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
+                        method=method,
+                        basis=basis,
                         extra="opt=(verytight,gdiis) freq IOP(2/16=3)",
                         multiplicity = autotst_mol.rmg_molecule.multiplicity
                         )
@@ -84,22 +95,22 @@ class AutoTST_Gaussian:
 
         return calc
 
-    def get_reactant_and_product_calcs(self, scratch="."):
+    def get_reactant_and_product_calcs(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method that collects all of the calculators for reactants and prods"
 
         self.reactant_calcs = {}
         self.product_calcs = {}
 
         for reactant in self.reaction.reactant_mols:
-            calc = self.reactants_or_products_calc(reactant, scratch)
+            calc = self.reactants_or_products_calc(reactant, mem, nprocshared, scratch, method, basis)
             self.reactant_calcs[reactant] = calc
 
         for product in self.reaction.product_mols:
-            calc = self.reactants_or_products_calc(product, scratch)
+            calc = self.reactants_or_products_calc(product, mem, nprocshared, scratch, method, basis)
             self.product_calcs[product] = calc
 
 
-    def get_shell_calc(self, scratch="."):
+    def get_shell_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method to create a calculator that optimizes the reaction shell"
 
         indicies = []
@@ -116,10 +127,12 @@ class AutoTST_Gaussian:
 
         label = self.reaction.label.replace("(", "left").replace(")", "right") + "_shell"
 
-        calc = Gaussian(mem="5GB",
-                        nprocshared="20",
+        calc = Gaussian(mem=mem,
+                        nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
+                        method=method,
+                        basis=basis,
                         extra="Opt=(ModRedun,Loose) Int(Grid=SG1)",
                         multiplicity = self.reaction.ts.rmg_ts.multiplicity,
                         addsec = [combos[:-1]])
@@ -127,7 +140,7 @@ class AutoTST_Gaussian:
         del calc.parameters['force']
         return calc
 
-    def get_center_calc(self, scratch="."):
+    def get_center_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method to create the calculator to perform the reaction center opt"
 
         indicies = []
@@ -144,10 +157,12 @@ class AutoTST_Gaussian:
 
         label = self.reaction.label.replace("(", "left").replace(")", "right") + "_center"
 
-        calc = Gaussian(mem="5GB",
-                        nprocshared="20",
+        calc = Gaussian(mem=mem,
+                        nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
+                        method=method,
+                        basis=basis,
                         extra="opt=(ts,calcfc,noeigentest,ModRedun)",
                         multiplicity = self.reaction.ts.rmg_ts.multiplicity,
                         addsec = [combos[:-1]])
@@ -155,33 +170,37 @@ class AutoTST_Gaussian:
         del calc.parameters['force']
         return calc
 
-    def get_overall_calc(self, scratch="."):
+    def get_overall_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method to create the calculator to perform the full TS optimization"
 
         self.reaction.ts.rmg_ts.updateMultiplicity()
 
         label = self.reaction.label.replace("(", "left").replace(")", "right") + "_overall"
 
-        calc = Gaussian(mem="5GB",
-                        nprocshared="20",
+        calc = Gaussian(mem=mem,
+                        nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
+                        method=method,
+                        basis=basis,
                         extra="opt=(ts,calcfc,noeigentest) freq",
                         multiplicity = self.reaction.ts.rmg_ts.multiplicity)
 
         del calc.parameters['force']
         return calc
 
-    def get_irc_calc(self, scratch="."):
+    def get_irc_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method to create the IRC calculator object"
 
         self.reaction.ts.rmg_ts.updateMultiplicity()
         label = self.reaction.label.replace("(", "left").replace(")", "right") + "_irc"
 
-        calc = Gaussian(mem="5GB",
-                        nprocshared="20",
+        calc = Gaussian(mem=mem,
+                        nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
+                        method=method,
+                        basis=basis,
                         extra="irc=(calcall)",
                         multiplicity = self.reaction.ts.rmg_ts.multiplicity)
 

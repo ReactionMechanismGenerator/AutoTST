@@ -86,7 +86,7 @@ class Vibrational_Analysis():
         self.before_geometry = reaction.ts.ase_ts.copy()
         self.post_geometry = reaction.ts.ase_ts.copy()
 
-        for vib, displacements in reaction.vibrations:
+        for vib, displacements in self.vibrations:
             if vib < 0: # Finding the imaginary frequency
                 got_imaginary_frequency = True
                 self.post_geometry.arrays["positions"] -= displacements
