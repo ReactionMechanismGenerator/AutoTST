@@ -62,7 +62,7 @@ for i, reactant in enumerate(test_reaction.product_mols):
 
     reactant.update_from_ase_mol()
 
-tst_calculators = AutoTST_Gaussian(test_reaction)
+tst_calculators = AutoTST_Gaussian(test_reaction, method="CCSD")
 
 tst_calculators.run_all()
 
