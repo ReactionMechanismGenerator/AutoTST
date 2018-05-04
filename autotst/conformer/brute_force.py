@@ -106,7 +106,7 @@ def perform_brute_force(multi_object,
 
     brute_force = brute_force.sort_values("Energy")
 
-    f = os.path.join(store_directory,file_name)
+    f = os.path.join(store_directory, file_name)
     df.to_csv(f)
 
     return brute_force

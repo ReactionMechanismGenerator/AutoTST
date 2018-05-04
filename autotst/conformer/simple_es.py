@@ -52,8 +52,8 @@ from ase.calculators.emt import *
 def perform_simple_es(multi_object,
                       df,
                       top_percent=0.3,
-                      tolerance=1e-4,
-                      max_generations=np.inf,
+                      tolerance=1e-5,
+                      max_generations=500,
                       store_generations=False,
                       store_directory="."):
     """
