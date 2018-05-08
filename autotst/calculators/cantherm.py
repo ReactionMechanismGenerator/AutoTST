@@ -4,13 +4,23 @@ from autotst.reaction import *
 
 class AutoTST_CanTherm():
 
-    def __init__(self, reaction, output_directory="."):
+    def __init__(self, reaction, output_directory=".", model_chemistry="M06-2X/cc-pVTZ", freq_scale_factor=0.982):
+
+        """
+        A class to perform CanTherm calculations:
+        :param: reaction: (AutoTST_Reaction) The reaction of interest
+        :param: output_directory: (str) The directory where you would like output files written to
+        :param: model_chemistry: (str) The supported model_chemistry described by http://reactionmechanismgenerator.github.io/RMG-Py/users/cantherm/input.html#model-chemistry
+        :param: freq_scale_factor: (float) The scaling factor corresponding to the model chemistry - source:https://comp.chem.umn.edu/freqscale/version3b1.htm
+        """
 
         self.reaction = reaction
 
         self.cantherm_job = CanTherm()
         self.output_directory=output_directory
         self.cantherm_job.outputDirectory = self.output_directory
+        self.model_chemistry = model_chemistry
+        self.freq_scale_factor=freq_scale_factor
 
     def get_atoms(self, mol):
         atom_dict={}
@@ -126,7 +136,7 @@ class AutoTST_CanTherm():
 
         output += ["","linear = False","","externalSymmetry = 1", "", "spinMultiplicity = {}".format(mol.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {","    'M06-2X/cc-pVTZ': GaussianLog('{}.log'),".format(mol.smiles),"}",""]
+        output += ["energy = {","    '{0}': GaussianLog('{1}.log'),".format(self.model_chemistry, mol.smiles),"}",""]
 
         output += ["geometry = GaussianLog('{}.log')".format(mol.smiles), ""]
 
@@ -167,7 +177,7 @@ class AutoTST_CanTherm():
 
         output += ["","linear = False","","externalSymmetry = 1", "", "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {","    'M06-2X/cc-pVTZ': GaussianLog('{}_overall.log'),".format(rxn.label),"}",""]
+        output += ["energy = {","    '{0}': GaussianLog('{1}_overall.log'),".format(self.model_chemistry,rxn.label),"}",""]
 
         output += ["geometry = GaussianLog('{}_overall.log')".format(rxn.label), ""]
 
@@ -184,7 +194,7 @@ class AutoTST_CanTherm():
             f.write(input_string)
 
     def write_cantherm_ts(self, rxn):
-        top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "M06-2X/cc-pVTZ"', "frequencyScaleFactor = 0.982", "useHinderedRotors = False", "useBondCorrections = False", ""]
+        top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
 
         scratch ="."
         for react in rxn.reactant_mols:
@@ -244,15 +254,15 @@ class AutoTST_CanTherm():
 
     def set_reactants_and_products(self):
 
-        for reactant in self.reaction.reactant_mols:
+        for reactant in self.reaction.rmg_reaction.reactants:
             for r in self.kinetics_job.reaction.reactants:
-                if reactant.smiles == r.label:
-                    r.molecule = [reactant.rmg_molecule]
+                if reactant.toSMILES() == r.label:
+                    r.molecule = [reactant]
 
-        for product in self.reaction.product_mols:
+        for product in self.reaction.rmg_reaction.products:
             for p in self.kinetics_job.reaction.products:
-                if product.smiles == p.label:
-                    p.molecule = [product.rmg_molecule]
+                if product.toSMILES() == p.label:
+                    p.molecule = [product]
 
         self.reaction.rmg_reaction = self.kinetics_job.reaction
 

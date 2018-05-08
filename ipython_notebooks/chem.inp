@@ -32,7 +32,7 @@ END
 
 REACTIONS    KCAL/MOLE   MOLES
 
-CC=C(C)C + [O]O <=> OO + [CH2]C=C(C)C               4.245e-41    15.221     2.944
+[O]O + CC=C(C)C <=> [CH2]C=C(C)C + OO               4.245e-41    15.221     2.944
 
 END
 
