@@ -317,6 +317,7 @@ class AutoTST_Gaussian:
         converged on a verified TS.
         """
 
+        self.run_reactants_and_products()
         self.run_shell()
         self.run_center()
         self.run_overall()

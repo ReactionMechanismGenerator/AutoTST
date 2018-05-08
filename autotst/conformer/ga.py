@@ -109,9 +109,7 @@ def perform_ga(multi_object,
 
                 if random.random() < mutation_probability:
                     dihedral = np.random.choice(possible_dihedrals)
-                    logging.info("Mutation on the {0}th torsion of the {1}th individual".format(index, individual))
                 else:
-                    logging.info("Crossover on the {0}th torsion of the {1}th individual".format(index, individual))
                     if 0.5 > random.random():
                         dihedral = df.iloc[parent_0, index + 1]
                     else:
@@ -153,7 +151,7 @@ def perform_ga(multi_object,
 
         if store_generations == True:
             # This portion stores each generation if desired
-            logging.info("Pickling the DataFrame")
+            logging.info("Saving the DataFrame")
 
             if "AutoTST_Reaction" in str(multi_object.__class__):
                 generation_name = "rxn_ga_generation_{}.csv".format(gen_number)
@@ -172,10 +170,12 @@ def perform_ga(multi_object,
 
         top = df.iloc[:int(top_population), :]
 
+        stats = top.describe()
+
         if gen_number >= max_generations:
             complete = True
             logging.info("Max generations reached. GA complete.")
-        if top.std()[0] / top.mean()[0] < tolerance:
+        if stats.loc["std"][0] / abs(stats.loc["max"][0] - stats.loc["min"][0]) < tolerance:
             complete = True
             logging.info("Cutoff criteria reached. GA complete.")
 
