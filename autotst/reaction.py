@@ -547,6 +547,7 @@ class AutoTST_TS():
 
         rdmol_copy = self.rdkit_ts.__copy__()
         rdmol_copy = Chem.RWMol(rdmol_copy)
+        rdmol_copy.UpdatePropertyCache(strict=False)
         for atom in rdmol_copy.GetAtoms():
             idx = atom.GetIdx()
             rmg_atom = self.rmg_ts.atoms[idx]
