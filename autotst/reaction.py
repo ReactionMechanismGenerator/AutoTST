@@ -1,3 +1,32 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+################################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+################################################################################
+
 import os
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
@@ -22,7 +51,10 @@ from rdkit.Chem import AllChem
 
 from rdkit.Chem.Pharm3D import EmbedLib
 
-#import py3Dmol
+try:
+    import py3Dmol
+except ImportError:
+    logging.info("Error importing py3Dmol")
 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
@@ -31,31 +63,13 @@ from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
 # AutoTST imports
-from database import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
-from molecule import *
-from geometry import *
+from autotst.database import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
+from autotst.molecule import *
+from autotst.geometry import *
 
 
-rmg_database = RMGDatabase()
-database_path = os.path.join(os.path.expandvars('$RMGpy'), "..",  'RMG-database', 'input')
-rmg_database.load(database_path,
-                 kineticsFamilies=['H_Abstraction'],
-                 transportLibraries=[],
-                 reactionLibraries=[],
-                 seedMechanisms=[],
-                 thermoLibraries=['primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR' ],
-                 solvation=False,
-                 )
-
-# TODO: Edit this so it works with multiple databases
-
-ts_database = TransitionStates()
-path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", "H_Abstraction")
-global_context = { '__builtins__': None }
-local_context={'DistanceData': DistanceData}
-family = rmg_database.kinetics.families["H_Abstraction"]
-ts_database.family = family
-ts_database.load(path, local_context, global_context)
+### Currently this is set up to only work with H_Abstraction
+# TODO: Edit this so it works with other reaction families
 
 
 
@@ -80,6 +94,8 @@ class AutoTST_Reaction():
 
         self.label = label
         self.reaction_family = reaction_family
+
+        self.load_database()
 
 
         if rmg_reaction:
@@ -127,6 +143,41 @@ class AutoTST_Reaction():
         self.get_rmg_reactions()
         self.create_ts_geometries()
 
+    def __repr__(self):
+        return '<AutoTST Reaction "{0}">'.format(self.label)
+
+    def load_database(self):
+
+        possible_families = [
+            "disproportionation",
+            "h_abstraction",
+            "intra_h_migration"
+        ]
+
+        assert self.reaction_family.lower() in possible_families, "Reaction family is not supported by AutoTST."
+
+        rmg_database = RMGDatabase()
+        database_path = os.path.join(os.path.expandvars('$RMGpy'), "..",  'RMG-database', 'input')
+        rmg_database.load(database_path,
+                         kineticsFamilies=[self.reaction_family],
+                         transportLibraries=[],
+                         reactionLibraries=[],
+                         seedMechanisms=[],
+                         thermoLibraries=['primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR' ],
+                         solvation=False,
+                         )
+
+        ts_database = TransitionStates()
+        path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", self.reaction_family)
+        global_context = { '__builtins__': None }
+        local_context={'DistanceData': DistanceData}
+        family = rmg_database.kinetics.families[self.reaction_family]
+        ts_database.family = family
+        ts_database.load(path, local_context, global_context)
+
+        self.ts_database = ts_database
+        self.rmg_database = rmg_database
+
     def get_reactants_and_products(self):
 
         """
@@ -136,11 +187,9 @@ class AutoTST_Reaction():
         """
         reactants, products = self.label.split("_")
 
-        if "+" in reactants:
-            reactants = reactants.split("+")
+        reactants = reactants.split("+")
 
-        if "+" in products:
-            products = products.split("+")
+        products = products.split("+")
 
         reactant_mols = []
         product_mols = []
@@ -173,12 +222,12 @@ class AutoTST_Reaction():
 
 
 
-        labeled_r, labeled_p = family.getLabeledReactantsAndProducts(rmg_reactants, rmg_products)
+        labeled_r, labeled_p = self.ts_database.family.getLabeledReactantsAndProducts(rmg_reactants, rmg_products)
 
         test_reaction = Reaction(reactants=labeled_r, products=labeled_p, reversible=True)
 
 
-        reaction_list = rmg_database.kinetics.generate_reactions_from_families(
+        reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
             rmg_reactants,
             rmg_products)
 
@@ -194,42 +243,8 @@ class AutoTST_Reaction():
                     reaction.products = test_reaction.reactants
                     reaction.reactants = test_reaction.products
 
-        """
-        #NOTE::: This was how we did it before, but now it should be working for master
-
-        print rmg_reactants
-
-        print reaction_list
-
-        for reaction in reaction_list:
-            print reaction
-            # Check if any of the RMG proposed reactions matches the reaction in the mechanism
-            if test_reaction.isIsomorphic(reaction):
-                atom_labels_reactants = dict([(lbl[0], False) for lbl in reaction.labeledAtoms])
-                atom_labels_products = dict([(lbl[0], False) for lbl in reaction.labeledAtoms])
-
-                for reactant in reaction.reactants:
-                    reactant.clearLabeledAtoms()
-                    for atom in reactant.atoms:
-                        for atom_label in reaction.labeledAtoms:
-                            if atom == atom_label[1]:
-                                atom.label = atom_label[0]
-                                atom_labels_reactants[atom_label[0]] = True
-
-                for product in reaction.products:
-                    product.clearLabeledAtoms()
-                    for atom in product.atoms:
-                        for atom_label in reaction.labeledAtoms:
-                            if atom == atom_label[1]:
-                                atom.label = atom_label[0]
-                                atom_labels_products[atom_label[0]] = True
-
-                if all(atom_labels_reactants.values()) and all(atom_labels_products.values()):
-                    # We successfully labeled all of the atoms
-                    break
-        """
         self.rmg_reaction = reaction
-        self.distance_data = ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
+        self.distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
         logging.info("The distance data is as follows: \n{}".format(self.distance_data))
 
     def create_ts_geometries(self):
@@ -253,32 +268,13 @@ class AutoTST_TS():
         self.create_rdkit_ts_geometry()
         self.create_ase_ts_geometry()
         self.create_rmg_ts_geometry()
-        self.get_ts_torsion_list()
+        self.get_ts_bonds()
+        self.get_ts_angles()
         self.get_ts_torsions()
-        self.get_ts_angle_indices()
-        self.angle_indices
-        self.get_ts_angle()
-        i, j, k =self.angle_indices
-        r_mask = self.angle.right_mask
 
-        self.ase_ts.set_angle(a1=i, a2=j, a3=k, angle=float(180), mask=r_mask)
-        labels = []
-        for i, atom in enumerate(self.rmg_ts.atoms):
-            if atom.label != "":
-                labels.append(i)
+    def __repr__(self):
+        return '<AutoTST TS "{0}">'.format(self.label)
 
-        for torsion in self.torsions:
-            if set(labels).issubset(torsion.indices[:3]):
-                i, j, k, l = torsion.indices
-                r_mask = torsion.right_mask
-
-                self.ase_ts.set_dihedral(a1=i,
-                                         a2=j,
-                                         a3=k,
-                                         a4=l,
-                                         mask=r_mask,
-                                         angle=float(180))
-        self.update_from_ase_ts()
 
     def create_rdkit_ts_geometry(self):
 
@@ -547,6 +543,8 @@ class AutoTST_TS():
 
     def create_pseudo_geometry(self):
 
+        # TODO: This only works for some reaction families, need to fix this
+
         rdmol_copy = self.rdkit_ts.__copy__()
         rdmol_copy = Chem.RWMol(rdmol_copy)
         for atom in rdmol_copy.GetAtoms():
@@ -568,64 +566,81 @@ class AutoTST_TS():
 
         return rdmol_copy
 
-    def get_ts_angle_indices(self):
-        rdmol_copy = self.rdkit_ts.__copy__()
-        rdmol_copy = Chem.RWMol(rdmol_copy)
-        for atom in rdmol_copy.GetAtoms():
-            idx = atom.GetIdx()
-            rmg_atom = self.rmg_ts.atoms[idx]
+    def get_ts_bonds(self):
 
-            if rmg_atom.label:
-                if rmg_atom.label == "*1":
-                    atom1_star = atom
-                if rmg_atom.label == "*2":
-                    atom2_star = atom
-                if rmg_atom.label == "*3":
-                    atom3_star = atom
+        rdmol_copy = self.create_pseudo_geometry()
+        bond_list=[]
+        for bond in rdmol_copy.GetBonds():
+            bond_list.append((bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()))
 
-        if rdmol_copy.GetBondBetweenAtoms(atom1_star.GetIdx(), atom2_star.GetIdx()):
-            bond_list = list(atom3_star.GetBonds())
+        bonds = []
+        for indices in bond_list:
+            i, j = indices
 
-            for bond in bond_list:
-                atomX = bond.GetOtherAtom(atom3_star)
-                if atomX.GetAtomicNum() == 1 and len(atomX.GetBonds()) == 1:
-                    # This means that we have a terminal hydrogen, skip this
-                    # NOTE: for H_abstraction TSs, a non teminal H should exist
-                    continue
-                if atomX.GetIdx() != atom2_star.GetIdx():
-                    other_atom = atomX
-            angle_indices = [atom2_star.GetIdx(), atom3_star.GetIdx(), other_atom.GetIdx()]
+            length = self.ase_ts.get_distance(i, j)
 
-        else:
-            bond_list = list(atom1_star.GetBonds())
+            reaction_center="No"
 
-            for bond in bond_list:
-                atomX = bond.GetOtherAtom(atom1_star)
-                if atomX.GetAtomicNum() == 1 and len(atomX.GetBonds()) == 1:
-                    # This means that we have a terminal hydrogen, skip this
-                    # NOTE: for H_abstraction TSs, a non teminal H should exist
-                    continue
-                if atomX.GetIdx() != atom2_star.GetIdx():
-                    other_atom = atomX
+            if (self.rmg_ts.atoms[i].label != "" and
+                self.rmg_ts.atoms[j].label != ""):
+                reaction_center = "Yes"
 
-            angle_indices = [atom2_star.GetIdx(), atom1_star.GetIdx(), other_atom.GetIdx()]
+            elif ((self.rmg_ts.atoms[i].label != "" and self.rmg_ts.atoms[j].label == "") or
+                (self.rmg_ts.atoms[i].label == "" and self.rmg_ts.atoms[j].label != "")):
+                reaction_center = "Close"
 
-        self.angle_indices = angle_indices
+            bond = Bond(indices=indices, length=length, reaction_center=reaction_center)
 
-    def get_ts_angle(self):
+            bonds.append(bond)
+        self.bonds = bonds
+        return self.bonds
 
-        i, j, k = self.angle_indices
-        ang = self.ase_ts.get_angle(i, j, k)
-        angle = Angle(indices=self.angle_indices, degree=ang, left_mask=[], right_mask=[])
-        left_mask = self.get_ts_left_mask(angle)
-        right_mask = self.get_ts_right_mask(angle)
 
-        self.angle = Angle(self.angle_indices, ang, left_mask, right_mask)
+    def get_ts_angles(self):
 
-        return self.angle
+        rdmol_copy = self.create_pseudo_geometry()
 
-    def get_ts_torsion_list(self):
+        angle_list = []
+        for atom1 in rdmol_copy.GetAtoms():
+            for atom2 in atom1.GetNeighbors():
+                for atom3 in atom2.GetNeighbors():
+                    if atom1.GetIdx() == atom3.GetIdx():
+                        continue
 
+                    to_add = (atom1.GetIdx(), atom2.GetIdx(), atom3.GetIdx())
+                    if (to_add in angle_list) or (tuple(reversed(to_add)) in angle_list):
+                        continue
+                    angle_list.append(to_add)
+
+        angles = []
+        for indices in angle_list:
+            i, j, k = indices
+
+            degree = self.ase_ts.get_angle(i, j, k)
+            ang = Angle(indices=indices, degree=degree, left_mask=[], right_mask=[])
+            left_mask = self.get_ts_left_mask(ang)
+            right_mask = self.get_ts_right_mask(ang)
+
+            reaction_center="No"
+
+            if (self.rmg_ts.atoms[i].label != "" and
+                self.rmg_ts.atoms[j].label != "" and
+                self.rmg_ts.atoms[k].label != ""):
+
+                reaction_center = "Yes"
+            elif ((self.rmg_ts.atoms[i].label != "" and
+                 self.rmg_ts.atoms[j].label != "") or
+                 (self.rmg_ts.atoms[j].label != "" and
+                 self.rmg_ts.atoms[k].label != "")):
+
+                reaction_center = "Close"
+
+            angles.append(Angle(indices, degree, left_mask, right_mask, reaction_center))
+        self.angles = angles
+        return self.angles
+
+
+    def get_ts_torsions(self):
         rdmol_copy = self.create_pseudo_geometry()
 
         torsion_list = []
@@ -676,26 +691,38 @@ class AutoTST_TS():
                 continue
 
             # Looking to make sure that all of the atoms are properly bonded to eached
-            if (
-                            rdmol_copy.GetBondBetweenAtoms(atom0.GetIdx(), atom1.GetIdx()) and
-                            rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()) and
-                        rdmol_copy.GetBondBetweenAtoms(atom2.GetIdx(), atom3.GetIdx())):
+            if ("SINGLE" in str(rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()).GetBondType()) and
+                rdmol_copy.GetBondBetweenAtoms(atom0.GetIdx(), atom1.GetIdx()) and
+                rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()) and
+                rdmol_copy.GetBondBetweenAtoms(atom2.GetIdx(), atom3.GetIdx())):
                 torsion_tup = (atom0.GetIdx(), atom1.GetIdx(), atom2.GetIdx(), atom3.GetIdx())
                 torsion_list.append(torsion_tup)
 
-        self.torsion_list = torsion_list
-
-    def get_ts_torsions(self):
         torsions = []
-        for indices in self.torsion_list:
+        for indices in torsion_list:
             i, j, k, l = indices
 
             dihedral = self.ase_ts.get_dihedral(i, j, k, l)
             tor = Torsion(indices=indices, dihedral=dihedral, left_mask=[], right_mask=[])
             left_mask = self.get_ts_left_mask(tor)
             right_mask = self.get_ts_right_mask(tor)
+            reaction_center = "No"
 
-            torsions.append(Torsion(indices, dihedral, left_mask, right_mask))
+            if ((self.rmg_ts.atoms[i].label != "" and
+                self.rmg_ts.atoms[j].label != "" and
+                self.rmg_ts.atoms[k].label != "") or (
+                self.rmg_ts.atoms[j].label != "" and
+                self.rmg_ts.atoms[k].label != "" and
+                self.rmg_ts.atoms[l].label != "")):
+                reaction_center = "Yes"
+
+            elif ((self.rmg_ts.atoms[i].label != "" and
+                self.rmg_ts.atoms[j].label != "") or (
+                self.rmg_ts.atoms[k].label != "" and
+                self.rmg_ts.atoms[l].label != "")):
+                reaction_center = "Close"
+
+            torsions.append(Torsion(indices, dihedral, left_mask, right_mask, reaction_center))
         self.torsions = torsions
         return self.torsions
 

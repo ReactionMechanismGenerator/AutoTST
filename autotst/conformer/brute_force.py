@@ -1,44 +1,52 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+################################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+################################################################################
+
 import os
 import sys
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
-import re
-import imp
 import itertools
 import random
 import numpy as np
 from numpy import array
 import pandas as pd
 
-
-# do this before we have a chance to import openbabel!
-import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
-
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit import rdBase
-
-import py3Dmol
-
-from rmgpy.molecule import Molecule
-from rmgpy.species import Species
-from rmgpy.reaction import Reaction
-
-import ase
-from ase import Atom, Atoms
-
 from autotst.molecule import *
 from autotst.reaction import *
 from autotst.conformer.utilities import *
 
-from ase.calculators.morse import * #chosing this calculator for now because it's fast
+from ase.calculators.morse import *
 from ase.calculators.dftb import *
 from ase.calculators.lj import *
 from ase.calculators.emt import *
-
-import cPickle as pickle
 
 
 def perform_brute_force(multi_object,
@@ -48,17 +56,17 @@ def perform_brute_force(multi_object,
     if "AutoTST_Molecule" in str(multi_object.__class__):
         ase_object = multi_object.ase_molecule
         torsions = multi_object.torsions
-        file_name = "mol_brute_force.pkl"
+        file_name = "mol_brute_force.csv"
 
     elif "AutoTST_Reaction" in str(multi_object.__class__):
         ase_object = multi_object.ts.ase_ts
         torsions = multi_object.ts.torsions
-        file_name = "rxn_brute_force.pkl"
+        file_name = "rxn_brute_force.csv"
 
     elif "AutoTST_TS" in str(multi_object.__class__):
         ase_object = multi_object.ase_ts
         torsions = multi_object.torsions
-        file_name = "ts_brute_force.pkl"
+        file_name = "ts_brute_force.csv"
 
     torsion_angles = np.arange(0, 360, delta)
     torsion_combos = list(itertools.combinations_with_replacement(torsion_angles, len(torsions)))
@@ -98,7 +106,7 @@ def perform_brute_force(multi_object,
 
     brute_force = brute_force.sort_values("Energy")
 
-    f = open(os.path.join(store_directory, file_name), "w")
-    pickle.dump(brute_force, f)
+    f = os.path.join(store_directory, file_name)
+    df.to_csv(f)
 
     return brute_force

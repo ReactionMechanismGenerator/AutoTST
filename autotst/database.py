@@ -3,10 +3,9 @@
 
 ################################################################################
 #
-#   RMG - Reaction Mechanism Generator
+#   AutoTST - Automated Transition State Theory
 #
-#   Copyright (c) 2002-2010 Prof. William H. Green (whgreen@mit.edu) and the
-#   RMG Team (rmg_dev@mit.edu)
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
 #
 #   Permission is hereby granted, free of charge, to any person obtaining a
 #   copy of this software and associated documentation files (the 'Software'),
@@ -777,31 +776,3 @@ class TSGroups(Database):
                 entry.history.append(event)
         return True # because the thing above is broken
         return changed
-        # below is what has been updated
-        # # Add a note to the history of each changed item indicating that we've generated new group values
-        # import time
-        # changed = False
-        # for label, entry in self.entries.items():
-        #     if entry.data is not None and old_entries.has_key(label):
-        #         if (isinstance(entry.data, KineticsData) and
-        #             isinstance(old_entries[label], KineticsData) and
-        #             len(entry.data.kdata.value_si) == len(old_entries[label].kdata.value_si) and
-        #             all(abs(entry.data.kdata.value_si / old_entries[label].kdata.value_si - 1) < 0.01)):
-        #             #print "New group values within 1% of old."
-        #             pass
-        #         elif (isinstance(entry.data, Arrhenius) and
-        #             isinstance(old_entries[label], Arrhenius) and
-        #             abs(entry.data.A.value_si / old_entries[label].A.value_si - 1) < 0.01 and
-        #             abs(entry.data.n.value_si / old_entries[label].n.value_si - 1) < 0.01 and
-        #             abs(entry.data.Ea.value_si / old_entries[label].Ea.value_si - 1) < 0.01 and
-        #             abs(entry.data.T0.value_si / old_entries[label].T0.value_si - 1) < 0.01):
-        #             #print "New group values within 1% of old."
-        #             pass
-        #         else:
-        #             changed = True
-        #             break
-        #     else:
-        #         changed = True
-        #         break
-        #
-        # return changed
