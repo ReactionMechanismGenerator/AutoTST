@@ -77,18 +77,26 @@ class AutoTST_Reaction():
     * rmg_reaction (RMG Reaction): an RMG Reaction object that describes the reaction of interest
 
     """
+    rmg_database = None   # will be an RMGDatabase instance, once loaded.
+    ts_databases = dict() # a dictionary will have reaction family names as keys and TransitionStates instances as values, once loaded.
+    possible_families = [ # These families (and only these) will be loaded from both RMG and AutoTST databases
+        "Disproportionation",
+        "H_Abstraction",
+        "intra_H_migration"
+    ]
 
     def __init__(self, label=None, reaction_family=None, rmg_reaction=None):
 
         #assert label, "Please provde a reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products."
         assert reaction_family, "Please provide a reaction family."
         assert (label or rmg_reaction), "An rmg_reaction or label needs to be provided."
+        assert reaction_family in self.possible_families, "Reaction family is not supported by AutoTST. ({} is not one of {})".format(reaction_family, sorted(self.possible_families))
 
         self.label = label
         self.reaction_family = reaction_family
 
-        self.load_database()
-
+        self.load_databases()
+        self.ts_database = self.ts_databases[reaction_family] # a bit clumsy, but saves refactoring code for now.
 
         if rmg_reaction:
 
@@ -138,38 +146,44 @@ class AutoTST_Reaction():
     def __repr__(self):
         return '<AutoTST Reaction "{0}">'.format(self.label)
 
-    def load_database(self):
+    @classmethod
+    def load_databases(cls, force_reload=False):
+        """
+        Load the RMG and AutoTST databases, if they have not already been loaded,
+        into the class level variables where they are stored.
 
-        possible_families = [
-            "disproportionation",
-            "h_abstraction",
-            "intra_h_migration"
-        ]
+        :param force_reload: if set to True then forces a reload, even if already loaded.
+        :return: None
+        """
+        if cls.rmg_database and cls.ts_databases and not force_reload:
+            return
 
-        assert self.reaction_family.lower() in possible_families, "Reaction family is not supported by AutoTST."
 
         rmg_database = RMGDatabase()
         database_path = os.path.join(os.path.expandvars('$RMGpy'), "..",  'RMG-database', 'input')
-        logging.info("Loading database from '{}'".format(database_path))
+        logging.info("Loading RMG database from '{}'".format(database_path))
         rmg_database.load(database_path,
-                         kineticsFamilies=[self.reaction_family],
+                         kineticsFamilies=cls.possible_families,
                          transportLibraries=[],
                          reactionLibraries=[],
                          seedMechanisms=[],
                          thermoLibraries=['primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR' ],
                          solvation=False,
                          )
+        cls.rmg_database = rmg_database
 
-        ts_database = TransitionStates()
-        path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", self.reaction_family)
-        global_context = { '__builtins__': None }
-        local_context={'DistanceData': DistanceData}
-        family = rmg_database.kinetics.families[self.reaction_family]
-        ts_database.family = family
-        ts_database.load(path, local_context, global_context)
+        cls.ts_databases = dict()
+        for reaction_family in cls.possible_families:
+            ts_database = TransitionStates()
+            path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", reaction_family)
+            global_context = { '__builtins__': None }
+            local_context={'DistanceData': DistanceData}
+            family = rmg_database.kinetics.families[reaction_family]
+            ts_database.family = family
+            ts_database.load(path, local_context, global_context)
 
-        self.ts_database = ts_database
-        self.rmg_database = rmg_database
+            cls.ts_databases[reaction_family] = ts_database
+
 
     def get_reactants_and_products(self):
 
@@ -222,7 +236,9 @@ class AutoTST_Reaction():
 
         reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
             rmg_reactants,
-            rmg_products)
+            rmg_products,
+            only_families=[self.reaction_family]
+        )
 
         assert reaction_list
 
