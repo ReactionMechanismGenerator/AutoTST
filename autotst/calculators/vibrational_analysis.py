@@ -27,7 +27,12 @@
 #
 ################################################################################
 
-from autotst.reaction import *
+import os
+import logging
+import pandas as pd
+import numpy as np
+
+from autotst.reaction import AutoTST_Reaction
 from cclib.io import ccread
 
 def percent_change(original,new):

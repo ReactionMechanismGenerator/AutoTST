@@ -1,6 +1,9 @@
+import os
+
 from rmgpy.cantherm import CanTherm, KineticsJob, StatMechJob
-from rmgpy.cantherm import *
-from autotst.reaction import *
+
+from autotst.reaction import AutoTST_Reaction, AutoTST_TS
+from autotst.molecule import AutoTST_Molecule
 
 class AutoTST_CanTherm():
 
