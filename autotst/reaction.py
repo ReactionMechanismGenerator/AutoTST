@@ -52,7 +52,7 @@ import ase
 import rmgpy
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
-from rmgpy.reaction import Reaction, _isomorphicSpeciesList
+from rmgpy.reaction import Reaction, _isomorphicSpeciesList, ReactionError
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
@@ -246,11 +246,14 @@ class AutoTST_Reaction():
                 if (_isomorphicSpeciesList(reaction.reactants, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.products, test_reaction.products)):
                     reaction.reactants = test_reaction.reactants
                     reaction.products = test_reaction.products
+                    break
 
                 elif (_isomorphicSpeciesList(reaction.products, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.reactants, test_reaction.products)):
                     reaction.products = test_reaction.reactants
                     reaction.reactants = test_reaction.products
-
+                    break
+        else: # didn't break
+            raise ReactionError("Didn't find a {} reaction matching {} in this list: {}".format(self.reaction_family, test_reaction, reaction_list))
         self.rmg_reaction = reaction
 
     def generate_distance_data(self):
