@@ -34,12 +34,10 @@ groups, including support for using group additivity to estimate TS geometries.
 
 import os
 import os.path
-import re
 import logging
 import codecs
-import math
 import numpy
-from copy import copy, deepcopy
+from copy import deepcopy
 
 from rmgpy.data.base import Database, Entry, makeLogicNode, LogicNode, DatabaseError
 

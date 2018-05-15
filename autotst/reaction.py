@@ -43,12 +43,9 @@ import pandas as pd
 import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
 
 from rdkit import Chem
-from rdkit.Chem import AllChem
 from rdkit import rdBase
-# from rdkit.Chem.rdMolTransforms import *
 from rdkit.Chem.rdChemReactions import ChemicalReaction
 from rdkit.Chem import AllChem
-
 from rdkit.Chem.Pharm3D import EmbedLib
 
 try:
@@ -77,7 +74,6 @@ from autotst.geometry import Torsion, Angle, Bond
 
 
 class AutoTST_Reaction():
-
     """
     A class to describe reactions in 3D in ase, rdkit and rmg.
 
@@ -87,7 +83,6 @@ class AutoTST_Reaction():
     * rmg_reaction (RMG Reaction): an RMG Reaction object that describes the reaction of interest
 
     """
-
 
     def __init__(self, label=None, reaction_family=None, rmg_reaction=None):
 
