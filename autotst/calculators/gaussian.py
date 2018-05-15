@@ -28,16 +28,16 @@
 ################################################################################
 
 import os
-from autotst.reaction import *
-from autotst.molecule import *
-from autotst.geometry import *
+import itertools
+import logging
+
+from autotst.reaction import AutoTST_Reaction, AutoTST_TS
+from autotst.molecule import AutoTST_Molecule
+from autotst.calculators.vibrational_analysis import Vibrational_Analysis
+
 from ase.io.gaussian import read_gaussian, read_gaussian_out
+from ase.calculators.gaussian import Gaussian
 
-from autotst.calculators.vibrational_analysis import *
-
-from ase.calculators.gaussian import *
-
-from ase.optimize import BFGS
 
 class AutoTST_Gaussian:
 
