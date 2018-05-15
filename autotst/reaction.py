@@ -879,9 +879,9 @@ class AutoTST_TS():
 
             conf.SetAtomPosition(i, [x, y, z])
 
-            ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
+            ase_atoms.append(ase.Atom(symbol=symbol, position=(x, y, z)))
 
-        self.ase_ts = Atoms(ase_atoms)
+        self.ase_ts = ase.Atoms(ase_atoms)
 
         # Getting the new torsion angles
         self.get_ts_torsion_list()
