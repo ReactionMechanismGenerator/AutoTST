@@ -32,13 +32,8 @@ import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
-import re
-import imp
-import itertools
-import random
+
 import numpy as np
-from numpy import array
-import pandas as pd
 
 import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
 
