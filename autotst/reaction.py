@@ -97,6 +97,7 @@ class AutoTST_Reaction():
         self.load_databases()
         self.ts_database = self.ts_databases[reaction_family] # a bit clumsy, but saves refactoring code for now.
         self._ts = None
+        self._distance_data = None
 
         if rmg_reaction:
             reactant_mols = []
@@ -138,9 +139,7 @@ class AutoTST_Reaction():
             logging.info("Family provided: {}".format(reaction_family))
             self.get_reactants_and_products()
 
-
         self.get_rmg_reactions()
-        self.generate_distance_data()
 
     def __repr__(self):
         return '<AutoTST Reaction "{0}">'.format(self.label)
@@ -156,6 +155,19 @@ class AutoTST_Reaction():
         if self._ts is None:
             self.create_ts_geometries()
         return self._ts
+
+    @property
+    def distance_data(self):
+        """
+        The distance data.
+
+        Calls generate_distance_data() if it has not previously been found.
+        To update, call create_distance_data()
+        :return:
+        """
+        if self._distance_data is None:
+            self.generate_distance_data()
+        return self._distance_data
 
     @classmethod
     def load_databases(cls, force_reload=False):
@@ -276,7 +288,7 @@ class AutoTST_Reaction():
         :return: None
         """
         assert self.rmg_reaction, "try calling get_rmg_reactions() first"
-        self.distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(self.rmg_reaction)
+        self._distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(self.rmg_reaction)
         logging.info("The distance data is as follows: \n{}".format(self.distance_data))
 
     def create_ts_geometries(self):
