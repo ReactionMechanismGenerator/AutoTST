@@ -187,16 +187,14 @@ class AutoTST_Reaction():
 
 
     def get_reactants_and_products(self):
-
         """
-        This uses the reaction label to creat multi_molecule objects of
+        This uses the reaction label to create multi_molecule objects.
+        Stores results in self.reactant_mols and self.product_mols
 
-        :return:
+        :return: None
         """
         reactants, products = self.label.split("_")
-
         reactants = reactants.split("+")
-
         products = products.split("+")
 
         reactant_mols = []
