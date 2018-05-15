@@ -569,22 +569,19 @@ class AutoTST_TS():
         rdmol_copy = self.rdkit_ts.__copy__()
         rdmol_copy = Chem.RWMol(rdmol_copy)
         rdmol_copy.UpdatePropertyCache(strict=False)
-        for atom in rdmol_copy.GetAtoms():
-            idx = atom.GetIdx()
-            rmg_atom = self.rmg_ts.atoms[idx]
 
-            if rmg_atom.label:
-                if rmg_atom.label == "*1":
-                    atom1_star = atom
-                if rmg_atom.label == "*2":
-                    atom2_star = atom
-                if rmg_atom.label == "*3":
-                    atom3_star = atom
+        for idx, rmg_atom in enumerate(self.rmg_ts.atoms):
+            if rmg_atom.label == "*1":
+                star1_index = idx
+            if rmg_atom.label == "*2":
+                star2_index = idx
+            if rmg_atom.label == "*3":
+                star3_index = idx
 
-        if not rdmol_copy.GetBondBetweenAtoms(atom1_star.GetIdx(), atom2_star.GetIdx()):
-            rdmol_copy.AddBond(atom1_star.GetIdx(), atom2_star.GetIdx(), order=rdkit.Chem.rdchem.BondType.SINGLE)
+        if not rdmol_copy.GetBondBetweenAtoms(star1_index, star2_index):
+            rdmol_copy.AddBond(star1_index, star2_index, order=rdkit.Chem.rdchem.BondType.SINGLE)
         else:
-            rdmol_copy.AddBond(atom2_star.GetIdx(), atom3_star.GetIdx(), order=rdkit.Chem.rdchem.BondType.SINGLE)
+            rdmol_copy.AddBond(star2_index, star3_index, order=rdkit.Chem.rdchem.BondType.SINGLE)
 
         return rdmol_copy
 
