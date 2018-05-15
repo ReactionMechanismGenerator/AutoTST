@@ -94,9 +94,9 @@ class AutoTST_Reaction():
 
         self.label = label
         self.reaction_family = reaction_family
-
         self.load_databases()
         self.ts_database = self.ts_databases[reaction_family] # a bit clumsy, but saves refactoring code for now.
+        self._ts = None
 
         if rmg_reaction:
             reactant_mols = []
@@ -141,10 +141,21 @@ class AutoTST_Reaction():
 
         self.get_rmg_reactions()
         self.generate_distance_data()
-        self.create_ts_geometries()
 
     def __repr__(self):
         return '<AutoTST Reaction "{0}">'.format(self.label)
+
+    @property
+    def ts(self):
+        """
+        The AutoTST_TS transition state for this reaction.
+
+        Calls create_ts_geometries() if it has not previously been found.
+        To update, call create_ts_geometries() manually.
+        """
+        if self._ts is None:
+            self.create_ts_geometries()
+        return self._ts
 
     @classmethod
     def load_databases(cls, force_reload=False):
@@ -277,7 +288,7 @@ class AutoTST_Reaction():
         self.multi_ts: a multi_ts object that contains geometries of a ts in
                         rdkit, ase, and rmg molecules
         """
-        self.ts = AutoTST_TS(self)
+        self._ts = AutoTST_TS(self)
 
 
 class AutoTST_TS():
