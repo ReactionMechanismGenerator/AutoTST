@@ -141,6 +141,7 @@ class AutoTST_Reaction():
 
 
         self.get_rmg_reactions()
+        self.generate_distance_data()
         self.create_ts_geometries()
 
     def __repr__(self):
@@ -253,7 +254,17 @@ class AutoTST_Reaction():
                     reaction.reactants = test_reaction.products
 
         self.rmg_reaction = reaction
-        self.distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
+
+    def generate_distance_data(self):
+        """
+        Generates the distance estimates using group additivity.
+        Requires self.rmg_reaction
+        Stores it in self.distance_data.
+
+        :return: None
+        """
+        assert self.rmg_reaction, "try calling get_rmg_reactions() first"
+        self.distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(self.rmg_reaction)
         logging.info("The distance data is as follows: \n{}".format(self.distance_data))
 
     def create_ts_geometries(self):
