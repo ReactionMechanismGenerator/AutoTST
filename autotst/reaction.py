@@ -564,9 +564,9 @@ class AutoTST_TS():
                 if rmg_atom.label == "*3":
                     atom3_star = atom
 
-        try:
+        if not rdmol_copy.GetBondBetweenAtoms(atom1_star.GetIdx(), atom2_star.GetIdx()):
             rdmol_copy.AddBond(atom1_star.GetIdx(), atom2_star.GetIdx(), order=rdkit.Chem.rdchem.BondType.SINGLE)
-        except RuntimeError:
+        else:
             rdmol_copy.AddBond(atom2_star.GetIdx(), atom3_star.GetIdx(), order=rdkit.Chem.rdchem.BondType.SINGLE)
 
         return rdmol_copy
