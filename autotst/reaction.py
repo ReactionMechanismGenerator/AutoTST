@@ -45,7 +45,7 @@ import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
 from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit import rdBase
-from rdkit.Chem.rdMolTransforms import *
+# from rdkit.Chem.rdMolTransforms import *
 from rdkit.Chem.rdChemReactions import ChemicalReaction
 from rdkit.Chem import AllChem
 
@@ -56,6 +56,9 @@ try:
 except ImportError:
     logging.info("Error importing py3Dmol")
 
+import ase
+
+import rmgpy
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
 from rmgpy.reaction import Reaction, _isomorphicSpeciesList
@@ -64,8 +67,8 @@ from rmgpy.data.rmg import RMGDatabase
 
 # AutoTST imports
 from autotst.database import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
-from autotst.molecule import *
-from autotst.geometry import *
+from autotst.molecule import AutoTST_Molecule
+from autotst.geometry import Torsion, Angle, Bond
 
 
 ### Currently this is set up to only work with H_Abstraction
@@ -514,12 +517,12 @@ class AutoTST_TS():
                         y = float(y)
                         z = float(z)
 
-                        ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
+                        ase_atoms.append(ase.Atom(symbol=symbol, position=(x, y, z)))
 
                     except:
                         continue
 
-        self.ase_ts = Atoms(ase_atoms)
+        self.ase_ts = ase.Atoms(ase_atoms)
 
     def create_rmg_ts_geometry(self):
 

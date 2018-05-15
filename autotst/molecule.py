@@ -31,7 +31,7 @@ import rdkit
 from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
-from rdkit.Chem.rdMolTransforms import *
+#from rdkit.Chem.rdMolTransforms import *
 import ase
 from ase import Atom, Atoms
 import rmgpy
@@ -44,7 +44,7 @@ except ImportError:
 
 import numpy as np
 
-from autotst.geometry import *
+from autotst.geometry import Torsion, Angle, Bond
 
 
 class AutoTST_Molecule():

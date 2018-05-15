@@ -41,11 +41,11 @@ import math
 import numpy
 from copy import copy, deepcopy
 
-from rmgpy.data.base import *
+from rmgpy.data.base import Database, Entry, makeLogicNode, LogicNode, DatabaseError
 
 from rmgpy.quantity import Quantity, constants
 from rmgpy.reaction import Reaction, ReactionError
-from rmgpy.molecule import Bond, GroupBond, Group
+from rmgpy.molecule import Bond, GroupBond, Group, Molecule
 from rmgpy.species import Species
 
 from rmgpy.data.kinetics.common import KineticsError, saveEntry
