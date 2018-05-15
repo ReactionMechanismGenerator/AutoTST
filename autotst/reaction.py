@@ -161,6 +161,7 @@ class AutoTST_Reaction():
 
         rmg_database = RMGDatabase()
         database_path = os.path.join(os.path.expandvars('$RMGpy'), "..",  'RMG-database', 'input')
+        logging.info("Loading database from '{}'".format(database_path))
         rmg_database.load(database_path,
                          kineticsFamilies=[self.reaction_family],
                          transportLibraries=[],
