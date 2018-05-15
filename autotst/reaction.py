@@ -38,8 +38,7 @@ import numpy as np
 import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
 
 from rdkit import Chem
-from rdkit import rdBase
-from rdkit.Chem.rdChemReactions import ChemicalReaction
+
 from rdkit.Chem import AllChem
 from rdkit.Chem.Pharm3D import EmbedLib
 
