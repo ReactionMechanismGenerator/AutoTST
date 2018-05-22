@@ -111,6 +111,7 @@ class Vibrational_Analysis():
         """
 
         results = []
+        """
         for torsion in reaction.ts.torsions:
             i,j,k,l = torsion.indices
             before = self.before_geometry.get_dihedral(i,j,k,l)
@@ -122,7 +123,7 @@ class Vibrational_Analysis():
             before = self.before_geometry.get_angle(i,j,k)
             after = self.post_geometry.get_angle(i,j,k)
             results.append(["Ang", angle.indices, angle.reaction_center, percent_change(before, after)])
-
+        """
         for bond in reaction.ts.bonds:
             i,j = bond.indices
             before = self.before_geometry.get_distance(i,j)
