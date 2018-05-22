@@ -49,22 +49,23 @@ class Vibrational_Analysis():
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, reaction):
+    def __init__(self, reaction, scratch="."):
         """
         reaction: (AutoTST_Reaction) a reaction that proives the connectivity
         and label name for this analysis
         """
         self.reaction = reaction
+        self.scratch = scratch
 
     def __repr__(self):
         return '<AutoTST Vibrational Analysis "{0}">'.format(self.reaction.label)
 
-    def get_log_file(self, reaction):
+    def get_log_file(self, scratch, reaction):
         """
         This method obtains the logfile name from the AutoTST_Reaction
         """
 
-        self.log_file = reaction.label + "_overall.log"
+        self.log_file = os.path.join(scratch, reaction.label + "_overall.log")
 
     def parse_vibrations(self):
         """
@@ -141,7 +142,7 @@ class Vibrational_Analysis():
         geater elsewhere.
         """
 
-        self.get_log_file(self.reaction)
+        self.get_log_file(self.scratch, self.reaction)
 
         self.parse_vibrations()
 

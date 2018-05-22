@@ -7,7 +7,7 @@ from autotst.molecule import AutoTST_Molecule
 
 class AutoTST_CanTherm():
 
-    def __init__(self, reaction, output_directory=".", model_chemistry="M06-2X/cc-pVTZ", freq_scale_factor=0.982):
+    def __init__(self, reaction, scratch=".", output_directory=".", model_chemistry="M06-2X/cc-pVTZ", freq_scale_factor=0.982):
 
         """
         A class to perform CanTherm calculations:
@@ -18,6 +18,7 @@ class AutoTST_CanTherm():
         """
 
         self.reaction = reaction
+        self.scratch = scratch
 
         self.cantherm_job = CanTherm()
         self.output_directory=output_directory
@@ -141,9 +142,9 @@ class AutoTST_CanTherm():
 
         output += ["energy = {","    '{0}': GaussianLog('{1}.log'),".format(self.model_chemistry, mol.smiles),"}",""]
 
-        output += ["geometry = GaussianLog('{}.log')".format(mol.smiles), ""]
+        output += ["geometry = GaussianLog('{0}.log')".format(mol.smiles), ""]
 
-        output += ["frequencies = GaussianLog('{}.log')".format(mol.smiles), ""]
+        output += ["frequencies = GaussianLog('{0}.log')".format(mol.smiles), ""]
 
         output += ["rotors = []"]
 
@@ -152,7 +153,7 @@ class AutoTST_CanTherm():
         for t in output:
             input_string += t +"\n"
 
-        with open(os.path.join(mol.smiles+".py"), "w") as f:
+        with open(os.path.join(self.scratch, mol.smiles+".py"), "w") as f:
             f.write(input_string)
 
     def write_statmech_ts(self, rxn):
@@ -180,11 +181,11 @@ class AutoTST_CanTherm():
 
         output += ["","linear = False","","externalSymmetry = 1", "", "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {","    '{0}': GaussianLog('{1}_overall.log'),".format(self.model_chemistry,rxn.label),"}",""]
+        output += ["energy = {","    '{0}': GaussianLog('{1}_overall.log'),".format(self.model_chemistry, rxn.label),"}",""]
 
-        output += ["geometry = GaussianLog('{}_overall.log')".format(rxn.label), ""]
+        output += ["geometry = GaussianLog('{0}_overall.log')".format(rxn.label), ""]
 
-        output += ["frequencies = GaussianLog('{}_overall.log')".format(rxn.label), ""]
+        output += ["frequencies = GaussianLog('{0}_overall.log')".format(rxn.label), ""]
 
         output += ["rotors = []", ""]
 
@@ -193,7 +194,7 @@ class AutoTST_CanTherm():
         for t in output:
             input_string += t +"\n"
 
-        with open(os.path.join(rxn.label +".py"), "w") as f:
+        with open(os.path.join(self.scratch, rxn.label +".py"), "w") as f:
             f.write(input_string)
 
     def write_cantherm_ts(self, rxn):
@@ -201,14 +202,14 @@ class AutoTST_CanTherm():
 
         scratch ="."
         for react in rxn.reactant_mols:
-            line = "species('{0}', '{1}')".format(react.smiles, os.path.join(scratch, react.smiles +".py"))
+            line = "species('{0}', '{1}')".format(react.smiles, react.smiles +".py")
             top.append(line)
 
         for prod in rxn.product_mols:
-            line = "species('{0}', '{1}')".format(prod.smiles, os.path.join(scratch, prod.smiles +".py"))
+            line = "species('{0}', '{1}')".format(prod.smiles, prod.smiles +".py")
             top.append(line)
 
-        line = "transitionState('TS', '{0}')".format(os.path.join(scratch, rxn.label +".py"))
+        line = "transitionState('TS', '{0}')".format(rxn.label +".py")
         top.append(line)
 
 
@@ -231,7 +232,7 @@ class AutoTST_CanTherm():
         for t in top:
             input_string += t +"\n"
 
-        with open(rxn.label +".cantherm.py", "w") as f:
+        with open(os.path.join(self.scratch, rxn.label +".cantherm.py"), "w") as f:
             f.write(input_string)
 
     def write_files(self):
@@ -247,7 +248,7 @@ class AutoTST_CanTherm():
 
     def run(self):
 
-        self.cantherm_job.inputFile = self.reaction.label + ".cantherm.py"
+        self.cantherm_job.inputFile = os.path.join(self.scratch, self.reaction.label + ".cantherm.py")
         self.cantherm_job.plot = False
         self.cantherm_job.execute()
 
