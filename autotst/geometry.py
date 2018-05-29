@@ -47,7 +47,7 @@ class Torsion:
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Torsion "{0}">'.format(self.indicies)
+        return '<AutoTST Torsion "{0}">'.format(self.indices)
 
 
 class Angle:
@@ -71,7 +71,7 @@ class Angle:
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Angle "{0}">'.format(self.indicies)
+        return '<AutoTST Angle "{0}">'.format(self.indices)
 
 class Bond:
     """
@@ -90,4 +90,4 @@ class Bond:
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Bond "{0}">'.format(self.indicies)
+        return '<AutoTST Bond "{0}">'.format(self.indices)
