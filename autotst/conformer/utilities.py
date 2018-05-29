@@ -103,13 +103,13 @@ def create_initial_population(autotst_object, delta=30, population_size=200):
         logging.info("The object given is a `AutoTST_Reaction` object")
         torsions = autotst_object.ts.torsions
         ase_object = autotst_object.ts.ase_ts
-        ase_object = autotst_object.ts.rdkit_ts
+        rdkit_object = autotst_object.ts.rdkit_ts
 
     if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
         logging.info("The object given is a `AutoTST_TS` object")
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_ts
-        ase_object = autotst_object.rdkit_ts
+        rdkit_object = autotst_object.rdkit_ts
 
 
     for indivudual in range(population_size):
