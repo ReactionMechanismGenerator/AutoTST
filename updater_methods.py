@@ -1,3 +1,24 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import os
+import numpy as np
+import pylab
+import scipy.stats
+import matplotlib
+matplotlib.rc('mathtext', fontset='stixsans', default='regular')
+import re
+import rmgpy
+#from rmgpy.quantity import constants
+#from rmgpy.kinetics import Arrhenius, ArrheniusEP, KineticsData
+from autotst.database import *
+from rmgpy.species import Species
+from rmgpy.data.rmg import RMGDatabase
+import logging
+from collections import defaultdict, OrderedDict
+import pandas as pd
+import itertools
+
 def get_unknown_species(reactions, known_species):
     """
     Expects list of auto-TST reactions and known species dictionary
@@ -404,7 +425,6 @@ def TS_Database_Update(families, auto_save = False):
 def save_all_individual_databases(Databases):
     """
     Expects dict of family:database
-
     """
     for family, database in Databases:
         database.save_database()
