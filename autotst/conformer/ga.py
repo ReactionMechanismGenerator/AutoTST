@@ -48,7 +48,7 @@ from autotst.conformer.utilities import update_from_ase, create_initial_populati
 
 
 def perform_ga(autotst_object,
-               df,
+               initial_pop=None,
                top_percent=0.3,
                tolerance=0.01,
                max_generations=500,
@@ -58,11 +58,11 @@ def perform_ga(autotst_object,
                delta=30):
 
     """
-    Performs a genetic algorithm to determine the lowest energy conformer of a TS or molecule
+    Performs a genetic algorithm to determine the lowest energy conformer of a TS or molecule. 
 
-    :param autotst_object: a multi_ts, multi_rxn, or multi_molecule that you want to perform conformer analysis on
-       * the ase_object of the multi_object must have a calculator attached to it.
-    :param df: a DataFrame containing the initial population
+    :param autotst_object: am autotst_ts, autotst_rxn, or autotst_molecule that you want to perform conformer analysis on
+       * the ase_object of the autotst_object must have a calculator attached to it.
+    :param initial_pop: a DataFrame containing the initial population
     :param top_percent: float of the top percentage of conformers you want to select
     :param tolerance: float of one of the possible cut off points for the analysis
     :param max_generations: int of one of the possible cut off points for the analysis
@@ -70,27 +70,23 @@ def perform_ga(autotst_object,
     :param store_directory: the director where you want the pickle files stored
     :param mutation_probability: float of the chance of mutation
     :param delta: the degree change in dihedral angle between each possible dihedral angle
-    :return df: a DataFrame containing the final generation
+    :return results: a DataFrame containing the final generation
     """
+    assert autotst_object, "No AutoTST object provided..."
+    if not initial_pop:
+        logging.info("No initial population provided, creating one using base parameters...")
+        initial_pop = create_initial_population(autotst_object)
+
     possible_dihedrals = np.arange(0, 360, delta)
-    top = select_top_population(df,
+    top = select_top_population(initial_pop,
                                 top_percent=top_percent
                                 )
 
     top_population = top.shape[0]
 
-    population_size = df.shape[0]
+    population_size = initial_pop.shape[0]
 
-    def update(autotst_obj):
-        if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
-            autotst_obj.update_from_ase_mol()
-
-        if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
-            autotst_obj.ts.update_from_ase_ts()
-
-        if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
-            autotst_obj.update_from_ase_ts()
-
+    results = initial_pop
 
     if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
         logging.info("The object given is a `AutoTST_Molecule` object")
@@ -118,7 +114,7 @@ def perform_ga(autotst_object,
         gen_number += 1
         logging.info("Performing GA on generation {}".format(gen_number))
 
-        results = []
+        r = []
         for individual in range(population_size):
             parent_0, parent_1 = random.sample(top.index, 2)
             dihedrals = []
@@ -128,9 +124,9 @@ def perform_ga(autotst_object,
                     dihedral = np.random.choice(possible_dihedrals)
                 else:
                     if 0.5 > random.random():
-                        dihedral = df["torsion_" + str(index)].loc[parent_0]
+                        dihedral = results["torsion_" + str(index)].loc[parent_0]
                     else:
-                        dihedral = df["torsion_" + str(index)].loc[parent_1]
+                        dihedral = results["torsion_" + str(index)].loc[parent_1]
 
                 i, j, k, l = torsion.indices
                 right_mask = torsion.right_mask
@@ -159,10 +155,10 @@ def perform_ga(autotst_object,
                 if angle < 0: angle += 360
                 relaxed_torsions.append(angle)
 
-            results.append([constrained_energy, relaxed_energy] + list(dihedrals) + relaxed_torsions)
+            r.append([constrained_energy, relaxed_energy] + dihedrals + relaxed_torsions)
 
 
-        df = pd.DataFrame(results)
+        results = pd.DataFrame(r)
         logging.info("Creating the DataFrame of results for the {}th generation".format(gen_number))
 
         columns = ["constrained_energy", "relaxed_energy"]
@@ -171,20 +167,20 @@ def perform_ga(autotst_object,
 
         for i in range(len(torsions)):
             columns = columns + ["relaxed_torsion_" + str(i)]
-        df.columns = columns
-        df = df.sort_values("constrained_energy")
+        results.columns = columns
+        results = results.sort_values("constrained_energy")
 
-        unique_conformers = get_unique_conformers(df, unique_conformers)
+        unique_conformers = get_unique_conformers(results, unique_conformers)
 
         if store_generations == True:
             # This portion stores each generation if desired
-            logging.info("Saving the DataFrame")
+            logging.info("Saving the results DataFrame")
 
             generation_name = "{0}_ga_generation_{1}.csv".format(label, gen_number)
             f = os.path.join(store_directory, generation_name)
-            df.to_csv(f)
+            results.to_csv(f)
 
-        top = select_top_population(df, top_percent)
+        top = select_top_population(results, top_percent)
 
         stats = top.describe()
 
@@ -195,4 +191,4 @@ def perform_ga(autotst_object,
             complete = True
             logging.info("Cutoff criteria reached. GA complete.")
 
-    return df, unique_conformers
+    return results, unique_conformers

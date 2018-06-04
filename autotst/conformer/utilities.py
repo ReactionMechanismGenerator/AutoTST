@@ -65,7 +65,7 @@ def update_from_ase(autotst_obj):
         autotst_obj.update_from_ase_ts()
 
 
-def create_initial_population(autotst_object, delta=30, population_size=200):
+def create_initial_population(autotst_object, delta=30, population_size=100):
     """
     A function designed to take a multi_molecule, multi_rxn or multi_ts object
     and create an initial population of conformers.
