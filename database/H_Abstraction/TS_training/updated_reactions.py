@@ -28136,9 +28136,10 @@ entry(
 
 entry(
     index = 2490,
-    label = "CH4 + C6H1O2 <=> C6O2 + CH3-1",
+    label = "C3H4-1 + HO2 <=> C3H3-3 + H2O2",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.37508, 'd13': 2.69041, 'd23': 1.31161},
+        distances = {'d12': 1.19371, 'd13': 2.51181, 'd23': 1.32998},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28146,9 +28147,10 @@ entry(
 
 entry(
     index = 2491,
-    label = "H2O + C8H1O1-1 <=> C8O1-1 + HO",
+    label = "C3H3-3 + H2O2 <=> C3H4-1 + HO2",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.40504, 'd13': 2.56295, 'd23': 1.18587},
+        distances = {'d12': 1.33, 'd13': 2.51181, 'd23': 1.19371},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28156,9 +28158,10 @@ entry(
 
 entry(
     index = 2492,
-    label = "H2O + C8H1O1 <=> C8O1 + HO",
+    label = "C3H3-3 + HO2 <=> H2O2 + C3H2",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.40504, 'd13': 2.56295, 'd23': 1.18587},
+        distances = {'d12': 1.33386, 'd13': 2.48757, 'd23': 1.17008},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28166,9 +28169,10 @@ entry(
 
 entry(
     index = 2493,
-    label = "H2O + C6H1O2 <=> C6O2 + HO",
+    label = "CH4 + C5O1-10 <=> C5O1-4 + CH3",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.40504, 'd13': 2.56295, 'd23': 1.18587},
+        distances = {'d12': 1.27009, 'd13': 2.50212, 'd23': 1.23225},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28176,9 +28180,10 @@ entry(
 
 entry(
     index = 2494,
-    label = "H2O + C10H1-1 <=> C10 + HO",
+    label = "CH4 + C6O1-32 <=> C6O1-13 + CH3",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.34481, 'd13': 2.56505, 'd23': 1.25208},
+        distances = {'d12': 1.23684, 'd13': 2.48729, 'd23': 1.2574},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28186,9 +28191,10 @@ entry(
 
 entry(
     index = 2495,
-    label = "H2O2 + C6H1O1 <=> C6O1-1 + HO2",
+    label = "CH4 + C6H1O2 <=> C6O2-20 + CH3",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
+        distances = {'d12': 1.35895, 'd13': 2.67482, 'd23': 1.32002},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28196,9 +28202,10 @@ entry(
 
 entry(
     index = 2496,
-    label = "H2O2 + C6H1O1-2 <=> C6O1 + HO2",
+    label = "C9-7 + HO2 <=> H2O2 + C9H1-9",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
+        distances = {'d12': 1.28077, 'd13': 2.53702, 'd23': 1.26687},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28206,9 +28213,10 @@ entry(
 
 entry(
     index = 2497,
-    label = "H2O2 + C10H1 <=> C10 + HO2",
+    label = "C10-3 + HO2 <=> H2O2 + C10H1-14",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
+        distances = {'d12': 1.19545, 'd13': 2.50671, 'd23': 1.3239},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28216,9 +28224,10 @@ entry(
 
 entry(
     index = 2498,
-    label = "H2O2 + C5H1O1 <=> C5O1 + HO2",
+    label = "C6-4 + HO2 <=> H2O2 + C6H7-3",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
+        distances = {'d12': 1.31902, 'd13': 2.53425, 'd23': 1.25043},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
@@ -28226,9 +28235,10020 @@ entry(
 
 entry(
     index = 2499,
-    label = "H2O2 + C6H1O1-1 <=> C6O1-2 + HO2",
+    label = "C5-2 + HO2 <=> H2O2 + C5H1-7",
+    degeneracy = 1.0,
     kinetics = DistanceData(
-        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
+        distances = {'d12': 1.31719, 'd13': 2.50333, 'd23': 1.19928},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2500,
+    label = "C6-2 + HO2 <=> H2O2 + C6H1-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2774, 'd13': 2.51413, 'd23': 1.26858},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2501,
+    label = "C6-2 + HO2 <=> H2O2 + C6H1-11",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31532, 'd13': 2.49863, 'd23': 1.19563},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2502,
+    label = "C4O1 + HO2 <=> H2O2 + C4H1O1-6",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25131, 'd13': 2.52341, 'd23': 1.30861},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2503,
+    label = "C5O1-35 + HO2 <=> H2O2 + C5H1O1-32",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26438, 'd13': 2.49513, 'd23': 1.27701},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2504,
+    label = "C5O1-35 + HO2 <=> H2O2 + C5H1O1-40",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25997, 'd13': 2.5129, 'd23': 1.27139},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2505,
+    label = "C3O1-2 + HO2 <=> H2O2 + C3H1O1-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1844, 'd13': 2.46871, 'd23': 1.32378},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2506,
+    label = "C5O1-12 + HO2 <=> H2O2 + C5H1O1-32",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28153, 'd13': 2.52925, 'd23': 1.25705},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2507,
+    label = "C5O1-12 + HO2 <=> H2O2 + C5H1O1-28",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3282, 'd13': 2.50726, 'd23': 1.18507},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2508,
+    label = "C10 + HO2 <=> C10-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28263, 'd13': 2.55174, 'd23': 1.28306},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2509,
+    label = "C5H6 + HO2 <=> H2O2 + C5H5",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26549, 'd13': 2.5397, 'd23': 1.29462},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2510,
+    label = "C6H8-3 + HO2 <=> H2O2 + C6H7-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33041, 'd13': 2.55088, 'd23': 1.23862},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2511,
+    label = "C5O1-1 + HO2 <=> H2O2 + C5H1O1-23",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34619, 'd13': 2.56118, 'd23': 1.2341},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2512,
+    label = "C6O1-61 + HO2 <=> C6O1-62 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30797, 'd13': 2.48635, 'd23': 1.20304},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2513,
+    label = "C6O1-61 + HO2 <=> H2O2 + C6H1O1-63",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32809, 'd13': 2.49966, 'd23': 1.18549},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2514,
+    label = "C6O1-1 + HO2 <=> H2O2 + C6H1O1-55",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31445, 'd13': 2.49932, 'd23': 1.18964},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2515,
+    label = "C10-4 + HO2 <=> C10-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28926, 'd13': 2.51612, 'd23': 1.23302},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2516,
+    label = "C10-4 + HO2 <=> H2O2 + C10H1-7",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31073, 'd13': 2.50695, 'd23': 1.20532},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2517,
+    label = "C6O1-20 + HO2 <=> C6O1-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18599, 'd13': 2.50294, 'd23': 1.3217},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2518,
+    label = "C6-17 + HO2 <=> H2O2 + C6H1-20",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30264, 'd13': 2.51405, 'd23': 1.2165},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2519,
+    label = "C4O1-4 + HO2 <=> H2O2 + C4H1O1-5",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28175, 'd13': 2.53347, 'd23': 1.26552},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2520,
+    label = "C4O1-4 + HO2 <=> H2O2 + C4H1O1-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30849, 'd13': 2.50039, 'd23': 1.1943},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2521,
+    label = "C5O1-13 + HO2 <=> H2O2 + C5H1O1-46",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32782, 'd13': 2.47464, 'd23': 1.18437},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2522,
+    label = "C5O1-13 + HO2 <=> H2O2 + C5H1O1-24",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18577, 'd13': 2.48874, 'd23': 1.33353},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2523,
+    label = "C5O1-13 + HO2 <=> H2O2 + C5H1O1-36",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19849, 'd13': 2.50868, 'd23': 1.3111},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2524,
+    label = "C2H4O-2 + HO2 <=> H2O2 + C2H3O-2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15139, 'd13': 2.46939, 'd23': 1.35771},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2525,
+    label = "C3O1-6 + HO2 <=> H2O2 + C3H1O1-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16054, 'd13': 2.49364, 'd23': 1.3581},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2526,
+    label = "C6O1-46 + HO2 <=> C6H1O1-36 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20928, 'd13': 2.51271, 'd23': 1.3178},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2527,
+    label = "C6O1-46 + HO2 <=> H2O2 + C6H1O1-47",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32492, 'd13': 2.49654, 'd23': 1.19144},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2528,
+    label = "C6O1-46 + HO2 <=> H2O2 + C6H1O1-51",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35211, 'd13': 2.50906, 'd23': 1.16598},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2529,
+    label = "C6H1O1-36 + H2O2 <=> C6O1-46 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20822, 'd13': 2.51524, 'd23': 1.31028},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2530,
+    label = "C5O1-42 + HO2 <=> H2O2 + C5H1O1-15",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32786, 'd13': 2.50964, 'd23': 1.186},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2531,
+    label = "C6-1 + HO2 <=> H2O2 + C6H1-28",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28231, 'd13': 2.52331, 'd23': 1.24556},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2532,
+    label = "C4H6O-1 + HO2 <=> C4H5O-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26668, 'd13': 2.54525, 'd23': 1.29047},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2533,
+    label = "C4H6O-1 + HO2 <=> H2O2 + C4H1O1-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31669, 'd13': 2.51355, 'd23': 1.20482},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2534,
+    label = "C6O1-26 + HO2 <=> C6H1O1-71 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27005, 'd13': 2.53684, 'd23': 1.28081},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2535,
+    label = "C6O1-26 + HO2 <=> H2O2 + C6H1O1-32",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32408, 'd13': 2.51568, 'd23': 1.20568},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2536,
+    label = "C7-2 + HO2 <=> C7H1-73 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27907, 'd13': 2.53334, 'd23': 1.26367},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2537,
+    label = "C7-2 + HO2 <=> H2O2 + C7H1-15",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24486, 'd13': 2.52579, 'd23': 1.29338},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2538,
+    label = "C5-6 + HO2 <=> C5H1-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25269, 'd13': 2.51976, 'd23': 1.28257},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2539,
+    label = "C5O1-28 + HO2 <=> C5H1O1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26704, 'd13': 2.52344, 'd23': 1.28418},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2540,
+    label = "C5O1-28 + HO2 <=> H2O2 + C5H1O1-31",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29835, 'd13': 2.52789, 'd23': 1.23879},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2541,
+    label = "C8-14 + HO2 <=> C8H1-42 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27204, 'd13': 2.53047, 'd23': 1.26319},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2542,
+    label = "C6-6 + HO2 <=> C6H1-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31204, 'd13': 2.50626, 'd23': 1.19866},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2543,
+    label = "C6-6 + HO2 <=> C6H1-26 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22285, 'd13': 2.51053, 'd23': 1.29886},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2544,
+    label = "C6-6 + HO2 <=> H2O2 + C6H1-9",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35012, 'd13': 2.50806, 'd23': 1.16317},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2545,
+    label = "C4H8O-9 + HO2 <=> C4H1O1-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25574, 'd13': 2.52455, 'd23': 1.30217},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2546,
+    label = "C4H8O-9 + HO2 <=> H2O2 + C4H7O-9",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28183, 'd13': 2.52118, 'd23': 1.24781},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2547,
+    label = "C5O1-27 + H2O2 <=> C5O1-28 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27559, 'd13': 2.51901, 'd23': 1.27428},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2548,
+    label = "C4H7O-14 + HO2 <=> H2O2 + C4H1O1-11",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32406, 'd13': 2.51792, 'd23': 1.20246},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2549,
+    label = "C3O1-3 + HO2 <=> H2O2 + C3H1O1-8",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21954, 'd13': 2.51132, 'd23': 1.30959},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2550,
+    label = "C5O1-39 + HO2 <=> C5O1-36 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26035, 'd13': 2.52503, 'd23': 1.28012},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2551,
+    label = "C5O1-39 + HO2 <=> H2O2 + C5H1O1-8",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17843, 'd13': 2.5109, 'd23': 1.33423},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2552,
+    label = "C3O2 + HO2 <=> C3O2-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26875, 'd13': 2.53362, 'd23': 1.30491},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2553,
+    label = "C4H8O-1 + HO2 <=> C4H7O-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25033, 'd13': 2.52469, 'd23': 1.28256},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2554,
+    label = "C6H8 + HO2 <=> C6H7-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25209, 'd13': 2.53732, 'd23': 1.29646},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2555,
+    label = "C6H8 + HO2 <=> C6H7-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24675, 'd13': 2.52332, 'd23': 1.2841},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2556,
+    label = "C7-21 + HO2 <=> C7H1-24 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27196, 'd13': 2.51692, 'd23': 1.27541},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2557,
+    label = "C7-21 + HO2 <=> C7H1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24501, 'd13': 2.52107, 'd23': 1.28175},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2558,
+    label = "C7-3 + HO2 <=> C7H1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28319, 'd13': 2.52342, 'd23': 1.24966},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2559,
+    label = "C7-3 + HO2 <=> C7H1-57 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25316, 'd13': 2.51378, 'd23': 1.28205},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2560,
+    label = "C7-6 + HO2 <=> C7H1-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31224, 'd13': 2.51594, 'd23': 1.20846},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2561,
+    label = "C7-6 + HO2 <=> C7H1-66 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21402, 'd13': 2.51916, 'd23': 1.30701},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2562,
+    label = "C7-6 + HO2 <=> C7H1-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27891, 'd13': 2.54107, 'd23': 1.26876},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2563,
+    label = "C3H4 + HO2 <=> H2O2 + C3H3-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31838, 'd13': 2.49886, 'd23': 1.19652},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2564,
+    label = "C6O1-35 + HO2 <=> C6O1-24 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29558, 'd13': 2.5148, 'd23': 1.22999},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2565,
+    label = "C5O1-32 + HO2 <=> C5H1O1-20 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31541, 'd13': 2.51227, 'd23': 1.2031},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2566,
+    label = "C5O1-32 + HO2 <=> H2O2 + C5H1O1-39",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35854, 'd13': 2.5082, 'd23': 1.15601},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2567,
+    label = "C4O2-1 + HO2 <=> H2O2 + C4H1O2-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15586, 'd13': 2.48954, 'd23': 1.35933},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2568,
+    label = "C5H1O1-20 + H2O2 <=> C5O1-32 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20136, 'd13': 2.51211, 'd23': 1.32384},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2569,
+    label = "C10-6 + HO <=> H2O + C10H1-9",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3411, 'd13': 2.50996, 'd23': 1.18576},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2570,
+    label = "C10-6 + HO2 <=> H2O2 + C10H1-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28537, 'd13': 2.51763, 'd23': 1.24392},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2571,
+    label = "C4O1-11 + HO2 <=> C4O1-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29825, 'd13': 2.54107, 'd23': 1.25281},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2572,
+    label = "C3H6-2 + HO2 <=> H2O2 + C3H5",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23996, 'd13': 2.52108, 'd23': 1.29383},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2573,
+    label = "C8-22 + HO2 <=> C8-21 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35546, 'd13': 2.49349, 'd23': 1.1568},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2574,
+    label = "C3H4O-1 + HO2 <=> C3H3O + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2668, 'd13': 2.52746, 'd23': 1.28396},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2575,
+    label = "C5O2-9 + HO2 <=> C5H1O2-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30256, 'd13': 2.49507, 'd23': 1.23944},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2576,
+    label = "C6-5 + HO2 <=> C6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22699, 'd13': 2.50799, 'd23': 1.28773},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2577,
+    label = "C6-5 + HO2 <=> C6H1-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2644, 'd13': 2.5289, 'd23': 1.27365},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2578,
+    label = "C6-5 + HO2 <=> H2O2 + C6H1-7",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33243, 'd13': 2.50549, 'd23': 1.18377},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2579,
+    label = "C7-30 + HO2 <=> C7-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28685, 'd13': 2.52692, 'd23': 1.25332},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2580,
+    label = "C4H8 + HO2 <=> H2O2 + C4H7-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33719, 'd13': 2.50759, 'd23': 1.17834},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2581,
+    label = "C9-4 + HO2 <=> C9H1-11 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25624, 'd13': 2.53671, 'd23': 1.29616},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2582,
+    label = "C5H8-1 + HO2 <=> C5H7-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25957, 'd13': 2.54092, 'd23': 1.29537},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2583,
+    label = "C4O1-7 + HO2 <=> C4O1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27126, 'd13': 2.52876, 'd23': 1.27419},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2584,
+    label = "C4O1-7 + HO2 <=> C4H5O-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2674, 'd13': 2.53009, 'd23': 1.28358},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2585,
+    label = "C7-5 + HO2 <=> C7H1-71 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2784, 'd13': 2.53121, 'd23': 1.2629},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2586,
+    label = "C7-5 + HO2 <=> H2O2 + C7H1-50",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23283, 'd13': 2.51421, 'd23': 1.29954},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2587,
+    label = "C5O2-1 + HO2 <=> C5H1O2-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35067, 'd13': 2.50547, 'd23': 1.1615},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2588,
+    label = "C5O2-1 + HO2 <=> C5H1O2-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26381, 'd13': 2.51248, 'd23': 1.26763},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2589,
+    label = "C8-13 + HO2 <=> C8-24 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26033, 'd13': 2.52998, 'd23': 1.2768},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2590,
+    label = "C8-13 + HO2 <=> C8H1-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2742, 'd13': 2.53093, 'd23': 1.26468},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2591,
+    label = "C7O1-9 + HO2 <=> C7O1-25 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30211, 'd13': 2.52526, 'd23': 1.22762},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2592,
+    label = "C5-9 + HO2 <=> C5H1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32069, 'd13': 2.50847, 'd23': 1.19222},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2593,
+    label = "C5-9 + HO2 <=> C5H1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26005, 'd13': 2.52433, 'd23': 1.27726},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2594,
+    label = "C5-9 + HO2 <=> H2O2 + C5H1-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17739, 'd13': 2.50937, 'd23': 1.33895},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2595,
+    label = "C10-12 + HO2 <=> C10H1-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28445, 'd13': 2.50724, 'd23': 1.24011},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2596,
+    label = "C10-12 + HO2 <=> C10H1-16 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25723, 'd13': 2.53439, 'd23': 1.27746},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2597,
+    label = "C6-7 + HO2 <=> C6H1-16 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27626, 'd13': 2.52148, 'd23': 1.25586},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2598,
+    label = "C7-9 + HO2 <=> C7H1-63 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29215, 'd13': 2.53098, 'd23': 1.24975},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2599,
+    label = "C7-9 + HO2 <=> H2O2 + C7H1-49",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28475, 'd13': 2.52881, 'd23': 1.25586},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2600,
+    label = "C5O1-18 + HO2 <=> C5O1-29 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26137, 'd13': 2.54575, 'd23': 1.29921},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2601,
+    label = "C5O1-18 + HO2 <=> C5H1O1-18 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20303, 'd13': 2.51454, 'd23': 1.32056},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2602,
+    label = "C5O1-18 + HO2 <=> C5H1O1-16 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26049, 'd13': 2.51614, 'd23': 1.27165},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2603,
+    label = "C8 + CH3 <=> CH4 + C8-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34154, 'd13': 2.67185, 'd23': 1.33067},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2604,
+    label = "C8 + HO <=> H2O + C8H1-41",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31154, 'd13': 2.48225, 'd23': 1.19671},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2605,
+    label = "C8 + HO2 <=> C8-27 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23284, 'd13': 2.5111, 'd23': 1.28344},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2606,
+    label = "C6-18 + HO2 <=> C6H1-22 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20563, 'd13': 2.50146, 'd23': 1.30744},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2607,
+    label = "C6-18 + HO2 <=> C6H1-14 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31294, 'd13': 2.50339, 'd23': 1.20459},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2608,
+    label = "C6-18 + HO2 <=> C6H1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27317, 'd13': 2.52968, 'd23': 1.26615},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2609,
+    label = "C6-18 + HO2 <=> H2O2 + C6H1-27",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18239, 'd13': 2.50781, 'd23': 1.33242},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2610,
+    label = "C6O1-53 + HO2 <=> C6O1-52 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25649, 'd13': 2.53591, 'd23': 1.30519},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2611,
+    label = "C6O1-53 + HO2 <=> C6H1O1-62 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18131, 'd13': 2.50432, 'd23': 1.33239},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2612,
+    label = "C6O1-53 + HO2 <=> C6H1O1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27572, 'd13': 2.51718, 'd23': 1.25859},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2613,
+    label = "C7-12 + HO2 <=> C7H1-48 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20739, 'd13': 2.51412, 'd23': 1.31251},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2614,
+    label = "C7-12 + HO2 <=> C7H1-56 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25977, 'd13': 2.52516, 'd23': 1.27429},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2615,
+    label = "C7-12 + HO2 <=> H2O2 + C7H1-7",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33589, 'd13': 2.50703, 'd23': 1.17626},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2616,
+    label = "C8-16 + HO2 <=> C8H1-45 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21569, 'd13': 2.51521, 'd23': 1.30376},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2617,
+    label = "C4O1-12 + HO2 <=> C4O1-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.08291, 'd13': 2.33745, 'd23': 1.27865},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2618,
+    label = "C4O1-12 + HO2 <=> C4H1O1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25521, 'd13': 2.51675, 'd23': 1.27677},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2619,
+    label = "C4O2-9 + H2O2 <=> C4O2-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15236, 'd13': 2.34323, 'd23': 1.20497},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2620,
+    label = "C7H1-48 + H2O2 <=> C7-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30208, 'd13': 2.51817, 'd23': 1.21645},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2621,
+    label = "C5O1-29 + H2O2 <=> C5O1-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25466, 'd13': 2.5487, 'd23': 1.3153},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2622,
+    label = "C3H6O-2 + HO2 <=> C3H1O1-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26562, 'd13': 2.53579, 'd23': 1.28231},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2623,
+    label = "C3O2-4 + HO2 <=> C3H1O2-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19294, 'd13': 2.50574, 'd23': 1.33199},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2624,
+    label = "C5H1O1-18 + H2O2 <=> C5O1-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20018, 'd13': 2.51123, 'd23': 1.32536},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2625,
+    label = "C8H1-6 + H2O2 <=> C8 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19039, 'd13': 2.51498, 'd23': 1.33369},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2626,
+    label = "C4O1-5 + H2O2 <=> C4O1-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29392, 'd13': 2.54942, 'd23': 1.26475},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2627,
+    label = "C4O1-10 + HO2 <=> C4H1O1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20439, 'd13': 2.4894, 'd23': 1.32033},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2628,
+    label = "C4H7 + H2O2 <=> C4H8 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26684, 'd13': 2.52695, 'd23': 1.26702},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2629,
+    label = "C5H1O1-16 + H2O2 <=> C5O1-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27923, 'd13': 2.519, 'd23': 1.24985},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2630,
+    label = "C5 + H2O2 <=> C5H8 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33232, 'd13': 2.50228, 'd23': 1.17747},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2631,
+    label = "CH2O + HO2 <=> H2O2 + CHO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2691, 'd13': 2.50502, 'd23': 1.27443},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2632,
+    label = "C8-1 + H2O2 <=> C8 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1573, 'd13': 2.49996, 'd23': 1.35226},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2633,
+    label = "C4H6-3 + HO2 <=> H2O2 + C4H5-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21012, 'd13': 2.5136, 'd23': 1.3163},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2634,
+    label = "C6O1-12 + HO2 <=> H2O2 + C6H1O1-56",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17399, 'd13': 2.50974, 'd23': 1.35466},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2635,
+    label = "C5O1-41 + HO2 <=> C5O1-14 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24098, 'd13': 2.52256, 'd23': 1.29354},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2636,
+    label = "C5O1-41 + HO2 <=> H2O2 + C5H1O1-29",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34692, 'd13': 2.50846, 'd23': 1.16817},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2637,
+    label = "C8O1 + HO2 <=> C8O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25055, 'd13': 2.52604, 'd23': 1.28696},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2638,
+    label = "C6O1-6 + HO2 <=> H2O2 + C6H1O1-20",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17054, 'd13': 2.50571, 'd23': 1.3574},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2639,
+    label = "C6O1-6 + HO2 <=> H2O2 + C6H1O1-71",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25004, 'd13': 2.52873, 'd23': 1.29269},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2640,
+    label = "C3O2-7 + HO2 <=> C3O2-11 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23659, 'd13': 2.51569, 'd23': 1.2991},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2641,
+    label = "C7O1-24 + HO2 <=> C7H1O1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21622, 'd13': 2.52036, 'd23': 1.3103},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2642,
+    label = "C7O1-24 + HO2 <=> H2O2 + C7H1O1-10",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1737, 'd13': 2.50809, 'd23': 1.35288},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2643,
+    label = "C6O1-14 + HO2 <=> C6H1O1-11 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33304, 'd13': 2.49707, 'd23': 1.20117},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2644,
+    label = "C6O1-14 + HO2 <=> C6O1-60 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33075, 'd13': 2.50715, 'd23': 1.17824},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2645,
+    label = "C6O1-14 + HO2 <=> H2O2 + C6H1O1-48",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35583, 'd13': 2.50412, 'd23': 1.16912},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2646,
+    label = "C3H5O3 + H2O2 <=> C3H6O3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.11836, 'd13': 2.34311, 'd23': 1.24175},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2647,
+    label = "C2O2-1 + HO2 <=> C2O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.05648, 'd13': 2.38168, 'd23': 1.33798},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2648,
+    label = "C2H3O3 + H2O2 <=> C2H4O3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21138, 'd13': 2.33379, 'd23': 1.14724},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2649,
+    label = "C7H1O1 + H2O2 <=> C7O1-24 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33399, 'd13': 2.51998, 'd23': 1.1868},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2650,
+    label = "C5-1 + HO2 <=> H2O2 + C5H1-13",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33226, 'd13': 2.50972, 'd23': 1.18073},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2651,
+    label = "C6O1-54 + HO2 <=> C6O1-23 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20103, 'd13': 2.50383, 'd23': 1.3119},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2652,
+    label = "C6O1-54 + HO2 <=> H2O2 + C6H1O1-7",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16953, 'd13': 2.50421, 'd23': 1.34167},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2653,
+    label = "C5O1-3 + HO2 <=> C5O1-23 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30569, 'd13': 2.55408, 'd23': 1.25868},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2654,
+    label = "C5O1-3 + HO2 <=> H2O2 + C5H1O1-27",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16958, 'd13': 2.50335, 'd23': 1.34106},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2655,
+    label = "C8O2-6 + HO2 <=> C8H1O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20712, 'd13': 2.52272, 'd23': 1.31707},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2656,
+    label = "C8O2-7 + H2O2 <=> C8O2-6 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.13435, 'd13': 2.34587, 'd23': 1.22111},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2657,
+    label = "C6O1-22 + HO2 <=> C6O1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31515, 'd13': 2.54199, 'd23': 1.25259},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2658,
+    label = "C6O1-22 + HO2 <=> C6H1O1-21 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31536, 'd13': 2.51685, 'd23': 1.21354},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2659,
+    label = "C6O1-22 + HO2 <=> H2O2 + C6H1O1-23",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17969, 'd13': 2.50835, 'd23': 1.33332},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2660,
+    label = "C7O1-17 + HO2 <=> C7O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27276, 'd13': 2.52559, 'd23': 1.2793},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2661,
+    label = "C7O1-17 + HO2 <=> C7H1O1-15 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3313, 'd13': 2.50716, 'd23': 1.21499},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2662,
+    label = "C7O1-17 + HO2 <=> C7H1O1-18 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15603, 'd13': 2.51019, 'd23': 1.35717},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2663,
+    label = "C7O1-17 + HO2 <=> H2O2 + C7H1O1-2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33449, 'd13': 2.51208, 'd23': 1.17895},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2664,
+    label = "C7O2-43 + H2O2 <=> C7O2-36 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14955, 'd13': 2.34378, 'd23': 1.20776},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2665,
+    label = "C6O2-7 + HO2 <=> C6O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21788, 'd13': 2.34871, 'd23': 1.13176},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2666,
+    label = "C6O2-7 + HO2 <=> C6H1O2-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19108, 'd13': 2.50902, 'd23': 1.32387},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2667,
+    label = "C6O2 + H2O2 <=> C6O2-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21758, 'd13': 2.34476, 'd23': 1.14673},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2668,
+    label = "C7O1-1 + H2O2 <=> C7O1-17 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25351, 'd13': 2.55306, 'd23': 1.31771},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2669,
+    label = "C5O2-17 + H2O2 <=> C5O2-4 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16542, 'd13': 2.33296, 'd23': 1.19067},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2670,
+    label = "C7H1O1-15 + H2O2 <=> C7O1-17 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.334, 'd13': 2.51567, 'd23': 1.20547},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2671,
+    label = "C6O1-9 + H2O2 <=> C6O1-22 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2526, 'd13': 2.54196, 'd23': 1.31509},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2672,
+    label = "C4H10O-3 + HO2 <=> C4H9O-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.09318, 'd13': 2.33607, 'd23': 1.25313},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2673,
+    label = "C4H10O-3 + HO2 <=> H2O2 + C4H9O-5",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33697, 'd13': 2.50345, 'd23': 1.17529},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2674,
+    label = "C11O3 + CH3 <=> CH4 + C11H1O3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35581, 'd13': 2.68295, 'd23': 1.3288},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2675,
+    label = "C11O3 + HO <=> C11O3-1 + H2O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3345, 'd13': 2.26157, 'd23': 1.04124},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2676,
+    label = "C11O3 + O <=> C11O3-1 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.13835, 'd13': 2.29507, 'd23': 1.17864},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2677,
+    label = "C11O3-1 + H2 <=> C11O3 + H",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23575, 'd13': 2.09946, 'd23': 0.873148},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2678,
+    label = "C4H9O2-1 + H2O2 <=> C4H10O2-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20119, 'd13': 2.33536, 'd23': 1.15213},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2679,
+    label = "C4H9O2-1 + HO2 <=> H2O2 + C4H1O2-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15607, 'd13': 2.50358, 'd23': 1.35568},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2680,
+    label = "C6H1O1-21 + H2O2 <=> C6O1-22 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31416, 'd13': 2.51438, 'd23': 1.2096},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2681,
+    label = "C5O1-23 + H2O2 <=> C5O1-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30566, 'd13': 2.55411, 'd23': 1.25869},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2682,
+    label = "C4O3-8 + HO2 <=> C4O3-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28912, 'd13': 2.50635, 'd23': 1.25165},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2683,
+    label = "C4H9O3-4 + H2O2 <=> C4H10O3-4 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21171, 'd13': 2.34452, 'd23': 1.14764},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2684,
+    label = "C4H9O3-4 + HO2 <=> C4H1O3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22616, 'd13': 2.49549, 'd23': 1.30264},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2685,
+    label = "C4H9O3-5 + H2O2 <=> C4H10O3-5 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15458, 'd13': 2.34243, 'd23': 1.20557},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2686,
+    label = "C4O2-2 + HO <=> H2O + C4H1O2-6",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31737, 'd13': 2.51473, 'd23': 1.20644},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2687,
+    label = "C7H14O + HO2 <=> H2O2 + C7H13O-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18775, 'd13': 2.51027, 'd23': 1.32977},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2688,
+    label = "C5O2-8 + H2O2 <=> C5O2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2117, 'd13': 2.34455, 'd23': 1.14712},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2689,
+    label = "C4H9O3-3 + H2O2 <=> C4H10O3-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16381, 'd13': 2.33594, 'd23': 1.18616},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2690,
+    label = "C8O2-3 + HO2 <=> C8O2-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30285, 'd13': 2.51782, 'd23': 1.23217},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2691,
+    label = "C7O2-35 + HO2 <=> C7O2-22 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.12773, 'd13': 2.35148, 'd23': 1.22466},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2692,
+    label = "C4H10 + HO2 <=> H2O2 + C4H9",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33033, 'd13': 2.50773, 'd23': 1.18037},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2693,
+    label = "C9-2 + HO2 <=> C9-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26504, 'd13': 2.51904, 'd23': 1.26311},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2694,
+    label = "C9-2 + HO2 <=> H2O2 + C9H1-12",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17919, 'd13': 2.50955, 'd23': 1.33576},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2695,
+    label = "C6O1-41 + HO2 <=> C6O1-57 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22103, 'd13': 2.51895, 'd23': 1.29998},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2696,
+    label = "C6O1-41 + HO2 <=> H2O2 + C6H1O1-10",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18297, 'd13': 2.51329, 'd23': 1.33285},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2697,
+    label = "C6O1-43 + HO2 <=> H2O2 + C6H1O1-43",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19397, 'd13': 2.50658, 'd23': 1.31956},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2698,
+    label = "C4H8O-6 + HO2 <=> C4H7O-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26657, 'd13': 2.52235, 'd23': 1.27916},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2699,
+    label = "C4H8O-6 + HO2 <=> C4H7O-12 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24479, 'd13': 2.52214, 'd23': 1.29203},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2700,
+    label = "C8-28 + HO2 <=> C8H1-37 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3121, 'd13': 2.52829, 'd23': 1.21952},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2701,
+    label = "C8-28 + HO2 <=> H2O2 + C8H1-12",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18086, 'd13': 2.50672, 'd23': 1.3324},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2702,
+    label = "C8O2 + HO2 <=> C8O2-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21476, 'd13': 2.34434, 'd23': 1.14724},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2703,
+    label = "C8O2 + HO2 <=> C8O2-25 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24528, 'd13': 2.5228, 'd23': 1.29157},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2704,
+    label = "C8O2-5 + H2O2 <=> C8O2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15231, 'd13': 2.33813, 'd23': 1.20476},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2705,
+    label = "C7O2-25 + HO2 <=> C7O2-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24855, 'd13': 2.51452, 'd23': 1.27307},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2706,
+    label = "C7O2-19 + H2O2 <=> C7O2-25 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1351, 'd13': 2.34653, 'd23': 1.22321},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2707,
+    label = "C7-13 + HO2 <=> C7H1-29 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31167, 'd13': 2.52041, 'd23': 1.21268},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2708,
+    label = "C7-13 + HO2 <=> C7-18 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22494, 'd13': 2.50876, 'd23': 1.29831},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2709,
+    label = "C7-13 + HO2 <=> H2O2 + C7H1-59",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33625, 'd13': 2.51202, 'd23': 1.18152},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2710,
+    label = "C7O1-13 + HO2 <=> C7O1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32418, 'd13': 2.5702, 'd23': 1.25256},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2711,
+    label = "C7O1-13 + HO2 <=> C7H1O1-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35354, 'd13': 2.51657, 'd23': 1.16383},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2712,
+    label = "C7O1-13 + HO2 <=> C7O1-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29634, 'd13': 2.51125, 'd23': 1.2233},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2713,
+    label = "C7O1-13 + HO2 <=> C7O1-16 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24703, 'd13': 2.52301, 'd23': 1.29003},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2714,
+    label = "C7O1-13 + HO2 <=> H2O2 + C7H1O1-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34486, 'd13': 2.51403, 'd23': 1.16947},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2715,
+    label = "C7O2-32 + HO2 <=> C7O2-18 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19959, 'd13': 2.51167, 'd23': 1.31938},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2716,
+    label = "C7O2-38 + H2O2 <=> C7O2-32 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14802, 'd13': 2.34481, 'd23': 1.2152},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2717,
+    label = "C6O2-27 + HO2 <=> C6O2-19 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14548, 'd13': 2.34508, 'd23': 1.21461},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2718,
+    label = "C6O2-27 + HO2 <=> C6O2-24 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27707, 'd13': 2.51612, 'd23': 1.24447},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2719,
+    label = "C6O2-19 + H2O2 <=> C6O2-27 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21132, 'd13': 2.34333, 'd23': 1.1471},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2720,
+    label = "C6O1-37 + HO2 <=> C6O1-25 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22255, 'd13': 2.51849, 'd23': 1.30008},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2721,
+    label = "C5O1-15 + HO2 <=> C5O1-30 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26063, 'd13': 2.51398, 'd23': 1.28294},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2722,
+    label = "C5O1-15 + HO2 <=> C5H1O1-21 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31948, 'd13': 2.51342, 'd23': 1.204},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2723,
+    label = "C5O1-15 + HO2 <=> C5O1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2102, 'd13': 2.51757, 'd23': 1.30887},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2724,
+    label = "C5O1-15 + HO2 <=> H2O2 + C5H1O1-12",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34156, 'd13': 2.50664, 'd23': 1.17197},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2725,
+    label = "C7O2-24 + H2O2 <=> C7O2-20 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21241, 'd13': 2.34477, 'd23': 1.14697},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2726,
+    label = "C6O1-56 + HO2 <=> C6O1-27 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27661, 'd13': 2.51481, 'd23': 1.26905},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2727,
+    label = "C6O1-56 + HO2 <=> C6H1O1-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22378, 'd13': 2.51675, 'd23': 1.30124},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2728,
+    label = "C6O1-56 + HO2 <=> C6O1-42 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28565, 'd13': 2.50691, 'd23': 1.23054},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2729,
+    label = "C6O1-56 + HO2 <=> H2O2 + C6H1O1-44",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17994, 'd13': 2.50962, 'd23': 1.332},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2730,
+    label = "C8O2-16 + H2O2 <=> C8O2-24 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21, 'd13': 2.34304, 'd23': 1.15315},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2731,
+    label = "C7O1-4 + HO2 <=> C7O1-23 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30819, 'd13': 2.54024, 'd23': 1.25492},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2732,
+    label = "C7O1-4 + HO2 <=> C7O1-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28394, 'd13': 2.51049, 'd23': 1.2327},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2733,
+    label = "C8O1-7 + HO2 <=> C8O1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25624, 'd13': 2.53615, 'd23': 1.30642},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2734,
+    label = "C8O1-7 + HO2 <=> C8O1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28521, 'd13': 2.50873, 'd23': 1.22972},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2735,
+    label = "C9O1-6 + HO2 <=> C9O1-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30755, 'd13': 2.5372, 'd23': 1.2556},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2736,
+    label = "C8O2-13 + H2O2 <=> C8O2-20 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21403, 'd13': 2.34434, 'd23': 1.14829},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2737,
+    label = "C7O2-40 + H2O2 <=> C7O2-2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14822, 'd13': 2.34389, 'd23': 1.21381},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2738,
+    label = "C6O2-2 + HO2 <=> C6O2-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23059, 'd13': 2.51361, 'd23': 1.29006},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2739,
+    label = "C6O1-27 + H2O2 <=> C6O1-56 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31926, 'd13': 2.55027, 'd23': 1.25118},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2740,
+    label = "C4H10O + HO2 <=> C4H9O-12 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.08593, 'd13': 2.33587, 'd23': 1.27366},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2741,
+    label = "C4H10O + HO2 <=> C4H9O-14 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29404, 'd13': 2.51711, 'd23': 1.23489},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2742,
+    label = "C4H10O + HO2 <=> H2O2 + C4H9O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34101, 'd13': 2.50793, 'd23': 1.17429},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2743,
+    label = "C4H9O2-3 + H2O2 <=> C4H10O2-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19847, 'd13': 2.33559, 'd23': 1.15852},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2744,
+    label = "C4H9O2-3 + HO2 <=> C4O2-11 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31057, 'd13': 2.50269, 'd23': 1.2045},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2745,
+    label = "C5O1-30 + H2O2 <=> C5O1-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2565, 'd13': 2.55336, 'd23': 1.30891},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2746,
+    label = "C4H9O-12 + H2O2 <=> C4H10O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.08593, 'd13': 2.33597, 'd23': 1.27368},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2747,
+    label = "C4H9O-12 + HO2 <=> C4O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18735, 'd13': 2.49745, 'd23': 1.32641},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2748,
+    label = "C3O1-8 + HO2 <=> C3O1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.08828, 'd13': 2.34049, 'd23': 1.26795},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2749,
+    label = "C3O1-8 + HO2 <=> C3O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26423, 'd13': 2.52694, 'd23': 1.27114},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2750,
+    label = "C3O1-8 + HO2 <=> H2O2 + C3H1O1-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16526, 'd13': 2.50854, 'd23': 1.34865},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2751,
+    label = "C3H7O2 + HO2 <=> C3O2-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33557, 'd13': 2.50786, 'd23': 1.17598},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2752,
+    label = "C9H1O1-2 + H2O2 <=> C9O1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21388, 'd13': 2.51465, 'd23': 1.31322},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2753,
+    label = "C8H1-37 + H2O2 <=> C8-28 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21247, 'd13': 2.51732, 'd23': 1.30834},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2754,
+    label = "C7H1-29 + H2O2 <=> C7-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21013, 'd13': 2.51765, 'd23': 1.30956},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2755,
+    label = "C5H1O1-21 + H2O2 <=> C5O1-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2135, 'd13': 2.51309, 'd23': 1.31066},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2756,
+    label = "C6H1O1-28 + H2O2 <=> C6O1-56 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19642, 'd13': 2.51438, 'd23': 1.32619},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2757,
+    label = "C4H9O-14 + H2O2 <=> C4H10O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23488, 'd13': 2.51707, 'd23': 1.29403},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2758,
+    label = "C4H9O-14 + HO2 <=> H2O2 + C4H2O1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34624, 'd13': 2.51021, 'd23': 1.17049},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2759,
+    label = "C7O2-34 + H2O2 <=> C7O2-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18988, 'd13': 2.32835, 'd23': 1.15732},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2760,
+    label = "C4H9O3 + H2O2 <=> C4H10O3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20014, 'd13': 2.34594, 'd23': 1.14729},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2761,
+    label = "C4H9O3 + HO2 <=> C4O3-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19043, 'd13': 2.50367, 'd23': 1.3228},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2762,
+    label = "C8O2-26 + HO2 <=> C8O2-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.13344, 'd13': 2.34752, 'd23': 1.21676},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2763,
+    label = "C4H9O3-6 + H2O2 <=> C4H10O3-6 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15257, 'd13': 2.32982, 'd23': 1.20753},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2764,
+    label = "C4H9O3-9 + H2O2 <=> C4H10O3-9 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20423, 'd13': 2.34292, 'd23': 1.1526},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2765,
+    label = "C6O2-3 + H2O2 <=> C6O2-21 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14178, 'd13': 2.34454, 'd23': 1.21706},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2766,
+    label = "C2H6 + HO2 <=> C2H5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33733, 'd13': 2.50689, 'd23': 1.17558},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2767,
+    label = "C6O1-33 + HO2 <=> C6H1O1-40 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19282, 'd13': 2.50432, 'd23': 1.31228},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2768,
+    label = "C6O1 + HO2 <=> C6H1O1-52 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19437, 'd13': 2.50694, 'd23': 1.31357},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2769,
+    label = "C6O1 + HO2 <=> H2O2 + C6H1O1-13",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33848, 'd13': 2.51058, 'd23': 1.17414},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2770,
+    label = "C4O1-6 + HO2 <=> C4H1O1-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16265, 'd13': 2.47634, 'd23': 1.34948},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2771,
+    label = "C4O1-6 + HO2 <=> H2O2 + C4H1O1-10",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34052, 'd13': 2.5129, 'd23': 1.17709},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2772,
+    label = "C5O1-17 + HO2 <=> C5H1O1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22455, 'd13': 2.48173, 'd23': 1.30065},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2773,
+    label = "C5O1-17 + HO2 <=> H2O2 + C5H1O1-42",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33084, 'd13': 2.5074, 'd23': 1.18307},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2774,
+    label = "C6O1-49 + HO2 <=> H2O2 + C6H1O1-8",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28275, 'd13': 2.52532, 'd23': 1.26168},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2775,
+    label = "C6O2-23 + HO2 <=> C6O2-26 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26939, 'd13': 2.53815, 'd23': 1.27819},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2776,
+    label = "C6O2-23 + HO2 <=> H2O2 + C6H1O2-5",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23684, 'd13': 2.52097, 'd23': 1.29996},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2777,
+    label = "C5O2-11 + HO2 <=> H2O2 + C5H1O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27449, 'd13': 2.53543, 'd23': 1.27748},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2778,
+    label = "C15 + HO2 <=> H2O2 + C15H1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30495, 'd13': 2.51799, 'd23': 1.22775},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2779,
+    label = "C11 + HO2 <=> H2O2 + C11H1-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30398, 'd13': 2.51894, 'd23': 1.22966},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2780,
+    label = "C7O1-5 + HO2 <=> H2O2 + C7H1O1-12",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31099, 'd13': 2.5175, 'd23': 1.22069},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2781,
+    label = "C11-1 + HO2 <=> H2O2 + C11H1-5",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22325, 'd13': 2.51984, 'd23': 1.3115},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2782,
+    label = "C8-30 + HO2 <=> H2O2 + C8H1-8",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24709, 'd13': 2.52337, 'd23': 1.28284},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2783,
+    label = "C7O1-20 + HO2 <=> H2O2 + C7H1O1-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22325, 'd13': 2.50975, 'd23': 1.31807},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2784,
+    label = "C7-19 + HO2 <=> C7H1-35 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32885, 'd13': 2.55336, 'd23': 1.2387},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2785,
+    label = "C7-19 + HO2 <=> H2O2 + C7H1-24",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28211, 'd13': 2.53494, 'd23': 1.27383},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2786,
+    label = "C5O1-8 + HO2 <=> H2O2 + C5H1O1-17",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25064, 'd13': 2.52482, 'd23': 1.28987},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2787,
+    label = "C5O1-5 + HO2 <=> H2O2 + C5H1O1-33",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27664, 'd13': 2.53173, 'd23': 1.27252},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2788,
+    label = "C5O2-7 + HO2 <=> C5H1O2-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26311, 'd13': 2.54021, 'd23': 1.29965},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2789,
+    label = "C10-10 + HO <=> C10-9 + H2O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18088, 'd13': 2.51046, 'd23': 1.35526},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2790,
+    label = "C10-10 + HO2 <=> C10-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18319, 'd13': 2.5061, 'd23': 1.32742},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2791,
+    label = "C10-10 + HO2 <=> H2O2 + C10H1-10",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.265, 'd13': 2.53511, 'd23': 1.28586},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2792,
+    label = "C10-10 + O <=> C10-9 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16435, 'd13': 2.49295, 'd23': 1.32971},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2793,
+    label = "C7-8 + HO2 <=> C7H1-19 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32777, 'd13': 2.53945, 'd23': 1.24512},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2794,
+    label = "C7-8 + HO2 <=> C7H1-35 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31796, 'd13': 2.53318, 'd23': 1.2514},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2795,
+    label = "C7-8 + HO2 <=> H2O2 + C7H1-57",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27877, 'd13': 2.52839, 'd23': 1.25087},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2796,
+    label = "C6O1-55 + HO <=> C6O1-40 + H2O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20346, 'd13': 2.4876, 'd23': 1.30051},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2797,
+    label = "C6O1-55 + HO2 <=> C6H1O1-49 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28158, 'd13': 2.50729, 'd23': 1.25742},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2798,
+    label = "C6O1-55 + HO2 <=> H2O2 + C6H1O1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31499, 'd13': 2.51507, 'd23': 1.2118},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2799,
+    label = "C6O1-55 + O <=> C6H1O1-49 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20748, 'd13': 2.54874, 'd23': 1.34441},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2800,
+    label = "C6O1-55 + O <=> C6H1O1 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2305, 'd13': 2.53254, 'd23': 1.30286},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2801,
+    label = "C7-11 + HO2 <=> C7H1-33 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20485, 'd13': 2.51626, 'd23': 1.31583},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2802,
+    label = "C7-11 + HO2 <=> C7H1-26 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1961, 'd13': 2.49912, 'd23': 1.31536},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2803,
+    label = "C7-11 + HO2 <=> C7-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27519, 'd13': 2.52931, 'd23': 1.26747},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2804,
+    label = "C7-11 + HO2 <=> C7H1-37 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2649, 'd13': 2.53118, 'd23': 1.26804},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2805,
+    label = "C7-11 + HO2 <=> H2O2 + C7H1-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25814, 'd13': 2.53421, 'd23': 1.28709},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2806,
+    label = "C6H1O1-37 + H2O2 <=> C6O1-55 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33582, 'd13': 2.50597, 'd23': 1.18343},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2807,
+    label = "C7H1O1-6 + H2O2 <=> C7O1-19 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25821, 'd13': 2.5483, 'd23': 1.32128},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2808,
+    label = "C8-31 + HO2 <=> H2O2 + C8H1-26",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30464, 'd13': 2.51665, 'd23': 1.22862},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2809,
+    label = "C8O1-8 + HO2 <=> H2O2 + C8H1O1-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30862, 'd13': 2.51682, 'd23': 1.21984},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2810,
+    label = "C7 + HO2 <=> C7H1-39 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26497, 'd13': 2.54846, 'd23': 1.30446},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2811,
+    label = "C7-10 + HO2 <=> H2O2 + C7H1-72",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22263, 'd13': 2.516, 'd23': 1.30893},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2812,
+    label = "C7-4 + HO2 <=> C7H1-39 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24986, 'd13': 2.53745, 'd23': 1.3175},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2813,
+    label = "C7-4 + HO2 <=> H2O2 + C7H1-30",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3439, 'd13': 2.49546, 'd23': 1.17122},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2814,
+    label = "C7-24 + HO2 <=> C7H1-47 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31332, 'd13': 2.50058, 'd23': 1.19749},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2815,
+    label = "C7-24 + HO2 <=> C7H1-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27323, 'd13': 2.52492, 'd23': 1.265},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2816,
+    label = "C7-24 + HO2 <=> C7H1-12 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30174, 'd13': 2.5183, 'd23': 1.21802},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2817,
+    label = "C7-24 + HO2 <=> C7-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3, 'd13': 2.5337, 'd23': 1.24808},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2818,
+    label = "C7-24 + HO2 <=> H2O2 + C7H1-14",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17748, 'd13': 2.50973, 'd23': 1.33792},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2819,
+    label = "C7-20 + HO2 <=> C7H1-53 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24993, 'd13': 2.55422, 'd23': 1.31353},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2820,
+    label = "C7-20 + HO2 <=> C7H1-35 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25826, 'd13': 2.5397, 'd23': 1.30447},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2821,
+    label = "C6O1-58 + HO2 <=> C6O1-21 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25454, 'd13': 2.53037, 'd23': 1.28853},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2822,
+    label = "C6O1-58 + HO2 <=> H2O2 + C6H1O1-9",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17296, 'd13': 2.50831, 'd23': 1.34126},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2823,
+    label = "C7O1-3 + HO2 <=> C7O1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19738, 'd13': 2.49873, 'd23': 1.32019},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2824,
+    label = "C7-1 + HO2 <=> C7H1-58 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27332, 'd13': 2.5253, 'd23': 1.26563},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2825,
+    label = "C7-1 + HO2 <=> C7H1-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27149, 'd13': 2.51387, 'd23': 1.27198},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2826,
+    label = "C7-1 + HO2 <=> C7H1-40 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20991, 'd13': 2.51635, 'd23': 1.3077},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2827,
+    label = "C7-1 + HO2 <=> C7-16 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22689, 'd13': 2.50912, 'd23': 1.29236},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2828,
+    label = "C7-1 + HO2 <=> H2O2 + C7H1-23",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32822, 'd13': 2.50893, 'd23': 1.18368},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2829,
+    label = "C5O2-6 + HO2 <=> C5H1O2-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1779, 'd13': 2.50208, 'd23': 1.32826},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2830,
+    label = "C7-25 + HO2 <=> C7H1-18 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30937, 'd13': 2.50072, 'd23': 1.20462},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2831,
+    label = "C7-25 + HO2 <=> C7H1-54 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21502, 'd13': 2.51522, 'd23': 1.30278},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2832,
+    label = "C7-25 + HO2 <=> C7H1-43 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30774, 'd13': 2.51254, 'd23': 1.20549},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2833,
+    label = "C7-25 + HO2 <=> C7-28 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23019, 'd13': 2.50586, 'd23': 1.28547},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2834,
+    label = "C7-25 + HO2 <=> H2O2 + C7H1-60",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18627, 'd13': 2.50693, 'd23': 1.3256},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2835,
+    label = "C6O1-28 + HO2 <=> H2O2 + C6H1O1-14",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33067, 'd13': 2.50784, 'd23': 1.18091},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2836,
+    label = "C3O1 + HO2 <=> C3O1-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33855, 'd13': 2.48561, 'd23': 1.17432},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2837,
+    label = "C6O1-16 + HO2 <=> C6O1-19 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29784, 'd13': 2.51423, 'd23': 1.2181},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2838,
+    label = "C6H1-1 + H2O2 <=> C6-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30438, 'd13': 2.51438, 'd23': 1.2137},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2839,
+    label = "C6O1-34 + HO2 <=> C6O1-31 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27456, 'd13': 2.53078, 'd23': 1.26635},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2840,
+    label = "C6O1-34 + HO2 <=> H2O2 + C6H1O1-27",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34097, 'd13': 2.51254, 'd23': 1.17405},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2841,
+    label = "C6H1-18 + H2O2 <=> C6-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20935, 'd13': 2.51183, 'd23': 1.3085},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2842,
+    label = "C5-5 + HO2 <=> H2O2 + C5H1-6",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25361, 'd13': 2.53211, 'd23': 1.28899},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2843,
+    label = "C5O1-40 + HO2 <=> C5O1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.292, 'd13': 2.54252, 'd23': 1.26381},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2844,
+    label = "C5O1-40 + HO2 <=> H2O2 + C5H1O1-35",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23602, 'd13': 2.50957, 'd23': 1.28825},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2845,
+    label = "C5O1-40 + HO2 <=> H2O2 + C5H1O1-7",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25185, 'd13': 2.53026, 'd23': 1.28856},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2846,
+    label = "C4H8O-3 + HO2 <=> H2O2 + C4H7O-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23616, 'd13': 2.5108, 'd23': 1.31028},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2847,
+    label = "C4H7O-8 + HO2 <=> H2O2 + C4H1O1-12",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32312, 'd13': 2.50204, 'd23': 1.19076},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2848,
+    label = "C3H4O + HO2 <=> H2O2 + C3H3O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28377, 'd13': 2.52003, 'd23': 1.25319},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2849,
+    label = "C5O2-18 + HO2 <=> H2O2 + C5H1O2-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29628, 'd13': 2.52197, 'd23': 1.23992},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2850,
+    label = "C5O1-37 + HO2 <=> H2O2 + C5H1O1-30",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28541, 'd13': 2.52201, 'd23': 1.24095},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2851,
+    label = "C6-12 + HO2 <=> C6-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29287, 'd13': 2.52943, 'd23': 1.25493},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2852,
+    label = "C6-12 + HO2 <=> H2O2 + C6H1-10",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28723, 'd13': 2.52916, 'd23': 1.25533},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2853,
+    label = "C9-6 + HO2 <=> H2O2 + C9H1-11",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27208, 'd13': 2.51877, 'd23': 1.26477},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2854,
+    label = "C4H6O-3 + HO2 <=> C4H5O-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2574, 'd13': 2.5092, 'd23': 1.28127},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2855,
+    label = "C4H6O-3 + HO2 <=> H2O2 + C4H5O-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29818, 'd13': 2.51536, 'd23': 1.23592},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2856,
+    label = "C5-3 + HO2 <=> C5H1-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26714, 'd13': 2.5255, 'd23': 1.27142},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2857,
+    label = "C5-3 + HO2 <=> H2O2 + C5H1-9",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28867, 'd13': 2.51612, 'd23': 1.24843},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2858,
+    label = "C5-3 + HO2 <=> H2O2 + C5H1-8",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1619, 'd13': 2.50508, 'd23': 1.35346},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2859,
+    label = "C10-2 + HO2 <=> C10H1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29666, 'd13': 2.53618, 'd23': 1.25765},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2860,
+    label = "C5O1-11 + HO2 <=> C5O1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26521, 'd13': 2.54832, 'd23': 1.29246},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2861,
+    label = "C5O1-11 + HO2 <=> H2O2 + C5H1O1-16",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29065, 'd13': 2.51768, 'd23': 1.24305},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2862,
+    label = "C8-12 + CH3 <=> CH4 + C8-6",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34186, 'd13': 2.67741, 'd23': 1.33593},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2863,
+    label = "C8-12 + HO2 <=> C8H1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27112, 'd13': 2.52564, 'd23': 1.26878},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2864,
+    label = "C8-12 + O <=> C8-6 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30371, 'd13': 2.5007, 'd23': 1.19725},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2865,
+    label = "C6-14 + HO2 <=> C6H1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28241, 'd13': 2.53408, 'd23': 1.26003},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2866,
+    label = "C6-14 + HO2 <=> C6H1-19 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30258, 'd13': 2.50426, 'd23': 1.21056},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2867,
+    label = "C8-20 + HO2 <=> C8H1-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28246, 'd13': 2.51743, 'd23': 1.24933},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2868,
+    label = "C8-20 + HO2 <=> H2O2 + C8H1-23",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25276, 'd13': 2.52558, 'd23': 1.28641},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2869,
+    label = "C7-22 + HO2 <=> C7H1-20 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31569, 'd13': 2.51502, 'd23': 1.20277},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2870,
+    label = "C7-22 + HO2 <=> C7H1-51 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26592, 'd13': 2.52475, 'd23': 1.27255},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2871,
+    label = "C7-22 + HO2 <=> C7H1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20744, 'd13': 2.51416, 'd23': 1.31143},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2872,
+    label = "C7-22 + HO2 <=> H2O2 + C7H1-56",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2853, 'd13': 2.52621, 'd23': 1.25469},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2873,
+    label = "C4O1-2 + HO2 <=> C4O1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25965, 'd13': 2.34133, 'd23': 1.09651},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2874,
+    label = "C4O1-2 + HO2 <=> C4H7O-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33787, 'd13': 2.523, 'd23': 1.23583},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2875,
+    label = "C8H1-16 + H2O2 <=> C8-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32192, 'd13': 2.50831, 'd23': 1.19262},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2876,
+    label = "C5O1-9 + H2O2 <=> C5O1-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31261, 'd13': 2.54409, 'd23': 1.25391},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2877,
+    label = "C3O1-7 + HO2 <=> H2O2 + C3H1O1-6",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.257, 'd13': 2.52675, 'd23': 1.28735},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2878,
+    label = "C2H4O + HO2 <=> C2H3O-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29981, 'd13': 2.53341, 'd23': 1.25938},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2879,
+    label = "C8-6 + H2O2 <=> C8-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15681, 'd13': 2.50333, 'd23': 1.35388},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2880,
+    label = "C7O1-10 + HO2 <=> C7H1O1-11 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33308, 'd13': 2.49842, 'd23': 1.20457},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2881,
+    label = "C7O1-10 + HO2 <=> H2O2 + C7H1O1-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33332, 'd13': 2.51514, 'd23': 1.18403},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2882,
+    label = "C6H12O + HO2 <=> C6H11O + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32418, 'd13': 2.51389, 'd23': 1.2032},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2883,
+    label = "C6H12O + HO2 <=> H2O2 + C6H1O1-67",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35229, 'd13': 2.5071, 'd23': 1.16201},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2884,
+    label = "C4O3-9 + HO2 <=> C4O3-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1379, 'd13': 2.34238, 'd23': 1.20934},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2885,
+    label = "C4O3-9 + HO2 <=> C4H1O3-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33638, 'd13': 2.49479, 'd23': 1.19179},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2886,
+    label = "C4O2-6 + HO2 <=> C4H1O2-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32594, 'd13': 2.5105, 'd23': 1.18941},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2887,
+    label = "C6O1-2 + H2O2 <=> C6H12O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23844, 'd13': 2.51309, 'd23': 1.28693},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2888,
+    label = "C6O1-8 + HO2 <=> C6O1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30407, 'd13': 2.561, 'd23': 1.26247},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2889,
+    label = "C6O1-8 + HO2 <=> C6H1O1-68 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19821, 'd13': 2.51344, 'd23': 1.31957},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2890,
+    label = "C6O1-8 + HO2 <=> H2O2 + C6H1O1-22",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3344, 'd13': 2.50777, 'd23': 1.17786},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2891,
+    label = "C6O2-12 + H2O2 <=> C6O2-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14959, 'd13': 2.34388, 'd23': 1.21239},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2892,
+    label = "C5O1-4 + HO <=> C5O1-10 + H2O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.05566, 'd13': 2.26741, 'd23': 1.30568},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2893,
+    label = "C5O1-4 + O <=> C5O1-10 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14185, 'd13': 2.29385, 'd23': 1.17716},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2894,
+    label = "C5O1-4 + O <=> C5H1O1-43 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28303, 'd13': 2.51593, 'd23': 1.24992},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2895,
+    label = "C5O2-19 + H2O2 <=> C5O2-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21841, 'd13': 2.34616, 'd23': 1.14311},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2896,
+    label = "C5O1-10 + H2O2 <=> C5O1-4 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.08915, 'd13': 2.32831, 'd23': 1.26149},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2897,
+    label = "C5O1-10 + H2 <=> C5O1-4 + H",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 0.874327, 'd13': 2.1109, 'd23': 1.24386},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2898,
+    label = "C4H9O3-1 + H2O2 <=> C4H10O3-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2003, 'd13': 2.33924, 'd23': 1.15909},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2899,
+    label = "C4H9O3-1 + HO2 <=> C4H1O3-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18807, 'd13': 2.49794, 'd23': 1.3321},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2900,
+    label = "C4H8O-8 + HO2 <=> C4H7O-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33231, 'd13': 2.499, 'd23': 1.2038},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2901,
+    label = "C5-4 + HO2 <=> C5-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28923, 'd13': 2.5108, 'd23': 1.22851},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2902,
+    label = "C5-4 + HO2 <=> C5H1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31725, 'd13': 2.51582, 'd23': 1.20407},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2903,
+    label = "C5-4 + HO2 <=> H2O2 + C5H1-15",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32951, 'd13': 2.51175, 'd23': 1.1858},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2904,
+    label = "C5-4 + HO2 <=> H2O2 + C5H1-10",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33259, 'd13': 2.50849, 'd23': 1.18077},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2905,
+    label = "C5O1-38 + HO2 <=> C5O1-19 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26974, 'd13': 2.52424, 'd23': 1.27576},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2906,
+    label = "C5O1-38 + HO2 <=> C5O1-26 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.252, 'd13': 2.53099, 'd23': 1.28533},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2907,
+    label = "C5O1-38 + HO2 <=> C5H1O1-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19717, 'd13': 2.51505, 'd23': 1.32441},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2908,
+    label = "C5O1-38 + HO2 <=> H2O2 + C5H1O1-9",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33387, 'd13': 2.50922, 'd23': 1.17836},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2909,
+    label = "C8-11 + HO2 <=> C8-33 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28661, 'd13': 2.51363, 'd23': 1.23212},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2910,
+    label = "C8-11 + O <=> C8H1-39 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27645, 'd13': 2.50721, 'd23': 1.23165},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2911,
+    label = "C8-11 + O <=> C8H1-46 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2749, 'd13': 2.50811, 'd23': 1.23382},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2912,
+    label = "C8O2-15 + H2O2 <=> C8O2-23 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14502, 'd13': 2.34093, 'd23': 1.2063},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2913,
+    label = "C4H10O-9 + HO2 <=> C4H9O-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.08913, 'd13': 2.34312, 'd23': 1.26913},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2914,
+    label = "C4H10O-9 + HO2 <=> C4H9O-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3294, 'd13': 2.51406, 'd23': 1.18828},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2915,
+    label = "C4H10O-9 + HO2 <=> H2O2 + C4H9O-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32626, 'd13': 2.51421, 'd23': 1.19147},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2916,
+    label = "C4H10O-9 + HO2 <=> H2O2 + C4H9O-9",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17781, 'd13': 2.51064, 'd23': 1.33595},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2917,
+    label = "C4H9O2 + H2O2 <=> C4H10O2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15117, 'd13': 2.34012, 'd23': 1.20725},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2918,
+    label = "C4H9O2 + HO2 <=> C4O2-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1798, 'd13': 2.51032, 'd23': 1.33536},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2919,
+    label = "C5O1-19 + H2O2 <=> C5O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25294, 'd13': 2.55423, 'd23': 1.31561},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2920,
+    label = "C7O2-17 + H2O2 <=> C7O2-30 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22998, 'd13': 2.35048, 'd23': 1.12276},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2921,
+    label = "C5O2-12 + H2O2 <=> C5O2-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.12843, 'd13': 2.34793, 'd23': 1.22166},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2922,
+    label = "C8O2-9 + H2O2 <=> C8O2-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20903, 'd13': 2.33953, 'd23': 1.15006},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2923,
+    label = "C4H9O3-10 + H2O2 <=> C4H10O3-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15025, 'd13': 2.33494, 'd23': 1.19487},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2924,
+    label = "C4H9O3-10 + HO2 <=> C4O3-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16298, 'd13': 2.50512, 'd23': 1.34467},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2925,
+    label = "C4O2-5 + HO2 <=> C4H1O2-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21967, 'd13': 2.51043, 'd23': 1.30322},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2926,
+    label = "C4H9O3-7 + H2O2 <=> C4H10O3-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.13769, 'd13': 2.34685, 'd23': 1.22555},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2927,
+    label = "C5O4 + HO2 <=> C5O4-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.12469, 'd13': 2.34635, 'd23': 1.23745},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2928,
+    label = "C6O2-1 + HO2 <=> C6O2-16 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22999, 'd13': 2.34898, 'd23': 1.12187},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2929,
+    label = "C7O2-26 + H2O2 <=> C7O2-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14256, 'd13': 2.34551, 'd23': 1.21242},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2930,
+    label = "C6O2-16 + H2O2 <=> C6O2-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21627, 'd13': 2.34724, 'd23': 1.1423},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2931,
+    label = "C3H8-1 + HO2 <=> C3H7-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30782, 'd13': 2.50076, 'd23': 1.20581},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2932,
+    label = "C3H8-1 + HO2 <=> H2O2 + C3H7",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18445, 'd13': 2.50821, 'd23': 1.32682},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2933,
+    label = "C6O1-45 + HO2 <=> C6H1O1-45 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31172, 'd13': 2.5126, 'd23': 1.20152},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2934,
+    label = "C6O1-45 + HO2 <=> H2O2 + C6H1O1-38",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33174, 'd13': 2.51101, 'd23': 1.18254},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2935,
+    label = "C7O1-22 + HO2 <=> C7H1O1-16 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27247, 'd13': 2.51997, 'd23': 1.27581},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2936,
+    label = "C7O1-22 + HO2 <=> H2O2 + C7H1O1-14",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28287, 'd13': 2.52595, 'd23': 1.26136},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2937,
+    label = "C7O2 + HO2 <=> C7O2-15 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28687, 'd13': 2.51565, 'd23': 1.25},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2938,
+    label = "C6O1-48 + HO2 <=> C6H1O1-57 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27015, 'd13': 2.53005, 'd23': 1.2735},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2939,
+    label = "C6O1-15 + HO2 <=> C6O1-30 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21808, 'd13': 2.50977, 'd23': 1.2988},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2940,
+    label = "C6O1-15 + HO2 <=> H2O2 + C6H1O1-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17589, 'd13': 2.4952, 'd23': 1.33349},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2941,
+    label = "C6O1-18 + HO2 <=> C6O1-50 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1995, 'd13': 2.50263, 'd23': 1.30901},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2942,
+    label = "C6O1-18 + HO2 <=> H2O2 + C6H1O1-66",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17538, 'd13': 2.50797, 'd23': 1.33679},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2943,
+    label = "C6-8 + HO2 <=> C6-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29475, 'd13': 2.5349, 'd23': 1.25031},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2944,
+    label = "C6-8 + HO2 <=> H2O2 + C6H1-26",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29059, 'd13': 2.53333, 'd23': 1.25614},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2945,
+    label = "C5O1-25 + HO2 <=> C5O1-20 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29576, 'd13': 2.53307, 'd23': 1.26028},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2946,
+    label = "C5O1-25 + HO2 <=> H2O2 + C5H1O1-34",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15771, 'd13': 2.50614, 'd23': 1.35643},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2947,
+    label = "C8-4 + CH3 <=> CH4 + C8-29",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33067, 'd13': 2.67317, 'd23': 1.34285},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2948,
+    label = "C8-4 + HO2 <=> C8-23 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29245, 'd13': 2.51079, 'd23': 1.22518},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2949,
+    label = "C8-4 + HO2 <=> C8H1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25672, 'd13': 2.54086, 'd23': 1.28841},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2950,
+    label = "C8-4 + HO2 <=> C8H1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27217, 'd13': 2.52046, 'd23': 1.27917},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2951,
+    label = "C6-9 + HO2 <=> C6H1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27055, 'd13': 2.52336, 'd23': 1.26623},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2952,
+    label = "C7-27 + HO2 <=> C7H1-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2723, 'd13': 2.52795, 'd23': 1.27052},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2953,
+    label = "C7-27 + HO2 <=> C7H1-51 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27783, 'd13': 2.5195, 'd23': 1.27113},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2954,
+    label = "C7-27 + HO2 <=> C7H1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20135, 'd13': 2.51663, 'd23': 1.31637},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2955,
+    label = "C7-27 + HO2 <=> H2O2 + C7H1-11",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35784, 'd13': 2.50877, 'd23': 1.16139},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2956,
+    label = "C7-27 + HO2 <=> H2O2 + C7H1-69",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32925, 'd13': 2.50208, 'd23': 1.18038},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2957,
+    label = "C8-7 + HO2 <=> C8-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15692, 'd13': 2.50615, 'd23': 1.35436},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2958,
+    label = "C8-7 + HO2 <=> C8H1-28 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31516, 'd13': 2.51438, 'd23': 1.20227},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2959,
+    label = "C4H8O-5 + HO2 <=> C4H7O-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27503, 'd13': 2.53352, 'd23': 1.26864},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2960,
+    label = "C3H6O-1 + HO2 <=> C3H5O-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2858, 'd13': 2.51288, 'd23': 1.25644},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2961,
+    label = "C3H6O-1 + HO2 <=> C3H1O1-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31717, 'd13': 2.5079, 'd23': 1.21574},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2962,
+    label = "C6O1-29 + HO2 <=> C6H1O1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19294, 'd13': 2.4945, 'd23': 1.32956},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2963,
+    label = "C6O1-29 + HO2 <=> C6H1O1-59 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21724, 'd13': 2.51548, 'd23': 1.30643},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2964,
+    label = "C6O1-29 + HO2 <=> C6H1O1-19 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17066, 'd13': 2.49698, 'd23': 1.3386},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2965,
+    label = "C6O1-29 + HO2 <=> H2O2 + C6H1O1-46",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17232, 'd13': 2.50442, 'd23': 1.33856},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2966,
+    label = "C6O1-29 + HO2 <=> H2O2 + C6H1O1-65",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33356, 'd13': 2.50537, 'd23': 1.18636},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2967,
+    label = "C5O2-14 + HO2 <=> C5H1O2-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1801, 'd13': 2.4887, 'd23': 1.3456},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2968,
+    label = "C5O2-14 + HO2 <=> C5H1O2-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34848, 'd13': 2.50063, 'd23': 1.16713},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2969,
+    label = "C5O2-14 + HO2 <=> H2O2 + C5H1O2-5",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34435, 'd13': 2.50736, 'd23': 1.17734},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2970,
+    label = "C5O3 + HO2 <=> C5O3-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32779, 'd13': 2.51296, 'd23': 1.19429},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2971,
+    label = "C5O3 + HO2 <=> C5H1O3-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31742, 'd13': 2.50047, 'd23': 1.19076},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2972,
+    label = "C5O4-2 + HO2 <=> C5H1O4-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19392, 'd13': 2.49755, 'd23': 1.31624},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2973,
+    label = "C5O4-6 + H2O2 <=> C5O4-2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17219, 'd13': 2.34024, 'd23': 1.17947},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2974,
+    label = "C7-15 + HO2 <=> C7H1-61 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31474, 'd13': 2.51929, 'd23': 1.20987},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2975,
+    label = "C7-15 + HO2 <=> C7H1-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32273, 'd13': 2.51805, 'd23': 1.20885},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2976,
+    label = "C7-15 + HO2 <=> H2O2 + C7H1-38",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3299, 'd13': 2.5101, 'd23': 1.18386},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2977,
+    label = "C7-15 + HO2 <=> H2O2 + C7H1-21",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33426, 'd13': 2.51128, 'd23': 1.18364},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2978,
+    label = "C7O1-18 + HO2 <=> C7O1-14 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25773, 'd13': 2.55586, 'd23': 1.30909},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2979,
+    label = "C7O1-18 + HO2 <=> C7H1O1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19925, 'd13': 2.51725, 'd23': 1.32417},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2980,
+    label = "C7O1-18 + HO2 <=> C7H1O1-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30709, 'd13': 2.5118, 'd23': 1.21664},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2981,
+    label = "C7O1-18 + HO2 <=> H2O2 + C7H1O1-7",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33482, 'd13': 2.49793, 'd23': 1.17768},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2982,
+    label = "C7O2-39 + HO2 <=> C7O2-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19256, 'd13': 2.33375, 'd23': 1.16431},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2983,
+    label = "C7O2-39 + HO2 <=> C7H1O2-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21131, 'd13': 2.51579, 'd23': 1.30679},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2984,
+    label = "C7O2-4 + H2O2 <=> C7O2-39 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14733, 'd13': 2.34428, 'd23': 1.215},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2985,
+    label = "C6O2-28 + HO2 <=> C6O2-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22466, 'd13': 2.34634, 'd23': 1.12857},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2986,
+    label = "C6O2-28 + HO2 <=> C6H1O2-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17948, 'd13': 2.51098, 'd23': 1.33216},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2987,
+    label = "C6O2-9 + H2O2 <=> C6O2-28 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22092, 'd13': 2.34712, 'd23': 1.14178},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2988,
+    label = "C5O1-34 + HO2 <=> C5H1O1-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30555, 'd13': 2.49838, 'd23': 1.21375},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2989,
+    label = "C5O1-34 + HO2 <=> H2O2 + C5H1O1-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33459, 'd13': 2.51052, 'd23': 1.18383},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2990,
+    label = "C6O1-36 + HO2 <=> C6O1-39 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27483, 'd13': 2.52729, 'd23': 1.27485},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2991,
+    label = "C6O1-36 + HO2 <=> C6O1-59 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24358, 'd13': 2.51884, 'd23': 1.30297},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2992,
+    label = "C6O1-36 + HO2 <=> C6H1O1-58 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32122, 'd13': 2.51336, 'd23': 1.1965},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2993,
+    label = "C6O1-36 + HO2 <=> C6H1O1-15 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30188, 'd13': 2.51429, 'd23': 1.21527},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2994,
+    label = "C6O1-36 + HO2 <=> H2O2 + C6H1O1-35",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17501, 'd13': 2.50837, 'd23': 1.33989},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2995,
+    label = "C7-26 + HO2 <=> C7H1-36 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21389, 'd13': 2.51836, 'd23': 1.30714},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2996,
+    label = "C7-26 + HO2 <=> C7H1-65 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30202, 'd13': 2.51449, 'd23': 1.21254},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2997,
+    label = "C7-26 + HO2 <=> C7H1-64 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30938, 'd13': 2.51207, 'd23': 1.20573},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2998,
+    label = "C7-26 + HO2 <=> H2O2 + C7H1-27",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18213, 'd13': 2.51068, 'd23': 1.32951},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 2999,
+    label = "C7-26 + HO2 <=> H2O2 + C7H1-28",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33448, 'd13': 2.50976, 'd23': 1.17963},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3000,
+    label = "C7-26 + HO2 <=> H2O2 + C7H1-8",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18464, 'd13': 2.51072, 'd23': 1.3334},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3001,
+    label = "C6O1-13 + HO <=> C6O1-32 + H2O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.04879, 'd13': 2.25452, 'd23': 1.30757},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3002,
+    label = "C6O1-13 + O <=> C6O1-7 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21919, 'd13': 2.53819, 'd23': 1.33737},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3003,
+    label = "C6O2-15 + HO2 <=> C6O2-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14725, 'd13': 2.34464, 'd23': 1.21664},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3004,
+    label = "C6O2-15 + HO2 <=> C6O2-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29669, 'd13': 2.51904, 'd23': 1.22286},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3005,
+    label = "C6O2-6 + H2O2 <=> C6O2-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21452, 'd13': 2.34563, 'd23': 1.14043},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3006,
+    label = "C6O1-32 + H2O2 <=> C6O1-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26014, 'd13': 2.32244, 'd23': 1.09029},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3007,
+    label = "C6O1-32 + H2 <=> C6O1-13 + H",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 0.872693, 'd13': 2.10113, 'd23': 1.23757},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3008,
+    label = "C5O2-16 + HO2 <=> C5O2-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14978, 'd13': 2.33666, 'd23': 1.20065},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3009,
+    label = "C5O2-16 + HO2 <=> C5O2-20 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19626, 'd13': 2.49337, 'd23': 1.31829},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3010,
+    label = "C5O2-5 + H2O2 <=> C5O2-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15285, 'd13': 2.33946, 'd23': 1.20576},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3011,
+    label = "C6H1O1-24 + H2O2 <=> C6O1-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26135, 'd13': 2.49375, 'd23': 1.28006},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3012,
+    label = "C6O1-39 + H2O2 <=> C6O1-36 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27748, 'd13': 2.52005, 'd23': 1.26978},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3013,
+    label = "C6O2-18 + HO2 <=> C6O2-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22347, 'd13': 2.34587, 'd23': 1.13839},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3014,
+    label = "C6O2-18 + HO2 <=> C6O2-25 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27775, 'd13': 2.52502, 'd23': 1.26934},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3015,
+    label = "C6O2-17 + H2O2 <=> C6O2-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14628, 'd13': 2.34488, 'd23': 1.21164},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3016,
+    label = "C7O2-16 + HO2 <=> C7O2-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.12342, 'd13': 2.34844, 'd23': 1.22713},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3017,
+    label = "C7O2-16 + HO2 <=> C7O2-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25672, 'd13': 2.52206, 'd23': 1.27958},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3018,
+    label = "C7O2-10 + H2O2 <=> C7O2-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22202, 'd13': 2.34606, 'd23': 1.14354},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3019,
+    label = "C4H9O3-8 + HO2 <=> C4H1O3-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17179, 'd13': 2.51062, 'd23': 1.3433},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3020,
+    label = "C8O2-19 + H2O2 <=> C8O2-14 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.12837, 'd13': 2.34851, 'd23': 1.22197},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3021,
+    label = "C4H10-3 + HO2 <=> C4H9-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30618, 'd13': 2.50141, 'd23': 1.20703},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3022,
+    label = "C4H10-3 + HO2 <=> H2O2 + C4H9-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32689, 'd13': 2.50804, 'd23': 1.18454},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3023,
+    label = "C6O1-11 + HO2 <=> C6H1O1-25 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30859, 'd13': 2.51593, 'd23': 1.21187},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3024,
+    label = "C6O1-11 + HO2 <=> H2O2 + C6H1O1-42",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33272, 'd13': 2.50211, 'd23': 1.17759},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3025,
+    label = "C9 + HO2 <=> C9H1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24298, 'd13': 2.51802, 'd23': 1.28943},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3026,
+    label = "C9 + HO2 <=> C9H1-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19797, 'd13': 2.50735, 'd23': 1.31335},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3027,
+    label = "C9 + HO2 <=> H2O2 + C9H1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33609, 'd13': 2.51119, 'd23': 1.18277},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3028,
+    label = "C8-5 + HO2 <=> C8-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28631, 'd13': 2.53748, 'd23': 1.26137},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3029,
+    label = "C8-5 + HO2 <=> C8H1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26576, 'd13': 2.52261, 'd23': 1.2742},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3030,
+    label = "C8-34 + HO2 <=> C8-25 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15978, 'd13': 2.49862, 'd23': 1.34704},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3031,
+    label = "C8-34 + HO2 <=> C8H1-11 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20597, 'd13': 2.50156, 'd23': 1.30655},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3032,
+    label = "C4H8O-4 + HO2 <=> C4H7O-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30512, 'd13': 2.53942, 'd23': 1.25687},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3033,
+    label = "C4H8O-4 + HO2 <=> C4H7O-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3183, 'd13': 2.50637, 'd23': 1.21707},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3034,
+    label = "C4H8O-4 + HO2 <=> C4H7O-11 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19996, 'd13': 2.49714, 'd23': 1.31275},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3035,
+    label = "C4H8O-4 + HO2 <=> H2O2 + C4H7O-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32703, 'd13': 2.50451, 'd23': 1.18567},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3036,
+    label = "C8-32 + H2O2 <=> C8-5 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3593, 'd13': 2.50808, 'd23': 1.15273},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3037,
+    label = "C7O2-27 + H2O2 <=> C7O2-44 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14456, 'd13': 2.34597, 'd23': 1.21725},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3038,
+    label = "C8O2-28 + H2O2 <=> C8O2-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20279, 'd13': 2.33773, 'd23': 1.15036},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3039,
+    label = "C6O1-38 + HO2 <=> C6H1O1-33 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33166, 'd13': 2.49255, 'd23': 1.19781},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3040,
+    label = "C6O1-38 + HO2 <=> C6H1O1-31 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32259, 'd13': 2.51172, 'd23': 1.19586},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3041,
+    label = "C6O1-38 + HO2 <=> H2O2 + C6H1O1-53",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34986, 'd13': 2.50693, 'd23': 1.17203},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3042,
+    label = "C8O2-29 + H2O2 <=> C8O2-8 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14612, 'd13': 2.34407, 'd23': 1.21154},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3043,
+    label = "C7-14 + HO2 <=> C7-29 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29284, 'd13': 2.51402, 'd23': 1.22769},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3044,
+    label = "C7-14 + HO2 <=> C7H1-31 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20969, 'd13': 2.51816, 'd23': 1.31202},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3045,
+    label = "C7-14 + HO2 <=> C7H1-62 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21297, 'd13': 2.51729, 'd23': 1.30475},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3046,
+    label = "C7-14 + HO2 <=> C7H1-25 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30601, 'd13': 2.50252, 'd23': 1.20842},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3047,
+    label = "C7-14 + HO2 <=> H2O2 + C7H1-41",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32863, 'd13': 2.51097, 'd23': 1.18637},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3048,
+    label = "C7-14 + HO2 <=> H2O2 + C7H1-16",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33108, 'd13': 2.50413, 'd23': 1.17986},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3049,
+    label = "C8-18 + HO2 <=> C8-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27227, 'd13': 2.51296, 'd23': 1.24576},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3050,
+    label = "C8-18 + HO2 <=> C8H1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2087, 'd13': 2.51631, 'd23': 1.31161},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3051,
+    label = "C8-18 + HO2 <=> C8H1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31109, 'd13': 2.50444, 'd23': 1.20951},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3052,
+    label = "C8-18 + HO2 <=> C8H1-29 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20451, 'd13': 2.51274, 'd23': 1.31353},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3053,
+    label = "C8-18 + HO2 <=> C8H1-33 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20876, 'd13': 2.51524, 'd23': 1.31045},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3054,
+    label = "C8-18 + HO2 <=> H2O2 + C8H1-32",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18472, 'd13': 2.50818, 'd23': 1.32675},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3055,
+    label = "C8-18 + HO2 <=> H2O2 + C8H1-44",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33378, 'd13': 2.51154, 'd23': 1.18489},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3056,
+    label = "C8-18 + HO2 <=> H2O2 + C8H1-24",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18514, 'd13': 2.50874, 'd23': 1.3271},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3057,
+    label = "C8-18 + O <=> C8H1-44 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27503, 'd13': 2.50812, 'd23': 1.23388},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3058,
+    label = "C7O2-11 + H2O2 <=> C7O2-41 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19469, 'd13': 2.33555, 'd23': 1.16218},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3059,
+    label = "C6O2-22 + HO2 <=> C6O2-14 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21831, 'd13': 2.34622, 'd23': 1.13815},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3060,
+    label = "C6O2-22 + HO2 <=> C6O2-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27918, 'd13': 2.51743, 'd23': 1.26861},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3061,
+    label = "C6O2-14 + H2O2 <=> C6O2-22 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14425, 'd13': 2.34532, 'd23': 1.21446},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3062,
+    label = "C7O2-9 + HO2 <=> C7O2-21 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30713, 'd13': 2.51313, 'd23': 1.2098},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3063,
+    label = "C7O2-37 + H2O2 <=> C7O2-9 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15834, 'd13': 2.33511, 'd23': 1.19619},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3064,
+    label = "C8O2-21 + H2O2 <=> C8O2-31 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15651, 'd13': 2.33485, 'd23': 1.19447},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3065,
+    label = "C8O2-22 + H2O2 <=> C8O2-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21667, 'd13': 2.34725, 'd23': 1.14156},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3066,
+    label = "C5-7 + HO2 <=> C5H1-12 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20768, 'd13': 2.51361, 'd23': 1.31192},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3067,
+    label = "C5-7 + HO2 <=> C5H1-14 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31494, 'd13': 2.5147, 'd23': 1.20456},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3068,
+    label = "C5-7 + HO2 <=> H2O2 + C5H1-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17922, 'd13': 2.5073, 'd23': 1.33717},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3069,
+    label = "C10-1 + HO2 <=> C10H1-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25125, 'd13': 2.51445, 'd23': 1.28143},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3070,
+    label = "C10-1 + HO2 <=> C10H1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18805, 'd13': 2.50971, 'd23': 1.32794},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3071,
+    label = "C10-1 + HO2 <=> C10H1-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30734, 'd13': 2.50028, 'd23': 1.20606},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3072,
+    label = "C10-1 + HO2 <=> H2O2 + C10H1-8",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17703, 'd13': 2.50524, 'd23': 1.33683},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3073,
+    label = "C8-9 + HO2 <=> C8-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25165, 'd13': 2.53774, 'd23': 1.29472},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3074,
+    label = "C8-9 + HO2 <=> C8H1-20 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32304, 'd13': 2.51049, 'd23': 1.19434},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3075,
+    label = "C5O1-16 + HO2 <=> C5O1-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31637, 'd13': 2.55164, 'd23': 1.25423},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3076,
+    label = "C5O1-16 + HO2 <=> C5H1O1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20048, 'd13': 2.51132, 'd23': 1.31668},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3077,
+    label = "C5O1-16 + HO2 <=> H2O2 + C5H1O1-38",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17845, 'd13': 2.50775, 'd23': 1.33787},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3078,
+    label = "C8O2-30 + H2O2 <=> C8O2-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20509, 'd13': 2.33696, 'd23': 1.14874},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3079,
+    label = "C8-10 + HO2 <=> C8H1-34 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21726, 'd13': 2.5167, 'd23': 1.29984},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3080,
+    label = "C8-10 + HO2 <=> C8H1-27 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30945, 'd13': 2.51425, 'd23': 1.2088},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3081,
+    label = "C8-10 + HO2 <=> C8H1-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30512, 'd13': 2.50176, 'd23': 1.20821},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3082,
+    label = "C8-10 + HO2 <=> H2O2 + C8H1-43",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17606, 'd13': 2.50556, 'd23': 1.33714},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3083,
+    label = "C8O2-4 + H2O2 <=> C8O2-27 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.13171, 'd13': 2.34655, 'd23': 1.21679},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3084,
+    label = "C7O2-23 + HO2 <=> C7O2-31 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22855, 'd13': 2.3509, 'd23': 1.12449},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3085,
+    label = "C7O2-23 + HO2 <=> C7O2-33 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30863, 'd13': 2.49756, 'd23': 1.21223},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3086,
+    label = "C7O2-31 + H2O2 <=> C7O2-23 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19661, 'd13': 2.333, 'd23': 1.15546},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3087,
+    label = "C6-16 + HO2 <=> C6H1-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20965, 'd13': 2.51466, 'd23': 1.30889},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3088,
+    label = "C6-16 + HO2 <=> C6H1-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30557, 'd13': 2.50184, 'd23': 1.20848},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3089,
+    label = "C6-16 + HO2 <=> H2O2 + C6H1-23",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33344, 'd13': 2.51033, 'd23': 1.18387},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3090,
+    label = "C10O1-3 + O <=> C10H1O1 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28723, 'd13': 2.50891, 'd23': 1.22482},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3091,
+    label = "C10O1-5 + H2O2 <=> C10O1-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26245, 'd13': 2.52904, 'd23': 1.27718},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3092,
+    label = "C10H1O1-2 + H2O2 <=> C10O1-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31669, 'd13': 2.51507, 'd23': 1.19884},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3093,
+    label = "C6O1-17 + HO2 <=> C6O1-63 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26416, 'd13': 2.52883, 'd23': 1.28706},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3094,
+    label = "C6O1-17 + HO2 <=> C6H1O1-54 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32993, 'd13': 2.49267, 'd23': 1.19727},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3095,
+    label = "C6O1-17 + HO2 <=> C6H1O1-60 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2034, 'd13': 2.49691, 'd23': 1.30634},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3096,
+    label = "C6O1-17 + HO2 <=> C6H1O1-64 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19734, 'd13': 2.51369, 'd23': 1.31989},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3097,
+    label = "C6O1-17 + HO2 <=> C6H1O1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30473, 'd13': 2.51495, 'd23': 1.21165},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3098,
+    label = "C8O2-32 + H2O2 <=> C8O2-2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19527, 'd13': 2.33444, 'd23': 1.15932},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3099,
+    label = "C9O2-3 + H2O2 <=> C9O2-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20518, 'd13': 2.33563, 'd23': 1.14118},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3100,
+    label = "C7-23 + HO2 <=> C7H1-68 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3091, 'd13': 2.51545, 'd23': 1.20983},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3101,
+    label = "C7-23 + HO2 <=> C7H1-52 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2953, 'd13': 2.50382, 'd23': 1.21749},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3102,
+    label = "C7-23 + HO2 <=> C7H1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20848, 'd13': 2.51446, 'd23': 1.31058},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3103,
+    label = "C7-23 + HO2 <=> H2O2 + C7H1-42",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18422, 'd13': 2.51002, 'd23': 1.33163},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3104,
+    label = "C10O1-8 + HO2 <=> C10O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29614, 'd13': 2.53794, 'd23': 1.26296},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3105,
+    label = "C7O1-11 + HO2 <=> C7O1-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25692, 'd13': 2.55275, 'd23': 1.3093},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3106,
+    label = "C7O1-11 + HO2 <=> C7H1O1-17 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20899, 'd13': 2.51479, 'd23': 1.30627},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3107,
+    label = "C8-19 + HO2 <=> C8H1-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21576, 'd13': 2.51307, 'd23': 1.3035},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3108,
+    label = "C8-19 + HO2 <=> C8H1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3094, 'd13': 2.5142, 'd23': 1.20864},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3109,
+    label = "C8-19 + HO2 <=> C8H1-31 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2089, 'd13': 2.50225, 'd23': 1.30519},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3110,
+    label = "C8-19 + HO2 <=> H2O2 + C8H1-35",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33408, 'd13': 2.5112, 'd23': 1.18419},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3111,
+    label = "C10O1 + HO2 <=> C10O1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26885, 'd13': 2.53258, 'd23': 1.27445},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3112,
+    label = "C8O1-3 + HO2 <=> C8H1O1-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30635, 'd13': 2.50749, 'd23': 1.21327},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3113,
+    label = "C9-5 + HO2 <=> C9H1-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31001, 'd13': 2.5187, 'd23': 1.21316},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3114,
+    label = "C9-5 + HO2 <=> C9H1-13 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30347, 'd13': 2.51601, 'd23': 1.21643},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3115,
+    label = "C9-5 + HO2 <=> C9H1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21123, 'd13': 2.51491, 'd23': 1.30404},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3116,
+    label = "C9-5 + HO2 <=> C9H1-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30998, 'd13': 2.50966, 'd23': 1.20394},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3117,
+    label = "C9-5 + HO2 <=> H2O2 + C9H1-10",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18405, 'd13': 2.50647, 'd23': 1.32859},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3118,
+    label = "C9O1-2 + HO2 <=> C9O1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30215, 'd13': 2.54785, 'd23': 1.25958},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3119,
+    label = "C9O1-2 + HO2 <=> C9H1O1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19127, 'd13': 2.50969, 'd23': 1.33361},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3120,
+    label = "C10-11 + HO2 <=> C10H1-11 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21794, 'd13': 2.5026, 'd23': 1.29528},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3121,
+    label = "C10-11 + HO2 <=> C10H1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31262, 'd13': 2.51351, 'd23': 1.20766},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3122,
+    label = "C10-11 + HO2 <=> C10H1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30944, 'd13': 2.51064, 'd23': 1.21071},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3123,
+    label = "C10-11 + HO2 <=> C10H1-15 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20474, 'd13': 2.50886, 'd23': 1.30798},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3124,
+    label = "C10O1-7 + HO2 <=> C10O1-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32359, 'd13': 2.56636, 'd23': 1.24732},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3125,
+    label = "C10O1-7 + HO2 <=> C10H1O1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3071, 'd13': 2.5158, 'd23': 1.21479},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3126,
+    label = "C11-2 + HO2 <=> C11H1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2151, 'd13': 2.51781, 'd23': 1.30285},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3127,
+    label = "C11-2 + HO2 <=> C11H1-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30621, 'd13': 2.50747, 'd23': 1.21177},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3128,
+    label = "C11-2 + HO2 <=> C11H1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30551, 'd13': 2.51652, 'd23': 1.2116},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3129,
+    label = "C11-2 + HO2 <=> H2O2 + C11H1-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18746, 'd13': 2.51145, 'd23': 1.32742},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3130,
+    label = "C11O1 + HO2 <=> C11H1O1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20547, 'd13': 2.51276, 'd23': 1.31371},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3131,
+    label = "C12 + HO2 <=> C12H1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20621, 'd13': 2.51528, 'd23': 1.31613},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3132,
+    label = "C12 + HO2 <=> C12H1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21064, 'd13': 2.51115, 'd23': 1.31042},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3133,
+    label = "C9O2-2 + H2O2 <=> C9O2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.213, 'd13': 2.34415, 'd23': 1.14918},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3134,
+    label = "C7O2-14 + HO2 <=> C7O2-42 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20753, 'd13': 2.34377, 'd23': 1.14985},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3135,
+    label = "C7O2-14 + HO2 <=> C7H1O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30352, 'd13': 2.52355, 'd23': 1.22171},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3136,
+    label = "C7O2-42 + H2O2 <=> C7O2-14 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.13179, 'd13': 2.34708, 'd23': 1.21738},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3137,
+    label = "C6O2-10 + HO2 <=> C6O2-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21548, 'd13': 2.34398, 'd23': 1.14768},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3138,
+    label = "C6O2-10 + HO2 <=> C6H1O2-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31149, 'd13': 2.50736, 'd23': 1.20757},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3139,
+    label = "C6O2-8 + H2O2 <=> C6O2-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19629, 'd13': 2.33641, 'd23': 1.1559},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3140,
+    label = "C5O2-10 + HO2 <=> C5H1O2-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20878, 'd13': 2.50506, 'd23': 1.31048},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3141,
+    label = "C5O2-2 + H2O2 <=> C5O2-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19653, 'd13': 2.33457, 'd23': 1.15807},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3142,
+    label = "C10O1-6 + H2O2 <=> C10O1-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25528, 'd13': 2.55282, 'd23': 1.29903},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3143,
+    label = "C6O1-63 + H2O2 <=> C6O1-17 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2565, 'd13': 2.53545, 'd23': 1.30573},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3144,
+    label = "C4H10O-8 + HO2 <=> C4H9O-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26667, 'd13': 2.32528, 'd23': 1.08447},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3145,
+    label = "C4H10O-8 + HO2 <=> C4H9O-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27733, 'd13': 2.51979, 'd23': 1.2556},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3146,
+    label = "C4H10O-8 + HO2 <=> C4H9O-10 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17544, 'd13': 2.49505, 'd23': 1.34202},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3147,
+    label = "C4H10O-8 + HO2 <=> C4H9O-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20566, 'd13': 2.49908, 'd23': 1.30689},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3148,
+    label = "C4H10O-8 + HO2 <=> H2O2 + C4H9O-11",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33681, 'd13': 2.50777, 'd23': 1.17816},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3149,
+    label = "C4H9O2-2 + HO2 <=> C4H1O2-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34843, 'd13': 2.50318, 'd23': 1.16914},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3150,
+    label = "C10H1O1-4 + H2O2 <=> C10O1-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32012, 'd13': 2.51594, 'd23': 1.20189},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3151,
+    label = "C6H1O1-54 + H2O2 <=> C6O1-17 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21577, 'd13': 2.50918, 'd23': 1.31553},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3152,
+    label = "C5O1-6 + H2O2 <=> C5O1-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31637, 'd13': 2.55165, 'd23': 1.25423},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3153,
+    label = "C3O1-10 + HO2 <=> C3O1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27262, 'd13': 2.34455, 'd23': 1.08722},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3154,
+    label = "C3O1-10 + HO2 <=> C3H1O1-9 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27698, 'd13': 2.52859, 'd23': 1.25621},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3155,
+    label = "C3O1-10 + HO2 <=> C3H1O1-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21721, 'd13': 2.51324, 'd23': 1.30065},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3156,
+    label = "C3O1-10 + HO2 <=> H2O2 + C3H1O1-2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33203, 'd13': 2.50096, 'd23': 1.17854},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3157,
+    label = "C3H7O2-1 + H2O2 <=> C3H8O2-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14863, 'd13': 2.34434, 'd23': 1.21561},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3158,
+    label = "C3H7O2-1 + HO2 <=> C3H1O2-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17517, 'd13': 2.5055, 'd23': 1.33929},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3159,
+    label = "C6H1O1-33 + H2O2 <=> C6O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20244, 'd13': 2.51354, 'd23': 1.31857},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3160,
+    label = "C8H1 + H2O2 <=> C8-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22087, 'd13': 2.51564, 'd23': 1.29834},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3161,
+    label = "C5H1O1-1 + H2O2 <=> C5O1-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30397, 'd13': 2.52125, 'd23': 1.22638},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3162,
+    label = "C6H1O1-60 + H2O2 <=> C6O1-17 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3412, 'd13': 2.51256, 'd23': 1.17204},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3163,
+    label = "C7H1-68 + H2O2 <=> C7-23 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21408, 'd13': 2.51735, 'd23': 1.30379},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3164,
+    label = "C4H9O-6 + HO2 <=> C4H2O1-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19444, 'd13': 2.50027, 'd23': 1.31562},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3165,
+    label = "C6-19 + H2O2 <=> C6-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27369, 'd13': 2.5152, 'd23': 1.24579},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3166,
+    label = "C6O1-59 + H2O2 <=> C6O1-36 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25345, 'd13': 2.51778, 'd23': 1.28447},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3167,
+    label = "C2H6O + HO2 <=> C2H5O-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26719, 'd13': 2.33703, 'd23': 1.08871},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3168,
+    label = "C2H6O + HO2 <=> C2H5O + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26268, 'd13': 2.49142, 'd23': 1.27739},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3169,
+    label = "C2H6O + HO2 <=> H2O2 + C2H5O-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16798, 'd13': 2.47228, 'd23': 1.35379},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3170,
+    label = "C4O3-5 + H2O2 <=> C4O3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19403, 'd13': 2.34102, 'd23': 1.16148},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3171,
+    label = "C3O2-1 + HO2 <=> C3H1O2-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32472, 'd13': 2.50353, 'd23': 1.18694},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3172,
+    label = "C4O1-9 + HO2 <=> C4H1O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26741, 'd13': 2.53743, 'd23': 1.27465},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3173,
+    label = "C4O1-9 + HO2 <=> H2O2 + C4H1O1-8",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16814, 'd13': 2.5059, 'd23': 1.34146},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3174,
+    label = "C4O3-3 + H2O2 <=> C4O3-6 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15481, 'd13': 2.33392, 'd23': 1.20099},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3175,
+    label = "C3O3-6 + H2O2 <=> C3O3-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14461, 'd13': 2.34121, 'd23': 1.21494},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3176,
+    label = "C2H5O2 + H2O2 <=> C2H6O2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.13233, 'd13': 2.34629, 'd23': 1.21632},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3177,
+    label = "C6H1O1-3 + H2O2 <=> C6O1-29 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2996, 'd13': 2.51854, 'd23': 1.22196},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3178,
+    label = "C7H1-61 + H2O2 <=> C7-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30518, 'd13': 2.51872, 'd23': 1.21464},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3179,
+    label = "C5H1O1-26 + H2O2 <=> C5O1-34 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19789, 'd13': 2.49266, 'd23': 1.33109},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3180,
+    label = "C9H1-5 + H2O2 <=> C9-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22204, 'd13': 2.51711, 'd23': 1.29564},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3181,
+    label = "C6H1O1-58 + H2O2 <=> C6O1-36 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20202, 'd13': 2.51196, 'd23': 1.31883},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3182,
+    label = "C6H1O1-70 + H2O2 <=> C6O1-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21339, 'd13': 2.52458, 'd23': 1.31418},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3183,
+    label = "C6H1O1-31 + H2O2 <=> C6O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32398, 'd13': 2.50783, 'd23': 1.19192},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3184,
+    label = "C8H1-5 + H2O2 <=> C8-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20813, 'd13': 2.5167, 'd23': 1.31398},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3185,
+    label = "C5H1-12 + H2O2 <=> C5-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20983, 'd13': 2.51695, 'd23': 1.31256},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3186,
+    label = "C5H1-12 + HO2 <=> H2O2 + C5H2-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18144, 'd13': 2.507, 'd23': 1.33145},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3187,
+    label = "C5H1O1-3 + H2O2 <=> C5O1-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19491, 'd13': 2.51081, 'd23': 1.32184},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3188,
+    label = "C6H1-17 + H2O2 <=> C6-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29781, 'd13': 2.50251, 'd23': 1.21518},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3189,
+    label = "C6H1O1-64 + H2O2 <=> C6O1-17 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31612, 'd13': 2.50177, 'd23': 1.1992},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3190,
+    label = "C7H1-52 + H2O2 <=> C7-23 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30849, 'd13': 2.51461, 'd23': 1.21027},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3191,
+    label = "C5-8 + HO2 <=> H2O2 + C5H1-16",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32111, 'd13': 2.50459, 'd23': 1.1889},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3192,
+    label = "C5O1-26 + H2O2 <=> C5O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24675, 'd13': 2.52625, 'd23': 1.28839},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3193,
+    label = "C4H9O-15 + HO2 <=> H2O2 + C4H1O1-2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17048, 'd13': 2.50868, 'd23': 1.34617},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3194,
+    label = "CH4O + HO2 <=> CH3O-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26767, 'd13': 2.3391, 'd23': 1.08737},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3195,
+    label = "CH4O + HO2 <=> H2O2 + CH3O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30736, 'd13': 2.48359, 'd23': 1.21249},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3196,
+    label = "C4O4-1 + HO2 <=> C4O4-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28409, 'd13': 2.53279, 'd23': 1.26668},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3197,
+    label = "C3O3 + HO2 <=> C3O3-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22451, 'd13': 2.50933, 'd23': 1.30704},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3198,
+    label = "C5O4-7 + HO2 <=> C5O4-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14167, 'd13': 2.33157, 'd23': 1.21193},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3199,
+    label = "C5O4-7 + HO2 <=> C5O4-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30878, 'd13': 2.50169, 'd23': 1.21757},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3200,
+    label = "C5O4-5 + H2O2 <=> C5O4-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18718, 'd13': 2.33873, 'd23': 1.17047},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3201,
+    label = "C5O3-1 + HO2 <=> C5O3-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29017, 'd13': 2.52798, 'd23': 1.26507},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3202,
+    label = "C5O3-1 + HO2 <=> C5H1O3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35124, 'd13': 2.51565, 'd23': 1.17436},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3203,
+    label = "C5O4-4 + HO2 <=> C5O4-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15157, 'd13': 2.34346, 'd23': 1.21033},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3204,
+    label = "C5O4-4 + HO2 <=> C5H1O4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.174, 'd13': 2.50319, 'd23': 1.337},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3205,
+    label = "C5O4-3 + H2O2 <=> C5O4-4 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21037, 'd13': 2.34345, 'd23': 1.1516},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3206,
+    label = "C5O1-22 + HO2 <=> H2O2 + C5H1O1-44",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16977, 'd13': 2.50321, 'd23': 1.34184},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3207,
+    label = "C2H6O-3 + HO2 <=> H2O2 + C2H5O-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30208, 'd13': 2.52018, 'd23': 1.23525},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3208,
+    label = "C2H4O2-1 + HO2 <=> C2H3O2-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16718, 'd13': 2.49711, 'd23': 1.35406},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3209,
+    label = "C2H4O2-1 + HO2 <=> H2O2 + C2H3O2-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35568, 'd13': 2.50834, 'd23': 1.16277},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3210,
+    label = "C3O2-9 + HO2 <=> C3H1O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22348, 'd13': 2.50835, 'd23': 1.30489},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3211,
+    label = "C3O2-9 + HO2 <=> H2O2 + C3H1O2-6",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23684, 'd13': 2.5186, 'd23': 1.3006},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3212,
+    label = "C3O3-7 + HO2 <=> C3O3-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17942, 'd13': 2.50802, 'd23': 1.34163},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3213,
+    label = "C3O3-7 + HO2 <=> C3H1O3-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18959, 'd13': 2.51008, 'd23': 1.33906},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3214,
+    label = "C3O3-7 + HO2 <=> H2O2 + C3H1O3-2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3199, 'd13': 2.50804, 'd23': 1.20111},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3215,
+    label = "C4O3-1 + HO2 <=> C4H1O3-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26521, 'd13': 2.5363, 'd23': 1.28573},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3216,
+    label = "C4O3-1 + HO2 <=> H2O2 + C4H1O3-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22413, 'd13': 2.51717, 'd23': 1.30825},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3217,
+    label = "C4O4-3 + HO2 <=> C4O4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34746, 'd13': 2.49552, 'd23': 1.17446},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3218,
+    label = "C4O4-3 + HO2 <=> C4H1O4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19705, 'd13': 2.50936, 'd23': 1.32368},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3219,
+    label = "C4O4-3 + HO2 <=> C4H1O4-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31085, 'd13': 2.51552, 'd23': 1.21572},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3220,
+    label = "C4O4-3 + HO2 <=> H2O2 + C4H1O4-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30973, 'd13': 2.51628, 'd23': 1.22277},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3221,
+    label = "C5O4-9 + HO2 <=> C5H1O4-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29462, 'd13': 2.52046, 'd23': 1.23959},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3222,
+    label = "CH4O2 + HO2 <=> CH3O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15299, 'd13': 2.34306, 'd23': 1.20863},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3223,
+    label = "CH4O2 + HO2 <=> H2O2 + C1H1O2-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24909, 'd13': 2.51885, 'd23': 1.28338},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3224,
+    label = "CH3O2 + H2O2 <=> CH4O2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20882, 'd13': 2.34312, 'd23': 1.15287},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3225,
+    label = "CH3O2 + HO <=> H2O + C1H1O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27095, 'd13': 2.48318, 'd23': 1.22095},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3226,
+    label = "C2H5 + H2O2 <=> C2H6 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18051, 'd13': 2.502, 'd23': 1.33004},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3227,
+    label = "C2H5 + HO2 <=> H2O2 + C2H1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33401, 'd13': 2.48164, 'd23': 1.15912},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3228,
+    label = "C7H1O1-11 + H2O2 <=> C7O1-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3331, 'd13': 2.49839, 'd23': 1.20455},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3229,
+    label = "C6H11O + H2O2 <=> C6H12O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30684, 'd13': 2.51539, 'd23': 1.21727},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3230,
+    label = "C5H1O1-25 + H2O2 <=> C5O1-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21091, 'd13': 2.51742, 'd23': 1.3168},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3231,
+    label = "C6H1O1-59 + H2O2 <=> C6O1-29 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33211, 'd13': 2.49873, 'd23': 1.20562},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3232,
+    label = "C6H1-13 + H2O2 <=> C6-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31083, 'd13': 2.51265, 'd23': 1.21002},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3233,
+    label = "C5H1O1-43 + H2O2 <=> C5O1-4 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30716, 'd13': 2.5111, 'd23': 1.21036},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3234,
+    label = "C5H1-2 + HO2 <=> H2O2 + C5H2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33107, 'd13': 2.51009, 'd23': 1.18042},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3235,
+    label = "C5H1O1-13 + H2O2 <=> C5O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18106, 'd13': 2.51113, 'd23': 1.33547},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3236,
+    label = "C8H1-22 + H2O2 <=> C8-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20754, 'd13': 2.51814, 'd23': 1.31611},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3237,
+    label = "C4H9O-2 + HO2 <=> H2O2 + C4H2O1-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16996, 'd13': 2.50505, 'd23': 1.34081},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3238,
+    label = "C3H7-1 + HO2 <=> C3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18047, 'd13': 2.48425, 'd23': 1.31261},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3239,
+    label = "C6H1O1-19 + H2O2 <=> C6O1-29 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30993, 'd13': 2.5063, 'd23': 1.20259},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3240,
+    label = "C7H1-6 + H2O2 <=> C7-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20615, 'd13': 2.51324, 'd23': 1.3129},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3241,
+    label = "C5H1O1-6 + H2O2 <=> C5O1-34 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17094, 'd13': 2.4954, 'd23': 1.33813},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3242,
+    label = "C6H1-29 + H2O2 <=> C6-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21801, 'd13': 2.50157, 'd23': 1.29408},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3243,
+    label = "C9H1-1 + H2O2 <=> C9-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29686, 'd13': 2.49836, 'd23': 1.21576},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3244,
+    label = "C6H1O1-15 + H2O2 <=> C6O1-36 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20949, 'd13': 2.49975, 'd23': 1.30468},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3245,
+    label = "C6H1O1-69 + H2O2 <=> C6O1-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20157, 'd13': 2.50758, 'd23': 1.3102},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3246,
+    label = "C8H1-4 + H2O2 <=> C8-5 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18862, 'd13': 2.50466, 'd23': 1.3243},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3247,
+    label = "C6H1O1-6 + H2O2 <=> C6O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21144, 'd13': 2.5119, 'd23': 1.30777},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3248,
+    label = "C8H1-33 + H2O2 <=> C8-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30896, 'd13': 2.51449, 'd23': 1.21051},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3249,
+    label = "C5H1-14 + H2O2 <=> C5-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30786, 'd13': 2.50559, 'd23': 1.20911},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3250,
+    label = "C5H1-14 + HO2 <=> C5H2-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30818, 'd13': 2.50292, 'd23': 1.20697},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3251,
+    label = "C8H1-18 + H2O2 <=> C8-9 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21374, 'd13': 2.51443, 'd23': 1.30651},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3252,
+    label = "C5H1O1-14 + H2O2 <=> C5O1-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19876, 'd13': 2.49924, 'd23': 1.31302},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3253,
+    label = "C6H1-6 + H2O2 <=> C6-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.21009, 'd13': 2.51388, 'd23': 1.30437},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3254,
+    label = "C6H1O1-5 + H2O2 <=> C6O1-17 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32501, 'd13': 2.50184, 'd23': 1.18861},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3255,
+    label = "C7H1-3 + H2O2 <=> C7-23 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31114, 'd13': 2.51398, 'd23': 1.20769},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3256,
+    label = "C4H9O-8 + HO2 <=> C4H2O1-7 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24858, 'd13': 2.49548, 'd23': 1.28721},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3257,
+    label = "C2H5O + HO2 <=> C2O1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16167, 'd13': 2.48024, 'd23': 1.33793},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3258,
+    label = "C6H1O2-1 + H2O2 <=> C6O2-20 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32403, 'd13': 2.50976, 'd23': 1.19449},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3259,
+    label = "C4H1O1-1 + HO2 <=> C4H2O1-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20738, 'd13': 2.49744, 'd23': 1.31585},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3260,
+    label = "C7H13O + H2O2 <=> C7H14O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2847, 'd13': 2.51295, 'd23': 1.24694},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3261,
+    label = "C5O1-14 + H2O2 <=> C5O1-41 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30909, 'd13': 2.5095, 'd23': 1.22971},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3262,
+    label = "C8-2 + H2O2 <=> C8-28 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29394, 'd13': 2.51099, 'd23': 1.22841},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3263,
+    label = "C6O1-60 + H2O2 <=> C6O1-14 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30179, 'd13': 2.51703, 'd23': 1.21671},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3264,
+    label = "C7-18 + H2O2 <=> C7-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28783, 'd13': 2.52007, 'd23': 1.23361},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3265,
+    label = "C5O1-2 + H2O2 <=> C5O1-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30238, 'd13': 2.51506, 'd23': 1.21454},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3266,
+    label = "C6O1-42 + H2O2 <=> C6O1-56 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2936, 'd13': 2.51923, 'd23': 1.22881},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3267,
+    label = "C4H9O-13 + HO2 <=> C4O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25063, 'd13': 2.32866, 'd23': 1.09694},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3268,
+    label = "C6-15 + H2O2 <=> C6-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24085, 'd13': 2.51872, 'd23': 1.2801},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3269,
+    label = "C8-26 + H2O2 <=> C8-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3557, 'd13': 2.50879, 'd23': 1.1556},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3270,
+    label = "C2H3O-1 + H2O2 <=> C2H4O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29971, 'd13': 2.5334, 'd23': 1.25941},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3271,
+    label = "CH3O-1 + H2O2 <=> CH4O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26763, 'd13': 2.33907, 'd23': 1.08735},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3272,
+    label = "C8-15 + HO <=> C8-31 + O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34887, 'd13': 2.49492, 'd23': 1.14606},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3273,
+    label = "C8-31 + HO <=> C8-15 + H2O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19736, 'd13': 2.48909, 'd23': 1.31282},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3274,
+    label = "C8-31 + HO2 <=> H2O2 + C8H1-26",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22863, 'd13': 2.51666, 'd23': 1.30463},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3275,
+    label = "H2O + C8H1O1-2 <=> C8O1 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35777, 'd13': 2.52972, 'd23': 1.18929},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3276,
+    label = "H2O + C8H1O1-3 <=> C8O1-6 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34763, 'd13': 2.49792, 'd23': 1.19563},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3277,
+    label = "H2O + C6H1O2 <=> C6O2-20 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18981, 'd13': 2.50781, 'd23': 1.35624},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3278,
+    label = "H2O + C10H1-13 <=> C10-6 + HO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19945, 'd13': 2.48115, 'd23': 1.3049},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3279,
+    label = "C6O1-47 + HO2 <=> C6O1-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28901, 'd13': 2.5138, 'd23': 1.28186},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3280,
+    label = "C6O1-51 + HO2 <=> C6H1O1-50 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31972, 'd13': 2.49578, 'd23': 1.1921},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3281,
+    label = "C6O1-51 + HO2 <=> C6H1O1-16 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19231, 'd13': 2.48676, 'd23': 1.33862},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3282,
+    label = "C6O1-4 + HO2 <=> C6H1O1-30 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18195, 'd13': 2.51984, 'd23': 1.34568},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3283,
+    label = "C6O1-4 + HO2 <=> C6H1O1-26 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29414, 'd13': 2.52357, 'd23': 1.23689},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3284,
+    label = "C6O3-1 + HO2 <=> C6O3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3194, 'd13': 2.52937, 'd23': 1.22035},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3285,
+    label = "C7O2-29 + HO2 <=> C7O2-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25668, 'd13': 2.55627, 'd23': 1.31313},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3286,
+    label = "C5O2-21 + HO2 <=> C5O2-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27047, 'd13': 2.54137, 'd23': 1.2838},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3287,
+    label = "C7O2-3 + HO2 <=> H2O2 + C7O2-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17311, 'd13': 2.3353, 'd23': 1.18388},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3288,
+    label = "C7O2-28 + HO2 <=> C7O2-8 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26506, 'd13': 2.55299, 'd23': 1.29469},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3289,
+    label = "C7O1-12 + HO2 <=> C7O1-21 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27085, 'd13': 2.54824, 'd23': 1.28506},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3290,
+    label = "C4O2-10 + HO2 <=> C4O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25664, 'd13': 2.53671, 'd23': 1.28931},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3291,
+    label = "C3O2-5 + HO2 <=> C3O2-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25879, 'd13': 2.53408, 'd23': 1.29974},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3292,
+    label = "C8O1-4 + HO2 <=> C8H1O1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29072, 'd13': 2.52562, 'd23': 1.25379},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3293,
+    label = "C3O2-8 + HO2 <=> C3H1O2-4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18535, 'd13': 2.488, 'd23': 1.35587},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3294,
+    label = "C3O2-8 + HO2 <=> C3O2-6 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26883, 'd13': 2.53432, 'd23': 1.28391},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3295,
+    label = "C9O1-5 + HO2 <=> C9H1O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3, 'd13': 2.51514, 'd23': 1.2306},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3296,
+    label = "C9O1-5 + HO2 <=> C9O1-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31811, 'd13': 2.5513, 'd23': 1.25437},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3297,
+    label = "C4O2-8 + HO2 <=> C4H1O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3173, 'd13': 2.50544, 'd23': 1.20147},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3298,
+    label = "C4O2-8 + HO2 <=> C4O2-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28401, 'd13': 2.52866, 'd23': 1.26779},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3299,
+    label = "C3H6O2 + HO2 <=> C3H1O2-5 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34609, 'd13': 2.51032, 'd23': 1.17973},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3300,
+    label = "C3H6O2 + HO2 <=> C3H5O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.2855, 'd13': 2.52075, 'd23': 1.25669},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3301,
+    label = "C2H4O2 + HO2 <=> C2H1O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28784, 'd13': 2.49483, 'd23': 1.25808},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3302,
+    label = "C2H4O2 + HO2 <=> C2H3O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25355, 'd13': 2.56839, 'd23': 1.32628},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3303,
+    label = "C3O3-4 + HO2 <=> C3H1O3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20094, 'd13': 2.51174, 'd23': 1.32433},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3304,
+    label = "C3O3-4 + HO2 <=> C3O3-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24499, 'd13': 2.53059, 'd23': 1.30437},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3305,
+    label = "C3O3-4 + HO2 <=> C3O3-3 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35851, 'd13': 2.50733, 'd23': 1.16081},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3306,
+    label = "CH2O2 + HO2 <=> C1O2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26532, 'd13': 2.50462, 'd23': 1.28207},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3307,
+    label = "C3O4-1 + HO2 <=> C3O4 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28176, 'd13': 2.49388, 'd23': 1.26918},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3308,
+    label = "C3O4-1 + HO2 <=> C3O4-2 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35609, 'd13': 2.49773, 'd23': 1.1641},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3309,
+    label = "C2O3 + HO2 <=> C2O3-1 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34926, 'd13': 2.4963, 'd23': 1.17069},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3310,
+    label = "C5O1-33 + HO2 <=> H2O2 + C5O1-43",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25075, 'd13': 2.5922, 'd23': 1.35162},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3311,
+    label = "C5O1-33 + HO2 <=> H2O2 + C5O1-21",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.06289, 'd13': 2.34168, 'd23': 1.31463},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3312,
+    label = "C5O1-24 + HO2 <=> C5O1-43 + H2O2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26378, 'd13': 2.54821, 'd23': 1.31508},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3313,
+    label = "C7O1-15 + HO2 <=> H2O2 + C7H1O1-19",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.27553, 'd13': 2.53883, 'd23': 1.26862},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3314,
+    label = "H2O2 + C6H1O1-47 <=> C6O1-46 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29771, 'd13': 2.52268, 'd23': 1.23987},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3315,
+    label = "H2O2 + C6H1O1-32 <=> C6O1-26 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32416, 'd13': 2.5157, 'd23': 1.2057},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3316,
+    label = "H2O2 + C10H1-12 <=> C10-6 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23428, 'd13': 2.51571, 'd23': 1.3001},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3317,
+    label = "H2O2 + C4H7O-9 <=> C4H8O-9 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.22894, 'd13': 2.51246, 'd23': 1.30208},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3318,
+    label = "H2O2 + C4H7-2 <=> C4H8-2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23779, 'd13': 2.52649, 'd23': 1.29977},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3319,
+    label = "H2O2 + C5H1O1-15 <=> C5O1-42 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16858, 'd13': 2.50869, 'd23': 1.35864},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3320,
+    label = "H2O2 + C6H1O1-56 <=> C6O1-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18449, 'd13': 2.50957, 'd23': 1.32952},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3321,
+    label = "H2O2 + C6H1O1-61 <=> C6O1-26 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35808, 'd13': 2.50974, 'd23': 1.17},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3322,
+    label = "H2O2 + C5H1O1-37 <=> C5O1-34 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17381, 'd13': 2.51087, 'd23': 1.35318},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3323,
+    label = "H2O2 + C7H1O1-3 <=> C7O1-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32967, 'd13': 2.50855, 'd23': 1.18302},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3324,
+    label = "H2O2 + C5H1O1-27 <=> C5O1-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34546, 'd13': 2.51215, 'd23': 1.16899},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3325,
+    label = "H2O2 + C7H1O1-9 <=> C7O1-24 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19004, 'd13': 2.5094, 'd23': 1.3255},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3326,
+    label = "H2O2 + C8H1-12 <=> C8-28 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32806, 'd13': 2.51093, 'd23': 1.18594},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3327,
+    label = "H2O2 + C6H1O1-23 <=> C6O1-22 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17633, 'd13': 2.50957, 'd23': 1.33675},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3328,
+    label = "H2O2 + C7H1-38 <=> C7-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18536, 'd13': 2.51158, 'd23': 1.32823},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3329,
+    label = "H2O2 + C6H1-30 <=> C6-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33683, 'd13': 2.50764, 'd23': 1.17635},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3330,
+    label = "H2O2 + C5H1O1 <=> C5O1-4 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18434, 'd13': 2.50426, 'd23': 1.33123},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3331,
+    label = "H2O2 + C5H1O1-2 <=> C5O1-31 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23814, 'd13': 2.51995, 'd23': 1.28957},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3332,
+    label = "H2O2 + C3H5O <=> C3H6O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35821, 'd13': 2.50828, 'd23': 1.16736},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3333,
+    label = "H2O2 + C7H13O-1 <=> C7H14O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33408, 'd13': 2.51146, 'd23': 1.18232},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3334,
+    label = "H2O2 + C6H1O1-34 <=> C6H12O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34501, 'd13': 2.50835, 'd23': 1.16939},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3335,
+    label = "H2O2 + C8H1-19 <=> C8-5 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3389, 'd13': 2.50739, 'd23': 1.17608},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3336,
+    label = "H2O2 + C5H1-11 <=> C5-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33462, 'd13': 2.50808, 'd23': 1.17937},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3337,
+    label = "H2O2 + C8H1-1 <=> C8-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18171, 'd13': 2.511, 'd23': 1.33089},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3338,
+    label = "H2O2 + C8H1-38 <=> C8-4 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33337, 'd13': 2.50807, 'd23': 1.18044},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3339,
+    label = "H2O2 + C5H1O1-12 <=> C5O1-15 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34058, 'd13': 2.5064, 'd23': 1.173},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3340,
+    label = "H2O2 + C8H1-15 <=> C8-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18233, 'd13': 2.51243, 'd23': 1.33603},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3341,
+    label = "H2O2 + C8H1-25 <=> C8 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1909, 'd13': 2.51436, 'd23': 1.32573},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3342,
+    label = "H2O2 + C6H1-2 <=> C6-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.1819, 'd13': 2.51071, 'd23': 1.3337},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3343,
+    label = "H2O2 + C4H9O <=> C4H10O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32183, 'd13': 2.51442, 'd23': 1.19718},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3344,
+    label = "H2O2 + C4H9 <=> C4H10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33528, 'd13': 2.5088, 'd23': 1.1793},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3345,
+    label = "H2O2 + C5H1O1-10 <=> C5O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16353, 'd13': 2.51007, 'd23': 1.34935},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3346,
+    label = "H2O2 + C8H1-39 <=> C8-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18312, 'd13': 2.51422, 'd23': 1.33435},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3347,
+    label = "H2O2 + C8H1-32 <=> C8-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33234, 'd13': 2.51335, 'd23': 1.18434},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3348,
+    label = "H2O2 + C6H1O1-41 <=> C6O1-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.3389, 'd13': 2.50949, 'd23': 1.17717},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3349,
+    label = "H2O2 + C7H1-72 <=> C7-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30893, 'd13': 2.51602, 'd23': 1.22265},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3350,
+    label = "H2O2 + C10H1O1 <=> C10O1-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.173, 'd13': 2.51414, 'd23': 1.34197},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3351,
+    label = "H2O2 + C6H1-24 <=> C6-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32952, 'd13': 2.50907, 'd23': 1.18544},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3352,
+    label = "H2O2 + C4H5O-3 <=> C4H6O-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23613, 'd13': 2.51663, 'd23': 1.2979},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3353,
+    label = "H2O2 + C5H1O1-16 <=> C5O1-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24346, 'd13': 2.52308, 'd23': 1.28271},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3354,
+    label = "H2O2 + C8H1-40 <=> C8-12 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28637, 'd13': 2.52118, 'd23': 1.2513},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3355,
+    label = "H2O2 + C3H5 <=> C3H6-2 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.29477, 'd13': 2.51429, 'd23': 1.23787},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3356,
+    label = "H2O2 + C2H3O <=> C2H4O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16972, 'd13': 2.50662, 'd23': 1.35827},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3357,
+    label = "H2O2 + C7H1O1-20 <=> C7O1-10 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32883, 'd13': 2.50198, 'd23': 1.18091},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3358,
+    label = "H2O2 + C6H1O1-67 <=> C6H12O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33723, 'd13': 2.50083, 'd23': 1.17357},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3359,
+    label = "H2O2 + C5H1O1-39 <=> C5O1-32 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15514, 'd13': 2.50752, 'd23': 1.35839},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3360,
+    label = "H2O2 + C6H1O1-46 <=> C6O1-29 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16174, 'd13': 2.5085, 'd23': 1.35296},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3361,
+    label = "H2O2 + C6H1-12 <=> C6-13 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32894, 'd13': 2.5069, 'd23': 1.18269},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3362,
+    label = "H2O2 + C5H1O1-19 <=> C5O1-4 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18276, 'd13': 2.50091, 'd23': 1.32726},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3363,
+    label = "H2O2 + C5H1O1-9 <=> C5O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17318, 'd13': 2.49917, 'd23': 1.33631},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3364,
+    label = "H2O2 + C8H1-46 <=> C8-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32483, 'd13': 2.50705, 'd23': 1.18239},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3365,
+    label = "H2O2 + C8H1-44 <=> C8-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18028, 'd13': 2.51113, 'd23': 1.33891},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3366,
+    label = "H2O2 + C5H1-8 <=> C5-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32849, 'd13': 2.50081, 'd23': 1.18153},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3367,
+    label = "H2O2 + C6H1O1-65 <=> C6O1-29 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18091, 'd13': 2.50502, 'd23': 1.33362},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3368,
+    label = "H2O2 + C6H1O1-39 <=> C6O1-36 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32916, 'd13': 2.50708, 'd23': 1.18275},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3369,
+    label = "H2O2 + C6H1O1-12 <=> C6O1-38 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17357, 'd13': 2.50683, 'd23': 1.33826},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3370,
+    label = "H2O2 + C8H1-24 <=> C8-18 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33123, 'd13': 2.50568, 'd23': 1.17961},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3371,
+    label = "H2O2 + C8H1-30 <=> C8-9 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34077, 'd13': 2.51363, 'd23': 1.17882},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3372,
+    label = "H2O2 + C5H1O1-38 <=> C5O1-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17872, 'd13': 2.50639, 'd23': 1.33227},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3373,
+    label = "H2O2 + C10H1O1-1 <=> C10O1-3 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17548, 'd13': 2.51003, 'd23': 1.33624},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3374,
+    label = "H2O2 + C6H1O1-1 <=> C6O1-17 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18877, 'd13': 2.49064, 'd23': 1.32185},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3375,
+    label = "H2O2 + C7H1-42 <=> C7-23 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18335, 'd13': 2.50996, 'd23': 1.3335},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3376,
+    label = "H2O2 + C6H1-23 <=> C6-16 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33055, 'd13': 2.509, 'd23': 1.18473},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3377,
+    label = "H2O2 + C5H1-4 <=> C5-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.33176, 'd13': 2.50965, 'd23': 1.18222},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3378,
+    label = "H2O2 + C3H7 <=> C3H8-1 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32686, 'd13': 2.50826, 'd23': 1.18443},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3379,
+    label = "H2O2 + CH3O <=> CH4O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24943, 'd13': 2.4846, 'd23': 1.2855},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3380,
+    label = "H2O2 + C9H1-9 <=> C9-7 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26687, 'd13': 2.53697, 'd23': 1.28073},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3381,
+    label = "H2O2 + C2HO <=> C2H2O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.14557, 'd13': 2.4497, 'd23': 1.35486},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3382,
+    label = "H2O2 + CHO <=> CH2O + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.23877, 'd13': 2.4971, 'd23': 1.29412},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3383,
+    label = "H2O2 + C4H9O3-11 <=> C4H10O3-11 + HO2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.15839, 'd13': 2.33565, 'd23': 1.19311},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3384,
+    label = "CH2-1 + HO <=> CH3 + O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17949, 'd13': 2.47881, 'd23': 1.29932},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3385,
+    label = "C4H7O-9 + HO2 <=> H2O2 + C4H2O1-5",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.25719, 'd13': 2.5164, 'd23': 1.29665},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3386,
+    label = "C4H7O-7 + HO2 <=> H2O2 + C4H1O1-12",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20026, 'd13': 2.50662, 'd23': 1.32713},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3387,
+    label = "C5H1-15 + HO2 <=> H2O2 + C5H2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.32434, 'd13': 2.50801, 'd23': 1.19335},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3388,
+    label = "C4H9O + HO2 <=> H2O2 + C4H2O1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.24171, 'd13': 2.50804, 'd23': 1.2941},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3389,
+    label = "C4H1O1-14 + HO2 <=> H2O2 + C4H2O1-6",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.17687, 'd13': 2.50792, 'd23': 1.33571},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3390,
+    label = "C4H9O-4 + HO2 <=> H2O2 + C4H2O1-3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19319, 'd13': 2.49671, 'd23': 1.32561},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3391,
+    label = "C5H1-9 + HO2 <=> H2O2 + C5H2-2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34914, 'd13': 2.50944, 'd23': 1.16542},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3392,
+    label = "C5H1-10 + HO2 <=> H2O2 + C5H1-16",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30262, 'd13': 2.51043, 'd23': 1.21263},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3393,
+    label = "C4H9O-9 + HO2 <=> H2O2 + C4H1O1-2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.28065, 'd13': 2.50424, 'd23': 1.26374},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3394,
+    label = "C3H7 + HO2 <=> H2O2 + C3H2-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.16738, 'd13': 2.49906, 'd23': 1.34209},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3395,
+    label = "C4H9-3 + HO2 <=> H2O2 + C4H2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19357, 'd13': 2.50431, 'd23': 1.31593},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3396,
+    label = "C5H1-4 + HO2 <=> H2O2 + C5H2-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31674, 'd13': 2.50619, 'd23': 1.19576},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3397,
+    label = "C4H9O-11 + HO2 <=> H2O2 + C4H2O1-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18924, 'd13': 2.51164, 'd23': 1.32565},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3398,
+    label = "C2H5O-3 + HO2 <=> H2O2 + C2H2O1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.34111, 'd13': 2.50953, 'd23': 1.18485},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3399,
+    label = "CH3 + HO <=> CH4 + O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31432, 'd13': 2.49993, 'd23': 1.18565},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3400,
+    label = "C6H1-20 + HO2 <=> H2O2 + C6H2",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.31683, 'd13': 2.51372, 'd23': 1.20214},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3401,
+    label = "C5H1O1-46 + HO2 <=> H2O2 + C5H2O1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.30249, 'd13': 2.50298, 'd23': 1.21045},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3402,
+    label = "C5H1O1-24 + HO2 <=> H2O2 + C5H2O1-1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19877, 'd13': 2.51282, 'd23': 1.31509},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3403,
+    label = "C5H1O1-36 + HO2 <=> H2O2 + C5H2O1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18207, 'd13': 2.4742, 'd23': 1.32978},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3404,
+    label = "C4H5 + HO2 <=> H2O2 + C4H1",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.19192, 'd13': 2.49892, 'd23': 1.31891},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3405,
+    label = "CHO + HO2 <=> H2O2 + CO",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.26929, 'd13': 2.59361, 'd23': 1.35213},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3406,
+    label = "HO + C6O1-3 <=> C6O1-44 + O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.07281, 'd13': 2.3229, 'd23': 1.31134},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3407,
+    label = "HO + CHO3 <=> CH2O3 + O",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.20109, 'd13': 2.30434, 'd23': 1.13564},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3408,
+    label = "HO2 + C4H9O3-11 <=> H2O2 + C4H1O3-4",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.18011, 'd13': 2.51437, 'd23': 1.33631},
+        method = 'm062x/6-311+G(2df,2p)',
+    ),
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+)
+
+entry(
+    index = 3409,
+    label = "HO2 + C1O3 <=> H2O2 + C1H1O3",
+    degeneracy = 1.0,
+    kinetics = DistanceData(
+        distances = {'d12': 1.35337, 'd13': 2.47972, 'd23': 1.17131},
         method = 'm062x/6-311+G(2df,2p)',
     ),
     shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
