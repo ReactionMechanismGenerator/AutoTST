@@ -28,16 +28,17 @@
 ################################################################################
 
 import os
-from autotst.reaction import *
-from autotst.molecule import *
-from autotst.geometry import *
+import itertools
+import logging
+import numpy as np
+
+from autotst.reaction import AutoTST_Reaction, AutoTST_TS
+from autotst.molecule import AutoTST_Molecule
+from autotst.calculators.vibrational_analysis import Vibrational_Analysis
+
 from ase.io.gaussian import read_gaussian, read_gaussian_out
+from ase.calculators.gaussian import Gaussian
 
-from autotst.calculators.vibrational_analysis import *
-
-from ase.calculators.gaussian import *
-
-from ase.optimize import BFGS
 
 class AutoTST_Gaussian:
 
@@ -219,51 +220,195 @@ class AutoTST_Gaussian:
         AutoTST object that you want to run calculations on
         calc: (ase.calculators.calculator) the calculator that you want to run
         """
+
+        short_file_name = calc.label.replace("left", "(").replace("right", ")") + ".log"
+        old_long_file_name = os.path.join(calc.scratch, calc.label + ".log")
+        new_long_file_name = os.path.join(calc.scratch, calc.label.replace("left", "(").replace("right", ")") + ".log")
+
         if isinstance(autotst_object, AutoTST_Molecule):
-            if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-                calc.calculate(autotst_object.ase_molecule)
-            autotst_object.ase_molecule = read_gaussian_out(os.path.join(calc.scratch, calc.label + ".log"))
-            autotst_object.update_from_ase_mol()
+
+            # Seeing if the file exists
+            if not os.path.exists(new_long_file_name):
+                # File doesn't exist, running calculations
+                logging.info("Starting calculation for {}...".format(short_file_name))
+                try:
+                    calc.calculate(autotst_object.ase_molecule)
+                    # reading in results
+                    autotst_object.ase_molecule = read_gaussian_out(old_long_file_name)
+                    autotst_object.update_from_ase_mol()
+                    return autotst_object, True
+                except: #TODO: add error for seg fault
+                    # first calc failed, trying it once more
+                    logging.info("Failed first attempt for {}. Trying it once more...".format(short_file_name))
+                    try:
+                        calc.calculate(autotst_object.ase_molecule)
+                        autotst_object.ase_molecule = read_gaussian_out(old_long_file_name)
+                        autotst_object.update_from_ase_mol()
+                        return autotst_object, True
+                    except: #TODO: add error for seg fault
+                        logging.info("{} failed first and second attempt...".format(short_file_name))
+                        return autotst_object, False
+
+            else:
+                # We found an old file... it should be fixed
+                logging.info("Found previous file for {}, verifying it...".format(new_long_file_name))
+                if self.verify_output_file(new_long_file_name):
+                    logging.info("Old output file verified, reading it in...")
+                    autotst_object.ase_molecule = read_gaussian_out(new_long_file_name)
+                    autotst_object.update_from_ase_mol()
+                    return autotst_object, True
+
+                else:
+                    logging.info("Could not verify output file, attempting to run one last time...")
+                    try:
+                        calc.calculate(autotst_object.ase_molecule)
+                        autotst_object.ase_molecule = read_gaussian_out(old_long_file_name)
+                        autotst_object.update_from_ase_mol()
+                        return autotst_object, True
+
+                    except: #TODO: add error for seg fault
+                        logging.info("{} failed... again...".format(short_file_name))
+                        return autotst_object, False
 
         elif isinstance(autotst_object, AutoTST_Reaction):
-            if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-                calc.calculate(autotst_object.ts.ase_ts)
-            autotst_object.ts.ase_ts = read_gaussian_out(os.path.join(calc.scratch, calc.label + ".log"))
-            autotst_object.ts.update_from_ase_ts()
+
+            # Seeing if the file exists
+            if not os.path.exists(new_long_file_name):
+                # File doesn't exist, running calculations
+                logging.info("Starting calculation for {}...".format(short_file_name))
+                try:
+                    calc.calculate(autotst_object.ts.ase_ts)
+                    # reading in results
+                    autotst_object.ts.ase_ts = read_gaussian_out(old_long_file_name)
+                    autotst_object.ts.update_from_ase_ts()
+                    return autotst_object, True
+                except: #TODO: add error for seg fault
+                    # first calc failed, trying it once more
+                    logging.info("Failed first attempt for {}. Trying it once more...".format(short_file_name))
+                    try:
+                        calc.calculate(autotst_object.ts.ase_ts)
+                        autotst_object.ts.ase_ts = read_gaussian_out(old_long_file_name)
+                        autotst_object.ts.update_from_ase_ts()
+                        return autotst_object, True
+                    except: #TODO: add error for seg fault
+                        logging.info("{} failed first and second attempt...".format(short_file_name))
+                        return autotst_object, False
+
+            else:
+                # We found an old file... it should be fixed
+                logging.info("Found previous file for {}, verifying it...".format(new_long_file_name))
+                if self.verify_output_file(new_long_file_name):
+                    logging.info("Old output file verified, reading it in...")
+                    autotst_object.ts.ase_ts = read_gaussian_out(new_long_file_name)
+                    autotst_object.ts.update_from_ase_ts()
+                    return autotst_object, True
+
+                else:
+                    logging.info("Could not verify output file, attempting to run one last time...")
+                    try:
+                        calc.calculate(autotst_object.ts.ase_ts)
+                        autotst_object.ts.ase_ts = read_gaussian_out(old_long_file_name)
+                        autotst_object.ts.update_from_ase_ts()
+                        return autotst_object, True
+
+                    except: #TODO: add error for seg fault
+                        logging.info("{} failed... again...".format(short_file_name))
+                        return autotst_object, False
 
         elif isinstance(autotst_object, AutoTST_TS):
-            if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-                calc.calculate(autotst_object.ase_ts)
-            autotst_object.ase_ts = read_gaussian_out(os.path.join(calc.scratch, calc.label + ".log"))
-            autotst_object.update_from_ase_ts()
 
-        return autotst_object
+            # Seeing if the file exists
+            if not os.path.exists(new_long_file_name):
+                # File doesn't exist, running calculations
+                logging.info("Starting calculation for {}...".format(short_file_name))
+                try:
+                    calc.calculate(autotst_object.ase_ts)
+                    # reading in results
+                    autotst_object.ase_ts = read_gaussian_out(old_long_file_name)
+                    autotst_object.update_from_ase_ts()
+                    return autotst_object, True
+                except: #TODO: add error for seg fault
+                    # first calc failed, trying it once more
+                    logging.info("Failed first attempt for {}. Trying it once more...".format(short_file_name))
+                    try:
+                        calc.calculate(autotst_object.ase_ts)
+                        autotst_object.ase_ts = read_gaussian_out(old_long_file_name)
+                        autotst_object.update_from_ase_ts()
+                        return autotst_object, True
+                    except: #TODO: add error for seg fault
+                        logging.info("{} failed first and second attempt...".format(short_file_name))
+                        return autotst_object, False
+
+            else:
+                # We found an old file... it should be fixed
+                logging.info("Found previous file for {}, verifying it...".format(new_long_file_name))
+                if self.verify_output_file(new_long_file_name):
+                    logging.info("Old output file verified, reading it in...")
+                    autotst_object.ase_ts = read_gaussian_out(new_long_file_name)
+                    autotst_object.update_from_ase_ts()
+                    return autotst_object, True
+
+                else:
+                    logging.info("Could not verify output file, attempting to run one last time...")
+                    try:
+                        calc.calculate(autotst_object.ase_ts)
+                        autotst_object.ase_ts = read_gaussian_out(old_long_file_name)
+                        autotst_object.update_from_ase_ts()
+                        return autotst_object, True
+
+                    except: #TODO: add error for seg fault
+                        logging.info("{} failed... again...".format(short_file_name))
+                        return autotst_object, False
+
+
+    def verify_output_file(self, path):
+        "A method to verify output files and make sure that they successfully converged, if not, re-running them"
+
+        f = open(path, "r")
+        file_lines = f.readlines()[-5:]
+        verified = False
+        for file_line in file_lines:
+            if " Normal termination" in file_line:
+                verified = True
+
+        return verified
 
     def run_reactants_and_products(self):
         "A method to run the calculations for all reactants and products"
+
+        bools = []
         for mol, calc in self.reactant_calcs.iteritems():
-            mol = self.calculate(mol, calc)
+            mol, bool = self.calculate(mol, calc)
+            self.fix_io_file(calc)
+            bools.append(bool)
 
         for mol, calc in self.product_calcs.iteritems():
-            mol = self.calculate(mol, calc)
+            mol, bool = self.calculate(mol, calc)
+            self.fix_io_file(calc)
+            bools.append(bool)
+
+        return np.array(bools).all()
 
     def run_shell(self):
         "A method to run the shell optimization with the reaction center frozen"
         logging.info("Running shell optimization with center frozen...")
-        self.reaction = self.calculate(self.reaction, self.shell_calc)
+        self.reaction, bool = self.calculate(self.reaction, self.shell_calc)
         logging.info("Shell optimization complete!")
+        return bool
 
     def run_center(self):
         "A method to run the reaction center optimization with the shell frozen"
         logging.info("Running center optimization with shell frozen...")
-        self.reaction = self.calculate(self.reaction, self.center_calc)
+        self.reaction, bool = self.calculate(self.reaction, self.center_calc)
         logging.info("Center optimization complete!")
+        return bool
 
     def run_overall(self):
         "A method to run the optimization of the entire TS"
         logging.info("Running overall optimization...")
-        self.reaction = self.calculate(self.reaction, self.overall_calc)
+        self.reaction, bool = self.calculate(self.reaction, self.overall_calc)
         logging.info("Overall optimization complete!")
+        return bool
 
     def run_irc(self):
         "A method to run the IRC calculation"
@@ -275,7 +420,7 @@ class AutoTST_Gaussian:
             pass
         logging.info("IRC calc complete!")
 
-    def validate_irc(self):
+    def validate_irc(self): #TODO: need to add more verification here
         logging.info("Validating IRC file...")
         irc_path = os.path.join(self.irc_calc.scratch, self.irc_calc.label + ".log")
         if not os.path.exists(irc_path):
@@ -316,15 +461,24 @@ class AutoTST_Gaussian:
         result: (bool) A bool to tell you if an AutoTST run successfully
         converged on a verified TS.
         """
+        result = False
+        r_and_p = self.run_reactants_and_products()
+        if not r_and_p:
+            return result
+        shell = self.run_shell()
+        self.fix_io_file(self.shell_calc)
+        if not shell:
+            return result
+        center = self.run_center()
+        self.fix_io_file(self.center_calc)
+        if not center:
+            return result
+        overall = self.run_overall()
+        self.fix_io_file(self.overall_calc)
+        if not overall:
+            return result
 
-        self.run_shell()
-        self.run_center()
-        self.run_overall()
-
-        logging.info("Fixing file names...")
-        self.fix_io_files()
-
-        vib = Vibrational_Analysis(self.reaction)
+        vib = Vibrational_Analysis(reaction=self.reaction, scratch=self.scratch)
         logging.info("Performing Vibrational Analysis...")
         if vibrational_analysis and vib.validate_ts():
             logging.info("Vibrational analysis successful! Successfully arrived at a TS.")

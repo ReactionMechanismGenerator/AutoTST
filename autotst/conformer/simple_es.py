@@ -154,10 +154,12 @@ def perform_simple_es(multi_object,
 
         top = df.iloc[:int(top_population), :]
 
+        stats = top.describe()
+
         if gen_number >= max_generations:
             complete = True
             logging.info("Max generations reached. Simple ES complete.")
-        if top.std()[0] / top.mean()[0] < tolerance:
+        if stats.loc["std"][0] / abs(stats.loc["max"][0] - stats.loc["min"][0]) < tolerance:
             complete = True
             logging.info("Cutoff criteria reached. Simple ES complete.")
 

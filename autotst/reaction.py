@@ -32,23 +32,14 @@ import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
-import re
-import imp
-import itertools
-import random
+
 import numpy as np
-from numpy import array
-import pandas as pd
 
 import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
 
 from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit import rdBase
-from rdkit.Chem.rdMolTransforms import *
-from rdkit.Chem.rdChemReactions import ChemicalReaction
-from rdkit.Chem import AllChem
 
+from rdkit.Chem import AllChem
 from rdkit.Chem.Pharm3D import EmbedLib
 
 try:
@@ -56,16 +47,19 @@ try:
 except ImportError:
     logging.info("Error importing py3Dmol")
 
+import ase
+
+import rmgpy
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
-from rmgpy.reaction import Reaction, _isomorphicSpeciesList
+from rmgpy.reaction import Reaction, _isomorphicSpeciesList, ReactionError
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
 # AutoTST imports
 from autotst.database import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
-from autotst.molecule import *
-from autotst.geometry import *
+from autotst.molecule import AutoTST_Molecule
+from autotst.geometry import Torsion, Angle, Bond
 
 
 ### Currently this is set up to only work with H_Abstraction
@@ -74,7 +68,6 @@ from autotst.geometry import *
 
 
 class AutoTST_Reaction():
-
     """
     A class to describe reactions in 3D in ase, rdkit and rmg.
 
@@ -84,22 +77,29 @@ class AutoTST_Reaction():
     * rmg_reaction (RMG Reaction): an RMG Reaction object that describes the reaction of interest
 
     """
-
+    rmg_database = None   # will be an RMGDatabase instance, once loaded.
+    ts_databases = dict() # a dictionary will have reaction family names as keys and TransitionStates instances as values, once loaded.
+    possible_families = [ # These families (and only these) will be loaded from both RMG and AutoTST databases
+        "Disproportionation",
+        "H_Abstraction",
+        "intra_H_migration"
+    ]
 
     def __init__(self, label=None, reaction_family=None, rmg_reaction=None):
 
         #assert label, "Please provde a reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products."
         assert reaction_family, "Please provide a reaction family."
         assert (label or rmg_reaction), "An rmg_reaction or label needs to be provided."
+        assert reaction_family in self.possible_families, "Reaction family is not supported by AutoTST. ({} is not one of {})".format(reaction_family, sorted(self.possible_families))
 
         self.label = label
         self.reaction_family = reaction_family
-
-        self.load_database()
-
+        self.load_databases()
+        self.ts_database = self.ts_databases[reaction_family] # a bit clumsy, but saves refactoring code for now.
+        self._ts = None
+        self._distance_data = None
 
         if rmg_reaction:
-
             reactant_mols = []
             product_mols = []
 
@@ -139,56 +139,87 @@ class AutoTST_Reaction():
             logging.info("Family provided: {}".format(reaction_family))
             self.get_reactants_and_products()
 
-
         self.get_rmg_reactions()
-        self.create_ts_geometries()
 
     def __repr__(self):
         return '<AutoTST Reaction "{0}">'.format(self.label)
 
-    def load_database(self):
+    @property
+    def ts(self):
+        """
+        The AutoTST_TS transition state for this reaction.
 
-        possible_families = [
-            "disproportionation",
-            "h_abstraction",
-            "intra_h_migration"
-        ]
+        Calls create_ts_geometries() if it has not previously been found.
+        To update, call create_ts_geometries() manually.
+        """
+        if self._ts is None:
+            self.create_ts_geometries()
+        return self._ts
 
-        assert self.reaction_family.lower() in possible_families, "Reaction family is not supported by AutoTST."
+    @property
+    def distance_data(self):
+        """
+        The distance data.
+
+        Calls generate_distance_data() if it has not previously been found.
+        To update, call create_distance_data()
+        :return:
+        """
+        if self._distance_data is None:
+            self.generate_distance_data()
+        return self._distance_data
+
+    @classmethod
+    def load_databases(cls, force_reload=False):
+        """
+        Load the RMG and AutoTST databases, if they have not already been loaded,
+        into the class level variables where they are stored.
+
+        :param force_reload: if set to True then forces a reload, even if already loaded.
+        :return: None
+        """
+        if cls.rmg_database and cls.ts_databases and not force_reload:
+            return
+
 
         rmg_database = RMGDatabase()
         database_path = os.path.join(os.path.expandvars('$RMGpy'), "..",  'RMG-database', 'input')
+        logging.info("Loading RMG database from '{}'".format(database_path))
         rmg_database.load(database_path,
-                         kineticsFamilies=[self.reaction_family],
+                         kineticsFamilies=cls.possible_families,
                          transportLibraries=[],
                          reactionLibraries=[],
                          seedMechanisms=[],
                          thermoLibraries=['primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR' ],
                          solvation=False,
                          )
+        cls.rmg_database = rmg_database
 
-        ts_database = TransitionStates()
-        path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", self.reaction_family)
-        global_context = { '__builtins__': None }
-        local_context={'DistanceData': DistanceData}
-        family = rmg_database.kinetics.families[self.reaction_family]
-        ts_database.family = family
-        ts_database.load(path, local_context, global_context)
+        cls.ts_databases = dict()
+        for reaction_family in cls.possible_families:
+            ts_database = TransitionStates()
+            path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", reaction_family)
+            global_context = { '__builtins__': None }
+            local_context={'DistanceData': DistanceData}
+            family = rmg_database.kinetics.families[reaction_family]
+            ts_database.family = family
+            ts_database.load(path, local_context, global_context)
 
-        self.ts_database = ts_database
-        self.rmg_database = rmg_database
+            cls.ts_databases[reaction_family] = ts_database
+
 
     def get_reactants_and_products(self):
-
         """
-        This uses the reaction label to creat multi_molecule objects of
+        This uses the reaction label to create multi_molecule objects.
+        The reaction string should look as follows: r1+r2_p1+p2
+        Where r1, r2, p1, p2 are SMILES strings for the reactants and products.
 
-        :return:
+        Stores results in self.reactant_mols and self.product_mols
+
+        :return: None
         """
         reactants, products = self.label.split("_")
-
         reactants = reactants.split("+")
-
         products = products.split("+")
 
         reactant_mols = []
@@ -206,9 +237,10 @@ class AutoTST_Reaction():
 
     def get_rmg_reactions(self):
         """
-        This method creates a labeled rmg_reaction from the reaction string
+        This method creates a labeled rmg_reaction from the reactant and products.
 
-        the reaction string should look as follows: r1+r2_p1+p2
+        The reactants and products should be stored in self.reactant_mols
+        and self.product_mols, eg. as generated by .get_reactants_and_products()
         """
 
         rmg_reactants = []
@@ -220,16 +252,15 @@ class AutoTST_Reaction():
         for product_mol in self.product_mols:
             rmg_products.append(product_mol.rmg_molecule)
 
-
-
         labeled_r, labeled_p = self.ts_database.family.getLabeledReactantsAndProducts(rmg_reactants, rmg_products)
 
         test_reaction = Reaction(reactants=labeled_r, products=labeled_p, reversible=True)
 
-
         reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
             rmg_reactants,
-            rmg_products)
+            rmg_products,
+            only_families=[self.reaction_family]
+        )
 
         assert reaction_list
 
@@ -238,13 +269,26 @@ class AutoTST_Reaction():
                 if (_isomorphicSpeciesList(reaction.reactants, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.products, test_reaction.products)):
                     reaction.reactants = test_reaction.reactants
                     reaction.products = test_reaction.products
+                    break
 
                 elif (_isomorphicSpeciesList(reaction.products, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.reactants, test_reaction.products)):
                     reaction.products = test_reaction.reactants
                     reaction.reactants = test_reaction.products
-
+                    break
+        else: # didn't break
+            raise ReactionError("Didn't find a {} reaction matching {} in this list: {}".format(self.reaction_family, test_reaction, reaction_list))
         self.rmg_reaction = reaction
-        self.distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(reaction)
+
+    def generate_distance_data(self):
+        """
+        Generates the distance estimates using group additivity.
+        Requires self.rmg_reaction
+        Stores it in self.distance_data.
+
+        :return: None
+        """
+        assert self.rmg_reaction, "try calling get_rmg_reactions() first"
+        self._distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(self.rmg_reaction)
         logging.info("The distance data is as follows: \n{}".format(self.distance_data))
 
     def create_ts_geometries(self):
@@ -256,7 +300,7 @@ class AutoTST_Reaction():
         self.multi_ts: a multi_ts object that contains geometries of a ts in
                         rdkit, ase, and rmg molecules
         """
-        self.ts = AutoTST_TS(self)
+        self._ts = AutoTST_TS(self)
 
 
 class AutoTST_TS():
@@ -514,12 +558,12 @@ class AutoTST_TS():
                         y = float(y)
                         z = float(z)
 
-                        ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
+                        ase_atoms.append(ase.Atom(symbol=symbol, position=(x, y, z)))
 
                     except:
                         continue
 
-        self.ase_ts = Atoms(ase_atoms)
+        self.ase_ts = ase.Atoms(ase_atoms)
 
     def create_rmg_ts_geometry(self):
 
@@ -548,22 +592,19 @@ class AutoTST_TS():
         rdmol_copy = self.rdkit_ts.__copy__()
         rdmol_copy = Chem.RWMol(rdmol_copy)
         rdmol_copy.UpdatePropertyCache(strict=False)
-        for atom in rdmol_copy.GetAtoms():
-            idx = atom.GetIdx()
-            rmg_atom = self.rmg_ts.atoms[idx]
 
-            if rmg_atom.label:
-                if rmg_atom.label == "*1":
-                    atom1_star = atom
-                if rmg_atom.label == "*2":
-                    atom2_star = atom
-                if rmg_atom.label == "*3":
-                    atom3_star = atom
+        for idx, rmg_atom in enumerate(self.rmg_ts.atoms):
+            if rmg_atom.label == "*1":
+                star1_index = idx
+            if rmg_atom.label == "*2":
+                star2_index = idx
+            if rmg_atom.label == "*3":
+                star3_index = idx
 
-        try:
-            rdmol_copy.AddBond(atom1_star.GetIdx(), atom2_star.GetIdx(), order=rdkit.Chem.rdchem.BondType.SINGLE)
-        except RuntimeError:
-            rdmol_copy.AddBond(atom2_star.GetIdx(), atom3_star.GetIdx(), order=rdkit.Chem.rdchem.BondType.SINGLE)
+        if not rdmol_copy.GetBondBetweenAtoms(star1_index, star2_index):
+            rdmol_copy.AddBond(star1_index, star2_index, order=rdkit.Chem.rdchem.BondType.SINGLE)
+        else:
+            rdmol_copy.AddBond(star2_index, star3_index, order=rdkit.Chem.rdchem.BondType.SINGLE)
 
         return rdmol_copy
 
@@ -861,9 +902,9 @@ class AutoTST_TS():
 
             conf.SetAtomPosition(i, [x, y, z])
 
-            ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
+            ase_atoms.append(ase.Atom(symbol=symbol, position=(x, y, z)))
 
-        self.ase_ts = Atoms(ase_atoms)
+        self.ase_ts = ase.Atoms(ase_atoms)
 
         # Getting the new torsion angles
         self.get_ts_torsion_list()

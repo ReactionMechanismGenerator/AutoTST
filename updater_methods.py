@@ -2,19 +2,23 @@
 # -*- coding: utf-8 -*-
 
 import os
-import numpy as np
+import os.path
+import logging
+#FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
+#logging.basicConfig(format=FORMAT, level=logging.iNFO)
+
 import pylab
 import scipy.stats
 import matplotlib
 matplotlib.rc('mathtext', fontset='stixsans', default='regular')
 import re
 import rmgpy
-#from rmgpy.quantity import constants
-#from rmgpy.kinetics import Arrhenius, ArrheniusEP, KineticsData
+from rmgpy.quantity import constants
+from rmgpy.kinetics import Arrhenius, ArrheniusEP, KineticsData
 from autotst.database import *
 from rmgpy.species import Species
 from rmgpy.data.rmg import RMGDatabase
-import logging
+
 from collections import defaultdict, OrderedDict
 import pandas as pd
 import itertools
@@ -326,7 +330,13 @@ def update_databases(reactions, method='', shortDesc='', reaction_family=''):
 
     Saves the new reactions and new species found in those reactions
     """
+
+    import logging
+    import os
+
     assert isinstance(reactions, list), 'Must provide list of auto-TST reaction objects even if there is only one reaction'
+    assert len(reactions) > 0
+
     if reaction_family == '':
         reaction_family = 'H_Abstraction'
         logging.warning('Defaulting to reaction family of {}'.format(reaction_family))
@@ -379,7 +389,7 @@ def update_databases(reactions, method='', shortDesc='', reaction_family=''):
 
 #################################################################################################################################
 
-def TS_Database_Update(families, auto_save = False):
+def TS_Database_Update(families, path = None, auto_save = False):
     """
     Expects list of reaction families
 
@@ -414,7 +424,7 @@ def TS_Database_Update(families, auto_save = False):
     except:
         logging.error("Failed to Load RMG Database at {}".format(database_path))
 
-    Databases = {family:TS_Updater(family, rmg_database) for family in families}
+    Databases = {family:TS_Updater(family, rmg_database, path=path) for family in families}
 
     if auto_save == True:
         save_all_individual_databases(Databases)
@@ -424,7 +434,7 @@ def TS_Database_Update(families, auto_save = False):
 
 def save_all_individual_databases(Databases):
     """
-    Expects dict of family:database
+    Expects dict of family:TS_Updater instance
     """
     for family, database in Databases:
         database.save_database()
@@ -434,7 +444,7 @@ def save_all_individual_databases(Databases):
 
 class TS_Updater:
     """
-    Class for use in updating TS training databases
+    Class for use in updating TS training databases (functional group contributions to TS geo.)
 
     Attributes:
     self.family                 : Relavent Reaction Family
@@ -455,8 +465,8 @@ class TS_Updater:
     self.groupUncertainties     : Uncertainty in the optimized TS geometry for that node/entry
     self.groupValues            : Optimized TS geometry for that node/entry
 
-    self.A                      : Binary Matrix (all combinations of those relavent groups for all reactions) by (relavant groups + 1)
-    self.b                      : Ax=b, x is found, b is (all combinations of relavent groups for all reactions) by (3 distances)
+    self.A                      : Binary Matrix of groups involved in specific reaction, is of size (all combinations of those relavent groups for all reactions) by (relavant groups + 1)
+    self.b                      : Ax=b, x is unknown, b is distance data and is of size (all combinations of relavent groups for all reactions) by (3 distances)
     """
 
     def __init__(self, family, rmg_database, path = None):
@@ -600,7 +610,8 @@ class TS_Updater:
 
     def adjust_distances(self):
         """
-        Creating A and b of Ax=b
+        Creating A and b of Ax=b, where b is distance data and x are groups involved
+        A is optimized group contributions (found next in self.set_entry_data)
         """
         def getAllCombinations(nodeLists):
             """
@@ -657,11 +668,16 @@ class TS_Updater:
     def set_entry_data(self):
         """
         Using A and b to find stats for relavent nodes of tree
+
+        Needs to follow self.adjust_distances() so that self.A and self.b are set
+
+        Pseudo explaination:
+        Groups M and N are associated with a reaction that has a known ts geometry
+        Groups M, N, and the family component must add together to get as close to that geometry as possible
+        M and N are optimized based off of all reactionas they are involved with, and the family component is optimized over all reactions of that family
         """
         import scipy.stats
-        # Groups M and N are associated with a reaction that has a known ts geometry
-        # Groups M, N, and the family component must add together to get as close to that geometry as possible
-        # M and N are optimized based off of all reactionas they are involved with and the family component is optimized over all reactions of that family
+
 
 
         distance_keys = sorted(self.training_set[0][1].keys())
@@ -746,6 +762,11 @@ class TS_Updater:
 
 
     def save_database(self, path = None):
+        """
+        Saves self.database of this instance to path if privided.
+
+        If path not provided, appends TS_groups.py to self.path
+        """
         if path is None and self.path is None:
             logging.error("Need path to save output")
         elif path is None:

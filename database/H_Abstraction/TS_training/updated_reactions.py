@@ -28136,761 +28136,101 @@ entry(
 
 entry(
     index = 2490,
-    label = "CH4 + C5O1-9 <=> C5O1-5 + CH3",
+    label = "CH4 + C6H1O2 <=> C6O2 + CH3-1",
     kinetics = DistanceData(
-        distances = {'d12': 1.282, 'd13': 2.51004, 'd23': 1.23656},
-        method = 'Method goes here',
+        distances = {'d12': 1.37508, 'd13': 2.69041, 'd23': 1.31161},
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2491,
-    label = "CH4 + C6O1-6 <=> C6O1-7 + CH3",
+    label = "H2O + C8H1O1-1 <=> C8O1-1 + HO",
     kinetics = DistanceData(
-        distances = {'d12': 1.282, 'd13': 2.51004, 'd23': 1.23656},
-        method = 'Method goes here',
+        distances = {'d12': 1.40504, 'd13': 2.56295, 'd23': 1.18587},
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2492,
-    label = "CH4 + C6H1O2 <=> C6O2 + CH3",
+    label = "H2O + C8H1O1 <=> C8O1 + HO",
     kinetics = DistanceData(
-        distances = {'d12': 1.37508, 'd13': 2.69041, 'd23': 1.31161},
-        method = 'Method goes here',
+        distances = {'d12': 1.40504, 'd13': 2.56295, 'd23': 1.18587},
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2493,
-    label = "H2O + C8H1O1 <=> C8O1-1 + HO",
+    label = "H2O + C6H1O2 <=> C6O2 + HO",
     kinetics = DistanceData(
         distances = {'d12': 1.40504, 'd13': 2.56295, 'd23': 1.18587},
-        method = 'Method goes here',
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2494,
-    label = "H2O + C8H1O1-1 <=> C8O1 + HO",
+    label = "H2O + C10H1-1 <=> C10 + HO",
     kinetics = DistanceData(
-        distances = {'d12': 1.40504, 'd13': 2.56295, 'd23': 1.18587},
-        method = 'Method goes here',
+        distances = {'d12': 1.34481, 'd13': 2.56505, 'd23': 1.25208},
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2495,
-    label = "H2O + C6H1O2 <=> C6O2 + HO",
+    label = "H2O2 + C6H1O1 <=> C6O1-1 + HO2",
     kinetics = DistanceData(
-        distances = {'d12': 1.40504, 'd13': 2.56295, 'd23': 1.18587},
-        method = 'Method goes here',
+        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2496,
-    label = "H2O + C10H1 <=> C10 + HO",
+    label = "H2O2 + C6H1O1-2 <=> C6O1 + HO2",
     kinetics = DistanceData(
-        distances = {'d12': 1.34481, 'd13': 2.56505, 'd23': 1.25208},
-        method = 'Method goes here',
+        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2497,
-    label = "H2O2 + C6H1O1-8 <=> C6O1-4 + HO2",
+    label = "H2O2 + C10H1 <=> C10 + HO2",
     kinetics = DistanceData(
         distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2498,
-    label = "H2O2 + C6H1O1-10 <=> C6O1 + HO2",
+    label = "H2O2 + C5H1O1 <=> C5O1 + HO2",
     kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
+        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
     index = 2499,
-    label = "H2O2 + C10H1-1 <=> C10 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2500,
-    label = "H2O2 + C4H7O-9 <=> C4H8O-9 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2501,
-    label = "H2O2 + C4H7-2 <=> C4H8-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2502,
-    label = "H2O2 + C5H1O1-2 <=> C5O1-8 + HO2",
+    label = "H2O2 + C6H1O1-1 <=> C6O1-2 + HO2",
     kinetics = DistanceData(
         distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
-        method = 'Method goes here',
+        method = 'm062x/6-311+G(2df,2p)',
     ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2503,
-    label = "H2O2 + C6H1O1-4 <=> C6O1-5 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2504,
-    label = "H2O2 + C6H1O1-6 <=> C6O1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2505,
-    label = "H2O2 + C5H1O1-6 <=> C5O1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2506,
-    label = "H2O2 + C7H1O1-2 <=> C7O1-1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2507,
-    label = "H2O2 + C5H1O1-4 <=> C5O1-3 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2508,
-    label = "H2O2 + C7H1O1 <=> C7O1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2509,
-    label = "H2O2 + C8H1-6 <=> C8-6 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2510,
-    label = "H2O2 + C6H1O1-2 <=> C6O1-10 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2511,
-    label = "H2O2 + C7H1-1 <=> C7 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2512,
-    label = "H2O2 + C6H1-2 <=> C6 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2513,
-    label = "H2O2 + C5H1O1-1 <=> C5O1-5 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2514,
-    label = "H2O2 + C5H1O1-5 <=> C5O1-6 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2515,
-    label = "H2O2 + C3H5O <=> C3H6O + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2516,
-    label = "H2O2 + C7H13O-1 <=> C7H14O + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2517,
-    label = "H2O2 + C6H1O1-12 <=> C6H12O + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2518,
-    label = "H2O2 + C8H1-7 <=> C8-7 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2519,
-    label = "H2O2 + C5H1-1 <=> C5-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2520,
-    label = "H2O2 + C8H1-3 <=> C8-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2521,
-    label = "H2O2 + C8H1-9 <=> C8-1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2522,
-    label = "H2O2 + C5H1O1 <=> C5O1-1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2523,
-    label = "H2O2 + C8H1 <=> C8-5 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2524,
-    label = "H2O2 + C8H1-4 <=> C8-3 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2525,
-    label = "H2O2 + C6H1-3 <=> C6-1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2526,
-    label = "H2O2 + C4H9O <=> C4H10O + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2527,
-    label = "H2O2 + C4H9 <=> C4H10 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2528,
-    label = "H2O2 + C5H1O1-11 <=> C5O1-4 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2529,
-    label = "H2O2 + C8H1-10 <=> C8-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2530,
-    label = "H2O2 + C8H1-8 <=> C8-4 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2531,
-    label = "H2O2 + C6H1O1 <=> C6O1-7 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2532,
-    label = "H2O2 + C7H1-2 <=> C7-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2533,
-    label = "H2O2 + C10H1O1 <=> C10O1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2534,
-    label = "H2O2 + C6H1-1 <=> C6-3 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2535,
-    label = "H2O2 + C4H5O-3 <=> C4H6O-3 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2536,
-    label = "H2O2 + C5H1O1-3 <=> C5O1-10 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2537,
-    label = "H2O2 + C8H1-12 <=> C8-5 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2538,
-    label = "H2O2 + C3H5 <=> C3H6-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.23631, 'd13': 2.54714, 'd23': 1.32119},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2539,
-    label = "H2O2 + C2H3O <=> C2H4O + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.18664, 'd13': 2.53571, 'd23': 1.35796},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2540,
-    label = "H2O2 + C7H1O1-1 <=> C7O1-1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2541,
-    label = "H2O2 + C6H1O1-5 <=> C6H12O + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2542,
-    label = "H2O2 + C5H1O1-9 <=> C5O1-7 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2543,
-    label = "H2O2 + C6H1O1-7 <=> C6O1-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2544,
-    label = "H2O2 + C6H1-4 <=> C6 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2545,
-    label = "H2O2 + C5H1O1-8 <=> C5O1-5 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2546,
-    label = "H2O2 + C5H1O1-10 <=> C5O1-4 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2547,
-    label = "H2O2 + C8H1-11 <=> C8-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2548,
-    label = "H2O2 + C8H1-1 <=> C8-4 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2549,
-    label = "H2O2 + C5H1-2 <=> C5-1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2550,
-    label = "H2O2 + C6H1O1-11 <=> C6O1-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2551,
-    label = "H2O2 + C6H1O1-3 <=> C6O1-8 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2552,
-    label = "H2O2 + C6H1O1-9 <=> C6O1-11 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2553,
-    label = "H2O2 + C8H1-2 <=> C8-4 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2554,
-    label = "H2O2 + C8H1-5 <=> C8 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2555,
-    label = "H2O2 + C5H1O1-7 <=> C5O1-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2556,
-    label = "H2O2 + C10H1O1-1 <=> C10O1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2557,
-    label = "H2O2 + C6H1O1-1 <=> C6O1-9 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2558,
-    label = "H2O2 + C7H1 <=> C7-1 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2559,
-    label = "H2O2 + C6H1 <=> C6-2 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2560,
-    label = "H2O2 + C5H1 <=> C5 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15837, 'd13': 2.52956, 'd23': 1.3784},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2561,
-    label = "H2O2 + C9H1 <=> C9 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.24847, 'd13': 2.5478, 'd23': 1.31215},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2562,
-    label = "H2O2 + C2HO <=> C2H2O + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.14494, 'd13': 2.51524, 'd23': 1.38661},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2563,
-    label = "H2O2 + C4H9O3-11 <=> C4H10O3-11 + HO2",
-    kinetics = DistanceData(
-        distances = {'d12': 1.19868, 'd13': 2.37866, 'd23': 1.19423},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2564,
-    label = "HO + C6O1-1 <=> C6O1-3 + O",
-    kinetics = DistanceData(
-        distances = {'d12': 1.15346, 'd13': 2.34045, 'd23': 1.20269},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
-)
-
-entry(
-    index = 2565,
-    label = "HO2 + C4H9O3-11 <=> H2O2 + C4H1O3",
-    kinetics = DistanceData(
-        distances = {'d12': 1.35152, 'd13': 2.52531, 'd23': 1.18373},
-        method = 'Method goes here',
-    ),
-    shortDesc = u"""description goes here""",
+    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
