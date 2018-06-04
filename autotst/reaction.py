@@ -32,7 +32,6 @@ import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
-
 import numpy as np
 
 import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
@@ -57,9 +56,10 @@ from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
 # AutoTST imports
+import autotst
 from autotst.database import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
 from autotst.molecule import AutoTST_Molecule
-from autotst.geometry import Torsion, Angle, Bond
+from autotst.geometry import Torsion, Angle, Bond, CisTrans
 
 
 ### Currently this is set up to only work with H_Abstraction
@@ -684,8 +684,9 @@ class AutoTST_TS():
 
     def get_ts_torsions(self):
         rdmol_copy = self.create_pseudo_geometry()
-
         torsion_list = []
+        cistrans_list = []
+        
         for bond1 in rdmol_copy.GetBonds():
             atom1 = bond1.GetBeginAtom()
             atom2 = bond1.GetEndAtom()
@@ -711,19 +712,12 @@ class AutoTST_TS():
 
             for bond0 in bond_list1:
                 atomX = bond0.GetOtherAtom(atom1)
-                if atomX.GetAtomicNum() == 1 and len(atomX.GetBonds()) == 1:
-                    # This means that we have a terminal hydrogen, skip this
-                    # NOTE: for H_abstraction TSs, a non teminal H should exist
-                    continue
                 if atomX.GetIdx() != atom2.GetIdx():
                     got_atom0 = True
                     atom0 = atomX
 
             for bond2 in bond_list2:
                 atomY = bond2.GetOtherAtom(atom2)
-                if atomY.GetAtomicNum() == 1 and len(atomY.GetBonds()) == 1:
-                    # This means that we have a terminal hydrogen, skip this
-                    continue
                 if atomY.GetIdx() != atom1.GetIdx():
                     got_atom3 = True
                     atom3 = atomY
@@ -732,15 +726,46 @@ class AutoTST_TS():
                 # Making sure atom0 and atom3 were not found
                 continue
 
+
+
             # Looking to make sure that all of the atoms are properly bonded to eached
             if ("SINGLE" in str(rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()).GetBondType()) and
                 rdmol_copy.GetBondBetweenAtoms(atom0.GetIdx(), atom1.GetIdx()) and
                 rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()) and
                 rdmol_copy.GetBondBetweenAtoms(atom2.GetIdx(), atom3.GetIdx())):
                 torsion_tup = (atom0.GetIdx(), atom1.GetIdx(), atom2.GetIdx(), atom3.GetIdx())
-                torsion_list.append(torsion_tup)
+
+                already_in_list = False
+                for torsion_entry in torsion_list:
+                    a,b,c,d = torsion_entry
+                    e,f,g,h = torsion_tup
+
+                    if (b,c) == (f,g) or (b,c) == (g,f):
+                        already_in_list = True
+
+                if not already_in_list:
+                    torsion_list.append(torsion_tup)
+
+            if ("DOUBLE" in str(rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()).GetBondType()) and
+                rdmol_copy.GetBondBetweenAtoms(atom0.GetIdx(), atom1.GetIdx()) and
+                rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()) and
+                rdmol_copy.GetBondBetweenAtoms(atom2.GetIdx(), atom3.GetIdx())):
+
+                torsion_tup = (atom0.GetIdx(), atom1.GetIdx(), atom2.GetIdx(), atom3.GetIdx())
+
+                already_in_list = False
+                for torsion_entry in torsion_list:
+                    a,b,c,d = torsion_entry
+                    e,f,g,h = torsion_tup
+
+                    if (b,c) == (f,g) or (b,c) == (g,f):
+                        already_in_list = True
+
+                if not already_in_list:
+                    cistrans_list.append(torsion_tup)
 
         torsions = []
+        cistrans = []
         for indices in torsion_list:
             i, j, k, l = indices
 
@@ -758,14 +783,21 @@ class AutoTST_TS():
                 self.rmg_ts.atoms[l].label != "")):
                 reaction_center = "Yes"
 
-            elif ((self.rmg_ts.atoms[i].label != "" and
-                self.rmg_ts.atoms[j].label != "") or (
-                self.rmg_ts.atoms[k].label != "" and
-                self.rmg_ts.atoms[l].label != "")):
-                reaction_center = "Close"
-
             torsions.append(Torsion(indices, dihedral, left_mask, right_mask, reaction_center))
+
+        for indices in cistrans_list:
+            i, j, k, l = indices
+
+            dihedral = self.ase_ts.get_dihedral(i, j, k, l)
+            tor = CisTrans(indices=indices, dihedral=dihedral, left_mask=[], right_mask=[])
+            left_mask = self.get_ts_left_mask(tor)
+            right_mask = self.get_ts_right_mask(tor)
+            reaction_center = "No"
+
+            cistrans.append(CisTrans(indices, dihedral, left_mask, right_mask, reaction_center))
+
         self.torsions = torsions
+        self.cistrans = cistrans
         return self.torsions
 
     def get_ts_right_mask(self, torsion_or_angle):
@@ -774,7 +806,8 @@ class AutoTST_TS():
 
         rdkit_atoms = rdmol_copy.GetAtoms()
 
-        if "Torsion" in str(torsion_or_angle.__class__):
+        if (isinstance(torsion_or_angle, autotst.geometry.Torsion) or
+            isinstance(torsion_or_angle, autotst.geometry.CisTrans)):
 
             L1, L0, R0, R1 = torsion_or_angle.indices
 
@@ -782,7 +815,7 @@ class AutoTST_TS():
             LHS_atoms_index = [L0, L1]
             RHS_atoms_index = [R0, R1]
 
-        elif "Angle" in str(torsion_or_angle.__class__):
+        elif isinstance(torsion_or_angle, autotst.geometry.Angle):
             a1, a2, a3 = torsion_or_angle.indices
             LHS_atoms_index = [a2, a1]
             RHS_atoms_index = [a2, a3]
@@ -814,7 +847,8 @@ class AutoTST_TS():
 
         rdkit_atoms = rdmol_copy.GetAtoms()
 
-        if "Torsion" in str(torsion_or_angle.__class__):
+        if (isinstance(torsion_or_angle, autotst.geometry.Torsion) or
+            isinstance(torsion_or_angle, autotst.geometry.CisTrans)):
 
             L1, L0, R0, R1 = torsion_or_angle.indices
 
@@ -822,7 +856,7 @@ class AutoTST_TS():
             LHS_atoms_index = [L0, L1]
             RHS_atoms_index = [R0, R1]
 
-        elif "Angle" in str(torsion_or_angle.__class__):
+        elif isinstance(torsion_or_angle, autotst.geometry.Angle):
             a1, a2, a3 = torsion_or_angle.indices
             LHS_atoms_index = [a2, a1]
             RHS_atoms_index = [a2, a3]

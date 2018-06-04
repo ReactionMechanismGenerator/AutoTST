@@ -32,6 +32,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
 #from rdkit.Chem.rdMolTransforms import *
+import autotst
 import ase
 from ase import Atom, Atoms
 import rmgpy
@@ -44,7 +45,7 @@ except ImportError:
 
 import numpy as np
 
-from autotst.geometry import Torsion, Angle, Bond
+from autotst.geometry import CisTrans, Torsion, Angle, Bond
 
 
 class AutoTST_Molecule():
@@ -198,6 +199,7 @@ class AutoTST_Molecule():
         rdmol_copy = self.rdkit_molecule
 
         torsion_list = []
+        cistrans_list = []
         for bond1 in rdmol_copy.GetBonds():
             atom1 = bond1.GetBeginAtom()
             atom2 = bond1.GetEndAtom()
@@ -263,7 +265,26 @@ class AutoTST_Molecule():
                 if not already_in_list:
                     torsion_list.append(torsion_tup)
 
+            if ("DOUBLE" in str(rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()).GetBondType()) and
+                rdmol_copy.GetBondBetweenAtoms(atom0.GetIdx(), atom1.GetIdx()) and
+                rdmol_copy.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()) and
+                rdmol_copy.GetBondBetweenAtoms(atom2.GetIdx(), atom3.GetIdx())):
+
+                torsion_tup = (atom0.GetIdx(), atom1.GetIdx(), atom2.GetIdx(), atom3.GetIdx())
+
+                already_in_list = False
+                for torsion_entry in torsion_list:
+                    a,b,c,d = torsion_entry
+                    e,f,g,h = torsion_tup
+
+                    if (b,c) == (f,g) or (b,c) == (g,f):
+                        already_in_list = True
+
+                if not already_in_list:
+                    cistrans_list.append(torsion_tup)
+
         torsions = []
+        cistrans = []
         for indices in torsion_list:
             i, j, k, l = indices
 
@@ -274,7 +295,19 @@ class AutoTST_Molecule():
             reaction_center = "No"
 
             torsions.append(Torsion(indices, dihedral, left_mask, right_mask, reaction_center))
+
+        for indices in cistrans_list:
+            i, j, k, l = indices
+
+            dihedral = self.ase_molecule.get_dihedral(i, j, k, l)
+            tor = CisTrans(indices=indices, dihedral=dihedral, left_mask=[], right_mask=[])
+            left_mask = self.get_left_mask(tor)
+            right_mask = self.get_right_mask(tor)
+            reaction_center = "No"
+
+            cistrans.append(CisTrans(indices, dihedral, left_mask, right_mask, reaction_center))
         self.torsions = torsions
+        self.cistrans = cistrans
         return self.torsions
 
     def get_right_mask(self, torsion_or_angle):
@@ -283,7 +316,8 @@ class AutoTST_Molecule():
 
         rdkit_atoms = rdmol_copy.GetAtoms()
 
-        if "Torsion" in str(torsion_or_angle.__class__):
+        if (isinstance(torsion_or_angle, autotst.geometry.Torsion) or
+            isinstance(torsion_or_angle, autotst.geometry.CisTrans)):
 
             L1, L0, R0, R1 = torsion_or_angle.indices
 
@@ -291,7 +325,7 @@ class AutoTST_Molecule():
             LHS_atoms_index = [L0, L1]
             RHS_atoms_index = [R0, R1]
 
-        elif "Angle" in str(torsion_or_angle.__class__):
+        elif isinstance(torsion_or_angle, autotst.geometry.Angle):
             a1, a2, a3 = torsion_or_angle.indices
             LHS_atoms_index = [a2, a1]
             RHS_atoms_index = [a2, a3]
@@ -323,7 +357,8 @@ class AutoTST_Molecule():
 
         rdkit_atoms = rdmol_copy.GetAtoms()
 
-        if "Torsion" in str(torsion_or_angle.__class__):
+        if (isinstance(torsion_or_angle, autotst.geometry.Torsion) or
+            isinstance(torsion_or_angle, autotst.geometry.CisTrans)):
 
             L1, L0, R0, R1 = torsion_or_angle.indices
 
@@ -331,7 +366,7 @@ class AutoTST_Molecule():
             LHS_atoms_index = [L0, L1]
             RHS_atoms_index = [R0, R1]
 
-        elif "Angle" in str(torsion_or_angle.__class__):
+        elif isinstance(torsion_or_angle, autotst.geometry.Angle):
             a1, a2, a3 = torsion_or_angle.indices
             LHS_atoms_index = [a2, a1]
             RHS_atoms_index = [a2, a3]
@@ -358,149 +393,6 @@ class AutoTST_Molecule():
 
         return left_mask
 
-    #############################################################################
-    """
-    def get_torsion_list(self):
-
-        A method to return a list of the possible torsions in a Multi_Molecule.
-        This uses the RDKit framework to do this.
-
-        RDMol = self.rdkit_molecule
-        torsion_list = []
-        for bond1 in RDMol.GetBonds():
-            atom1 = bond1.GetBeginAtom()
-            atom2 = bond1.GetEndAtom()
-            if atom1.IsInRing() or atom2.IsInRing():
-                # Making sure that bond1 we're looking at are in a ring
-                continue
-
-            bond_list1 = list(atom1.GetBonds())
-            bond_list2 = list(atom2.GetBonds())
-
-            if not len(bond_list1) > 1 and not len(bond_list2) > 1:
-                # Making sure that there are more than one bond attached to
-                # the atoms we're looking at
-                continue
-
-            # Getting the 0th and 3rd atom and insuring that atoms
-            # attached to the 1st and 2nd atom are not terminal hydrogens
-            # We also make sure that all of the atoms are properly bound together
-
-            # If the above are satisfied, we append a tuple of the torsion our torsion_list
-            got_atom0 = False
-            got_atom3 = False
-
-            for bond0 in bond_list1:
-                atomX = bond0.GetOtherAtom(atom1)
-                if atomX.GetAtomicNum() == 1 and len(atomX.GetBonds()) == 1:
-                    # This means that we have a terminal hydrogen, skip this
-                    # NOTE: for H_abstraction TSs, a non teminal H should exist
-                    continue
-                if atomX.GetIdx() != atom2.GetIdx():
-                    got_atom0 = True
-                    atom0 = atomX
-
-            for bond2 in bond_list2:
-                atomY = bond2.GetOtherAtom(atom2)
-                if atomY.GetAtomicNum() == 1 and len(atomY.GetBonds()) == 1:
-                    # This means that we have a terminal hydrogen, skip this
-                    continue
-                if atomY.GetIdx() != atom1.GetIdx():
-                    got_atom3 = True
-                    atom3 = atomY
-
-            if not (got_atom0 and got_atom3):
-                # Making sure atom0 and atom3 were not found
-                continue
-
-            # Looking to make sure that all of the atoms are properly bonded to eached
-            if (
-                RDMol.GetBondBetweenAtoms(atom0.GetIdx(), atom1.GetIdx()) and
-                RDMol.GetBondBetweenAtoms(atom1.GetIdx(), atom2.GetIdx()) and
-                RDMol.GetBondBetweenAtoms(atom2.GetIdx(), atom3.GetIdx())   ) :
-
-                torsion_tup = (atom0.GetIdx(), atom1.GetIdx(), atom2.GetIdx(), atom3.GetIdx())
-                torsion_list.append(torsion_tup)
-
-        self.torsion_list = torsion_list
-        return self.torsion_list
-
-    def get_torsions(self):
-        torsions = []
-        for indices in self.torsion_list:
-            i, j, k, l = indices
-
-            dihedral = self.ase_molecule.get_dihedral(i,j,k,l)
-            tor = Torsion(indices=indices, dihedral=dihedral, left_mask=[], right_mask=[])
-            left_mask = self.get_left_mask(tor)
-            right_mask = self.get_right_mask(tor)
-
-            torsions.append(Torsion(indices, dihedral, left_mask, right_mask))
-        self.torsions = torsions
-        return self.torsions
-
-    def get_left_mask(self, Torsion):
-
-        rdkit_atoms = self.rdkit_molecule.GetAtoms()
-
-        L1, L0, R0, R1 = Torsion.indices
-
-        # trying to get the left hand side of this torsion
-        LHS_atoms_index = [L0, L1]
-        RHS_atoms_index = [R0, R1]
-
-        complete_LHS = False
-        i = 0
-        atom_index = LHS_atoms_index[0]
-        while complete_LHS == False:
-            try:
-                LHS_atom = rdkit_atoms[atom_index]
-                for neighbor in LHS_atom.GetNeighbors():
-                    if (neighbor.GetIdx() in LHS_atoms_index) or (neighbor.GetIdx() in RHS_atoms_index):
-                        continue
-                    else:
-                        LHS_atoms_index.append(neighbor.GetIdx())
-                i +=1
-                atom_index = LHS_atoms_index[i]
-
-            except IndexError:
-                complete_LHS = True
-
-        left_mask = [index in LHS_atoms_index for index in range(len(self.ase_molecule))]
-
-        return left_mask
-
-    def get_right_mask(self, Torsion):
-
-        rdkit_atoms = self.rdkit_molecule.GetAtoms()
-
-        L1, L0, R0, R1 = Torsion.indices
-
-        # trying to get the left hand side of this torsion
-        LHS_atoms_index = [L0, L1]
-        RHS_atoms_index = [R0, R1]
-
-        complete_RHS = False
-        i = 0
-        atom_index = RHS_atoms_index[0]
-        while complete_RHS == False:
-            try:
-                RHS_atom = rdkit_atoms[atom_index]
-                for neighbor in RHS_atom.GetNeighbors():
-                    if (neighbor.GetIdx() in RHS_atoms_index) or (neighbor.GetIdx() in LHS_atoms_index):
-                        continue
-                    else:
-                        RHS_atoms_index.append(neighbor.GetIdx())
-                i +=1
-                atom_index = RHS_atoms_index[i]
-
-            except IndexError:
-                complete_RHS = True
-
-        right_mask = [index in RHS_atoms_index for index in range(len(self.ase_molecule))]
-
-        return right_mask
-    """
     def set_rmg_coords(self, molecule_base):
 
         if molecule_base == "RDKit":
