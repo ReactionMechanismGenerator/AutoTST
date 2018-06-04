@@ -40,9 +40,11 @@ from numpy import array
 import pandas as pd
 
 import autotst
-from autotst.molecule import *
-from autotst.reaction import *
-from autotst.conformer.utilities import *
+from autotst.geometry import Bond, Angle, Torsion, CisTrans
+from autotst.molecule import AutoTST_Molecule
+from autotst.reaction import AutoTST_Reaction, AutoTST_TS
+from autotst.conformer.utilities import update_from_ase, create_initial_population, \
+                                        select_top_population, get_unique_conformers, get_energies
 
 
 def perform_simple_es(autotst_object,

@@ -30,11 +30,13 @@ import itertools
 import logging
 import pandas as pd
 import numpy as np
-import autotst
 import os
+
 import ase
 from ase import Atoms
 from ase import calculators
+
+import autotst
 from autotst.conformer.utilities import update_from_ase, get_unique_conformers, get_energies
 
 def perform_brute_force(autotst_object,

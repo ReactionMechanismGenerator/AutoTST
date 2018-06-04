@@ -50,8 +50,9 @@ from rmgpy.species import Species
 from rmgpy.reaction import Reaction
 
 import autotst
-from autotst.molecule import *
-from autotst.reaction import *
+from autotst.geometry import Bond, Angle, Torsion, CisTrans
+from autotst.molecule import AutoTST_Molecule
+from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 
 def update_from_ase(autotst_obj):
     if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
