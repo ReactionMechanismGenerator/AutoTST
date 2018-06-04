@@ -70,7 +70,9 @@ def perform_ga(autotst_object,
     :param store_directory: the director where you want the pickle files stored
     :param mutation_probability: float of the chance of mutation
     :param delta: the degree change in dihedral angle between each possible dihedral angle
+
     :return results: a DataFrame containing the final generation
+    :return unique_conformers: a dictionary with indicies of unique torsion combinations and entries of energy of those torsions
     """
     assert autotst_object, "No AutoTST object provided..."
     if not initial_pop:

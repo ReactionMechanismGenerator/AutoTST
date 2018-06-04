@@ -43,7 +43,18 @@ def perform_brute_force(autotst_object,
                         delta=float(30),
                         store_results=True,
                         store_directory="."):
+    """
+    Perfoms a brute force conformer analysis of a molecule or a transition state
 
+    :param autotst_object: am autotst_ts, autotst_rxn, or autotst_molecule that you want to perform conformer analysis on
+       * the ase_object of the autotst_object must have a calculator attached to it.
+    :param store_generations: do you want to store pickle files of each generation
+    :param store_directory: the director where you want the pickle files stored
+    :param delta: the degree change in dihedral angle between each possible dihedral angle
+
+    :return results: a DataFrame containing the final generation
+    :return unique_conformers: a dictionary with indicies of unique torsion combinations and entries of energy of those torsions
+    """
     # Takes each of the molecule objects
     if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
         ase_object = autotst_object.ase_molecule
@@ -121,4 +132,6 @@ def perform_brute_force(autotst_object,
         f = os.path.join(store_directory, file_name)
         brute_force.to_csv(f)
 
-    return brute_force
+    unique_conformers = get_unique_conformers(brute_force)
+
+    return brute_force, unique_conformers

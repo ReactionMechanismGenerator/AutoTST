@@ -55,6 +55,9 @@ from autotst.molecule import AutoTST_Molecule
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 
 def update_from_ase(autotst_obj):
+    """
+    A function designed to update all objects based off of their ase objects
+    """
     if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
         autotst_obj.update_from_ase_mol()
 
@@ -119,8 +122,6 @@ def create_initial_population(autotst_object, delta=30, population_size=100):
                 mask=right_mask
             )
 
-
-
         constrained_energy, relaxed_energy, ase_copy = get_energies(autotst_object)
 
         update_from_ase(autotst_object)
@@ -138,7 +139,6 @@ def create_initial_population(autotst_object, delta=30, population_size=100):
 
         population.append([constrained_energy, relaxed_energy] + dihedrals + relaxed_torsions)
 
-
     if len(population) > 0:
         logging.info("Creating a dataframe of the initial population")
         df = pd.DataFrame(population)
@@ -152,7 +152,6 @@ def create_initial_population(autotst_object, delta=30, population_size=100):
         df = df.sort_values("constrained_energy")
 
     return df
-
 
 def select_top_population(df=None, top_percent=0.30):
     """
@@ -175,8 +174,16 @@ def select_top_population(df=None, top_percent=0.30):
 
 
 def get_unique_conformers(df, unique_torsions={}):
-    #ToDo: Need to rework this...
+    """
+    A function designed to identify all low energy conformers within a standard deviation of the data given.
 
+    :param:
+     df: a DataFrame of a population of torsions with columns of `Energy` and `Torsion N`
+     unique_torsions: a dict of unique torsions already present in the dataframe
+
+    :return:
+     unique_torsion: a dict containing all of the unique torsions from the dataframe appended
+    """
     columns = []
 
     for c in df.columns:
