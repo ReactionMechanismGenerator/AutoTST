@@ -114,7 +114,7 @@ def perform_simple_es(autotst_object,
     unique_conformers = {}
     while complete == False:
         gen_number += 1
-        logging.info("Performing GA on generation {}".format(gen_number))
+        logging.info("Performing ES on generation {}".format(gen_number))
 
         results = []
         for individual in range(population_size):
@@ -170,7 +170,7 @@ def perform_simple_es(autotst_object,
             # This portion stores each generation if desired
             logging.info("Saving the DataFrame")
 
-            generation_name = "{0}_ga_generation_{1}.csv".format(label, gen_number)
+            generation_name = "{0}_es_generation_{1}.csv".format(label, gen_number)
             f = os.path.join(store_directory, generation_name)
             df.to_csv(f)
 
@@ -180,10 +180,10 @@ def perform_simple_es(autotst_object,
 
         if gen_number >= max_generations:
             complete = True
-            logging.info("Max generations reached. GA complete.")
+            logging.info("Max generations reached. Simple ES complete.")
         if abs(stats.loc["max"][0] - stats.loc["min"][0]) / stats.loc["max"][0] < tolerance:
             complete = True
-            logging.info("Cutoff criteria reached. GA complete.")
+            logging.info("Cutoff criteria reached. Simple ES complete.")
 
     return df, unique_conformers
 
