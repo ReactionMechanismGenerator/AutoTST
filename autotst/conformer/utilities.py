@@ -42,23 +42,27 @@ import cPickle as pickle
 
 
 # do this before we have a chance to import openbabel!
-import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
-
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit import rdBase
-
+import ase
+from ase.constraints import FixBondLengths
+from ase.optimize import BFGS 
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
 from rmgpy.reaction import Reaction
 
+import autotst
 from autotst.molecule import *
 from autotst.reaction import *
 
-from ase.calculators.morse import *
-from ase.calculators.dftb import *
-from ase.calculators.lj import *
-from ase.calculators.emt import *
+def update_from_ase(autotst_obj):
+    if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
+        autotst_obj.update_from_ase_mol()
+
+    if isinstance(autotst_obj, autotst.reaction.AutoTST_Reaction):
+        autotst_obj.ts.update_from_ase_ts()
+
+    if isinstance(autotst_obj, autotst.reaction.AutoTST_TS):
+        autotst_obj.update_from_ase_ts()
+
 
 def create_initial_population(autotst_object, delta=30, population_size=200):
     """
@@ -78,18 +82,6 @@ def create_initial_population(autotst_object, delta=30, population_size=200):
 
     df = None
 
-    def update(autotst_obj):
-        if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
-            autotst_obj.update_from_ase_mol()
-
-        if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
-            autotst_obj.ts.update_from_ase_ts()
-
-        if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
-            autotst_obj.update_from_ase_ts()
-
-
-
     possible_dihedrals = np.arange(0, 360, delta)
     population = []
     if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
@@ -97,19 +89,16 @@ def create_initial_population(autotst_object, delta=30, population_size=200):
 
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_molecule
-        rdkit_object = autotst_object.rdkit_molecule
 
     if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
         logging.info("The object given is a `AutoTST_Reaction` object")
         torsions = autotst_object.ts.torsions
         ase_object = autotst_object.ts.ase_ts
-        rdkit_object = autotst_object.ts.rdkit_ts
 
     if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
         logging.info("The object given is a `AutoTST_TS` object")
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_ts
-        rdkit_object = autotst_object.rdkit_ts
 
 
     for indivudual in range(population_size):
@@ -129,22 +118,20 @@ def create_initial_population(autotst_object, delta=30, population_size=200):
                 mask=right_mask
             )
 
-        update(autotst_object)
 
-        ff1 = UFFGetMoleculeForceField(rdkit_object)
-        constrained_energy = ff1.CalcEnergy()
 
-        rd_copy = rdkit_object.__copy__()
-        UFFOptimizeMolecule(rd_copy)
-        ff2 = UFFGetMoleculeForceField(rd_copy)
-        relaxed_energy = ff2.CalcEnergy()
+        constrained_energy, relaxed_energy, ase_copy = get_energies(autotst_object)
+
+        update_from_ase(autotst_object)
 
         relaxed_torsions = []
 
         for torsion in torsions:
 
             i, j, k, l = torsion.indices
-            angle = round(rdkit.Chem.rdMolTransforms.GetDihedralDeg(rd_copy.GetConformer(0), i,j,k,l), -1)
+
+            angle = round(ase_copy.get_dihedral(i,j,k,l), -1)
+            angle = int(30 * round(float(angle)/30))
             if angle < 0: angle += 360
             relaxed_torsions.append(angle)
 
@@ -184,3 +171,62 @@ def select_top_population(df=None, top_percent=0.30):
     top = df.iloc[:int(top_population), :]
 
     return top
+
+
+def get_unique_conformers(df, unique_torsions={}):
+    #ToDo: Need to rework this...
+
+    columns = []
+
+    for c in df.columns:
+        if "relaxed_torsion" in c:
+            columns.append(c)
+
+    assert len(columns) > 0
+    assert "relaxed_energy" in df.columns
+
+
+    mini = df[df.constrained_energy < df.constrained_energy.min() + df.constrained_energy.std()].sort_values("constrained_energy")
+    for i, combo in enumerate(mini[columns].values):
+        print combo
+        combo = tuple(combo)
+        energy = mini.constrained_energy.iloc[i]
+        if not combo in unique_torsions.keys():
+            unique_torsions[combo] = energy
+
+    return unique_torsions
+
+
+def get_energies(autotst_object):
+
+    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
+        ase_object = autotst_object.ase_molecule
+        labels = []
+
+    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
+        ase_object = autotst_object.ts.ase_ts
+
+        labels = []
+        for atom in autotst_object.ts.rmg_ts.getLabeledAtoms().values():
+            labels.append(atom.sortingLabel)
+
+    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
+        ase_object = autotst_object.ase_ts
+
+        labels = []
+        for atom in autotst_object.ts.rmg_ts.getLabeledAtoms().values():
+            labels.append(atom.sortingLabel)
+
+    constrained_energy = ase_object.get_potential_energy()
+
+    ase_copy = ase_object.copy()
+    ase_copy.set_calculator(ase_object.get_calculator())
+
+    ase_copy.set_constraint(FixBondLengths(list(itertools.combinations(labels,2))))
+
+    opt = BFGS(ase_copy)
+    opt.run(fmax=0.01)
+
+    relaxed_energy = ase_copy.get_potential_energy()
+
+    return constrained_energy, relaxed_energy, ase_copy
