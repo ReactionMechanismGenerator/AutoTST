@@ -43,11 +43,9 @@ import cPickle as pickle
 
 # do this before we have a chance to import openbabel!
 import ase
+from ase import units
 from ase.constraints import FixBondLengths
 from ase.optimize import BFGS 
-from rmgpy.molecule import Molecule
-from rmgpy.species import Species
-from rmgpy.reaction import Reaction
 
 import autotst
 from autotst.geometry import Bond, Angle, Torsion, CisTrans
@@ -68,7 +66,7 @@ def update_from_ase(autotst_obj):
         autotst_obj.update_from_ase_ts()
 
 
-def create_initial_population(autotst_object, delta=30, population_size=100):
+def create_initial_population(autotst_object, delta=30, population_size=30):
     """
     A function designed to take a multi_molecule, multi_rxn or multi_ts object
     and create an initial population of conformers.
@@ -194,14 +192,12 @@ def get_unique_conformers(df, unique_torsions={}):
     assert "relaxed_energy" in df.columns
 
 
-    mini = df[df.constrained_energy < df.constrained_energy.min() + df.constrained_energy.std()].sort_values("constrained_energy")
+    mini = df[df.relaxed_energy < df.relaxed_energy.min() + units.eV / (units.kcal / units.mol)].sort_values("relaxed_energy")
     for i, combo in enumerate(mini[columns].values):
-        print combo
         combo = tuple(combo)
-        energy = mini.constrained_energy.iloc[i]
+        energy = mini.relaxed_energy.iloc[i]
         if not combo in unique_torsions.keys():
             unique_torsions[combo] = energy
-
     return unique_torsions
 
 

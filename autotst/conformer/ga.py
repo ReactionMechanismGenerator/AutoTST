@@ -50,7 +50,7 @@ from autotst.conformer.utilities import update_from_ase, create_initial_populati
 def perform_ga(autotst_object,
                initial_pop=None,
                top_percent=0.3,
-               tolerance=0.01,
+               tolerance=0.0001,
                max_generations=500,
                store_generations=False,
                store_directory=".",
@@ -75,7 +75,7 @@ def perform_ga(autotst_object,
     :return unique_conformers: a dictionary with indicies of unique torsion combinations and entries of energy of those torsions
     """
     assert autotst_object, "No AutoTST object provided..."
-    if not initial_pop:
+    if initial_pop is None:
         logging.info("No initial population provided, creating one using base parameters...")
         initial_pop = create_initial_population(autotst_object)
 
@@ -83,8 +83,6 @@ def perform_ga(autotst_object,
     top = select_top_population(initial_pop,
                                 top_percent=top_percent
                                 )
-
-    top_population = top.shape[0]
 
     population_size = initial_pop.shape[0]
 
@@ -189,7 +187,7 @@ def perform_ga(autotst_object,
         if gen_number >= max_generations:
             complete = True
             logging.info("Max generations reached. GA complete.")
-        if abs(stats.loc["max"][0] - stats.loc["min"][0]) / stats.loc["max"][0] < tolerance:
+        if abs((stats["constrained_energy"]["max"] - stats["constrained_energy"]["min"]) / stats["constrained_energy"]["min"]) < tolerance:
             complete = True
             logging.info("Cutoff criteria reached. GA complete.")
 
