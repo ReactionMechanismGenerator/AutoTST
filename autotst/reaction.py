@@ -57,7 +57,7 @@ from rmgpy.data.rmg import RMGDatabase
 
 # AutoTST imports
 import autotst
-from autotst.database import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
+from autotst.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
 from autotst.molecule import AutoTST_Molecule
 from autotst.geometry import Torsion, Angle, Bond, CisTrans
 
@@ -87,7 +87,6 @@ class AutoTST_Reaction():
 
     def __init__(self, label=None, reaction_family=None, rmg_reaction=None):
 
-        #assert label, "Please provde a reaction in the following format: r1+r2_p1+p2. Where r1, r2, p1, p2 are SMILES strings for the reactants and products."
         assert reaction_family, "Please provide a reaction family."
         assert (label or rmg_reaction), "An rmg_reaction or label needs to be provided."
         assert reaction_family in self.possible_families, "Reaction family is not supported by AutoTST. ({} is not one of {})".format(reaction_family, sorted(self.possible_families))
@@ -183,7 +182,7 @@ class AutoTST_Reaction():
 
 
         rmg_database = RMGDatabase()
-        database_path = os.path.join(os.path.expandvars('$RMGpy'), "..",  'RMG-database', 'input')
+        database_path = os.path.join(os.path.expandvars('$AUTOTST'), "..",  'RMG-database', 'input')
         logging.info("Loading RMG database from '{}'".format(database_path))
         rmg_database.load(database_path,
                          kineticsFamilies=cls.possible_families,
@@ -198,7 +197,7 @@ class AutoTST_Reaction():
         cls.ts_databases = dict()
         for reaction_family in cls.possible_families:
             ts_database = TransitionStates()
-            path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", reaction_family)
+            path = os.path.join(os.path.expandvars("$AUTOTST"), "..", "AutoTST", "database", reaction_family)
             global_context = { '__builtins__': None }
             local_context={'DistanceData': DistanceData}
             family = rmg_database.kinetics.families[reaction_family]
@@ -297,7 +296,7 @@ class AutoTST_Reaction():
         This will create the geometry in both rdkit and ase
 
         :return:
-        self.multi_ts: a multi_ts object that contains geometries of a ts in
+        self.ts: an autotst object object that contains geometries of a ts in
                         rdkit, ase, and rmg molecules
         """
         self._ts = AutoTST_TS(self)
@@ -477,16 +476,15 @@ class AutoTST_TS():
         """
 
         energy = 0.0
-        minEid = 0;
+        minEid = 0
         lowestE = 9.999999e99;  # start with a very high number, which would never be reached
-        crude = Chem.Mol(rdmol.ToBinary())
 
         for conf in rdmol.GetConformers():
             if boundsMatrix is None:
                 AllChem.UFFOptimizeMolecule(rdmol, confId=conf.GetId())
                 energy = AllChem.UFFGetMoleculeForceField(rdmol, confId=conf.GetId()).CalcEnergy()
             else:
-                eBefore, energy = EmbedLib.OptimizeMol(rdmol, boundsMatrix, atomMatches=atomMatch,
+                _, energy = EmbedLib.OptimizeMol(rdmol, boundsMatrix, atomMatches=atomMatch,
                                                        forceConstant=100000.0)
 
             if energy < lowestE:
@@ -538,6 +536,7 @@ class AutoTST_TS():
         return rdmol, minEid
 
     def create_ase_ts_geometry(self):
+        
 
         mol_list = AllChem.MolToMolBlock(self.rdkit_ts).split('\n')
         ase_atoms = []
@@ -941,4 +940,4 @@ class AutoTST_TS():
         self.ase_ts = ase.Atoms(ase_atoms)
 
         # Getting the new torsion angles
-        self.get_ts_torsion_list()
+        self.get_ts_torsions()

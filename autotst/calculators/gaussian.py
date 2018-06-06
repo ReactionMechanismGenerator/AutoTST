@@ -35,12 +35,13 @@ import numpy as np
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.molecule import AutoTST_Molecule
 from autotst.calculators.vibrational_analysis import Vibrational_Analysis
+from autotst.calculators.calculator import AutoTST_Calculator
 
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian
 
 
-class AutoTST_Gaussian:
+class AutoTST_Gaussian(AutoTST_Calculator):
 
     def __init__(self,
                  autotst_reaction,
@@ -48,7 +49,8 @@ class AutoTST_Gaussian:
                  nprocshared=20,
                  scratch=".",
                  method="m062x",
-                 basis="6-311+g(2df,2p)"):
+                 basis="6-311+g(2df,2p)",
+                 store_directory="."):
         """
         A method to create all of the calculators needed for AutoTST
 
@@ -63,6 +65,7 @@ class AutoTST_Gaussian:
         self.scratch = scratch
         self.method = method
         self.basis = basis
+        self.store_directory = store_directory
 
         self.get_reactant_and_product_calcs(self.mem, self.nprocshared, self.scratch, self.method, self.basis)
 
