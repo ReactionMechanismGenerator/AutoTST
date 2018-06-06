@@ -448,7 +448,7 @@ class TransitionStateDepository(Database):
             longDesc = longDesc.strip(),
             rank = rank,
         )
-        self.entries['{0:d}:{1}'.format(index,label)] = entry
+        self.entries['{0:d}:{1}'.format(index, label)] = entry
         return entry
 
     def saveEntry(self, f, entry):
