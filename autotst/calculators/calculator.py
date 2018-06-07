@@ -51,12 +51,12 @@ class AutoTST_Calculator():
     input and output of `.ts` and `.kinetics` files.
     """
 
-    def __init__(self, autotst_reaction = None, store_directory="."):
+    def __init__(self, autotst_reaction = None, save_directory="."):
         self.autotst_reaction = autotst_reaction
         if autotst_reaction:
             self.label = autotst_reaction.label
         else: self.label = None
-        self.store_directory = store_directory
+        self.save_directory = save_directory
 
     def get_qm_data(self, file_path):
 
@@ -64,11 +64,11 @@ class AutoTST_Calculator():
 
     def get_ts_file_path(self, reaction):
 
-        return os.path.join(self.store_directory, reaction.label + ".ts")
+        return os.path.join(self.save_directory, reaction.label + ".ts")
 
     def get_kinetics_file_path(self, reaction):
 
-        return os.path.join(self.store_directory, reaction.label + ".kinetics")
+        return os.path.join(self.save_directory, reaction.label + ".kinetics")
         
     def save_ts(self, reaction, method, qmData):
         """

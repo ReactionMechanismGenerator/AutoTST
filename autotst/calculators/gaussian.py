@@ -32,6 +32,8 @@ import itertools
 import logging
 import numpy as np
 
+import rmgpy
+
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.molecule import AutoTST_Molecule
 from autotst.calculators.vibrational_analysis import Vibrational_Analysis
@@ -50,7 +52,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                  scratch=".",
                  method="m062x",
                  basis="6-311+g(2df,2p)",
-                 store_directory="."):
+                 save_directory="."):
         """
         A method to create all of the calculators needed for AutoTST
 
@@ -65,7 +67,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         self.scratch = scratch
         self.method = method
         self.basis = basis
-        self.store_directory = store_directory
+        self.save_directory = save_directory
 
         self.get_reactant_and_product_calcs(self.mem, self.nprocshared, self.scratch, self.method, self.basis)
 
@@ -432,23 +434,76 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
             if not os.path.exists(irc_path):
                 logging.info("It seems that the IRC claculation has not been run.")
-                irc_path = False
+                return False
 
-        if irc_path:
-            f = open(irc_path, "r")
-            file_lines = f.readlines()[-5:]
+        f = open(irc_path, "r")
+        file_lines = f.readlines()[-5:]
 
-            for file_line in file_lines:
-                if " Normal termination" in file_line:
-                    logging.info("IRC successfully validated")
-                    self.validated_irc = True
-                else:
-                    logging.info("IRC could not be validated")
-                    self.validated_irc = False
+        completed = False
+        for file_line in file_lines:
+            if " Normal termination" in file_line:
+                logging.info("IRC successfully ran")
+                completed = True
+        if completed == False:
+            logging.info("IRC failed... could not be validated...")
+            return False
+
+        pth1 = list()
+        steps = list()
+        with open(irc_path) as outputFile:
+            for line in outputFile:
+                line = line.strip() 
+
+                if line.startswith('Point Number:'):
+                    if int(line.split()[2]) > 0:
+                        if int(line.split()[-1]) == 1:
+                            ptNum = int(line.split()[2])
+                            pth1.append(ptNum)
+                        else:
+                            pass
+                elif line.startswith('# OF STEPS ='):
+                    numStp = int(line.split()[-1])
+                    steps.append(numStp)
+        # This indexes the coordinate to be used from the parsing
+        if steps == []:
+            logging.error('No steps taken in the IRC calculation!')
+            return False
         else:
-            self.validated_irc = False
+            pth1End = sum(steps[:pth1[-1]])
+            # Compare the reactants and products
+            ircParse = ccread(irc_path)
+            ircParse.logger.setLevel(logging.ERROR) #cf. http://cclib.sourceforge.net/wiki/index.php/Using_cclib#Additional_information
 
-        return self.validated_irc
+            atomcoords = ircParse.atomcoords
+            atomnos = ircParse.atomnos
+            # Convert the IRC geometries into RMG molecules
+            # We don't know which is reactant or product, so take the two at the end of the
+            # paths and compare to the reactants and products
+            mol1 = Molecule()
+            mol1.fromXYZ(atomnos, atomcoords[pth1End])
+            mol2 = Molecule()
+            mol2.fromXYZ(atomnos, atomcoords[-1])
+
+            testReaction = Reaction(
+                                    reactants = mol1.split(),
+                                    products = mol2.split(),
+                                    )
+
+            if isinstance(self.reaction.rmg_reaction.reactants[0], rmgpy.molecule.Molecule):
+                targetReaction = Reaction(
+                                        reactants = [reactant.toSingleBonds() for reactant in self.reaction.rmg_reaction.reactants],
+                                        products = [product.toSingleBonds() for product in self.reaction.rmg_reaction.products],
+                                        )
+            elif isinstance(self.reaction.rmg_reaction.reactants[0], rmgpy.species.Species):
+                targetReaction = Reaction(
+                                        reactants = [reactant.molecule[0].toSingleBonds() for reactant in self.reaction.rmg_reaction.reactants],
+                                        products = [product.molecule[0].toSingleBonds() for product in self.reaction.rmg_reaction.products],
+                                        )
+
+            if targetReaction.isIsomorphic(testReaction):
+                return True
+            else:
+                return False
 
 
     def run_all(self, vibrational_analysis=True):
