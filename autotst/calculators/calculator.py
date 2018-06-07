@@ -100,7 +100,7 @@ class AutoTST_Calculator():
                 resultFile.write('method = "{0!s}"\n'.format(method))
                 resultFile.write('reaction = {0!r}\n'.format(reaction.rmg_reaction))
 
-    def read_ts(self, path):
+    def read_ts_file(self, path):
         """
         Load the specified transition state data file and return the dictionary of its contents.
 
@@ -142,7 +142,7 @@ class AutoTST_Calculator():
             return None
         return local_context
 
-    def read_kinetics(self, path):
+    def read_kinetics_file(self, path):
         """
         Load the specified kinetic data file and return the dictionary of its contents.
 
