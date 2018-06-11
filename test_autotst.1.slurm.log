@@ -8,603 +8,78 @@ transport.py:294 loadGroups INFO Loading transport group database from /home/har
 database.py:167 loadFamilies INFO Loading the user-specified kinetics families from /home/harms.n/Code/RMG-master/../RMG-database/input/kinetics/families
 statmech.py:526 loadGroups INFO Loading frequencies group database from /home/harms.n/Code/RMG-master/../RMG-database/input/statmech/groups...
 database.py:126 load INFO Loading transitions state family groups from /home/harms.n/Code/RMG-master/../AutoTST/database/H_Abstraction/TS_groups.py
+reaction.py:138 __init__ INFO Label provided: CSNC(I)Cl+[O]O_[CH2]SNC(I)Cl+OO
+reaction.py:139 __init__ INFO Family provided: H_Abstraction
 reaction.py:248 get_rmg_reactions INFO The distance data is as follows: 
-DistanceData(distances={'d12': 1.380401,'d13': 2.530343,'d23': 1.157074,}, uncertainties={'d12': 0.385038,'d13': 0.208449,'d23': 0.303191,}, comment=u'Matched node C/H3/Cs ([<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">])\nMatched node OjO ([<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">])\n')
-reaction.py:347 get_labels INFO The labled atoms are [2, 7, 0].
+DistanceData(distances={'d12': 1.357950,'d13': 2.535869,'d23': 1.188636,}, uncertainties={'d12': 0.380357,'d13': 0.219088,'d23': 0.331560,}, comment=u'Matched node CsRHHH ([<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">])\nMatched node OjO ([<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">])\n')
+reaction.py:347 get_labels INFO The labled atoms are [6, 10, 3].
 reaction.py:292 create_rdkit_ts_geometry INFO Initially embedded molecule
 reaction.py:295 create_rdkit_ts_geometry INFO Editing bounds matrix
-reaction.py:362 set_limits INFO For atoms 2 and 7 we have a distance of: 	 1.380401
-reaction.py:362 set_limits INFO For atoms 7 and 0 we have a distance of: 	 1.157074
-reaction.py:362 set_limits INFO For atoms 2 and 0 we have a distance of: 	 2.530343
-reaction.py:417 bm_pre_edit INFO Changing lower limit 2.520343 to 2.457475
-reaction.py:417 bm_pre_edit INFO Changing lower limit 3.65 to 3.26214059416
-reaction.py:417 bm_pre_edit INFO Changing lower limit 2.9 to 2.393074
+reaction.py:362 set_limits INFO For atoms 6 and 10 we have a distance of: 	 1.35795
+reaction.py:362 set_limits INFO For atoms 10 and 3 we have a distance of: 	 1.188636
+reaction.py:362 set_limits INFO For atoms 6 and 3 we have a distance of: 	 2.535869
+reaction.py:417 bm_pre_edit INFO Changing lower limit 3.7 to 3.56016525872
+reaction.py:417 bm_pre_edit INFO Changing lower limit 2.525869 to 2.466586
+reaction.py:417 bm_pre_edit INFO Changing lower limit 2.9 to 2.424636
 reaction.py:299 create_rdkit_ts_geometry INFO Performing triangle smoothing on bounds matrix.
 reaction.py:304 create_rdkit_ts_geometry INFO Now attempting to embed using edited bounds matrix.
-Error importing py3Dmol
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-[09:20:48] 
-
-****
-Pre-condition Violation
-bond already exists
-Violation occurred on line 281 in file /opt/conda/conda-bld/rdkit_1524232522039/work/Code/GraphMol/RWMol.cpp
-Failed Expression: !(boost::edge(atomIdx1, atomIdx2, d_graph).second)
-****
-
-gaussian.py:252 run_shell INFO Running shell optimization with center frozen...
+utilities.py:78 create_initial_population INFO Creating initial population of 200 individuals from random guesses
+utilities.py:114 create_initial_population INFO The object given is a `Multi_Reaction` object
+utilities.py:172 create_initial_population INFO Creating a dataframe of the initial population
+utilities.py:193 select_top_population INFO Selecting the top population
+ga.py:102 perform_ga INFO Performing GA on generation 1
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 1th generation
+ga.py:102 perform_ga INFO Performing GA on generation 2
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 2th generation
+ga.py:102 perform_ga INFO Performing GA on generation 3
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 3th generation
+ga.py:102 perform_ga INFO Performing GA on generation 4
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 4th generation
+ga.py:102 perform_ga INFO Performing GA on generation 5
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 5th generation
+ga.py:102 perform_ga INFO Performing GA on generation 6
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 6th generation
+ga.py:102 perform_ga INFO Performing GA on generation 7
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 7th generation
+ga.py:102 perform_ga INFO Performing GA on generation 8
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 8th generation
+ga.py:102 perform_ga INFO Performing GA on generation 9
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 9th generation
+ga.py:102 perform_ga INFO Performing GA on generation 10
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 10th generation
+ga.py:102 perform_ga INFO Performing GA on generation 11
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 11th generation
+ga.py:102 perform_ga INFO Performing GA on generation 12
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 12th generation
+ga.py:102 perform_ga INFO Performing GA on generation 13
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 13th generation
+ga.py:102 perform_ga INFO Performing GA on generation 14
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 14th generation
+ga.py:102 perform_ga INFO Performing GA on generation 15
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 15th generation
+ga.py:102 perform_ga INFO Performing GA on generation 16
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 16th generation
+ga.py:102 perform_ga INFO Performing GA on generation 17
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 17th generation
+ga.py:102 perform_ga INFO Performing GA on generation 18
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 18th generation
+ga.py:102 perform_ga INFO Performing GA on generation 19
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 19th generation
+ga.py:102 perform_ga INFO Performing GA on generation 20
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 20th generation
+ga.py:102 perform_ga INFO Performing GA on generation 21
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 21th generation
+ga.py:102 perform_ga INFO Performing GA on generation 22
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 22th generation
+ga.py:102 perform_ga INFO Performing GA on generation 23
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 23th generation
+ga.py:102 perform_ga INFO Performing GA on generation 24
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 24th generation
+ga.py:102 perform_ga INFO Performing GA on generation 25
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 25th generation
+ga.py:102 perform_ga INFO Performing GA on generation 26
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 26th generation
+ga.py:102 perform_ga INFO Performing GA on generation 27
+ga.py:143 perform_ga INFO Creating the DataFrame of results for the 27th generation
+ga.py:102 perform_ga INFO Performing GA on generation 28
+slurmstepd: *** JOB 14285127 CANCELLED AT 2018-05-10T17:52:10 *** on compute-3-045

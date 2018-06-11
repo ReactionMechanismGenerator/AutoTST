@@ -1,0 +1,289 @@
+ Entering Gaussian System, Link 0=g09
+ Input=g09.com
+ Output=g09.log
+ Initial command:
+ /shared/apps/gaussian/G09_LINUX_LINDA/g09/l1.exe /home/harms.n/Code/AutoTST/ipython_notebooks/Gau-24711.inp -scrdir=/home/harms.n/Code/AutoTST/ipython_notebooks/
+ Entering Link 1 = /shared/apps/gaussian/G09_LINUX_LINDA/g09/l1.exe PID=     24712.
+  
+ Copyright (c) 1988,1990,1992,1993,1995,1998,2003,2009,2010,
+            Gaussian, Inc.  All Rights Reserved.
+  
+ This is part of the Gaussian(R) 09 program.  It is based on
+ the Gaussian(R) 03 system (copyright 2003, Gaussian, Inc.),
+ the Gaussian(R) 98 system (copyright 1998, Gaussian, Inc.),
+ the Gaussian(R) 94 system (copyright 1995, Gaussian, Inc.),
+ the Gaussian 92(TM) system (copyright 1992, Gaussian, Inc.),
+ the Gaussian 90(TM) system (copyright 1990, Gaussian, Inc.),
+ the Gaussian 88(TM) system (copyright 1988, Gaussian, Inc.),
+ the Gaussian 86(TM) system (copyright 1986, Carnegie Mellon
+ University), and the Gaussian 82(TM) system (copyright 1983,
+ Carnegie Mellon University). Gaussian is a federally registered
+ trademark of Gaussian, Inc.
+  
+ This software contains proprietary and confidential information,
+ including trade secrets, belonging to Gaussian, Inc.
+  
+ This software is provided under written license and may be
+ used, copied, transmitted, or stored only in accord with that
+ written license.
+  
+ The following legend is applicable only to US Government
+ contracts under FAR:
+  
+                    RESTRICTED RIGHTS LEGEND
+  
+ Use, reproduction and disclosure by the US Government is
+ subject to restrictions as set forth in subparagraphs (a)
+ and (c) of the Commercial Computer Software - Restricted
+ Rights clause in FAR 52.227-19.
+  
+ Gaussian, Inc.
+ 340 Quinnipiac St., Bldg. 40, Wallingford CT 06492
+  
+  
+ ---------------------------------------------------------------
+ Warning -- This program may not be used in any manner that
+ competes with the business of Gaussian, Inc. or will provide
+ assistance to any competitor of Gaussian, Inc.  The licensee
+ of this program is prohibited from giving any competitor of
+ Gaussian, Inc. access to this program.  By using this program,
+ the user acknowledges that Gaussian, Inc. is engaged in the
+ business of creating and licensing software in the field of
+ computational chemistry and represents and warrants to the
+ licensee that it is not a competitor of Gaussian, Inc. and that
+ it will not use this program in any manner prohibited above.
+ ---------------------------------------------------------------
+  
+
+ Cite this work as:
+ Gaussian 09, Revision B.01,
+ M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, 
+ M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, B. Mennucci, 
+ G. A. Petersson, H. Nakatsuji, M. Caricato, X. Li, H. P. Hratchian, 
+ A. F. Izmaylov, J. Bloino, G. Zheng, J. L. Sonnenberg, M. Hada, 
+ M. Ehara, K. Toyota, R. Fukuda, J. Hasegawa, M. Ishida, T. Nakajima, 
+ Y. Honda, O. Kitao, H. Nakai, T. Vreven, J. A. Montgomery, Jr., 
+ J. E. Peralta, F. Ogliaro, M. Bearpark, J. J. Heyd, E. Brothers, 
+ K. N. Kudin, V. N. Staroverov, T. Keith, R. Kobayashi, J. Normand, 
+ K. Raghavachari, A. Rendell, J. C. Burant, S. S. Iyengar, J. Tomasi, 
+ M. Cossi, N. Rega, J. M. Millam, M. Klene, J. E. Knox, J. B. Cross, 
+ V. Bakken, C. Adamo, J. Jaramillo, R. Gomperts, R. E. Stratmann, 
+ O. Yazyev, A. J. Austin, R. Cammi, C. Pomelli, J. W. Ochterski, 
+ R. L. Martin, K. Morokuma, V. G. Zakrzewski, G. A. Voth, 
+ P. Salvador, J. J. Dannenberg, S. Dapprich, A. D. Daniels, 
+ O. Farkas, J. B. Foresman, J. V. Ortiz, J. Cioslowski, 
+ and D. J. Fox, Gaussian, Inc., Wallingford CT, 2010.
+ 
+ ******************************************
+ Gaussian 09:  EM64L-G09RevB.01 12-Aug-2010
+                 1-Jun-2018 
+ ******************************************
+ ------------
+ #p dftba opt
+ ------------
+ 1/14=-1,18=20,19=15,26=1,38=1/1,3;
+ 2/9=110,12=2,17=6,18=5,40=1/2;
+ 3/5=2,7=1,16=1,25=1,41=1800000,71=1,74=-1,112=20/1,2,3;
+ 4//1;
+ 5/5=2,38=5/2;
+ 6/7=2,8=2,9=2,10=2,28=1/1;
+ 7//1,2,3,16;
+ 1/14=-1,18=20,19=15/3(2);
+ 2/9=110/2;
+ 99//99;
+ 2/9=110/2;
+ 3/5=2,7=1,16=1,25=1,41=1800000,71=1,74=-1,112=30/1,2,3;
+ 4/5=5,16=3/1;
+ 5/5=2,38=5/2;
+ 7//1,2,3,16;
+ 1/14=-1,18=20,19=15/3(-5);
+ 2/9=110/2;
+ 6/7=2,8=2,9=2,10=2,19=2,28=1/1;
+ 99/9=1/99;
+ Leave Link    1 at Fri Jun  1 10:46:50 2018, MaxMem=          0 cpu:       0.0
+ (Enter /shared/apps/gaussian/G09_LINUX_LINDA/g09/l101.exe)
+ ------------------------------
+ Gaussian input prepared by ASE
+ ------------------------------
+ Symbolic Z-matrix:
+ Charge =  0 Multiplicity = 1
+ C                     1.257     0.0728    0.2317 
+ C                    -1.2362   -0.2076    0.2105 
+ C                     0.0035    0.2051   -0.5723 
+ H                     2.104    -0.3702   -0.3475 
+ H                     1.6342    1.0188    0.6489 
+ H                     1.0515   -0.6548    1.0496 
+ H                    -1.9141    0.6697    0.3546 
+ H                    -1.839    -0.9594   -0.3598 
+ H                    -0.9461   -0.6255    1.2061 
+ H                     0.0345   -0.4066   -1.5036 
+ H                    -0.1494    1.2577   -0.9182 
+ 
+ NAtoms=     11 NQM=     11 NQMF=      0 NMic=      0 NMicF=      0 NTot=     11.
+                    Isotopes and Nuclear Properties:
+ (Nuclear quadrupole moments (NQMom) in fm**2, nuclear magnetic moments (NMagM)
+  in nuclear magnetons)
+
+  Atom         1           2           3           4           5           6           7           8           9          10
+ IAtWgt=          12          12          12           1           1           1           1           1           1           1
+ AtmWgt=  12.0000000  12.0000000  12.0000000   1.0078250   1.0078250   1.0078250   1.0078250   1.0078250   1.0078250   1.0078250
+ NucSpn=           0           0           0           1           1           1           1           1           1           1
+ AtZEff=   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000
+ NQMom=    0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000
+ NMagM=    0.0000000   0.0000000   0.0000000   2.7928460   2.7928460   2.7928460   2.7928460   2.7928460   2.7928460   2.7928460
+
+  Atom        11
+ IAtWgt=           1
+ AtmWgt=   1.0078250
+ NucSpn=           1
+ AtZEff=   0.0000000
+ NQMom=    0.0000000
+ NMagM=    2.7928460
+ Leave Link  101 at Fri Jun  1 10:46:50 2018, MaxMem=   33554432 cpu:       0.1
+ (Enter /shared/apps/gaussian/G09_LINUX_LINDA/g09/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Initialization pass.
+                           ----------------------------
+                           !    Initial Parameters    !
+                           ! (Angstroms and Degrees)  !
+ --------------------------                            --------------------------
+ ! Name  Definition              Value          Derivative Info.                !
+ --------------------------------------------------------------------------------
+ ! R1    R(1,3)                  1.4951         estimate D2E/DX2                !
+ ! R2    R(1,4)                  1.1176         estimate D2E/DX2                !
+ ! R3    R(1,5)                  1.1006         estimate D2E/DX2                !
+ ! R4    R(1,6)                  1.1138         estimate D2E/DX2                !
+ ! R5    R(2,3)                  1.5231         estimate D2E/DX2                !
+ ! R6    R(2,7)                  1.118          estimate D2E/DX2                !
+ ! R7    R(2,8)                  1.1197         estimate D2E/DX2                !
+ ! R8    R(2,9)                  1.118          estimate D2E/DX2                !
+ ! R9    R(3,10)                 1.1147         estimate D2E/DX2                !
+ ! R10   R(3,11)                 1.1185         estimate D2E/DX2                !
+ ! A1    A(3,1,4)              113.0655         estimate D2E/DX2                !
+ ! A2    A(3,1,5)              114.5288         estimate D2E/DX2                !
+ ! A3    A(3,1,6)              107.3384         estimate D2E/DX2                !
+ ! A4    A(4,1,5)              106.1059         estimate D2E/DX2                !
+ ! A5    A(4,1,6)              105.1557         estimate D2E/DX2                !
+ ! A6    A(5,1,6)              110.2657         estimate D2E/DX2                !
+ ! A7    A(3,2,7)              110.312          estimate D2E/DX2                !
+ ! A8    A(3,2,8)              110.9973         estimate D2E/DX2                !
+ ! A9    A(3,2,9)              110.3494         estimate D2E/DX2                !
+ ! A10   A(7,2,8)              105.4308         estimate D2E/DX2                !
+ ! A11   A(7,2,9)              109.6245         estimate D2E/DX2                !
+ ! A12   A(8,2,9)              110.0149         estimate D2E/DX2                !
+ ! A13   A(1,3,2)              112.4607         estimate D2E/DX2                !
+ ! A14   A(1,3,10)             112.1747         estimate D2E/DX2                !
+ ! A15   A(1,3,11)             111.3589         estimate D2E/DX2                !
+ ! A16   A(2,3,10)             107.6583         estimate D2E/DX2                !
+ ! A17   A(2,3,11)             107.6181         estimate D2E/DX2                !
+ ! A18   A(10,3,11)            105.1811         estimate D2E/DX2                !
+ ! D1    D(4,1,3,2)            137.4201         estimate D2E/DX2                !
+ ! D2    D(4,1,3,10)            15.8896         estimate D2E/DX2                !
+ ! D3    D(4,1,3,11)          -101.6933         estimate D2E/DX2                !
+ ! D4    D(5,1,3,2)           -100.8613         estimate D2E/DX2                !
+ ! D5    D(5,1,3,10)           137.6082         estimate D2E/DX2                !
+ ! D6    D(5,1,3,11)            20.0253         estimate D2E/DX2                !
+ ! D7    D(6,1,3,2)             21.9126         estimate D2E/DX2                !
+ ! D8    D(6,1,3,10)           -99.618          estimate D2E/DX2                !
+ ! D9    D(6,1,3,11)           142.7991         estimate D2E/DX2                !
+ ! D10   D(7,2,3,1)            115.7027         estimate D2E/DX2                !
+ ! D11   D(7,2,3,10)          -120.2267         estimate D2E/DX2                !
+ ! D12   D(7,2,3,11)            -7.3072         estimate D2E/DX2                !
+ ! D13   D(8,2,3,1)           -127.8122         estimate D2E/DX2                !
+ ! D14   D(8,2,3,10)            -3.7416         estimate D2E/DX2                !
+ ! D15   D(8,2,3,11)           109.1779         estimate D2E/DX2                !
+ ! D16   D(9,2,3,1)             -5.5792         estimate D2E/DX2                !
+ ! D17   D(9,2,3,10)           118.4914         estimate D2E/DX2                !
+ ! D18   D(9,2,3,11)          -128.5891         estimate D2E/DX2                !
+ --------------------------------------------------------------------------------
+ Trust Radius=3.00D-01 FncErr=1.00D-07 GrdErr=1.00D-07
+ Number of steps in this run=     56 maximum allowed number of steps=    100.
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Fri Jun  1 10:46:50 2018, MaxMem=   33554432 cpu:       0.0
+ (Enter /shared/apps/gaussian/G09_LINUX_LINDA/g09/l202.exe)
+                          Input orientation:                          
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          6           0        1.257000    0.072800    0.231700
+      2          6           0       -1.236200   -0.207600    0.210500
+      3          6           0        0.003500    0.205100   -0.572300
+      4          1           0        2.104000   -0.370200   -0.347500
+      5          1           0        1.634200    1.018800    0.648900
+      6          1           0        1.051500   -0.654800    1.049600
+      7          1           0       -1.914100    0.669700    0.354600
+      8          1           0       -1.839000   -0.959400   -0.359800
+      9          1           0       -0.946100   -0.625500    1.206100
+     10          1           0        0.034500   -0.406600   -1.503600
+     11          1           0       -0.149400    1.257700   -0.918200
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3          4          5
+     1  C    0.000000
+     2  C    2.509008   0.000000
+     3  C    1.495052   1.523139   0.000000
+     4  H    1.117645   3.390389   2.189430   0.000000
+     5  H    1.100569   3.152055   2.193768   1.772807   0.000000
+     6  H    1.113819   2.477428   2.113833   1.772186   1.816876
+     7  H    3.229128   1.118020   2.179951   4.209449   3.577557
+     8  H    3.316704   1.119738   2.189982   3.986798   4.122362
+     9  H    2.508132   1.118042   2.180446   3.432486   3.110007
+    10  H    2.176143   2.142993   1.114656   2.370806   3.037114
+    11  H    2.168921   2.145274   1.118478   2.837881   2.386232
+                    6          7          8          9         10
+     6  H    0.000000
+     7  H    3.321462   0.000000
+     8  H    3.230198   1.780442   0.000000
+     9  H    2.003935   1.827463   1.833249   0.000000
+    10  H    2.759479   2.899719   2.263596   2.889977   0.000000
+    11  H    2.995339   2.253870   2.842902   2.948529   1.773811
+                   11
+    11  H    0.000000
+ Stoichiometry    C3H8
+ Framework group  C1[X(C3H8)]
+ Deg. of freedom    27
+ Full point group                 C1      NOp   1
+ Largest Abelian subgroup         C1      NOp   1
+ Largest concise Abelian subgroup C1      NOp   1
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          6           0        1.255159   -0.249391    0.011472
+      2          6           0       -1.253758   -0.268708    0.002430
+      3          6           0        0.011183    0.579709   -0.005774
+      4          1           0        2.042067    0.127161   -0.687179
+      5          1           0        1.736319   -0.330839    0.997932
+      6          1           0        0.985700   -1.260192   -0.370977
+      7          1           0       -1.832887   -0.092917    0.942470
+      8          1           0       -1.940901    0.027411   -0.830614
+      9          1           0       -0.995115   -1.353137   -0.082031
+     10          1           0       -0.036188    1.248744   -0.896058
+     11          1           0       -0.034496    1.264109    0.877686
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):     29.3676727      8.5692044      7.5906395
+ Leave Link  202 at Fri Jun  1 10:46:50 2018, MaxMem=   33554432 cpu:       0.0
+ (Enter /shared/apps/gaussian/G09_LINUX_LINDA/g09/l301.exe)
+ Standard basis: VSTO-3G* (5D, 7F)
+ Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
+ There are    20 symmetry adapted basis functions of A   symmetry.
+ Integral buffers will be    131072 words long.
+ Regular integral format.
+ Two-electron integral symmetry is turned off.
+    20 basis functions,    60 primitive gaussians,    20 cartesian basis functions
+    10 alpha electrons       10 beta electrons
+       nuclear repulsion energy        49.7170539431 Hartrees.
+ IExCor=   -1 DFT=F Ex+Corr=HFnoK ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      0 IRanWt=     -1 IRanGd=            0 ICorTp=0
+ Leave Link  301 at Fri Jun  1 10:46:50 2018, MaxMem=   33554432 cpu:       0.1
+ (Enter /shared/apps/gaussian/G09_LINUX_LINDA/g09/l302.exe)
+ NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
+         NCelK=      1 NCelE2=     1 NClLst=     1 CellRange=     0.0.
+ One-electron integrals computed using PRISM.
+ Generate DFT-SCTBA integrals.

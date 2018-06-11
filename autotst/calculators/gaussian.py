@@ -262,7 +262,11 @@ class AutoTST_Gaussian:
     def run_overall(self):
         "A method to run the optimization of the entire TS"
         logging.info("Running overall optimization...")
-        self.reaction = self.calculate(self.reaction, self.overall_calc)
+        try:
+            self.reaction = self.calculate(self.reaction, self.overall_calc)
+        except RuntimeError:
+            logging.info("First ran failed, trying a second time...")
+            self.reaction = self.calculate(self.reaction, self.overall_calc)
         logging.info("Overall optimization complete!")
 
     def run_irc(self):
@@ -378,10 +382,10 @@ class AutoTST_Gaussian:
         A method that removes the `left` and `right` text from a log, ase, and
         com files and turns it back into a smiles structure for ALL files.
         """
-        for calc in self.reactant_calcs.values:
+        for calc in self.reactant_calcs.values():
             self.fix_io_file(calc)
 
-        for calc in self.product_calcs.values:
+        for calc in self.product_calcs.values():
             self.fix_io_file(calc)
 
         self.fix_io_file(self.shell_calc)
