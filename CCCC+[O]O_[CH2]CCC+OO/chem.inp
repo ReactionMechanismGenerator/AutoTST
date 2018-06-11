@@ -32,7 +32,7 @@ END
 
 REACTIONS    KCAL/MOLE   MOLES
 
-CCCC + [O]O <=> OO + [CH2]CCC                       2.099e-04     4.490    14.752
+[O]O + CCCC <=> OO + [CH2]CCC                       2.099e-04     4.490    14.752
 
 END
 

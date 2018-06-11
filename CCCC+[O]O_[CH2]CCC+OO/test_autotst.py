@@ -23,7 +23,7 @@ rmg_reaction = Reaction(reactants=reactants, products=products)
 
 test_reaction = AutoTST_Reaction(reaction_family="H_Abstraction", rmg_reaction=rmg_reaction)
 
-### Performing the conformer analyses ###
+"""### Performing the conformer analyses ###
 ## On the reaction ##
 test_reaction.ts.ase_ts.set_calculator(LennardJones())
 mol = test_reaction
@@ -56,7 +56,7 @@ for i, reactant in enumerate(test_reaction.product_mols):
     for i, dihedral in enumerate(top_pop.iloc[0,1:]):
         tor = reactant.torsions[i]
         reactant.ase_molecule.set_dihedral(tor.indices, angle=dihedral, mask=tor.right_mask)
-    reactant.update_from_ase_mol()
+    reactant.update_from_ase_mol()"""
 
 ### Performing the partial optimizations
 tst_calculators = AutoTST_Gaussian(test_reaction)

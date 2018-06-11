@@ -6,11 +6,11 @@ frequencyScaleFactor = 0.982
 useHinderedRotors = False
 useBondCorrections = False
 
-species('CCCC', './CCCC.py')
-species('[O]O', './[O]O.py')
-species('[CH2]CCC', './[CH2]CCC.py')
-species('OO', './OO.py')
-transitionState('TS', './CCCC+[O]O_[CH2]CCC+OO.py')
+species('CCCC', 'CCCC.py')
+species('[O]O', '[O]O.py')
+species('[CH2]CCC', '[CH2]CCC.py')
+species('OO', 'OO.py')
+transitionState('TS', 'CCCC+[O]O_[CH2]CCC+OO.py')
 
 reaction(
     label = 'CCCC+[O]O_[CH2]CCC+OO',
