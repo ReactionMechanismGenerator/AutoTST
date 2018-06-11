@@ -27,28 +27,24 @@
 #
 ################################################################################
 
-class Torsion:
+class Bond:
     """
-    A class that acts as a container for torsion information.
+    A class that acts as a container for bond information.
     The information stored is as follows:
 
     * indicies (list of ints): indicies of atoms that describe the dihedral
-    * dihedral (float): the angle (in degrees) of the dihedral
-    * LHS (list of ints): indices of atoms that are branced off the left side of the torsion
-    * RHS (list of ints): indices of atoms that are branced off the right side of the torsion
-        i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
+    * length (float): the angle (in degrees) of the dihedral
+    * reaction_center (bool): a bood that states if this bond is in the reaction center
+        i.e. atoms i and j are labeled (*1, *2, *3)
     """
 
-    def __init__(self, indices, dihedral, left_mask, right_mask, reaction_center="No"):
+    def __init__(self, indices, length, reaction_center="No"):
         self.indices = indices
-        self.dihedral = dihedral
-        self.left_mask = left_mask
-        self.right_mask = right_mask
+        self.length = length
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Torsion "{0}">'.format(self.indicies)
-
+        return '<AutoTST Bond "{0}">'.format(self.indices)
 
 class Angle:
     """
@@ -71,23 +67,47 @@ class Angle:
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Angle "{0}">'.format(self.indicies)
+        return '<AutoTST Angle "{0}">'.format(self.indices)
 
-class Bond:
+class Torsion:
     """
-    A class that acts as a container for bond information.
+    A class that acts as a container for torsion information.
     The information stored is as follows:
 
     * indicies (list of ints): indicies of atoms that describe the dihedral
-    * length (float): the angle (in degrees) of the dihedral
-    * reaction_center (bool): a bood that states if this bond is in the reaction center
-        i.e. atoms i and j are labeled (*1, *2, *3)
+    * dihedral (float): the angle (in degrees) of the dihedral
+    * LHS (list of ints): indices of atoms that are branced off the left side of the torsion
+    * RHS (list of ints): indices of atoms that are branced off the right side of the torsion
+        i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
     """
 
-    def __init__(self, indices, length, reaction_center="No"):
+    def __init__(self, indices, dihedral, left_mask, right_mask, reaction_center="No"):
         self.indices = indices
-        self.length = length
+        self.dihedral = dihedral
+        self.left_mask = left_mask
+        self.right_mask = right_mask
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Bond "{0}">'.format(self.indicies)
+        return '<AutoTST Torsion "{0}">'.format(self.indices)
+
+class CisTrans():
+    """
+    A class that acts as a container for CisTrans information.
+    The information stored is as follows:
+
+    * indicies (list of ints): indicies of atoms that describe the dihedral
+    * dihedral (float): the angle (in degrees) of the dihedral
+    * LHS (list of ints): indices of atoms that are branced off the left side of the torsion
+    * RHS (list of ints): indices of atoms that are branced off the right side of the torsion
+        i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
+    """
+
+    def __init__(self, indices, dihedral, left_mask, right_mask, reaction_center="No"):
+        self.indices = indices
+        self.dihedral = dihedral
+        self.left_mask = left_mask
+        self.right_mask = right_mask
+        self.reaction_center = reaction_center
+    def __repr__(self):
+        return '<AutoTST CisTrans "{0}">'.format(self.indices)

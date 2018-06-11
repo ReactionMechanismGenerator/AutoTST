@@ -42,26 +42,31 @@ import cPickle as pickle
 
 
 # do this before we have a chance to import openbabel!
-import rdkit, rdkit.Chem.rdDistGeom, rdkit.DistanceGeometry
+import ase
+from ase import units
+from ase.constraints import FixBondLengths
+from ase.optimize import BFGS 
 
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit import rdBase
+import autotst
+from autotst.geometry import Bond, Angle, Torsion, CisTrans
+from autotst.molecule import AutoTST_Molecule
+from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 
-from rmgpy.molecule import Molecule
-from rmgpy.species import Species
-from rmgpy.reaction import Reaction
+def update_from_ase(autotst_obj):
+    """
+    A function designed to update all objects based off of their ase objects
+    """
+    if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
+        autotst_obj.update_from_ase_mol()
 
-from autotst.molecule import *
-from autotst.reaction import *
+    if isinstance(autotst_obj, autotst.reaction.AutoTST_Reaction):
+        autotst_obj.ts.update_from_ase_ts()
 
-from ase.calculators.morse import *
-from ase.calculators.dftb import *
-from ase.calculators.lj import *
-from ase.calculators.emt import *
+    if isinstance(autotst_obj, autotst.reaction.AutoTST_TS):
+        autotst_obj.update_from_ase_ts()
 
 
-def create_initial_population(multi_object, delta=30, population_size=200):
+def create_initial_population(autotst_object, delta=30, population_size=30):
     """
     A function designed to take a multi_molecule, multi_rxn or multi_ts object
     and create an initial population of conformers.
@@ -81,104 +86,70 @@ def create_initial_population(multi_object, delta=30, population_size=200):
 
     possible_dihedrals = np.arange(0, 360, delta)
     population = []
+    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
+        logging.info("The object given is a `AutoTST_Molecule` object")
 
-    if "AutoTST_Molecule" in str(multi_object.__class__):
-        logging.info("The object given is a `Multi_Molecule` object")
+        torsions = autotst_object.torsions
+        ase_object = autotst_object.ase_molecule
 
-        torsion_object = multi_object
+    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
+        logging.info("The object given is a `AutoTST_Reaction` object")
+        torsions = autotst_object.ts.torsions
+        ase_object = autotst_object.ts.ase_ts
 
-        for indivudual in range(population_size):
-            dihedrals = []
-            for torsion in torsion_object.torsions:
-                dihedral = np.random.choice(possible_dihedrals)
-                dihedrals.append(dihedral)
-                i, j, k, l = torsion.indices
-                right_mask = torsion.right_mask
+    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
+        logging.info("The object given is a `AutoTST_TS` object")
+        torsions = autotst_object.torsions
+        ase_object = autotst_object.ase_ts
 
-                torsion_object.ase_molecule.set_dihedral(
-                    a1=i,
-                    a2=j,
-                    a3=k,
-                    a4=l,
-                    angle=float(dihedral),
-                    mask=right_mask
-                )
 
-            torsion_object.update_from_ase_mol()
+    for indivudual in range(population_size):
+        dihedrals = []
+        for torsion in torsions:
+            dihedral = np.random.choice(possible_dihedrals)
+            dihedrals.append(dihedral)
+            i, j, k, l = torsion.indices
+            right_mask = torsion.right_mask
 
-            e = torsion_object.ase_molecule.get_potential_energy()
+            ase_object.set_dihedral(
+                a1=i,
+                a2=j,
+                a3=k,
+                a4=l,
+                angle=float(dihedral),
+                mask=right_mask
+            )
 
-            population.append([e] + dihedrals)
+        constrained_energy, relaxed_energy, ase_copy = get_energies(autotst_object)
 
-    elif "AutoTST_Reaction" in str(multi_object.__class__):
-        logging.info("The object given is a `Multi_Reaction` object")
+        update_from_ase(autotst_object)
 
-        torsion_object = multi_object.ts
+        relaxed_torsions = []
 
-        for i in range(population_size):
-            dihedrals = []
+        for torsion in torsions:
 
-            for torsion in torsion_object.torsions:
-                dihedral = np.random.choice(possible_dihedrals)
-                dihedrals.append(dihedral)
-                i, j, k, l = torsion.indices
-                right_mask = torsion.right_mask
+            i, j, k, l = torsion.indices
 
-                torsion_object.ase_ts.set_dihedral(
-                    a1=i,
-                    a2=j,
-                    a3=k,
-                    a4=l,
-                    angle=float(dihedral),
-                    mask=right_mask
-                )
+            angle = round(ase_copy.get_dihedral(i,j,k,l), -1)
+            angle = int(30 * round(float(angle)/30))
+            if angle < 0: angle += 360
+            relaxed_torsions.append(angle)
 
-            torsion_object.update_from_ase_ts()
-
-            e = torsion_object.ase_ts.get_potential_energy()
-
-            population.append([e] + dihedrals)
-
-    elif "AutoTST_TS" in str(multi_object.__class__):
-        logging.info("The object given is a `Multi_TS` object")
-
-        torsion_object = multi_object
-
-        for i in range(population_size):
-            dihedrals = []
-
-            for torsion in torsion_object.torsions:
-                dihedral = np.random.choice(possible_dihedrals)
-                dihedrals.append(dihedral)
-                i, j, k, l = torsion.indices
-                right_mask = torsion.right_mask
-
-                torsion_object.ase_ts.set_dihedral(
-                    a1=i,
-                    a2=j,
-                    a3=k,
-                    a4=l,
-                    angle=float(dihedral),
-                    mask=right_mask
-                )
-
-            torsion_object.update_from_ase_ts()
-
-            e = torsion_object.ase_ts.get_potential_energy()
-
-            population.append([e] + dihedrals)
+        population.append([constrained_energy, relaxed_energy] + dihedrals + relaxed_torsions)
 
     if len(population) > 0:
         logging.info("Creating a dataframe of the initial population")
         df = pd.DataFrame(population)
-        columns = ["Energy"]
-        for i in range(len(torsion_object.torsions)):
-            columns = columns + ["Torsion " + str(i)]
+        columns = ["constrained_energy", "relaxed_energy"]
+        for i in range(len(torsions)):
+            columns = columns + ["torsion_" + str(i)]
+
+        for i in range(len(torsions)):
+            columns = columns + ["relaxed_torsion_" + str(i)]
         df.columns = columns
-        df = df.sort_values("Energy")
+        df = df.sort_values("constrained_energy")
 
     return df
-
 
 def select_top_population(df=None, top_percent=0.30):
     """
@@ -191,10 +162,75 @@ def select_top_population(df=None, top_percent=0.30):
     """
 
     logging.info("Selecting the top population")
-    assert "Energy" in df.columns
-    df.sort_values("Energy")
+    assert "constrained_energy" in df.columns
+    df.sort_values("constrained_energy")
     population_size = df.shape[0]
     top_population = population_size * top_percent
     top = df.iloc[:int(top_population), :]
 
     return top
+
+
+def get_unique_conformers(df, unique_torsions={}):
+    """
+    A function designed to identify all low energy conformers within a standard deviation of the data given.
+
+    :param:
+     df: a DataFrame of a population of torsions with columns of `Energy` and `Torsion N`
+     unique_torsions: a dict of unique torsions already present in the dataframe
+
+    :return:
+     unique_torsion: a dict containing all of the unique torsions from the dataframe appended
+    """
+    columns = []
+
+    for c in df.columns:
+        if "relaxed_torsion" in c:
+            columns.append(c)
+
+    assert len(columns) > 0
+    assert "relaxed_energy" in df.columns
+
+
+    mini = df[df.relaxed_energy < df.relaxed_energy.min() + units.eV / (units.kcal / units.mol)].sort_values("relaxed_energy")
+    for i, combo in enumerate(mini[columns].values):
+        combo = tuple(combo)
+        energy = mini.relaxed_energy.iloc[i]
+        if not combo in unique_torsions.keys():
+            unique_torsions[combo] = energy
+    return unique_torsions
+
+
+def get_energies(autotst_object):
+
+    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
+        ase_object = autotst_object.ase_molecule
+        labels = []
+
+    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
+        ase_object = autotst_object.ts.ase_ts
+
+        labels = []
+        for atom in autotst_object.ts.rmg_ts.getLabeledAtoms().values():
+            labels.append(atom.sortingLabel)
+
+    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
+        ase_object = autotst_object.ase_ts
+
+        labels = []
+        for atom in autotst_object.ts.rmg_ts.getLabeledAtoms().values():
+            labels.append(atom.sortingLabel)
+
+    constrained_energy = ase_object.get_potential_energy()
+
+    ase_copy = ase_object.copy()
+    ase_copy.set_calculator(ase_object.get_calculator())
+
+    ase_copy.set_constraint(FixBondLengths(list(itertools.combinations(labels,2))))
+
+    opt = BFGS(ase_copy)
+    opt.run(fmax=0.01)
+
+    relaxed_energy = ase_copy.get_potential_energy()
+
+    return constrained_energy, relaxed_energy, ase_copy

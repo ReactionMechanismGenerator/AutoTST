@@ -27,7 +27,12 @@
 #
 ################################################################################
 
-from autotst.reaction import *
+import os
+import logging
+import pandas as pd
+import numpy as np
+
+from autotst.reaction import AutoTST_Reaction
 from cclib.io import ccread
 
 def percent_change(original,new):
@@ -44,22 +49,23 @@ class Vibrational_Analysis():
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, reaction):
+    def __init__(self, reaction, scratch="."):
         """
         reaction: (AutoTST_Reaction) a reaction that proives the connectivity
         and label name for this analysis
         """
         self.reaction = reaction
+        self.scratch = scratch
 
     def __repr__(self):
         return '<AutoTST Vibrational Analysis "{0}">'.format(self.reaction.label)
 
-    def get_log_file(self, reaction):
+    def get_log_file(self, scratch, reaction):
         """
         This method obtains the logfile name from the AutoTST_Reaction
         """
 
-        self.log_file = reaction.label + "_overall.log"
+        self.log_file = os.path.join(scratch, reaction.label + "_overall.log")
 
     def parse_vibrations(self):
         """
@@ -105,6 +111,7 @@ class Vibrational_Analysis():
         """
 
         results = []
+        """
         for torsion in reaction.ts.torsions:
             i,j,k,l = torsion.indices
             before = self.before_geometry.get_dihedral(i,j,k,l)
@@ -116,7 +123,7 @@ class Vibrational_Analysis():
             before = self.before_geometry.get_angle(i,j,k)
             after = self.post_geometry.get_angle(i,j,k)
             results.append(["Ang", angle.indices, angle.reaction_center, percent_change(before, after)])
-
+        """
         for bond in reaction.ts.bonds:
             i,j = bond.indices
             before = self.before_geometry.get_distance(i,j)
@@ -136,7 +143,7 @@ class Vibrational_Analysis():
         geater elsewhere.
         """
 
-        self.get_log_file(self.reaction)
+        self.get_log_file(self.scratch, self.reaction)
 
         self.parse_vibrations()
 

@@ -39,70 +39,88 @@ import numpy as np
 from numpy import array
 import pandas as pd
 
-from autotst.molecule import *
-from autotst.reaction import *
-from autotst.conformer.utilities import *
-
-from ase.calculators.morse import *
-from ase.calculators.dftb import *
-from ase.calculators.lj import *
-from ase.calculators.emt import *
+import autotst
+from autotst.geometry import Bond, Angle, Torsion, CisTrans
+from autotst.molecule import AutoTST_Molecule
+from autotst.reaction import AutoTST_Reaction, AutoTST_TS
+from autotst.conformer.utilities import update_from_ase, create_initial_population, \
+                                        select_top_population, get_unique_conformers, get_energies
 
 
-def perform_simple_es(multi_object,
-                      df,
+def perform_simple_es(autotst_object,
+                      initial_pop=None,
                       top_percent=0.3,
-                      tolerance=1e-5,
+                      tolerance=0.0001,
                       max_generations=500,
                       store_generations=False,
-                      store_directory="."):
-    """
-    Performs a simple evolutionary strategy to determine the lowest energy conformer of a TS or molecule
+                      store_directory=".",
+                      delta=30):
 
-    :param multi_object: a multi_ts, multi_rxn, or multi_molecule that you want to perform conformer analysis on
+    """
+    Performs a genetic algorithm to determine the lowest energy conformer of a TS or molecule
+
+    :param autotst_object: a multi_ts, multi_rxn, or multi_molecule that you want to perform conformer analysis on
        * the ase_object of the multi_object must have a calculator attached to it.
-    :param df: a DataFrame containing the initial population
+    :param initial_pop: a DataFrame containing the initial population
     :param top_percent: float of the top percentage of conformers you want to select
     :param tolerance: float of one of the possible cut off points for the analysis
     :param max_generations: int of one of the possible cut off points for the analysis
     :param store_generations: do you want to store pickle files of each generation
     :param store_directory: the director where you want the pickle files stored
-    :return df: a DataFrame containing the final generation
+    :param mutation_probability: float of the chance of mutation
+    :param delta: the degree change in dihedral angle between each possible dihedral angle
+    
+    :return results: a DataFrame containing the final generation
+    :return unique_conformers: a dictionary with indicies of unique torsion combinations and entries of energy of those torsions
     """
-    top = select_top_population(df,
+
+    assert autotst_object, "No AutoTST object provided..."
+    if initial_pop is None:
+        logging.info("No initial population provided, creating one using base parameters...")
+        initial_pop = create_initial_population(autotst_object)
+
+    top = select_top_population(initial_pop,
                                 top_percent=top_percent
                                 )
-    top_population = top.shape[0]
 
-    population_size = df.shape[0]
+    population_size = initial_pop.shape[0]
 
-    # Takes each of the molecule objects
-    if "AutoTST_Molecule" in str(multi_object.__class__):
-        ase_object = multi_object.ase_molecule
-        torsions = multi_object.torsions
+    results = initial_pop
 
-    elif "AutoTST_Reaction" in str(multi_object.__class__):
-        ase_object = multi_object.ts.ase_ts
-        torsions = multi_object.ts.torsions
+    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
+        logging.info("The object given is a `AutoTST_Molecule` object")
+        torsions = autotst_object.torsions
+        ase_object = autotst_object.ase_molecule
+        label = autotst_object.smiles
 
-    elif "AutoTST_TS" in str(multi_object.__class__):
-        ase_object = multi_object.ase_ts
-        torsions = multi_object.torsions
+    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
+        logging.info("The object given is a `AutoTST_Reaction` object")
+        torsions = autotst_object.ts.torsions
+        ase_object = autotst_object.ts.ase_ts
+        label = autotst_object.label
 
+    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
+        logging.info("The object given is a `AutoTST_TS` object")
+        torsions = autotst_object.torsions
+        ase_object = autotst_object.ase_ts
+        label = autotst_object.label
+
+    assert ase_object.get_calculator(), "To use GA, you must attach an ASE calculator to the `ase_molecule`."
     gen_number = 0
     complete = False
+    unique_conformers = {}
     while complete == False:
         gen_number += 1
-        logging.info("Performing Simple ES on generation {}".format(gen_number))
+        logging.info("Performing ES on generation {}".format(gen_number))
 
-        results = []
+        r = []
         for individual in range(population_size):
             dihedrals = []
             for index, torsion in enumerate(torsions):
                 i, j, k, l = torsion.indices
                 right_mask = torsion.right_mask
 
-                dihedral = random.gauss(top.mean()[index + 1], top.std()[index + 1])
+                dihedral = random.gauss(top.mean()["torsion_" + str(index)], top.std()["torsion_" + str(index)])
                 dihedrals.append(dihedral)
                 ase_object.set_dihedral(a1=i,
                                         a2=j,
@@ -111,56 +129,57 @@ def perform_simple_es(multi_object,
                                         angle=float(dihedral),
                                         mask=right_mask)
 
-                # Updating the molecule
-                if "AutoTST_Molecule" in str(multi_object.__class__):
-                    multi_object.update_from_ase_mol()
+            # Updating the molecule
+            update_from_ase(autotst_object)
 
-                elif "AutoTST_Reaction" in str(multi_object.__class__):
-                    multi_object.ts.update_from_ase_ts()
+            constrained_energy, relaxed_energy, ase_copy = get_energies(autotst_object)
 
-                elif "AutoTST_TS" in str(multi_object.__class__):
-                    multi_object.update_from_ase_ts()
+            relaxed_torsions = []
 
-            e = ase_object.get_potential_energy()
-            results.append([e] + dihedrals)
+            for torsion in torsions:
 
-        df = pd.DataFrame(results)
+                i, j, k, l = torsion.indices
+
+                angle = round(ase_copy.get_dihedral(i,j,k,l), -1)
+                angle = int(30 * round(float(angle)/30)) # rounding to the nearest 30 degrees
+                if angle < 0: angle += 360
+                relaxed_torsions.append(angle)
+
+            r.append([constrained_energy, relaxed_energy] + list(dihedrals) + relaxed_torsions)
+
+
+        results = pd.DataFrame(r)
         logging.info("Creating the DataFrame of results for the {}th generation".format(gen_number))
 
-        columns = ["Energy"]
+        columns = ["constrained_energy", "relaxed_energy"]
         for i in range(len(torsions)):
-            columns = columns + ["Torsion " + str(i)]
+            columns = columns + ["torsion_" + str(i)]
 
-        df.columns = columns
-        df = df.sort_values("Energy")
+        for i in range(len(torsions)):
+            columns = columns + ["relaxed_torsion_" + str(i)]
+        results.columns = columns
+        results = results.sort_values("constrained_energy")
+
+        unique_conformers = get_unique_conformers(results, unique_conformers)
 
         if store_generations == True:
             # This portion stores each generation if desired
+            logging.info("Saving the DataFrame")
 
-            if "AutoTST_Reaction" in str(multi_object.__class__):
-                generation_name = "rxn_simple_es_generation_{}.csv".format(gen_number)
-
-            elif "AutoTST_Molecule" in str(multi_object.__class__):
-                generation_name = "mol_simple_es_generation_{}.csv".format(gen_number)
-
-            elif "AutoTST_TS" in str(multi_object.__class__):
-                generation_name = "ts_simple_es_generation_{}.csv".format(gen_number)
-
-            else:
-                generation_name = "simple_es_generation_{}.csv".format(gen_number)
-
+            generation_name = "{0}_es_generation_{1}.csv".format(label, gen_number)
             f = os.path.join(store_directory, generation_name)
-            df.to_csv(f)
+            results.to_csv(f)
 
-        top = df.iloc[:int(top_population), :]
+        top = select_top_population(results, top_percent)
 
         stats = top.describe()
 
         if gen_number >= max_generations:
             complete = True
             logging.info("Max generations reached. Simple ES complete.")
-        if stats.loc["std"][0] / abs(stats.loc["max"][0] - stats.loc["min"][0]) < tolerance:
+        if abs((stats["constrained_energy"]["max"] - stats["constrained_energy"]["min"]) / stats["constrained_energy"]["min"]) < tolerance:
             complete = True
             logging.info("Cutoff criteria reached. Simple ES complete.")
 
-    return df
+    return results, unique_conformers
+

@@ -34,23 +34,101 @@ groups, including support for using group additivity to estimate TS geometries.
 
 import os
 import os.path
-import re
 import logging
 import codecs
-import math
 import numpy
-from copy import copy, deepcopy
-
-from rmgpy.data.base import *
+from copy import deepcopy
+from numpy import array
+from cclib.io import ccread
+from ase.io.gaussian import read_gaussian_out
+from rmgpy.data.base import Database, Entry, makeLogicNode, LogicNode, DatabaseError
 
 from rmgpy.quantity import Quantity, constants
 from rmgpy.reaction import Reaction, ReactionError
-from rmgpy.molecule import Bond, GroupBond, Group
+from rmgpy.molecule import Bond, GroupBond, Group, Molecule
 from rmgpy.species import Species
 
 from rmgpy.data.kinetics.common import KineticsError, saveEntry
 
+from rmgpy.molecule import Molecule, Atom, getElement
+from rmgpy.species import Species, TransitionState
+from rmgpy.reaction import Reaction
+from rmgpy.kinetics import Arrhenius, Eckart
+from rmgpy.statmech import Conformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
+from rmgpy.cantherm.main import CanTherm
+from rmgpy.cantherm.kinetics import KineticsJob
+
 ################################################################################
+
+class QMData():
+    """
+    A class that acts as a container for .ts objects
+    """
+    def __init__(self, 
+                 groundStateDegeneracy=0, 
+                 numberOfAtoms=0,
+                 stericEnergy=None,
+                 molecularMass=(0, "amu"),
+                 energy=(0,'eV/molecule'),
+                 atomicNumbers=array([]),
+                 rotationalConstants=([],"cm^-1"),
+                 atomCoords=([[]], "angstrom"),
+                 frequencies=([],"cm^-1"),
+                 source=None,
+                 method = None,
+                 label = ""):
+
+        self.groundStateDegeneracy = groundStateDegeneracy
+        self.numberOfAtoms = numberOfAtoms
+        self.stericEnergy = stericEnergy
+        self.molecularMass = molecularMass
+        self.energy = energy
+        self.atomicNumbers = atomicNumbers
+        self.rotationalConstants = rotationalConstants
+        self.atomCoords = atomCoords
+        self.frequencies = frequencies
+        self.source = source
+        self.method = method
+        self.label = label
+
+    def __repr__(self):
+        """
+        Return a string representation that can be used to reconstruct the
+        object.
+        """
+        string = 'QMData('
+        string += "groundStateDegeneracy={0!r}, ".format(self.groundStateDegeneracy)
+        string += "numberOfAtoms={0!r}, ".format(self.numberOfAtoms)
+        string += "stericEnergy={0!r}, ".format(self.stericEnergy)
+        string += "molecularMass={0!r}, ".format(self.molecularMass)
+        string += "energy={0!r}, ".format(self.energy)
+        string += "atomicNumbers={0}, ".format("{0!r}".format(self.atomicNumbers).replace(" ",""))
+        string += "rotationalConstants={0}, ".format("{0}".format(self.rotationalConstants).replace("\n", "").replace(" ",""))
+        string += "atomCoords={0}, ".format("{0}".format(self.atomCoords).replace("\n", "").replace(" ",""))
+        string += "frequencies={0}, ".format("{0}".format(self.frequencies).replace("\n", "").replace(" ",""))
+        string += "source={0!r}, ".format(self.source)
+        string = string[:-2] + ')'
+        return string
+
+
+    def get_qmdata(self, file_path=None):
+        "A helper function to fill in the qmdata using CCLib"
+
+        parser = ccread(file_path)
+        atoms = read_gaussian_out(file_path)
+
+        self.groundStateDegeneracy = parser.mult
+        self.atomNumbers = atoms.numbers
+        self.atomCoords = (atoms.arrays["positions"], "angstrom")
+        self.stericEnergy = None # Need to fix this
+        self.molecularMass = (parser.atommasses.sum(), "amu")
+        self.energy = (atoms.get_potential_energy(), "eV/molecule")
+        self.atomicNumbers = parser.atomnos
+        self.rotationalConstants = ([],"cm^-1") # Need to fix this
+        self.frequencies = (parser.vibfreqs, "cm^-1")
+        self.source = None
+        self.method = parser.metadata["functional"]
+
 
 class DistanceData():
     """
@@ -450,7 +528,7 @@ class TransitionStateDepository(Database):
             longDesc = longDesc.strip(),
             rank = rank,
         )
-        self.entries['{0:d}:{1}'.format(index,label)] = entry
+        self.entries['{0:d}:{1}'.format(index, label)] = entry
         return entry
 
     def saveEntry(self, f, entry):
