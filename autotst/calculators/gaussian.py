@@ -225,10 +225,14 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         AutoTST object that you want to run calculations on
         calc: (ase.calculators.calculator) the calculator that you want to run
         """
+        current_path = os.getcwd()
+        scratch_path = os.path.expanduser(calc.scratch).replace(".", os.getcwd())
 
         short_file_name = calc.label.replace("left", "(").replace("right", ")") + ".log"
-        old_long_file_name = os.path.join(calc.scratch, calc.label + ".log")
-        new_long_file_name = os.path.join(calc.scratch, calc.label.replace("left", "(").replace("right", ")") + ".log")
+        old_long_file_name = os.path.join(scratch_path, calc.label + ".log")
+        new_long_file_name = os.path.join(scratch_path, calc.label.replace("left", "(").replace("right", ")") + ".log")
+
+        os.chdir(scratch_path)
 
         if isinstance(autotst_object, AutoTST_Molecule):
 
@@ -237,6 +241,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                 # File doesn't exist, running calculations
                 logging.info("Starting calculation for {}...".format(short_file_name))
                 try:
+                    os.chdir(scratch_path)
                     calc.calculate(autotst_object.ase_molecule)
                     # reading in results
                     autotst_object.ase_molecule = read_gaussian_out(old_long_file_name)
@@ -249,9 +254,11 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         calc.calculate(autotst_object.ase_molecule)
                         autotst_object.ase_molecule = read_gaussian_out(old_long_file_name)
                         autotst_object.update_from_ase_mol()
+                        os.chdir(current_path)
                         return autotst_object, True
                     except: #TODO: add error for seg fault
                         logging.info("{} failed first and second attempt...".format(short_file_name))
+                        os.chdir(current_path)
                         return autotst_object, False
 
             else:
@@ -261,18 +268,22 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                     logging.info("Old output file verified, reading it in...")
                     autotst_object.ase_molecule = read_gaussian_out(new_long_file_name)
                     autotst_object.update_from_ase_mol()
+                    os.chdir(current_path)
                     return autotst_object, True
 
                 else:
                     logging.info("Could not verify output file, attempting to run one last time...")
                     try:
+
                         calc.calculate(autotst_object.ase_molecule)
                         autotst_object.ase_molecule = read_gaussian_out(old_long_file_name)
                         autotst_object.update_from_ase_mol()
+                        os.chdir(current_path)
                         return autotst_object, True
 
                     except: #TODO: add error for seg fault
                         logging.info("{} failed... again...".format(short_file_name))
+                        os.chdir(current_path)
                         return autotst_object, False
 
         elif isinstance(autotst_object, AutoTST_Reaction):
@@ -286,6 +297,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                     # reading in results
                     autotst_object.ts.ase_ts = read_gaussian_out(old_long_file_name)
                     autotst_object.ts.update_from_ase_ts()
+                    os.chdir(current_path)
                     return autotst_object, True
                 except: #TODO: add error for seg fault
                     # first calc failed, trying it once more
@@ -294,9 +306,11 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         calc.calculate(autotst_object.ts.ase_ts)
                         autotst_object.ts.ase_ts = read_gaussian_out(old_long_file_name)
                         autotst_object.ts.update_from_ase_ts()
+                        os.chdir(current_path)
                         return autotst_object, True
                     except: #TODO: add error for seg fault
                         logging.info("{} failed first and second attempt...".format(short_file_name))
+                        os.chdir(current_path)
                         return autotst_object, False
 
             else:
@@ -306,6 +320,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                     logging.info("Old output file verified, reading it in...")
                     autotst_object.ts.ase_ts = read_gaussian_out(new_long_file_name)
                     autotst_object.ts.update_from_ase_ts()
+                    os.chdir(current_path)
                     return autotst_object, True
 
                 else:
@@ -314,10 +329,12 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         calc.calculate(autotst_object.ts.ase_ts)
                         autotst_object.ts.ase_ts = read_gaussian_out(old_long_file_name)
                         autotst_object.ts.update_from_ase_ts()
+                        os.chdir(current_path)
                         return autotst_object, True
 
                     except: #TODO: add error for seg fault
                         logging.info("{} failed... again...".format(short_file_name))
+                        os.chdir(current_path)
                         return autotst_object, False
 
         elif isinstance(autotst_object, AutoTST_TS):
@@ -331,6 +348,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                     # reading in results
                     autotst_object.ase_ts = read_gaussian_out(old_long_file_name)
                     autotst_object.update_from_ase_ts()
+                    os.chdir(current_path)
                     return autotst_object, True
                 except: #TODO: add error for seg fault
                     # first calc failed, trying it once more
@@ -339,9 +357,11 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         calc.calculate(autotst_object.ase_ts)
                         autotst_object.ase_ts = read_gaussian_out(old_long_file_name)
                         autotst_object.update_from_ase_ts()
+                        os.chdir(current_path)
                         return autotst_object, True
                     except: #TODO: add error for seg fault
                         logging.info("{} failed first and second attempt...".format(short_file_name))
+                        os.chdir(current_path)
                         return autotst_object, False
 
             else:
@@ -351,6 +371,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                     logging.info("Old output file verified, reading it in...")
                     autotst_object.ase_ts = read_gaussian_out(new_long_file_name)
                     autotst_object.update_from_ase_ts()
+                    os.chdir(current_path)
                     return autotst_object, True
 
                 else:
@@ -359,10 +380,12 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         calc.calculate(autotst_object.ase_ts)
                         autotst_object.ase_ts = read_gaussian_out(old_long_file_name)
                         autotst_object.update_from_ase_ts()
+                        os.chdir(current_path)
                         return autotst_object, True
 
                     except: #TODO: add error for seg fault
                         logging.info("{} failed... again...".format(short_file_name))
+                        os.chdir(current_path)
                         return autotst_object, False
 
 
