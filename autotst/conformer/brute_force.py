@@ -39,6 +39,7 @@ from ase import calculators
 import autotst
 from autotst.conformer.utilities import update_from_ase, get_unique_conformers, get_energies
 
+
 def perform_brute_force(autotst_object,
                         delta=float(30),
                         store_results=True,
@@ -61,7 +62,6 @@ def perform_brute_force(autotst_object,
         torsions = autotst_object.torsions
         file_name = autotst_object.smiles + "_brute_force.csv"
 
-
     elif isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
         ase_object = autotst_object.ts.ase_ts
         torsions = autotst_object.ts.torsions
@@ -72,9 +72,9 @@ def perform_brute_force(autotst_object,
         torsions = autotst_object.torsions
         file_name = autotst_object.label + "_brute_force.csv"
 
-
     torsion_angles = np.arange(0, 360, delta)
-    torsion_combos = list(itertools.combinations_with_replacement(torsion_angles, len(torsions)))
+    torsion_combos = list(itertools.combinations_with_replacement(
+        torsion_angles, len(torsions)))
     if len(torsions) != 1:
         torsion_combos = list(
             set(
@@ -86,7 +86,8 @@ def perform_brute_force(autotst_object,
     results = []
     for index, combo in enumerate(torsion_combos):
         logging.info("Generating conformer {}".format(index))
-        logging.info("Applying the torsion combo {0} to the molecule or TS.".format(combo))
+        logging.info(
+            "Applying the torsion combo {0} to the molecule or TS.".format(combo))
         geo = zip(torsions, combo)
         for torsion in geo:
             tor = torsion[0]
@@ -103,7 +104,8 @@ def perform_brute_force(autotst_object,
 
         update_from_ase(autotst_object)
 
-        constrained_energy, relaxed_energy, ase_copy = get_energies(autotst_object)
+        constrained_energy, relaxed_energy, ase_copy = get_energies(
+            autotst_object)
 
         relaxed_torsions = []
 
@@ -111,12 +113,14 @@ def perform_brute_force(autotst_object,
 
             i, j, k, l = torsion.indices
 
-            angle = round(ase_copy.get_dihedral(i,j,k,l), -1)
+            angle = round(ase_copy.get_dihedral(i, j, k, l), -1)
             angle = int(30 * round(float(angle)/30))
-            if angle < 0: angle += 360
+            if angle < 0:
+                angle += 360
             relaxed_torsions.append(angle)
 
-        results.append([constrained_energy, relaxed_energy] + list(combo) + relaxed_torsions)
+        results.append([constrained_energy, relaxed_energy] +
+                       list(combo) + relaxed_torsions)
 
     brute_force = pd.DataFrame(results)
     columns = ["constrained_energy", "relaxed_energy"]

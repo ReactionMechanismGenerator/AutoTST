@@ -44,13 +44,18 @@ from rmgpy.reaction import Reaction
 from rmgpy.kinetics import Arrhenius, Eckart
 from rmgpy.statmech import Conformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
 
+
 def get_possible_names(reactants, products):
-   
-    joinedReactOrders = ['+'.join(order) for order in itertools.permutations(reactants)]
-    joinedProdOrders = ['+'.join(order) for order in itertools.permutations(products)]
-    fileNames = ['_'.join((rJO, pJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders] + ['_'.join((pJO, rJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders]
+
+    joinedReactOrders = ['+'.join(order)
+                         for order in itertools.permutations(reactants)]
+    joinedProdOrders = ['+'.join(order)
+                        for order in itertools.permutations(products)]
+    fileNames = ['_'.join((rJO, pJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders] + [
+        '_'.join((pJO, rJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders]
 
     return fileNames
+
 
 class AutoTST_Calculator():
     """
@@ -59,11 +64,12 @@ class AutoTST_Calculator():
     input and output of `.ts` and `.kinetics` files.
     """
 
-    def __init__(self, autotst_reaction = None, save_directory="."):
+    def __init__(self, autotst_reaction=None, save_directory="."):
         self.autotst_reaction = autotst_reaction
         if autotst_reaction:
             self.label = autotst_reaction.label
-        else: self.label = None
+        else:
+            self.label = None
         self.save_directory = save_directory
 
     def get_qm_data(self, file_path):
@@ -77,7 +83,7 @@ class AutoTST_Calculator():
     def get_kinetics_file_path(self, reaction):
 
         return os.path.join(self.save_directory, reaction.label + ".kinetics")
-        
+
     def save_ts(self, reaction, method, qmData):
         """
         Save the generated TS data.
@@ -97,7 +103,7 @@ class AutoTST_Calculator():
         """
         logging.info("Saving kinetics data file {}".format(filePath))
         with open(filePath, 'w') as resultFile:
-            
+
             if isinstance(reaction, rmgpy.reaction.Reaction):
                 assert reaction.kinetics, "No kinetics calclated for this reaction..."
                 resultFile.write('method = "{0!s}"\n'.format(method))
@@ -106,7 +112,8 @@ class AutoTST_Calculator():
             elif isinstance(reaction, autotst.reaction.AutoTST_Reaction):
                 assert reaction.rmg_reaction.kinetics, "No kinetics calclated for this reaction..."
                 resultFile.write('method = "{0!s}"\n'.format(method))
-                resultFile.write('reaction = {0!r}\n'.format(reaction.rmg_reaction))
+                resultFile.write(
+                    'reaction = {0!r}\n'.format(reaction.rmg_reaction))
 
     def read_ts_file(self):
         """
@@ -126,16 +133,16 @@ class AutoTST_Calculator():
         got_file = False
         for file_name in file_names:
             ts_file = os.path.join(self.save_directory, file_name + ".ts")
-            if os.path.exists(ts_file): 
-                got_file = True 
+            if os.path.exists(ts_file):
+                got_file = True
                 path = ts_file
-        
+
         if not got_file:
             return None
         try:
             with open(path) as resultFile:
                 logging.info('Reading existing ts file {0}'.format(path))
-                global_context = { '__builtins__': None }
+                global_context = {'__builtins__': None}
                 local_context = {
                     '__builtins__': None,
                     'True': True,
@@ -153,13 +160,16 @@ class AutoTST_Calculator():
             logging.exception(e)
             return None
         if not 'rxnLabel' in local_context:
-            logging.error('The ts file "{0}" did not contain a rxnLabel.'.format(path))
+            logging.error(
+                'The ts file "{0}" did not contain a rxnLabel.'.format(path))
             return None
         if not 'method' in local_context:
-            logging.error('The ts file "{0}" did not contain a method.'.format(path))
+            logging.error(
+                'The ts file "{0}" did not contain a method.'.format(path))
             return None
         if not 'qmData' in local_context:
-            logging.error('The ts file "{0}" did not contain thermoData.'.format(path))
+            logging.error(
+                'The ts file "{0}" did not contain thermoData.'.format(path))
             return None
         return local_context
 
@@ -179,17 +189,18 @@ class AutoTST_Calculator():
 
         got_file = False
         for file_name in file_names:
-            ts_file = os.path.join(self.save_directory, file_name + ".kinetics")
-            if os.path.exists(ts_file): 
-                got_file = True 
+            ts_file = os.path.join(self.save_directory,
+                                   file_name + ".kinetics")
+            if os.path.exists(ts_file):
+                got_file = True
                 path = ts_file
-        
+
         if not got_file:
             return None
         try:
             with open(path) as resultFile:
                 logging.info('Reading existing kinetics file {0}'.format(path))
-                global_context = { '__builtins__': None }
+                global_context = {'__builtins__': None}
                 local_context = {
                     '__builtins__': None,
                     'True': True,
@@ -216,10 +227,11 @@ class AutoTST_Calculator():
             logging.exception(e)
             return None
         if not 'method' in local_context:
-            logging.error('The kinetics file "{0}" did not contain a method.'.format(path))
+            logging.error(
+                'The kinetics file "{0}" did not contain a method.'.format(path))
             return None
         if not 'Reaction' in local_context:
-            logging.error('The kinetics file "{0}" did not contain a reaction.'.format(path))
+            logging.error(
+                'The kinetics file "{0}" did not contain a reaction.'.format(path))
             return None
         return local_context
-

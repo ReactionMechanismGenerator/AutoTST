@@ -44,7 +44,7 @@ from autotst.geometry import Bond, Angle, Torsion, CisTrans
 from autotst.molecule import AutoTST_Molecule
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.conformer.utilities import update_from_ase, create_initial_population, \
-                                        select_top_population, get_unique_conformers, get_energies
+    select_top_population, get_unique_conformers, get_energies
 
 
 def perform_ga(autotst_object,
@@ -56,7 +56,6 @@ def perform_ga(autotst_object,
                store_directory=".",
                mutation_probability=0.2,
                delta=30):
-
     """
     Performs a genetic algorithm to determine the lowest energy conformer of a TS or molecule. 
 
@@ -76,7 +75,8 @@ def perform_ga(autotst_object,
     """
     assert autotst_object, "No AutoTST object provided..."
     if initial_pop is None:
-        logging.info("No initial population provided, creating one using base parameters...")
+        logging.info(
+            "No initial population provided, creating one using base parameters...")
         initial_pop = create_initial_population(autotst_object)
 
     possible_dihedrals = np.arange(0, 360, delta)
@@ -106,7 +106,8 @@ def perform_ga(autotst_object,
         ase_object = autotst_object.ase_ts
         label = autotst_object.label
 
-    assert ase_object.get_calculator(), "To use GA, you must attach an ASE calculator to the `ase_molecule`."
+    assert ase_object.get_calculator(
+    ), "To use GA, you must attach an ASE calculator to the `ase_molecule`."
     gen_number = 0
     complete = False
     unique_conformers = {}
@@ -124,9 +125,11 @@ def perform_ga(autotst_object,
                     dihedral = np.random.choice(possible_dihedrals)
                 else:
                     if 0.5 > random.random():
-                        dihedral = results["torsion_" + str(index)].loc[parent_0]
+                        dihedral = results["torsion_" +
+                                           str(index)].loc[parent_0]
                     else:
-                        dihedral = results["torsion_" + str(index)].loc[parent_1]
+                        dihedral = results["torsion_" +
+                                           str(index)].loc[parent_1]
 
                 i, j, k, l = torsion.indices
                 right_mask = torsion.right_mask
@@ -142,7 +145,8 @@ def perform_ga(autotst_object,
             # Updating the molecule
             update_from_ase(autotst_object)
 
-            constrained_energy, relaxed_energy, ase_copy = get_energies(autotst_object)
+            constrained_energy, relaxed_energy, ase_copy = get_energies(
+                autotst_object)
 
             relaxed_torsions = []
 
@@ -150,16 +154,18 @@ def perform_ga(autotst_object,
 
                 i, j, k, l = torsion.indices
 
-                angle = round(ase_copy.get_dihedral(i,j,k,l), -1)
+                angle = round(ase_copy.get_dihedral(i, j, k, l), -1)
                 angle = int(30 * round(float(angle)/30))
-                if angle < 0: angle += 360
+                if angle < 0:
+                    angle += 360
                 relaxed_torsions.append(angle)
 
-            r.append([constrained_energy, relaxed_energy] + dihedrals + relaxed_torsions)
-
+            r.append([constrained_energy, relaxed_energy] +
+                     dihedrals + relaxed_torsions)
 
         results = pd.DataFrame(r)
-        logging.info("Creating the DataFrame of results for the {}th generation".format(gen_number))
+        logging.info(
+            "Creating the DataFrame of results for the {}th generation".format(gen_number))
 
         columns = ["constrained_energy", "relaxed_energy"]
         for i in range(len(torsions)):
@@ -176,7 +182,8 @@ def perform_ga(autotst_object,
             # This portion stores each generation if desired
             logging.info("Saving the results DataFrame")
 
-            generation_name = "{0}_ga_generation_{1}.csv".format(label, gen_number)
+            generation_name = "{0}_ga_generation_{1}.csv".format(
+                label, gen_number)
             f = os.path.join(store_directory, generation_name)
             results.to_csv(f)
 

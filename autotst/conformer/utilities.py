@@ -45,12 +45,13 @@ import cPickle as pickle
 import ase
 from ase import units
 from ase.constraints import FixBondLengths
-from ase.optimize import BFGS 
+from ase.optimize import BFGS
 
 import autotst
 from autotst.geometry import Bond, Angle, Torsion, CisTrans
 from autotst.molecule import AutoTST_Molecule
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
+
 
 def update_from_ase(autotst_obj):
     """
@@ -80,7 +81,8 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
     :return:
      df: a DataFrame of the results sorted by the lowest energy conformers
     """
-    logging.info("Creating initial population of {} individuals from random guesses".format(population_size))
+    logging.info("Creating initial population of {} individuals from random guesses".format(
+        population_size))
 
     df = None
 
@@ -102,7 +104,6 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_ts
 
-
     for indivudual in range(population_size):
         dihedrals = []
         for torsion in torsions:
@@ -120,7 +121,8 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
                 mask=right_mask
             )
 
-        constrained_energy, relaxed_energy, ase_copy = get_energies(autotst_object)
+        constrained_energy, relaxed_energy, ase_copy = get_energies(
+            autotst_object)
 
         update_from_ase(autotst_object)
 
@@ -130,12 +132,14 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
 
             i, j, k, l = torsion.indices
 
-            angle = round(ase_copy.get_dihedral(i,j,k,l), -1)
+            angle = round(ase_copy.get_dihedral(i, j, k, l), -1)
             angle = int(30 * round(float(angle)/30))
-            if angle < 0: angle += 360
+            if angle < 0:
+                angle += 360
             relaxed_torsions.append(angle)
 
-        population.append([constrained_energy, relaxed_energy] + dihedrals + relaxed_torsions)
+        population.append(
+            [constrained_energy, relaxed_energy] + dihedrals + relaxed_torsions)
 
     if len(population) > 0:
         logging.info("Creating a dataframe of the initial population")
@@ -150,6 +154,7 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
         df = df.sort_values("constrained_energy")
 
     return df
+
 
 def select_top_population(df=None, top_percent=0.30):
     """
@@ -191,8 +196,8 @@ def get_unique_conformers(df, unique_torsions={}):
     assert len(columns) > 0
     assert "relaxed_energy" in df.columns
 
-
-    mini = df[df.relaxed_energy < df.relaxed_energy.min() + units.eV / (units.kcal / units.mol)].sort_values("relaxed_energy")
+    mini = df[df.relaxed_energy < df.relaxed_energy.min(
+    ) + units.eV / (units.kcal / units.mol)].sort_values("relaxed_energy")
     for i, combo in enumerate(mini[columns].values):
         combo = tuple(combo)
         energy = mini.relaxed_energy.iloc[i]
@@ -226,7 +231,8 @@ def get_energies(autotst_object):
     ase_copy = ase_object.copy()
     ase_copy.set_calculator(ase_object.get_calculator())
 
-    ase_copy.set_constraint(FixBondLengths(list(itertools.combinations(labels,2))))
+    ase_copy.set_constraint(FixBondLengths(
+        list(itertools.combinations(labels, 2))))
 
     opt = BFGS(ase_copy)
     opt.run(fmax=0.01)

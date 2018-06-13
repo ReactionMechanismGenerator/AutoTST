@@ -27,6 +27,7 @@
 #
 ################################################################################
 
+
 class Bond:
     """
     A class that acts as a container for bond information.
@@ -45,6 +46,7 @@ class Bond:
 
     def __repr__(self):
         return '<AutoTST Bond "{0}">'.format(self.indices)
+
 
 class Angle:
     """
@@ -69,6 +71,7 @@ class Angle:
     def __repr__(self):
         return '<AutoTST Angle "{0}">'.format(self.indices)
 
+
 class Torsion:
     """
     A class that acts as a container for torsion information.
@@ -91,6 +94,7 @@ class Torsion:
     def __repr__(self):
         return '<AutoTST Torsion "{0}">'.format(self.indices)
 
+
 class CisTrans():
     """
     A class that acts as a container for CisTrans information.
@@ -109,5 +113,6 @@ class CisTrans():
         self.left_mask = left_mask
         self.right_mask = right_mask
         self.reaction_center = reaction_center
+
     def __repr__(self):
         return '<AutoTST CisTrans "{0}">'.format(self.indices)

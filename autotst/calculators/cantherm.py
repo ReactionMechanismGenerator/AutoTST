@@ -5,10 +5,10 @@ from rmgpy.cantherm import CanTherm, KineticsJob, StatMechJob
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.molecule import AutoTST_Molecule
 
+
 class AutoTST_CanTherm():
 
     def __init__(self, reaction, scratch=".", output_directory=".", model_chemistry="M06-2X/cc-pVTZ", freq_scale_factor=0.982):
-
         """
         A class to perform CanTherm calculations:
         :param: reaction: (AutoTST_Reaction) The reaction of interest
@@ -21,13 +21,13 @@ class AutoTST_CanTherm():
         self.scratch = scratch
 
         self.cantherm_job = CanTherm()
-        self.output_directory=output_directory
+        self.output_directory = output_directory
         self.cantherm_job.outputDirectory = self.output_directory
         self.model_chemistry = model_chemistry
-        self.freq_scale_factor=freq_scale_factor
+        self.freq_scale_factor = freq_scale_factor
 
     def get_atoms(self, mol):
-        atom_dict={}
+        atom_dict = {}
         if isinstance(mol, AutoTST_Molecule):
             rmg_mol = mol.rmg_molecule
         elif isinstance(mol, AutoTST_Reaction):
@@ -64,51 +64,51 @@ class AutoTST_CanTherm():
         bondDict = {}
         for bond in bonds:
             if bond.isSingle():
-                if bond.atom1.symbol=='C' and bond.atom2.symbol=='C':
+                if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
                     bondType = 'C-C'
-                elif (bond.atom1.symbol=='H' and bond.atom2.symbol=='H'):
+                elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'H'):
                     bondType = 'H-H'
-                elif (bond.atom1.symbol=='C' and bond.atom2.symbol=='H') or (bond.atom1.symbol=='H' and bond.atom2.symbol=='C'):
+                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'H') or (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'C'):
                     bondType = 'C-H'
-                elif (bond.atom1.symbol=='O' and bond.atom2.symbol=='O'):
+                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'O'):
                     bondType = 'O-O'
-                elif (bond.atom1.symbol=='C' and bond.atom2.symbol=='O') or (bond.atom1.symbol=='O' and bond.atom2.symbol=='C'):
+                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'C'):
                     bondType = 'C-O'
-                elif (bond.atom1.symbol=='H' and bond.atom2.symbol=='O') or (bond.atom1.symbol=='O' and bond.atom2.symbol=='H'):
+                elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'H'):
                     bondType = 'O-H'
-                elif bond.atom1.symbol=='N' and bond.atom2.symbol=='N':
+                elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
                     bondType = 'N-N'
-                elif (bond.atom1.symbol=='C' and bond.atom2.symbol=='N') or (bond.atom1.symbol=='N' and bond.atom2.symbol=='C'):
+                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
                     bondType = 'N-C'
-                elif (bond.atom1.symbol=='O' and bond.atom2.symbol=='N') or (bond.atom1.symbol=='N' and bond.atom2.symbol=='O'):
+                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'O'):
                     bondType = 'N-O'
-                elif (bond.atom1.symbol=='H' and bond.atom2.symbol=='N') or (bond.atom1.symbol=='N' and bond.atom2.symbol=='H'):
+                elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'H'):
                     bondType = 'N-H'
-                elif bond.atom1.symbol=='S' and bond.atom2.symbol=='S':
+                elif bond.atom1.symbol == 'S' and bond.atom2.symbol == 'S':
                     bondType = 'S-S'
-                elif (bond.atom1.symbol=='H' and bond.atom2.symbol=='S') or (bond.atom1.symbol=='S' and bond.atom2.symbol=='H'):
+                elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'S') or (bond.atom1.symbol == 'S' and bond.atom2.symbol == 'H'):
                     bondType = 'S-H'
             elif bond.isDouble:
-                if bond.atom1.symbol=='C' and bond.atom2.symbol=='C':
+                if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
                     bondType = 'C=C'
-                elif (bond.atom1.symbol=='O' and bond.atom2.symbol=='O'):
+                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'O'):
                     bondType = 'O=O'
-                elif (bond.atom1.symbol=='C' and bond.atom2.symbol=='O') or (bond.atom1.symbol=='O' and bond.atom2.symbol=='C'):
+                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'C'):
                     bondType = 'C=O'
-                elif bond.atom1.symbol=='N' and bond.atom2.symbol=='N':
+                elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
                     bondType = 'N=N'
-                elif (bond.atom1.symbol=='C' and bond.atom2.symbol=='N') or (bond.atom1.symbol=='N' and bond.atom2.symbol=='C'):
+                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
                     bondType = 'N=C'
-                elif (bond.atom1.symbol=='O' and bond.atom2.symbol=='N') or (bond.atom1.symbol=='N' and bond.atom2.symbol=='O'):
+                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'O'):
                     bondType = 'N=O'
-                elif (bond.atom1.symbol=='O' and bond.atom2.symbol=='S') or (bond.atom1.symbol=='S' and bond.atom2.symbol=='O'):
+                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'S') or (bond.atom1.symbol == 'S' and bond.atom2.symbol == 'O'):
                     bondType = 'S=O'
             elif bond.isTriple:
-                if bond.atom1.symbol=='C' and bond.atom2.symbol=='C':
+                if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
                     bondType = 'C#C'
-                elif bond.atom1.symbol=='N' and bond.atom2.symbol=='N':
+                elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
                     bondType = 'N#N'
-                elif (bond.atom1.symbol=='C' and bond.atom2.symbol=='N') or (bond.atom1.symbol=='N' and bond.atom2.symbol=='C'):
+                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
                     bondType = 'N#C'
             try:
                 bondDict[bondType] += 1
@@ -119,7 +119,8 @@ class AutoTST_CanTherm():
 
     def write_cantherm_for_reacts_and_prods(self, mol):
 
-        output = ['#!/usr/bin/env python', '# -*- coding: utf-8 -*-', '', 'atoms = {']
+        output = ['#!/usr/bin/env python',
+                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
         atom_dict = self.get_atoms(mol)
 
@@ -136,36 +137,36 @@ class AutoTST_CanTherm():
         else:
             output.append('bonds = {}')
 
+        output += ["", "linear = False", "", "externalSymmetry = 1", "",
+                   "spinMultiplicity = {}".format(mol.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
 
-
-        output += ["","linear = False","","externalSymmetry = 1", "", "spinMultiplicity = {}".format(mol.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
-
-        output += ["energy = {","    '{0}': GaussianLog('{1}.log'),".format(self.model_chemistry, mol.smiles),"}",""]
+        output += ["energy = {", "    '{0}': GaussianLog('{1}.log'),".format(
+            self.model_chemistry, mol.smiles), "}", ""]
 
         output += ["geometry = GaussianLog('{0}.log')".format(mol.smiles), ""]
 
-        output += ["frequencies = GaussianLog('{0}.log')".format(mol.smiles), ""]
+        output += [
+            "frequencies = GaussianLog('{0}.log')".format(mol.smiles), ""]
 
         output += ["rotors = []"]
 
         input_string = ""
 
         for t in output:
-            input_string += t +"\n"
+            input_string += t + "\n"
 
         with open(os.path.join(self.scratch, mol.smiles+".py"), "w") as f:
             f.write(input_string)
 
     def write_statmech_ts(self, rxn):
-        output = ['#!/usr/bin/env python', '# -*- coding: utf-8 -*-', '', 'atoms = {']
-
+        output = ['#!/usr/bin/env python',
+                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
         atom_dict = self.get_atoms(rxn)
 
         for atom, count in atom_dict.iteritems():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
-
 
         bond_dict = self.get_bonds(rxn)
         if bond_dict != {}:
@@ -177,61 +178,65 @@ class AutoTST_CanTherm():
         else:
             output.append('bonds = {}')
 
+        output += ["", "linear = False", "", "externalSymmetry = 1", "",
+                   "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
 
-
-        output += ["","linear = False","","externalSymmetry = 1", "", "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
-
-        output += ["energy = {","    '{0}': GaussianLog('{1}.log'),".format(self.model_chemistry, rxn.label),"}",""]
+        output += ["energy = {", "    '{0}': GaussianLog('{1}.log'),".format(
+            self.model_chemistry, rxn.label), "}", ""]
 
         output += ["geometry = GaussianLog('{0}.log')".format(rxn.label), ""]
 
-        output += ["frequencies = GaussianLog('{0}.log')".format(rxn.label), ""]
+        output += [
+            "frequencies = GaussianLog('{0}.log')".format(rxn.label), ""]
 
         output += ["rotors = []", ""]
 
         input_string = ""
 
         for t in output:
-            input_string += t +"\n"
+            input_string += t + "\n"
 
-        with open(os.path.join(self.scratch, rxn.label +".py"), "w") as f:
+        with open(os.path.join(self.scratch, rxn.label + ".py"), "w") as f:
             f.write(input_string)
 
     def write_cantherm_ts(self, rxn):
-        top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
+        top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(
+            self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
 
         for react in rxn.reactant_mols:
-            line = "species('{0}', '{1}')".format(react.smiles, react.smiles +".py")
+            line = "species('{0}', '{1}')".format(
+                react.smiles, react.smiles + ".py")
             top.append(line)
 
         for prod in rxn.product_mols:
-            line = "species('{0}', '{1}')".format(prod.smiles, prod.smiles +".py")
+            line = "species('{0}', '{1}')".format(
+                prod.smiles, prod.smiles + ".py")
             top.append(line)
 
-        line = "transitionState('TS', '{0}')".format(rxn.label +".py")
+        line = "transitionState('TS', '{0}')".format(rxn.label + ".py")
         top.append(line)
 
-
         line = ["",
-        "reaction(",
-        "    label = '{0}',".format(rxn.label),
-        "    reactants = ['{0}', '{1}'],".format(rxn.reactant_mols[0].smiles, rxn.reactant_mols[1].smiles),
-        "    products = ['{0}', '{1}'],".format(rxn.product_mols[0].smiles, rxn.product_mols[1].smiles),
-        "    transitionState = 'TS',",
-        "    tunneling = 'Eckart',",
-        ")",
-        "",
-        "statmech('TS')",
-        "kinetics('{0}')".format(rxn.label)]
+                "reaction(",
+                "    label = '{0}',".format(rxn.label),
+                "    reactants = ['{0}', '{1}'],".format(
+                    rxn.reactant_mols[0].smiles, rxn.reactant_mols[1].smiles),
+                "    products = ['{0}', '{1}'],".format(
+                    rxn.product_mols[0].smiles, rxn.product_mols[1].smiles),
+                "    transitionState = 'TS',",
+                "    tunneling = 'Eckart',",
+                ")",
+                "",
+                "statmech('TS')",
+                "kinetics('{0}')".format(rxn.label)]
         top += line
-
 
         input_string = ""
 
         for t in top:
-            input_string += t +"\n"
+            input_string += t + "\n"
 
-        with open(os.path.join(self.scratch, rxn.label +".canth.py"), "w") as f:
+        with open(os.path.join(self.scratch, rxn.label + ".canth.py"), "w") as f:
             f.write(input_string)
 
     def write_files(self):
@@ -247,7 +252,8 @@ class AutoTST_CanTherm():
 
     def run(self):
 
-        self.cantherm_job.inputFile = os.path.join(self.scratch, self.reaction.label + ".cantherm.py")
+        self.cantherm_job.inputFile = os.path.join(
+            self.scratch, self.reaction.label + ".cantherm.py")
         self.cantherm_job.plot = False
         self.cantherm_job.execute()
 

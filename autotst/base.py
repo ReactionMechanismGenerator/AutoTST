@@ -60,23 +60,25 @@ from rmgpy.cantherm.kinetics import KineticsJob
 
 ################################################################################
 
+
 class QMData():
     """
     A class that acts as a container for .ts objects
     """
-    def __init__(self, 
-                 groundStateDegeneracy=0, 
+
+    def __init__(self,
+                 groundStateDegeneracy=0,
                  numberOfAtoms=0,
                  stericEnergy=None,
                  molecularMass=(0, "amu"),
-                 energy=(0,'eV/molecule'),
+                 energy=(0, 'eV/molecule'),
                  atomicNumbers=array([]),
-                 rotationalConstants=([],"cm^-1"),
+                 rotationalConstants=([], "cm^-1"),
                  atomCoords=([[]], "angstrom"),
-                 frequencies=([],"cm^-1"),
+                 frequencies=([], "cm^-1"),
                  source=None,
-                 method = None,
-                 label = ""):
+                 method=None,
+                 label=""):
 
         self.groundStateDegeneracy = groundStateDegeneracy
         self.numberOfAtoms = numberOfAtoms
@@ -97,19 +99,23 @@ class QMData():
         object.
         """
         string = 'QMData('
-        string += "groundStateDegeneracy={0!r}, ".format(self.groundStateDegeneracy)
+        string += "groundStateDegeneracy={0!r}, ".format(
+            self.groundStateDegeneracy)
         string += "numberOfAtoms={0!r}, ".format(self.numberOfAtoms)
         string += "stericEnergy={0!r}, ".format(self.stericEnergy)
         string += "molecularMass={0!r}, ".format(self.molecularMass)
         string += "energy={0!r}, ".format(self.energy)
-        string += "atomicNumbers={0}, ".format("{0!r}".format(self.atomicNumbers).replace(" ",""))
-        string += "rotationalConstants={0}, ".format("{0}".format(self.rotationalConstants).replace("\n", "").replace(" ",""))
-        string += "atomCoords={0}, ".format("{0}".format(self.atomCoords).replace("\n", "").replace(" ",""))
-        string += "frequencies={0}, ".format("{0}".format(self.frequencies).replace("\n", "").replace(" ",""))
+        string += "atomicNumbers={0}, ".format(
+            "{0!r}".format(self.atomicNumbers).replace(" ", ""))
+        string += "rotationalConstants={0}, ".format("{0}".format(
+            self.rotationalConstants).replace("\n", "").replace(" ", ""))
+        string += "atomCoords={0}, ".format("{0}".format(
+            self.atomCoords).replace("\n", "").replace(" ", ""))
+        string += "frequencies={0}, ".format("{0}".format(
+            self.frequencies).replace("\n", "").replace(" ", ""))
         string += "source={0!r}, ".format(self.source)
         string = string[:-2] + ')'
         return string
-
 
     def get_qmdata(self, file_path=None):
         "A helper function to fill in the qmdata using CCLib"
@@ -120,11 +126,11 @@ class QMData():
         self.groundStateDegeneracy = parser.mult
         self.atomNumbers = atoms.numbers
         self.atomCoords = (atoms.arrays["positions"], "angstrom")
-        self.stericEnergy = None # Need to fix this
+        self.stericEnergy = None  # Need to fix this
         self.molecularMass = (parser.atommasses.sum(), "amu")
         self.energy = (atoms.get_potential_energy(), "eV/molecule")
         self.atomicNumbers = parser.atomnos
-        self.rotationalConstants = ([],"cm^-1") # Need to fix this
+        self.rotationalConstants = ([], "cm^-1")  # Need to fix this
         self.frequencies = (parser.vibfreqs, "cm^-1")
         self.source = None
         self.method = parser.metadata["functional"]
@@ -134,13 +140,15 @@ class DistanceData():
     """
     A class for storing distance matrix data, for geometry estimation
     """
+
     def __init__(self, distances={}, uncertainties=None, method=None):
         self.distances = distances
         self.uncertainties = uncertainties
         self.method = method
         self.comment = u''
-        assert isinstance(distances,dict), "distances should be a dict"
-        if method: assert isinstance(method,str), "method should be a string"
+        assert isinstance(distances, dict), "distances should be a dict"
+        if method:
+            assert isinstance(method, str), "method should be a string"
 
     def __repr__(self):
         strings = ["DistanceData("]
@@ -153,7 +161,8 @@ class DistanceData():
         if self.uncertainties is not None:
             strings.append(", uncertainties={")
             for key in sorted(self.uncertainties.keys()):
-                strings.append("{0!r}: {1:.6f},".format(key, self.uncertainties[key]))
+                strings.append("{0!r}: {1:.6f},".format(
+                    key, self.uncertainties[key]))
             strings.append("}")
 
         if self.method:
@@ -165,7 +174,8 @@ class DistanceData():
 
     def add(self, other):
         """Adds the `other` distances to these."""
-        assert len(self.distances)==len(other.distances), "self and other must have the same size dictionary of distances, but self={0!r} and other={1!r}".format(self,other)
+        assert len(self.distances) == len(
+            other.distances), "self and other must have the same size dictionary of distances, but self={0!r} and other={1!r}".format(self, other)
         for key, value in other.distances.iteritems():
             self.distances[key] += value
         if self.uncertainties and other.uncertainties:
@@ -182,6 +192,7 @@ class TransitionStates(Database):
     """
     loads, and contains, both Depository and Groups
     """
+
     def __init__(self):
         self.groups = None
         self.depository = None
@@ -191,21 +202,27 @@ class TransitionStates(Database):
         """
         Load the TS database
         """
-        if local_context is None: local_context = {}
+        if local_context is None:
+            local_context = {}
         local_context['DistanceData'] = DistanceData
 
-        fpath = os.path.join(path,'TS_training', 'reactions.py')
-        logging.debug("Loading transitions state family training set from {0}".format(fpath))
-        depository = TransitionStateDepository(label='{0}/TS_training'.format(path.split('/')[-1]))#'intra_H_migration/TS_training')
-        depository.load(fpath, local_context, global_context )
+        fpath = os.path.join(path, 'TS_training', 'reactions.py')
+        logging.debug(
+            "Loading transitions state family training set from {0}".format(fpath))
+        depository = TransitionStateDepository(
+            label='{0}/TS_training'.format(path.split('/')[-1]))  # 'intra_H_migration/TS_training')
+        depository.load(fpath, local_context, global_context)
         self.depository = depository
 
-        fpath = os.path.join(path,'TS_groups.py')
-        logging.info("Loading transitions state family groups from {0}".format(fpath))
-        groups = TSGroups(label='{0}/TS_groups'.format(path.split('/')[-1]))#'intra_H_migration/TS_groups')
-        groups.load(fpath, local_context, global_context )
+        fpath = os.path.join(path, 'TS_groups.py')
+        logging.info(
+            "Loading transitions state family groups from {0}".format(fpath))
+        # 'intra_H_migration/TS_groups')
+        groups = TSGroups(label='{0}/TS_groups'.format(path.split('/')[-1]))
+        groups.load(fpath, local_context, global_context)
 
-        self.family.forwardTemplate.reactants = [groups.entries[entry.label] for entry in self.family.forwardTemplate.reactants]
+        self.family.forwardTemplate.reactants = [
+            groups.entries[entry.label] for entry in self.family.forwardTemplate.reactants]
         # self.family.forwardTemplate.products = [groups.entries[entry.label] for entry in self.family.forwardTemplate.products]
         self.family.entries = groups.entries
         self.family.groups = groups
@@ -258,8 +275,10 @@ class TransitionStates(Database):
         searches the depository, libraries, and groups, in that order.
         """
         reactionList = []
-        reactionList.extend(self.generateReactionsFromLibraries(reactants, products, **options))
-        reactionList.extend(self.generateReactionsFromFamilies(reactants, products, **options))
+        reactionList.extend(self.generateReactionsFromLibraries(
+            reactants, products, **options))
+        reactionList.extend(self.generateReactionsFromFamilies(
+            reactants, products, **options))
         return reactionList
 
     def generateReactionsFromFamilies(self, reactants, products, only_families=None, families=None, **options):
@@ -305,26 +324,29 @@ class TransitionStates(Database):
                     return True
             return False
 
-        reaction = None; template = None
+        reaction = None
+        template = None
 
         # Get the indicated reaction family
         if groups == None:
-            raise ValueError('Invalid value "{0}" for family parameter.'.format(family))
+            raise ValueError(
+                'Invalid value "{0}" for family parameter.'.format(family))
 
         if all([(isinstance(reactant, Group) or isinstance(reactant, LogicNode)) for reactant in entry.item.reactants]):
             # The entry is a rate rule, containing functional groups only
             # By convention, these are always given in the forward direction and
             # have kinetics defined on a per-site basis
             reaction = Reaction(
-                reactants = entry.item.reactants[:],
-                products = [],
-                kinetics = entry.data,
-                degeneracy = 1,
+                reactants=entry.item.reactants[:],
+                products=[],
+                kinetics=entry.data,
+                degeneracy=1,
             )
-            template = [groups.entries[label] for label in entry.label.split(';')]
+            template = [groups.entries[label]
+                        for label in entry.label.split(';')]
 
         elif (all([isinstance(reactant, (Molecule, Species)) for reactant in entry.item.reactants]) and
-            all([isinstance(product, (Molecule, Species)) for product in entry.item.products])):
+              all([isinstance(product, (Molecule, Species)) for product in entry.item.products])):
             # The entry is a real reaction, containing molecules
             # These could be defined for either the forward or reverse direction
             # and could have a reaction-path degeneracy
@@ -346,10 +368,12 @@ class TransitionStates(Database):
                 reaction.products.append(product)
 
             # Generate all possible reactions involving the reactant species
-            generatedReactions = self.generateReactionsFromFamilies([reactant.molecule[0] for reactant in reaction.reactants], [], only_families=[family], families=rxnFamily)
+            generatedReactions = self.generateReactionsFromFamilies(
+                [reactant.molecule[0] for reactant in reaction.reactants], [], only_families=[family], families=rxnFamily)
 
             # Remove from that set any reactions that don't produce the desired reactants and products
-            forward = []; reverse = []
+            forward = []
+            reverse = []
             for rxn in generatedReactions:
                 if matchSpeciesToMolecules(reaction.reactants, rxn.reactants) and matchSpeciesToMolecules(reaction.products, rxn.products):
                     forward.append(rxn)
@@ -374,15 +398,18 @@ class TransitionStates(Database):
                 reaction.distances['d12'] = entry.data['d23']
                 reaction.distances['d23'] = entry.data['d12']
             elif len(reverse) > 0 and len(forward) > 0:
-                print 'FAIL: Multiple reactions found for {0!r}.'.format(entry.label)
+                print 'FAIL: Multiple reactions found for {0!r}.'.format(
+                    entry.label)
             elif len(reverse) == 0 and len(forward) == 0:
                 print 'FAIL: No reactions found for "%s".' % (entry.label)
             else:
-                print 'FAIL: Unable to estimate distances for {0!r}.'.format(entry.label)
+                print 'FAIL: Unable to estimate distances for {0!r}.'.format(
+                    entry.label)
 
         assert reaction is not None
         assert template is not None
         return reaction, template
+
 
 def filterReactions(reactants, products, reactionList):
     """
@@ -443,6 +470,7 @@ def filterReactions(reactants, products, reactionList):
 
 ################################################################################
 
+
 class TransitionStateDepository(Database):
     """
     A class for working with an RMG transition state depository. Each depository
@@ -452,7 +480,8 @@ class TransitionStateDepository(Database):
     """
 
     def __init__(self, label='', name='', shortDesc='', longDesc=''):
-        Database.__init__(self, label=label, name=name, shortDesc=shortDesc, longDesc=longDesc)
+        Database.__init__(self, label=label, name=name,
+                          shortDesc=shortDesc, longDesc=longDesc)
 
     def __repr__(self):
         return '<TransitionStateDepository "{0}">'.format(self.label)
@@ -462,7 +491,8 @@ class TransitionStateDepository(Database):
         Database.load(self, path, local_context, global_context)
 
         # Load the species in the kinetics library
-        speciesDict = self.getSpecies(os.path.join(os.path.dirname(path),'dictionary.txt'))
+        speciesDict = self.getSpecies(os.path.join(
+            os.path.dirname(path), 'dictionary.txt'))
         # Make sure all of the reactions draw from only this set
         entries = self.entries.values()
         for entry in entries:
@@ -482,18 +512,21 @@ class TransitionStateDepository(Database):
             for reactant in reactants.split('+'):
                 reactant = reactant.strip()
                 if reactant not in speciesDict:
-                    raise DatabaseError('Species {0} in kinetics depository {1} is missing from its dictionary.'.format(reactant, self.label))
+                    raise DatabaseError(
+                        'Species {0} in kinetics depository {1} is missing from its dictionary.'.format(reactant, self.label))
                 # For some reason we need molecule objects in the depository rather than species objects
                 rxn.reactants.append(speciesDict[reactant])
             for product in products.split('+'):
                 product = product.strip()
                 if product not in speciesDict:
-                    raise DatabaseError('Species {0} in kinetics depository {1} is missing from its dictionary.'.format(product, self.label))
+                    raise DatabaseError(
+                        'Species {0} in kinetics depository {1} is missing from its dictionary.'.format(product, self.label))
                 # For some reason we need molecule objects in the depository rather than species objects
                 rxn.products.append(speciesDict[product])
 
             if not rxn.isBalanced():
-                raise DatabaseError('Reaction {0} in kinetics depository {1} was not balanced! Please reformulate.'.format(rxn, self.label))
+                raise DatabaseError(
+                    'Reaction {0} in kinetics depository {1} was not balanced! Please reformulate.'.format(rxn, self.label))
 
     def loadEntry(self,
                   index,
@@ -515,18 +548,19 @@ class TransitionStateDepository(Database):
                   rank=None,
                   ):
 
-        reaction = Reaction(reactants=[], products=[], degeneracy=degeneracy, duplicate=duplicate, reversible=reversible)
+        reaction = Reaction(reactants=[], products=[
+        ], degeneracy=degeneracy, duplicate=duplicate, reversible=reversible)
 
         entry = Entry(
-            index = index,
-            label = label,
-            item = reaction,
-            data = distances,
-            reference = reference,
-            referenceType = referenceType,
-            shortDesc = shortDesc,
-            longDesc = longDesc.strip(),
-            rank = rank,
+            index=index,
+            label=label,
+            item=reaction,
+            data=distances,
+            reference=reference,
+            referenceType=referenceType,
+            shortDesc=shortDesc,
+            longDesc=longDesc.strip(),
+            rank=rank,
         )
         self.entries['{0:d}:{1}'.format(index, label)] = entry
         return entry
@@ -570,14 +604,14 @@ class TSGroups(Database):
         else:
             item = Group().fromAdjacencyList(group)
         self.entries[label] = Entry(
-            index = index,
-            label = label,
-            item = item,
-            data = distances,
-            reference = reference,
-            referenceType = referenceType,
-            shortDesc = shortDesc,
-            longDesc = longDesc.strip(),
+            index=index,
+            label=label,
+            item=item,
+            data=distances,
+            reference=reference,
+            referenceType=referenceType,
+            shortDesc=shortDesc,
+            longDesc=longDesc.strip(),
         )
 
     def getReactionTemplate(self, reaction):
@@ -598,7 +632,8 @@ class TSGroups(Database):
             else:
                 # duplicate node found at top of tree
                 # eg. R_recombination: ['Y_rad', 'Y_rad']
-                assert len(forwardTemplate)==2 , 'Can currently only do symmetric trees with nothing else in them'
+                assert len(
+                    forwardTemplate) == 2, 'Can currently only do symmetric trees with nothing else in them'
                 symmetricTree = True
         forwardTemplate = temporary
 
@@ -615,7 +650,8 @@ class TSGroups(Database):
             if isinstance(entry.item, LogicNode):
                 group = entry.item.getPossibleStructures(self.entries)[0]
 
-            atomList = group.getLabeledAtoms() # list of atom labels in highest non-union node
+            # list of atom labels in highest non-union node
+            atomList = group.getLabeledAtoms()
 
             for reactant in reaction.reactants:
                 if isinstance(reactant, Species):
@@ -623,14 +659,14 @@ class TSGroups(Database):
                 # Match labeled atoms
                 # Check this reactant has each of the atom labels in this group
                 if not all([reactant.containsLabeledAtom(label) for label in atomList]):
-                    continue # don't try to match this structure - the atoms aren't there!
+                    continue  # don't try to match this structure - the atoms aren't there!
                 # Match structures
                 atoms = reactant.getLabeledAtoms()
 
                 matched_node = self.descendTree(reactant, atoms, root=entry)
                 if matched_node is not None:
                     template.append(matched_node)
-                #else:
+                # else:
                 #    logging.warning("Couldn't find match for {0} in {1}".format(entry,atomList))
                 #    logging.warning(reactant.toAdjacencyList())
 
@@ -643,14 +679,15 @@ class TSGroups(Database):
         # template is a list of the actual matched nodes
         # forwardTemplate is a list of the top level nodes that should be matched
         if len(template) != len(forwardTemplate):
-            logging.warning('Unable to find matching template for reaction {0} in reaction family {1}'.format(str(reaction), str(self)) )
+            logging.warning('Unable to find matching template for reaction {0} in reaction family {1}'.format(
+                str(reaction), str(self)))
             logging.warning(" Trying to match " + str(forwardTemplate))
             logging.warning(" Matched "+str(template))
             print str(self), template, forwardTemplate
-            for n,reactant in enumerate(reaction.reactants):
+            for n, reactant in enumerate(reaction.reactants):
                 print "Reactant", n
                 print reactant.toAdjacencyList() + '\n'
-            for n,product in enumerate(reaction.products):
+            for n, product in enumerate(reaction.products):
                 print "Product", n
                 print product.toAdjacencyList() + '\n'
             raise KineticsError(reaction)
@@ -658,7 +695,7 @@ class TSGroups(Database):
         for reactant in reaction.reactants:
             if isinstance(reactant, Species):
                 reactant = reactant.molecule[0]
-            #reactant.clearLabeledAtoms()
+            # reactant.clearLabeledAtoms()
 
         return template
 
@@ -668,7 +705,7 @@ class TSGroups(Database):
         with the given `template` using group additivity.
         """
         template = reaction.template
-        referenceDistances = self.top[0].data # or something like that
+        referenceDistances = self.top[0].data  # or something like that
 
         # Start with the generic distances of the top-level nodes
         # Make a copy so we don't modify the original
@@ -685,13 +722,13 @@ class TSGroups(Database):
                 entry = entry.parent
             if entry.data.distances and entry not in self.top:
                 tsDistances.add(entry.data)
-                comment_line += "{0} ({1})".format(entry.label, entry.longDesc.split('\n')[0])
+                comment_line += "{0} ({1})".format(entry.label,
+                                                   entry.longDesc.split('\n')[0])
             elif entry in self.top:
                 comment_line += "{0} (Top node)".format(entry.label)
             tsDistances.comment += comment_line + '\n'
 
         return tsDistances
-
 
     def generateGroupAdditivityValues(self, trainingSet):
         """
@@ -704,7 +741,7 @@ class TSGroups(Database):
         """
         # keep track of previous values so we can detect if they change
         old_entries = dict()
-        for label,entry in self.entries.items():
+        for label, entry in self.entries.items():
             if entry.data is not None:
                 old_entries[label] = entry.data
 
@@ -712,22 +749,27 @@ class TSGroups(Database):
         groupEntries = self.top[:]
 
         for entry in self.top:
-            groupEntries.extend(self.descendants(entry)) # Entries in the TS_group.py tree
+            # Entries in the TS_group.py tree
+            groupEntries.extend(self.descendants(entry))
 
         # Determine a unique list of the groups we will be able to fit parameters for
         groupList = []
         for template, distances in trainingSet:
             for group in template:
-                if isinstance(group, str): group = self.entries[group]
+                if isinstance(group, str):
+                    group = self.entries[group]
                 if group not in self.top:
                     groupList.append(group)
                     groupList.extend(self.ancestors(group)[:-1])
         groupList = list(set(groupList))
         groupList.sort(key=lambda x: x.index)
 
-        if True: # should remove this IF block, as we only have one method.
+        if True:  # should remove this IF block, as we only have one method.
             # Initialize dictionaries of fitted group values and uncertainties
-            groupValues = {}; groupUncertainties = {}; groupCounts = {}; groupComments = {}
+            groupValues = {}
+            groupUncertainties = {}
+            groupCounts = {}
+            groupComments = {}
             for entry in groupEntries:
                 groupValues[entry] = []
                 groupUncertainties[entry] = []
@@ -735,9 +777,11 @@ class TSGroups(Database):
                 groupComments[entry] = set()
 
             # Generate least-squares matrix and vector
-            A = []; b = []
+            A = []
+            b = []
 
-            distance_keys = sorted(trainingSet[0][1].distances.keys())  # ['d12', 'd13', 'd23']
+            # ['d12', 'd13', 'd23']
+            distance_keys = sorted(trainingSet[0][1].distances.keys())
             distance_data = []
             for template, distanceData in trainingSet:
                 d = [distanceData.distances[key] for key in distance_keys]
@@ -746,7 +790,9 @@ class TSGroups(Database):
                 # Create every combination of each group and its ancestors with each other
                 combinations = []
                 for group in template:
-                    groups = [group]; groups.extend(self.ancestors(group)) # Groups from the group.py tree
+                    groups = [group]
+                    # Groups from the group.py tree
+                    groups.extend(self.ancestors(group))
                     combinations.append(groups)
                 combinations = getAllCombinations(combinations)
                 # Add a row to the matrix for each combination
@@ -754,14 +800,17 @@ class TSGroups(Database):
                     Arow = [1 if group in groups else 0 for group in groupList]
                     Arow.append(1)
                     brow = d
-                    A.append(Arow); b.append(brow)
+                    A.append(Arow)
+                    b.append(brow)
 
                     for group in groups:
-                        if isinstance(group, str): group = self.entries[group]
+                        if isinstance(group, str):
+                            group = self.entries[group]
                         groupComments[group].add("{0!s}".format(template))
 
             if len(A) == 0:
-                logging.warning('Unable to fit kinetics groups for family "{0}"; no valid data found.'.format(self.label))
+                logging.warning(
+                    'Unable to fit kinetics groups for family "{0}"; no valid data found.'.format(self.label))
                 return
             A = numpy.array(A)
             b = numpy.array(b)
@@ -777,8 +826,9 @@ class TSGroups(Database):
 
                 for index in range(len(trainingSet)):
                     template, distances = trainingSet[index]
-                    d = numpy.float64(distance_data[index,t])
-                    dm = x[-1,t] + sum([x[groupList.index(group),t] for group in template if group in groupList])
+                    d = numpy.float64(distance_data[index, t])
+                    dm = x[-1, t] + sum([x[groupList.index(group), t]
+                                         for group in template if group in groupList])
                     variance = (dm - d)**2
                     for group in template:
                         groups = [group]
@@ -796,19 +846,21 @@ class TSGroups(Database):
                 for i in range(len(count)):
                     if count[i] > 1:
                         stdev[i] = numpy.sqrt(stdev[i] / (count[i] - 1))
-                        ci[i] = scipy.stats.t.ppf(0.975, count[i] - 1) * stdev[i]
+                        ci[i] = scipy.stats.t.ppf(
+                            0.975, count[i] - 1) * stdev[i]
                     else:
                         stdev[i] = None
                         ci[i] = None
                 # Update dictionaries of fitted group values and uncertainties
                 for entry in groupEntries:
                     if entry == self.top[0]:
-                        groupValues[entry].append(x[-1,t])
+                        groupValues[entry].append(x[-1, t])
                         groupUncertainties[entry].append(ci[-1])
                         groupCounts[entry].append(count[-1])
                     elif entry.label in [group.label for group in groupList]:
-                        index = [group.label for group in groupList].index(entry.label)
-                        groupValues[entry].append(x[index,t])
+                        index = [group.label for group in groupList].index(
+                            entry.label)
+                        groupValues[entry].append(x[index, t])
                         groupUncertainties[entry].append(ci[index])
                         groupCounts[entry].append(count[index])
                     else:
@@ -826,11 +878,15 @@ class TSGroups(Database):
                     else:
                         uncertainties = {}
                     # should be entry.*
-                    shortDesc = "Fitted to {0} distances.\n".format(groupCounts[entry][0])
+                    shortDesc = "Fitted to {0} distances.\n".format(
+                        groupCounts[entry][0])
                     longDesc = "\n".join(groupComments[entry.label])
-                    distances_dict = {key:distance for key, distance in zip(distance_keys, groupValues[entry])}
-                    uncertainties_dict = {key:distance for key, distance in zip(distance_keys, uncertainties)}
-                    entry.data = DistanceData(distances=distances_dict, uncertainties=uncertainties_dict)
+                    distances_dict = {key: distance for key, distance in zip(
+                        distance_keys, groupValues[entry])}
+                    uncertainties_dict = {key: distance for key, distance in zip(
+                        distance_keys, uncertainties)}
+                    entry.data = DistanceData(
+                        distances=distances_dict, uncertainties=uncertainties_dict)
                     entry.shortDesc = shortDesc
                     entry.longDesc = longDesc
                 else:
@@ -839,7 +895,7 @@ class TSGroups(Database):
         changed = False
         for label, entry in self.entries.items():
             if entry.data is not None:
-                continue # because this is broken:
+                continue  # because this is broken:
                 if old_entries.has_key(label):
                     old_entry = old_entries[label][label][0]
                     for key, distance in entry.data.iteritems():
@@ -852,5 +908,5 @@ class TSGroups(Database):
             else:
                 changed = True
                 entry.history.append(event)
-        return True # because the thing above is broken
+        return True  # because the thing above is broken
         return changed

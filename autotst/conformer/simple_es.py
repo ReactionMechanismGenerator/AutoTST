@@ -44,7 +44,7 @@ from autotst.geometry import Bond, Angle, Torsion, CisTrans
 from autotst.molecule import AutoTST_Molecule
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.conformer.utilities import update_from_ase, create_initial_population, \
-                                        select_top_population, get_unique_conformers, get_energies
+    select_top_population, get_unique_conformers, get_energies
 
 
 def perform_simple_es(autotst_object,
@@ -55,7 +55,6 @@ def perform_simple_es(autotst_object,
                       store_generations=False,
                       store_directory=".",
                       delta=30):
-
     """
     Performs a genetic algorithm to determine the lowest energy conformer of a TS or molecule
 
@@ -69,14 +68,15 @@ def perform_simple_es(autotst_object,
     :param store_directory: the director where you want the pickle files stored
     :param mutation_probability: float of the chance of mutation
     :param delta: the degree change in dihedral angle between each possible dihedral angle
-    
+
     :return results: a DataFrame containing the final generation
     :return unique_conformers: a dictionary with indicies of unique torsion combinations and entries of energy of those torsions
     """
 
     assert autotst_object, "No AutoTST object provided..."
     if initial_pop is None:
-        logging.info("No initial population provided, creating one using base parameters...")
+        logging.info(
+            "No initial population provided, creating one using base parameters...")
         initial_pop = create_initial_population(autotst_object)
 
     top = select_top_population(initial_pop,
@@ -105,7 +105,8 @@ def perform_simple_es(autotst_object,
         ase_object = autotst_object.ase_ts
         label = autotst_object.label
 
-    assert ase_object.get_calculator(), "To use GA, you must attach an ASE calculator to the `ase_molecule`."
+    assert ase_object.get_calculator(
+    ), "To use GA, you must attach an ASE calculator to the `ase_molecule`."
     gen_number = 0
     complete = False
     unique_conformers = {}
@@ -120,7 +121,8 @@ def perform_simple_es(autotst_object,
                 i, j, k, l = torsion.indices
                 right_mask = torsion.right_mask
 
-                dihedral = random.gauss(top.mean()["torsion_" + str(index)], top.std()["torsion_" + str(index)])
+                dihedral = random.gauss(
+                    top.mean()["torsion_" + str(index)], top.std()["torsion_" + str(index)])
                 dihedrals.append(dihedral)
                 ase_object.set_dihedral(a1=i,
                                         a2=j,
@@ -132,7 +134,8 @@ def perform_simple_es(autotst_object,
             # Updating the molecule
             update_from_ase(autotst_object)
 
-            constrained_energy, relaxed_energy, ase_copy = get_energies(autotst_object)
+            constrained_energy, relaxed_energy, ase_copy = get_energies(
+                autotst_object)
 
             relaxed_torsions = []
 
@@ -140,16 +143,19 @@ def perform_simple_es(autotst_object,
 
                 i, j, k, l = torsion.indices
 
-                angle = round(ase_copy.get_dihedral(i,j,k,l), -1)
-                angle = int(30 * round(float(angle)/30)) # rounding to the nearest 30 degrees
-                if angle < 0: angle += 360
+                angle = round(ase_copy.get_dihedral(i, j, k, l), -1)
+                # rounding to the nearest 30 degrees
+                angle = int(30 * round(float(angle)/30))
+                if angle < 0:
+                    angle += 360
                 relaxed_torsions.append(angle)
 
-            r.append([constrained_energy, relaxed_energy] + list(dihedrals) + relaxed_torsions)
-
+            r.append([constrained_energy, relaxed_energy] +
+                     list(dihedrals) + relaxed_torsions)
 
         results = pd.DataFrame(r)
-        logging.info("Creating the DataFrame of results for the {}th generation".format(gen_number))
+        logging.info(
+            "Creating the DataFrame of results for the {}th generation".format(gen_number))
 
         columns = ["constrained_energy", "relaxed_energy"]
         for i in range(len(torsions)):
@@ -166,7 +172,8 @@ def perform_simple_es(autotst_object,
             # This portion stores each generation if desired
             logging.info("Saving the DataFrame")
 
-            generation_name = "{0}_es_generation_{1}.csv".format(label, gen_number)
+            generation_name = "{0}_es_generation_{1}.csv".format(
+                label, gen_number)
             f = os.path.join(store_directory, generation_name)
             results.to_csv(f)
 
@@ -182,4 +189,3 @@ def perform_simple_es(autotst_object,
             logging.info("Cutoff criteria reached. Simple ES complete.")
 
     return results, unique_conformers
-

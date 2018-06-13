@@ -35,7 +35,8 @@ import numpy as np
 from autotst.reaction import AutoTST_Reaction
 from cclib.io import ccread
 
-def percent_change(original,new):
+
+def percent_change(original, new):
     "A function to calculate the percent change between two values"
     percent_change = (abs(new - original) / original) * 100
     return percent_change
@@ -93,7 +94,7 @@ class Vibrational_Analysis():
         self.post_geometry = reaction.ts.ase_ts.copy()
 
         for vib, displacements in self.vibrations:
-            if vib < 0: # Finding the imaginary frequency
+            if vib < 0:  # Finding the imaginary frequency
                 got_imaginary_frequency = True
                 self.post_geometry.arrays["positions"] -= displacements
 
@@ -125,10 +126,11 @@ class Vibrational_Analysis():
             results.append(["Ang", angle.indices, angle.reaction_center, percent_change(before, after)])
         """
         for bond in reaction.ts.bonds:
-            i,j = bond.indices
-            before = self.before_geometry.get_distance(i,j)
-            after = self.post_geometry.get_distance(i,j)
-            results.append(["Bond", bond.indices, bond.reaction_center, percent_change(before, after)])
+            i, j = bond.indices
+            before = self.before_geometry.get_distance(i, j)
+            after = self.post_geometry.get_distance(i, j)
+            results.append(
+                ["Bond", bond.indices, bond.reaction_center, percent_change(before, after)])
 
         results = pd.DataFrame(results)
         results.columns = ["type", "index", "center", "percent_change"]
@@ -156,5 +158,6 @@ class Vibrational_Analysis():
             return True
 
         else:
-            logging.info("Cannot reasonably say that we have arrived at a TS through vibrational analysis.\nRunning an IRC calc.")
+            logging.info(
+                "Cannot reasonably say that we have arrived at a TS through vibrational analysis.\nRunning an IRC calc.")
             return False
