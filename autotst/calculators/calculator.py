@@ -44,6 +44,14 @@ from rmgpy.reaction import Reaction
 from rmgpy.kinetics import Arrhenius, Eckart
 from rmgpy.statmech import Conformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
 
+def get_possible_names(reactants, products):
+   
+    joinedReactOrders = ['+'.join(order) for order in itertools.permutations(reactants)]
+    joinedProdOrders = ['+'.join(order) for order in itertools.permutations(products)]
+    fileNames = ['_'.join((rJO, pJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders] + ['_'.join((pJO, rJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders]
+
+    return fileNames
+
 class AutoTST_Calculator():
     """
     A base class for all autotst calculators. 
@@ -100,7 +108,7 @@ class AutoTST_Calculator():
                 resultFile.write('method = "{0!s}"\n'.format(method))
                 resultFile.write('reaction = {0!r}\n'.format(reaction.rmg_reaction))
 
-    def read_ts_file(self, path):
+    def read_ts_file(self):
         """
         Load the specified transition state data file and return the dictionary of its contents.
 
@@ -108,8 +116,21 @@ class AutoTST_Calculator():
 
         Checks that the returned dictionary contains at least rxnLabel, method, qmData.
         """
+
+        r, p = self.label.split("_")
+        reacts = r.split("+")
+        prods = p.split("+")
+
+        file_names = get_possible_names(reacts, prods)
+
+        got_file = False
+        for file_name in file_names:
+            ts_file = os.path.join(self.save_directory, file_name + ".ts")
+            if os.path.exists(ts_file): 
+                got_file = True 
+                path = ts_file
         
-        if not os.path.exists(path):
+        if not got_file:
             return None
         try:
             with open(path) as resultFile:
@@ -150,8 +171,20 @@ class AutoTST_Calculator():
 
         Checks that the returned dictionary contains at least method, Reaction.
         """
+        r, p = self.label.split("_")
+        reacts = r.split("+")
+        prods = p.split("+")
+
+        file_names = get_possible_names(reacts, prods)
+
+        got_file = False
+        for file_name in file_names:
+            ts_file = os.path.join(self.save_directory, file_name + ".kinetics")
+            if os.path.exists(ts_file): 
+                got_file = True 
+                path = ts_file
         
-        if not os.path.exists(path):
+        if not got_file:
             return None
         try:
             with open(path) as resultFile:

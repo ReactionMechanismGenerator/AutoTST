@@ -181,11 +181,11 @@ class AutoTST_CanTherm():
 
         output += ["","linear = False","","externalSymmetry = 1", "", "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {","    '{0}': GaussianLog('{1}_overall.log'),".format(self.model_chemistry, rxn.label),"}",""]
+        output += ["energy = {","    '{0}': GaussianLog('{1}.log'),".format(self.model_chemistry, rxn.label),"}",""]
 
-        output += ["geometry = GaussianLog('{0}_overall.log')".format(rxn.label), ""]
+        output += ["geometry = GaussianLog('{0}.log')".format(rxn.label), ""]
 
-        output += ["frequencies = GaussianLog('{0}_overall.log')".format(rxn.label), ""]
+        output += ["frequencies = GaussianLog('{0}.log')".format(rxn.label), ""]
 
         output += ["rotors = []", ""]
 

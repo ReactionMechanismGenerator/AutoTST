@@ -38,10 +38,27 @@ from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.molecule import AutoTST_Molecule
 from autotst.calculators.vibrational_analysis import Vibrational_Analysis
 from autotst.calculators.calculator import AutoTST_Calculator
-from autotst.conformer.utilities import update_from_ase
 
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian
+
+def update_from_ase(autotst_obj, ase_object):
+    """
+    A function designed to update all objects based off of their ase objects
+    """
+    if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
+        autotst_obj.ase_molecule = ase_object
+        autotst_obj.update_from_ase_mol()
+
+    if isinstance(autotst_obj, autotst.reaction.AutoTST_Reaction):
+        autotst_obj.ts.ase_ts = ase_object
+        autotst_obj.ts.update_from_ase_ts()
+
+    if isinstance(autotst_obj, autotst.reaction.AutoTST_TS):
+        autotst_obj.ase_ts = ase_object
+        autotst_obj.update_from_ase_ts()
+
+    return autotst_obj
 
 
 class AutoTST_Gaussian(AutoTST_Calculator):
@@ -250,7 +267,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             try:
                 calc.calculate(ase_object)
                 ase_object = read_gaussian_out(old_file_name)
-                update_from_ase(autotst_object)
+                autotst_object = update_from_ase(autotst_object, ase_object)
                 os.chdir(current_path)
                 return autotst_object, True
             except: #TODO: add error for seg fault
@@ -259,7 +276,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                 try:
                     calc.calculate(ase_object)
                     ase_object = read_gaussian_out(old_file_name)
-                    update_from_ase(autotst_object)
+                    autotst_object = update_from_ase(autotst_object, ase_object)
                     os.chdir(current_path)
                     return autotst_object, True
                 except: #TODO: add error for seg fault
@@ -273,7 +290,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             if self.verify_output_file(new_file_name):
                 logging.info("Old output file verified, reading it in...")
                 ase_object = read_gaussian_out(new_file_name)
-                update_from_ase(autotst_object)
+                autotst_object = update_from_ase(autotst_object, ase_object)
                 os.chdir(current_path)
                 return autotst_object, True
 
@@ -282,7 +299,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                 try:
                     calc.calculate(ase_object)
                     autotst_object.ase_molecule = read_gaussian_out(old_file_name)
-                    update_from_ase(autotst_object)
+                    autotst_object = update_from_ase(autotst_object, ase_object)
                     os.chdir(current_path)
                     return autotst_object, True
 
