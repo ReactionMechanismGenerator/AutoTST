@@ -83,11 +83,11 @@ for i, reactant in enumerate(test_reaction.product_mols):
 
 ### Performing the partial optimizations
 tst_calculators = AutoTST_Gaussian(test_reaction, scratch="test")
-gaussian_results = tst_calculators.run_all()
+gaussian_results = tst_calculators.run_all(vibrational_analysis=False)
 
 if gaussian_results:
     ### Running CanTherm ###
-    cantherm = AutoTST_CanTherm(test_reaction, scratch="test", output_directory="test")
+    cantherm = AutoTST_CanTherm(tst_calculators.reaction, scratch="test", output_directory="test")
     cantherm.write_files()
     cantherm.run()
     cantherm.set_reactants_and_products()

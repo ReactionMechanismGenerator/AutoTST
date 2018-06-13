@@ -232,7 +232,7 @@ class AutoTST_CanTherm():
         for t in top:
             input_string += t +"\n"
 
-        with open(os.path.join(self.scratch, rxn.label +".cantherm.py"), "w") as f:
+        with open(os.path.join(self.scratch, rxn.label +".canth.py"), "w") as f:
             f.write(input_string)
 
     def write_files(self):
