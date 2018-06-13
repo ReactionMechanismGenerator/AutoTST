@@ -41,6 +41,7 @@ from autotst.calculators.vibrational_analysis import Vibrational_Analysis
 from autotst.calculators.calculator import AutoTST_Calculator
 
 from rdkit import Chem
+from cclib.io import ccread
 
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian
@@ -124,6 +125,42 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         del calc.parameters['force']
 
         return calc
+
+    def get_rotor_calcs(self, autotst_object, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+        """ A method to create all of the calculators needed to perform hindered rotor calculations"""
+
+        calculators = {}
+        for torsion in autotst_object.torsions:
+            string = ""
+            for bond in mol.bonds:
+                i,j =  bond.indices
+                string += "B {} {} F\n".format(i+1,j+1)
+
+            for angle in mol.angles:
+                i,j,k =  angle.indices
+                string += "A {} {} {} F\n".format(i+1,j+1,k+1)
+
+            i,j,k,l = torsion.indices
+            string += "D {} {} {} {} S 36 10.0".format(i+1,j+1,k+1,l+1)
+            
+            smiles = autotst_object.rmg_molecule.toSMILES()
+            
+            label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
+            label += "_tor{}{}".format(j,k)
+            calc = Gaussian(mem=mem,
+                            nprocshared=nprocshared,
+                            label=label,
+                            scratch=scratch,
+                            method=method,
+                            basis=basis,
+                            extra="Opt=(ModRedun)",
+                            multiplicity = autotst_object.rmg_molecule.multiplicity,
+                            addsec=[string])
+            
+            del calc.parameters['force']
+            calculators[(i,j)] = calc
+
+        return calculators
 
     def get_reactant_and_product_calcs(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method that collects all of the calculators for reactants and prods"
@@ -338,6 +375,10 @@ class AutoTST_Gaussian(AutoTST_Calculator):
     def verify_output_file(self, path):
         "A method to verify output files and make sure that they successfully converged, if not, re-running them"
 
+        if not os.path.exists(path):
+            print "Not a validat path, cannot be verified..."
+            return False
+
         f = open(path, "r")
         file_lines = f.readlines()[-5:]
         verified = False
@@ -346,6 +387,57 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                 verified = True
 
         return verified
+
+    def run_rotors(self, calculators, autotst_object):
+
+        assert len(calculators) == len(autotst_object.torsions), "Incorrectly matched calculators to molecule..."
+
+        if isinstance(autotst_object, AutoTST_Molecule):
+            ase_object = autotst_object.ase_molecule
+        elif isinstance(autotst_object, AutoTST_Reaction):
+            ase_object = autotst_object.ts.ase_ts
+        elif isinstance(autotst_object, AutoTST_TS):
+            ase_object = autotst_object.ase_ts
+
+        for torsion in autotst_object.torsions:
+            i,j,k,l = torsion.indices
+            calc = calculators[(j,k)]
+            try: 
+                calc.calculate(ase_object)
+            except:
+                pass
+
+            path = os.path.join(calc.scratch, calc.label +".log")
+
+            if not (self.verify_rotor(path) and self.verify_output_file(path)):
+                logging.info("Could not verify the rotor, this file will not be included in calculations.")
+                logging.info("File {} renamed as {}...".format(path, path.replace(".log", "-failed.log")))
+                os.rename(path, path.replace(".log", "-failed.log"))
+
+
+    def verify_rotor(self, path):
+
+        "This could be extrapolated...?"
+
+        parser = ccread(path)
+
+        smallest = max(p.scfenergies) + 1
+        results = []
+        for i in parser.scfenergies:
+            if i < smallest:
+                smallest = i
+            else:
+                results.append(smallest)
+                smallest = max(parser.scfenergies) + 1
+        # adding the last one which should be a converged geometry 
+        results.append(smallest)
+
+        if results[0] - results[-1] < 1e-5:
+            return True
+
+        else:
+            return False
+        
 
     def run_reactants_and_products(self):
         "A method to run the calculations for all reactants and products"

@@ -200,7 +200,6 @@ class AutoTST_CanTherm():
     def write_cantherm_ts(self, rxn):
         top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
 
-        scratch ="."
         for react in rxn.reactant_mols:
             line = "species('{0}', '{1}')".format(react.smiles, react.smiles +".py")
             top.append(line)
