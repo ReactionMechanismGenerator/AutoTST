@@ -34,11 +34,14 @@ import numpy as np
 
 import rmgpy
 
+import autotst
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.molecule import AutoTST_Molecule
 from autotst.calculators.vibrational_analysis import Vibrational_Analysis
 from autotst.calculators.calculator import AutoTST_Calculator
 from autotst.conformer.utilities import update_from_ase
+
+from rdkit import Chem
 
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian
@@ -87,7 +90,10 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
         autotst_mol.rmg_molecule.updateMultiplicity()
 
-        label = autotst_mol.rmg_molecule.toSMILES().replace("(", "left").replace(")", "right")
+        #using this round about way of doing stuff because rmg's `toAugumentedInChIKey` method doesn't work on our cluster
+
+        smiles = autotst_mol.rmg_molecule.toSMILES()
+        label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
 
         calc = Gaussian(mem=mem,
                         nprocshared=nprocshared,
@@ -182,7 +188,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
         self.reaction.ts.rmg_ts.updateMultiplicity()
 
-        label = self.reaction.label.replace("(", "left").replace(")", "right") + "_overall"
+        label = self.reaction.label.replace("(", "left").replace(")", "right")
 
         calc = Gaussian(mem=mem,
                         nprocshared=nprocshared,
@@ -226,6 +232,25 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         AutoTST object that you want to run calculations on
         calc: (ase.calculators.calculator) the calculator that you want to run
         """
+
+        def update_from_ase(autotst_obj, ase_object):
+            """
+            A function designed to update all objects based off of their ase objects
+            """
+            if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
+                autotst_obj.ase_molecule = ase_object
+                autotst_obj.update_from_ase_mol()
+
+            if isinstance(autotst_obj, autotst.reaction.AutoTST_Reaction):
+                autotst_obj.ts.ase_ts = ase_object
+                autotst_obj.ts.update_from_ase_ts()
+
+            if isinstance(autotst_obj, autotst.reaction.AutoTST_TS):
+                autotst_obj.ase_ts = ase_object
+                autotst_obj.update_from_ase_ts()
+
+            return autotst_obj
+
         current_path = os.getcwd()
         scratch_path = os.path.expanduser(calc.scratch).replace(".", os.getcwd())
 
@@ -250,7 +275,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             try:
                 calc.calculate(ase_object)
                 ase_object = read_gaussian_out(old_file_name)
-                update_from_ase(autotst_object)
+                autotst_object = update_from_ase(autotst_object, ase_object)
                 os.chdir(current_path)
                 return autotst_object, True
             except: #TODO: add error for seg fault
@@ -259,7 +284,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                 try:
                     calc.calculate(ase_object)
                     ase_object = read_gaussian_out(old_file_name)
-                    update_from_ase(autotst_object)
+                    autotst_object = update_from_ase(autotst_object, ase_object)
                     os.chdir(current_path)
                     return autotst_object, True
                 except: #TODO: add error for seg fault
@@ -273,7 +298,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             if self.verify_output_file(new_file_name):
                 logging.info("Old output file verified, reading it in...")
                 ase_object = read_gaussian_out(new_file_name)
-                update_from_ase(autotst_object)
+                autotst_object = update_from_ase(autotst_object, ase_object)
                 os.chdir(current_path)
                 return autotst_object, True
 
@@ -282,7 +307,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                 try:
                     calc.calculate(ase_object)
                     autotst_object.ase_molecule = read_gaussian_out(old_file_name)
-                    update_from_ase(autotst_object)
+                    autotst_object = update_from_ase(autotst_object, ase_object)
                     os.chdir(current_path)
                     return autotst_object, True
 
@@ -345,10 +370,14 @@ class AutoTST_Gaussian(AutoTST_Calculator):
     def run_irc(self):
         "A method to run the IRC calculation"
         logging.info("Running IRC calculation")
+        current_dir = os.getcwd
         try:
+            scratch_path = os.path.expanduser(calc.scratch).replace(".", os.getcwd())
+            os.chdir(scratch_path)
             self.irc_calc.calculate(self.reaction.ts.ase_ts)
         except:
             # This normally fails because of an issue with ase's `read_results` method.
+            os.chdir(current_dir)
             pass
         logging.info("IRC calc complete!")
 

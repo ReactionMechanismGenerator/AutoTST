@@ -181,11 +181,11 @@ class AutoTST_CanTherm():
 
         output += ["","linear = False","","externalSymmetry = 1", "", "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {","    '{0}': GaussianLog('{1}_overall.log'),".format(self.model_chemistry, rxn.label),"}",""]
+        output += ["energy = {","    '{0}': GaussianLog('{1}.log'),".format(self.model_chemistry, rxn.label),"}",""]
 
-        output += ["geometry = GaussianLog('{0}_overall.log')".format(rxn.label), ""]
+        output += ["geometry = GaussianLog('{0}.log')".format(rxn.label), ""]
 
-        output += ["frequencies = GaussianLog('{0}_overall.log')".format(rxn.label), ""]
+        output += ["frequencies = GaussianLog('{0}.log')".format(rxn.label), ""]
 
         output += ["rotors = []", ""]
 
@@ -232,7 +232,7 @@ class AutoTST_CanTherm():
         for t in top:
             input_string += t +"\n"
 
-        with open(os.path.join(self.scratch, rxn.label +".cantherm.py"), "w") as f:
+        with open(os.path.join(self.scratch, rxn.label +".canth.py"), "w") as f:
             f.write(input_string)
 
     def write_files(self):
