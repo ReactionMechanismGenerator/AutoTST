@@ -161,7 +161,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                             scratch=scratch,
                             method=method,
                             basis=basis,
-                            extra="Opt=(ModRedun)",
+                            extra="Opt=(CalcFC,ModRedun)",
                             multiplicity=autotst_object.rmg_molecule.multiplicity,
                             addsec=[string])
 
@@ -434,11 +434,11 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                 os.rename(path, path.replace(".log", "-failed.log"))
 
     def verify_rotor(self, path):
-        "This could be extrapolated...?"
+        "This could be extrapolated to the general calculators class...?"
 
         parser = ccread(path)
 
-        smallest = max(p.scfenergies) + 1
+        smallest = max(parser.scfenergies) + 1
         results = []
         for i in parser.scfenergies:
             if i < smallest:
@@ -449,7 +449,8 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         # adding the last one which should be a converged geometry
         results.append(smallest)
 
-        if results[0] - results[-1] < 1e-5:
+        if ((results[0] - results[-1] < 1e-5) and # The energy difference is less than 1e-5 eV
+            (((parser.converged_geometries[0] - parser.converged_geometries[i]) ** 2).mean() < 0.01)): # the RMSE between initial and final geometries is less than 1%
             return True
 
         else:
