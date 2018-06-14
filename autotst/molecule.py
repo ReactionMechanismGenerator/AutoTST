@@ -27,6 +27,9 @@
 #
 ################################################################################
 
+import os
+import logging
+
 import rdkit
 from rdkit import Chem
 from rdkit.Chem import AllChem
@@ -37,10 +40,13 @@ from ase import Atom, Atoms
 import rmgpy
 from rmgpy.molecule import Molecule
 
+FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
+logging.basicConfig(format=FORMAT, level=logging.INFO)
+
 try:
     import py3Dmol
 except ImportError:
-    print("Error importing py3Dmol")
+    logging.info("Error importing py3Dmol")
 
 import numpy as np
 

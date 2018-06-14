@@ -30,7 +30,6 @@
 import os
 import logging
 
-
 import numpy as np
 
 import rdkit
@@ -45,7 +44,7 @@ import ase
 import rmgpy
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
-from rmgpy.reaction import Reaction, _isomorphicSpeciesList, ReactionError
+from rmgpy.reaction import Reaction, ReactionError
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
@@ -54,14 +53,13 @@ from autotst.base import DistanceData, TransitionStateDepository, TSGroups, Tran
 from autotst.molecule import AutoTST_Molecule
 from autotst.geometry import Torsion, Angle, Bond, CisTrans
 
+FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
+logging.basicConfig(format=FORMAT, level=logging.INFO)
+
 try:
     import py3Dmol
 except ImportError:
     logging.info("Error importing py3Dmol")
-
-
-FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
-logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 
 # Currently this is set up to only work with H_Abstraction
@@ -274,15 +272,9 @@ class AutoTST_Reaction():
 
         for reaction in reaction_list:
             if reaction.isIsomorphic(test_reaction):
-                if (_isomorphicSpeciesList(reaction.reactants, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.products, test_reaction.products)):
-                    reaction.reactants = test_reaction.reactants
-                    reaction.products = test_reaction.products
-                    break
-
-                elif (_isomorphicSpeciesList(reaction.products, test_reaction.reactants)) and (_isomorphicSpeciesList(reaction.reactants, test_reaction.products)):
-                    reaction.products = test_reaction.reactants
-                    reaction.reactants = test_reaction.products
-                    break
+                reaction.reactants = test_reaction.reactants
+                reaction.products = test_reaction.products
+                break
         else:  # didn't break
             raise ReactionError("Didn't find a {} reaction matching {} in this list: {}".format(
                 self.reaction_family, test_reaction, reaction_list))
