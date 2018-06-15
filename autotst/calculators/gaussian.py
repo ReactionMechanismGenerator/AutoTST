@@ -33,6 +33,8 @@ import logging
 import numpy as np
 
 import rmgpy
+from rmgpy.molecule import Molecule
+from rmgpy.reaction import Reaction
 
 import autotst
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
@@ -91,6 +93,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         self.method = method
         self.basis = basis
         self.save_directory = save_directory
+        self.label = autotst_reaction.label
 
         self.get_reactant_and_product_calcs(
             self.mem, self.nprocshared, self.scratch, self.method, self.basis)
@@ -317,7 +320,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
         current_path = os.getcwd()
         scratch_path = os.path.expanduser(
-            calc.scratch).replace(".", os.getcwd())
+            calc.scratch)
 
         new_file_name = calc.label.replace(
             "left", "(").replace("right", ")") + ".log"
@@ -392,7 +395,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         "A method to verify output files and make sure that they successfully converged, if not, re-running them"
 
         if not os.path.exists(path):
-            print "Not a validat path, cannot be verified..."
+            print "Not a valid path, cannot be verified..."
             return False
 
         f = open(path, "r")
@@ -496,17 +499,40 @@ class AutoTST_Gaussian(AutoTST_Calculator):
     def run_irc(self):
         "A method to run the IRC calculation"
         logging.info("Running IRC calculation")
-        current_dir = os.getcwd
-        try:
-            scratch_path = os.path.expanduser(
-                calc.scratch).replace(".", os.getcwd())
-            os.chdir(scratch_path)
-            self.irc_calc.calculate(self.reaction.ts.ase_ts)
-        except:
-            # This normally fails because of an issue with ase's `read_results` method.
-            os.chdir(current_dir)
-            pass
-        logging.info("IRC calc complete!")
+
+        current_path = os.getcwd()
+        scratch_path = os.path.expanduser(
+            self.irc_calc.scratch)
+
+        new_file_name = self.irc_calc.label.replace(
+            "left", "(").replace("right", ")") + ".log"
+        old_file_name = self.irc_calc.label + ".log"
+
+        os.chdir(scratch_path)
+        if os.path.exists(new_file_name):
+            logging.info("It seems that an old IRC has been run, seeing if it's complete...")
+            if self.verify_output_file(new_file_name):
+                logging.info("Previous IRC complete and resulted in Normal Termination, verifying it...")
+                os.chdir(current_path)
+
+            else:
+                logging.info("Previous IRC was not successful or incomplete... Rerunning it...")
+                try:
+                    self.irc_calc.calculate(self.reaction.ts.ase_ts)
+                except:
+                    # This normally fails because of an issue with ase's `read_results` method.
+                    os.chdir(current_path)
+                    pass
+                logging.info("IRC calc complete!")
+        else:
+            logging.info("No previous IRC clac has been run, starting a new one...")
+            try:
+                self.irc_calc.calculate(self.reaction.ts.ase_ts)
+            except:
+                # This normally fails because of an issue with ase's `read_results` method.
+                os.chdir(current_path)
+                pass
+            logging.info("IRC calc complete!")
 
     def validate_irc(self):  # TODO: need to add more verification here
         logging.info("Validating IRC file...")
@@ -559,7 +585,6 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             # Compare the reactants and products
             ircParse = ccread(irc_path)
             # cf. http://cclib.sourceforge.net/wiki/index.php/Using_cclib#Additional_information
-            ircParse.logger.setLevel(logging.ERROR)
 
             atomcoords = ircParse.atomcoords
             atomnos = ircParse.atomnos

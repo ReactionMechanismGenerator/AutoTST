@@ -173,7 +173,7 @@ class AutoTST_Calculator():
             return None
         return local_context
 
-    def read_kinetics_file(self, path):
+    def read_kinetics_file(self):
         """
         Load the specified kinetic data file and return the dictionary of its contents.
 
@@ -217,6 +217,7 @@ class AutoTST_Calculator():
                     'LinearRotor': LinearRotor,
                     'array': numpy.array,
                     'int32': numpy.int32,
+                    'Molecule': Molecule
                 }
                 exec resultFile in global_context, local_context
         except IOError, e:

@@ -17,7 +17,7 @@ import ase
 import rmgpy
 from rmgpy.molecule import Molecule
 from rmgpy.species import Species
-from rmgpy.reaction import Reaction, _isomorphicSpeciesList, ReactionError
+from rmgpy.reaction import Reaction, ReactionError
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
@@ -43,7 +43,7 @@ reactants = [Molecule(SMILES="CCCC"), Molecule(SMILES="[O]O")]
 products = [Molecule(SMILES="[CH2]CCC"), Molecule(SMILES="OO")]
 rmg_reaction = Reaction(reactants=reactants, products=products)
 
-test_reaction = AutoTST_Reaction("CC=C(C)C+[O]O_[CH2]C=C(C)C+OO", "H_Abstraction")
+test_reaction = AutoTST_Reaction("[CH]=CC=C+[O]O_[CH]=C[C]=C+OO", "H_Abstraction")
 """
 ### Performing the conformer analyses ###
 ## On the reaction ##
@@ -82,19 +82,28 @@ for i, reactant in enumerate(test_reaction.product_mols):
 """
 
 ### Performing the partial optimizations
-tst_calculators = AutoTST_Gaussian(test_reaction, scratch="test")
-gaussian_results = tst_calculators.run_all(vibrational_analysis=False)
+tst_calculators = AutoTST_Gaussian(test_reaction, scratch="/gss_gpfs_scratch/harms.n/QMscratch/", save_directory=".")
 
-if gaussian_results:
-    ### Running CanTherm ###
-    cantherm = AutoTST_CanTherm(tst_calculators.reaction, scratch="test", output_directory="test")
-    cantherm.write_files()
-    cantherm.run()
-    cantherm.set_reactants_and_products()
+kinetics = tst_calculators.read_kinetics_file()
 
-    ### Printing Results ###
-    logging.info("The kinetics of intrest are as follows:")
-    logging.info("{0!r}".format(cantherm.kinetics_job.reaction))
+if kinetics:
+    logging.info("We have previously loaded kinetics:")
+    logging.info("{0!r}".format(kinetics['reaction']))
 
 else:
-    logging.info("Failed gaussian... :(")
+    gaussian_results = tst_calculators.run_all(vibrational_analysis = False)
+    if gaussian_results:
+        ### Running CanTherm ###
+        cantherm = AutoTST_CanTherm(tst_calculators.reaction, scratch="/gss_gpfs_scratch/harms.n/QMscratch/", output_directory="test")
+        cantherm.write_files()
+        cantherm.run()
+        cantherm.set_reactants_and_products()
+
+        ### Printing Results ###
+        logging.info("The kinetics of intrest are as follows:")
+        logging.info("{0!r}".format(cantherm.kinetics_job.reaction))
+
+        tst_calculators.save_kinetics(tst_calculators.method, cantherm.kinetics_job.reaction)
+
+    else:
+        logging.info("Failed gaussian... :(")
