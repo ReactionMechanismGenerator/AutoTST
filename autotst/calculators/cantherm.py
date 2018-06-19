@@ -210,9 +210,15 @@ class AutoTST_CanTherm(AutoTST_Calculator):
         top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(
             self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
 
+        labels = []
+
         for react in rxn.reactant_mols:
             label = Chem.rdinchi.InchiToInchiKey(
                 Chem.MolToInchi(Chem.MolFromSmiles(react.smiles))).strip("-N")
+            if label in labels:
+                continue
+            else:
+                labels.append(label)
             line = "species('{0}', '{1}')".format(
                 react.smiles, label + ".py")
             top.append(line)
@@ -220,6 +226,10 @@ class AutoTST_CanTherm(AutoTST_Calculator):
         for prod in rxn.product_mols:
             label = Chem.rdinchi.InchiToInchiKey(
                 Chem.MolToInchi(Chem.MolFromSmiles(prod.smiles))).strip("-N")
+            if label in labels:
+                continue
+            else:
+                labels.append(label)
             line = "species('{0}', '{1}')".format(
                 prod.smiles, label + ".py")
             top.append(line)
