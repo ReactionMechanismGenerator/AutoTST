@@ -69,7 +69,7 @@ def update_from_ase(autotst_obj, ase_object):
 class AutoTST_Gaussian(AutoTST_Calculator):
 
     def __init__(self,
-                 autotst_reaction,
+                 autotst_reaction=None,
                  mem="5GB",
                  nprocshared=20,
                  scratch=".",
@@ -90,21 +90,23 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         self.scratch = scratch
         self.method = method
         self.basis = basis
-        self.save_directory = save_directory
 
-        self.get_reactant_and_product_calcs(
-            self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+        if autotst_reaction:
+            self.save_directory = save_directory
 
-        self.shell_calc = self.get_shell_calc(
-            self.mem, self.nprocshared, self.scratch, self.method, self.basis)
-        self.center_calc = self.get_center_calc(
-            self.mem, self.nprocshared, self.scratch, self.method, self.basis)
-        self.overall_calc = self.get_overall_calc(
-            self.mem, self.nprocshared, self.scratch, self.method, self.basis)
-        self.irc_calc = self.get_irc_calc(
-            self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+            self.get_reactant_and_product_calcs(
+                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
 
-        self.completed_irc = False
+            self.shell_calc = self.get_shell_calc(
+                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+            self.center_calc = self.get_center_calc(
+                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+            self.overall_calc = self.get_overall_calc(
+                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+            self.irc_calc = self.get_irc_calc(
+                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+
+            self.completed_irc = False
 
     def __repr__(self):
         return '<AutoTST Gaussian Calculators "{0}">'.format(self.reaction.label)
@@ -139,18 +141,26 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         calculators = {}
         for torsion in autotst_object.torsions:
             string = ""
-            for bond in mol.bonds:
+            for bond in autotst_object.bonds:
                 i, j = bond.indices
                 string += "B {} {}\n".format(i+1, j+1)
 
             i, j, k, l = torsion.indices
             string += "D {} {} {} {} S 36 10.0".format(i+1, j+1, k+1, l+1)
 
-            smiles = autotst_object.rmg_molecule.toSMILES()
+            if isinstance(autotst_object, AutoTST_Reaction):
+                label = autotst_object.label + "_tor_{}_{}".format(j, k)
+                mult = autotst_object.ts.rmg_ts.multiplicity
+            elif isinstance(autotst_object, AutoTST_TS):
+                label = autotst_object.label + "_tor_{}_{}".format(j, k)
+                mult = autotst_object.rmg_ts.multiplicity
+            elif isinstance(autotst_object, AutoTST_Molecule):
+                smiles = autotst_object.rmg_molecule.toSMILES()
+                label = Chem.rdinchi.InchiToInchiKey(
+                    Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
+                label += "_tor{}{}".format(j, k)
+                mult = autotst_object.rmg_molecule.multiplicity
 
-            label = Chem.rdinchi.InchiToInchiKey(
-                Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
-            label += "_tor{}{}".format(j, k)
             calc = Gaussian(mem=mem,
                             nprocshared=nprocshared,
                             label=label,
@@ -158,11 +168,11 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                             method=method,
                             basis=basis,
                             extra="Opt=(CalcFC,ModRedun)",
-                            multiplicity=autotst_object.rmg_molecule.multiplicity,
+                            multiplicity=mult,
                             addsec=[string])
 
             del calc.parameters['force']
-            calculators[(i, j)] = calc
+            calculators[(j, k)] = calc
 
         return calculators
 
