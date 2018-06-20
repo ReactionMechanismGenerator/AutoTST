@@ -144,11 +144,11 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             string = ""
             for bond in mol.bonds:
                 i, j = bond.indices
-                string += "B {} {} F\n".format(i+1, j+1)
+                string += "B {} {}\n".format(i+1, j+1)
 
-            for angle in mol.angles:
+            """for angle in mol.angles:
                 i, j, k = angle.indices
-                string += "A {} {} {} F\n".format(i+1, j+1, k+1)
+                string += "A {} {} {} F\n".format(i+1, j+1, k+1)"""
 
             i, j, k, l = torsion.indices
             string += "D {} {} {} {} S 36 10.0".format(i+1, j+1, k+1, l+1)
@@ -157,7 +157,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
             label = Chem.rdinchi.InchiToInchiKey(
                 Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
-            label += "_tor{}{}".format(j, k)
+            label += "_tor_{}_{}".format(j, k)
             calc = Gaussian(mem=mem,
                             nprocshared=nprocshared,
                             label=label,
