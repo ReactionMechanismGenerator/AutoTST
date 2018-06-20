@@ -66,7 +66,7 @@ class Vibrational_Analysis():
         This method obtains the logfile name from the AutoTST_Reaction
         """
 
-        self.log_file = os.path.join(scratch, reaction.label + "_overall.log")
+        self.log_file = os.path.join(scratch, reaction.label + ".log")
 
     def parse_vibrations(self):
         """

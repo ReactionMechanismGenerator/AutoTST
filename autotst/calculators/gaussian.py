@@ -33,6 +33,8 @@ import logging
 import numpy as np
 
 import rmgpy
+from rmgpy.molecule import Molecule
+from rmgpy.reaction import Reaction
 
 import autotst
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
@@ -90,9 +92,11 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         self.scratch = scratch
         self.method = method
         self.basis = basis
+        self.save_directory = save_directory
+        
 
         if autotst_reaction:
-            self.save_directory = save_directory
+            self.label = autotst_reaction.label
 
             self.get_reactant_and_product_calcs(
                 self.mem, self.nprocshared, self.scratch, self.method, self.basis)
@@ -323,7 +327,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
         current_path = os.getcwd()
         scratch_path = os.path.expanduser(
-            calc.scratch).replace(".", os.getcwd())
+            calc.scratch)
 
         new_file_name = calc.label.replace(
             "left", "(").replace("right", ")") + ".log"
@@ -338,8 +342,113 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
         os.chdir(scratch_path)
 
+        if os.path.exists(new_file_name):
+            # We found a finished file file... it should be fixed
+            logging.info(
+                "Found previous file for {}, verifying it...".format(new_file_name))
+            complete, success = self.verify_output_file(new_file_name)
+            if success:
+                logging.info("Old output file verified, reading it in...")
+                ase_object = read_gaussian_out(new_file_name)
+                autotst_object = update_from_ase(autotst_object, ase_object)
+                os.chdir(current_path)
+                return autotst_object, True
+
+            elif complete:
+                logging.info(
+                    "Output file did not converge, attempting to run one last time...")
+                try:
+                    calc.calculate(ase_object)
+                    ase_object = read_gaussian_out(
+                        old_file_name)
+                    autotst_object = update_from_ase(
+                        autotst_object, ase_object)
+                    os.chdir(current_path)
+                    return autotst_object, True
+
+                except:  # TODO: add error for seg fault
+                    logging.info("{} failed... again...".format(new_file_name))
+                    os.chdir(current_path)
+                    return autotst_object, False
+
+            elif (new_file_name == old_file_name) and (not complete):
+                # The file names are identical and the job isn't complete yet
+                
+                logging.info(
+                    "Job appears to be running for this calculation, waiting for it to complete...")
+                
+                from time import sleep
+
+                f = open(old_file_name)
+                lines = f.readlines()[:5]
+                for line in lines:
+                    if "Entering Link" in line:
+                        num = line.split()[-1][:-1]
+                scratch_file = "Gau-" + num + ".int"
+                while os.path.exists(scratch_file):
+                    sleep(60)
+                logging.info("Job complete, reading in results now by running calculate again...")
+
+                sleep(30) # waiting a lil while to make sure that the file is fixed... just in case...
+                try:
+                    ase_object = read_gaussian_out(
+                        old_file_name)
+                    autotst_object = update_from_ase(
+                        autotst_object, ase_object)
+                    os.chdir(current_path)
+                    return autotst_object, True
+                except IndexError:
+                    logging.info("It appears that the previous log file wasn't finished... removing the files and rerunning")
+                    os.remove(old_file_name)
+                    os.remove(old_file_name.replace(".log", ".ase"))
+                    os.remove(old_file_name.replace(".log", ".com"))
+                    return self.calculate(autotst_object, calc)
+
+            else:
+                logging.info(
+                    "Something went wrong... File is neither complete nor successful...")
+
+                return autotst_object, False
+
+        elif os.path.exists(old_file_name):
+            complete, success = self.verify_output_file(old_file_name)
+
+            if not complete:
+                logging.info(
+                    "Job appears to be running already, waiting for it to complete...")
+                
+                from time import sleep
+
+                f = open(old_file_name)
+                lines = f.readlines()[:5]
+                for line in lines:
+                    if "Entering Link" in line:
+                        num = line.split()[-1][:-1]
+                scratch_file = "Gau-" + num + ".int"
+                while os.path.exists(scratch_file):
+                    sleep(60)
+                logging.info("Job complete, reading in results now by running calculate again...")
+
+                sleep(30) # waiting a lil while to make sure that the file is fixed... just in case...
+
+                return self.calculate(autotst_object, calc)
+            
+            else:
+                logging.info(
+                    "Found previous file for {}, verifying it...".format(old_file_name))
+                if success:
+                    logging.info("Old output file verified, reading it in...")
+                    ase_object = read_gaussian_out(old_file_name)
+                    autotst_object = update_from_ase(autotst_object, ase_object)
+                    os.chdir(current_path)
+                    return autotst_object, True
+                else:
+                    logging.info(
+                        "Something went wrong... File is neither complete nor successful...")
+
+                    return autotst_object, False           
         # Seeing if the file exists
-        if not os.path.exists(new_file_name):
+        else:
             # File doesn't exist, running calculations
             logging.info(
                 "Starting calculation for {}...".format(new_file_name))
@@ -366,47 +475,28 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                     os.chdir(current_path)
                     return autotst_object, False
 
-        else:
-            # We found an old file... it should be fixed
-            logging.info(
-                "Found previous file for {}, verifying it...".format(new_file_name))
-            if self.verify_output_file(new_file_name):
-                logging.info("Old output file verified, reading it in...")
-                ase_object = read_gaussian_out(new_file_name)
-                autotst_object = update_from_ase(autotst_object, ase_object)
-                os.chdir(current_path)
-                return autotst_object, True
 
-            else:
-                logging.info(
-                    "Could not verify output file, attempting to run one last time...")
-                try:
-                    calc.calculate(ase_object)
-                    autotst_object.ase_molecule = read_gaussian_out(
-                        old_file_name)
-                    autotst_object = update_from_ase(
-                        autotst_object, ase_object)
-                    os.chdir(current_path)
-                    return autotst_object, True
 
-                except:  # TODO: add error for seg fault
-                    logging.info("{} failed... again...".format(new_file_name))
-                    os.chdir(current_path)
-                    return autotst_object, False
 
     def verify_output_file(self, path):
-        "A method to verify output files and make sure that they successfully converged, if not, re-running them"
+        """
+        A method to verify output files and make sure that they successfully converged, if not, re-running them
+
+        Returns a tuple where the first entry indicates if the file is complete, the second indicates if it was successful
+        """
 
         if not os.path.exists(path):
-            print "Not a validat path, cannot be verified..."
+            print "Not a valid path, cannot be verified..."
             return False
 
         f = open(path, "r")
         file_lines = f.readlines()[-5:]
-        verified = False
+        verified = (False, False)
         for file_line in file_lines:
             if " Normal termination" in file_line:
-                verified = True
+                verified = (True, True)
+            if " Error termination" in file_line:
+                verified = (True, False)
 
         return verified
 
@@ -502,17 +592,40 @@ class AutoTST_Gaussian(AutoTST_Calculator):
     def run_irc(self):
         "A method to run the IRC calculation"
         logging.info("Running IRC calculation")
-        current_dir = os.getcwd
-        try:
-            scratch_path = os.path.expanduser(
-                calc.scratch).replace(".", os.getcwd())
-            os.chdir(scratch_path)
-            self.irc_calc.calculate(self.reaction.ts.ase_ts)
-        except:
-            # This normally fails because of an issue with ase's `read_results` method.
-            os.chdir(current_dir)
-            pass
-        logging.info("IRC calc complete!")
+
+        current_path = os.getcwd()
+        scratch_path = os.path.expanduser(
+            self.irc_calc.scratch)
+
+        new_file_name = self.irc_calc.label.replace(
+            "left", "(").replace("right", ")") + ".log"
+        old_file_name = self.irc_calc.label + ".log"
+
+        os.chdir(scratch_path)
+        if os.path.exists(new_file_name):
+            logging.info("It seems that an old IRC has been run, seeing if it's complete...")
+            if self.verify_output_file(new_file_name):
+                logging.info("Previous IRC complete and resulted in Normal Termination, verifying it...")
+                os.chdir(current_path)
+
+            else:
+                logging.info("Previous IRC was not successful or incomplete... Rerunning it...")
+                try:
+                    self.irc_calc.calculate(self.reaction.ts.ase_ts)
+                except:
+                    # This normally fails because of an issue with ase's `read_results` method.
+                    os.chdir(current_path)
+                    pass
+                logging.info("IRC calc complete!")
+        else:
+            logging.info("No previous IRC clac has been run, starting a new one...")
+            try:
+                self.irc_calc.calculate(self.reaction.ts.ase_ts)
+            except:
+                # This normally fails because of an issue with ase's `read_results` method.
+                os.chdir(current_path)
+                pass
+            logging.info("IRC calc complete!")
 
     def validate_irc(self):  # TODO: need to add more verification here
         logging.info("Validating IRC file...")
@@ -565,7 +678,6 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             # Compare the reactants and products
             ircParse = ccread(irc_path)
             # cf. http://cclib.sourceforge.net/wiki/index.php/Using_cclib#Additional_information
-            ircParse.logger.setLevel(logging.ERROR)
 
             atomcoords = ircParse.atomcoords
             atomnos = ircParse.atomnos

@@ -1,12 +1,15 @@
 import os
 
+from rdkit import Chem
+
 from rmgpy.cantherm import CanTherm, KineticsJob, StatMechJob
 
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.molecule import AutoTST_Molecule
+from autotst.calculators.calculator import AutoTST_Calculator
 
 
-class AutoTST_CanTherm():
+class AutoTST_CanTherm(AutoTST_Calculator):
 
     def __init__(self, reaction, scratch=".", output_directory=".", model_chemistry="M06-2X/cc-pVTZ", freq_scale_factor=0.982):
         """
@@ -137,16 +140,19 @@ class AutoTST_CanTherm():
         else:
             output.append('bonds = {}')
 
+        label = Chem.rdinchi.InchiToInchiKey(
+            Chem.MolToInchi(Chem.MolFromSmiles(mol.smiles))).strip("-N")
+
         output += ["", "linear = False", "", "externalSymmetry = 1", "",
                    "spinMultiplicity = {}".format(mol.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
 
         output += ["energy = {", "    '{0}': GaussianLog('{1}.log'),".format(
-            self.model_chemistry, mol.smiles), "}", ""]
+            self.model_chemistry, label), "}", ""]
 
-        output += ["geometry = GaussianLog('{0}.log')".format(mol.smiles), ""]
+        output += ["geometry = GaussianLog('{0}.log')".format(label), ""]
 
         output += [
-            "frequencies = GaussianLog('{0}.log')".format(mol.smiles), ""]
+            "frequencies = GaussianLog('{0}.log')".format(label), ""]
 
         output += ["rotors = []"]
 
@@ -155,7 +161,8 @@ class AutoTST_CanTherm():
         for t in output:
             input_string += t + "\n"
 
-        with open(os.path.join(self.scratch, mol.smiles+".py"), "w") as f:
+
+        with open(os.path.join(self.scratch, label +".py"), "w") as f:
             f.write(input_string)
 
     def write_statmech_ts(self, rxn):
@@ -203,18 +210,33 @@ class AutoTST_CanTherm():
         top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(
             self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
 
+        labels = []
+
         for react in rxn.reactant_mols:
+            label = Chem.rdinchi.InchiToInchiKey(
+                Chem.MolToInchi(Chem.MolFromSmiles(react.smiles))).strip("-N")
+            if label in labels:
+                continue
+            else:
+                labels.append(label)
             line = "species('{0}', '{1}')".format(
-                react.smiles, react.smiles + ".py")
+                react.smiles, label + ".py")
             top.append(line)
 
         for prod in rxn.product_mols:
+            label = Chem.rdinchi.InchiToInchiKey(
+                Chem.MolToInchi(Chem.MolFromSmiles(prod.smiles))).strip("-N")
+            if label in labels:
+                continue
+            else:
+                labels.append(label)
             line = "species('{0}', '{1}')".format(
-                prod.smiles, prod.smiles + ".py")
+                prod.smiles, label + ".py")
             top.append(line)
 
         line = "transitionState('TS', '{0}')".format(rxn.label + ".py")
         top.append(line)
+
 
         line = ["",
                 "reaction(",
@@ -253,9 +275,12 @@ class AutoTST_CanTherm():
     def run(self):
 
         self.cantherm_job.inputFile = os.path.join(
-            self.scratch, self.reaction.label + ".cantherm.py")
+            self.scratch, self.reaction.label + ".canth.py")
         self.cantherm_job.plot = False
-        self.cantherm_job.execute()
+        try:
+            self.cantherm_job.execute()
+        except IOError:
+            print "There was an issue with Cairo..."
 
         for job in self.cantherm_job.jobList:
             if isinstance(job, KineticsJob):
