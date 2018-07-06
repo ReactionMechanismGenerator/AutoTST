@@ -4,5 +4,6 @@ channels:
   - rmg
   - conda-forge
 dependencies:
-  - rmg ==2.1.0
+  - rmg == 2.1.9
   - ase
+  - cclib
