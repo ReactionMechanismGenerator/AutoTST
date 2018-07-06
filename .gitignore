@@ -26,5 +26,8 @@
 # pycharm files
 *.idea/
 
-# Gaussian scratch files
+# Gaussian scratch files and ase related io files
+*.ase
+*.com
+*.log
 Gau*
