@@ -196,8 +196,8 @@ def get_unique_conformers(df, unique_torsions={}):
     assert len(columns) > 0
     assert "relaxed_energy" in df.columns
 
-    mini = df[df.relaxed_energy < df.relaxed_energy.min(
-    ) + units.eV / (units.kcal / units.mol)].sort_values("relaxed_energy")
+    mini = df[df.relaxed_energy < (df.relaxed_energy.min(
+    ) + (units.kcal / units.mol) / units.eV)].sort_values("relaxed_energy")
     for i, combo in enumerate(mini[columns].values):
         combo = tuple(combo)
         energy = mini.relaxed_energy.iloc[i]
