@@ -116,6 +116,7 @@ def perform_ga(autotst_object,
         logging.info("Performing GA on generation {}".format(gen_number))
 
         r = []
+        relaxations = {}
         for individual in range(population_size):
             parent_0, parent_1 = random.sample(top.index, 2)
             dihedrals = []
@@ -145,8 +146,16 @@ def perform_ga(autotst_object,
             # Updating the molecule
             update_from_ase(autotst_object)
 
-            constrained_energy, relaxed_energy, ase_copy = get_energies(
-                autotst_object)
+            dihed = tuple(dihedrals)
+
+            if dihed in relaxations.keys():
+                logging.info("Found previous relaxations, using it to save time...")
+                constrained_energy, relaxed_energy, ase_copy = relaxations[dihed]
+            else:
+                constrained_energy, relaxed_energy, ase_copy = get_energies(
+                    autotst_object)
+
+                relaxations[dihed] = (constrained_energy, relaxed_energy, ase_copy)
 
             relaxed_torsions = []
 

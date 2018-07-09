@@ -115,6 +115,7 @@ def perform_simple_es(autotst_object,
         logging.info("Performing ES on generation {}".format(gen_number))
 
         r = []
+        relaxations = {}
         for individual in range(population_size):
             dihedrals = []
             for index, torsion in enumerate(torsions):
@@ -133,6 +134,19 @@ def perform_simple_es(autotst_object,
 
             # Updating the molecule
             update_from_ase(autotst_object)
+
+            dihed = tuple(dihedrals)
+
+            if dihed in relaxations.keys():
+                logging.info("Found previous relaxations, using it to save time...")
+                constrained_energy, relaxed_energy, ase_copy = relaxations[dihedrals]
+            else:
+                constrained_energy, relaxed_energy, ase_copy = get_energies(
+                    autotst_object)
+
+                relaxations[dihed] = (constrained_energy, relaxed_energy, ase_copy)
+
+            relaxed_torsions = []
 
             constrained_energy, relaxed_energy, ase_copy = get_energies(
                 autotst_object)
