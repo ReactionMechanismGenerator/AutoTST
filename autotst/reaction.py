@@ -220,8 +220,7 @@ class AutoTST_Reaction():
         cls.ts_databases = dict()
         for reaction_family in cls.possible_families:
             ts_database = TransitionStates()
-            path = os.path.join(os.path.expandvars(
-                "$AUTOTST"), "..", "AutoTST", "database", reaction_family)
+            path = os.path.join(autotst.settings['tst_database_path'], reaction_family)
             global_context = {'__builtins__': None}
             local_context = {'DistanceData': DistanceData}
             family = rmg_database.kinetics.families[reaction_family]
