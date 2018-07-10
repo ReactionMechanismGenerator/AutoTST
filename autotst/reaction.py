@@ -186,18 +186,35 @@ class AutoTST_Reaction():
             return
 
         rmg_database = RMGDatabase()
-        database_path = os.path.join(os.path.expandvars(
-            '$AUTOTST'), "..",  'RMG-database', 'input')
+        database_path = rmgpy.settings['database.directory']
+
         logging.info("Loading RMG database from '{}'".format(database_path))
-        rmg_database.load(database_path,
-                          kineticsFamilies=cls.possible_families,
-                          transportLibraries=[],
-                          reactionLibraries=[],
-                          seedMechanisms=[],
-                          thermoLibraries=[
-                              'primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR'],
-                          solvation=False,
-                          )
+
+        try:
+            rmg_database.load(database_path,
+                              kineticsFamilies=cls.possible_families,
+                              transportLibraries=[],
+                              reactionLibraries=[],
+                              seedMechanisms=[],
+                              thermoLibraries=[
+                                  'primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR'],
+                              solvation=False,
+                              )
+        except IOError:
+            logging.info("RMG database not found at '{}'. This can occur if a git repository of the database is being"
+                         "used rather than the binary version".format(database_path))
+            database_path = os.path.join(database_path, 'input')
+            logging.info("Loading RMG database instead from '{}'".format(database_path))
+            rmg_database.load(database_path,
+                              kineticsFamilies=cls.possible_families,
+                              transportLibraries=[],
+                              reactionLibraries=[],
+                              seedMechanisms=[],
+                              thermoLibraries=[
+                                  'primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR'],
+                              solvation=False,
+                              )
+
         cls.rmg_database = rmg_database
 
         cls.ts_databases = dict()
