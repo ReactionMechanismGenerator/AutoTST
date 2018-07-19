@@ -143,7 +143,7 @@ class AutoTST_CanTherm(AutoTST_Calculator):
         label = Chem.rdinchi.InchiToInchiKey(
             Chem.MolToInchi(Chem.MolFromSmiles(mol.smiles))).strip("-N")
 
-        external_symmetry = mol.rmg_molecule.mol.getSymmetryNumber()
+        external_symmetry = mol.rmg_molecule.getSymmetryNumber()
 
         output += ["", "linear = False", "", "externalSymmetry = {}".format(external_symmetry), "",
                    "spinMultiplicity = {}".format(mol.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
@@ -187,7 +187,7 @@ class AutoTST_CanTherm(AutoTST_Calculator):
         else:
             output.append('bonds = {}')
 
-        external_symmetry = rxn.ts.rmg_ts.mol.getSymmetryNumber()
+        external_symmetry = rxn.ts.rmg_ts.getSymmetryNumber()
 
         output += ["", "linear = False", "", "externalSymmetry = {}".format(external_symmetry), "",
                    "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
