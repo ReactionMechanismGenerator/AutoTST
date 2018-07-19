@@ -4,8 +4,8 @@
 ## Descritpion
 
 AutoTST is a framework to perform automated transition state theory calculations related to reaction families common in combustion.
-It is based off of the frame work of **RMG**, **RDkit**, and **ASE** to automatically create three dimentional geometries of transition states, reactants, and products;
-optimize them using the **Gaussian** quantum chemistry package; and obtain kinetic parameters using **CanTherm**.
+It is based off of the frame work of [**RMG**](rmg.mit.edu), [**RDKit**](http://www.rdkit.org/), and [**ASE**](https://wiki.fysik.dtu.dk/ase/) to automatically create three dimentional geometries of transition states, reactants, and products;
+optimize them using the [**Gaussian 09**](http://gaussian.com/) quantum chemistry package; and obtain kinetic parameters using **CanTherm**.
 
 Currently, AutoTST supports three reaction families:
 - Hydrogen Abstraction
@@ -19,7 +19,7 @@ However, we intend to introduce support for new reaction families and quantum pa
 
 ## How to Install
 
-Before installing AutoTST, download [anaconda](anaconda.com/download/) and [Git](https://git-scm.com/downloads)
+Before installing AutoTST, download [Anaconda](anaconda.com/download/) and [Git](https://git-scm.com/downloads)
 
 Install the latest version of AutoTST by cloning the source code via Git. Make sure to start in an appropriate local directory where you want the AutoTST folder to exist.
 
@@ -31,7 +31,7 @@ Now, create the anaconda environment for AutoTST
 
 - `conda env create -f environment.yml`
 
-Modify environment variables. Add AutoTST to the PYTHONPATH to ensure that you can access modules from any folder. Modify your ~/.bashrc file by adding the following line:
+Modify environment variables. Add AutoTST to the `PYTHONPATH` to ensure that you can access modules from any folder. Modify your ~/.bashrc file by adding the following line:
 
 - `export PYTHONPATH=$PYTHONPATH:your_folder/AutoTST`
 
