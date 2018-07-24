@@ -8,3 +8,4 @@ dependencies:
   - ase
   - cclib
   - py3dmol
+  - mpmath
