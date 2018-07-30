@@ -67,6 +67,7 @@ def update_from_ase(autotst_obj):
         autotst_obj.update_from_ase_ts()
 
 
+
 def create_initial_population(autotst_object, delta=30, population_size=30):
     """
     A function designed to take a multi_molecule, multi_rxn or multi_ts object
@@ -103,10 +104,12 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
         logging.info("The object given is a `AutoTST_TS` object")
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_ts
+        
+    terminal_torsions, non_terminal_torsions = find_terminal_torsions(autotst_object)
 
     for indivudual in range(population_size):
         dihedrals = []
-        for torsion in torsions:
+        for torsion in non_terminal_torsions:
             dihedral = np.random.choice(possible_dihedrals)
             dihedrals.append(dihedral)
             i, j, k, l = torsion.indices
@@ -121,37 +124,20 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
                 mask=right_mask
             )
 
-        constrained_energy, relaxed_energy, ase_copy = get_energies(
-            autotst_object)
-
-        update_from_ase(autotst_object)
-
-        relaxed_torsions = []
-
-        for torsion in torsions:
-
-            i, j, k, l = torsion.indices
-
-            angle = round(ase_copy.get_dihedral(i, j, k, l), -1)
-            angle = int(30 * round(float(angle)/30))
-            if angle < 0:
-                angle += 360
-            relaxed_torsions.append(angle)
+        energy = get_energy(autotst_object)
 
         population.append(
-            [constrained_energy, relaxed_energy] + dihedrals + relaxed_torsions)
+            [energy] + dihedrals)
 
     if len(population) > 0:
         logging.info("Creating a dataframe of the initial population")
         df = pd.DataFrame(population)
-        columns = ["constrained_energy", "relaxed_energy"]
-        for i in range(len(torsions)):
+        columns = ["energy"]
+        for i in range(len(non_terminal_torsions)):
             columns = columns + ["torsion_" + str(i)]
 
-        for i in range(len(torsions)):
-            columns = columns + ["relaxed_torsion_" + str(i)]
         df.columns = columns
-        df = df.sort_values("constrained_energy")
+        df = df.sort_values("energy")
 
     return df
 
@@ -167,8 +153,8 @@ def select_top_population(df=None, top_percent=0.30):
     """
 
     logging.info("Selecting the top population")
-    assert "constrained_energy" in df.columns
-    df.sort_values("constrained_energy")
+    assert "energy" in df.columns
+    df.sort_values("energy")
     population_size = df.shape[0]
     top_population = population_size * top_percent
     top = df.iloc[:int(top_population), :]
@@ -205,9 +191,8 @@ def get_unique_conformers(df, unique_torsions={}):
             unique_torsions[combo] = energy
     return unique_torsions
 
-
-def get_energies(autotst_object):
-
+def partial_optimize_mol(autotst_object):
+    
     if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
         ase_object = autotst_object.ase_molecule
         labels = []
@@ -225,9 +210,7 @@ def get_energies(autotst_object):
         labels = []
         for atom in autotst_object.ts.rmg_ts.getLabeledAtoms().values():
             labels.append(atom.sortingLabel)
-
-    constrained_energy = ase_object.get_potential_energy()
-
+            
     ase_copy = ase_object.copy()
     ase_copy.set_calculator(ase_object.get_calculator())
 
@@ -235,8 +218,71 @@ def get_energies(autotst_object):
         list(itertools.combinations(labels, 2))))
 
     opt = BFGS(ase_copy)
-    opt.run(fmax=0.01)
-
+    complete = opt.run(fmax=0.01, steps=5)
+    
     relaxed_energy = ase_copy.get_potential_energy()
+    return relaxed_energy, ase_copy
 
-    return constrained_energy, relaxed_energy, ase_copy
+def get_energy(autotst_object):
+
+    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
+        ase_object = autotst_object.ase_molecule
+
+    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
+        ase_object = autotst_object.ts.ase_ts
+
+    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
+        ase_object = autotst_object.ase_ts
+
+    energy = ase_object.get_potential_energy()
+
+    return energy
+
+
+def find_terminal_torsions(mol):
+    terminal_torsions = []
+    non_terminal_torsions = []
+    for torsion in mol.torsions:
+
+        i,j,k,l = torsion.indices
+
+        if isinstance(mol, autotst.molecule.AutoTST_Molecule):
+            rmg_mol = mol.rmg_molecule
+
+        if isinstance(mol, autotst.reaction.AutoTST_Reaction):
+            rmg_mol = mol.ts.rmg_ts
+
+        if isinstance(mol, autotst.reaction.AutoTST_TS):
+            rmg_mol = mol.rmg_ts
+            
+        assert rmg_mol
+
+        atom_j = rmg_mol.atoms[j]
+        atom_k = rmg_mol.atoms[k]
+        
+        terminal = False
+
+        if (atom_j.isCarbon()) and (len(atom_j.bonds) == 4):
+            num_hydrogens = 0
+            for atom_other in atom_j.bonds.keys():
+                if atom_other.isHydrogen():
+                    num_hydrogens += 1
+
+            if num_hydrogens == 3:
+                terminal = True
+
+        if (atom_k.isCarbon()) and (len(atom_k.bonds) == 4):
+            num_hydrogens = 0
+            for atom_other in atom_k.bonds.keys():
+                if atom_other.isHydrogen():
+                    num_hydrogens += 1
+
+            if num_hydrogens == 3:
+                terminal = True
+                      
+        if terminal:
+            terminal_torsions.append(torsion)
+        else:
+            non_terminal_torsions.append(torsion)
+            
+    return terminal_torsions, non_terminal_torsions
