@@ -44,7 +44,7 @@ from autotst.geometry import Bond, Angle, Torsion, CisTrans
 from autotst.molecule import AutoTST_Molecule
 from autotst.reaction import AutoTST_Reaction, AutoTST_TS
 from autotst.conformer.utilities import update_from_ase, create_initial_population, \
-    select_top_population, get_unique_conformers, get_energies
+    select_top_population, get_unique_conformers, get_energy, find_terminal_torsions
 
 
 def perform_ga(autotst_object,
