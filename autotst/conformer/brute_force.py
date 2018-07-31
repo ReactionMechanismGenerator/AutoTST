@@ -37,7 +37,9 @@ from ase import Atoms
 from ase import calculators
 
 import autotst
-from autotst.conformer.utilities import update_from_ase, get_unique_conformers, get_energies
+from autotst.conformer.utilities import update_from_ase, create_initial_population, \
+    select_top_population, get_unique_conformers, get_energy, find_terminal_torsions, \
+    partial_optimize_mol
 
 
 def perform_brute_force(autotst_object,
