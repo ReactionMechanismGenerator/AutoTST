@@ -162,7 +162,7 @@ def select_top_population(df=None, top_percent=0.30):
     return top
 
 
-def get_unique_conformers(df, unique_torsions={}):
+def get_unique_conformers(df, unique_torsions={}, min_rms=10):
     """
     A function designed to identify all low energy conformers within a standard deviation of the data given.
 
@@ -176,19 +176,45 @@ def get_unique_conformers(df, unique_torsions={}):
     columns = []
 
     for c in df.columns:
-        if "relaxed_torsion" in c:
+        if "torsion" in c:
             columns.append(c)
 
     assert len(columns) > 0
-    assert "relaxed_energy" in df.columns
+    assert "energy" in df.columns
 
-    mini = df[df.relaxed_energy < (df.relaxed_energy.min(
-    ) + (units.kcal / units.mol) / units.eV)].sort_values("relaxed_energy")
+    mini = df[df.energy < (df.energy.min(
+    ) + (units.kcal / units.mol) / units.eV)].sort_values("energy")
     for i, combo in enumerate(mini[columns].values):
-        combo = tuple(combo)
-        energy = mini.relaxed_energy.iloc[i]
-        if not combo in unique_torsions.keys():
+        combo = np.array(combo)
+        energy = mini.energy.iloc[i]
+        
+        unique = []
+        for key in unique_torsions.keys():
+            key = np.array(key)
+            
+            if ((key - combo)**2).mean() > min_rms:
+                unique.append(True)
+                
+            else:
+                unique.append(False)
+                
+        if np.array(unique).all():
+            combo = tuple(combo)
             unique_torsions[combo] = energy
+            
+            
+    min_e = min(unique_torsions.values())
+
+    to_delete = []
+    for key, value  in unique_torsions.iteritems():
+
+        if value > min_e + ((units.kcal / units.mol) / units.eV):
+            to_delete.append(key)
+
+    for delete in to_delete:
+        del unique_torsions[delete]
+                
+        
     return unique_torsions
 
 def partial_optimize_mol(autotst_object):
