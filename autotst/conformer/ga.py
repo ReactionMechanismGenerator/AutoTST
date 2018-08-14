@@ -51,7 +51,7 @@ from autotst.conformer.utilities import update_from_ase, create_initial_populati
 def perform_ga(autotst_object,
                initial_pop=None,
                top_percent=0.3,
-               min_rms=10,
+               min_rms=60,
                max_generations=500,
                store_generations=False,
                store_directory=".",
@@ -78,7 +78,7 @@ def perform_ga(autotst_object,
     if initial_pop is None:
         logging.info(
             "No initial population provided, creating one using base parameters...")
-        initial_pop = create_initial_population(autotst_object)
+        initial_pop = create_initial_population(autotst_object, delta=delta)
 
     possible_dihedrals = np.arange(0, 360, delta)
     top = select_top_population(initial_pop,

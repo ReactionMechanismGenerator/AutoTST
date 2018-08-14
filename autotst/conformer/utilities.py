@@ -162,7 +162,7 @@ def select_top_population(df=None, top_percent=0.30):
     return top
 
 
-def get_unique_conformers(df, unique_torsions={}, min_rms=10):
+def get_unique_conformers(df, unique_torsions={}, min_rms=60):
     """
     A function designed to identify all low energy conformers within a standard deviation of the data given.
 
@@ -185,7 +185,10 @@ def get_unique_conformers(df, unique_torsions={}, min_rms=10):
     mini = df[df.energy < (df.energy.min(
     ) + (units.kcal / units.mol) / units.eV)].sort_values("energy")
     for i, combo in enumerate(mini[columns].values):
-        combo = np.array(combo)
+        c = []
+        for tor in combo:
+            c.append(tor % 360)
+        combo = np.array(c)
         energy = mini.energy.iloc[i]
         
         unique = []
