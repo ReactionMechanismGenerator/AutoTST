@@ -153,6 +153,11 @@ def perform_simple_es(autotst_object,
 
         columns = top.columns
         top = pd.DataFrame(relaxed_top, columns=columns)
+
+        if store_generations:
+            save_name = "{}_relaxed_top_es_generation_{}.csv".format(label, gen_number)
+            f = os.path.join(store_directory, save_name)
+            top.to_csv(f)
         
         
         gen_number += 1

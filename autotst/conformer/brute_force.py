@@ -61,17 +61,17 @@ def perform_brute_force(autotst_object,
     # Takes each of the molecule objects
     if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
         ase_object = autotst_object.ase_molecule
-        torsions = autotst_object.torsions
+        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
         file_name = autotst_object.smiles + "_brute_force.csv"
 
     elif isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
         ase_object = autotst_object.ts.ase_ts
-        torsions = autotst_object.ts.torsions
+        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
         file_name = autotst_object.label + "_brute_force.csv"
 
     elif isinstance(autotst_object, autotst.reaction.AutoTST_TS):
         ase_object = autotst_object.ase_ts
-        torsions = autotst_object.torsions
+        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
         file_name = autotst_object.label + "_brute_force.csv"
 
     torsion_angles = np.arange(0, 360, delta)
@@ -106,31 +106,19 @@ def perform_brute_force(autotst_object,
 
         update_from_ase(autotst_object)
 
-        constrained_energy, relaxed_energy, ase_copy = get_energies(
-            autotst_object)
+        energy = get_energy(autotst_object)
+
+
 
         relaxed_torsions = []
 
-        for torsion in torsions:
-
-            i, j, k, l = torsion.indices
-
-            angle = round(ase_copy.get_dihedral(i, j, k, l), -1)
-            angle = int(30 * round(float(angle)/30))
-            if angle < 0:
-                angle += 360
-            relaxed_torsions.append(angle)
-
-        results.append([constrained_energy, relaxed_energy] +
-                       list(combo) + relaxed_torsions)
+        results.append([energy] +
+                       list(combo))
 
     brute_force = pd.DataFrame(results)
-    columns = ["constrained_energy", "relaxed_energy"]
+    columns = ["energy"]
     for i in range(len(torsions)):
         columns = columns + ["torsion_" + str(i)]
-
-    for i in range(len(torsions)):
-        columns = columns + ["relaxed_torsion_" + str(i)]
 
     brute_force.columns = columns
 
