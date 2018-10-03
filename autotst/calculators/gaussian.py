@@ -421,9 +421,17 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
                 f = open(old_file_name)
                 lines = f.readlines()[:5]
+                num = None
                 for line in lines:
                     if "Entering Link" in line:
                         num = line.split()[-1][:-1]
+
+                if not num:
+                    logging.info("Something is wrong... it seems this run was interupted...")
+                    logging.info("deleting {} and recalculating...".format(old_file_name))
+                    os.remove(old_file_name)
+                    return self.calculate(autotst_object, calc)
+                
                 scratch_file = "Gau-" + num + ".int"
                 while os.path.exists(scratch_file):
                     sleep(60)
