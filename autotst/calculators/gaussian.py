@@ -132,7 +132,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(verytight,gdiis,maxcycle=1000)) freq IOP(2/16=3)",
+                        extra="opt=(verytight,gdiis,maxcycle=1000) freq IOP(2/16=3)",
                         multiplicity=autotst_mol.rmg_molecule.multiplicity
                         )
         del calc.parameters['force']
@@ -220,7 +220,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="Opt=(ModRedun,Loose,maxcycle=1000)) Int(Grid=SG1)",
+                        extra="Opt=(ModRedun,Loose,maxcycle=1000) Int(Grid=SG1)",
                         multiplicity=self.reaction.ts.rmg_ts.multiplicity,
                         addsec=[combos[:-1]])
 
@@ -251,7 +251,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(ts,calcfc,noeigentest,ModRedun,maxcycle=1000))",
+                        extra="opt=(ts,calcfc,noeigentest,ModRedun,maxcycle=1000)",
                         multiplicity=self.reaction.ts.rmg_ts.multiplicity,
                         addsec=[combos[:-1]])
 
@@ -271,7 +271,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(ts,calcfc,noeigentest,maxcycle=1000)) freq",
+                        extra="opt=(ts,calcfc,noeigentest,maxcycle=1000) freq",
                         multiplicity=self.reaction.ts.rmg_ts.multiplicity)
 
         del calc.parameters['force']
