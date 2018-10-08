@@ -103,6 +103,8 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
             self.shell_calc = self.get_shell_calc(
                 self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+            self.loose_shell_calc = self.get_loose_shell_calc(
+                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
             self.center_calc = self.get_center_calc(
                 self.mem, self.nprocshared, self.scratch, self.method, self.basis)
             self.overall_calc = self.get_overall_calc(
@@ -126,6 +128,12 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         label = Chem.rdinchi.InchiToInchiKey(
             Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
 
+        bonds = ""
+
+        for bond in autotst_mol.bonds:
+            i,j = bond.indices
+            bonds += "B {} {}\n".format(i+1,j+1)
+
         calc = Gaussian(mem=mem,
                         nprocshared=nprocshared,
                         label=label,
@@ -133,7 +141,8 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         method=method,
                         basis=basis,
                         extra="opt=(verytight,gdiis,maxcycle=1000) freq IOP(2/16=3)",
-                        multiplicity=autotst_mol.rmg_molecule.multiplicity
+                        multiplicity=autotst_mol.rmg_molecule.multiplicity,
+                        addsec=[bonds[:-1]]
                         )
         del calc.parameters['force']
 
@@ -173,8 +182,8 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                             basis=basis,
                             extra="Opt=(CalcFC,ModRedun)",
                             multiplicity=mult,
-                            addsec=[string])
-
+                            addsec=[string]
+                            )
             del calc.parameters['force']
             calculators[(j, k)] = calc
 
@@ -213,6 +222,46 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
         label = self.reaction.label.replace(
             "(", "left").replace(")", "right") + "_shell"
+
+        calc = Gaussian(mem=mem,
+                        nprocshared=nprocshared,
+                        label=label,
+                        scratch=scratch,
+                        method=method,
+                        basis=basis,
+                        extra="Opt=(ModRedun,Loose,maxcycle=1000) Int(Grid=SG1)",
+                        multiplicity=self.reaction.ts.rmg_ts.multiplicity,
+                        addsec=[combos[:-1]])
+
+        del calc.parameters['force']
+        return calc
+
+    def get_loose_shell_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+        "A method to create a calculator that optimizes the reaction shell"
+
+        indicies = []
+        for i, atom in enumerate(self.reaction.ts.rmg_ts.atoms):
+            if not (atom.label == ""):
+                indicies.append(i)
+
+        combos = ""
+        for combo in list(itertools.combinations(indicies, 2)):
+            a, b = combo
+            atom1 = self.reaction.ts.rmg_ts.atoms[a]
+            atom2 = self.reaction.ts.rmg_ts.atoms[b]
+            labels = [atom1.label, atom2.label]
+            
+            if self.reaction.reaction_family.lower() == "h_abstraction":
+                if not (("*1" in labels) and ("*3" in labels)):
+                    combos += "{0} {1} F\n".format(a+1, b+1)
+
+            else:
+                combos += "{0} {1} F\n".format(a+1, b+1)
+
+        self.reaction.ts.rmg_ts.updateMultiplicity()
+
+        label = self.reaction.label.replace(
+            "(", "left").replace(")", "right") + "_loose_shell"
 
         calc = Gaussian(mem=mem,
                         nprocshared=nprocshared,
@@ -583,6 +632,13 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         logging.info("Shell optimization complete!")
         return bool
 
+    def run_loose_shell(self):
+        "A method to run the shell optimization with the reaction center frozen"
+        logging.info("Running LOOSE shell optimization with center frozen...")
+        self.reaction, bool = self.calculate(self.reaction, self.loose_shell_calc)
+        logging.info("Loose Shell optimization complete!")
+        return bool
+
     def run_center(self):
         "A method to run the reaction center optimization with the shell frozen"
         logging.info("Running center optimization with shell frozen...")
@@ -742,7 +798,12 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         shell = self.run_shell()
         self.fix_io_file(self.shell_calc)
         if not shell:
-            return result
+            logging.info(
+                "Shell optimization failed... Trying it again with loose criteria..."
+            )
+            loose_shell = self.run_loose_shell()
+            if not loose_shell:
+                return result
         center = self.run_center()
         self.fix_io_file(self.center_calc)
         if not center:
