@@ -132,7 +132,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(verytight,gdiis) freq IOP(2/16=3)",
+                        extra="opt=(verytight,gdiis,maxcycle=1000) freq IOP(2/16=3)",
                         multiplicity=autotst_mol.rmg_molecule.multiplicity
                         )
         del calc.parameters['force']
@@ -220,7 +220,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="Opt=(ModRedun,Loose) Int(Grid=SG1)",
+                        extra="Opt=(ModRedun,Loose,maxcycle=1000) Int(Grid=SG1)",
                         multiplicity=self.reaction.ts.rmg_ts.multiplicity,
                         addsec=[combos[:-1]])
 
@@ -251,7 +251,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(ts,calcfc,noeigentest,ModRedun)",
+                        extra="opt=(ts,calcfc,noeigentest,ModRedun,maxcycle=1000)",
                         multiplicity=self.reaction.ts.rmg_ts.multiplicity,
                         addsec=[combos[:-1]])
 
@@ -271,7 +271,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(ts,calcfc,noeigentest) freq",
+                        extra="opt=(ts,calcfc,noeigentest,maxcycle=1000) freq",
                         multiplicity=self.reaction.ts.rmg_ts.multiplicity)
 
         del calc.parameters['force']
@@ -421,9 +421,17 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
                 f = open(old_file_name)
                 lines = f.readlines()[:5]
+                num = None
                 for line in lines:
                     if "Entering Link" in line:
                         num = line.split()[-1][:-1]
+
+                if not num:
+                    logging.info("Something is wrong... it seems this run was interupted...")
+                    logging.info("deleting {} and recalculating...".format(old_file_name))
+                    os.remove(old_file_name)
+                    return self.calculate(autotst_object, calc)
+                
                 scratch_file = "Gau-" + num + ".int"
                 while os.path.exists(scratch_file):
                     sleep(60)
