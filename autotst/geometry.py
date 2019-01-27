@@ -107,12 +107,22 @@ class CisTrans():
         i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
     """
 
-    def __init__(self, indices, dihedral, left_mask, right_mask, reaction_center="No"):
+    def __init__(self, indices, dihedral, left_mask, right_mask, stero=None, reaction_center="No"):
         self.indices = indices
         self.dihedral = dihedral
         self.left_mask = left_mask
         self.right_mask = right_mask
+        self.stero = stero
         self.reaction_center = reaction_center
 
     def __repr__(self):
         return '<AutoTST CisTrans "{0}">'.format(self.indices)
+
+class ChiralCenter():
+
+    def __init__(self, index, chirality):
+        self.index = index
+        self.chirality = chirality
+
+    def __repr__(self):
+        return '<AutoTST ChiralCenter "{0}: {1}">'.format(self.index, self.chirality)

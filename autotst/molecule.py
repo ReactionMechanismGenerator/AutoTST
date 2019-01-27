@@ -50,7 +50,7 @@ except ImportError:
 
 import numpy as np
 
-from autotst.geometry import CisTrans, Torsion, Angle, Bond
+from autotst.geometry import CisTrans, Torsion, Angle, Bond, ChiralCenter
 
 
 class AutoTST_Molecule():
@@ -86,6 +86,7 @@ class AutoTST_Molecule():
         self.set_rmg_coords("RDKit")
         self.get_ase_molecule()
         self.get_torsions()
+        self.get_chiral_centers()
         self.get_angles()
         self.get_bonds()
 
@@ -324,6 +325,74 @@ class AutoTST_Molecule():
         self.torsions = torsions
         self.cistrans = cistrans
         return self.torsions
+
+    def get_chiral_centers(self):
+
+        centers = rdkit.Chem.FindMolChiralCenters(self.rdkit_molecule, includeUnassigned=True)
+        chiral_centers = []
+        
+        for center in centers:
+            index, chirality = center
+            
+            chiral_centers.append(ChiralCenter(index=index, chirality=chirality))
+            
+        self.chiral_centers = chiral_centers
+
+    def set_chiral_center(self, index, chirality):
+        
+        centers_dict = {
+            'R' : Chem.rdchem.ChiralType.CHI_TETRAHEDRAL_CW,
+            'S' : Chem.rdchem.ChiralType.CHI_TETRAHEDRAL_CCW
+        }
+        
+        assert chirality.lower() in ["s", "r"], "Did not specify a valid chirality..."
+        assert isinstance(index, int)
+        
+        rdmol = self.rdkit_molecule.__copy__()
+        
+        chiral_centers = self.chiral_centers
+        
+        match = False
+        for chiral_center in chiral_centers:
+            ID = chiral_center.index
+            
+            if ID == index:
+                match = True
+                chiral_center.chirality = chirality.upper()
+                break
+                
+        if not match:
+            print "It seems the atom index provided is not a chiral center."
+            return self
+        
+
+        rdmol.GetAtomWithIdx(index).SetChiralTag(centers_dict[chirality.upper()])
+        
+        rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
+        
+        old_torsions = self.torsions[:]
+        
+        self.rdkit_molecule = rdmol
+        self.update_from_rdkit_mol()
+        
+        # Now resetting dihedral angles in case if they changed.
+        
+        for torsion in old_torsions:
+            dihedral = torsion.dihedral
+            i,j,k,l = torsion.indices
+            
+            self.ase_molecule.set_dihedral(
+                a1 = i,
+                a2 = j,
+                a3 = k,
+                a4 = l,
+                mask = torsion.right_mask,
+                angle = torsion.dihedral,
+            )
+            
+        self.update_from_ase_mol()
+        
+        return self
 
     def get_right_mask(self, torsion_or_angle):
 
