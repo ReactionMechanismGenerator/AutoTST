@@ -116,7 +116,7 @@ class CisTrans():
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST CisTrans "{0}">'.format(self.indices)
+        return '<AutoTST CisTrans "{0}: {1}">'.format(self.indices, self.stero)
 
 class ChiralCenter():
 
