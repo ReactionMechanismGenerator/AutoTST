@@ -41,25 +41,15 @@ from autotst.conformer.utilities import update_from_ase, create_initial_populati
     select_top_population, get_unique_conformers, get_energy, find_terminal_torsions, \
     partial_optimize_mol
 
-def find_all_combos(autotst_object, delta=float(30), cistrans=True, chiral_centers=True):
-    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
-        ase_object = autotst_object.ase_molecule
-        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
-        cistranss = autotst_object.cistrans
-        chiral_centers = autotst_object.chiral_centers
-        file_name = autotst_object.smiles + "_brute_force.csv"
+def find_all_combos(conformer, delta=float(30), cistrans=True, chiral_centers=True):
+    """
+    A function to find all possible conformer combinations for a given conformer
+    """ 
 
-    elif isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
-        ase_object = autotst_object.ts.ase_ts
-        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
-        file_name = autotst_object.label + "_brute_force.csv"
+    terminal_torsions, torsions = find_terminal_torsions(conformer)
+    cistranss = conformer.cistrans
+    chiral_centers = conformer.chiral_centers
 
-    elif isinstance(autotst_object, autotst.reaction.AutoTST_TS):
-        ase_object = autotst_object.ase_ts
-        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
-        file_name = autotst_object.label + "_brute_force.csv"
-
-    conf_objects = autotst_object.torsions + autotst_object.cistrans + autotst_object.chiral_centers
 
     torsion_angles = np.arange(0, 360, delta)
     torsion_combos = list(itertools.combinations_with_replacement(
@@ -89,7 +79,7 @@ def find_all_combos(autotst_object, delta=float(30), cistrans=True, chiral_cente
     
 
     if chiral_centers:
-        chiral_options = ["r", "s"]
+        chiral_options = ["R", "S"]
         chiral_combos = list(itertools.combinations_with_replacement(
             chiral_options, len(chiral_centers)))
         if len(chiral_centers) != 1:
@@ -105,7 +95,7 @@ def find_all_combos(autotst_object, delta=float(30), cistrans=True, chiral_cente
     all_combos = list(itertools.product(torsion_combos, cistrans_combos, chiral_combos))
     return all_combos
 
-def perform_brute_force(autotst_object,
+def perform_brute_force(conformer,
                         delta=float(30),
                         cistrans=True,
                         chiral_centers=True,
@@ -125,24 +115,14 @@ def perform_brute_force(autotst_object,
     """
     # Takes each of the molecule objects
 
-    combos = find_all_combos(autotst_object, delta=delta, cistrans=cistrans, chiral_centers=chiral_centers)
+    combos = find_all_combos(conformer, delta=delta, cistrans=cistrans, chiral_centers=chiral_centers)
     
-    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
-        ase_object = autotst_object.ase_molecule
-        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
-        file_name = autotst_object.smiles + "_brute_force.csv"
 
-    elif isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
-        ase_object = autotst_object.ts.ase_ts
-        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
-        file_name = autotst_object.label + "_brute_force.csv"
+    terminal_torsions, torsions = find_terminal_torsions(conformer)
+    file_name = conformer.smiles + "_brute_force.csv"
 
-    elif isinstance(autotst_object, autotst.reaction.AutoTST_TS):
-        ase_object = autotst_object.ase_ts
-        terminal_torsions, torsions = find_terminal_torsions(autotst_object)
-        file_name = autotst_object.label + "_brute_force.csv"
+    calc = conformer.ase_molecule.get_calculator()
 
-    calc = ase_object.get_calculator()
 
     results = []
     for combo in combos:
@@ -150,11 +130,11 @@ def perform_brute_force(autotst_object,
         
         for i, torsion in enumerate(torsions):
             
-            tor = autotst_object.torsions[i]
-            i,j,k,l = tor.indices
-            mask = tor.right_mask
-            
-            autotst_object.ase_molecule.set_dihedral(
+            tor = conformer.torsions[i]
+            i,j,k,l = tor.atom_indices
+            mask = tor.mask
+
+            conformer.ase_molecule.set_dihedral(
                 a1 = i,
                 a2 = j,
                 a3 = k,
@@ -162,21 +142,20 @@ def perform_brute_force(autotst_object,
                 angle = torsion,
                 mask = mask
             )
-            autotst_object.update_from_ase_mol()
+            conformer.update_coords()
             
         for i, e_z in enumerate(cistrans):
-            ct = autotst_object.cistrans[i]
-            autotst_object.set_cistrans(ct, e_z)
+            ct = conformer.cistrans[i]
+            conformer.set_cistrans(ct.index, e_z)
             
         for i, s_r in enumerate(chiral_centers):
-            center = autotst_object.chiral_centers[i]
-            index = center.index
-            autotst_object.set_chiral_center(index, s_r)
+            center = conformer.chiral_centers[i]
+            conformer.set_chiral_center(center.index, s_r)
             
         
-        autotst_object.ase_molecule.set_calculator(calc)
-        update_from_ase(autotst_object)
-        energy = get_energy(autotst_object)
+        conformer.ase_molecule.set_calculator(calc)
+        conformer.update_coords()
+        energy = get_energy(conformer)
         
         sample = ["torsion_{}", "cistrans_{}", "chiral_center_{}"]
         columns = ["energy"]

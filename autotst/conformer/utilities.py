@@ -49,21 +49,21 @@ from ase.optimize import BFGS
 
 import autotst
 from autotst.geometry import Bond, Angle, Torsion, CisTrans
-from autotst.molecule import AutoTST_Molecule
-from autotst.reaction import AutoTST_Reaction, AutoTST_TS
+from autotst.molecule import Molecule
+from autotst.reaction import Reaction, TS
 
 
 def update_from_ase(autotst_obj):
     """
     A function designed to update all objects based off of their ase objects
     """
-    if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
+    if isinstance(autotst_obj, autotst.molecule.Molecule):
         autotst_obj.update_from_ase_mol()
 
-    if isinstance(autotst_obj, autotst.reaction.AutoTST_Reaction):
+    if isinstance(autotst_obj, autotst.reaction.Reaction):
         autotst_obj.ts.update_from_ase_ts()
 
-    if isinstance(autotst_obj, autotst.reaction.AutoTST_TS):
+    if isinstance(autotst_obj, autotst.reaction.TS):
         autotst_obj.update_from_ase_ts()
 
 
@@ -89,19 +89,19 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
 
     possible_dihedrals = np.arange(0, 360, delta)
     population = []
-    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
-        logging.info("The object given is a `AutoTST_Molecule` object")
+    if isinstance(autotst_object, autotst.molecule.Molecule):
+        logging.info("The object given is a `Molecule` object")
 
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_molecule
 
-    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
-        logging.info("The object given is a `AutoTST_Reaction` object")
+    if isinstance(autotst_object, autotst.reaction.Reaction):
+        logging.info("The object given is a `Reaction` object")
         torsions = autotst_object.ts.torsions
         ase_object = autotst_object.ts.ase_ts
 
-    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
-        logging.info("The object given is a `AutoTST_TS` object")
+    if isinstance(autotst_object, autotst.reaction.TS):
+        logging.info("The object given is a `TS` object")
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_ts
         
@@ -173,6 +173,7 @@ def get_unique_conformers(df, unique_torsions={}, min_rms=60):
     :return:
      unique_torsion: a dict containing all of the unique torsions from the dataframe appended
     """
+    ### CURRENTLY BROKEN
     columns = []
 
     for c in df.columns:
@@ -221,19 +222,22 @@ def get_unique_conformers(df, unique_torsions={}, min_rms=60):
     return unique_torsions
 
 def partial_optimize_mol(autotst_object):
+    """
+    # CURRENTLY BROKEN
+    """
     
-    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
+    if isinstance(autotst_object, autotst.molecule.Molecule):
         ase_object = autotst_object.ase_molecule
         labels = []
 
-    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
+    if isinstance(autotst_object, autotst.reaction.Reaction):
         ase_object = autotst_object.ts.ase_ts
 
         labels = []
         for atom in autotst_object.ts.rmg_ts.getLabeledAtoms().values():
             labels.append(atom.sortingLabel)
 
-    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
+    if isinstance(autotst_object, autotst.reaction.TS):
         ase_object = autotst_object.ase_ts
 
         labels = []
@@ -252,37 +256,26 @@ def partial_optimize_mol(autotst_object):
     relaxed_energy = ase_copy.get_potential_energy()
     return relaxed_energy, ase_copy
 
-def get_energy(autotst_object):
+def get_energy(conformer):
+    """
+    A function to find the potential energy of a conformer
+    """
 
-    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
-        ase_object = autotst_object.ase_molecule
-
-    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
-        ase_object = autotst_object.ts.ase_ts
-
-    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
-        ase_object = autotst_object.ase_ts
-
-    energy = ase_object.get_potential_energy()
+    energy = conformer.ase_molecule.get_potential_energy()
 
     return energy
 
 
-def find_terminal_torsions(mol):
+def find_terminal_torsions(conformer):
+    """
+    A function that can find the terminal and non terminal torsions in a conformer object
+    """
     terminal_torsions = []
     non_terminal_torsions = []
-    for torsion in mol.torsions:
+    for torsion in conformer.torsions:
 
-        i,j,k,l = torsion.indices
-
-        if isinstance(mol, autotst.molecule.AutoTST_Molecule):
-            rmg_mol = mol.rmg_molecule
-
-        if isinstance(mol, autotst.reaction.AutoTST_Reaction):
-            rmg_mol = mol.ts.rmg_ts
-
-        if isinstance(mol, autotst.reaction.AutoTST_TS):
-            rmg_mol = mol.rmg_ts
+        i,j,k,l = torsion.atom_indices
+        rmg_mol = conformer.rmg_molecule
             
         assert rmg_mol
 
