@@ -104,22 +104,27 @@ class Reaction():
 
                     if self.rmg_reaction.isIsomorphic(test_reaction):
                         self.label = label
+                        self.generate_reactants_and_products()
 
                     else:
                         logging.info("Label provided doesn't match the RMGReaction, creating a new label")
                         self.label = self.get_reaction_label(self.rmg_reaction)
+                        self.generate_reactants_and_products()
 
                 except:
                     logging.info("Label provided doesn't match the RMGReaction, creating a new label")
 
                     self.label = self.get_reaction_label(self.rmg_reaction)
+                    self.generate_reactants_and_products()
             else:
                 self.label = self.get_reaction_label(self.rmg_reaction)
+                self.generate_reactants_and_products()
 
         elif label:
             try:
                 self.rmg_reaction, self.reaction_family = self.get_labeled_reaction(label=label)
                 self.label = label
+                self.generate_reactants_and_products()
             except:
                 logging.info("Label provided is not valid... setting everything to None")
 
@@ -158,7 +163,7 @@ class Reaction():
                     reaction_family=self.reaction_family,
                     distance_data=self.distance_data
                 )
-                ts_dict[direction] = ts
+                ts_dict[direction] = [ts]
 
             self._ts = ts_dict
 
@@ -253,9 +258,28 @@ class Reaction():
         return self.distance_data
         
     def generate_reactants_and_products(self, rmg_reaction=None):
-        #### ToDo
+        """
+        A module that will generate AutoTST molecules for a given reaction
+        """
+
+        if not rmg_reaction:
+            rmg_reaction = self.rmg_reaction
+
+        reactants = []
+        products = []
+        for react in rmg_reaction.reactants:
+            mol =  Molecule(rmg_species=react)
+            mol.generate_structures()
+            reactants.append(mol)
+            
+        for prod in rmg_reaction.products:
+            mol =  Molecule(rmg_species=prod)
+            mol.generate_structures()
+            products.append(mol)
         
-        assert (self.rmg_reaction or rmg_reaction), "No reaction provided... "
+        self.reactants = reactants
+        self.products = products
+        return self.reactants, self.products
         
     def get_labeled_reaction(self, label=None, rmg_reaction=None):
         """
@@ -329,18 +353,16 @@ class Reaction():
         got_one = False
         for name, family in self.rmg_database.kinetics.families.items():
             try:
-                print test_reaction, name
                 labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
                     test_reaction.reactants, test_reaction.products)
                 got_one = True
 
             except:
-                print "Couldn't match {} family...".format(family)
+                logging.info("Couldn't match {} family...".format(family))
                 
             if got_one:
-                print labeled_r
                 break
-        assert got_one, "Wow, couldn't find a match"
+        assert got_one, "Couldn't find a match"
         
         reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
             test_reaction.reactants,
@@ -529,7 +551,6 @@ class TS(Conformer):
         return rdkit_molecule, bm
 
                     
-    
     def get_bounds_matrix(self, rmg_molecule=None, rdkit_molecule=None):
         """
         A method to obtain the bounds matrix 

@@ -37,9 +37,8 @@ from ase import Atoms
 from ase import calculators
 
 import autotst
-from autotst.conformer.utilities import update_from_ase, create_initial_population, \
-    select_top_population, get_unique_conformers, get_energy, find_terminal_torsions, \
-    partial_optimize_mol
+from autotst.conformer.utilities import get_energy, find_terminal_torsions
+    
 
 def find_all_combos(conformer, delta=float(30), cistrans=True, chiral_centers=True):
     """
@@ -71,7 +70,7 @@ def find_all_combos(conformer, delta=float(30), cistrans=True, chiral_centers=Tr
                 set(
                     cistrans_combos +
                     list(itertools.combinations_with_replacement(
-                        cistrans_options[::-1], len(torsions)
+                        cistrans_options[::-1], len(cistranss)
                     ))))
             
     else:
@@ -126,6 +125,7 @@ def perform_brute_force(conformer,
 
     results = []
     for combo in combos:
+        print combo
         torsions, cistrans, chiral_centers = combo
         
         for i, torsion in enumerate(torsions):
@@ -171,10 +171,8 @@ def perform_brute_force(conformer,
                 
         results.append(long_combo)
 
-    return results
 
-
-    brute_force = pd.DataFrame(results, columns=sample)
+    brute_force = pd.DataFrame(results, columns=columns)
 
 
     if store_results:

@@ -37,41 +37,23 @@ from rmgpy.molecule import Molecule
 from rmgpy.reaction import Reaction
 
 import autotst
-from autotst.reaction import AutoTST_Reaction, AutoTST_TS
-from autotst.molecule import AutoTST_Molecule
-from autotst.calculators.vibrational_analysis import Vibrational_Analysis
-from autotst.calculators.calculator import AutoTST_Calculator
+from autotst.reaction import Reaction, TS
+from autotst.molecule import Molecule
+from autotst.calculators.vibrational_analysis import VibrationalAnalysis
+from autotst.calculators.calculator import Calculator
 
 from rdkit import Chem
 from cclib.io import ccread
 
 from ase.io.gaussian import read_gaussian, read_gaussian_out
-from ase.calculators.gaussian import Gaussian
+from ase.calculators.gaussian import Gaussian as ASEGaussian
 
 
-def update_from_ase(autotst_obj, ase_object):
-    """
-    A function designed to update all objects based off of their ase objects
-    """
-    if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
-        autotst_obj.ase_molecule = ase_object
-        autotst_obj.update_from_ase_mol()
 
-    if isinstance(autotst_obj, autotst.reaction.AutoTST_Reaction):
-        autotst_obj.ts.ase_ts = ase_object
-        autotst_obj.ts.update_from_ase_ts()
-
-    if isinstance(autotst_obj, autotst.reaction.AutoTST_TS):
-        autotst_obj.ase_ts = ase_object
-        autotst_obj.update_from_ase_ts()
-
-    return autotst_obj
-
-
-class AutoTST_Gaussian(AutoTST_Calculator):
+class Gaussian(Calculator):
 
     def __init__(self,
-                 autotst_reaction=None,
+                 reaction=None,
                  mem="5GB",
                  nprocshared=20,
                  scratch=".",
@@ -82,11 +64,11 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         A method to create all of the calculators needed for AutoTST
 
         :params:
-        autotst_reaction: (AutoTST_Reaction) The reaction of interest
+        autotst_reaction: (Reaction) The reaction of interest
         scratch: (str) The directory that you would like to use for calculations
         """
 
-        self.reaction = autotst_reaction
+        self.reaction = reaction
         self.mem = mem
         self.nprocshared = nprocshared
         self.scratch = scratch
@@ -95,112 +77,150 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         self.save_directory = save_directory
         
 
-        if autotst_reaction:
-            self.label = autotst_reaction.label
+        if reaction:
+            self.label = reaction.label
 
-            self.get_reactant_and_product_calcs(
-                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+            self.get_species_calcs(
+                self.reaction, self.mem, self.nprocshared, self.scratch, self.method, self.basis)
 
             self.shell_calc = self.get_shell_calc(
-                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+                self.reaction, self.reaction.ts["forward"][0], self.mem, self.nprocshared, self.scratch, self.method, self.basis)
             self.center_calc = self.get_center_calc(
-                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+                self.reaction, self.reaction.ts["forward"][0], self.mem, self.nprocshared, self.scratch, self.method, self.basis)
             self.overall_calc = self.get_overall_calc(
-                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+                self.reaction, self.reaction.ts["forward"][0], self.mem, self.nprocshared, self.scratch, self.method, self.basis)
             self.irc_calc = self.get_irc_calc(
-                self.mem, self.nprocshared, self.scratch, self.method, self.basis)
+                self.reaction, self.reaction.ts["forward"][0], self.mem, self.nprocshared, self.scratch, self.method, self.basis)
 
             self.completed_irc = False
 
     def __repr__(self):
-        return '<AutoTST Gaussian Calculators "{0}">'.format(self.reaction.label)
+        return '<Gaussian Calculator "{0}">'.format(self.reaction.label)
 
-    def reactants_or_products_calc(self, autotst_mol, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+    def get_species_calc(self, conformer, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method that creates a calculator for a reactant or product"
 
-        autotst_mol.rmg_molecule.updateMultiplicity()
+        conformer.rmg_molecule.updateMultiplicity()
 
         # using this round about way of doing stuff because rmg's `toAugumentedInChIKey` method doesn't work on our cluster
 
-        smiles = autotst_mol.rmg_molecule.toSMILES()
+        smiles = conformer.rmg_molecule.toSMILES()
         label = Chem.rdinchi.InchiToInchiKey(
             Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
 
-        calc = Gaussian(mem=mem,
+        calc = ASEGaussian(mem=mem,
                         nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
                         method=method,
                         basis=basis,
                         extra="opt=(verytight,gdiis,maxcycle=1000) freq IOP(2/16=3)",
-                        multiplicity=autotst_mol.rmg_molecule.multiplicity
+                        multiplicity=conformer.rmg_molecule.multiplicity
                         )
         del calc.parameters['force']
 
         return calc
 
-    def get_rotor_calcs(self, autotst_object, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+    def get_rotor_calc(self, conformer, torsion, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         """ A method to create all of the calculators needed to perform hindered rotor calculations"""
+        
+        string = ""
+        for bond in conformer.bonds:
+            i, j = bond.indices
+            string += "B {} {}\n".format(i+1, j+1)
 
-        calculators = {}
-        for torsion in autotst_object.torsions:
-            string = ""
-            for bond in autotst_object.bonds:
-                i, j = bond.indices
-                string += "B {} {}\n".format(i+1, j+1)
+        i, j, k, l = torsion.atom_indices
+        string += "D {} {} {} {} S 36 10.0".format(i+1, j+1, k+1, l+1)
+        
+        if isinstance(conformer, TS):
+            label = self.label + "_tor_{}_{}".format(j,k)
+        elif isisntance(conformer, Conformer):
+            label = conformer.smiles + "_tor_{}_{}".format(j,k)
+        
+        label = conformer.smiles + "_tor_{}_{}".format(j,k)
+        conformer.rmg_molecule.updateMultiplicity()
+        mult = conformer.rmg_molecule.multiplicity
 
-            i, j, k, l = torsion.indices
-            string += "D {} {} {} {} S 36 10.0".format(i+1, j+1, k+1, l+1)
+        if isinstance(autotst_object, Reaction):
+            label = autotst_object.label + "_tor_{}_{}".format(j, k)
+            mult = autotst_object.ts.rmg_ts.multiplicity
+        elif isinstance(autotst_object, TS):
+            label = autotst_object.label + "_tor_{}_{}".format(j, k)
+            mult = autotst_object.rmg_ts.multiplicity
+        elif isinstance(autotst_object, Molecule):
+            smiles = autotst_object.rmg_molecule.toSMILES()
+            label = Chem.rdinchi.InchiToInchiKey(
+                Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
+            label += "_tor{}{}".format(j, k)
+            mult = autotst_object.rmg_molecule.multiplicity
 
-            if isinstance(autotst_object, AutoTST_Reaction):
-                label = autotst_object.label + "_tor_{}_{}".format(j, k)
-                mult = autotst_object.ts.rmg_ts.multiplicity
-            elif isinstance(autotst_object, AutoTST_TS):
-                label = autotst_object.label + "_tor_{}_{}".format(j, k)
-                mult = autotst_object.rmg_ts.multiplicity
-            elif isinstance(autotst_object, AutoTST_Molecule):
-                smiles = autotst_object.rmg_molecule.toSMILES()
-                label = Chem.rdinchi.InchiToInchiKey(
-                    Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
-                label += "_tor{}{}".format(j, k)
-                mult = autotst_object.rmg_molecule.multiplicity
+        calc = ASEGaussian(mem=mem,
+                        nprocshared=nprocshared,
+                        label=label,
+                        scratch=scratch,
+                        method=method,
+                        basis=basis,
+                        extra="Opt=(CalcFC,ModRedun)",
+                        multiplicity=mult,
+                        addsec=[string])
 
-            calc = Gaussian(mem=mem,
-                            nprocshared=nprocshared,
-                            label=label,
-                            scratch=scratch,
-                            method=method,
-                            basis=basis,
-                            extra="Opt=(CalcFC,ModRedun)",
-                            multiplicity=mult,
-                            addsec=[string])
+        del calc.parameters['force']
 
-            del calc.parameters['force']
-            calculators[(j, k)] = calc
+        return calc
 
-        return calculators
-
-    def get_reactant_and_product_calcs(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+    def get_species_calcs(self, reaction=None, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method that collects all of the calculators for reactants and prods"
 
-        self.reactant_calcs = {}
-        self.product_calcs = {}
+        if not reaction:
+            reaction = self.reaction
 
-        for reactant in self.reaction.reactant_mols:
-            calc = self.reactants_or_products_calc(
-                reactant, mem, nprocshared, scratch, method, basis)
-            self.reactant_calcs[reactant] = calc
+        reactant_calcs = {}
+        product_calcs = {}
 
-        for product in self.reaction.product_mols:
-            calc = self.reactants_or_products_calc(
-                product, mem, nprocshared, scratch, method, basis)
-            self.product_calcs[product] = calc
+        for reactant in self.reaction.reactants:
+            r_calcs = {}
+            for smiles, confs in reactant.conformers.iteritems():
 
-    def get_shell_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+                conf = confs[0]
+
+                calc = self.get_species_calc(
+                    conf, mem, nprocshared, scratch, method, basis)
+
+
+                r_calcs[smiles] = calc
+            reactant_calcs[reactant] = r_calcs
+
+        self.reactant_calcs = reactant_calcs
+
+        for product in self.reaction.products:
+            p_calcs = {}
+            for smiles, confs in product.conformers.iteritems():
+
+                conf = confs[0]
+
+                calc = self.get_species_calc(
+                    conf, mem, nprocshared, scratch, method, basis)
+
+
+                p_calcs[smiles] = calc
+            product_calcs[product] = p_calcs
+
+        self.product_calcs = product_calcs
+
+        return reactant_calcs, product_calcs
+
+    def get_shell_calc(self, reaction=None, conformer=None, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method to create a calculator that optimizes the reaction shell"
 
+        if reaction is None:
+            reaction = self.reaction
+
+        if conformer is None:
+            logging.info("No TS was provided, selecting the first TS geometry")
+            conformer = reaction.ts["forward"][0]
+
         indicies = []
-        for i, atom in enumerate(self.reaction.ts.rmg_ts.atoms):
+        for i, atom in enumerate(conformer.rmg_molecule.atoms):
             if not (atom.label == ""):
                 indicies.append(i)
 
@@ -209,30 +229,38 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             a, b = combo
             combos += "{0} {1} F\n".format(a+1, b+1)
 
-        self.reaction.ts.rmg_ts.updateMultiplicity()
+        conformer.rmg_molecule.updateMultiplicity()
 
-        label = self.reaction.label.replace(
+        label = reaction.label.replace(
             "(", "left").replace(")", "right") + "_shell"
 
-        calc = Gaussian(mem=mem,
+        calc = ASEGaussian(mem=mem,
                         nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
                         method=method,
                         basis=basis,
                         extra="Opt=(ModRedun,Loose,maxcycle=1000) Int(Grid=SG1)",
-                        multiplicity=self.reaction.ts.rmg_ts.multiplicity,
+                        multiplicity=conformer.rmg_molecule.multiplicity,
                         addsec=[combos[:-1]])
 
         del calc.parameters['force']
         return calc
 
-    def get_center_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+    def get_center_calc(self, reaction=None, conformer=None, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method to create the calculator to perform the reaction center opt"
 
+
+        if reaction is None:
+            reaction = self.reaction
+
+        if conformer is None:
+            logging.info("No TS was provided, selecting the first TS geometry")
+            conformer = reaction.ts["forward"][0]
+
         indicies = []
-        for i, atom in enumerate(self.reaction.ts.rmg_ts.atoms):
-            if (atom.label == ""):
+        for i, atom in enumerate(conformer.rmg_molecule.atoms):
+            if not (atom.label != ""):
                 indicies.append(i)
 
         combos = ""
@@ -240,90 +268,87 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             a, b = combo
             combos += "{0} {1} F\n".format(a+1, b+1)
 
-        self.reaction.ts.rmg_ts.updateMultiplicity()
+        conformer.rmg_molecule.updateMultiplicity()
 
-        label = self.reaction.label.replace(
+        label = reaction.label.replace(
             "(", "left").replace(")", "right") + "_center"
 
-        calc = Gaussian(mem=mem,
+        calc = ASEGaussian(mem=mem,
                         nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(ts,calcfc,noeigentest,ModRedun,maxcycle=1000)",
-                        multiplicity=self.reaction.ts.rmg_ts.multiplicity,
+                        extra="Opt=(ModRedun,Loose,maxcycle=1000) Int(Grid=SG1)",
+                        multiplicity=conformer.rmg_molecule.multiplicity,
                         addsec=[combos[:-1]])
 
         del calc.parameters['force']
         return calc
 
-    def get_overall_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+    def get_overall_calc(self, reaction=None, conformer=None, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method to create the calculator to perform the full TS optimization"
 
-        self.reaction.ts.rmg_ts.updateMultiplicity()
+        if reaction is None:
+            reaction = self.reaction
+
+        if conformer is None:
+            logging.info("No TS was provided, selecting the first TS geometry")
+            conformer = reaction.ts["forward"][0]
+
+
+        conformer.rmg_molecule.updateMultiplicity()
 
         label = self.reaction.label.replace("(", "left").replace(")", "right")
 
-        calc = Gaussian(mem=mem,
+        calc = ASEGaussian(mem=mem,
                         nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
                         method=method,
                         basis=basis,
                         extra="opt=(ts,calcfc,noeigentest,maxcycle=1000) freq",
-                        multiplicity=self.reaction.ts.rmg_ts.multiplicity)
+                        multiplicity=conformer.rmg_molecule.multiplicity)
 
         del calc.parameters['force']
         return calc
 
-    def get_irc_calc(self, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
+    def get_irc_calc(self, reaction=None, conformer=None, mem="5GB", nprocshared=20, scratch=".", method="m062x", basis="6-311+g(2df,2p)"):
         "A method to create the IRC calculator object"
 
-        self.reaction.ts.rmg_ts.updateMultiplicity()
-        label = self.reaction.label.replace(
+        if reaction is None:
+            reaction = self.reaction
+
+        if conformer is None:
+            logging.info("No TS was provided, selecting the first TS geometry")
+            conformer = reaction.ts["forward"][0]
+
+        conformer.rmg_molecule.updateMultiplicity()
+        label = reaction.label.replace(
             "(", "left").replace(")", "right") + "_irc"
 
-        calc = Gaussian(mem=mem,
+        calc = ASEGaussian(mem=mem,
                         nprocshared=nprocshared,
                         label=label,
                         scratch=scratch,
                         method=method,
                         basis=basis,
                         extra="irc=(calcall)",
-                        multiplicity=self.reaction.ts.rmg_ts.multiplicity)
+                        multiplicity=conformer.rmg_molecule.multiplicity)
 
         del calc.parameters['force']
         return calc
 
-    def calculate(self, autotst_object, calc):
+    def calculate(self, conformer, calc):
         """
         A method to perform a calculation given a calculator and an AutoTST
         object. If the corresponding log file already exists, we will skip it
 
         :params:
-        autotst_object: (AutoTST_Molecule, AutoTST_TS, AutoTST_Reaction) an
+        autotst_object: (Molecule, TS, Reaction) an
         AutoTST object that you want to run calculations on
         calc: (ase.calculators.calculator) the calculator that you want to run
         """
-
-        def update_from_ase(autotst_obj, ase_object):
-            """
-            A function designed to update all objects based off of their ase objects
-            """
-            if isinstance(autotst_obj, autotst.molecule.AutoTST_Molecule):
-                autotst_obj.ase_molecule = ase_object
-                autotst_obj.update_from_ase_mol()
-
-            if isinstance(autotst_obj, autotst.reaction.AutoTST_Reaction):
-                autotst_obj.ts.ase_ts = ase_object
-                autotst_obj.ts.update_from_ase_ts()
-
-            if isinstance(autotst_obj, autotst.reaction.AutoTST_TS):
-                autotst_obj.ase_ts = ase_object
-                autotst_obj.update_from_ase_ts()
-
-            return autotst_obj
 
         current_path = os.getcwd()
         scratch_path = os.path.expanduser(
@@ -333,12 +358,6 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             "left", "(").replace("right", ")") + ".log"
         old_file_name = calc.label + ".log"
 
-        if isinstance(autotst_object, AutoTST_Molecule):
-            ase_object = autotst_object.ase_molecule
-        elif isinstance(autotst_object, AutoTST_Reaction):
-            ase_object = autotst_object.ts.ase_ts
-        elif isinstance(autotst_object, AutoTST_TS):
-            ase_object = autotst_object.ase_ts
 
         os.chdir(scratch_path)
 
@@ -349,27 +368,26 @@ class AutoTST_Gaussian(AutoTST_Calculator):
             complete, success = self.verify_output_file(new_file_name)
             if success:
                 logging.info("Old output file verified, reading it in...")
-                ase_object = read_gaussian_out(new_file_name)
-                autotst_object = update_from_ase(autotst_object, ase_object)
+                conformer.ase_molecule = read_gaussian_out(new_file_name)
+                conformer.update_coords()
                 os.chdir(current_path)
-                return autotst_object, True
+                return conformer, True
 
             elif complete:
                 logging.info(
                     "Output file did not converge, attempting to run one last time...")
                 try:
-                    calc.calculate(ase_object)
-                    ase_object = read_gaussian_out(
+                    calc.calculate(conformer.ase_molecule)
+                    conformer.ase_molecule = read_gaussian_out(
                         old_file_name)
-                    autotst_object = update_from_ase(
-                        autotst_object, ase_object)
+                    conformer.update_coords()
                     os.chdir(current_path)
-                    return autotst_object, True
+                    return conformer, True
 
                 except:  # TODO: add error for seg fault
                     logging.info("{} failed... again...".format(new_file_name))
                     os.chdir(current_path)
-                    return autotst_object, False
+                    return conformer, False
 
             elif (new_file_name == old_file_name) and (not complete):
                 # The file names are identical and the job isn't complete yet
@@ -391,24 +409,23 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
                 sleep(30) # waiting a lil while to make sure that the file is fixed... just in case...
                 try:
-                    ase_object = read_gaussian_out(
+                    conformer.ase_molecule = read_gaussian_out(
                         old_file_name)
-                    autotst_object = update_from_ase(
-                        autotst_object, ase_object)
+                    conformer.update_coords()
                     os.chdir(current_path)
-                    return autotst_object, True
+                    return conformer, True
                 except IndexError:
                     logging.info("It appears that the previous log file wasn't finished... removing the files and rerunning")
                     os.remove(old_file_name)
                     os.remove(old_file_name.replace(".log", ".ase"))
                     os.remove(old_file_name.replace(".log", ".com"))
-                    return self.calculate(autotst_object, calc)
+                    return self.calculate(conformer, calc)
 
             else:
                 logging.info(
                     "Something went wrong... File is neither complete nor successful...")
 
-                return autotst_object, False
+                return conformer, False
 
         elif os.path.exists(old_file_name):
             complete, success = self.verify_output_file(old_file_name)
@@ -430,7 +447,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
                     logging.info("Something is wrong... it seems this run was interupted...")
                     logging.info("deleting {} and recalculating...".format(old_file_name))
                     os.remove(old_file_name)
-                    return self.calculate(autotst_object, calc)
+                    return self.calculate(conformer, calc)
                 
                 scratch_file = "Gau-" + num + ".int"
                 while os.path.exists(scratch_file):
@@ -439,51 +456,48 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
                 sleep(30) # waiting a lil while to make sure that the file is fixed... just in case...
 
-                return self.calculate(autotst_object, calc)
+                return self.calculate(conformer, calc)
             
             else:
                 logging.info(
                     "Found previous file for {}, verifying it...".format(old_file_name))
                 if success:
                     logging.info("Old output file verified, reading it in...")
-                    ase_object = read_gaussian_out(old_file_name)
-                    autotst_object = update_from_ase(autotst_object, ase_object)
+                    conformer.ase_molecule = read_gaussian_out(old_file_name)
+                    conformer.update_coords()
                     os.chdir(current_path)
-                    return autotst_object, True
+                    return conformer, True
                 else:
                     logging.info(
                         "Something went wrong... File is neither complete nor successful...")
 
-                    return autotst_object, False           
+                    return conformer, False           
         # Seeing if the file exists
         else:
             # File doesn't exist, running calculations
             logging.info(
                 "Starting calculation for {}...".format(new_file_name))
             try:
-                calc.calculate(ase_object)
-                ase_object = read_gaussian_out(old_file_name)
-                autotst_object = update_from_ase(autotst_object, ase_object)
+                calc.calculate(conformer.ase_molecule)
+                conformer.ase_molecule = read_gaussian_out(old_file_name)
+                conformer.update_coords()
                 os.chdir(current_path)
-                return autotst_object, True
+                return conformer, True
             except:  # TODO: add error for seg fault
                 # first calc failed, trying it once more
                 logging.info(
                     "Failed first attempt for {}. Trying it once more...".format(new_file_name))
                 try:
-                    calc.calculate(ase_object)
-                    ase_object = read_gaussian_out(old_file_name)
-                    autotst_object = update_from_ase(
-                        autotst_object, ase_object)
+                    calc.calculate(conformer.ase_molecule)
+                    conformer.ase_molecule = read_gaussian_out(old_file_name)
+                    conformer.update_coords()
                     os.chdir(current_path)
-                    return autotst_object, True
+                    return conformer, True
                 except:  # TODO: add error for seg fault
                     logging.info(
                         "{} failed first and second attempt...".format(new_file_name))
                     os.chdir(current_path)
-                    return autotst_object, False
-
-
+                    return conformer, False
 
 
     def verify_output_file(self, path):
@@ -508,34 +522,24 @@ class AutoTST_Gaussian(AutoTST_Calculator):
 
         return verified
 
-    def run_rotors(self, calculators, autotst_object):
+    def calculate_rotor(self, conformer, calculator):
+        """
+        A method to run hindered rotor calculations
+        """
 
-        assert len(calculators) == len(
-            autotst_object.torsions), "Incorrectly matched calculators to molecule..."
+        try:
+            calc.calculate(conformer.ase_molecule)
+        except:
+            pass
 
-        if isinstance(autotst_object, AutoTST_Molecule):
-            ase_object = autotst_object.ase_molecule
-        elif isinstance(autotst_object, AutoTST_Reaction):
-            ase_object = autotst_object.ts.ase_ts
-        elif isinstance(autotst_object, AutoTST_TS):
-            ase_object = autotst_object.ase_ts
+        path = os.path.join(calc.scratch, calc.label + ".log")
 
-        for torsion in autotst_object.torsions:
-            i, j, k, l = torsion.indices
-            calc = calculators[(j, k)]
-            try:
-                calc.calculate(ase_object)
-            except:
-                pass
-
-            path = os.path.join(calc.scratch, calc.label + ".log")
-
-            if not (self.verify_rotor(path) and self.verify_output_file(path)):
-                logging.info(
-                    "Could not verify the rotor, this file will not be included in calculations.")
-                logging.info("File {} renamed as {}...".format(
-                    path, path.replace(".log", "-failed.log")))
-                os.rename(path, path.replace(".log", "-failed.log"))
+        if not (self.verify_rotor(path) and self.verify_output_file(path)):
+            logging.info(
+                "Could not verify the rotor, this file will not be included in calculations.")
+            logging.info("File {} renamed as {}...".format(
+                path, path.replace(".log", "-failed.log")))
+            os.rename(path, path.replace(".log", "-failed.log"))
 
     def verify_rotor(self, path):
         "This could be extrapolated to the general calculators class...?"
@@ -560,42 +564,76 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         else:
             return False
 
-    def run_reactants_and_products(self):
+    def calculate_species(self, reaction=None, reactant_calcs=None, product_calcs=None):
         "A method to run the calculations for all reactants and products"
 
-        bools = []
-        for mol, calc in self.reactant_calcs.iteritems():
-            mol, b = self.calculate(mol, calc)
-            self.fix_io_file(calc)
-            bools.append(b)
+        if reaction is None:
+            reaction = self.reaction 
+        if reactant_calcs is None:
+            reactant_calcs = self.reactant_calcs
+        if product_calcs is None:
+            product_calcs = self.reactant_calcs
 
-        for mol, calc in self.product_calcs.iteritems():
-            mol, b = self.calculate(mol, calc)
-            self.fix_io_file(calc)
-            bools.append(b)
+        bools = []
+        for mol in reaction.reactants:
+            for smiles, confs in mol.conformers.iteritems():
+                calc = reactant_calcs[mol][smiles]
+
+                origin_label = calc.label[:]
+
+                for i, conf in enumerate(confs):
+                    calc.label = origin_label + "_{}".format(i)
+                    conf, b = self.calculate(conf, calc)
+                    self.fix_io_file(calc)
+                    bools.append(b)
+
+        for mol in reaction.products:
+            for smiles, confs in mol.conformers.iteritems():
+                calc = product_calcs[mol][smiles]
+
+                origin_label = calc.label[:]
+
+                for i, conf in enumerate(confs):
+                    calc.label = origin_label + "_{}".format(i)
+                    conf, b = self.calculate(conf, calc)
+                    self.fix_io_file(calc)
+                    bools.append(b)
 
         return np.array(bools).all()
 
-    def run_shell(self):
+    def run_shell(self, conformer=None, shell_calc=None):
         "A method to run the shell optimization with the reaction center frozen"
+
+        if conformer is None:
+            conformer = self.reaction.ts["forward"][0]
+        if shell_calc is None:
+            shell_calc = self.shell_calc
         logging.info("Running shell optimization with center frozen...")
-        self.reaction, bool = self.calculate(self.reaction, self.shell_calc)
+        conformer, bool = self.calculate(conformer, shell_calc)
         logging.info("Shell optimization complete!")
-        return bool
+        return conformer, bool
 
-    def run_center(self):
+    def run_center(self, conformer=None, center_calc=None):
         "A method to run the reaction center optimization with the shell frozen"
+        if conformer is None:
+            conformer = self.reaction.ts["forward"][0]
+        if center_calc is None:
+            center_calc = self.center_calc
         logging.info("Running center optimization with shell frozen...")
-        self.reaction, bool = self.calculate(self.reaction, self.center_calc)
+        conformer, bool = self.calculate(conformer, center_calc)
         logging.info("Center optimization complete!")
-        return bool
+        return conformer, bool
 
-    def run_overall(self):
+    def run_overall(self, conformer=None, overall_calc=None):
         "A method to run the optimization of the entire TS"
+        if conformer is None:
+            conformer = self.reaction.ts["forward"][0]
+        if overall_calc is None:
+            overall_calc = self.overall_calc
         logging.info("Running overall optimization...")
-        self.reaction, bool = self.calculate(self.reaction, self.overall_calc)
+        conformer, bool = self.calculate(conformer, overall_calc)
         logging.info("Overall optimization complete!")
-        return bool
+        return conformer, bool
 
     def run_irc(self):
         "A method to run the IRC calculation"
@@ -736,7 +774,7 @@ class AutoTST_Gaussian(AutoTST_Calculator):
         converged on a verified TS.
         """
         result = False
-        r_and_p = self.run_reactants_and_products()
+        r_and_p = self.calculate_species()
         if not r_and_p:
             return result
         shell = self.run_shell()

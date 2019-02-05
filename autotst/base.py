@@ -55,8 +55,6 @@ from rmgpy.species import Species, TransitionState
 from rmgpy.reaction import Reaction
 from rmgpy.kinetics import Arrhenius, Eckart
 from rmgpy.statmech import Conformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
-from rmgpy.cantherm.main import CanTherm
-from rmgpy.cantherm.kinetics import KineticsJob
 
 ################################################################################
 

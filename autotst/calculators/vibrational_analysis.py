@@ -32,7 +32,7 @@ import logging
 import pandas as pd
 import numpy as np
 
-from autotst.reaction import AutoTST_Reaction
+from autotst.reaction import Reaction
 from cclib.io import ccread
 
 
@@ -42,7 +42,7 @@ def percent_change(original, new):
     return percent_change
 
 
-class Vibrational_Analysis():
+class VibrationalAnalysis():
     """
     A class that allows one to perform vibrational analysis. It takes an
     AutoTST_Reaction and uses it to parse out the finalized geometry from a

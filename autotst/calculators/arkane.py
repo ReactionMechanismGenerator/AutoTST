@@ -2,40 +2,40 @@ import os
 
 from rdkit import Chem
 
-from rmgpy.cantherm import CanTherm, KineticsJob, StatMechJob
+from arkane import Arkane as RMGArkane, KineticsJob, StatMechJob
 
-from autotst.reaction import AutoTST_Reaction, AutoTST_TS
-from autotst.molecule import AutoTST_Molecule
-from autotst.calculators.calculator import AutoTST_Calculator
+from autotst.reaction import Reaction, TS
+from autotst.molecule import Molecule
+from autotst.calculators.calculator import Calculator
 
 
-class AutoTST_CanTherm(AutoTST_Calculator):
+class Arkane(Calculator):
 
     def __init__(self, reaction, scratch=".", output_directory=".", model_chemistry="M06-2X/cc-pVTZ", freq_scale_factor=0.982):
         """
-        A class to perform CanTherm calculations:
-        :param: reaction: (AutoTST_Reaction) The reaction of interest
+        A class to perform Arkane calculations:
+        :param: reaction: (Reaction) The reaction of interest
         :param: output_directory: (str) The directory where you would like output files written to
-        :param: model_chemistry: (str) The supported model_chemistry described by http://reactionmechanismgenerator.github.io/RMG-Py/users/cantherm/input.html#model-chemistry
+        :param: model_chemistry: (str) The supported model_chemistry described by http://reactionmechanismgenerator.github.io/RMG-Py/users/arkane/input.html#model-chemistry
         :param: freq_scale_factor: (float) The scaling factor corresponding to the model chemistry - source:https://comp.chem.umn.edu/freqscale/version3b1.htm
         """
 
         self.reaction = reaction
         self.scratch = scratch
 
-        self.cantherm_job = CanTherm()
+        self.arkane_job = RMGArkane()
         self.output_directory = output_directory
-        self.cantherm_job.outputDirectory = self.output_directory
+        self.arkane_job.outputDirectory = self.output_directory
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
 
     def get_atoms(self, mol):
         atom_dict = {}
-        if isinstance(mol, AutoTST_Molecule):
+        if isinstance(mol, Molecule):
             rmg_mol = mol.rmg_molecule
-        elif isinstance(mol, AutoTST_Reaction):
+        elif isinstance(mol, Reaction):
             rmg_mol = mol.ts.rmg_ts
-        elif isinstance(mol, AutoTST_TS):
+        elif isinstance(mol, TS):
             rmg_mol = mol.rmg_ts
         for atom in rmg_mol.atoms:
             if atom.isCarbon():
@@ -54,11 +54,11 @@ class AutoTST_CanTherm(AutoTST_Calculator):
 
     def get_bonds(self, mol):
         bondList = []
-        if isinstance(mol, AutoTST_Molecule):
+        if isinstance(mol, Molecule):
             rmg_mol = mol.rmg_molecule
-        elif isinstance(mol, AutoTST_Reaction):
+        elif isinstance(mol, Reaction):
             rmg_mol = mol.ts.rmg_ts
-        elif isinstance(mol, AutoTST_TS):
+        elif isinstance(mol, TS):
             rmg_mol = mol.rmg_ts
         for atom in rmg_mol.atoms:
             for bond in atom.bonds.values():
@@ -120,7 +120,7 @@ class AutoTST_CanTherm(AutoTST_Calculator):
 
         return bondDict
 
-    def write_cantherm_for_reacts_and_prods(self, mol):
+    def write_arkane_for_reacts_and_prods(self, mol):
 
         output = ['#!/usr/bin/env python',
                   '# -*- coding: utf-8 -*-', '', 'atoms = {']
@@ -210,7 +210,7 @@ class AutoTST_CanTherm(AutoTST_Calculator):
         with open(os.path.join(self.scratch, rxn.label + ".py"), "w") as f:
             f.write(input_string)
 
-    def write_cantherm_ts(self, rxn):
+    def write_arkane_ts(self, rxn):
         top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(
             self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
 
@@ -267,26 +267,26 @@ class AutoTST_CanTherm(AutoTST_Calculator):
 
     def write_files(self):
         for mol in self.reaction.reactant_mols:
-            self.write_cantherm_for_reacts_and_prods(mol)
+            self.write_arkane_for_reacts_and_prods(mol)
 
         for mol in self.reaction.product_mols:
-            self.write_cantherm_for_reacts_and_prods(mol)
+            self.write_arkane_for_reacts_and_prods(mol)
 
         self.write_statmech_ts(self.reaction)
 
-        self.write_cantherm_ts(self.reaction)
+        self.write_arkane_ts(self.reaction)
 
     def run(self):
 
-        self.cantherm_job.inputFile = os.path.join(
+        self.arkane_job.inputFile = os.path.join(
             self.scratch, self.reaction.label + ".canth.py")
-        self.cantherm_job.plot = False
+        self.arkane_job.plot = False
         try:
-            self.cantherm_job.execute()
+            self.arkane_job.execute()
         except IOError:
             print "There was an issue with Cairo..."
 
-        for job in self.cantherm_job.jobList:
+        for job in self.arkane_job.jobList:
             if isinstance(job, KineticsJob):
                 self.kinetics_job = job
 
