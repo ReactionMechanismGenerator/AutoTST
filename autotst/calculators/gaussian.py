@@ -39,7 +39,7 @@ from rmgpy.reaction import Reaction
 
 import autotst
 from autotst.reaction import Reaction, TS
-from autotst.species import Species
+from autotst.species import Species, Conformer
 from autotst.calculators.vibrational_analysis import VibrationalAnalysis
 from autotst.calculators.calculator import Calculator
 
@@ -127,7 +127,7 @@ class Gaussian(Calculator):
         
         string = ""
         for bond in conformer.bonds:
-            i, j = bond.indices
+            i, j = bond.atom_indices
             string += "B {} {}\n".format(i+1, j+1)
 
         i, j, k, l = torsion.atom_indices
@@ -135,25 +135,15 @@ class Gaussian(Calculator):
         
         if isinstance(conformer, TS):
             label = self.label + "_tor_{}_{}".format(j,k)
-        elif isisntance(conformer, Conformer):
-            label = conformer.smiles + "_tor_{}_{}".format(j,k)
+        elif isinstance(conformer, Conformer):
+            label = Chem.rdinchi.InchiToInchiKey(
+                Chem.MolToInchi(Chem.MolFromSmiles(conformer.smiles))).strip("-N")
+            label += "_tor{}{}".format(j, k)
+
         
         label = conformer.smiles + "_tor_{}_{}".format(j,k)
         conformer.rmg_molecule.updateMultiplicity()
         mult = conformer.rmg_molecule.multiplicity
-
-        if isinstance(autotst_object, Reaction):
-            label = autotst_object.label + "_tor_{}_{}".format(j, k)
-            mult = autotst_object.ts.rmg_ts.multiplicity
-        elif isinstance(autotst_object, TS):
-            label = autotst_object.label + "_tor_{}_{}".format(j, k)
-            mult = autotst_object.rmg_ts.multiplicity
-        elif isinstance(autotst_object, Species):
-            smiles = autotst_object.rmg_molecule.toSMILES()
-            label = Chem.rdinchi.InchiToInchiKey(
-                Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
-            label += "_tor{}{}".format(j, k)
-            mult = autotst_object.rmg_molecule.multiplicity
 
         calc = ASEGaussian(mem=mem,
                         nprocshared=nprocshared,
