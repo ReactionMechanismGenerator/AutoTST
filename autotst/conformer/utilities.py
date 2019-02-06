@@ -49,7 +49,7 @@ from ase.optimize import BFGS
 
 import autotst
 from autotst.geometry import Bond, Angle, Torsion, CisTrans
-from autotst.molecule import Molecule
+from autotst.species import Species
 from autotst.reaction import Reaction, TS
 
 
@@ -57,7 +57,7 @@ def update_from_ase(autotst_obj):
     """
     A function designed to update all objects based off of their ase objects
     """
-    if isinstance(autotst_obj, autotst.molecule.Molecule):
+    if isinstance(autotst_obj, autotst.species.Species):
         autotst_obj.update_from_ase_mol()
 
     if isinstance(autotst_obj, autotst.reaction.Reaction):
@@ -89,8 +89,8 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
 
     possible_dihedrals = np.arange(0, 360, delta)
     population = []
-    if isinstance(autotst_object, autotst.molecule.Molecule):
-        logging.info("The object given is a `Molecule` object")
+    if isinstance(autotst_object, autotst.species.Species):
+        logging.info("The object given is a `Species` object")
 
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_molecule
@@ -226,7 +226,7 @@ def partial_optimize_mol(autotst_object):
     # CURRENTLY BROKEN
     """
     
-    if isinstance(autotst_object, autotst.molecule.Molecule):
+    if isinstance(autotst_object, autotst.species.Species):
         ase_object = autotst_object.ase_molecule
         labels = []
 

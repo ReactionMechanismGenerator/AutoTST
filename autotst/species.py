@@ -29,6 +29,7 @@
 
 import os
 import logging
+from cclib.io import ccread
 
 import rdkit
 from rdkit import Chem
@@ -53,17 +54,16 @@ import numpy as np
 
 from autotst.geometry import CisTrans, Torsion, Angle, Bond, ChiralCenter
 
-class Molecule():
+class Species():
     """
     A class for handling molecules in AutoTST
     """
     
-    def __init__(self, smiles=[], rmg_species=None, calculator=None):
+    def __init__(self, smiles=[], rmg_species=None):
         
         
         assert isinstance(smiles, list)
-        
-        self.calculator = calculator
+
         if ((len(smiles) != 0) and rmg_species):
             # Provide both a list of smiles and an rmg_species
             assert isinstance(rmg_species, (rmgpy.molecule.Molecule, rmgpy.species.Species))
@@ -139,7 +139,7 @@ class Molecule():
         for s in self.smiles:
             string += s +" / "
             
-        return '<Molecule "{}">'.format(string[:-3])
+        return '<Species "{}">'.format(string[:-3])
     
     
     def generate_structure(self, smiles=None, rmg_molecule=None):

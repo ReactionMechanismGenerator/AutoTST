@@ -31,9 +31,10 @@ import os
 import logging
 import pandas as pd
 import numpy as np
-
-from autotst.reaction import Reaction
 from cclib.io import ccread
+from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
+
 
 
 def percent_change(original, new):

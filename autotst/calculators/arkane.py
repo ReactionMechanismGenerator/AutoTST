@@ -1,11 +1,41 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+################################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+################################################################################
+
 import os
 
+
+import arkane
+from arkane import Arkane as RMGArkane, KineticsJob, StatMechJob
 from rdkit import Chem
 
-from arkane import Arkane as RMGArkane, KineticsJob, StatMechJob
-
 from autotst.reaction import Reaction, TS
-from autotst.molecule import Molecule
+from autotst.species import Species
 from autotst.calculators.calculator import Calculator
 
 
@@ -29,14 +59,12 @@ class Arkane(Calculator):
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
 
-    def get_atoms(self, mol):
+    def get_atoms(self, rmg_mol):
+        """
+        A method to create an atom dictionary for an rmg molecule
+        """
         atom_dict = {}
-        if isinstance(mol, Molecule):
-            rmg_mol = mol.rmg_molecule
-        elif isinstance(mol, Reaction):
-            rmg_mol = mol.ts.rmg_ts
-        elif isinstance(mol, TS):
-            rmg_mol = mol.rmg_ts
+
         for atom in rmg_mol.atoms:
             if atom.isCarbon():
                 atom_type = "C"
@@ -52,14 +80,8 @@ class Arkane(Calculator):
 
         return atom_dict
 
-    def get_bonds(self, mol):
+    def get_bonds(self, rmg_mol):
         bondList = []
-        if isinstance(mol, Molecule):
-            rmg_mol = mol.rmg_molecule
-        elif isinstance(mol, Reaction):
-            rmg_mol = mol.ts.rmg_ts
-        elif isinstance(mol, TS):
-            rmg_mol = mol.rmg_ts
         for atom in rmg_mol.atoms:
             for bond in atom.bonds.values():
                 bondList.append(bond)
@@ -121,6 +143,9 @@ class Arkane(Calculator):
         return bondDict
 
     def write_arkane_for_reacts_and_prods(self, mol):
+        """
+        a method to write species to an arkane input file. Mol is an RMGMolecule
+        """
 
         output = ['#!/usr/bin/env python',
                   '# -*- coding: utf-8 -*-', '', 'atoms = {']
@@ -141,20 +166,20 @@ class Arkane(Calculator):
             output.append('bonds = {}')
 
         label = Chem.rdinchi.InchiToInchiKey(
-            Chem.MolToInchi(Chem.MolFromSmiles(mol.smiles))).strip("-N")
+            Chem.MolToInchi(Chem.MolFromSmiles(mol.getSMILES()))).strip("-N")
 
-        external_symmetry = mol.rmg_molecule.getSymmetryNumber()
+        external_symmetry = mol.getSymmetryNumber()
 
         output += ["", "linear = False", "", "externalSymmetry = {}".format(external_symmetry), "",
-                   "spinMultiplicity = {}".format(mol.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
+                   "spinMultiplicity = {}".format(mol.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {", "    '{0}': GaussianLog('{1}.log'),".format(
+        output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
             self.model_chemistry, label), "}", ""]
 
-        output += ["geometry = GaussianLog('{0}.log')".format(label), ""]
+        output += ["geometry = Log('{0}.log')".format(label), ""]
 
         output += [
-            "frequencies = GaussianLog('{0}.log')".format(label), ""]
+            "frequencies = Log('{0}.log')".format(label), ""]
 
         output += ["rotors = []"]
 
@@ -187,18 +212,18 @@ class Arkane(Calculator):
         else:
             output.append('bonds = {}')
 
-        external_symmetry = rxn.ts.rmg_ts.getSymmetryNumber()
+        external_symmetry = ts.getSymmetryNumber()
 
         output += ["", "linear = False", "", "externalSymmetry = {}".format(external_symmetry), "",
                    "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {", "    '{0}': GaussianLog('{1}.log'),".format(
+        output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
             self.model_chemistry, rxn.label), "}", ""]
 
-        output += ["geometry = GaussianLog('{0}.log')".format(rxn.label), ""]
+        output += ["geometry = Log('{0}.log')".format(rxn.label), ""]
 
         output += [
-            "frequencies = GaussianLog('{0}.log')".format(rxn.label), ""]
+            "frequencies = Log('{0}.log')".format(rxn.label), ""]
 
         output += ["rotors = []", ""]
 
@@ -267,6 +292,10 @@ class Arkane(Calculator):
 
     def write_files(self):
         for mol in self.reaction.reactant_mols:
+
+            if len(mol.conformers) < 1:
+                logging.info("This molecule object has too")
+            rmg_mol = None
             self.write_arkane_for_reacts_and_prods(mol)
 
         for mol in self.reaction.product_mols:

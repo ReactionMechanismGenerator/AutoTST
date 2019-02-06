@@ -31,14 +31,15 @@ import os
 import itertools
 import logging
 import numpy as np
+from cclib.io import ccread
 
 import rmgpy
-from rmgpy.molecule import Molecule
+from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.reaction import Reaction
 
 import autotst
 from autotst.reaction import Reaction, TS
-from autotst.molecule import Molecule
+from autotst.species import Species
 from autotst.calculators.vibrational_analysis import VibrationalAnalysis
 from autotst.calculators.calculator import Calculator
 
@@ -147,7 +148,7 @@ class Gaussian(Calculator):
         elif isinstance(autotst_object, TS):
             label = autotst_object.label + "_tor_{}_{}".format(j, k)
             mult = autotst_object.rmg_ts.multiplicity
-        elif isinstance(autotst_object, Molecule):
+        elif isinstance(autotst_object, Species):
             smiles = autotst_object.rmg_molecule.toSMILES()
             label = Chem.rdinchi.InchiToInchiKey(
                 Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
@@ -730,9 +731,9 @@ class Gaussian(Calculator):
             # Convert the IRC geometries into RMG molecules
             # We don't know which is reactant or product, so take the two at the end of the
             # paths and compare to the reactants and products
-            mol1 = Molecule()
+            mol1 = RMGMolecule()
             mol1.fromXYZ(atomnos, atomcoords[pth1End])
-            mol2 = Molecule()
+            mol2 = RMGMolecule()
             mol2.fromXYZ(atomnos, atomcoords[-1])
 
             testReaction = Reaction(

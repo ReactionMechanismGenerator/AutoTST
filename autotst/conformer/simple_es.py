@@ -41,8 +41,8 @@ import pandas as pd
 
 import autotst
 from autotst.geometry import Bond, Angle, Torsion, CisTrans
-from autotst.molecule import AutoTST_Molecule
-from autotst.reaction import AutoTST_Reaction, AutoTST_TS
+from autotst.species import Species
+from autotst.reaction import Reaction, TS
 from autotst.conformer.utilities import update_from_ase, create_initial_population, \
     select_top_population, get_unique_conformers, get_energy, find_terminal_torsions, \
     partial_optimize_mol
@@ -87,20 +87,20 @@ def perform_simple_es(autotst_object,
 
     results = initial_pop
 
-    if isinstance(autotst_object, autotst.molecule.AutoTST_Molecule):
-        logging.info("The object given is a `AutoTST_Molecule` object")
+    if isinstance(autotst_object, autotst.species.Species):
+        logging.info("The object given is a `Molecule` object")
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_molecule
         label = autotst_object.smiles
 
-    if isinstance(autotst_object, autotst.reaction.AutoTST_Reaction):
-        logging.info("The object given is a `AutoTST_Reaction` object")
+    if isinstance(autotst_object, autotst.reaction.Reaction):
+        logging.info("The object given is a `Reaction` object")
         torsions = autotst_object.ts.torsions
         ase_object = autotst_object.ts.ase_ts
         label = autotst_object.label
 
-    if isinstance(autotst_object, autotst.reaction.AutoTST_TS):
-        logging.info("The object given is a `AutoTST_TS` object")
+    if isinstance(autotst_object, autotst.reaction.TS):
+        logging.info("The object given is a `TS` object")
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_ts
         label = autotst_object.label

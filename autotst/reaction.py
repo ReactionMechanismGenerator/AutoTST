@@ -31,6 +31,7 @@ import os
 import logging
 
 import numpy as np
+from cclib.io import ccread
 
 import rdkit
 import rdkit.Chem.rdDistGeom
@@ -51,7 +52,7 @@ from rmgpy.data.rmg import RMGDatabase
 
 import autotst
 from autotst.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
-from autotst.molecule import Molecule, Conformer
+from autotst.species import Species, Conformer
 from autotst.geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
@@ -268,12 +269,12 @@ class Reaction():
         reactants = []
         products = []
         for react in rmg_reaction.reactants:
-            mol =  Molecule(rmg_species=react)
+            mol =  Species(rmg_species=react)
             mol.generate_structures()
             reactants.append(mol)
             
         for prod in rmg_reaction.products:
-            mol =  Molecule(rmg_species=prod)
+            mol =  Species(rmg_species=prod)
             mol.generate_structures()
             products.append(mol)
         
