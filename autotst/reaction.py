@@ -78,7 +78,7 @@ class Reaction():
             "intra_H_migration"
         ]
     
-    def __init__(self, label=None, rmg_reaction=None, reaction_family="H_Abstraction"):
+    def __init__(self, label=None, rmg_reaction=None, reaction_family="H_Abstraction", calculator=None):
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
             "Disproportionation",
             "H_Abstraction",
@@ -86,6 +86,7 @@ class Reaction():
         ]
         
         self.load_databases()
+        self.calculator = calculator
 
         if rmg_reaction:
             self.rmg_reaction, self.reaction_family = self.get_labeled_reaction(rmg_reaction=rmg_reaction)
