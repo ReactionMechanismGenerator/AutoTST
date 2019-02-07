@@ -161,6 +161,7 @@ class Reaction():
             ts_dict = {}
             for direction, mol in self.get_complexes().iteritems():
                 ts = TS(
+                    reaction_label = self.label,
                     rmg_molecule=mol,
                     reaction_family=self.reaction_family,
                     distance_data=self.distance_data
@@ -444,14 +445,16 @@ class TS(Conformer):
     A class that defines the 3D geometry of a transition state (TS)
     """
     
-    def __init__(self, smiles=None, rmg_molecule=None, reaction_family="H_Abstraction", distance_data=None):
+    def __init__(self, smiles=None, reaction_label=None, rmg_molecule=None, reaction_family="H_Abstraction", distance_data=None):
         
         #####################################################
         #####################################################
+        assert reaction_label, "A reaction label needs to be provided in addition to a smiles or rmg_molecule"
         self._rdkit_molecule = None
         self._ase_molecule=None
         self.reaction_family=reaction_family
         self.distance_data=distance_data
+
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
                 assert rmg_molecule.isIsomorphic(
