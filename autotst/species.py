@@ -282,13 +282,17 @@ class Conformer():
         return p.show()
     
     
-    def get_bonds(self, rdkit_molecule=None):
+    def get_bonds(self, rdkit_molecule=None, ase_molecule=None, rmg_molecule=None):
         """
         A method for identifying all of the bonds in a conformer
         """
 
         if not rdkit_molecule:
             rdkit_molecule = self.rdkit_molecule
+        if not ase_molecule:
+            ase_molecule = self.ase_molecule
+        if not rmg_molecule:
+            rmg_molecule = self.rmg_molecule
         rdmol_copy = rdkit_molecule
 
         bond_list = []
@@ -299,12 +303,16 @@ class Conformer():
         for index, indices in enumerate(bond_list):
             i, j = indices
 
-            length = self.ase_molecule.get_distance(i, j)
-
+            length = ase_molecule.get_distance(i, j)
+            center = False
+            if ((rmg_molecule.atoms[i].label) and (rmg_molecule.atoms[j].label)):
+                    center = True
+                
+            
             bond = Bond(index=index,
                         atom_indices=indices, 
                         length=length,
-                        reaction_center=False)
+                        reaction_center=center)
 
             bonds.append(bond)
             

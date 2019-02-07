@@ -450,8 +450,9 @@ class TS(Conformer):
         #####################################################
         #####################################################
         assert reaction_label, "A reaction label needs to be provided in addition to a smiles or rmg_molecule"
+        self.reaction_label = reaction_label
         self._rdkit_molecule = None
-        self._ase_molecule=None
+        self._ase_molecule = None
         self.reaction_family=reaction_family
         self.distance_data=distance_data
 
@@ -758,7 +759,9 @@ class TS(Conformer):
 
         return rdmol, minEid
 
-
+    def get_bonds(self):
+        return Conformer().get_bonds(self._pseudo_geometry, self.ase_molecule, self.rmg_molecule)
+        
     def get_torsions(self):
         return Conformer().get_torsions(self._pseudo_geometry, self.ase_molecule)
 
