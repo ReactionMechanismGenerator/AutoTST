@@ -30,12 +30,12 @@
 import os
 import logging
 
-import numpy as np
+import rdkit
+from rdkit import DistanceGeometry
+from rdkit.Chem import rdDistGeom
+
 from cclib.io import ccread
 
-import rdkit
-import rdkit.Chem.rdDistGeom
-import rdkit.DistanceGeometry
 from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem.Pharm3D import EmbedLib
@@ -546,7 +546,7 @@ class TS(Conformer):
                 bm = self.edit_matrix(rmg_molecule, bm, labels, distance_data)
 
             logging.info("Performing triangle smoothing on bounds matrix.")
-            rdkit.DistanceGeometry.DoTriangleSmoothing(bm)
+            DistanceGeometry.DoTriangleSmoothing(bm)
 
             logging.info("Now attempting to embed using edited bounds matrix.")
 
@@ -572,8 +572,10 @@ class TS(Conformer):
                 rdkit_molecule = self.get_rdkit_mol(rmg_molecule=rmg_molecule)
             except:
                 return None
+
+        bm = rdDistGeom.GetMoleculeBoundsMatrix(rdkit_molecule)
             
-        return rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(rdkit_molecule)
+        return bm
     
     def set_limits(self, bm, lbl1, lbl2, value, uncertainty):
         """
