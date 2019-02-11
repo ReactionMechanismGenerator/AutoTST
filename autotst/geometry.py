@@ -39,13 +39,14 @@ class Bond:
         i.e. atoms i and j are labeled (*1, *2, *3)
     """
 
-    def __init__(self, indices, length, reaction_center="No"):
-        self.indices = indices
+    def __init__(self, index, atom_indices, length, reaction_center=False):
+        self.index = index
+        self.atom_indices = atom_indices
         self.length = length
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Bond "{0}">'.format(self.indices)
+        return '<Bond "{}">'.format(self.atom_indices)
 
 
 class Angle:
@@ -61,15 +62,15 @@ class Angle:
         i.e. atoms i, j and, k are labeled (*1, *2, *3)
     """
 
-    def __init__(self, indices, degree, left_mask, right_mask, reaction_center="No"):
-        self.indices = indices
+    def __init__(self, index, atom_indices, degree, mask, reaction_center=False):
+        self.index = index
+        self.atom_indices = atom_indices
         self.degree = degree
-        self.left_mask = left_mask
-        self.right_mask = right_mask
+        self.mask = mask
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Angle "{0}">'.format(self.indices)
+        return '<Angle "{0}">'.format(self.atom_indices)
 
 
 class Torsion:
@@ -84,15 +85,15 @@ class Torsion:
         i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
     """
 
-    def __init__(self, indices, dihedral, left_mask, right_mask, reaction_center="No"):
-        self.indices = indices
+    def __init__(self, index, atom_indices, dihedral, mask, reaction_center=False):
+        self.index = index
+        self.atom_indices = atom_indices
         self.dihedral = dihedral
-        self.left_mask = left_mask
-        self.right_mask = right_mask
+        self.mask = mask
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST Torsion "{0}">'.format(self.indices)
+        return '<Torsion "{0}">'.format(self.atom_indices)
 
 
 class CisTrans():
@@ -107,12 +108,23 @@ class CisTrans():
         i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
     """
 
-    def __init__(self, indices, dihedral, left_mask, right_mask, reaction_center="No"):
-        self.indices = indices
+    def __init__(self, index, atom_indices, dihedral, mask, stero=None, reaction_center=False):
+        self.index = index
+        self.atom_indices = atom_indices
         self.dihedral = dihedral
-        self.left_mask = left_mask
-        self.right_mask = right_mask
+        self.mask = mask
+        self.stero = stero
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<AutoTST CisTrans "{0}">'.format(self.indices)
+        return '<CisTrans "{0} - {1}">'.format(self.atom_indices, self.stero)
+
+class ChiralCenter():
+
+    def __init__(self, index, atom_index, chirality):
+        self.index = index
+        self.atom_indices = atom_index
+        self.chirality = chirality
+
+    def __repr__(self):
+        return '<ChiralCenter "{0} - {1}">'.format(self.atom_index, self.chirality)

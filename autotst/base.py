@@ -39,24 +39,18 @@ import codecs
 import numpy
 from copy import deepcopy
 from numpy import array
-from cclib.io import ccread
-from ase.io.gaussian import read_gaussian_out
 from rmgpy.data.base import Database, Entry, makeLogicNode, LogicNode, DatabaseError
 
 from rmgpy.quantity import Quantity, constants
 from rmgpy.reaction import Reaction, ReactionError
-from rmgpy.molecule import Bond, GroupBond, Group, Molecule
-from rmgpy.species import Species
+from rmgpy.molecule import Bond, GroupBond, Group, Molecule as RMGMolecule, Atom, getElement
 
 from rmgpy.data.kinetics.common import KineticsError, saveEntry
 
-from rmgpy.molecule import Molecule, Atom, getElement
-from rmgpy.species import Species, TransitionState
+from rmgpy.species import Species as RMGSpecies, TransitionState
 from rmgpy.reaction import Reaction
 from rmgpy.kinetics import Arrhenius, Eckart
 from rmgpy.statmech import Conformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
-from rmgpy.cantherm.main import CanTherm
-from rmgpy.cantherm.kinetics import KineticsJob
 
 ################################################################################
 
@@ -345,23 +339,23 @@ class TransitionStates(Database):
             template = [groups.entries[label]
                         for label in entry.label.split(';')]
 
-        elif (all([isinstance(reactant, (Molecule, Species)) for reactant in entry.item.reactants]) and
-              all([isinstance(product, (Molecule, Species)) for product in entry.item.products])):
+        elif (all([isinstance(reactant, (RMGMolecule, RMGSpecies)) for reactant in entry.item.reactants]) and
+              all([isinstance(product, (RMGMolecule, RMGSpecies)) for product in entry.item.products])):
             # The entry is a real reaction, containing molecules
             # These could be defined for either the forward or reverse direction
             # and could have a reaction-path degeneracy
 
             reaction = Reaction(reactants=[], products=[])
             for molecule in entry.item.reactants:
-                if isinstance(molecule, Molecule):
-                    reactant = Species(molecule=[molecule])
+                if isinstance(molecule, RMGMolecule):
+                    reactant = RMGSpecies(molecule=[molecule])
                 else:
                     reactant = molecule
                 reactant.generateResonanceIsomers()
                 reaction.reactants.append(reactant)
             for molecule in entry.item.products:
-                if isinstance(molecule, Molecule):
-                    product = Species(molecule=[molecule])
+                if isinstance(molecule, RMGMolecule):
+                    product = RMGSpecies(molecule=[molecule])
                 else:
                     product = molecule
                 product.generateResonanceIsomers()
@@ -422,13 +416,13 @@ def filterReactions(reactants, products, reactionList):
     # Convert from molecules to species and generate resonance isomers.
     reactant_species = []
     for mol in reactants:
-        s = Species(molecule=mol)
+        s = RMGSpecies(molecule=mol)
         s.generateResonanceIsomers()
         reactant_species.append(s)
     reactants = reactant_species
     product_species = []
     for mol in products:
-        s = Species(molecule=mol)
+        s = RMGSpecies(molecule=mol)
         s.generateResonanceIsomers()
         product_species.append(s)
     products = product_species
@@ -513,14 +507,14 @@ class TransitionStateDepository(Database):
                 reactant = reactant.strip()
                 if reactant not in speciesDict:
                     raise DatabaseError(
-                        'Species {0} in kinetics depository {1} is missing from its dictionary.'.format(reactant, self.label))
+                        'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(reactant, self.label))
                 # For some reason we need molecule objects in the depository rather than species objects
                 rxn.reactants.append(speciesDict[reactant])
             for product in products.split('+'):
                 product = product.strip()
                 if product not in speciesDict:
                     raise DatabaseError(
-                        'Species {0} in kinetics depository {1} is missing from its dictionary.'.format(product, self.label))
+                        'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(product, self.label))
                 # For some reason we need molecule objects in the depository rather than species objects
                 rxn.products.append(speciesDict[product])
 
@@ -654,7 +648,7 @@ class TSGroups(Database):
             atomList = group.getLabeledAtoms()
 
             for reactant in reaction.reactants:
-                if isinstance(reactant, Species):
+                if isinstance(reactant, RMGSpecies):
                     reactant = reactant.molecule[0]
                 # Match labeled atoms
                 # Check this reactant has each of the atom labels in this group
@@ -693,7 +687,7 @@ class TSGroups(Database):
             raise KineticsError(reaction)
 
         for reactant in reaction.reactants:
-            if isinstance(reactant, Species):
+            if isinstance(reactant, RMGSpecies):
                 reactant = reactant.molecule[0]
             # reactant.clearLabeledAtoms()
 

@@ -33,16 +33,17 @@ import logging
 import numpy
 
 import autotst
-from autotst.reaction import AutoTST_Reaction, AutoTST_TS
-from autotst.molecule import AutoTST_Molecule
-from autotst.calculators.vibrational_analysis import Vibrational_Analysis
+from autotst.reaction import Reaction, TS
+from autotst.species import Species
+from autotst.calculators.vibrational_analysis import VibrationalAnalysis
 from autotst.base import QMData
 import rmgpy
-from rmgpy.molecule import Molecule, Atom, getElement
-from rmgpy.species import Species, TransitionState
-from rmgpy.reaction import Reaction
+from rmgpy.molecule import Molecule as RMGMolecule
+from rmgpy.molecule import Atom, getElement
+from rmgpy.species import Species as RMGSpecies, TransitionState
+from rmgpy.reaction import Reaction as RMGReaction
 from rmgpy.kinetics import Arrhenius, Eckart
-from rmgpy.statmech import Conformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
+from rmgpy.statmech import Conformer as RMGConformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
 
 
 def get_possible_names(reactants, products):
@@ -57,20 +58,24 @@ def get_possible_names(reactants, products):
     return fileNames
 
 
-class AutoTST_Calculator():
+class Calculator():
     """
     A base class for all autotst calculators. 
     This class is designed to deal with the 
     input and output of `.ts` and `.kinetics` files.
     """
 
-    def __init__(self, autotst_reaction=None, save_directory="."):
-        self.autotst_reaction = autotst_reaction
-        if autotst_reaction:
-            self.label = autotst_reaction.label
+    def __init__(self, reaction=None, save_directory="."):
+        self.reaction = reaction
+        if reaction:
+            self.label = reaction.label
         else:
             self.label = None
         self.save_directory = save_directory
+
+    def copy(self):
+        from copy import deepcopy
+        return deepcopy(self)
 
     def get_qm_data(self, file_path):
 
@@ -109,13 +114,13 @@ class AutoTST_Calculator():
                 resultFile.write('method = "{0!s}"\n'.format(method))
 
                 resultFile.write('reaction = {0!r}\n'.format(reaction))
-            elif isinstance(reaction, autotst.reaction.AutoTST_Reaction):
+            elif isinstance(reaction, autotst.reaction.Reaction):
                 assert reaction.rmg_reaction.kinetics, "No kinetics calclated for this reaction..."
                 resultFile.write('method = "{0!s}"\n'.format(method))
                 resultFile.write(
                     'reaction = {0!r}\n'.format(reaction.rmg_reaction))
 
-    def read_ts_file(self):
+    def read_ts_file(self, reaction):
         """
         Load the specified transition state data file and return the dictionary of its contents.
 
@@ -124,7 +129,7 @@ class AutoTST_Calculator():
         Checks that the returned dictionary contains at least rxnLabel, method, qmData.
         """
 
-        r, p = self.label.split("_")
+        r, p = reaction.label.split("_")
         reacts = r.split("+")
         prods = p.split("+")
 
@@ -173,7 +178,7 @@ class AutoTST_Calculator():
             return None
         return local_context
 
-    def read_kinetics_file(self):
+    def read_kinetics_file(self, reaction):
         """
         Load the specified kinetic data file and return the dictionary of its contents.
 
@@ -181,7 +186,7 @@ class AutoTST_Calculator():
 
         Checks that the returned dictionary contains at least method, Reaction.
         """
-        r, p = self.label.split("_")
+        r, p = reaction.label.split("_")
         reacts = r.split("+")
         prods = p.split("+")
 
@@ -205,19 +210,19 @@ class AutoTST_Calculator():
                     '__builtins__': None,
                     'True': True,
                     'False': False,
-                    'Reaction': Reaction,
-                    'Species': Species,
+                    'Reaction': RMGReaction,
+                    'Species': RMGSpecies,
                     'TransitionState': TransitionState,
                     'Arrhenius': Arrhenius,
                     'Eckart': Eckart,
-                    'Conformer': Conformer,
+                    'Conformer': RMGConformer,
                     'IdealGasTranslation': IdealGasTranslation,
                     'NonlinearRotor': NonlinearRotor,
                     'HarmonicOscillator': HarmonicOscillator,
                     'LinearRotor': LinearRotor,
                     'array': numpy.array,
                     'int32': numpy.int32,
-                    'Molecule': Molecule
+                    'Molecule': RMGMolecule
                 }
                 exec resultFile in global_context, local_context
         except IOError, e:

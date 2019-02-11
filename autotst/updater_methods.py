@@ -13,10 +13,11 @@ import matplotlib
 matplotlib.rc('mathtext', fontset='stixsans', default='regular')
 import re
 import rmgpy
-from rmgpy.quantity import constants
-from rmgpy.kinetics import Arrhenius, ArrheniusEP, KineticsData
 from autotst.database import *
-from rmgpy.species import Species
+from rmgpy.quantity import constants
+from rmgpy.molecule import Molecule as RMGMolecule
+from rmgpy.kinetics import Arrhenius, ArrheniusEP, KineticsData
+from rmgpy.species import Species as RMGSpecies
 from rmgpy.data.rmg import RMGDatabase
 
 from collections import defaultdict, OrderedDict
@@ -67,7 +68,7 @@ def update_dictionary_entries(old_entries, need_to_add):
     list(set(need_to_add))
     for j, species in enumerate(need_to_add):
 
-        molecule = Molecule(SMILES=species)
+        molecule = RMGMolecule(SMILES=species)
         adjlist = molecule.toAdjacencyList()
 
         multiplicity = None

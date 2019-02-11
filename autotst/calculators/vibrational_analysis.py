@@ -31,9 +31,10 @@ import os
 import logging
 import pandas as pd
 import numpy as np
-
-from autotst.reaction import AutoTST_Reaction
 from cclib.io import ccread
+from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
+
 
 
 def percent_change(original, new):
@@ -42,7 +43,7 @@ def percent_change(original, new):
     return percent_change
 
 
-class Vibrational_Analysis():
+class VibrationalAnalysis():
     """
     A class that allows one to perform vibrational analysis. It takes an
     AutoTST_Reaction and uses it to parse out the finalized geometry from a
@@ -50,23 +51,23 @@ class Vibrational_Analysis():
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, reaction, scratch="."):
+    def __init__(self, ts, scratch="."):
         """
         reaction: (AutoTST_Reaction) a reaction that proives the connectivity
         and label name for this analysis
         """
-        self.reaction = reaction
+        self.ts = ts
         self.scratch = scratch
 
     def __repr__(self):
-        return '<AutoTST Vibrational Analysis "{0}">'.format(self.reaction.label)
+        return '<AutoTST Vibrational Analysis "{0}">'.format(self.ts.reaction_label)
 
-    def get_log_file(self, scratch, reaction):
+    def get_log_file(self, scratch, ts):
         """
         This method obtains the logfile name from the AutoTST_Reaction
         """
 
-        self.log_file = os.path.join(scratch, reaction.label + ".log")
+        self.log_file = os.path.join(scratch, ts.reaction_label + ".log")
 
     def parse_vibrations(self):
         """
@@ -82,16 +83,16 @@ class Vibrational_Analysis():
 
         return self.vibrations
 
-    def obtain_geometries(self, reaction):
+    def obtain_geometries(self, ts):
         """
         This method obtains the previbrational geometry (the geometry returned
         by a quantum optimizer), and the postvibrational geometry.
         """
 
-        assert isinstance(reaction, AutoTST_Reaction)
+        assert isinstance(ts, TS)
 
-        self.before_geometry = reaction.ts.ase_ts.copy()
-        self.post_geometry = reaction.ts.ase_ts.copy()
+        self.before_geometry = ts.ase_molecule.copy()
+        self.post_geometry = ts.ase_molecule.copy()
 
         for vib, displacements in self.vibrations:
             if vib < 0:  # Finding the imaginary frequency
@@ -100,7 +101,7 @@ class Vibrational_Analysis():
 
         return self.before_geometry, self.post_geometry
 
-    def obtain_percent_changes(self, reaction):
+    def obtain_percent_changes(self, ts):
         """
         This method takes the connectivity of an AutoTST_Reaction and then uses
         that to identify the percent change of the bonds, angles, and dihedrals
@@ -112,28 +113,16 @@ class Vibrational_Analysis():
         """
 
         results = []
-        """
-        for torsion in reaction.ts.torsions:
-            i,j,k,l = torsion.indices
-            before = self.before_geometry.get_dihedral(i,j,k,l)
-            after = self.post_geometry.get_dihedral(i,j,k,l)
-            results.append(["Tor", torsion.indices, torsion.reaction_center, percent_change(before, after)])
 
-        for angle in reaction.ts.angles:
-            i,j,k = angle.indices
-            before = self.before_geometry.get_angle(i,j,k)
-            after = self.post_geometry.get_angle(i,j,k)
-            results.append(["Ang", angle.indices, angle.reaction_center, percent_change(before, after)])
-        """
-        for bond in reaction.ts.bonds:
+        for bond in ts.bonds:
             i, j = bond.indices
             before = self.before_geometry.get_distance(i, j)
             after = self.post_geometry.get_distance(i, j)
             results.append(
-                ["Bond", bond.indices, bond.reaction_center, percent_change(before, after)])
+                [bond.index, bond.atom_indices, bond.reaction_center, percent_change(before, after)])
 
         results = pd.DataFrame(results)
-        results.columns = ["type", "index", "center", "percent_change"]
+        results.columns = ["index", "atom_indices", "center", "percent_change"]
 
         self.percent_changes = results
 
@@ -145,15 +134,15 @@ class Vibrational_Analysis():
         geater elsewhere.
         """
 
-        self.get_log_file(self.scratch, self.reaction)
+        self.get_log_file(self.scratch, self.ts)
 
         self.parse_vibrations()
 
-        self.obtain_geometries(self.reaction)
+        self.obtain_geometries(self.ts)
 
-        self.obtain_percent_changes(self.reaction)
+        self.obtain_percent_changes(self.ts)
 
-        if (np.log10(((self.percent_changes[self.percent_changes.center == "Yes"].mean()))) > np.log10(((self.percent_changes[self.percent_changes.center != "Yes"].mean()))) + 1).all():
+        if (np.log10(((self.percent_changes[self.percent_changes.center == True].mean()))) > np.log10(((self.percent_changes[self.percent_changes.center != True].mean()))) + 1).all():
             logging.info("Vibrational analysis was successful")
             return True
 

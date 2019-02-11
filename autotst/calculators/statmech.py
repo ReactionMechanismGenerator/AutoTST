@@ -1,42 +1,111 @@
-import os
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
+################################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+################################################################################
+
+import os
+import rmgpy
+from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob
 from rdkit import Chem
 
-from rmgpy.cantherm import CanTherm, KineticsJob, StatMechJob
+from autotst.reaction import Reaction, TS
+from autotst.species import Species
+from autotst.calculators.calculator import Calculator
 
-from autotst.reaction import AutoTST_Reaction, AutoTST_TS
-from autotst.molecule import AutoTST_Molecule
-from autotst.calculators.calculator import AutoTST_Calculator
+def find_lowest_energy_conformer(species, scratch="."):
+
+    if isinstance(species, Species):
+        conf_dict = species.conformers
+        label = None
+
+    elif isinstance(species, Reaction):
+        conf_dict = species.ts
+        label = species.label
+
+    else:
+        print("This isn't an appropirate object.")
+        return None
+
+    min_e = 1e5
+    lowest_energy_conformer = None
+    print conf_dict
+    for smiles, conformers in conf_dict.iteritems():
+        for conformer in conformers:
+            print conformer
+            if isinstance(species, Species):
+                label = Chem.rdinchi.InchiToInchiKey(
+                    Chem.MolToInchi(Chem.MolFromSmiles(conformer.rmg_molecule.toSMILES()))).strip("-N") + "_{}".format(conformer.index)
+            print label
+            if lowest_energy_conformer is None:
+                lowest_energy_conformer = conformer
+            if not os.path.exists(os.path.join(scratch, label + ".log")):
+                print("Output log files don't exist for {}".format(conformer))
+                continue
 
 
-class AutoTST_CanTherm(AutoTST_Calculator):
+            if conformer.energy and (conformer.energy < min_e):
+                lowest_energy_conformer = conformer
+
+    print lowest_energy_conformer
+
+    return lowest_energy_conformer
+
+
+class StatMech(Calculator):
 
     def __init__(self, reaction, scratch=".", output_directory=".", model_chemistry="M06-2X/cc-pVTZ", freq_scale_factor=0.982):
         """
-        A class to perform CanTherm calculations:
-        :param: reaction: (AutoTST_Reaction) The reaction of interest
+        A class to perform Arkane calculations:
+        :param: reaction: (Reaction) The reaction of interest
         :param: output_directory: (str) The directory where you would like output files written to
-        :param: model_chemistry: (str) The supported model_chemistry described by http://reactionmechanismgenerator.github.io/RMG-Py/users/cantherm/input.html#model-chemistry
+        :param: model_chemistry: (str) The supported model_chemistry described by http://reactionmechanismgenerator.github.io/RMG-Py/users/arkane/input.html#model-chemistry
         :param: freq_scale_factor: (float) The scaling factor corresponding to the model chemistry - source:https://comp.chem.umn.edu/freqscale/version3b1.htm
         """
 
         self.reaction = reaction
         self.scratch = scratch
 
-        self.cantherm_job = CanTherm()
+        self.arkane_job = RMGArkane()
         self.output_directory = output_directory
-        self.cantherm_job.outputDirectory = self.output_directory
+        self.arkane_job.outputDirectory = self.output_directory
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
 
-    def get_atoms(self, mol):
+
+    def get_atoms(self, species):
+        """
+        A method to create an atom dictionary for an rmg molecule
+        """
         atom_dict = {}
-        if isinstance(mol, AutoTST_Molecule):
-            rmg_mol = mol.rmg_molecule
-        elif isinstance(mol, AutoTST_Reaction):
-            rmg_mol = mol.ts.rmg_ts
-        elif isinstance(mol, AutoTST_TS):
-            rmg_mol = mol.rmg_ts
+
+        conf = find_lowest_energy_conformer(species, self.scratch)
+
+        rmg_mol = conf.rmg_molecule
+
         for atom in rmg_mol.atoms:
             if atom.isCarbon():
                 atom_type = "C"
@@ -52,14 +121,14 @@ class AutoTST_CanTherm(AutoTST_Calculator):
 
         return atom_dict
 
-    def get_bonds(self, mol):
+    def get_bonds(self, species):
+
+
+        conf = find_lowest_energy_conformer(species, self.scratch)
+
+        rmg_mol = conf.rmg_molecule
+
         bondList = []
-        if isinstance(mol, AutoTST_Molecule):
-            rmg_mol = mol.rmg_molecule
-        elif isinstance(mol, AutoTST_Reaction):
-            rmg_mol = mol.ts.rmg_ts
-        elif isinstance(mol, AutoTST_TS):
-            rmg_mol = mol.rmg_ts
         for atom in rmg_mol.atoms:
             for bond in atom.bonds.values():
                 bondList.append(bond)
@@ -120,18 +189,25 @@ class AutoTST_CanTherm(AutoTST_Calculator):
 
         return bondDict
 
-    def write_cantherm_for_reacts_and_prods(self, mol):
+    def write_arkane_for_reacts_and_prods(self, species):
+        """
+        a method to write species to an arkane input file. Mol is an RMGMolecule
+        """
+        conf = find_lowest_energy_conformer(species, self.scratch)
+
+        mol = conf.rmg_molecule
+
 
         output = ['#!/usr/bin/env python',
                   '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
-        atom_dict = self.get_atoms(mol)
+        atom_dict = self.get_atoms(species)
 
         for atom, count in atom_dict.iteritems():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
-        bond_dict = self.get_bonds(mol)
+        bond_dict = self.get_bonds(species)
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.iteritems():
@@ -141,20 +217,20 @@ class AutoTST_CanTherm(AutoTST_Calculator):
             output.append('bonds = {}')
 
         label = Chem.rdinchi.InchiToInchiKey(
-            Chem.MolToInchi(Chem.MolFromSmiles(mol.smiles))).strip("-N")
+            Chem.MolToInchi(Chem.MolFromSmiles(mol.toSMILES()))).strip("-N")
 
-        external_symmetry = mol.rmg_molecule.getSymmetryNumber()
+        external_symmetry = mol.getSymmetryNumber()
 
         output += ["", "linear = False", "", "externalSymmetry = {}".format(external_symmetry), "",
-                   "spinMultiplicity = {}".format(mol.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
+                   "spinMultiplicity = {}".format(mol.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {", "    '{0}': GaussianLog('{1}.log'),".format(
+        output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
             self.model_chemistry, label), "}", ""]
 
-        output += ["geometry = GaussianLog('{0}.log')".format(label), ""]
+        output += ["geometry = Log('{0}.log')".format(label), ""]
 
         output += [
-            "frequencies = GaussianLog('{0}.log')".format(label), ""]
+            "frequencies = Log('{0}.log')".format(label), ""]
 
         output += ["rotors = []"]
 
@@ -168,6 +244,8 @@ class AutoTST_CanTherm(AutoTST_Calculator):
             f.write(input_string)
 
     def write_statmech_ts(self, rxn):
+
+        conf = find_lowest_energy_conformer(rxn, self.scratch)
         output = ['#!/usr/bin/env python',
                   '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
@@ -186,19 +264,19 @@ class AutoTST_CanTherm(AutoTST_Calculator):
             output.append("}")
         else:
             output.append('bonds = {}')
-
-        external_symmetry = rxn.ts.rmg_ts.getSymmetryNumber()
+        conf.rmg_molecule.updateMultiplicity()
+        external_symmetry = conf.rmg_molecule.getSymmetryNumber()
 
         output += ["", "linear = False", "", "externalSymmetry = {}".format(external_symmetry), "",
-                   "spinMultiplicity = {}".format(rxn.ts.rmg_ts.multiplicity), "", "opticalIsomers = 1", ""]
+                   "spinMultiplicity = {}".format(conf.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
 
-        output += ["energy = {", "    '{0}': GaussianLog('{1}.log'),".format(
+        output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
             self.model_chemistry, rxn.label), "}", ""]
 
-        output += ["geometry = GaussianLog('{0}.log')".format(rxn.label), ""]
+        output += ["geometry = Log('{0}.log')".format(rxn.label), ""]
 
         output += [
-            "frequencies = GaussianLog('{0}.log')".format(rxn.label), ""]
+            "frequencies = Log('{0}.log')".format(rxn.label), ""]
 
         output += ["rotors = []", ""]
 
@@ -210,32 +288,37 @@ class AutoTST_CanTherm(AutoTST_Calculator):
         with open(os.path.join(self.scratch, rxn.label + ".py"), "w") as f:
             f.write(input_string)
 
-    def write_cantherm_ts(self, rxn):
+    def write_arkane_ts(self, rxn):
         top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(
             self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
 
         labels = []
-
-        for react in rxn.reactant_mols:
+        r_smiles = []
+        p_smiles = []
+        for react in rxn.reactants:
+            conf = find_lowest_energy_conformer(react, self.scratch)
+            r_smiles.append(conf.smiles)
             label = Chem.rdinchi.InchiToInchiKey(
-                Chem.MolToInchi(Chem.MolFromSmiles(react.smiles))).strip("-N")
+                Chem.MolToInchi(Chem.MolFromSmiles(conf.smiles))).strip("-N")
             if label in labels:
                 continue
             else:
                 labels.append(label)
             line = "species('{0}', '{1}')".format(
-                react.smiles, label + ".py")
+                conf.smiles, label + ".py")
             top.append(line)
 
-        for prod in rxn.product_mols:
+        for prod in rxn.products:
+            conf = find_lowest_energy_conformer(prod, self.scratch)
+            p_smiles.append(conf.smiles)
             label = Chem.rdinchi.InchiToInchiKey(
-                Chem.MolToInchi(Chem.MolFromSmiles(prod.smiles))).strip("-N")
+                Chem.MolToInchi(Chem.MolFromSmiles(conf.smiles))).strip("-N")
             if label in labels:
                 continue
             else:
                 labels.append(label)
             line = "species('{0}', '{1}')".format(
-                prod.smiles, label + ".py")
+                conf.smiles, label + ".py")
             top.append(line)
 
         line = "transitionState('TS', '{0}')".format(rxn.label + ".py")
@@ -246,9 +329,9 @@ class AutoTST_CanTherm(AutoTST_Calculator):
                 "reaction(",
                 "    label = '{0}',".format(rxn.label),
                 "    reactants = ['{0}', '{1}'],".format(
-                    rxn.reactant_mols[0].smiles, rxn.reactant_mols[1].smiles),
+                    r_smiles[0], r_smiles[1]),
                 "    products = ['{0}', '{1}'],".format(
-                    rxn.product_mols[0].smiles, rxn.product_mols[1].smiles),
+                    p_smiles[0], p_smiles[1]),
                 "    transitionState = 'TS',",
                 "    tunneling = 'Eckart',",
                 ")",
@@ -262,31 +345,34 @@ class AutoTST_CanTherm(AutoTST_Calculator):
         for t in top:
             input_string += t + "\n"
 
-        with open(os.path.join(self.scratch, rxn.label + ".canth.py"), "w") as f:
+        with open(os.path.join(self.scratch, rxn.label + ".ark.py"), "w") as f:
             f.write(input_string)
 
     def write_files(self):
-        for mol in self.reaction.reactant_mols:
-            self.write_cantherm_for_reacts_and_prods(mol)
+        for mol in self.reaction.reactants:
+            print mol
 
-        for mol in self.reaction.product_mols:
-            self.write_cantherm_for_reacts_and_prods(mol)
+            self.write_arkane_for_reacts_and_prods(mol)
+
+        for mol in self.reaction.products:
+            self.write_arkane_for_reacts_and_prods(mol)
 
         self.write_statmech_ts(self.reaction)
 
-        self.write_cantherm_ts(self.reaction)
+        self.write_arkane_ts(self.reaction)
 
     def run(self):
 
-        self.cantherm_job.inputFile = os.path.join(
-            self.scratch, self.reaction.label + ".canth.py")
-        self.cantherm_job.plot = False
-        try:
-            self.cantherm_job.execute()
-        except IOError:
-            print "There was an issue with Cairo..."
+        self.arkane_job.inputFile = os.path.join(
+            self.scratch, self.reaction.label + ".ark.py")
+        print self.arkane_job.inputFile
+        self.arkane_job.plot = False
+        #try:
+        self.arkane_job.execute()
+        #except IOError:
+        #    print "There was an issue with Cairo..."
 
-        for job in self.cantherm_job.jobList:
+        for job in self.arkane_job.jobList:
             if isinstance(job, KineticsJob):
                 self.kinetics_job = job
 
