@@ -95,12 +95,12 @@ def find_all_combos(conformer, delta=float(30), cistrans=True, chiral_centers=Tr
     all_combos = list(itertools.product(torsion_combos, cistrans_combos, chiral_combos))
     return all_combos
 
-def perform_brute_force(conformer,
-                        delta=float(30),
-                        cistrans=True,
-                        chiral_centers=True,
-                        store_results=True,
-                        store_directory="."):
+def systematic_search(conformer,
+                      delta=float(30),
+                      cistrans=True,
+                      chiral_centers=True,
+                      store_results=False,
+                      store_directory="."):
     """
     Perfoms a brute force conformer analysis of a molecule or a transition state
 
@@ -185,6 +185,26 @@ def perform_brute_force(conformer,
         f = os.path.join(store_directory, file_name)
         brute_force.to_csv(f)
 
-    #unique_conformers = get_unique_conformers(brute_force)
+    from ase import units
 
-    return brute_force# unique_conformers
+    unique_conformers = []
+    for ind in brute_force[brute_force.energy < (brute_force.energy.min() + units.kcal / units.mol / units.eV)].index:
+        copy_conf = conformer.copy()
+        for col in brute_force.columns[1:]:
+            geometry = col.split("_")[0]
+            index = int(col.split("_")[-1])
+            value = brute_force.loc[ind][col]
+            print value
+            
+            if "torsion" in geometry:
+                copy_conf.set_torsion(index, float(value))
+            elif "cistrans" in geometry.lower():
+                copy_conf.set_cistrans(index, value)
+            elif "chiral" in geometry.lower():
+                copy_conf.set_chirality(index, value)
+
+                
+        unique_conformers.append(copy_conf)
+        
+
+    return brute_force, unique_conformers
