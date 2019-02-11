@@ -485,6 +485,7 @@ class TS(Conformer):
             self.smiles = None
             self.rmg_molecule = None   
             self.rdkit_molecule = None
+            self._pseudo_geometry = None
             self.ase_molecule = None
             self.bonds = []
             self.angles = []
@@ -494,6 +495,16 @@ class TS(Conformer):
         
     def __repr__(self):
         return '<TS "{}">'.format(self.smiles)
+
+    def copy(self):
+        copy_conf = TS(reaction_label=self.reaction_label, reaction_family=self.reaction_family)
+        copy_conf.smiles = self.smiles
+        copy_conf.rmg_molecule = self.rmg_molecule.copy()
+        copy_conf.rdkit_molecule = self.rdkit_molecule.__copy__()
+        copy_conf._pseudo_geometry = self._pseudo_geometry.__copy__()
+        copy_conf.ase_molecule = self.ase_molecule.copy()
+        copy_conf.get_geometries()
+        return copy_conf
     
     @property
     def rdkit_molecule(self):

@@ -198,6 +198,15 @@ class Conformer():
         
     def __repr__(self):
         return '<Conformer "{}">'.format(self.smiles)
+
+    def copy(self):
+        copy_conf = Conformer()
+        copy_conf.smiles = self.smiles
+        copy_conf.rmg_molecule = self.rmg_molecule.copy()
+        copy_conf.rdkit_molecule = self.rdkit_molecule.__copy__()
+        copy_conf.ase_molecule = self.ase_molecule.copy()
+        copy_conf.get_geometries()
+        return copy_conf
     
     def get_rdkit_mol(self, rmg_molecule=None):
         """

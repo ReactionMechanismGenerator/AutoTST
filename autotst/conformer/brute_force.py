@@ -35,6 +35,7 @@ import os
 import ase
 from ase import Atoms
 from ase import calculators
+from ase.optimize import BFGS
 
 import autotst
 from autotst.conformer.utilities import get_energy, find_terminal_torsions
@@ -151,9 +152,14 @@ def perform_brute_force(conformer,
         for i, s_r in enumerate(chiral_centers):
             center = conformer.chiral_centers[i]
             conformer.set_chiral_center(center.index, s_r)
-            
+        
+        
         
         conformer.ase_molecule.set_calculator(calc)
+        ##### Something funky happening with this optimization
+        #conformer.update_coords()
+        #opt = BFGS(conformer.ase_molecule)
+        #opt.run()
         conformer.update_coords()
         energy = get_energy(conformer)
         
