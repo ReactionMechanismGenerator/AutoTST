@@ -34,7 +34,6 @@ import rdkit
 from rdkit import DistanceGeometry
 from rdkit.Chem import rdDistGeom
 
-from cclib.io import ccread
 
 from rdkit import Chem
 from rdkit.Chem import AllChem
@@ -73,14 +72,14 @@ class Reaction():
     # a dictionary will have reaction family names as keys and TransitionStates instances as values, once loaded.
     ts_databases = dict()
     possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
-            "Disproportionation",
+            "R_Addition_MultipleBond",
             "H_Abstraction",
             "intra_H_migration"
         ]
     
     def __init__(self, label=None, rmg_reaction=None, reaction_family="H_Abstraction", calculator=None):
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
-            "Disproportionation",
+            "R_Addition_MultipleBond",
             "H_Abstraction",
             "intra_H_migration"
         ]
@@ -126,13 +125,14 @@ class Reaction():
             try:
                 self.rmg_reaction, self.reaction_family = self.get_labeled_reaction(label=label)
                 self.label = label
-                self.generate_reactants_and_products()
+                self.generate_reactants_and_products(self.rmg_reaction)
             except:
                 logging.info("Label provided is not valid... setting everything to None")
 
                 self.rmg_reaction = None
                 self.label = None
                 self.reaction_family = reaction_family
+            
 
         else:
             self.rmg_reaction = None
@@ -355,9 +355,13 @@ class Reaction():
                         
         got_one = False
         for name, family in self.rmg_database.kinetics.families.items():
+            print name
             try:
                 labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
                     test_reaction.reactants, test_reaction.products)
+
+                if not (labeled_r and labeled_p):
+                    continue
                 got_one = True
 
             except:
@@ -446,7 +450,7 @@ class TS(Conformer):
     """
     
     def __init__(self, smiles=None, reaction_label=None, rmg_molecule=None, reaction_family="H_Abstraction", distance_data=None):
-        
+        self.energy = None
         #####################################################
         #####################################################
         assert reaction_label, "A reaction label needs to be provided in addition to a smiles or rmg_molecule"
@@ -670,7 +674,8 @@ class TS(Conformer):
         lbl1, lbl2, lbl3 = labels
         
         sect = []
-        for atom in rmg_molecule.split()[1].atoms:
+
+        for atom in rmg_molecule.split()[0].atoms:
             sect.append(atom.sortingLabel)
             
         uncertainties = {'d12': 0.02, 'd13': 0.02, 'd23': 0.02}  

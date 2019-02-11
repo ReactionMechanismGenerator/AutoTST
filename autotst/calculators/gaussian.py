@@ -40,7 +40,6 @@ from rmgpy.reaction import Reaction as RMGReaction
 import autotst
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
-from autotst.calculators.vibrational_analysis import VibrationalAnalysis
 from autotst.calculators.calculator import Calculator
 
 from rdkit import Chem
@@ -79,6 +78,18 @@ class Gaussian(Calculator):
         if not self.conformer:
             return '<Gaussian Calculator "">'.format(None)
         return '<Gaussian Calculator "{0}">'.format(self.conformer.smiles)
+
+    @property
+    def label(self):
+        if isinstance(self.conformer, TS):
+            return self.conformer.reaction_label + "_{}".format(self.conformer.index)
+        elif isinstance(self.conformer, Conformer):
+            label = Chem.rdinchi.InchiToInchiKey(
+                Chem.MolToInchi(Chem.MolFromSmiles(self.conformer.smiles))).strip("-N")
+            label += "_{}".format(self.conformer.index)
+            return label
+        else:
+            return None
         
         
     def get_rotor_calc(self, 
@@ -166,7 +177,7 @@ class Gaussian(Calculator):
 
         smiles = conformer.rmg_molecule.toSMILES()
         label = Chem.rdinchi.InchiToInchiKey(
-            Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N")
+            Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N") + "_{}".format(conformer.index)
 
         calc = ASEGaussian(mem=mem,
                         nprocshared=nprocshared,
@@ -387,6 +398,7 @@ class Gaussian(Calculator):
             if success:
                 logging.info("Old output file verified, reading it in...")
                 conformer.ase_molecule = read_gaussian_out(new_file_name)
+                conformer.energy = conformer.ase_molecule.get_potential_energy()
                 conformer.update_coords()
                 os.chdir(current_path)
                 return conformer, True
@@ -398,6 +410,7 @@ class Gaussian(Calculator):
                     calc.calculate(conformer.ase_molecule)
                     conformer.ase_molecule = read_gaussian_out(
                         old_file_name)
+                    conformer.energy = conformer.ase_molecule.get_potential_energy()
                     conformer.update_coords()
                     os.chdir(current_path)
                     return conformer, True
@@ -417,6 +430,7 @@ class Gaussian(Calculator):
 
                 f = open(old_file_name)
                 lines = f.readlines()[:5]
+                num = ""
                 for line in lines:
                     if "Entering Link" in line:
                         num = line.split()[-1][:-1]
@@ -425,10 +439,11 @@ class Gaussian(Calculator):
                     sleep(60)
                 logging.info("Job complete, reading in results now by running calculate again...")
 
-                sleep(60) # waiting a lil while to make sure that the file is fixed... just in case...
+                sleep(15) # waiting a lil while to make sure that the file is fixed... just in case...
                 try:
                     conformer.ase_molecule = read_gaussian_out(
                         old_file_name)
+                    conformer.energy = conformer.ase_molecule.get_potential_energy()
                     conformer.update_coords()
                     os.chdir(current_path)
                     return conformer, True
@@ -482,6 +497,7 @@ class Gaussian(Calculator):
                 if success:
                     logging.info("Old output file verified, reading it in...")
                     conformer.ase_molecule = read_gaussian_out(old_file_name)
+                    conformer.energy = conformer.ase_molecule.get_potential_energy()
                     conformer.update_coords()
                     os.chdir(current_path)
                     return conformer, True
@@ -498,6 +514,7 @@ class Gaussian(Calculator):
             try:
                 calc.calculate(conformer.ase_molecule)
                 conformer.ase_molecule = read_gaussian_out(old_file_name)
+                conformer.energy = conformer.ase_molecule.get_potential_energy()
                 conformer.update_coords()
                 os.chdir(current_path)
                 return conformer, True
@@ -508,6 +525,7 @@ class Gaussian(Calculator):
                 try:
                     calc.calculate(conformer.ase_molecule)
                     conformer.ase_molecule = read_gaussian_out(old_file_name)
+                    conformer.energy = conformer.ase_molecule.get_potential_energy()
                     conformer.update_coords()
                     os.chdir(current_path)
                     return conformer, True
@@ -731,6 +749,7 @@ class Gaussian(Calculator):
                 self.fix_io_file(irc)
 
             else:
+                from autotst.calculators.vibrational_analysis import VibrationalAnalysis
                 vib = VibrationalAnalysis(ts=conformer, scratch=self.scratch)
                 result = vib.validate_ts()
                 

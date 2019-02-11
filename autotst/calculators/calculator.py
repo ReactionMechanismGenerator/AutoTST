@@ -34,7 +34,7 @@ import numpy
 
 import autotst
 from autotst.reaction import Reaction, TS
-from autotst.molecule import Molecule
+from autotst.species import Species
 from autotst.calculators.vibrational_analysis import VibrationalAnalysis
 from autotst.base import QMData
 import rmgpy
@@ -72,6 +72,10 @@ class Calculator():
         else:
             self.label = None
         self.save_directory = save_directory
+
+    def copy(self):
+        from copy import deepcopy
+        return deepcopy(self)
 
     def get_qm_data(self, file_path):
 
@@ -116,7 +120,7 @@ class Calculator():
                 resultFile.write(
                     'reaction = {0!r}\n'.format(reaction.rmg_reaction))
 
-    def read_ts_file(self):
+    def read_ts_file(self, reaction):
         """
         Load the specified transition state data file and return the dictionary of its contents.
 
@@ -125,7 +129,7 @@ class Calculator():
         Checks that the returned dictionary contains at least rxnLabel, method, qmData.
         """
 
-        r, p = self.label.split("_")
+        r, p = reaction.label.split("_")
         reacts = r.split("+")
         prods = p.split("+")
 
@@ -174,7 +178,7 @@ class Calculator():
             return None
         return local_context
 
-    def read_kinetics_file(self):
+    def read_kinetics_file(self, reaction):
         """
         Load the specified kinetic data file and return the dictionary of its contents.
 
@@ -182,7 +186,7 @@ class Calculator():
 
         Checks that the returned dictionary contains at least method, Reaction.
         """
-        r, p = self.label.split("_")
+        r, p = reaction.label.split("_")
         reacts = r.split("+")
         prods = p.split("+")
 

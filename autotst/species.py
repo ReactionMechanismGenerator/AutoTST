@@ -29,7 +29,6 @@
 
 import os
 import logging
-from cclib.io import ccread
 
 import rdkit
 from rdkit import Chem
@@ -160,7 +159,10 @@ class Conformer():
     """
     A class for generating and editing 3D conformers of molecules
     """
-    def __init__(self, smiles=None, rmg_molecule=None):
+    def __init__(self, smiles=None, rmg_molecule=None, index=0):
+
+        self.energy = None
+        self.index = index
         
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
@@ -567,7 +569,7 @@ class Conformer():
                 indices = [i,j,k,l]
                 stero = "Z"
 
-            elif "STEREOE" in str(b1.GetStereo()):
+            else:
                 if round(self.ase_molecule.get_dihedral(i,j,k,l), -1) == 180:
                     atom = rdmol_copy.GetAtomWithIdx(k)
                     bonds = atom.GetBonds()
