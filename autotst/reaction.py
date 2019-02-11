@@ -443,6 +443,31 @@ class Reaction():
 
         return self.complexes
 
+    
+    def generate_conformers(self, method="systematic", calculator=None):
+        """
+        This isn't working right now...
+        """
+        possible_methods = [
+            "systematic",
+            #"ga",
+            #"es"
+        ]
+
+        assert calculator,"Please provide an ASE calculator object"
+        assert method in possible_methods, "Please provide a valid conformer search method."
+
+        from autotst.conformer.systematic import *
+
+        for direction, conformers in self.ts.iteritems():
+            conformer = conformers[0]
+            conformer.ase_molecule.set_calculator(calculator)
+            #print conformer.ase_molecule.get_calculator()
+            _, conformers = systematic_search(conformer)
+            self.ts[direction] = conformers
+        
+        return self.ts
+
 
 class TS(Conformer):
     """

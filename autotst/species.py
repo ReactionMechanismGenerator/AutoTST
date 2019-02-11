@@ -63,6 +63,8 @@ class Species():
         
         assert isinstance(smiles, list)
 
+        self._conformers = None
+
         if ((len(smiles) != 0) and rmg_species):
             # Provide both a list of smiles and an rmg_species
             assert isinstance(rmg_species, (rmgpy.molecule.Molecule, rmgpy.species.Species))
@@ -139,8 +141,13 @@ class Species():
             string += s +" / "
             
         return '<Species "{}">'.format(string[:-3])
-    
-    
+
+    @property
+    def conformers(self):
+        if not self._conformers:
+            self._conformers = self.generate_structures()
+        return self._conformers
+
     def generate_structure(self, smiles=None, rmg_molecule=None):
         
         return Conformer(smiles=smiles, rmg_molecule=rmg_molecule)
@@ -151,9 +158,27 @@ class Species():
             conf = self.generate_structure(smiles=smile)
             conformers[smile] = [conf]
             
-        self.conformers = conformers
-            
+        return conformers
+
+    def generate_conformers(self, method="systematic", calculator=None):
+        possible_methods = [
+            "systematic",
+            #"ga",
+            #"es"
+        ]
+
+        assert calculator,"Please provide an ASE calculator object"
+        assert method in possible_methods, "Please provide a valid conformer search method."
+
+        from autotst.conformer.systematic import *
+
+        for smiles, conformers in self.conformers.iteritems():
+            conformer = conformers[0]
+            conformer.ase_molecule.set_calculator(calculator)
+            _, conformers = systematic_search(conformer)
+            self.conformers[smiles] = conformers
         
+        return self.conformers
         
 class Conformer():
     """

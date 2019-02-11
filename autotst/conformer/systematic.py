@@ -126,7 +126,7 @@ def systematic_search(conformer,
 
     results = []
     for combo in combos:
-        print combo
+
         torsions, cistrans, chiral_centers = combo
         
         for i, torsion in enumerate(torsions):
@@ -188,14 +188,14 @@ def systematic_search(conformer,
     from ase import units
 
     unique_conformers = []
-    for ind in brute_force[brute_force.energy < (brute_force.energy.min() + units.kcal / units.mol / units.eV)].index:
+    for i, ind in enumerate(brute_force[brute_force.energy < (brute_force.energy.min() + units.kcal / units.mol / units.eV)].index):
         copy_conf = conformer.copy()
+        copy_conf.index = i
         for col in brute_force.columns[1:]:
             geometry = col.split("_")[0]
             index = int(col.split("_")[-1])
             value = brute_force.loc[ind][col]
-            print value
-            
+
             if "torsion" in geometry:
                 copy_conf.set_torsion(index, float(value))
             elif "cistrans" in geometry.lower():
