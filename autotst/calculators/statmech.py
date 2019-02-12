@@ -28,6 +28,7 @@
 ################################################################################
 
 import os
+import logging
 import rmgpy
 from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob
 from rdkit import Chem
@@ -35,6 +36,9 @@ from rdkit import Chem
 from autotst.reaction import Reaction, TS
 from autotst.species import Species
 from autotst.calculators.calculator import Calculator
+
+FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
+logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 def find_lowest_energy_conformer(species, scratch="."):
 
@@ -47,30 +51,27 @@ def find_lowest_energy_conformer(species, scratch="."):
         label = species.label
 
     else:
-        print("This isn't an appropirate object.")
+        logging.info("This isn't an appropirate object.")
         return None
 
     min_e = 1e5
     lowest_energy_conformer = None
-    print conf_dict
     for smiles, conformers in conf_dict.iteritems():
         for conformer in conformers:
-            print conformer
             if isinstance(species, Species):
                 label = Chem.rdinchi.InchiToInchiKey(
                     Chem.MolToInchi(Chem.MolFromSmiles(conformer.rmg_molecule.toSMILES()))).strip("-N") + "_{}".format(conformer.index)
-            print label
+
             if lowest_energy_conformer is None:
                 lowest_energy_conformer = conformer
             if not os.path.exists(os.path.join(scratch, label + ".log")):
-                print("Output log files don't exist for {}".format(conformer))
+                logging.info("Output log files don't exist for {}".format(conformer))
                 continue
 
 
             if conformer.energy and (conformer.energy < min_e):
                 lowest_energy_conformer = conformer
 
-    print lowest_energy_conformer
 
     return lowest_energy_conformer
 
@@ -350,7 +351,6 @@ class StatMech(Calculator):
 
     def write_files(self):
         for mol in self.reaction.reactants:
-            print mol
 
             self.write_arkane_for_reacts_and_prods(mol)
 
@@ -365,12 +365,10 @@ class StatMech(Calculator):
 
         self.arkane_job.inputFile = os.path.join(
             self.scratch, self.reaction.label + ".ark.py")
-        print self.arkane_job.inputFile
         self.arkane_job.plot = False
         #try:
         self.arkane_job.execute()
         #except IOError:
-        #    print "There was an issue with Cairo..."
 
         for job in self.arkane_job.jobList:
             if isinstance(job, KineticsJob):

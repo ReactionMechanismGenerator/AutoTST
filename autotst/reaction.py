@@ -355,7 +355,6 @@ class Reaction():
                         
         got_one = False
         for name, family in self.rmg_database.kinetics.families.items():
-            print name
             try:
                 labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
                     test_reaction.reactants, test_reaction.products)

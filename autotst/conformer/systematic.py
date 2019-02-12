@@ -161,7 +161,10 @@ def systematic_search(conformer,
         #opt = BFGS(conformer.ase_molecule)
         #opt.run()
         conformer.update_coords()
-        energy = get_energy(conformer)
+        try:
+            energy = get_energy(conformer)
+        except:
+            energy = 1e5
         
         sample = ["torsion_{}", "cistrans_{}", "chiral_center_{}"]
         columns = ["energy"]
