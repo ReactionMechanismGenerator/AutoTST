@@ -578,6 +578,7 @@ class TS(Conformer):
         bm=None
         
         if distance_data:
+            logging.info("Getting bounds matrix")
             bm = self.get_bounds_matrix(rdkit_molecule=rdkit_molecule)
             
             if len(labels) > 0:
@@ -613,7 +614,10 @@ class TS(Conformer):
             except:
                 return None
 
+        logging.info("before")
+
         bm = rdDistGeom.GetMoleculeBoundsMatrix(rdkit_molecule)
+        logging.info("Got bounds matrix")
             
         return bm
     

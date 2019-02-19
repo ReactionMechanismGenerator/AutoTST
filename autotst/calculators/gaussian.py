@@ -188,7 +188,7 @@ class Gaussian(Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(verytight,gdiis,maxcycle=1000) freq IOP(2/16=3)",
+                        extra="opt=(verytight,gdiis,maxcycle=900) freq IOP(2/16=3)",
                         multiplicity=conformer.rmg_molecule.multiplicity
                         )
         calc.atoms = conformer.ase_molecule
@@ -238,7 +238,7 @@ class Gaussian(Calculator):
                            scratch=scratch,
                            method=method,
                            basis=basis,
-                           extra="Opt=(ModRedun,Loose,maxcycle=1000) Int(Grid=SG1)",
+                           extra="Opt=(ModRedun,Loose,maxcycle=900) Int(Grid=SG1)",
                            multiplicity=ts.rmg_molecule.multiplicity,
                            addsec=[combos[:-1]])
         calc.atoms = conformer.ase_molecule
@@ -287,7 +287,7 @@ class Gaussian(Calculator):
                            scratch=scratch,
                            method=method,
                            basis=basis,
-                           extra="Opt=(ModRedun,Loose,maxcycle=1000) Int(Grid=SG1)",
+                           extra="Opt=(ModRedun,Loose,maxcycle=900) Int(Grid=SG1)",
                            multiplicity=ts.rmg_molecule.multiplicity,
                            addsec=[combos[:-1]])
         calc.atoms = conformer.ase_molecule
@@ -326,7 +326,7 @@ class Gaussian(Calculator):
                            scratch=scratch,
                            method=method,
                            basis=basis,
-                           extra="opt=(ts,calcfc,noeigentest,maxcycle=1000) freq",
+                           extra="opt=(ts,calcfc,noeigentest,maxcycle=900) freq",
                            multiplicity=ts.rmg_molecule.multiplicity
                           )
         calc.atoms = conformer.ase_molecule
