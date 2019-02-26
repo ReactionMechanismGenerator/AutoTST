@@ -5,8 +5,9 @@ from autotst.calculators.statmech import StatMech
 from autotst.calculators.vibrational_analysis import VibrationalAnalysis, percent_change
 from autotst.calculators.gaussian import Gaussian
 from ase.calculators.gaussian import Gaussian as ASEGaussian
+from ase.atoms import Atom, Atoms
 from autotst.calculators.calculator import Calculator
-from ase.io.gaussian import self.read_log
+from ase.io.gaussian import read_gaussian_out
 from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
 from autotst.molecule import Molecule
 from autotst.reaction import Reaction, TS
@@ -74,7 +75,7 @@ class Job():
 
         return Atoms(atoms)
 
-    def submit(calculator, partition):
+    def submit(self, calculator, partition):
         """
         A methods to submit a job based on the calculator and partition provided
         """
@@ -281,7 +282,6 @@ class Job():
         while not self.check_complete(ase_calculator=calc):
             time.sleep(30)
         logging.info("{} is complete!".format(calc.label))
-
         try:
             ts.ase_molecule = self.read_log(os.path.join(
                 calc.scratch,
@@ -388,9 +388,9 @@ class Job():
                     "Vibrational analysis not definitive. Running IRC instead")
                 self.submit_irc(ts=ts, calculator=calculator)
                 calc = calculator.get_irc_calc(ts)
-                while not check_complete(ase_calculator=calc):
+                while not self.check_complete(ase_calculator=calc):
                     time.sleep(30)
-                logging.info("{} is complete!".format())
+                logging.info("{} is complete!".format(calc.label))
 
                 result = calculator.validate_irc(calc=calc)
                 if not result:
@@ -403,7 +403,7 @@ class Job():
             calc = calculator.get_irc_calc(ts)
             while not self.check_complete(ase_calculator=calc):
                 time.sleep(30)
-            logging.info("{} is complete!".format())
+            logging.info("{} is complete!".format(calc.label))
 
             result = calculator.validate_irc(calc=calc)
 
@@ -412,4 +412,4 @@ class Job():
                 return False
             return True
 
-    def calculate_ts(self, ts=None, calculator=None):
+#    def calculate_ts(self, ts=None, calculator=None):

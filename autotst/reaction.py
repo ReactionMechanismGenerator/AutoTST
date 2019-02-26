@@ -476,7 +476,7 @@ class Reaction():
         assert calculator, "Please provide an ASE calculator object"
         assert method in possible_methods, "Please provide a valid conformer search method."
 
-        from autotst.conformer.systematic import *
+        from autotst.conformer.systematic import systematic_search, find_all_combos
 
         for direction, conformers in self.ts.iteritems():
             conformer = conformers[0]
