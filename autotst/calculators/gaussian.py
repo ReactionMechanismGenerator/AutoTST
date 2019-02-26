@@ -32,6 +32,7 @@ import itertools
 import logging
 import numpy as np
 from cclib.io import ccread
+from rdkit import Chem
 
 import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
@@ -42,7 +43,7 @@ from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
 from autotst.calculators.calculator import Calculator
 
-from rdkit import Chem
+
 from cclib.io import ccread
 
 from ase.io.gaussian import read_gaussian, read_gaussian_out
@@ -188,7 +189,7 @@ class Gaussian(Calculator):
                         scratch=scratch,
                         method=method,
                         basis=basis,
-                        extra="opt=(verytight,gdiis,maxcycle=900) freq IOP(2/16=3)",
+                        extra="opt=(verytight,gdiis,maxcycles=900) freq IOP(2/16=3)",
                         multiplicity=conformer.rmg_molecule.multiplicity
                         )
         calc.atoms = conformer.ase_molecule
@@ -230,7 +231,7 @@ class Gaussian(Calculator):
         ts.rmg_molecule.updateMultiplicity()
 
         label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_shell"
+            "(", "left").replace(")", "right") + "_shell_" + str(ts.index)
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -238,10 +239,10 @@ class Gaussian(Calculator):
                            scratch=scratch,
                            method=method,
                            basis=basis,
-                           extra="Opt=(ModRedun,Loose,maxcycle=900) Int(Grid=SG1)",
+                           extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1)",
                            multiplicity=ts.rmg_molecule.multiplicity,
                            addsec=[combos[:-1]])
-        calc.atoms = conformer.ase_molecule
+        calc.atoms = ts.ase_molecule
         del calc.parameters['force']
         
         return calc
@@ -279,7 +280,7 @@ class Gaussian(Calculator):
         ts.rmg_molecule.updateMultiplicity()
 
         label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_center"
+            "(", "left").replace(")", "right") + "_center_" + str(ts.index)
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -287,10 +288,10 @@ class Gaussian(Calculator):
                            scratch=scratch,
                            method=method,
                            basis=basis,
-                           extra="Opt=(ModRedun,Loose,maxcycle=900) Int(Grid=SG1)",
+                           extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1)",
                            multiplicity=ts.rmg_molecule.multiplicity,
                            addsec=[combos[:-1]])
-        calc.atoms = conformer.ase_molecule
+        calc.atoms = ts.ase_molecule
         del calc.parameters['force']
         
         return calc
@@ -318,7 +319,7 @@ class Gaussian(Calculator):
         ts.rmg_molecule.updateMultiplicity()
 
         label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right")
+            "(", "left").replace(")", "right") + "_" + str(ts.index)
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -326,10 +327,10 @@ class Gaussian(Calculator):
                            scratch=scratch,
                            method=method,
                            basis=basis,
-                           extra="opt=(ts,calcfc,noeigentest,maxcycle=900) freq",
+                           extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq",
                            multiplicity=ts.rmg_molecule.multiplicity
                           )
-        calc.atoms = conformer.ase_molecule
+        calc.atoms = ts.ase_molecule
         del calc.parameters['force']
         
         return calc
@@ -353,7 +354,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
         label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_irc"
+            "(", "left").replace(")", "right") + "_irc_" + str(ts.index)
 
         calc = ASEGaussian(mem=mem,
                         nprocshared=nprocshared,
@@ -363,7 +364,7 @@ class Gaussian(Calculator):
                         basis=basis,
                         extra="irc=(calcall)",
                         multiplicity=ts.rmg_molecule.multiplicity)
-        calc.atoms = conformer.ase_molecule
+        calc.atoms = ts.ase_molecule
         del calc.parameters['force']
         
         return calc

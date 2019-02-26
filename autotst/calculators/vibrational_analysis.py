@@ -67,7 +67,7 @@ class VibrationalAnalysis():
         This method obtains the logfile name from the AutoTST_Reaction
         """
 
-        self.log_file = os.path.join(scratch, ts.reaction_label + ".log")
+        self.log_file = os.path.join(scratch, ts.reaction_label + "_" + str(ts.index) + ".log")
 
     def parse_vibrations(self):
         """
@@ -115,7 +115,7 @@ class VibrationalAnalysis():
         results = []
 
         for bond in ts.bonds:
-            i, j = bond.indices
+            i, j = bond.atom_indices
             before = self.before_geometry.get_distance(i, j)
             after = self.post_geometry.get_distance(i, j)
             results.append(

@@ -473,7 +473,7 @@ class TS(Conformer):
     A class that defines the 3D geometry of a transition state (TS)
     """
     
-    def __init__(self, smiles=None, reaction_label=None, rmg_molecule=None, reaction_family="H_Abstraction", distance_data=None):
+    def __init__(self, smiles=None, reaction_label=None, rmg_molecule=None, reaction_family="H_Abstraction", distance_data=None, index=0):
         self.energy = None
         #####################################################
         #####################################################
@@ -483,6 +483,7 @@ class TS(Conformer):
         self._ase_molecule = None
         self.reaction_family=reaction_family
         self.distance_data=distance_data
+        self.index = index
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
