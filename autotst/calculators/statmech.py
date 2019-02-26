@@ -30,7 +30,7 @@
 import os
 import logging
 import rmgpy
-from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob
+from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob, ThermoJob
 from rdkit import Chem
 
 from autotst.reaction import Reaction, TS
@@ -102,13 +102,13 @@ class StatMech(Calculator):
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
 
-    def get_atoms(self, species):
+    def get_atoms(self, conformer):
         """
         A method to create an atom dictionary for an rmg molecule
         """
         atom_dict = {}
 
-        conf = find_lowest_energy_conformer(species, self.scratch)
+        conf = conformer
 
         rmg_mol = conf.rmg_molecule
 
@@ -127,9 +127,9 @@ class StatMech(Calculator):
 
         return atom_dict
 
-    def get_bonds(self, species):
+    def get_bonds(self, conformer):
 
-        conf = find_lowest_energy_conformer(species, self.scratch)
+        conf = conformer
 
         rmg_mol = conf.rmg_molecule
 
@@ -194,24 +194,24 @@ class StatMech(Calculator):
 
         return bondDict
 
-    def write_arkane_for_reacts_and_prods(self, species):
+    def write_arkane_for_reacts_and_prods(self, conformer):
         """
         a method to write species to an arkane input file. Mol is an RMGMolecule
         """
-        conf = find_lowest_energy_conformer(species, self.scratch)
+        conf = conformer
 
         mol = conf.rmg_molecule
 
         output = ['#!/usr/bin/env python',
                   '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
-        atom_dict = self.get_atoms(species)
+        atom_dict = self.get_atoms(conf)
 
         for atom, count in atom_dict.iteritems():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
-        bond_dict = self.get_bonds(species)
+        bond_dict = self.get_bonds(conf)
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.iteritems():
@@ -243,7 +243,10 @@ class StatMech(Calculator):
         output += [
             "frequencies = Log('{0}.log')".format(label), ""]
 
-        output += ["rotors = []"]
+        output += ["rotors = ["] #TODO for carl
+        for torsion in conf.torsions:
+            output += [self.get_rotor_info(conf, torsion)]
+        output += ["]"]
 
         input_string = ""
 
@@ -252,6 +255,46 @@ class StatMech(Calculator):
 
         with open(os.path.join(self.scratch, label + ".py"), "w") as f:
             f.write(input_string)
+
+    def get_rotor_info(self, conformer, torsion):
+        """
+        Formats and returns info about torsion as it should appear in an Arkane species.py
+
+        conformer :: autotst conformer object
+        torsion :: autotst torsion object 
+
+        Needed for Arkane species file:
+        scanLog :: Gaussian output log of freq calculation on optimized geometry
+        pivots :: torsion center: j,k)
+        top :: ID of all atoms in one top, starting from 1!),
+
+        """
+        i,j,k,l = torsion.atom_indices
+
+        tor_center = [j,k] #If given i,j,k,l torsion, center is j,k
+        tor_center_adj = [j+1, k+1] # Adjusted since mol's IDs start from 0 while Arkane's start from 1
+
+        # MUST CONTAIN FREQ as well as opt geometry
+        if isinstance(conformer, TS):
+            tor_log = os.path.join(
+                self.scratch,
+                comformer.reaction_label + "_tor{0}{1}.log".format(j,k)
+            )
+        else:
+            tor_log = os.path.join(
+                self.scratch,
+                conformer.rmg_molecule.toAugmentedInChIKey().strip("-N") + '_tor{0}{1}.log'.format(j,k)
+            )
+
+        top_IDs = []
+        for num, tf in enumerate(torsion.mask):
+            if tf: top_IDs.append(num)
+
+        top_IDs_adj = [ID+1 for ID in top_IDs] # Adjusted to start from 1 instead of 0
+
+        info = "     HinderedRotor(scanLog=Log('{0}'), pivots={1}, top={2}, fit='fourier'),".format(tor_log, tor_center_adj, top_IDs_adj)
+
+        return info
 
     def write_statmech_ts(self, rxn):
 
@@ -397,6 +440,7 @@ class StatMech(Calculator):
         for job in self.arkane_job.jobList:
             if isinstance(job, KineticsJob):
                 self.kinetics_job = job
+            elif isinstance(job, ThermoJob)
 
     def set_reactants_and_products(self):
 

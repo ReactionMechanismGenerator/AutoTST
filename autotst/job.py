@@ -208,6 +208,70 @@ class Job():
                                         calc.label))
                                 complete[calc.label] = True
 
+
+    def run_rotor(self, conformer, torsion, steps, step_size):
+        """
+        a method to run a hindered rotor calculation for a single rotor
+        """
+        calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
+        logging.info("Running hindered rotor calculation for {}".format(torsion))
+        calc.write_input(conformer.ase_molecule)
+        self.submit(calc, "general")
+
+    def run_rotors(self, conformer, steps, step_size):
+        """
+        A method to run hindered rotor scans for all torsions in a conformer
+        """
+
+        for torsion in conformer.torsions:
+            self.run_rotor(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
+
+    def calculate_rotors(self, conformer, calculator, steps, step_size):
+        """
+        A method to submit and verify all hindered rotor scans for a conformer
+        """
+        self.run_rotors(conformer=conformer, steps=steps, step_size=step_size)
+        complete = {}
+        verified = {}
+        for torsion in conformer.torsions:
+            complete[torsion.index] = False
+            verified[torsion.index] = False
+
+        while not all(complete.values()):
+            for torsion in conformer.torsions:
+                calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion)
+                if self.check_complete(calc):
+                    complete[torsion.index] = True
+        
+        for torsion in conformer.torsions:
+            calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion)
+            if self.verify_rotor(conformer=conformer, ase_calculator=calc):
+                verified[torsion.index] = True
+            else:
+                logging.info("Something went wrong with {}".format(torsion))
+
+
+    def verify_rotor(self, conformer, ase_calculator):
+
+        if (self.check_rotor_slope(ase_calculator) and self.check_rotor_continuous(ase_calculator)):
+            return True
+        else:
+            return False
+
+    def check_rotor_slope(self, ase_calculator):
+
+        file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+
+        parser = ccread(file_name)
+
+
+    def check_rotor_continuous(self, ase_calculator):
+        file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+
+        parser = ccread(file_name)
+
+
+
     def submit_shell(self, ts=None, calculator=None):
         """
         A method to submit a calculation for the reaction shell

@@ -74,7 +74,7 @@ class Gaussian(Calculator):
         self.save_directory = save_directory
 
         if self.conformer:
-            print self.conformer
+            logging.info self.conformer
 
     def __repr__(self):
         if not self.conformer:
@@ -101,7 +101,9 @@ class Gaussian(Calculator):
                        nprocshared=20,
                        scratch=".",
                        method="m062x",
-                       basis="6-311+g(2df,2p)"):
+                       basis="6-311+g(2df,2p)",
+                       steps=36,
+                       step_size=10.0):
         """
         A method to create all of the calculators needed to perform hindered rotor calculations given a conformer and a torsion
         """
@@ -123,7 +125,7 @@ class Gaussian(Calculator):
             string += "B {} {}\n".format(i + 1, j + 1)
 
         i, j, k, l = torsion.atom_indices
-        string += "D {} {} {} {} S 36 10.0".format(i + 1, j + 1, k + 1, l + 1)
+        string += "D {} {} {} {} S {} {}".format(i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
 
         if isinstance(conformer, TS):
             label = self.label + "_tor_{}_{}".format(j, k)
@@ -166,7 +168,7 @@ class Gaussian(Calculator):
             conformer = self.conformer
 
         if isinstance(conformer, TS):
-            print(
+            logging.info(
                 "TS object provided, cannot obtain a species calculator for a TS")
             return None
 
@@ -189,7 +191,7 @@ class Gaussian(Calculator):
             scratch=scratch,
             method=method,
             basis=basis,
-            extra="opt=(verytight,gdiis,maxcycles=900) freq IOP(2/16=3)",
+            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(2/16=3)",
             multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
@@ -390,11 +392,11 @@ class Gaussian(Calculator):
 
         if os.path.exists(new_file_name):
             # We found a finished file file... it should be fixed
-            print(
+            logging.info(
                 "Found previous file for {}, verifying it...".format(new_file_name))
             complete, success = self.verify_output_file(new_file_name)
             if success:
-                print("Old output file verified, reading it in...")
+                logging.info("Old output file verified, reading it in...")
                 conformer.ase_molecule = read_gaussian_out(new_file_name)
                 conformer.energy = conformer.ase_molecule.get_potential_energy()
                 conformer.update_coords()
@@ -402,7 +404,7 @@ class Gaussian(Calculator):
                 return conformer, True
 
             elif complete:
-                print(
+                logging.info(
                     "Output file did not converge, attempting to run one last time...")
                 try:
                     calc.calculate(conformer.ase_molecule)
@@ -414,14 +416,14 @@ class Gaussian(Calculator):
                     return conformer, True
 
                 except BaseException:  # TODO: add error for seg fault
-                    print("{} failed... again...".format(new_file_name))
+                    logging.info("{} failed... again...".format(new_file_name))
                     os.chdir(current_path)
                     return conformer, False
 
             elif (new_file_name == old_file_name) and (not complete):
                 # The file names are identical and the job isn't complete yet
 
-                print(
+                logging.info(
                     "Job appears to be running for this calculation, waiting for it to complete...")
 
                 from time import sleep
@@ -435,7 +437,7 @@ class Gaussian(Calculator):
                 scratch_file = "Gau-" + num + ".int"
                 while os.path.exists(scratch_file):
                     sleep(60)
-                print(
+                logging.info(
                     "Job complete, reading in results now by running calculate again...")
 
                 # waiting a lil while to make sure that the file is fixed...
@@ -449,7 +451,7 @@ class Gaussian(Calculator):
                     os.chdir(current_path)
                     return conformer, True
                 except IndexError:
-                    print(
+                    logging.info(
                         "It appears that the previous log file wasn't finished... removing the files and rerunning")
                     os.remove(old_file_name)
                     os.remove(old_file_name.replace(".log", ".ase"))
@@ -457,7 +459,7 @@ class Gaussian(Calculator):
                     return self.calculate(conformer, calc)
 
             else:
-                print(
+                logging.info(
                     "Something went wrong... File is neither complete nor successful...")
 
                 return conformer, False
@@ -466,7 +468,7 @@ class Gaussian(Calculator):
             complete, success = self.verify_output_file(old_file_name)
 
             if not complete:
-                print(
+                logging.info(
                     "Job appears to be running already, waiting for it to complete...")
 
                 from time import sleep
@@ -479,9 +481,9 @@ class Gaussian(Calculator):
                         num = line.split()[-1][:-1]
 
                 if not num:
-                    print(
+                    logging.info(
                         "Something is wrong... it seems this run was interupted...")
-                    print(
+                    logging.info(
                         "deleting {} and recalculating...".format(old_file_name))
                     os.remove(old_file_name)
                     return self.calculate(conformer, calc)
@@ -489,7 +491,7 @@ class Gaussian(Calculator):
                 scratch_file = "Gau-" + num + ".int"
                 while os.path.exists(scratch_file):
                     sleep(60)
-                print(
+                logging.info(
                     "Job complete, reading in results now by running calculate again...")
 
                 # waiting a lil while to make sure that the file is fixed...
@@ -499,24 +501,24 @@ class Gaussian(Calculator):
                 return self.calculate(conformer, calc)
 
             else:
-                print(
+                logging.info(
                     "Found previous file for {}, verifying it...".format(old_file_name))
                 if success:
-                    print("Old output file verified, reading it in...")
+                    logging.info("Old output file verified, reading it in...")
                     conformer.ase_molecule = read_gaussian_out(old_file_name)
                     conformer.energy = conformer.ase_molecule.get_potential_energy()
                     conformer.update_coords()
                     os.chdir(current_path)
                     return conformer, True
                 else:
-                    print(
+                    logging.info(
                         "Something went wrong... File is neither complete nor successful...")
 
                     return conformer, False
         # Seeing if the file exists
         else:
             # File doesn't exist, running calculations
-            print(
+            logging.info(
                 "Starting calculation for {}...".format(new_file_name))
             try:
                 calc.calculate(conformer.ase_molecule)
@@ -527,7 +529,7 @@ class Gaussian(Calculator):
                 return conformer, True
             except BaseException:  # TODO: add error for seg fault
                 # first calc failed, trying it once more
-                print(
+                logging.info(
                     "Failed first attempt for {}. Trying it once more...".format(new_file_name))
                 try:
                     calc.calculate(conformer.ase_molecule)
@@ -537,7 +539,7 @@ class Gaussian(Calculator):
                     os.chdir(current_path)
                     return conformer, True
                 except BaseException:  # TODO: add error for seg fault
-                    print(
+                    logging.info(
                         "{} failed first and second attempt...".format(new_file_name))
                     os.chdir(current_path)
                     return conformer, False
@@ -550,7 +552,7 @@ class Gaussian(Calculator):
         """
 
         if not os.path.exists(path):
-            print "Not a valid path, cannot be verified..."
+            logging.info "Not a valid path, cannot be verified..."
             return (False, False)
 
         f = open(path, "r")
@@ -568,7 +570,7 @@ class Gaussian(Calculator):
         "A method to run the IRC calculation"
 
         assert "irc" in calc.label, "The calculator provided is not an IRC calculator"
-        print("Running IRC calculation")
+        logging.info("Running IRC calculation")
 
         current_path = os.getcwd()
         scratch_path = os.path.expanduser(
@@ -580,16 +582,16 @@ class Gaussian(Calculator):
 
         os.chdir(scratch_path)
         if os.path.exists(new_file_name):
-            print(
+            logging.info(
                 "It seems that an old IRC has been run, seeing if it's complete...")
             complete, converged = self.verify_output_file(new_file_name)
             if complete and converged:
-                print(
+                logging.info(
                     "Previous IRC complete and resulted in Normal Termination, verifying it...")
                 os.chdir(current_path)
 
             else:
-                print(
+                logging.info(
                     "Previous IRC was not successful or incomplete... Rerunning it...")
                 try:
                     calc.calculate(conformer.ase_molecule)
@@ -598,9 +600,9 @@ class Gaussian(Calculator):
                     # `read_results` method.
                     os.chdir(current_path)
                     pass
-                print("IRC calc complete!")
+                logging.info("IRC calc complete!")
         else:
-            print(
+            logging.info(
                 "No previous IRC clac has been run, starting a new one...")
             try:
                 calc.calculate(conformer.ase_molecule)
@@ -609,7 +611,7 @@ class Gaussian(Calculator):
                 # `read_results` method.
                 os.chdir(current_path)
                 pass
-            print("IRC calc complete!")
+            logging.info("IRC calc complete!")
 
     def validate_irc(self, calc=None):
         """
@@ -621,16 +623,16 @@ class Gaussian(Calculator):
 
         reaction_label = reaction_label.replace("left", "(").replace("right", ")")
 
-        print("Validating IRC file...")
+        logging.info("Validating IRC file...")
         irc_path = os.path.join(calc.scratch,
                                 calc.label + ".log")
         if not os.path.exists(irc_path):
-            print(
+            logging.info(
                 "It seems that the file was `fixed`, reading in the `fixed` version.")
             irc_path = irc_path.replace("left", "(").replace("right", ")")
 
             if not os.path.exists(irc_path):
-                print(
+                logging.info(
                     "It seems that the IRC claculation has not been run.")
                 return False
 
@@ -640,10 +642,10 @@ class Gaussian(Calculator):
         completed = False
         for file_line in file_lines:
             if "Normal termination" in file_line:
-                print("IRC successfully ran")
+                logging.info("IRC successfully ran")
                 completed = True
         if not completed:
-            print("IRC failed... could not be validated...")
+            logging.info("IRC failed... could not be validated...")
             return False
 
         pth1 = list()
@@ -729,33 +731,33 @@ class Gaussian(Calculator):
 
         if isinstance(conformer, TS):
             # Performing the TS optimizations
-            print("Conformer provided is a TS object")
+            logging.info("Conformer provided is a TS object")
 
             shell = self.get_shell_calc(conformer)
-            print("Running optimization of reaction shell")
+            logging.info("Running optimization of reaction shell")
             conformer, result = self.calculate(conformer, shell)
             self.fix_io_file(shell)
             if not result:
-                print("FAILED SHELL CALCULATION")
+                logging.info("FAILED SHELL CALCULATION")
                 return result
 
             center = self.get_center_calc(conformer)
-            print("Running optization of reaction center")
+            logging.info("Running optization of reaction center")
             conformer, result = self.calculate(conformer, center)
             self.fix_io_file(center)
             if not result:
-                print("FAILED CENTER CALCULATION")
+                logging.info("FAILED CENTER CALCULATION")
                 return result
 
             overall = self.get_overall_calc(conformer)
-            print("Running overall optimization of TS")
+            logging.info("Running overall optimization of TS")
             conformer, result = self.calculate(conformer, overall)
             self.fix_io_file(overall)
             if not result:
-                print("FAILED OVERALL CALCULATION")
+                logging.info("FAILED OVERALL CALCULATION")
 
             if not vibrational_analysis:
-                print(
+                logging.info(
                     "Running without vibrational analysis. \nRunning IRC instead")
                 irc = self.get_irc_calc(conformer)
                 self.run_irc(conformer, irc)
@@ -768,7 +770,7 @@ class Gaussian(Calculator):
                 result = vib.validate_ts()
 
                 if not result:
-                    print(
+                    logging.info(
                         "Vibrational Analysis not conclusive...\n Running IRC instead")
                     irc = self.get_irc_calc(conformer)
                     self.run_irc(conformer, irc)
@@ -776,38 +778,38 @@ class Gaussian(Calculator):
                     self.fix_io_file(irc)
 
             if result:
-                print(
+                logging.info(
                     "TS validated, now running hindered rotor calculations")
                 # Add hindered rotor work here
-                print("jk, this feature hasn't been added just yet")
+                logging.info("jk, this feature hasn't been added just yet")
 
             if result:
-                print("Arrived at a TS!")
+                logging.info("Arrived at a TS!")
                 return result
 
             else:
-                print("Could not arrive at a TS!")
+                logging.info("Could not arrive at a TS!")
                 return result
 
         elif isinstance(conformer, Conformer):
-            print("Conformer provided is NOT a TS object")
+            logging.info("Conformer provided is NOT a TS object")
 
             calc = self.get_species_calc(conformer)
             conformer, result = self.calculate(conformer, calc)
             self.fix_io_file(calc)
 
             if result:
-                print(
+                logging.info(
                     "TS validated, now running hindered rotor calculations")
                 # Add hindered rotor work here
-                print("jk, this feature hasn't been added just yet")
+                logging.info("jk, this feature hasn't been added just yet")
 
             if result:
-                print("Conformer species successfully optimized")
+                logging.info("Conformer species successfully optimized")
                 return result
 
             else:
-                print("Could not optimize species geometry")
+                logging.info("Could not optimize species geometry")
                 return result
 
     def fix_io_file(self, calc=None):
@@ -838,7 +840,7 @@ class Gaussian(Calculator):
                 os.rename(old_com_path, new_com_path)
 
         else:
-            print("No calculator object provided... not doing anything")
+            logging.info("No calculator object provided... not doing anything")
 
 
 """
@@ -855,9 +857,9 @@ def calculate_rotor(self, conformer, calculator):
     path = os.path.join(calc.scratch, calc.label + ".log")
 
     if not (self.verify_rotor(path) and self.verify_output_file(path)):
-        print(
+        logging.info(
             "Could not verify the rotor, this file will not be included in calculations.")
-        print("File {} renamed as {}...".format(
+        logging.info("File {} renamed as {}...".format(
             path, path.replace(".log", "-failed.log")))
         os.rename(path, path.replace(".log", "-failed.log"))
 
