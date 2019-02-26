@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
+##########################################################################
 #
 #   AutoTST - Automated Transition State Theory
 #
@@ -25,7 +25,7 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-################################################################################
+##########################################################################
 
 import os
 import logging
@@ -39,6 +39,7 @@ from autotst.calculators.calculator import Calculator
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
+
 
 def find_lowest_energy_conformer(species, scratch="."):
 
@@ -59,26 +60,31 @@ def find_lowest_energy_conformer(species, scratch="."):
     for smiles, conformers in conf_dict.iteritems():
         for conformer in conformers:
             if isinstance(species, Species):
-                label = Chem.rdinchi.InchiToInchiKey(
-                    Chem.MolToInchi(Chem.MolFromSmiles(conformer.rmg_molecule.toSMILES()))).strip("-N") + "_{}".format(conformer.index)
+                label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(Chem.MolFromSmiles(
+                    conformer.rmg_molecule.toSMILES()))).strip("-N") + "_{}".format(conformer.index)
 
             if lowest_energy_conformer is None:
                 lowest_energy_conformer = conformer
             if not os.path.exists(os.path.join(scratch, label + ".log")):
-                logging.info("Output log files don't exist for {}".format(conformer))
+                logging.info(
+                    "Output log files don't exist for {}".format(conformer))
                 continue
-
 
             if conformer.energy and (conformer.energy < min_e):
                 lowest_energy_conformer = conformer
-
 
     return lowest_energy_conformer
 
 
 class StatMech(Calculator):
 
-    def __init__(self, reaction, scratch=".", output_directory=".", model_chemistry="M06-2X/cc-pVTZ", freq_scale_factor=0.982):
+    def __init__(
+            self,
+            reaction,
+            scratch=".",
+            output_directory=".",
+            model_chemistry="M06-2X/cc-pVTZ",
+            freq_scale_factor=0.982):
         """
         A class to perform Arkane calculations:
         :param: reaction: (Reaction) The reaction of interest
@@ -95,7 +101,6 @@ class StatMech(Calculator):
         self.arkane_job.outputDirectory = self.output_directory
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
-
 
     def get_atoms(self, species):
         """
@@ -123,7 +128,6 @@ class StatMech(Calculator):
         return atom_dict
 
     def get_bonds(self, species):
-
 
         conf = find_lowest_energy_conformer(species, self.scratch)
 
@@ -198,7 +202,6 @@ class StatMech(Calculator):
 
         mol = conf.rmg_molecule
 
-
         output = ['#!/usr/bin/env python',
                   '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
@@ -222,8 +225,15 @@ class StatMech(Calculator):
 
         external_symmetry = mol.getSymmetryNumber()
 
-        output += ["", "linear = False", "", "externalSymmetry = {}".format(external_symmetry), "",
-                   "spinMultiplicity = {}".format(mol.multiplicity), "", "opticalIsomers = 1", ""]
+        output += ["",
+                   "linear = False",
+                   "",
+                   "externalSymmetry = {}".format(external_symmetry),
+                   "",
+                   "spinMultiplicity = {}".format(mol.multiplicity),
+                   "",
+                   "opticalIsomers = 1",
+                   ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
             self.model_chemistry, label), "}", ""]
@@ -240,8 +250,7 @@ class StatMech(Calculator):
         for t in output:
             input_string += t + "\n"
 
-
-        with open(os.path.join(self.scratch, label +".py"), "w") as f:
+        with open(os.path.join(self.scratch, label + ".py"), "w") as f:
             f.write(input_string)
 
     def write_statmech_ts(self, rxn):
@@ -268,8 +277,15 @@ class StatMech(Calculator):
         conf.rmg_molecule.updateMultiplicity()
         external_symmetry = conf.rmg_molecule.getSymmetryNumber()
 
-        output += ["", "linear = False", "", "externalSymmetry = {}".format(external_symmetry), "",
-                   "spinMultiplicity = {}".format(conf.rmg_molecule.multiplicity), "", "opticalIsomers = 1", ""]
+        output += ["",
+                   "linear = False",
+                   "",
+                   "externalSymmetry = {}".format(external_symmetry),
+                   "",
+                   "spinMultiplicity = {}".format(conf.rmg_molecule.multiplicity),
+                   "",
+                   "opticalIsomers = 1",
+                   ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
             self.model_chemistry, rxn.label), "}", ""]
@@ -290,8 +306,17 @@ class StatMech(Calculator):
             f.write(input_string)
 
     def write_arkane_ts(self, rxn):
-        top = ["#!/usr/bin/env python", "# -*- coding: utf-8 -*-", "", 'modelChemistry = "{0}"'.format(
-            self.model_chemistry), "frequencyScaleFactor = {0}".format(self.freq_scale_factor), "useHinderedRotors = False", "useBondCorrections = False", ""]
+        top = [
+            "#!/usr/bin/env python",
+            "# -*- coding: utf-8 -*-",
+            "",
+            'modelChemistry = "{0}"'.format(
+                self.model_chemistry),
+            "frequencyScaleFactor = {0}".format(
+                self.freq_scale_factor),
+            "useHinderedRotors = False",
+            "useBondCorrections = False",
+            ""]
 
         labels = []
         r_smiles = []
@@ -324,7 +349,6 @@ class StatMech(Calculator):
 
         line = "transitionState('TS', '{0}')".format(rxn.label + ".py")
         top.append(line)
-
 
         line = ["",
                 "reaction(",
@@ -366,9 +390,9 @@ class StatMech(Calculator):
         self.arkane_job.inputFile = os.path.join(
             self.scratch, self.reaction.label + ".ark.py")
         self.arkane_job.plot = False
-        #try:
+        # try:
         self.arkane_job.execute()
-        #except IOError:
+        # except IOError:
 
         for job in self.arkane_job.jobList:
             if isinstance(job, KineticsJob):

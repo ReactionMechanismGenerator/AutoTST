@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
+##########################################################################
 #
 #   AutoTST - Automated Transition State Theory
 #
@@ -25,7 +25,7 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-################################################################################
+##########################################################################
 
 
 class Bond:
@@ -62,7 +62,13 @@ class Angle:
         i.e. atoms i, j and, k are labeled (*1, *2, *3)
     """
 
-    def __init__(self, index, atom_indices, degree, mask, reaction_center=False):
+    def __init__(
+            self,
+            index,
+            atom_indices,
+            degree,
+            mask,
+            reaction_center=False):
         self.index = index
         self.atom_indices = atom_indices
         self.degree = degree
@@ -85,7 +91,13 @@ class Torsion:
         i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
     """
 
-    def __init__(self, index, atom_indices, dihedral, mask, reaction_center=False):
+    def __init__(
+            self,
+            index,
+            atom_indices,
+            dihedral,
+            mask,
+            reaction_center=False):
         self.index = index
         self.atom_indices = atom_indices
         self.dihedral = dihedral
@@ -108,7 +120,14 @@ class CisTrans():
         i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
     """
 
-    def __init__(self, index, atom_indices, dihedral, mask, stero=None, reaction_center=False):
+    def __init__(
+            self,
+            index,
+            atom_indices,
+            dihedral,
+            mask,
+            stero=None,
+            reaction_center=False):
         self.index = index
         self.atom_indices = atom_indices
         self.dihedral = dihedral
@@ -119,6 +138,7 @@ class CisTrans():
     def __repr__(self):
         return '<CisTrans "{0} - {1}">'.format(self.atom_indices, self.stero)
 
+
 class ChiralCenter():
 
     def __init__(self, index, atom_index, chirality):
@@ -127,4 +147,5 @@ class ChiralCenter():
         self.chirality = chirality
 
     def __repr__(self):
-        return '<ChiralCenter "{0} - {1}">'.format(self.atom_index, self.chirality)
+        return '<ChiralCenter "{0} - {1}">'.format(
+            self.atom_index, self.chirality)

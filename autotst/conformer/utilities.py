@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
+##########################################################################
 #
 #   AutoTST - Automated Transition State Theory
 #
@@ -25,32 +25,30 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-################################################################################
+##########################################################################
 
+from autotst.reaction import Reaction, TS
+from autotst.species import Species
+from autotst.geometry import Bond, Angle, Torsion, CisTrans
+import autotst
+from ase.optimize import BFGS
+from ase.constraints import FixBondLengths
+from ase import units
+import ase
+import cPickle as pickle
+import pandas as pd
+from numpy import array
+import numpy as np
+import random
+import itertools
 import os
 import sys
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
-import itertools
-import random
-import numpy as np
-from numpy import array
-import pandas as pd
-import cPickle as pickle
-
 
 # do this before we have a chance to import openbabel!
-import ase
-from ase import units
-from ase.constraints import FixBondLengths
-from ase.optimize import BFGS
-
-import autotst
-from autotst.geometry import Bond, Angle, Torsion, CisTrans
-from autotst.species import Species
-from autotst.reaction import Reaction, TS
 
 
 def update_from_ase(autotst_obj):
@@ -65,7 +63,6 @@ def update_from_ase(autotst_obj):
 
     if isinstance(autotst_obj, autotst.reaction.TS):
         autotst_obj.update_from_ase_ts()
-
 
 
 def create_initial_population(autotst_object, delta=30, population_size=30):
@@ -104,8 +101,9 @@ def create_initial_population(autotst_object, delta=30, population_size=30):
         logging.info("The object given is a `TS` object")
         torsions = autotst_object.torsions
         ase_object = autotst_object.ase_ts
-        
-    terminal_torsions, non_terminal_torsions = find_terminal_torsions(autotst_object)
+
+    terminal_torsions, non_terminal_torsions = find_terminal_torsions(
+        autotst_object)
 
     for indivudual in range(population_size):
         dihedrals = []
@@ -173,7 +171,7 @@ def get_unique_conformers(df, unique_torsions={}, min_rms=60):
     :return:
      unique_torsion: a dict containing all of the unique torsions from the dataframe appended
     """
-    ### CURRENTLY BROKEN
+    # CURRENTLY BROKEN
     columns = []
 
     for c in df.columns:
@@ -191,41 +189,40 @@ def get_unique_conformers(df, unique_torsions={}, min_rms=60):
             c.append(tor % 360)
         combo = np.array(c)
         energy = mini.energy.iloc[i]
-        
+
         unique = []
         for key in unique_torsions.keys():
             key = np.array(key)
-            
+
             if ((key - combo)**2).mean() > min_rms:
                 unique.append(True)
-                
+
             else:
                 unique.append(False)
-                
+
         if np.array(unique).all():
             combo = tuple(combo)
             unique_torsions[combo] = energy
-            
-            
+
     min_e = min(unique_torsions.values())
 
     to_delete = []
-    for key, value  in unique_torsions.iteritems():
+    for key, value in unique_torsions.iteritems():
 
         if value > min_e + ((units.kcal / units.mol) / units.eV):
             to_delete.append(key)
 
     for delete in to_delete:
         del unique_torsions[delete]
-                
-        
+
     return unique_torsions
+
 
 def partial_optimize_mol(autotst_object):
     """
     # CURRENTLY BROKEN
     """
-    
+
     if isinstance(autotst_object, autotst.species.Species):
         ase_object = autotst_object.ase_molecule
         labels = []
@@ -243,7 +240,7 @@ def partial_optimize_mol(autotst_object):
         labels = []
         for atom in autotst_object.ts.rmg_ts.getLabeledAtoms().values():
             labels.append(atom.sortingLabel)
-            
+
     ase_copy = ase_object.copy()
     ase_copy.set_calculator(ase_object.get_calculator())
 
@@ -252,9 +249,10 @@ def partial_optimize_mol(autotst_object):
 
     opt = BFGS(ase_copy)
     complete = opt.run(fmax=0.01, steps=5)
-    
+
     relaxed_energy = ase_copy.get_potential_energy()
     return relaxed_energy, ase_copy
+
 
 def get_energy(conformer):
     """
@@ -274,14 +272,14 @@ def find_terminal_torsions(conformer):
     non_terminal_torsions = []
     for torsion in conformer.torsions:
 
-        i,j,k,l = torsion.atom_indices
+        i, j, k, l = torsion.atom_indices
         rmg_mol = conformer.rmg_molecule
-            
+
         assert rmg_mol
 
         atom_j = rmg_mol.atoms[j]
         atom_k = rmg_mol.atoms[k]
-        
+
         terminal = False
 
         if (atom_j.isCarbon()) and (len(atom_j.bonds) == 4):
@@ -301,10 +299,10 @@ def find_terminal_torsions(conformer):
 
             if num_hydrogens == 3:
                 terminal = True
-                      
+
         if terminal:
             terminal_torsions.append(torsion)
         else:
             non_terminal_torsions.append(torsion)
-            
+
     return terminal_torsions, non_terminal_torsions

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
+##########################################################################
 #
 #   AutoTST - Automated Transition State Theory
 #
@@ -25,7 +25,7 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-################################################################################
+##########################################################################
 
 import os
 import itertools
@@ -52,16 +52,19 @@ def get_possible_names(reactants, products):
                          for order in itertools.permutations(reactants)]
     joinedProdOrders = ['+'.join(order)
                         for order in itertools.permutations(products)]
-    fileNames = ['_'.join((rJO, pJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders] + [
-        '_'.join((pJO, rJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders]
+    fileNames = [
+        '_'.join(
+            (rJO, pJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders] + [
+        '_'.join(
+                (pJO, rJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders]
 
     return fileNames
 
 
 class Calculator():
     """
-    A base class for all autotst calculators. 
-    This class is designed to deal with the 
+    A base class for all autotst calculators.
+    This class is designed to deal with the
     input and output of `.ts` and `.kinetics` files.
     """
 
@@ -157,22 +160,22 @@ class Calculator():
                     'int32': numpy.int32,
                 }
                 exec resultFile in global_context, local_context
-        except IOError, e:
+        except IOError as e:
             logging.info("Couldn't read ts file {0}".format(path))
             return None
-        except (NameError, TypeError, SyntaxError), e:
+        except (NameError, TypeError, SyntaxError) as e:
             logging.error('The ts file "{0}" was invalid:'.format(path))
             logging.exception(e)
             return None
-        if not 'rxnLabel' in local_context:
+        if 'rxnLabel' not in local_context:
             logging.error(
                 'The ts file "{0}" did not contain a rxnLabel.'.format(path))
             return None
-        if not 'method' in local_context:
+        if 'method' not in local_context:
             logging.error(
                 'The ts file "{0}" did not contain a method.'.format(path))
             return None
-        if not 'qmData' in local_context:
+        if 'qmData' not in local_context:
             logging.error(
                 'The ts file "{0}" did not contain thermoData.'.format(path))
             return None
@@ -225,18 +228,18 @@ class Calculator():
                     'Molecule': RMGMolecule
                 }
                 exec resultFile in global_context, local_context
-        except IOError, e:
+        except IOError as e:
             logging.error("Couldn't read kinetics file {0}".format(path))
             return None
-        except (NameError, TypeError, SyntaxError), e:
+        except (NameError, TypeError, SyntaxError) as e:
             logging.error('The kinetics file "{0}" was invalid:'.format(path))
             logging.exception(e)
             return None
-        if not 'method' in local_context:
+        if 'method' not in local_context:
             logging.error(
                 'The kinetics file "{0}" did not contain a method.'.format(path))
             return None
-        if not 'Reaction' in local_context:
+        if 'Reaction' not in local_context:
             logging.error(
                 'The kinetics file "{0}" did not contain a reaction.'.format(path))
             return None

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
+##########################################################################
 #
 #   AutoTST - Automated Transition State Theory
 #
@@ -25,7 +25,7 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-################################################################################
+##########################################################################
 
 import os
 import logging
@@ -67,28 +67,35 @@ except ImportError:
 # TODO: Edit this so it works with other reaction families
 
 class Reaction():
-    
+
     rmg_database = None   # will be an RMGDatabase instance, once loaded.
-    # a dictionary will have reaction family names as keys and TransitionStates instances as values, once loaded.
+    # a dictionary will have reaction family names as keys and
+    # TransitionStates instances as values, once loaded.
     ts_databases = dict()
     possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
-            "R_Addition_MultipleBond",
-            "H_Abstraction",
-            "intra_H_migration"
-        ]
-    
-    def __init__(self, label=None, rmg_reaction=None, reaction_family="H_Abstraction", calculator=None):
+        "R_Addition_MultipleBond",
+        "H_Abstraction",
+        "intra_H_migration"
+    ]
+
+    def __init__(
+            self,
+            label=None,
+            rmg_reaction=None,
+            reaction_family="H_Abstraction",
+            calculator=None):
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
             "R_Addition_MultipleBond",
             "H_Abstraction",
             "intra_H_migration"
         ]
-        
+
         self.load_databases()
         self.calculator = calculator
 
         if rmg_reaction:
-            self.rmg_reaction, self.reaction_family = self.get_labeled_reaction(rmg_reaction=rmg_reaction)
+            self.rmg_reaction, self.reaction_family = self.get_labeled_reaction(
+                rmg_reaction=rmg_reaction)
             if label:
                 try:
                     reactants = []
@@ -101,19 +108,22 @@ class Reaction():
                     for prod in p.split("+"):
                         products.append(RMGMolecule(SMILES=prod))
 
-                    test_reaction = RMGReaction(reactants=reactants, products=products)
+                    test_reaction = RMGReaction(
+                        reactants=reactants, products=products)
 
                     if self.rmg_reaction.isIsomorphic(test_reaction):
                         self.label = label
                         self.generate_reactants_and_products()
 
                     else:
-                        logging.info("Label provided doesn't match the RMGReaction, creating a new label")
+                        logging.info(
+                            "Label provided doesn't match the RMGReaction, creating a new label")
                         self.label = self.get_reaction_label(self.rmg_reaction)
                         self.generate_reactants_and_products()
 
-                except:
-                    logging.info("Label provided doesn't match the RMGReaction, creating a new label")
+                except BaseException:
+                    logging.info(
+                        "Label provided doesn't match the RMGReaction, creating a new label")
 
                     self.label = self.get_reaction_label(self.rmg_reaction)
                     self.generate_reactants_and_products()
@@ -123,22 +133,23 @@ class Reaction():
 
         elif label:
             try:
-                self.rmg_reaction, self.reaction_family = self.get_labeled_reaction(label=label)
+                self.rmg_reaction, self.reaction_family = self.get_labeled_reaction(
+                    label=label)
                 self.label = label
                 self.generate_reactants_and_products(self.rmg_reaction)
-            except:
-                logging.info("Label provided is not valid... setting everything to None")
+            except BaseException:
+                logging.info(
+                    "Label provided is not valid... setting everything to None")
 
                 self.rmg_reaction = None
                 self.label = None
                 self.reaction_family = reaction_family
-            
 
         else:
             self.rmg_reaction = None
             self.reaction_family = reaction_family
             self.label = label
-        
+
         # a bit clumsy, but saves refactoring code for now.
         self.ts_database = self.ts_databases[reaction_family]
         self._ts = None
@@ -148,7 +159,6 @@ class Reaction():
 
         return '<Reaction "{}">'.format(self.label)
 
-         
     @property
     def ts(self):
         """
@@ -161,7 +171,7 @@ class Reaction():
             ts_dict = {}
             for direction, mol in self.get_complexes().iteritems():
                 ts = TS(
-                    reaction_label = self.label,
+                    reaction_label=self.label,
                     rmg_molecule=mol,
                     reaction_family=self.reaction_family,
                     distance_data=self.distance_data
@@ -184,8 +194,7 @@ class Reaction():
         if self._distance_data is None:
             self.generate_distance_data()
         return self._distance_data
-    
-    
+
     @classmethod
     def load_databases(cls, force_reload=False):
         """
@@ -204,36 +213,46 @@ class Reaction():
         logging.info("Loading RMG database from '{}'".format(database_path))
 
         try:
-            rmg_database.load(database_path,
-                              kineticsFamilies=cls.possible_families,
-                              transportLibraries=[],
-                              reactionLibraries=[],
-                              seedMechanisms=[],
-                              thermoLibraries=[
-                                  'primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR'],
-                              solvation=False,
-                              )
+            rmg_database.load(
+                database_path,
+                kineticsFamilies=cls.possible_families,
+                transportLibraries=[],
+                reactionLibraries=[],
+                seedMechanisms=[],
+                thermoLibraries=[
+                    'primaryThermoLibrary',
+                    'thermo_DFT_CCSDTF12_BAC',
+                    'CBS_QB3_1dHR'],
+                solvation=False,
+            )
         except IOError:
-            logging.info("RMG database not found at '{}'. This can occur if a git repository of the database is being"
-                         "used rather than the binary version".format(database_path))
+            logging.info(
+                "RMG database not found at '{}'. This can occur if a git repository of the database is being"
+                "used rather than the binary version".format(database_path))
             database_path = os.path.join(database_path, 'input')
-            logging.info("Loading RMG database instead from '{}'".format(database_path))
-            rmg_database.load(database_path,
-                              kineticsFamilies=cls.possible_families,
-                              transportLibraries=[],
-                              reactionLibraries=[],
-                              seedMechanisms=[],
-                              thermoLibraries=[
-                                  'primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR'],
-                              solvation=False,
-                              )
+            logging.info(
+                "Loading RMG database instead from '{}'".format(database_path))
+            rmg_database.load(
+                database_path,
+                kineticsFamilies=cls.possible_families,
+                transportLibraries=[],
+                reactionLibraries=[],
+                seedMechanisms=[],
+                thermoLibraries=[
+                    'primaryThermoLibrary',
+                    'thermo_DFT_CCSDTF12_BAC',
+                    'CBS_QB3_1dHR'],
+                solvation=False,
+            )
 
         cls.rmg_database = rmg_database
 
         cls.ts_databases = dict()
         for reaction_family in cls.possible_families:
             ts_database = TransitionStates()
-            path = os.path.join(autotst.settings['tst_database_path'], reaction_family)
+            path = os.path.join(
+                autotst.settings['tst_database_path'],
+                reaction_family)
             global_context = {'__builtins__': None}
             local_context = {'DistanceData': DistanceData}
             family = rmg_database.kinetics.families[reaction_family]
@@ -241,7 +260,7 @@ class Reaction():
             ts_database.load(path, local_context, global_context)
 
             cls.ts_databases[reaction_family] = ts_database
-            
+
     def generate_distance_data(self, rmg_reaction=None):
         """
         Generates the distance estimates using group additivity.
@@ -257,9 +276,9 @@ class Reaction():
             rmg_reaction)
         logging.info("The distance data is as follows: \n{}".format(
             self.distance_data))
-        
+
         return self.distance_data
-        
+
     def generate_reactants_and_products(self, rmg_reaction=None):
         """
         A module that will generate AutoTST molecules for a given reaction
@@ -271,49 +290,51 @@ class Reaction():
         reactants = []
         products = []
         for react in rmg_reaction.reactants:
-            mol =  Species(rmg_species=react)
+            mol = Species(rmg_species=react)
             mol.generate_structures()
             reactants.append(mol)
-            
+
         for prod in rmg_reaction.products:
-            mol =  Species(rmg_species=prod)
+            mol = Species(rmg_species=prod)
             mol.generate_structures()
             products.append(mol)
-        
+
         self.reactants = reactants
         self.products = products
         return self.reactants, self.products
-        
+
     def get_labeled_reaction(self, label=None, rmg_reaction=None):
         """
         A method that will return a labeled reaction given a reaction label or rmg_reaction
         """
-        
-        assert (label or rmg_reaction), "You must provide a reaction or a reaction label"
-        
+
+        assert (
+            label or rmg_reaction), "You must provide a reaction or a reaction label"
+
         label_reaction = None
         rmg_reaction_reaction = None
-        
+
         if label:
             rmg_reactants = []
             rmg_products = []
-            r,p = label.split("_")
+            r, p = label.split("_")
             for react in r.split("+"):
                 s = RMGMolecule(SMILES=react)
                 rmg_reactants.append(s)
-                
+
             for prod in p.split("+"):
                 s = RMGMolecule(SMILES=prod)
                 rmg_products.append(s)
-                
-            label_reaction = RMGReaction(reactants=rmg_reactants, products=rmg_products)
-            
+
+            label_reaction = RMGReaction(
+                reactants=rmg_reactants, products=rmg_products)
+
             if rmg_reaction:
                 assert rmg_reaction.isIsomorphic(label_reaction)
                 test_reaction = label_reaction
             else:
                 test_reaction = label_reaction
-                
+
         elif rmg_reaction:
             rmg_reactants = []
             rmg_products = []
@@ -322,13 +343,13 @@ class Reaction():
                     rmg_reactants.append(react.molecule)
                 elif isinstance(react, RMGMolecule):
                     rmg_reactants.append([react])
-                    
+
             for prod in rmg_reaction.products:
                 if isinstance(prod, RMGSpecies):
                     rmg_products.append(prod.molecule)
                 elif isinstance(prod, RMGMolecule):
                     rmg_products.append([prod])
-            
+
             test_reactants = []
             test_products = []
             if len(rmg_reactants) == 1:
@@ -337,22 +358,23 @@ class Reaction():
                 l1, l2 = rmg_reactants
                 for i in l1:
                     for j in l2:
-                        test_reactants.append([i,j])
-                        
+                        test_reactants.append([i, j])
+
             if len(rmg_products) == 1:
                 test_reactants = rmg_products
             elif len(rmg_products) == 2:
                 l1, l2 = rmg_products
                 for i in l1:
                     for j in l2:
-                        test_products.append([i,j])
-                        
+                        test_products.append([i, j])
+
             for test_reactant in test_reactants:
                 for test_products in test_products:
-                    test_reaction = RMGReaction(reactants=test_reactant, products=test_products)
+                    test_reaction = RMGReaction(
+                        reactants=test_reactant, products=test_products)
                     if rmg_reaction.isIsomorphic(test_reaction):
                         break
-                        
+
         got_one = False
         for name, family in self.rmg_database.kinetics.families.items():
             try:
@@ -363,27 +385,24 @@ class Reaction():
                     continue
                 got_one = True
 
-            except:
+            except BaseException:
                 logging.info("Couldn't match {} family...".format(family))
-                
+
             if got_one:
                 break
         assert got_one, "Couldn't find a match"
-        
+
         reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
-            test_reaction.reactants,
-            test_reaction.products,
-            only_families=[name]
-        )
-        
+            test_reaction.reactants, test_reaction.products, only_families=[name])
+
         assert reaction_list, "Could not match a reaction to a reaction family..."
-        
+
         for reaction in reaction_list:
             if reaction.isIsomorphic(test_reaction):
                 reaction.reactants = labeled_r
                 reaction.products = labeled_p
                 break
-                
+
         return reaction, name
 
     def get_reaction_label(self, rmg_reaction=None):
@@ -420,7 +439,7 @@ class Reaction():
 
         if not rmg_reaction:
             rmg_reaction = self.rmg_reaction
-        
+
         reactant_complex = RMGMolecule()
         for react in rmg_reaction.reactants:
             if isinstance(react, RMGMolecule):
@@ -438,22 +457,23 @@ class Reaction():
         reactant_complex.updateMultiplicity()
         product_complex.updateMultiplicity()
 
-        self.complexes = {"forward":reactant_complex, "reverse":product_complex}
+        self.complexes = {
+            "forward": reactant_complex,
+            "reverse": product_complex}
 
         return self.complexes
 
-    
     def generate_conformers(self, method="systematic", calculator=None):
         """
         This isn't working right now...
         """
         possible_methods = [
             "systematic",
-            #"ga",
-            #"es"
+            # "ga",
+            # "es"
         ]
 
-        assert calculator,"Please provide an ASE calculator object"
+        assert calculator, "Please provide an ASE calculator object"
         assert method in possible_methods, "Please provide a valid conformer search method."
 
         from autotst.conformer.systematic import *
@@ -464,7 +484,7 @@ class Reaction():
             #print conformer.ase_molecule.get_calculator()
             _, conformers = systematic_search(conformer)
             self.ts[direction] = conformers
-        
+
         return self.ts
 
 
@@ -472,8 +492,15 @@ class TS(Conformer):
     """
     A class that defines the 3D geometry of a transition state (TS)
     """
-    
-    def __init__(self, smiles=None, reaction_label=None, rmg_molecule=None, reaction_family="H_Abstraction", distance_data=None, index=0):
+
+    def __init__(
+            self,
+            smiles=None,
+            reaction_label=None,
+            rmg_molecule=None,
+            reaction_family="H_Abstraction",
+            distance_data=None,
+            index=0):
         self.energy = None
         #####################################################
         #####################################################
@@ -481,14 +508,14 @@ class TS(Conformer):
         self.reaction_label = reaction_label
         self._rdkit_molecule = None
         self._ase_molecule = None
-        self.reaction_family=reaction_family
-        self.distance_data=distance_data
+        self.reaction_family = reaction_family
+        self.distance_data = distance_data
         self.index = index
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
-                assert rmg_molecule.isIsomorphic(
-                    RMGMolecule(SMILES=smiles)), "SMILES string did not match RMG Molecule object"
+                assert rmg_molecule.isIsomorphic(RMGMolecule(
+                    SMILES=smiles)), "SMILES string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
 
@@ -499,16 +526,14 @@ class TS(Conformer):
             else:
                 self.smiles = smiles
                 self.rmg_molecule = RMGMolecule(SMILES=smiles)
-                
-                
+
             self.rmg_molecule.updateMultiplicity()
             self.get_mols()
             self.get_geometries()
-            
-                
+
         else:
             self.smiles = None
-            self.rmg_molecule = None   
+            self.rmg_molecule = None
             self.rdkit_molecule = None
             self._pseudo_geometry = None
             self.ase_molecule = None
@@ -517,12 +542,14 @@ class TS(Conformer):
             self.torsions = []
             self.cistrans = []
             self.chiral_centers = []
-        
+
     def __repr__(self):
         return '<TS "{}">'.format(self.smiles)
 
     def copy(self):
-        copy_conf = TS(reaction_label=self.reaction_label, reaction_family=self.reaction_family)
+        copy_conf = TS(
+            reaction_label=self.reaction_label,
+            reaction_family=self.reaction_family)
         copy_conf.smiles = self.smiles
         copy_conf.rmg_molecule = self.rmg_molecule.copy()
         copy_conf.rdkit_molecule = self.rdkit_molecule.__copy__()
@@ -530,30 +557,34 @@ class TS(Conformer):
         copy_conf.ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
         return copy_conf
-    
+
     @property
     def rdkit_molecule(self):
         if (self._rdkit_molecule is None) and self.distance_data:
-            self._rdkit_molecule = self.get_rdkit_mol(self.rmg_molecule, self.reaction_family, self.distance_data)[0]
+            self._rdkit_molecule = self.get_rdkit_mol(
+                self.rmg_molecule, self.reaction_family, self.distance_data)[0]
         return self._rdkit_molecule
-    
+
     @property
     def ase_molecule(self):
         if (self._ase_molecule is None):
             self._ase_molecule = self.get_ase_mol()
         return self._ase_molecule
 
-
-    def get_rdkit_mol(self, rmg_molecule=None, reaction_family="H_Abstraction", distance_data=None):
-
+    def get_rdkit_mol(
+            self,
+            rmg_molecule=None,
+            reaction_family="H_Abstraction",
+            distance_data=None):
         """
         A method to create an rdkit geometry... slightly different than that of the conformer method
         returns both the rdkit_molecule and the bm
         """
         if not rmg_molecule:
             rmg_molecule = self.rmg_molecule
-        rdkit_molecule = Chem.RWMol(Conformer().get_rdkit_mol(rmg_molecule = rmg_molecule))
-
+        rdkit_molecule = Chem.RWMol(
+            Conformer().get_rdkit_mol(
+                rmg_molecule=rmg_molecule))
 
         labels, atom_match = self.get_labels(rmg_molecule, reaction_family)
         for i, atom in enumerate(rmg_molecule.atoms):
@@ -575,13 +606,13 @@ class TS(Conformer):
             self._pseudo_geometry = rd_copy
 
         logging.info("Initially embedded molecule")
-        
-        bm=None
-        
+
+        bm = None
+
         if distance_data:
             logging.info("Getting bounds matrix")
             bm = self.get_bounds_matrix(rdkit_molecule=rdkit_molecule)
-            
+
             if len(labels) > 0:
 
                 logging.info("Editing bounds matrix")
@@ -594,34 +625,33 @@ class TS(Conformer):
 
             rdkit_molecule = self.rd_embed(
                 rdkit_molecule, 10000, bm=bm, match=atom_match)[0]
-        
+
         return rdkit_molecule, bm
 
-                    
     def get_bounds_matrix(self, rmg_molecule=None, rdkit_molecule=None):
         """
-        A method to obtain the bounds matrix 
+        A method to obtain the bounds matrix
         """
-        
+
         if not rmg_molecule:
             try:
                 rmg_molecule = self.rmg_molecule
-            except:
+            except BaseException:
                 return None
-            
+
         if not rdkit_molecule:
             try:
                 rdkit_molecule = self.get_rdkit_mol(rmg_molecule=rmg_molecule)
-            except:
+            except BaseException:
                 return None
 
         logging.info("before")
 
         bm = rdDistGeom.GetMoleculeBoundsMatrix(rdkit_molecule)
         logging.info("Got bounds matrix")
-            
+
         return bm
-    
+
     def set_limits(self, bm, lbl1, lbl2, value, uncertainty):
         """
         A method to set the limits of a particular distance between two atoms
@@ -633,8 +663,9 @@ class TS(Conformer):
         :param uncertainty: the uncertainty of the `value` distance (float)
         :return bm: an array of arrays corresponding to the edited bounds matrix
         """
-        logging.info("For atoms {0} and {1} we have a distance of: \t {2}".format(
-            lbl1, lbl2, value))
+        logging.info(
+            "For atoms {0} and {1} we have a distance of: \t {2}".format(
+                lbl1, lbl2, value))
         if lbl1 > lbl2:
             bm[lbl2][lbl1] = value + uncertainty / 2
             bm[lbl1][lbl2] = max(0, value - uncertainty / 2)
@@ -643,7 +674,7 @@ class TS(Conformer):
             bm[lbl1][lbl2] = value + uncertainty / 2
 
         return bm
-    
+
     def bm_pre_edit(self, bm, sect):
         """
         Clean up some of the atom distance limits before attempting triangle smoothing.
@@ -673,7 +704,7 @@ class TS(Conformer):
                         bm[i, j] = maxLij
 
         return bm
-    
+
     def get_labels(self, rmg_molecule, reaction_family):
         """
         A method to get the labeled atoms from a reaction
@@ -682,12 +713,15 @@ class TS(Conformer):
         :return labels: the atom labels corresponding to the reaction center
         :return atomMatch: a tuple of tuples the atoms labels corresponding to the reaction center
         """
-        
+
         if len(rmg_molecule.getLabeledAtoms()) == 0:
             labeles = []
             atomMatch = ()
 
-        if reaction_family.lower() in ['h_abstraction', 'r_addition_multiplebond', 'intra_h_migration']:
+        if reaction_family.lower() in [
+            'h_abstraction',
+            'r_addition_multiplebond',
+                'intra_h_migration']:
             # for i, atom in enumerate(reactants.atoms):
             lbl1 = rmg_molecule.getLabeledAtoms()["*1"].sortingLabel
             lbl2 = rmg_molecule.getLabeledAtoms()["*2"].sortingLabel
@@ -705,31 +739,43 @@ class TS(Conformer):
         #logging.info("The labled atoms are {}.".format(labels))
 
         return labels, atomMatch
-    
+
     def edit_matrix(self, rmg_molecule, bm, labels, distance_data):
         """
         A method to edit the bounds matrix using labels and distance data
         """
-        
+
         lbl1, lbl2, lbl3 = labels
-        
+
         sect = []
 
         for atom in rmg_molecule.split()[0].atoms:
             sect.append(atom.sortingLabel)
-            
-        uncertainties = {'d12': 0.02, 'd13': 0.02, 'd23': 0.02}  
+
+        uncertainties = {'d12': 0.02, 'd13': 0.02, 'd23': 0.02}
         bm = self.set_limits(
-            bm, lbl1, lbl2, distance_data.distances['d12'], uncertainties['d12'])
+            bm,
+            lbl1,
+            lbl2,
+            distance_data.distances['d12'],
+            uncertainties['d12'])
         bm = self.set_limits(
-            bm, lbl2, lbl3, distance_data.distances['d23'], uncertainties['d23'])
+            bm,
+            lbl2,
+            lbl3,
+            distance_data.distances['d23'],
+            uncertainties['d23'])
         bm = self.set_limits(
-            bm, lbl1, lbl3, distance_data.distances['d13'], uncertainties['d13'])
-        
+            bm,
+            lbl1,
+            lbl3,
+            distance_data.distances['d13'],
+            uncertainties['d13'])
+
         bm = self.bm_pre_edit(bm, sect)
-        
+
         return bm
-    
+
     def optimize(self, rdmol, boundsMatrix=None, atomMatch=None):
         """
 
@@ -753,16 +799,15 @@ class TS(Conformer):
                 energy = AllChem.UFFGetMoleculeForceField(
                     rdmol, confId=conf.GetId()).CalcEnergy()
             else:
-                _, energy = EmbedLib.OptimizeMol(rdmol, boundsMatrix, atomMatches=atomMatch,
-                                                 forceConstant=100000.0)
+                _, energy = EmbedLib.OptimizeMol(
+                    rdmol, boundsMatrix, atomMatches=atomMatch, forceConstant=100000.0)
 
             if energy < lowestE:
                 minEid = conf.GetId()
                 lowestE = energy
 
         return rdmol, minEid
-    
-    
+
     def rd_embed(self, rdmol, numConfAttempts, bm=None, match=None):
         """
         This portion of the script is literally taken from rmgpy but hacked to work without defining a geometry object
@@ -784,8 +829,9 @@ class TS(Conformer):
                     EmbedLib.EmbedMol(rdmol, bm, atomMatch=match)
                     break
                 except ValueError:
-                    logging.info("RDKit failed to embed on attempt {0} of {1}".format(
-                        i + 1, numConfAttempts))
+                    logging.info(
+                        "RDKit failed to embed on attempt {0} of {1}".format(
+                            i + 1, numConfAttempts))
                 except RuntimeError:
                     logging.info("RDKit failed to embed.")
             else:
@@ -805,12 +851,13 @@ class TS(Conformer):
         return rdmol, minEid
 
     def get_bonds(self):
-        return Conformer().get_bonds(self._pseudo_geometry, self.ase_molecule, self.rmg_molecule)
-        
+        return Conformer().get_bonds(
+            self._pseudo_geometry,
+            self.ase_molecule,
+            self.rmg_molecule)
+
     def get_torsions(self):
         return Conformer().get_torsions(self._pseudo_geometry, self.ase_molecule)
 
     def get_angles(self):
         return Conformer().get_angles(self._pseudo_geometry, self.ase_molecule)
-
-    

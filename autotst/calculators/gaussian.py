@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
+##########################################################################
 #
 #   AutoTST - Automated Transition State Theory
 #
@@ -25,7 +25,7 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-################################################################################
+##########################################################################
 
 import os
 import itertools
@@ -50,10 +50,9 @@ from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian as ASEGaussian
 
 
-
 class Gaussian(Calculator):
-    
-    def __init__(self, 
+
+    def __init__(self,
                  conformer=None,
                  mem="5GB",
                  nprocshared=20,
@@ -63,8 +62,9 @@ class Gaussian(Calculator):
                  save_directory="."):
 
         self.command = "g16"
-        
-        assert isinstance(conformer, (type(None), Conformer)), "Please provide a Conformer object"
+
+        assert isinstance(conformer, (type(None), Conformer)
+                          ), "Please provide a Conformer object"
         self.conformer = conformer
         self.mem = mem
         self.nprocshared = nprocshared
@@ -72,11 +72,10 @@ class Gaussian(Calculator):
         self.method = method
         self.basis = basis
         self.save_directory = save_directory
-        
+
         if self.conformer:
             print self.conformer
 
-        
     def __repr__(self):
         if not self.conformer:
             return '<Gaussian Calculator "">'.format(None)
@@ -85,128 +84,126 @@ class Gaussian(Calculator):
     @property
     def label(self):
         if isinstance(self.conformer, TS):
-            return self.conformer.reaction_label + "_{}".format(self.conformer.index)
+            return self.conformer.reaction_label + \
+                "_{}".format(self.conformer.index)
         elif isinstance(self.conformer, Conformer):
-            label = Chem.rdinchi.InchiToInchiKey(
-                Chem.MolToInchi(Chem.MolFromSmiles(self.conformer.smiles))).strip("-N")
+            label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
+                Chem.MolFromSmiles(self.conformer.smiles))).strip("-N")
             label += "_{}".format(self.conformer.index)
             return label
         else:
             return None
-        
-        
-    def get_rotor_calc(self, 
-                       conformer=None, 
-                       torsion=None, 
-                       mem="5GB", 
-                       nprocshared=20, 
-                       scratch=".", 
-                       method="m062x", 
+
+    def get_rotor_calc(self,
+                       conformer=None,
+                       torsion=None,
+                       mem="5GB",
+                       nprocshared=20,
+                       scratch=".",
+                       method="m062x",
                        basis="6-311+g(2df,2p)"):
-        
-        """ 
+        """
         A method to create all of the calculators needed to perform hindered rotor calculations given a conformer and a torsion
         """
-        
-        assert (torsion and (isinstance(torsion, Torsion))), "To create a rotor calculator, you must provide a Torsion object."
-        
+
+        assert (torsion and (isinstance(torsion, Torsion))
+                ), "To create a rotor calculator, you must provide a Torsion object."
+
         if not conformer:
             if not self.conformer:
                 return None
             conformer = self.conformer
-        
-        assert isinstance(conformer, Conformer), "A Conformer object was not provided..."
-            
-        
+
+        assert isinstance(
+            conformer, Conformer), "A Conformer object was not provided..."
+
         string = ""
         for bond in conformer.bonds:
             i, j = bond.atom_indices
-            string += "B {} {}\n".format(i+1, j+1)
+            string += "B {} {}\n".format(i + 1, j + 1)
 
         i, j, k, l = torsion.atom_indices
-        string += "D {} {} {} {} S 36 10.0".format(i+1, j+1, k+1, l+1)
-        
+        string += "D {} {} {} {} S 36 10.0".format(i + 1, j + 1, k + 1, l + 1)
+
         if isinstance(conformer, TS):
-            label = self.label + "_tor_{}_{}".format(j,k)
+            label = self.label + "_tor_{}_{}".format(j, k)
         elif isinstance(conformer, Conformer):
-            label = Chem.rdinchi.InchiToInchiKey(
-                Chem.MolToInchi(Chem.MolFromSmiles(conformer.smiles))).strip("-N")
+            label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
+                Chem.MolFromSmiles(conformer.smiles))).strip("-N")
             label += "_tor{}{}".format(j, k)
 
-        
-        label = conformer.smiles + "_tor_{}_{}".format(j,k)
+        label = conformer.smiles + "_tor_{}_{}".format(j, k)
         conformer.rmg_molecule.updateMultiplicity()
         mult = conformer.rmg_molecule.multiplicity
 
         calc = ASEGaussian(mem=mem,
-                        nprocshared=nprocshared,
-                        label=label,
-                        scratch=scratch,
-                        method=method,
-                        basis=basis,
-                        extra="Opt=(CalcFC,ModRedun)",
-                        multiplicity=mult,
-                        addsec=[string])
+                           nprocshared=nprocshared,
+                           label=label,
+                           scratch=scratch,
+                           method=method,
+                           basis=basis,
+                           extra="Opt=(CalcFC,ModRedun)",
+                           multiplicity=mult,
+                           addsec=[string])
 
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
 
         return calc
-    
-    def get_species_calc(self,                       
-                         conformer=None, 
-                         mem="5GB", 
-                         nprocshared=20, 
-                         scratch=".", 
-                         method="m062x", 
+
+    def get_species_calc(self,
+                         conformer=None,
+                         mem="5GB",
+                         nprocshared=20,
+                         scratch=".",
+                         method="m062x",
                          basis="6-311+g(2df,2p)"):
-        
         "A method that creates a calculator for a reactant or product that will perform a geometry optimization"
-        
+
         if not conformer:
             if not self.conformer:
                 return None
-            conformer = self.conformer 
-            
+            conformer = self.conformer
+
         if isinstance(conformer, TS):
-            logging.info("TS object provided, cannot obtain a species calculator for a TS")
+            logging.info(
+                "TS object provided, cannot obtain a species calculator for a TS")
             return None
-        
-        assert isinstance(conformer, Conformer), "A Conformer object was not provided..."
-        
-        
+
+        assert isinstance(
+            conformer, Conformer), "A Conformer object was not provided..."
+
         conformer.rmg_molecule.updateMultiplicity()
 
-        # using this round about way of doing stuff because rmg's `toAugumentedInChIKey` method doesn't work on our cluster
+        # using this round about way of doing stuff because rmg's
+        # `toAugumentedInChIKey` method doesn't work on our cluster
 
         smiles = conformer.rmg_molecule.toSMILES()
-        label = Chem.rdinchi.InchiToInchiKey(
-            Chem.MolToInchi(Chem.MolFromSmiles(smiles))).strip("-N") + "_{}".format(conformer.index)
+        label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
+            Chem.MolFromSmiles(smiles))).strip("-N") + "_{}".format(conformer.index)
 
-        calc = ASEGaussian(mem=mem,
-                        nprocshared=nprocshared,
-                        label=label,
-                        scratch=scratch,
-                        method=method,
-                        basis=basis,
-                        extra="opt=(verytight,gdiis,maxcycles=900) freq IOP(2/16=3)",
-                        multiplicity=conformer.rmg_molecule.multiplicity
-                        )
+        calc = ASEGaussian(
+            mem=mem,
+            nprocshared=nprocshared,
+            label=label,
+            scratch=scratch,
+            method=method,
+            basis=basis,
+            extra="opt=(verytight,gdiis,maxcycles=900) freq IOP(2/16=3)",
+            multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
 
         return calc
-    
-    def get_shell_calc(self, 
-                       ts=None, 
-                       mem="5GB", 
-                       nprocshared=20, 
-                       scratch=".", 
-                       method="m062x", 
+
+    def get_shell_calc(self,
+                       ts=None,
+                       mem="5GB",
+                       nprocshared=20,
+                       scratch=".",
+                       method="m062x",
                        basis="6-311+g(2df,2p)"):
         "A method to create a calculator that optimizes the reaction shell"
-
-
 
         if ts is None:
             if self.ts is None:
@@ -215,7 +212,7 @@ class Gaussian(Calculator):
                 return None
             else:
                 ts = self.conformer
-                
+
         assert isinstance(ts, TS), "A TS object was not provided..."
 
         indicies = []
@@ -226,7 +223,7 @@ class Gaussian(Calculator):
         combos = ""
         for combo in list(itertools.combinations(indicies, 2)):
             a, b = combo
-            combos += "{0} {1} F\n".format(a+1, b+1)
+            combos += "{0} {1} F\n".format(a + 1, b + 1)
 
         ts.rmg_molecule.updateMultiplicity()
 
@@ -244,18 +241,17 @@ class Gaussian(Calculator):
                            addsec=[combos[:-1]])
         calc.atoms = ts.ase_molecule
         del calc.parameters['force']
-        
-        return calc
-        
-    def get_center_calc(self, 
-                   ts=None, 
-                   mem="5GB", 
-                   nprocshared=20, 
-                   scratch=".", 
-                   method="m062x", 
-                   basis="6-311+g(2df,2p)"):
-        "A method to create a calculator that optimizes the reaction shell"
 
+        return calc
+
+    def get_center_calc(self,
+                        ts=None,
+                        mem="5GB",
+                        nprocshared=20,
+                        scratch=".",
+                        method="m062x",
+                        basis="6-311+g(2df,2p)"):
+        "A method to create a calculator that optimizes the reaction shell"
 
         if ts is None:
             if self.ts is None:
@@ -264,7 +260,7 @@ class Gaussian(Calculator):
                 return None
             else:
                 ts = self.conformer
-                
+
         assert isinstance(ts, TS), "A TS object was not provided..."
 
         indicies = []
@@ -275,7 +271,7 @@ class Gaussian(Calculator):
         combos = ""
         for combo in list(itertools.combinations(indicies, 2)):
             a, b = combo
-            combos += "{0} {1} F\n".format(a+1, b+1)
+            combos += "{0} {1} F\n".format(a + 1, b + 1)
 
         ts.rmg_molecule.updateMultiplicity()
 
@@ -293,18 +289,17 @@ class Gaussian(Calculator):
                            addsec=[combos[:-1]])
         calc.atoms = ts.ase_molecule
         del calc.parameters['force']
-        
+
         return calc
-    
-    def get_overall_calc(self, 
-                         ts=None, 
-                         mem="5GB", 
-                         nprocshared=20, 
-                         scratch=".", 
-                         method="m062x", 
+
+    def get_overall_calc(self,
+                         ts=None,
+                         mem="5GB",
+                         nprocshared=20,
+                         scratch=".",
+                         method="m062x",
                          basis="6-311+g(2df,2p)"):
         "A method to create a calculator that optimizes the reaction shell"
-
 
         if ts is None:
             if self.ts is None:
@@ -313,7 +308,7 @@ class Gaussian(Calculator):
                 return None
             else:
                 ts = self.conformer
-                
+
         assert isinstance(ts, TS), "A TS object was not provided..."
 
         ts.rmg_molecule.updateMultiplicity()
@@ -321,26 +316,26 @@ class Gaussian(Calculator):
         label = ts.reaction_label.replace(
             "(", "left").replace(")", "right") + "_" + str(ts.index)
 
-        calc = ASEGaussian(mem=mem,
-                           nprocshared=nprocshared,
-                           label=label,
-                           scratch=scratch,
-                           method=method,
-                           basis=basis,
-                           extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq",
-                           multiplicity=ts.rmg_molecule.multiplicity
-                          )
+        calc = ASEGaussian(
+            mem=mem,
+            nprocshared=nprocshared,
+            label=label,
+            scratch=scratch,
+            method=method,
+            basis=basis,
+            extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq",
+            multiplicity=ts.rmg_molecule.multiplicity)
         calc.atoms = ts.ase_molecule
         del calc.parameters['force']
-        
+
         return calc
-    
-    def get_irc_calc(self, 
-                     ts=None, 
-                     mem="5GB", 
-                     nprocshared=20, 
-                     scratch=".", 
-                     method="m062x", 
+
+    def get_irc_calc(self,
+                     ts=None,
+                     mem="5GB",
+                     nprocshared=20,
+                     scratch=".",
+                     method="m062x",
                      basis="6-311+g(2df,2p)"):
         "A method to create the IRC calculator object"
 
@@ -357,18 +352,18 @@ class Gaussian(Calculator):
             "(", "left").replace(")", "right") + "_irc_" + str(ts.index)
 
         calc = ASEGaussian(mem=mem,
-                        nprocshared=nprocshared,
-                        label=label,
-                        scratch=scratch,
-                        method=method,
-                        basis=basis,
-                        extra="irc=(calcall)",
-                        multiplicity=ts.rmg_molecule.multiplicity)
+                           nprocshared=nprocshared,
+                           label=label,
+                           scratch=scratch,
+                           method=method,
+                           basis=basis,
+                           extra="irc=(calcall)",
+                           multiplicity=ts.rmg_molecule.multiplicity)
         calc.atoms = ts.ase_molecule
         del calc.parameters['force']
-        
+
         return calc
-    
+
     def calculate(self, conformer=None, calc=None):
         """
         A method to perform a calculation given a calculator and an AutoTST
@@ -383,7 +378,6 @@ class Gaussian(Calculator):
         assert conformer, "A Conformer or TS object needs to be provided to run calculate..."
         assert calc, "An ASECalculator object must be provided to run calculate..."
 
-
         current_path = os.getcwd()
         scratch_path = os.path.expanduser(
             calc.scratch)
@@ -391,7 +385,6 @@ class Gaussian(Calculator):
         new_file_name = calc.label.replace(
             "left", "(").replace("right", ")") + ".log"
         old_file_name = calc.label + ".log"
-
 
         os.chdir(scratch_path)
 
@@ -420,7 +413,7 @@ class Gaussian(Calculator):
                     os.chdir(current_path)
                     return conformer, True
 
-                except:  # TODO: add error for seg fault
+                except BaseException:  # TODO: add error for seg fault
                     logging.info("{} failed... again...".format(new_file_name))
                     os.chdir(current_path)
                     return conformer, False
@@ -442,9 +435,12 @@ class Gaussian(Calculator):
                 scratch_file = "Gau-" + num + ".int"
                 while os.path.exists(scratch_file):
                     sleep(60)
-                logging.info("Job complete, reading in results now by running calculate again...")
+                logging.info(
+                    "Job complete, reading in results now by running calculate again...")
 
-                sleep(15) # waiting a lil while to make sure that the file is fixed... just in case...
+                # waiting a lil while to make sure that the file is fixed...
+                # just in case...
+                sleep(15)
                 try:
                     conformer.ase_molecule = read_gaussian_out(
                         old_file_name)
@@ -453,7 +449,8 @@ class Gaussian(Calculator):
                     os.chdir(current_path)
                     return conformer, True
                 except IndexError:
-                    logging.info("It appears that the previous log file wasn't finished... removing the files and rerunning")
+                    logging.info(
+                        "It appears that the previous log file wasn't finished... removing the files and rerunning")
                     os.remove(old_file_name)
                     os.remove(old_file_name.replace(".log", ".ase"))
                     os.remove(old_file_name.replace(".log", ".com"))
@@ -464,14 +461,14 @@ class Gaussian(Calculator):
                     "Something went wrong... File is neither complete nor successful...")
 
                 return conformer, False
-            
+
         elif os.path.exists(old_file_name):
             complete, success = self.verify_output_file(old_file_name)
 
             if not complete:
                 logging.info(
                     "Job appears to be running already, waiting for it to complete...")
-                
+
                 from time import sleep
 
                 f = open(old_file_name)
@@ -482,20 +479,25 @@ class Gaussian(Calculator):
                         num = line.split()[-1][:-1]
 
                 if not num:
-                    logging.info("Something is wrong... it seems this run was interupted...")
-                    logging.info("deleting {} and recalculating...".format(old_file_name))
+                    logging.info(
+                        "Something is wrong... it seems this run was interupted...")
+                    logging.info(
+                        "deleting {} and recalculating...".format(old_file_name))
                     os.remove(old_file_name)
                     return self.calculate(conformer, calc)
-                
+
                 scratch_file = "Gau-" + num + ".int"
                 while os.path.exists(scratch_file):
                     sleep(60)
-                logging.info("Job complete, reading in results now by running calculate again...")
+                logging.info(
+                    "Job complete, reading in results now by running calculate again...")
 
-                sleep(30) # waiting a lil while to make sure that the file is fixed... just in case...
+                # waiting a lil while to make sure that the file is fixed...
+                # just in case...
+                sleep(30)
 
                 return self.calculate(conformer, calc)
-            
+
             else:
                 logging.info(
                     "Found previous file for {}, verifying it...".format(old_file_name))
@@ -510,7 +512,7 @@ class Gaussian(Calculator):
                     logging.info(
                         "Something went wrong... File is neither complete nor successful...")
 
-                    return conformer, False           
+                    return conformer, False
         # Seeing if the file exists
         else:
             # File doesn't exist, running calculations
@@ -523,7 +525,7 @@ class Gaussian(Calculator):
                 conformer.update_coords()
                 os.chdir(current_path)
                 return conformer, True
-            except:  # TODO: add error for seg fault
+            except BaseException:  # TODO: add error for seg fault
                 # first calc failed, trying it once more
                 logging.info(
                     "Failed first attempt for {}. Trying it once more...".format(new_file_name))
@@ -534,12 +536,12 @@ class Gaussian(Calculator):
                     conformer.update_coords()
                     os.chdir(current_path)
                     return conformer, True
-                except:  # TODO: add error for seg fault
+                except BaseException:  # TODO: add error for seg fault
                     logging.info(
                         "{} failed first and second attempt...".format(new_file_name))
                     os.chdir(current_path)
                     return conformer, False
-                
+
     def verify_output_file(self, path):
         """
         A method to verify output files and make sure that they successfully converged, if not, re-running them
@@ -561,10 +563,10 @@ class Gaussian(Calculator):
                 verified = (True, False)
 
         return verified
-    
+
     def run_irc(self, conformer=None, calc=None):
         "A method to run the IRC calculation"
-        
+
         assert "irc" in calc.label, "The calculator provided is not an IRC calculator"
         logging.info("Running IRC calculation")
 
@@ -578,41 +580,45 @@ class Gaussian(Calculator):
 
         os.chdir(scratch_path)
         if os.path.exists(new_file_name):
-            logging.info("It seems that an old IRC has been run, seeing if it's complete...")
+            logging.info(
+                "It seems that an old IRC has been run, seeing if it's complete...")
             complete, converged = self.verify_output_file(new_file_name)
             if complete and converged:
-                logging.info("Previous IRC complete and resulted in Normal Termination, verifying it...")
+                logging.info(
+                    "Previous IRC complete and resulted in Normal Termination, verifying it...")
                 os.chdir(current_path)
 
             else:
-                logging.info("Previous IRC was not successful or incomplete... Rerunning it...")
+                logging.info(
+                    "Previous IRC was not successful or incomplete... Rerunning it...")
                 try:
                     calc.calculate(conformer.ase_molecule)
-                except:
-                    # This normally fails because of an issue with ase's `read_results` method.
+                except BaseException:
+                    # This normally fails because of an issue with ase's
+                    # `read_results` method.
                     os.chdir(current_path)
                     pass
                 logging.info("IRC calc complete!")
         else:
-            logging.info("No previous IRC clac has been run, starting a new one...")
+            logging.info(
+                "No previous IRC clac has been run, starting a new one...")
             try:
                 calc.calculate(conformer.ase_molecule)
-            except:
-                # This normally fails because of an issue with ase's `read_results` method.
+            except BaseException:
+                # This normally fails because of an issue with ase's
+                # `read_results` method.
                 os.chdir(current_path)
                 pass
             logging.info("IRC calc complete!")
-            
 
     def validate_irc(self, calc=None):
         """
         A method to verify an IRC calc
         """
         assert "irc" in calc.label, "The calculator provided is not an IRC calculator"
-        
-        
+
         reaction_label = calc.label.strip("_irc")
-        
+
         logging.info("Validating IRC file...")
         irc_path = os.path.join(calc.scratch,
                                 calc.label + ".log")
@@ -634,7 +640,7 @@ class Gaussian(Calculator):
             if "Normal termination" in file_line:
                 logging.info("IRC successfully ran")
                 completed = True
-        if completed == False:
+        if not completed:
             logging.info("IRC failed... could not be validated...")
             return False
 
@@ -662,7 +668,8 @@ class Gaussian(Calculator):
             pth1End = sum(steps[:pth1[-1]])
             # Compare the reactants and products
             ircParse = ccread(irc_path)
-            # cf. http://cclib.sourceforge.net/wiki/index.php/Using_cclib#Additional_information
+            # cf.
+            # http://cclib.sourceforge.net/wiki/index.php/Using_cclib#Additional_information
 
             atomcoords = ircParse.atomcoords
             atomnos = ircParse.atomnos
@@ -678,51 +685,50 @@ class Gaussian(Calculator):
                 reactants=mol1.split(),
                 products=mol2.split(),
             )
-            
+
             r, p = reaction_label.split("_")
-            
+
             reactants = []
             products = []
-            
+
             for react in r.split("+"):
                 react = RMGMolecule(SMILES=react)
                 react.toSingleBonds()
                 reactants.append(react)
-                
+
             for prod in p.split("+"):
                 prod = RMGMolecule(SMILES=prod)
                 prod.toSingleBonds()
                 products.append(prod)
-                
+
             targetReaction = RMGReaction(
-                reactants = reactants,
-                products = products,
+                reactants=reactants,
+                products=products,
             )
-            
 
             if targetReaction.isIsomorphic(testReaction):
                 return True
             else:
                 return False
-            
-            
-    def run(self, 
-            conformer=None, 
-            vibrational_analysis=True, 
+
+    def run(self,
+            conformer=None,
+            vibrational_analysis=True,
             hindered_rotors=True,):
         """
         A method to perform all the necessary calculations required for a particular conformer
         """
-        
+
         if not conformer:
             conformer = self.conformer
-        
-        assert isinstance(conformer, (Conformer, TS)), "`conformer` provided not a Conformer type..."
-        
+
+        assert isinstance(conformer, (Conformer, TS)
+                          ), "`conformer` provided not a Conformer type..."
+
         if isinstance(conformer, TS):
             # Performing the TS optimizations
             logging.info("Conformer provided is a TS object")
-            
+
             shell = self.get_shell_calc(conformer)
             logging.info("Running optimization of reaction shell")
             conformer, result = self.calculate(conformer, shell)
@@ -730,7 +736,7 @@ class Gaussian(Calculator):
             if not result:
                 logging.info("FAILED SHELL CALCULATION")
                 return result
-            
+
             center = self.get_center_calc(conformer)
             logging.info("Running optization of reaction center")
             conformer, result = self.calculate(conformer, center)
@@ -738,16 +744,17 @@ class Gaussian(Calculator):
             if not result:
                 logging.info("FAILED CENTER CALCULATION")
                 return result
-            
+
             overall = self.get_overall_calc(conformer)
             logging.info("Running overall optimization of TS")
             conformer, result = self.calculate(conformer, overall)
             self.fix_io_file(overall)
             if not result:
                 logging.info("FAILED OVERALL CALCULATION")
-                
+
             if not vibrational_analysis:
-                logging.info("Running without vibrational analysis. \nRunning IRC instead")
+                logging.info(
+                    "Running without vibrational analysis. \nRunning IRC instead")
                 irc = self.get_irc_calc(conformer)
                 self.run_irc(conformer, irc)
                 result = self.validate_irc(irc)
@@ -757,19 +764,21 @@ class Gaussian(Calculator):
                 from autotst.calculators.vibrational_analysis import VibrationalAnalysis
                 vib = VibrationalAnalysis(ts=conformer, scratch=self.scratch)
                 result = vib.validate_ts()
-                
+
                 if not result:
-                    logging.info("Vibrational Analysis not conclusive...\n Running IRC instead")
+                    logging.info(
+                        "Vibrational Analysis not conclusive...\n Running IRC instead")
                     irc = self.get_irc_calc(conformer)
                     self.run_irc(conformer, irc)
                     result = self.validate_irc(irc)
                     self.fix_io_file(irc)
-                    
+
             if result:
-                logging.info("TS validated, now running hindered rotor calculations")
-                ### Add hindered rotor work here
+                logging.info(
+                    "TS validated, now running hindered rotor calculations")
+                # Add hindered rotor work here
                 logging.info("jk, this feature hasn't been added just yet")
-                    
+
             if result:
                 logging.info("Arrived at a TS!")
                 return result
@@ -777,27 +786,28 @@ class Gaussian(Calculator):
             else:
                 logging.info("Could not arrive at a TS!")
                 return result
-            
+
         elif isinstance(conformer, Conformer):
             logging.info("Conformer provided is NOT a TS object")
-            
+
             calc = self.get_species_calc(conformer)
             conformer, result = self.calculate(conformer, calc)
             self.fix_io_file(calc)
-            
+
             if result:
-                logging.info("TS validated, now running hindered rotor calculations")
-                ### Add hindered rotor work here
+                logging.info(
+                    "TS validated, now running hindered rotor calculations")
+                # Add hindered rotor work here
                 logging.info("jk, this feature hasn't been added just yet")
-                
+
             if result:
                 logging.info("Conformer species successfully optimized")
                 return result
-            
+
             else:
                 logging.info("Could not optimize species geometry")
                 return result
-            
+
     def fix_io_file(self, calc=None):
         """
         A method that removes the `left` and `right` text from a log, ase, and
@@ -824,9 +834,11 @@ class Gaussian(Calculator):
                 new_com_path = old_com_path.replace(
                     "left", "(").replace("right", ")")
                 os.rename(old_com_path, new_com_path)
-                
+
         else:
             logging.info("No calculator object provided... not doing anything")
+
+
 """
 def calculate_rotor(self, conformer, calculator):
 

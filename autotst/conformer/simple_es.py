@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
+##########################################################################
 #
 #   AutoTST - Automated Transition State Theory
 #
@@ -25,27 +25,25 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-################################################################################
+##########################################################################
 
+from autotst.conformer.utilities import update_from_ase, create_initial_population, \
+    select_top_population, get_unique_conformers, get_energy, find_terminal_torsions, \
+    partial_optimize_mol
+from autotst.reaction import Reaction, TS
+from autotst.species import Species
+from autotst.geometry import Bond, Angle, Torsion, CisTrans
+import autotst
+import pandas as pd
+from numpy import array
+import numpy as np
+import random
+import itertools
 import os
 import sys
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
-
-import itertools
-import random
-import numpy as np
-from numpy import array
-import pandas as pd
-
-import autotst
-from autotst.geometry import Bond, Angle, Torsion, CisTrans
-from autotst.species import Species
-from autotst.reaction import Reaction, TS
-from autotst.conformer.utilities import update_from_ase, create_initial_population, \
-    select_top_population, get_unique_conformers, get_energy, find_terminal_torsions, \
-    partial_optimize_mol
 
 
 def perform_simple_es(autotst_object,
@@ -57,7 +55,7 @@ def perform_simple_es(autotst_object,
                       store_directory=".",
                       delta=30):
     """
-    Performs evolutionary strategy to determine the lowest energy conformer of a TS or molecule. 
+    Performs evolutionary strategy to determine the lowest energy conformer of a TS or molecule.
 
     :param autotst_object: an autotst_ts, autotst_rxn, or autotst_molecule that you want to perform conformer analysis on
        * the ase_object of the autotst_object must have a calculator attached to it.
@@ -110,28 +108,26 @@ def perform_simple_es(autotst_object,
     gen_number = 0
     complete = False
     unique_conformers = {}
-    
-    terminal_torsions, non_terminal_torsions = find_terminal_torsions(autotst_object)
-    
-    
+
+    terminal_torsions, non_terminal_torsions = find_terminal_torsions(
+        autotst_object)
+
     while complete == False:
-        
-        
+
         relaxed_top = []
-        for combo in top.iloc[:,1:].values:
+        for combo in top.iloc[:, 1:].values:
             for index, torsion in enumerate(non_terminal_torsions):
                 i, j, k, l = torsion.indices
                 right_mask = torsion.right_mask
 
                 dihedral = combo[index]
 
-
                 ase_object.set_dihedral(a1=i,
-                                    a2=j,
-                                    a3=k,
-                                    a4=l,
-                                    angle=float(dihedral),
-                                    mask=right_mask)
+                                        a2=j,
+                                        a3=k,
+                                        a4=l,
+                                        angle=float(dihedral),
+                                        mask=right_mask)
             update_from_ase(autotst_object)
 
             relaxed_e, relaxed_object = partial_optimize_mol(autotst_object)
@@ -143,23 +139,23 @@ def perform_simple_es(autotst_object,
                 right_mask = torsion.right_mask
 
                 d = relaxed_object.get_dihedral(a1=i,
-                                    a2=j,
-                                    a3=k,
-                                    a4=l)
+                                                a2=j,
+                                                a3=k,
+                                                a4=l)
 
                 new_dihedrals.append(d)
 
-            relaxed_top.append([relaxed_e]+ new_dihedrals)
+            relaxed_top.append([relaxed_e] + new_dihedrals)
 
         columns = top.columns
         top = pd.DataFrame(relaxed_top, columns=columns)
 
         if store_generations:
-            save_name = "{}_relaxed_top_es_generation_{}.csv".format(label, gen_number)
+            save_name = "{}_relaxed_top_es_generation_{}.csv".format(
+                label, gen_number)
             f = os.path.join(store_directory, save_name)
             top.to_csv(f)
-        
-        
+
         gen_number += 1
         logging.info("Performing ES on generation {}".format(gen_number))
 
@@ -172,7 +168,12 @@ def perform_simple_es(autotst_object,
                 right_mask = torsion.right_mask
 
                 dihedral = random.gauss(
-                    top.mean()["torsion_" + str(index)], top.std()["torsion_" + str(index)])
+                    top.mean()[
+                        "torsion_" +
+                        str(index)],
+                    top.std()[
+                        "torsion_" +
+                        str(index)])
                 dihedrals.append(dihedral)
                 ase_object.set_dihedral(a1=i,
                                         a2=j,
@@ -183,9 +184,8 @@ def perform_simple_es(autotst_object,
 
             # Updating the molecule
             update_from_ase(autotst_object)
-            
-            energy = get_energy(autotst_object)
 
+            energy = get_energy(autotst_object)
 
             r.append([energy] + dihedrals)
 
@@ -193,13 +193,13 @@ def perform_simple_es(autotst_object,
         logging.info(
             "Creating the DataFrame of results for the {}th generation".format(gen_number))
 
-
         results.columns = top.columns
         results = results.sort_values("energy")
 
-        unique_conformers = get_unique_conformers(results, unique_conformers, min_rms)
+        unique_conformers = get_unique_conformers(
+            results, unique_conformers, min_rms)
 
-        if store_generations == True:
+        if store_generations:
             # This portion stores each generation if desired
             logging.info("Saving the results DataFrame")
 
@@ -209,9 +209,9 @@ def perform_simple_es(autotst_object,
             results.to_csv(f)
 
         top = select_top_population(results, top_percent)
-                      
-        best = top.iloc[0,1:]
-        worst= top.iloc[-1,1:]
+
+        best = top.iloc[0, 1:]
+        worst = top.iloc[-1, 1:]
 
         rms = ((best - worst)**2).mean()
 
@@ -223,4 +223,3 @@ def perform_simple_es(autotst_object,
             logging.info("Cutoff criteria reached. ES complete.")
 
     return results, unique_conformers
-

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
+##########################################################################
 #
 #   AutoTST - Automated Transition State Theory
 #
@@ -25,7 +25,7 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-################################################################################
+##########################################################################
 
 import os
 import logging
@@ -34,7 +34,6 @@ import numpy as np
 from cclib.io import ccread
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
-
 
 
 def percent_change(original, new):
@@ -60,14 +59,16 @@ class VibrationalAnalysis():
         self.scratch = scratch
 
     def __repr__(self):
-        return '<AutoTST Vibrational Analysis "{0}">'.format(self.ts.reaction_label)
+        return '<AutoTST Vibrational Analysis "{0}">'.format(
+            self.ts.reaction_label)
 
     def get_log_file(self, scratch, ts):
         """
         This method obtains the logfile name from the AutoTST_Reaction
         """
 
-        self.log_file = os.path.join(scratch, ts.reaction_label + "_" + str(ts.index) + ".log")
+        self.log_file = os.path.join(
+            scratch, ts.reaction_label + "_" + str(ts.index) + ".log")
 
     def parse_vibrations(self):
         """
@@ -118,8 +119,8 @@ class VibrationalAnalysis():
             i, j = bond.atom_indices
             before = self.before_geometry.get_distance(i, j)
             after = self.post_geometry.get_distance(i, j)
-            results.append(
-                [bond.index, bond.atom_indices, bond.reaction_center, percent_change(before, after)])
+            results.append([bond.index, bond.atom_indices,
+                            bond.reaction_center, percent_change(before, after)])
 
         results = pd.DataFrame(results)
         results.columns = ["index", "atom_indices", "center", "percent_change"]
@@ -142,7 +143,8 @@ class VibrationalAnalysis():
 
         self.obtain_percent_changes(self.ts)
 
-        if (np.log10(((self.percent_changes[self.percent_changes.center == True].mean()))) > np.log10(((self.percent_changes[self.percent_changes.center != True].mean()))) + 1).all():
+        if (np.log10(((self.percent_changes[self.percent_changes.center].mean()))) > np.log10(
+                ((self.percent_changes[self.percent_changes.center != True].mean()))) + 1).all():
             logging.info("Vibrational analysis was successful")
             return True
 
