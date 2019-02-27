@@ -440,7 +440,8 @@ class StatMech(Calculator):
         for job in self.arkane_job.jobList:
             if isinstance(job, KineticsJob):
                 self.kinetics_job = job
-            elif isinstance(job, ThermoJob)
+            elif isinstance(job, ThermoJob):
+                continue
 
     def set_reactants_and_products(self):
 
