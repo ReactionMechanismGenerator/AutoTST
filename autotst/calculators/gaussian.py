@@ -247,8 +247,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_shell_" + str(ts.index)
+        label = ts.reaction_label "_shell_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
@@ -305,8 +304,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_center_" + str(ts.index)
+        label = ts.reaction_label + "_center_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
@@ -353,8 +351,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_" + str(ts.index)
+        label = ts.reaction_label + "_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
@@ -398,8 +395,7 @@ class Gaussian(Calculator):
                 ts = self.conformer
 
         ts.rmg_molecule.updateMultiplicity()
-        label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_irc_" + str(ts.index)
+        label = ts.reaction_label + "_irc_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,

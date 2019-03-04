@@ -75,7 +75,7 @@ class Reaction():
     possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
         "R_Addition_MultipleBond",
         "H_Abstraction",
-        "intra_H_migration"
+        "intra_H_migration",
     ]
 
     def __init__(
