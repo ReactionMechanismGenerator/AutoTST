@@ -247,7 +247,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label "_shell_" + str(ts.index)
+        label = ts.reaction_label + "_shell_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
