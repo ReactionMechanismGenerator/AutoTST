@@ -11,7 +11,7 @@ from ase.io.gaussian import read_gaussian_out
 from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
 from autotst.molecule import Molecule
 from autotst.reaction import Reaction, TS
-import os
+import os, time
 from rmgpy.data.rmg import RMGDatabase
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.reaction import Reaction as RMGReaction, ReactionError
@@ -25,6 +25,7 @@ from rdkit import Chem
 import numpy as np
 import logging
 import subprocess
+from shutil import move
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
@@ -81,14 +82,14 @@ class Job():
         """
         ase_calculator.write_input(conformer.ase_molecule)
 
-        os.rename(
+        move(
             ase_calculator.label + ".com", 
             os.path.join(
                 ase_calculator.scratch,
                 ase_calculator.label + ".com"
             ))
 
-        os.rename(
+        move(
             ase_calculator.label + ".ase", 
             os.path.join(
                 ase_calculator.scratch,
@@ -189,7 +190,7 @@ class Job():
         """
         calc = calculator.get_species_calc(conformer=conformer)
         logging.info("Submitting {} conformer".format(calc.label))
-        self.write_input(calc, conformer)
+        self.write_input(conformer, calc)
         self.submit(calc, "general")
         return calc
 
@@ -265,7 +266,7 @@ class Job():
         """
         calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
         logging.info("Running hindered rotor calculation for {}".format(torsion))
-        self.write_input(calc, conformer)
+        self.write_input(conformer, calc)
         self.submit(calc, "general")
 
     def run_rotors(self, conformer, steps, step_size):
@@ -335,7 +336,7 @@ class Job():
                                          basis=calculator.basis
                                          )
         logging.info("Submitting {} TS".format(calc.label))
-        self.write_input(calc, ts)
+        self.write_input(ts, calc)
         self.submit(calc, "general")
 
     def submit_center(self, ts=None, calculator=None):
@@ -351,7 +352,7 @@ class Job():
                                           basis=calculator.basis
                                           )
         logging.info("Submitting {} TS".format(calc.label))
-        self.write_input(calc, ts)
+        self.write_input(ts, calc)
         self.submit(calc, "general")
 
     def submit_overall(self, ts=None, calculator=None):
@@ -367,7 +368,7 @@ class Job():
                                            basis=calculator.basis
                                            )
         logging.info("Submitting {} TS".format(calc.label))
-        self.write_input(calc, ts)
+        self.write_input(ts, calc)
         self.submit(calc, "general")
 
     def submit_irc(self, ts=None, calculator=None):
@@ -380,7 +381,7 @@ class Job():
                                        basis=calculator.basis
                                        )
         logging.info("Submitting {} TS".format(calc.label))
-        self.write_input(calc, ts)
+        self.write_input(ts, calc)
         self.submit(calc, "west")
 
     def submit_ts(self, ts=None, calculator=None, vibrational_analysis=True):
