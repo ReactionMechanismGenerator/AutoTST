@@ -274,10 +274,17 @@ class Reaction():
         assert rmg_reaction, "try calling get_rmg_reactions() first"
         self._distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(
             rmg_reaction)
-        logging.info("The distance data is as follows: \n{}".format(
-            self.distance_data))
 
-        return self.distance_data
+        if np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"], 
+              self._distance_data.distances["d13"], 
+              atol=0.01):
+            logging.info("Distance between *1 and *3 is too small, setting it to lower bound of uncertainty")
+    
+            self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"]
+
+        logging.info("The distance data is as follows: \n{}".format(
+            self._distance_data))
+
 
     def generate_reactants_and_products(self, rmg_reaction=None):
         """
