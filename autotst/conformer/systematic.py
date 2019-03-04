@@ -163,14 +163,25 @@ def systematic_search(conformer,
             conformer.set_chiral_center(center.index, s_r)
 
         conformer.ase_molecule.set_calculator(calc)
-        # Something funky happening with this optimization
-        # conformer.update_coords()
-        #opt = BFGS(conformer.ase_molecule)
-        # opt.run()
         conformer.update_coords()
+    
+        if isinstance(conformer, TS):
+            atoms = conformer.rmg_molecule.getLabeledAtoms()
+            labels = []
+            labels.append([atoms["*1"].sortingLabel, atoms["*2"].sortingLabel])
+            labels.append([atoms["*3"].sortingLabel, atoms["*2"].sortingLabel])
+            labels.append([atoms["*1"].sortingLabel, atoms["*3"].sortingLabel])
+            from ase.constraints import FixBondLengths
+            c = FixBondLengths(labels)
+            conformer.ase_molecule.set_constraint(c)
+        
+        opt = BFGS(conformer.ase_molecule)
         try:
+            opt.run()
+            conformer.update_coords_from("ase")
             energy = get_energy(conformer)
         except BaseException:
+            print("Optimization failed for {}_{}".format(conformer.label, conformer.index))
             energy = 1e5
 
         sample = ["torsion_{}", "cistrans_{}", "chiral_center_{}"]
