@@ -92,7 +92,7 @@ class StatMech(Calculator):
         :param: model_chemistry: (str) The supported model_chemistry described by http://reactionmechanismgenerator.github.io/RMG-Py/users/arkane/input.html#model-chemistry
         :param: freq_scale_factor: (float) The scaling factor corresponding to the model chemistry - source:https://comp.chem.umn.edu/freqscale/version3b1.htm
         """
-
+  
         self.reaction = reaction
         self.scratch = scratch
 
@@ -243,7 +243,7 @@ class StatMech(Calculator):
         output += [
             "frequencies = Log('{0}.log')".format(label), ""]
 
-        output += ["rotors = ["] #TODO for carl
+        output += ["rotors = ["]
         for torsion in conf.torsions:
             output += [self.get_rotor_info(conf, torsion)]
         output += ["]"]
@@ -261,20 +261,19 @@ class StatMech(Calculator):
         Formats and returns info about torsion as it should appear in an Arkane species.py
 
         conformer :: autotst conformer object
-        torsion :: autotst torsion object 
+        torsion   :: autotst torsion object 
 
         Needed for Arkane species file:
         scanLog :: Gaussian output log of freq calculation on optimized geometry
-        pivots :: torsion center: j,k)
-        top :: ID of all atoms in one top, starting from 1!),
+        pivots  :: torsion center: j,k of i,j,k,l (Note Arkane begins indexing with 1)
+        top     :: ID of all atoms in one top (Note Arkane begins indexing with 1)
 
         """
         i,j,k,l = torsion.atom_indices
 
-        tor_center = [j,k] #If given i,j,k,l torsion, center is j,k
+        tor_center = [j,k]
         tor_center_adj = [j+1, k+1] # Adjusted since mol's IDs start from 0 while Arkane's start from 1
 
-        # MUST CONTAIN FREQ as well as opt geometry
         if isinstance(conformer, TS):
             tor_log = os.path.join(
                 self.scratch,
@@ -440,7 +439,8 @@ class StatMech(Calculator):
         for job in self.arkane_job.jobList:
             if isinstance(job, KineticsJob):
                 self.kinetics_job = job
-            elif isinstance(job, ThermoJob)
+            elif isinstance(job, ThermoJob):
+                self.thermo_job = job
 
     def set_reactants_and_products(self):
 
