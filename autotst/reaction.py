@@ -29,6 +29,7 @@
 
 import os
 import logging
+import numpy as np
 
 import rdkit
 from rdkit import DistanceGeometry
