@@ -58,7 +58,7 @@ class Gaussian(Calculator):
                  nprocshared=20,
                  scratch=".",
                  method="m062x",
-                 basis="6-311+g(2df,2p)",
+                 basis="cc-pVTZ",
                  save_directory="."):
 
         self.command = "g16"
@@ -99,7 +99,7 @@ class Gaussian(Calculator):
                        nprocshared=20,
                        scratch=".",
                        method="m062x",
-                       basis="6-311+g(2df,2p)",
+                       basis="cc-pVTZ",
                        steps=36,
                        step_size=10.0):
         """
@@ -166,7 +166,7 @@ class Gaussian(Calculator):
                          nprocshared=20,
                          scratch=".",
                          method="m062x",
-                         basis="6-311+g(2df,2p)"):
+                         basis="cc-pVTZ"):
         "A method that creates a calculator for a reactant or product that will perform a geometry optimization"
 
         if not conformer:
@@ -222,7 +222,7 @@ class Gaussian(Calculator):
                        nprocshared=20,
                        scratch=".",
                        method="m062x",
-                       basis="6-311+g(2df,2p)"):
+                       basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
 
         if ts is None:
@@ -279,7 +279,7 @@ class Gaussian(Calculator):
                         nprocshared=20,
                         scratch=".",
                         method="m062x",
-                        basis="6-311+g(2df,2p)"):
+                        basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
 
         if ts is None:
@@ -336,7 +336,7 @@ class Gaussian(Calculator):
                          nprocshared=20,
                          scratch=".",
                          method="m062x",
-                         basis="6-311+g(2df,2p)"):
+                         basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
 
         if ts is None:
@@ -383,7 +383,7 @@ class Gaussian(Calculator):
                      nprocshared=20,
                      scratch=".",
                      method="m062x",
-                     basis="6-311+g(2df,2p)"):
+                     basis="cc-pVTZ"):
         "A method to create the IRC calculator object"
 
         if ts is None:
