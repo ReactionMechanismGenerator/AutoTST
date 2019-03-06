@@ -31,6 +31,7 @@ import logging
 import pandas as pd
 import numpy as np
 import os
+from multiprocessing import Process, Manager
 
 import ase
 from ase import Atoms
@@ -38,6 +39,8 @@ from ase import calculators
 from ase.optimize import BFGS
 
 import autotst
+from autotst.species import Conformer
+from autotst.reaction import TS
 from autotst.conformer.utilities import get_energy, find_terminal_torsions
 
 
@@ -134,7 +137,11 @@ def systematic_search(conformer,
     calc = conformer.ase_molecule.get_calculator()
 
     results = []
-    for combo in combos:
+    conformers = {}
+    combinations = {}
+    for index, combo in enumerate(combos):
+
+        combinations[index] = combo
 
         torsions, cistrans, chiral_centers = combo
 
@@ -162,28 +169,61 @@ def systematic_search(conformer,
             center = conformer.chiral_centers[i]
             conformer.set_chiral_center(center.index, s_r)
 
-        conformer.ase_molecule.set_calculator(calc)
-        conformer.update_coords()
-    
+        conformer.update_coords_from("ase")
+
+        conformers[index] = conformer.copy()
+
+    logging.info("There are {} unique conformers generated".format(len(conformers)))
+
+    final_results = []
+
+    def opt_conf(conformer, calculator, i):
+
+        combo = combinations[i]
         if isinstance(conformer, TS):
             atoms = conformer.rmg_molecule.getLabeledAtoms()
             labels = []
             labels.append([atoms["*1"].sortingLabel, atoms["*2"].sortingLabel])
             labels.append([atoms["*3"].sortingLabel, atoms["*2"].sortingLabel])
-            labels.append([atoms["*1"].sortingLabel, atoms["*3"].sortingLabel])
+            #labels.append([atoms["*1"].sortingLabel, atoms["*3"].sortingLabel])
             from ase.constraints import FixBondLengths
             c = FixBondLengths(labels)
             conformer.ase_molecule.set_constraint(c)
+            label = conformer.reaction_label
+
+        else:
+            label = conformer.smiles
+
+        conformer.ase_molecule.set_calculator(calculator)
         
         opt = BFGS(conformer.ase_molecule)
-        try:
-            opt.run()
-            conformer.update_coords_from("ase")
-            energy = get_energy(conformer)
-        except BaseException:
-            print("Optimization failed for {}_{}".format(conformer.label, conformer.index))
-            energy = 1e5
+        #try:
+        opt.run()
+        conformer.update_coords_from("ase")
+        energy = get_energy(conformer)
+        return_dict[combo] = (energy, combo)
 
+
+        
+    manager = Manager()
+    return_dict = manager.dict()
+
+    processes = []
+    for i, conf in conformers.items():
+        p = Process(target=opt_conf, args=(conf,calc,i))
+        p.start()
+        processes.append(p)
+    complete = np.zeros_like(processes, dtype=bool)
+    while not np.all(complete):
+        for i, p in enumerate(processes):
+            if not p.is_alive():
+                complete[i] = True
+
+    return return_dict
+        
+    sample = ["torsion_{}", "cistrans_{}", "chiral_center_{}"]
+    for conformer, e_and_c in return_dict.items():
+        energy, conformer = e_and_c
         sample = ["torsion_{}", "cistrans_{}", "chiral_center_{}"]
         columns = ["energy"]
         long_combo = [energy]
@@ -220,6 +260,6 @@ def systematic_search(conformer,
             elif "chiral" in geometry.lower():
                 copy_conf.set_chirality(index, value)
 
-        unique_conformers.append(copy_conf)
+        unique_conformers.append(copy_conf.copy())
 
     return brute_force, unique_conformers
