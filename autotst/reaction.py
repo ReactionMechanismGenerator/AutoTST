@@ -29,6 +29,7 @@
 
 import os
 import logging
+import numpy as np
 
 import rdkit
 from rdkit import DistanceGeometry
@@ -75,7 +76,7 @@ class Reaction():
     possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
         "R_Addition_MultipleBond",
         "H_Abstraction",
-        "intra_H_migration"
+        "intra_H_migration",
     ]
 
     def __init__(
@@ -274,10 +275,17 @@ class Reaction():
         assert rmg_reaction, "try calling get_rmg_reactions() first"
         self._distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(
             rmg_reaction)
-        logging.info("The distance data is as follows: \n{}".format(
-            self.distance_data))
 
-        return self.distance_data
+        if np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"], 
+              self._distance_data.distances["d13"], 
+              atol=0.01):
+            logging.info("Distance between *1 and *3 is too small, setting it to lower bound of uncertainty")
+    
+            self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"]
+
+        logging.info("The distance data is as follows: \n{}".format(
+            self._distance_data))
+
 
     def generate_reactants_and_products(self, rmg_reaction=None):
         """
@@ -482,7 +490,7 @@ class Reaction():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
             #print conformer.ase_molecule.get_calculator()
-            _, conformers = systematic_search(conformer)
+            conformers = systematic_search(conformer, delta=60)
             self.ts[direction] = conformers
 
         return self.ts
@@ -556,6 +564,7 @@ class TS(Conformer):
         copy_conf._pseudo_geometry = self._pseudo_geometry.__copy__()
         copy_conf.ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
+        copy_conf.energy = self.energy
         return copy_conf
 
     @property

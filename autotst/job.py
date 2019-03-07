@@ -11,7 +11,7 @@ from ase.io.gaussian import read_gaussian_out
 from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
 from autotst.molecule import Molecule
 from autotst.reaction import Reaction, TS
-import os
+import os, time
 from rmgpy.data.rmg import RMGDatabase
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.reaction import Reaction as RMGReaction, ReactionError
@@ -25,6 +25,7 @@ from rdkit import Chem
 import numpy as np
 import logging
 import subprocess
+from shutil import move
 import cclib
 import time
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
@@ -76,6 +77,56 @@ class Job():
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
 
         return Atoms(atoms)
+
+    def write_input(self, conformer, ase_calculator):
+        """
+        A helper method that will write an input file and move it to the correct scratch directory
+        """
+        ase_calculator.write_input(conformer.ase_molecule)
+
+        move(
+            ase_calculator.label + ".com", 
+            os.path.join(
+                ase_calculator.scratch,
+                ase_calculator.label + ".com"
+            ))
+
+        move(
+            ase_calculator.label + ".ase", 
+            os.path.join(
+                ase_calculator.scratch,
+                ase_calculator.label + ".ase"
+            ))
+
+    def fix_io_file(self, calc=None):
+        """
+        A method that removes the `left` and `right` text from a log, ase, and
+        com files and turns it back into a smiles structure
+        """
+        if calc:
+            old_log_file = calc.label + ".log"
+            old_log_path = os.path.join(calc.scratch, old_log_file)
+            if os.path.exists(old_log_path):
+                new_log_path = old_log_path.replace(
+                    "left", "(").replace("right", ")")
+                os.rename(old_log_path, new_log_path)
+
+            old_ase_file = calc.label + ".ase"
+            old_ase_path = os.path.join(calc.scratch, old_ase_file)
+            if os.path.exists(old_ase_path):
+                new_ase_path = old_ase_path.replace(
+                    "left", "(").replace("right", ")")
+                os.rename(old_ase_path, new_ase_path)
+
+            old_com_file = calc.label + ".com"
+            old_com_path = os.path.join(calc.scratch, old_com_file)
+            if os.path.exists(old_com_path):
+                new_com_path = old_com_path.replace(
+                    "left", "(").replace("right", ")")
+                os.rename(old_com_path, new_com_path)
+
+        else:
+            logging.info("No calculator object provided... not doing anything")
 
     def submit(self, calculator, partition):
         """
@@ -141,7 +192,7 @@ class Job():
         """
         calc = calculator.get_species_calc(conformer=conformer)
         logging.info("Submitting {} conformer".format(calc.label))
-        calc.write_input(conformer.ase_molecule)
+        self.write_input(conformer, calc)
         self.submit(calc, "general")
         return calc
 
@@ -217,7 +268,7 @@ class Job():
         """
         calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
         logging.info("Running hindered rotor calculation for {}".format(torsion))
-        calc.write_input(conformer.ase_molecule)
+        self.write_input(conformer, calc)
         self.submit(calc, "general")
 
     def run_rotors(self, conformer, steps, step_size):
@@ -370,7 +421,7 @@ class Job():
                                          basis=calculator.basis
                                          )
         logging.info("Submitting {} TS".format(calc.label))
-        calc.write_input(ts.ase_molecule)
+        self.write_input(ts, calc)
         self.submit(calc, "general")
 
     def submit_center(self, ts=None, calculator=None):
@@ -386,7 +437,7 @@ class Job():
                                           basis=calculator.basis
                                           )
         logging.info("Submitting {} TS".format(calc.label))
-        calc.write_input(ts.ase_molecule)
+        self.write_input(ts, calc)
         self.submit(calc, "general")
 
     def submit_overall(self, ts=None, calculator=None):
@@ -402,7 +453,7 @@ class Job():
                                            basis=calculator.basis
                                            )
         logging.info("Submitting {} TS".format(calc.label))
-        calc.write_input(ts.ase_molecule)
+        self.write_input(ts, calc)
         self.submit(calc, "general")
 
     def submit_irc(self, ts=None, calculator=None):
@@ -415,7 +466,7 @@ class Job():
                                        basis=calculator.basis
                                        )
         logging.info("Submitting {} TS".format(calc.label))
-        calc.write_input(ts.ase_molecule)
+        self.write_input(ts, calc)
         self.submit(calc, "west")
 
     def submit_ts(self, ts=None, calculator=None, vibrational_analysis=True):
@@ -438,7 +489,7 @@ class Job():
             ))
             ts.update_coords()
             logging.info("{} was successful!".format(calc.label))
-            calculator.fix_io_file(calc)
+            self.fix_io_file(calc)
         except BaseException:
             try:
                 ts.ase_molecule = self.read_log(
@@ -452,10 +503,10 @@ class Job():
                         ".log"))
                 ts.update_coords()
                 logging.info("{} was successful!".format(calc.label))
-                calculator.fix_io_file(calc)
+                self.fix_io_file(calc)
             except BaseException:
                 logging.info("FAILED: {} calculation".format(calc.label))
-                calculator.fix_io_file(calc)
+                self.fix_io_file(calc)
                 return False
 
         # For center
@@ -472,7 +523,7 @@ class Job():
             ))
             ts.update_coords()
             logging.info("{} was successful!".format(calc.label))
-            calculator.fix_io_file(calc)
+            self.fix_io_file(calc)
         except BaseException:
             try:
                 ts.ase_molecule = self.read_log(
@@ -486,10 +537,10 @@ class Job():
                         ".log"))
                 ts.update_coords()
                 logging.info("{} was successful!".format(calc.label))
-                calculator.fix_io_file(calc)
+                self.fix_io_file(calc)
             except BaseException:
                 logging.info("FAILED: {} calculation".format(calc.label))
-                calculator.fix_io_file(calc)
+                self.fix_io_file(calc)
                 return False
 
         # For overall
@@ -506,7 +557,7 @@ class Job():
             ))
             ts.update_coords()
             logging.info("{} was successful!".format(calc.label))
-            calculator.fix_io_file(calc)
+            self.fix_io_file(calc)
         except BaseException:
             try:
                 ts.ase_molecule = self.read_log(
@@ -520,10 +571,10 @@ class Job():
                         ".log"))
                 ts.update_coords()
                 logging.info("{} was successful!".format(calc.label))
-                calculator.fix_io_file(calc)
+                self.fix_io_file(calc)
             except BaseException:
                 logging.info("FAILED: {} calculation".format(calc.label))
-                calculator.fix_io_file(calc)
+                self.fix_io_file(calc)
                 return False
 
         # For validation

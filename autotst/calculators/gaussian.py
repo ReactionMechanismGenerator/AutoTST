@@ -58,7 +58,7 @@ class Gaussian(Calculator):
                  nprocshared=20,
                  scratch=".",
                  method="m062x",
-                 basis="6-311+g(2df,2p)",
+                 basis="cc-pVTZ",
                  save_directory="."):
 
         self.command = "g16"
@@ -72,8 +72,6 @@ class Gaussian(Calculator):
         self.basis = basis
         self.save_directory = save_directory
 
-        if self.conformer:
-            logging.info('{}'.format(self.conformer))
 
     def __repr__(self):
         if not self.conformer:
@@ -100,7 +98,7 @@ class Gaussian(Calculator):
                        nprocshared=20,
                        scratch=".",
                        method="m062x",
-                       basis="6-311+g(2df,2p)",
+                       basis="cc-pVTZ",
                        steps=36,
                        step_size=10.0):
         """
@@ -128,19 +126,28 @@ class Gaussian(Calculator):
 
         if isinstance(conformer, TS):
             label = self.label + "_tor_{}_{}".format(j, k)
+            t = "ts"
+            d = self.label
         elif isinstance(conformer, Conformer):
-            label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
+            label = d = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
                 Chem.MolFromSmiles(conformer.smiles))).strip("-N")
             label += "_tor{}{}".format(j, k)
-
-        label = conformer.smiles + "_tor_{}_{}".format(j, k)
+            t = "species"
+            
         conformer.rmg_molecule.updateMultiplicity()
         mult = conformer.rmg_molecule.multiplicity
+
+        new_scratch = os.path.join(
+                scratch,
+                t,
+                d,
+                "rotors"
+            )
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
                            label=label,
-                           scratch=scratch,
+                           scratch=new_scratch,
                            method=method,
                            basis=basis,
                            extra="Opt=(CalcFC,ModRedun)",
@@ -158,7 +165,7 @@ class Gaussian(Calculator):
                          nprocshared=20,
                          scratch=".",
                          method="m062x",
-                         basis="6-311+g(2df,2p)"):
+                         basis="cc-pVTZ"):
         "A method that creates a calculator for a reactant or product that will perform a geometry optimization"
 
         if not conformer:
@@ -180,14 +187,25 @@ class Gaussian(Calculator):
         # `toAugumentedInChIKey` method doesn't work on our cluster
 
         smiles = conformer.rmg_molecule.toSMILES()
-        label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
-            Chem.MolFromSmiles(smiles))).strip("-N") + "_{}".format(conformer.index)
+        short_label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
+            Chem.MolFromSmiles(smiles))).strip("-N") 
+        label = short_label + "_{}".format(conformer.index)
+
+        new_scratch = os.path.join(
+                scratch,
+                "species",
+                short_label,
+                "conformers"
+            )
+
+        if not os.path.isdir(new_scratch):
+            os.makedirs(new_scratch)
 
         calc = ASEGaussian(
             mem=mem,
             nprocshared=nprocshared,
             label=label,
-            scratch=scratch,
+            scratch=new_scratch,
             method=method,
             basis=basis,
             extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(2/16=3)",
@@ -203,7 +221,7 @@ class Gaussian(Calculator):
                        nprocshared=20,
                        scratch=".",
                        method="m062x",
-                       basis="6-311+g(2df,2p)"):
+                       basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
 
         if ts is None:
@@ -228,13 +246,22 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_shell_" + str(ts.index)
+        label = ts.reaction_label + "_shell_" + str(ts.index)
+
+        new_scratch = os.path.join(
+                scratch,
+                "ts",
+                ts.reaction_label,
+                "conformers"
+            )
+
+        if not os.path.isdir(new_scratch):
+            os.makedirs(new_scratch)
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
                            label=label,
-                           scratch=scratch,
+                           scratch=new_scratch,
                            method=method,
                            basis=basis,
                            extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1)",
@@ -251,7 +278,7 @@ class Gaussian(Calculator):
                         nprocshared=20,
                         scratch=".",
                         method="m062x",
-                        basis="6-311+g(2df,2p)"):
+                        basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
 
         if ts is None:
@@ -276,13 +303,22 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_center_" + str(ts.index)
+        label = ts.reaction_label + "_center_" + str(ts.index)
+
+        new_scratch = os.path.join(
+                scratch,
+                "ts",
+                ts.reaction_label,
+                "conformers"
+            )
+
+        if not os.path.isdir(new_scratch):
+            os.makedirs(new_scratch)
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
                            label=label,
-                           scratch=scratch,
+                           scratch=new_scratch,
                            method=method,
                            basis=basis,
                            extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1)",
@@ -299,7 +335,7 @@ class Gaussian(Calculator):
                          nprocshared=20,
                          scratch=".",
                          method="m062x",
-                         basis="6-311+g(2df,2p)"):
+                         basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
 
         if ts is None:
@@ -314,14 +350,23 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_" + str(ts.index)
+        label = ts.reaction_label + "_" + str(ts.index)
+
+        new_scratch = os.path.join(
+                scratch,
+                "ts",
+                ts.reaction_label,
+                "conformers"
+            )
+
+        if not os.path.isdir(new_scratch):
+            os.makedirs(new_scratch)
 
         calc = ASEGaussian(
             mem=mem,
             nprocshared=nprocshared,
             label=label,
-            scratch=scratch,
+            scratch=new_scratch,
             method=method,
             basis=basis,
             extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq",
@@ -337,7 +382,7 @@ class Gaussian(Calculator):
                      nprocshared=20,
                      scratch=".",
                      method="m062x",
-                     basis="6-311+g(2df,2p)"):
+                     basis="cc-pVTZ"):
         "A method to create the IRC calculator object"
 
         if ts is None:
@@ -349,13 +394,21 @@ class Gaussian(Calculator):
                 ts = self.conformer
 
         ts.rmg_molecule.updateMultiplicity()
-        label = ts.reaction_label.replace(
-            "(", "left").replace(")", "right") + "_irc_" + str(ts.index)
+        label = ts.reaction_label + "_irc_" + str(ts.index)
+
+        new_scratch = os.path.join(
+                scratch,
+                "ts",
+                ts.reaction_label,
+                "irc"
+            )
+        if not os.path.isdir(new_scratch):
+            os.makedirs(new_scratch)
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
                            label=label,
-                           scratch=scratch,
+                           scratch=new_scratch,
                            method=method,
                            basis=basis,
                            extra="irc=(calcall)",
@@ -810,36 +863,6 @@ class Gaussian(Calculator):
             else:
                 logging.info("Could not optimize species geometry")
                 return result
-
-    def fix_io_file(self, calc=None):
-        """
-        A method that removes the `left` and `right` text from a log, ase, and
-        com files and turns it back into a smiles structure
-        """
-        if calc:
-            old_log_file = calc.label + ".log"
-            old_log_path = os.path.join(calc.scratch, old_log_file)
-            if os.path.exists(old_log_path):
-                new_log_path = old_log_path.replace(
-                    "left", "(").replace("right", ")")
-                os.rename(old_log_path, new_log_path)
-
-            old_ase_file = calc.label + ".ase"
-            old_ase_path = os.path.join(calc.scratch, old_ase_file)
-            if os.path.exists(old_ase_path):
-                new_ase_path = old_ase_path.replace(
-                    "left", "(").replace("right", ")")
-                os.rename(old_ase_path, new_ase_path)
-
-            old_com_file = calc.label + ".com"
-            old_com_path = os.path.join(calc.scratch, old_com_file)
-            if os.path.exists(old_com_path):
-                new_com_path = old_com_path.replace(
-                    "left", "(").replace("right", ")")
-                os.rename(old_com_path, new_com_path)
-
-        else:
-            logging.info("No calculator object provided... not doing anything")
 
 
 """

@@ -143,7 +143,7 @@ class ChiralCenter():
 
     def __init__(self, index, atom_index, chirality):
         self.index = index
-        self.atom_indices = atom_index
+        self.atom_index = atom_index
         self.chirality = chirality
 
     def __repr__(self):
