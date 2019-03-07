@@ -26,6 +26,8 @@ import numpy as np
 import logging
 import subprocess
 from shutil import move
+import cclib
+import time
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
@@ -296,30 +298,113 @@ class Job():
         
         for torsion in conformer.torsions:
             calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion)
-            if self.verify_rotor(conformer=conformer, ase_calculator=calc):
+            if self.verify_rotor(conformer=conformer, ase_calculator=calc, steps=steps, step_size=step_size):
                 verified[torsion.index] = True
             else:
                 logging.info("Something went wrong with {}".format(torsion))
 
 
-    def verify_rotor(self, conformer, ase_calculator):
+    def verify_rotor(self, steps, step_size, ase_calculator=None, file_name=None):
+        assert (ase_calculator is not None) or (file_name is not None)
+        
+        verified = True
+        verified = verified & self.check_rotor_continuous(steps, step_size, ase_calculator=ase_calculator, file_name=file_name)
+        
+        verified = verified & self.check_rotor_slope(steps, step_size, ase_calculator=ase_calculator, file_name=file_name)
+        
+        [lowest_conf, energy, atomnos, atomcoords] = self.check_rotor_lowest_conf(ase_calculator=ase_calculator, file_name=file_name)
+        
+        verified = verified & lowest_conf
+        return [verified, energy, atomnos, atomcoords] 
 
-        if (self.check_rotor_slope(ase_calculator) and self.check_rotor_continuous(ase_calculator)):
-            return True
-        else:
-            return False
+    def check_rotor_slope(self, steps, step_size, ase_calculator=None, file_name=None, tol=4.0e-3):
+        
+        assert (ase_calculator is not None) or (file_name is not None)
+        if file_name is None:
+            assert ase_calulator is not None
+            file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+        
+        parser = cclib.io.ccread(file_name)
+        
+        opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
+        
+        for i, energy in enumerate(opt_SCFEnergies):
+            prev_energy = opt_SCFEnergies[i-1]
+            slope = np.absolute((energy-prev_energy)/float(step_size))
+            if slope > tol:
+                return False
+        
+        return True
+        
+        
+    def check_rotor_continuous(self, steps, step_size, ase_calculator=None, file_name=None):
+        
+        assert isinstance(step_size, float)
+        
+        assert (ase_calculator is not None) or (file_name is not None)
+        if file_name is None:
+            assert ase_calulator is not None
+            file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+        
+        assert os.path.isfile(file_name)
+        parser = cclib.io.ccread(file_name)
+        
+        opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
+        
+        checked = {}
+        for step, energy in enumerate(opt_SCFEnergies):
+            theta = step*step_size%360
+            
+            found_match = False
+            
+            for checked_theta, checked_energy in checked.items():
+            
+                if np.isclose(theta, checked_theta, rtol=1.0e-2):
+                    found_match = True
 
-    def check_rotor_slope(self, ase_calculator):
+                    if not np.isclose(energy, checked_energy, rtol=1.0e-5):
+                        return False
 
-        file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
-
-        parser = ccread(file_name)
-
-
-    def check_rotor_continuous(self, ase_calculator):
-        file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
-
-        parser = ccread(file_name)
+                    break
+        
+            if not found_match:
+                checked[theta] = energy
+            
+        return True
+    
+    def check_rotor_lowest_conf(self, ase_calculator=None, file_name=None, tol=1.0e-4):
+        
+        assert (ase_calculator is not None) or (file_name is not None)
+        if file_name is None:
+            assert ase_calulator is not None
+            file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+        
+        assert os.path.isfile(file_name)
+        parser = cclib.io.ccread(file_name)
+        
+        opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
+        
+        first_is_lowest = True #Therefore...
+        min_idx = 0
+        min_energy = opt_SCFEnergies[min_idx]
+        
+        for i, energy in enumerate(opt_SCFEnergies):
+            if min_energy-energy>tol:
+                min_energy = energy
+                min_idx = i
+        
+        if min_idx != 0:
+            first_is_lowest = False
+        
+        min_opt_idx = opt_indices[min_idx]
+        
+        atomnos = parser.atomnos
+        atomcoords = parser.atomcoords[min_opt_idx]
+        
+        return [first_is_lowest, min_energy, atomnos, atomcoords]
 
 
 

@@ -42,7 +42,7 @@ import autotst
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
 from autotst.calculators.calculator import Calculator
-
+from autotst.geometry import Torsion
 
 from cclib.io import ccread
 
@@ -63,8 +63,7 @@ class Gaussian(Calculator):
 
         self.command = "g16"
 
-        assert isinstance(conformer, (type(None), Conformer)
-                          ), "Please provide a Conformer object"
+        assert isinstance(conformer, (type(None), Conformer)), "Please provide a Conformer object"
         self.conformer = conformer
         self.mem = mem
         self.nprocshared = nprocshared
