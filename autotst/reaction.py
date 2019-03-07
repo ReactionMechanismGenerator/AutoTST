@@ -490,7 +490,7 @@ class Reaction():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
             #print conformer.ase_molecule.get_calculator()
-            _, conformers = systematic_search(conformer)
+            conformers = systematic_search(conformer, delta=60)
             self.ts[direction] = conformers
 
         return self.ts
@@ -564,6 +564,7 @@ class TS(Conformer):
         copy_conf._pseudo_geometry = self._pseudo_geometry.__copy__()
         copy_conf.ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
+        copy_conf.energy = self.energy
         return copy_conf
 
     @property

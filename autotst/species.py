@@ -178,7 +178,7 @@ class Species():
         for smiles, conformers in self.conformers.iteritems():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
-            _, conformers = systematic_search(conformer)
+            conformers = systematic_search(conformer)
             self.conformers[smiles] = conformers
 
         return self.conformers
@@ -234,6 +234,7 @@ class Conformer():
         copy_conf.rdkit_molecule = self.rdkit_molecule.__copy__()
         copy_conf.ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
+        copy_conf.energy = self.energy
         return copy_conf
 
     def get_rdkit_mol(self, rmg_molecule=None):
@@ -936,6 +937,7 @@ class Conformer():
             return self
 
         else:
+            cistrans.stero = stero.upper()
             i, j, k, l = cistrans.atom_indices
             self.ase_molecule.rotate_dihedral(
                 a1=i,
@@ -970,16 +972,16 @@ class Conformer():
 
         match = False
         for chiral_center in self.chiral_centers:
-            if chiral_center.index == chiral_center_index:
+            if chiral_center.atom_index == chiral_center_index:
                 match = True
                 break
 
-        if not matched:
+        if not match:
             print "ChiralCenter index provided is out of range. Nothing was changed"
             return self
 
         rdmol.GetAtomWithIdx(chiral_center_index).SetChiralTag(
-            centers_dict[chirality.upper()])
+            centers_dict[stero.upper()])
 
         rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
 
@@ -992,7 +994,7 @@ class Conformer():
 
         for torsion in old_torsions:
             dihedral = torsion.dihedral
-            i, j, k, l = torsion.indices
+            i, j, k, l = torsion.atom_indices
 
             self.ase_molecule.set_dihedral(
                 a1=i,

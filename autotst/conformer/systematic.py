@@ -46,7 +46,7 @@ from autotst.conformer.utilities import get_energy, find_terminal_torsions
 
 def find_all_combos(
         conformer,
-        delta=float(30),
+        delta=float(60),
         cistrans=True,
         chiral_centers=True):
     """
@@ -131,6 +131,11 @@ def systematic_search(conformer,
         cistrans=cistrans,
         chiral_centers=chiral_centers)
 
+    if not np.any(combos):
+        logging.info("This species has no torsions, cistrans bonds, or chiral centers")
+        logging.info("Returning origional conformer")
+        return [conformer]
+
     terminal_torsions, torsions = find_terminal_torsions(conformer)
     file_name = conformer.smiles + "_brute_force.csv"
 
@@ -167,7 +172,7 @@ def systematic_search(conformer,
 
         for i, s_r in enumerate(chiral_centers):
             center = conformer.chiral_centers[i]
-            conformer.set_chiral_center(center.index, s_r)
+            conformer.set_chirality(center.atom_index, s_r)
 
         conformer.update_coords_from("ase")
 
@@ -201,10 +206,9 @@ def systematic_search(conformer,
         opt.run()
         conformer.update_coords_from("ase")
         energy = get_energy(conformer)
-        return_dict[combo] = (energy, combo)
 
+        return_dict[i] = (energy, conformer.ase_molecule.arrays, conformer.ase_molecule.get_all_distances())
 
-        
     manager = Manager()
     return_dict = manager.dict()
 
@@ -219,47 +223,34 @@ def systematic_search(conformer,
             if not p.is_alive():
                 complete[i] = True
 
-    return return_dict
-        
-    sample = ["torsion_{}", "cistrans_{}", "chiral_center_{}"]
-    for conformer, e_and_c in return_dict.items():
-        energy, conformer = e_and_c
-        sample = ["torsion_{}", "cistrans_{}", "chiral_center_{}"]
-        columns = ["energy"]
-        long_combo = [energy]
-
-        for c, name in zip(combo, sample):
-            for i, info in enumerate(c):
-                columns.append(name.format(i))
-                long_combo.append(info)
-
-        results.append(long_combo)
-
-    brute_force = pd.DataFrame(results, columns=columns)
-
-    if store_results:
-        f = os.path.join(store_directory, file_name)
-        brute_force.to_csv(f)
-
     from ase import units
+    results = []
+    for key, values in return_dict.items():
+        results.append(values)
+        
+    df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])
+    df = df[df.energy < df.energy.min() + units.kcal / units.mol / units.eV].sort_values("energy")
+    scratch_index = []
+    unique_index = []
+    for index, distances in zip(df.index, df.distances):
+        if index in scratch_index:
+            continue
 
-    unique_conformers = []
-    for i, ind in enumerate(brute_force[brute_force.energy < (
-            brute_force.energy.min() + units.kcal / units.mol / units.eV)].index):
+            
+        unique_index.append(index)
+        is_close = (np.sqrt(((df['distances'][index] - df.distances)**2).apply(np.mean)) > 0.1)
+        scratch_index += [d for d in is_close[is_close == False].index if not (d in scratch_index)]
+        
+    logging.info("We have identified {} unique conformers for {}".format(len(unique_index), conformer))
+    confs = []
+    for i, info in enumerate(df[["energy", "arrays"]].loc[unique_index].values):
         copy_conf = conformer.copy()
+        
+        energy, array = info
+        copy_conf.energy = energy
         copy_conf.index = i
-        for col in brute_force.columns[1:]:
-            geometry = col.split("_")[0]
-            index = int(col.split("_")[-1])
-            value = brute_force.loc[ind][col]
-
-            if "torsion" in geometry:
-                copy_conf.set_torsion(index, float(value))
-            elif "cistrans" in geometry.lower():
-                copy_conf.set_cistrans(index, value)
-            elif "chiral" in geometry.lower():
-                copy_conf.set_chirality(index, value)
-
-        unique_conformers.append(copy_conf.copy())
-
-    return brute_force, unique_conformers
+        copy_conf.ase_molecule.set_positions(array["positions"])
+        copy_conf.update_coords_from("ase")
+        confs.append(copy_conf.copy())
+        
+    return confs
