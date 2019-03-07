@@ -266,7 +266,7 @@ class Job():
         verified = verified & lowest_conf
         return [verified, energy, atomnos, atomcoords] 
 
-    def check_rotor_slope(self, steps, step_size, ase_calculator=None, file_name=None, tol=4.0e-3):
+    def check_rotor_slope(self, steps, step_size, ase_calculator=None, file_name=None, tol=1.0e-2):
         
         assert (ase_calculator is not None) or (file_name is not None)
         if file_name is None:
@@ -313,7 +313,7 @@ class Job():
                 if np.isclose(theta, checked_theta, rtol=1.0e-2):
                     found_match = True
 
-                    if not np.isclose(energy, checked_energy, rtol=1.0e-5):
+                    if not np.isclose(energy, checked_energy, rtol=1.0e-4):
                         return False
 
                     break
