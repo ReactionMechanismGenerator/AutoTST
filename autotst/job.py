@@ -138,16 +138,17 @@ class Job():
             "left", "(").replace("right", ")")
         command = calculator.command.split()[0]
 
+        os.environ["COMMAND"] = "g16"
+        os.environ["FILE_PATH"] = os.path.join(scratch, file_path)
+
         if os.path.exists(complete_file_path + ".log"):
             logging.info("It looks like this has already been attempted")
             try:
                 self.read_log(complete_file_path + ".log")
             except BaseException:
                 logging.info("This file failed... running it again")
-                os.environ["COMMAND"] = "g16"
-                os.environ["FILE_PATH"] = file_path
                 subprocess.call(
-                    "sbatch --exclude=c5003 --job-name={0} --output={0}.slurm.log --error={0}.slurm.log -p {1} -N 1 -n 20 --mem=100000 submit.sh".format(
+                    """sbatch --exclude=c5003 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
                         calculator.label, partition), shell=True)
         elif os.path.exists(file_path + ".log"):
             # a workaround for if a file already exists
@@ -157,25 +158,19 @@ class Job():
 
             except BaseException:
                 logging.info("This file failed... running it again")
-                os.environ["COMMAND"] = "g16"
-                os.environ["FILE_PATH"] = file_path
                 subprocess.call(
-                    "sbatch --exclude=c5003 --job-name={0} --output={0}.slurm.log --error={0}.slurm.log -p {1} -N 1 -n 20 --mem=100000 submit.sh".format(
+                    """sbatch --exclude=c5003 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
                         calculator.label, partition), shell=True)
         else:
-            os.environ["COMMAND"] = "g16"
-            os.environ["FILE_PATH"] = file_path
             subprocess.call(
-                "sbatch --exclude=c5003 --job-name={0} --output={0}.slurm.log --error={0}.slurm.log -p {1} -N 1 -n 20 --mem=100000 submit.sh".format(
-                    calculator.label,
-                    partition),
-                shell=True)
+                """sbatch --exclude=c5003 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
+                    calculator.label, partition), shell=True)
 
     def check_complete(self, ase_calculator=None):
         """
         A method to determine if a job is still running
         """
-        command = "squeue -n {}".format(ase_calculator.label)
+        command = """squeue -n "{}" """.format(ase_calculator.label)
         output = subprocess.Popen(
             command,
             shell=True,
@@ -190,7 +185,13 @@ class Job():
         """
         A method that uses submit to run the geometry optimization of a single conformer
         """
-        calc = calculator.get_species_calc(conformer=conformer)
+        calc = calculator.get_species_calc(conformer=conformer,
+                                        mem=calculator.mem,
+                                        nprocshared=calculator.nprocshared,
+                                        scratch=calculator.scratch,
+                                        method=calculator.method,
+                                        basis=calculator.basis
+                                        )
         logging.info("Submitting {} conformer".format(calc.label))
         self.write_input(conformer, calc)
         self.submit(calc, "general")
@@ -208,14 +209,16 @@ class Job():
                 calcs.append(calc)
         return calcs
 
-    def calculate_species(self, species=None, calculator=None):
+    def calculate_species(self, species=None, conformer_calculator=None, calculator=None):
         """
         A method that submits all conformers for a species and checks if the jobs are complete
         """
 
         logging.info("Submitting {}".format(species))
         # This doesn't work rn because RDKit is acting up on discovery
-        species.generate_conformers(calculator=Hotbit())
+        if conformer_calculator:
+            species.generate_conformers(calculator=conformer_calculator)
+        
         calcs = self.submit_species(species=species, calculator=calculator)
         complete = {}
         first_try = {}
@@ -228,15 +231,14 @@ class Job():
                 for conf in confs:
                     calc = calculator.get_species_calc(conf)
                     if complete[calc.label]:
-                        # Skipping in the case of complete
                         continue
-                    if check_complete(ase_calculator=calc):
+                    if self.check_complete(ase_calculator=calc):
                         if not first_try[calc.label]:
                             logging.info("{} is complete!".format(calc.label))
                             try:  # reading in results after the first attempt
                                 conf.ase_molecule = self.read_log(
                                     os.path.join(calc.scratch, calc.label + ".log"))
-                                # conf.update_coords() ### Broken cuz of RDKit
+                                conf.update_coords() ### Broken cuz of RDKit
                                 conf.energy = conf.ase_molecule.get_potential_energy()
                                 complete[calc.label] = True
                                 first_try[calc.label] = True
@@ -244,7 +246,7 @@ class Job():
                                 logging.info(
                                     "{} failed, trying it again...".format(
                                         calc.label))
-                                submit_conformer(
+                                self.submit_conformer(
                                     conformer=conf, calculator=calculator)
                                 first_try[calc.label] = True
                         else:  # look into trying something
@@ -252,7 +254,7 @@ class Job():
                             try:
                                 conf.ase_molecule = self.read_log(
                                     os.path.join(calc.scratch, calc.label + ".log"))
-                                # conf.update_coords() ### Broken cuz of RDKit
+                                conf.update_coords() ### Broken cuz of RDKit
                                 conf.energy = conf.ase_molecule.get_potential_energy()
                                 complete[calc.label] = True
                             except BaseException:
@@ -260,8 +262,7 @@ class Job():
                                     "{} failed a second time...".format(
                                         calc.label))
                                 complete[calc.label] = True
-
-
+    
     def run_rotor(self, conformer, torsion, steps, step_size):
         """
         a method to run a hindered rotor calculation for a single rotor
@@ -407,7 +408,6 @@ class Job():
         return [first_is_lowest, min_energy, atomnos, atomcoords]
 
 
-
     def submit_shell(self, ts=None, calculator=None):
         """
         A method to submit a calculation for the reaction shell
@@ -478,7 +478,7 @@ class Job():
 
         # For shell
         self.submit_shell(ts=ts, calculator=calculator)
-        calc = calculator.get_shell_calc(ts)
+        calc = calculator.get_shell_calc(ts, scratch=calculator.scratch)
         while not self.check_complete(ase_calculator=calc):
             time.sleep(30)
         logging.info("{} is complete!".format(calc.label))
@@ -489,33 +489,17 @@ class Job():
             ))
             ts.update_coords()
             logging.info("{} was successful!".format(calc.label))
-            self.fix_io_file(calc)
         except BaseException:
-            try:
-                ts.ase_molecule = self.read_log(
-                    os.path.join(
-                        calc.scratch,
-                        calc.label.replace(
-                            "left",
-                            "(").replace(
-                            "right",
-                            ")") +
-                        ".log"))
-                ts.update_coords()
-                logging.info("{} was successful!".format(calc.label))
-                self.fix_io_file(calc)
-            except BaseException:
-                logging.info("FAILED: {} calculation".format(calc.label))
-                self.fix_io_file(calc)
-                return False
+            logging.info("FAILED: {} calculation".format(calc.label))
+            #TODO: Make a way to unfreeze d13 distance
+            return False
 
         # For center
         self.submit_center(ts=ts, calculator=calculator)
-        calc = calculator.get_center_calc(ts)
+        calc = calculator.get_center_calc(ts, scratch=calculator.scratch)
         while not self.check_complete(ase_calculator=calc):
             time.sleep(30)
         logging.info("{} is complete!".format(calc.label))
-
         try:
             ts.ase_molecule = self.read_log(os.path.join(
                 calc.scratch,
@@ -523,33 +507,16 @@ class Job():
             ))
             ts.update_coords()
             logging.info("{} was successful!".format(calc.label))
-            self.fix_io_file(calc)
         except BaseException:
-            try:
-                ts.ase_molecule = self.read_log(
-                    os.path.join(
-                        calc.scratch,
-                        calc.label.replace(
-                            "left",
-                            "(").replace(
-                            "right",
-                            ")") +
-                        ".log"))
-                ts.update_coords()
-                logging.info("{} was successful!".format(calc.label))
-                self.fix_io_file(calc)
-            except BaseException:
-                logging.info("FAILED: {} calculation".format(calc.label))
-                self.fix_io_file(calc)
-                return False
+            logging.info("FAILED: {} calculation".format(calc.label))
+            return False
 
         # For overall
         self.submit_overall(ts=ts, calculator=calculator)
-        calc = calculator.get_overall_calc(ts)
+        calc = calculator.get_overall_calc(ts, scratch=calculator.scratch)
         while not self.check_complete(ase_calculator=calc):
             time.sleep(30)
         logging.info("{} is complete!".format(calc.label))
-
         try:
             ts.ase_molecule = self.read_log(os.path.join(
                 calc.scratch,
@@ -557,25 +524,9 @@ class Job():
             ))
             ts.update_coords()
             logging.info("{} was successful!".format(calc.label))
-            self.fix_io_file(calc)
         except BaseException:
-            try:
-                ts.ase_molecule = self.read_log(
-                    os.path.join(
-                        calc.scratch,
-                        calc.label.replace(
-                            "left",
-                            "(").replace(
-                            "right",
-                            ")") +
-                        ".log"))
-                ts.update_coords()
-                logging.info("{} was successful!".format(calc.label))
-                self.fix_io_file(calc)
-            except BaseException:
-                logging.info("FAILED: {} calculation".format(calc.label))
-                self.fix_io_file(calc)
-                return False
+            logging.info("FAILED: {} calculation".format(calc.label))
+            return False
 
         # For validation
         if vibrational_analysis:  # If we're running vibrational analysis
@@ -600,7 +551,7 @@ class Job():
 
         else:
             self.submit_irc(ts=ts, calculator=calculator)
-            calc = calculator.get_irc_calc(ts)
+            calc = calculator.get_irc_calc(ts, scratch=calculator.scratch)
             while not self.check_complete(ase_calculator=calc):
                 time.sleep(30)
             logging.info("{} is complete!".format(calc.label))
@@ -612,4 +563,67 @@ class Job():
                 return False
             return True
 
-#    def calculate_ts(self, ts=None, calculator=None):
+    def submit_reaction(self, reaction=None, calculator=None, vibrational_analysis=True):
+        """
+        A method that uses submit to run the geometry optimization of an entire species
+        """
+        processes = []
+        for smiles, transitionstates in reaction.ts.items():
+            for ts in transitionstates:
+                p = Process(target=self.submit_ts, args=(ts, calculator, vibrational_analysis))
+                p.start()
+                processes.append(p)
+        return processes
+
+    def calculate_reaction(self, reaction=None, calculator=None):
+
+        logging.info("Submitting {}".format(reaction))
+        # This doesn't work rn because RDKit is acting up on discovery
+        if conformer_calculator:
+            reaction.generate_conformers(calculator=conformer_calculator)
+        
+        calcs = self.submit_species(species=species, calculator=calculator)
+        complete = {}
+        first_try = {}
+        for calc in calcs:
+            complete[calc.label] = False
+            first_try[calc.label] = False
+
+        while not all(complete.values()):
+            for smiles, confs in species.conformers.items():
+                for conf in confs:
+                    calc = calculator.get_species_calc(conf)
+                    if complete[calc.label]:
+                        continue
+                    if self.check_complete(ase_calculator=calc):
+                        if not first_try[calc.label]:
+                            logging.info("{} is complete!".format(calc.label))
+                            try:  # reading in results after the first attempt
+                                conf.ase_molecule = self.read_log(
+                                    os.path.join(calc.scratch, calc.label + ".log"))
+                                conf.update_coords() ### Broken cuz of RDKit
+                                conf.energy = conf.ase_molecule.get_potential_energy()
+                                complete[calc.label] = True
+                                first_try[calc.label] = True
+                            except BaseException:
+                                logging.info(
+                                    "{} failed, trying it again...".format(
+                                        calc.label))
+                                self.submit_conformer(
+                                    conformer=conf, calculator=calculator)
+                                first_try[calc.label] = True
+                        else:  # look into trying something
+                            logging.info("{} second attempt is complete")
+                            try:
+                                conf.ase_molecule = self.read_log(
+                                    os.path.join(calc.scratch, calc.label + ".log"))
+                                conf.update_coords() ### Broken cuz of RDKit
+                                conf.energy = conf.ase_molecule.get_potential_energy()
+                                complete[calc.label] = True
+                            except BaseException:
+                                logging.info(
+                                    "{} failed a second time...".format(
+                                        calc.label))
+                                complete[calc.label] = True
+
+
