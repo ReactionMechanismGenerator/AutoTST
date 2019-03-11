@@ -219,7 +219,7 @@ class StatMech(Calculator):
             output.append("}")
         else:
             output.append('bonds = {}')
-
+        
         label = Chem.rdinchi.InchiToInchiKey(
             Chem.MolToInchi(Chem.MolFromSmiles(mol.toSMILES()))).strip("-N")
 
@@ -253,7 +253,8 @@ class StatMech(Calculator):
         for t in output:
             input_string += t + "\n"
 
-        with open(os.path.join(self.scratch, label + ".py"), "w") as f:
+   
+        with open(os.path.join(self.scratch, label + '.py'), "w") as f:
             f.write(input_string)
 
     def get_rotor_info(self, conformer, torsion):

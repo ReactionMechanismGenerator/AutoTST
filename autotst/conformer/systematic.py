@@ -201,7 +201,7 @@ def systematic_search(conformer,
 
         conformer.ase_molecule.set_calculator(calculator)
         
-        opt = BFGS(conformer.ase_molecule)
+        opt = BFGS(conformer.ase_molecule, logfile=None)
         #try:
         opt.run()
         conformer.update_coords_from("ase")

@@ -315,16 +315,36 @@ class Job():
 
             parser = cclib.io.ccread(file_name)
         
-        verified = True
-        verified = verified & self.check_rotor_continuous(steps, step_size, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
+        continuous = self.check_rotor_continuous(steps, step_size, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
         
-        verified = verified & self.check_rotor_slope(steps, step_size, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
+        good_slope = self.check_rotor_slope(steps, step_size, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
         
         [lowest_conf, energy, atomnos, atomcoords] = self.check_rotor_lowest_conf(ase_calculator=ase_calculator, file_name=file_name, parser=parser)
         
-        verified = verified & lowest_conf
-        return [verified, energy, atomnos, atomcoords] 
+        opt_count_check = self.check_rotor_opts(steps, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
+        
+        return [lowest_conf, continuous, good_slope, opt_count_check] 
 
+    def check_rotor_opts(self, steps, ase_calculator=None, file_name=None, parser=None):
+        
+        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
+        
+        if parser is None:
+            if file_name is None:
+                assert ase_calculator is not None
+                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+
+            parser = cclib.io.ccread(file_name)
+
+        opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
+        
+        n_opts_check = (steps + 1)==len(opt_SCFEnergies)
+        
+        return n_opts_check
+    
+    
+    
     def check_rotor_slope(self, steps, step_size, ase_calculator=None, file_name=None, parser=None, tol=0.35):
         
         assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
