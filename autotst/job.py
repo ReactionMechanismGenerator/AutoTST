@@ -304,95 +304,133 @@ class Job():
                 logging.info("Something went wrong with {}".format(torsion))
 
 
-    def verify_rotor(self, steps, step_size, ase_calculator=None, file_name=None):
-        assert (ase_calculator is not None) or (file_name is not None)
+    def verify_rotor(self, steps, step_size, ase_calculator=None, file_name=None, parser=None):
+        
+        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
+        
+        if parser is None:
+            if file_name is None:
+                assert ase_calculator is not None
+                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+
+            parser = cclib.io.ccread(file_name)
         
         verified = True
-        verified = verified & self.check_rotor_continuous(steps, step_size, ase_calculator=ase_calculator, file_name=file_name)
+        verified = verified & self.check_rotor_continuous(steps, step_size, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
         
-        verified = verified & self.check_rotor_slope(steps, step_size, ase_calculator=ase_calculator, file_name=file_name)
+        verified = verified & self.check_rotor_slope(steps, step_size, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
         
-        [lowest_conf, energy, atomnos, atomcoords] = self.check_rotor_lowest_conf(ase_calculator=ase_calculator, file_name=file_name)
+        [lowest_conf, energy, atomnos, atomcoords] = self.check_rotor_lowest_conf(ase_calculator=ase_calculator, file_name=file_name, parser=parser)
         
         verified = verified & lowest_conf
         return [verified, energy, atomnos, atomcoords] 
 
-    def check_rotor_slope(self, steps, step_size, ase_calculator=None, file_name=None, tol=1.0e-2):
+    def check_rotor_slope(self, steps, step_size, ase_calculator=None, file_name=None, parser=None, tol=0.35):
         
-        assert (ase_calculator is not None) or (file_name is not None)
-        if file_name is None:
-            assert ase_calulator is not None
-            file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
         
-        parser = cclib.io.ccread(file_name)
-        
+        if parser is None:
+            if file_name is None:
+                assert ase_calculator is not None
+                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+
+            parser = cclib.io.ccread(file_name)
+
         opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
+        
+        max_energy = max(opt_SCFEnergies)
+        min_energy = min(opt_SCFEnergies)
+        
+        max_slope = (max_energy - min_energy) / step_size
+        slope_tol = tol*max_slope
         
         for i, energy in enumerate(opt_SCFEnergies):
             prev_energy = opt_SCFEnergies[i-1]
             slope = np.absolute((energy-prev_energy)/float(step_size))
-            if slope > tol:
+            if slope > slope_tol:
                 return False
         
         return True
         
         
-    def check_rotor_continuous(self, steps, step_size, ase_calculator=None, file_name=None):
+    def check_rotor_continuous(self, steps, step_size, ase_calculator=None, file_name=None, parser=None, tol=0.05):
         
         assert isinstance(step_size, float)
         
-        assert (ase_calculator is not None) or (file_name is not None)
-        if file_name is None:
-            assert ase_calulator is not None
-            file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
         
-        assert os.path.isfile(file_name)
-        parser = cclib.io.ccread(file_name)
-        
+        if parser is None:
+            if file_name is None:
+                assert ase_calculator is not None
+                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+
+            assert os.path.isfile(file_name)
+            parser = cclib.io.ccread(file_name)
+
+            
         opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
         
-        checked = {}
+        max_energy = max(opt_SCFEnergies)
+        min_energy = min(opt_SCFEnergies)
+        energy_tol = np.absolute(tol*(max_energy - min_energy))
+        
+        checked = [None for angle in range(0,360)]
+
+        continuous = True
+
         for step, energy in enumerate(opt_SCFEnergies):
-            theta = step*step_size%360
-            
-            found_match = False
-            
-            for checked_theta, checked_energy in checked.items():
-            
-                if np.isclose(theta, checked_theta, rtol=1.0e-2):
-                    found_match = True
+            abs_theta = int(step*step_size)
+            theta = abs_theta%360
 
-                    if not np.isclose(energy, checked_energy, rtol=1.0e-4):
-                        return False
+            mismatch = False
 
-                    break
-        
-            if not found_match:
+            if checked[theta] is None:
                 checked[theta] = energy
-            
-        return True
+
+            else:
+                checked_energy = checked[theta]
+
+                abs_diff = np.absolute(energy - checked_energy)
+
+                if abs_diff > energy_tol:
+                    mismatch = True
+                    continuous = False
+                    return False
+
+                #print abs_theta, theta, checked_energy, energy, mismatch, abs_diff, energy_tol
+
+        return continuous
     
-    def check_rotor_lowest_conf(self, ase_calculator=None, file_name=None, tol=1.0e-4):
+    
+    
+    def check_rotor_lowest_conf(self, ase_calculator=None, file_name=None, parser=None, tol=0.03):
         
-        assert (ase_calculator is not None) or (file_name is not None)
-        if file_name is None:
-            assert ase_calulator is not None
-            file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
         
-        assert os.path.isfile(file_name)
-        parser = cclib.io.ccread(file_name)
-        
+        if parser is None:
+            if file_name is None:
+                assert ase_calculator is not None
+                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+
+            assert os.path.isfile(file_name)
+            parser = cclib.io.ccread(file_name)
+
         opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
+        
+        max_energy = max(opt_SCFEnergies)
+        min_energy = min(opt_SCFEnergies)
+        energy_tol = tol*(max_energy - min_energy)
+        
         
         first_is_lowest = True #Therefore...
         min_idx = 0
         min_energy = opt_SCFEnergies[min_idx]
         
         for i, energy in enumerate(opt_SCFEnergies):
-            if min_energy-energy>tol:
+            if min_energy - energy > energy_tol:
                 min_energy = energy
                 min_idx = i
         
