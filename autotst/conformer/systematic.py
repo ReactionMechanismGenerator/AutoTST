@@ -31,7 +31,9 @@ import logging
 import pandas as pd
 import numpy as np
 import os
+import multiprocessing
 from multiprocessing import Process, Manager
+import time
 
 import ase
 from ase import Atoms
@@ -106,7 +108,7 @@ def find_all_combos(
 
 
 def systematic_search(conformer,
-                      delta=float(30),
+                      delta=float(60),
                       cistrans=True,
                       chiral_centers=True,
                       store_results=False,
@@ -201,7 +203,7 @@ def systematic_search(conformer,
 
         conformer.ase_molecule.set_calculator(calculator)
         
-        opt = BFGS(conformer.ase_molecule)
+        opt = BFGS(conformer.ase_molecule, logfile=None)
         #try:
         opt.run()
         conformer.update_coords_from("ase")
@@ -215,11 +217,28 @@ def systematic_search(conformer,
     processes = []
     for i, conf in conformers.items():
         p = Process(target=opt_conf, args=(conf,calc,i))
-        p.start()
         processes.append(p)
-    complete = np.zeros_like(processes, dtype=bool)
+
+    active_processes = []
+    for process in processes:
+        if len(active_processes) < multiprocessing.cpu_count():
+            process.start()
+            active_processes.append(process)
+            continue
+
+        else:
+            one_done = False
+            while not one_done:
+                for i, p in enumerate(active_processes):
+                    if not p.is_alive():
+                        one_done = True
+                        break
+
+            process.start()
+            active_processes[i] = process
+    complete = np.zeros_like(active_processes, dtype=bool)
     while not np.all(complete):
-        for i, p in enumerate(processes):
+        for i, p in enumerate(active_processes):
             if not p.is_alive():
                 complete[i] = True
 
@@ -238,7 +257,7 @@ def systematic_search(conformer,
 
             
         unique_index.append(index)
-        is_close = (np.sqrt(((df['distances'][index] - df.distances)**2).apply(np.mean)) > 0.1)
+        is_close = (np.sqrt(((df.distances[index] - df.distances)**2).apply(np.mean)) > 0.1)
         scratch_index += [d for d in is_close[is_close == False].index if not (d in scratch_index)]
         
     logging.info("We have identified {} unique conformers for {}".format(len(unique_index), conformer))
