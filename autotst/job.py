@@ -193,6 +193,12 @@ class Job():
                                         basis=calculator.basis
                                         )
         logging.info("Submitting {} conformer".format(calc.label))
+        logging.info("{} has the following torsions".format(calc.label))
+        for torsion in conformer.torsions:
+            logging.info(torsion)
+            logging.info("\t-{}".format(torsion.mask))
+
+            
         self.write_input(conformer, calc)
         self.submit(calc, "general")
         return calc

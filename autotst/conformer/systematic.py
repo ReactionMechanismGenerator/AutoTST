@@ -262,14 +262,17 @@ def systematic_search(conformer,
         
     logging.info("We have identified {} unique conformers for {}".format(len(unique_index), conformer))
     confs = []
-    for i, info in enumerate(df[["energy", "arrays"]].loc[unique_index].values):
+    i = 0 
+    for info in df[["energy", "arrays"]].loc[unique_index].values:
         copy_conf = conformer.copy()
         
         energy, array = info
         copy_conf.energy = energy
-        copy_conf.index = i
         copy_conf.ase_molecule.set_positions(array["positions"])
         copy_conf.update_coords_from("ase")
-        confs.append(copy_conf.copy())
+        c = copy_conf.copy()
+        c.index = i
+        confs.append(c)
+        i += 1
         
     return confs

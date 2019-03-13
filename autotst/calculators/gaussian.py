@@ -208,7 +208,7 @@ class Gaussian(Calculator):
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(2/16=3)",
+            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(2/16=3) scf=(maxcycle=900)",
             multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
@@ -264,7 +264,7 @@ class Gaussian(Calculator):
                            scratch=new_scratch,
                            method=method,
                            basis=basis,
-                           extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1)",
+                           extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1) scf=(maxcycle=900)",
                            multiplicity=ts.rmg_molecule.multiplicity,
                            addsec=[combos[:-1]])
         calc.atoms = ts.ase_molecule
@@ -321,7 +321,7 @@ class Gaussian(Calculator):
                            scratch=new_scratch,
                            method=method,
                            basis=basis,
-                           extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1)",
+                           extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1) scf=(maxcycle=900)",
                            multiplicity=ts.rmg_molecule.multiplicity,
                            addsec=[combos[:-1]])
         calc.atoms = ts.ase_molecule
@@ -369,7 +369,7 @@ class Gaussian(Calculator):
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq",
+            extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900)",
             multiplicity=ts.rmg_molecule.multiplicity)
         calc.atoms = ts.ase_molecule
         del calc.parameters['force']
