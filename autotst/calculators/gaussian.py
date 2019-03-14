@@ -46,6 +46,7 @@ from autotst.geometry import Torsion
 
 from cclib.io import ccread
 
+from ase import Atom, Atoms
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian as ASEGaussian
 
@@ -234,16 +235,6 @@ class Gaussian(Calculator):
 
         assert isinstance(ts, TS), "A TS object was not provided..."
 
-        indicies = []
-        for i, atom in enumerate(ts.rmg_molecule.atoms):
-            if not (atom.label == ""):
-                indicies.append(i)
-
-        combos = ""
-        for combo in list(itertools.combinations(indicies, 2)):
-            a, b = combo
-            combos += "{0} {1} F\n".format(a + 1, b + 1)
-
         ts.rmg_molecule.updateMultiplicity()
 
         label = ts.reaction_label + "_shell_" + str(ts.index)
@@ -257,6 +248,28 @@ class Gaussian(Calculator):
 
         if not os.path.isdir(new_scratch):
             os.makedirs(new_scratch)
+
+        logging.info("Adding in dummy atom for reaction center freezing...")
+        coords = (
+            ts.rmg_molecule.getLabeledAtom("*1").coords +
+            ts.rmg_molecule.getLabeledAtom("*3").coords 
+        ) / 2
+
+        ts.ase_molecule.append(Atom("X", position=coords))
+        for indX, num in enumerate(ts.ase_molecule.numbers):
+            if num == 0:
+                break
+
+        ind1 = ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
+        ind2 = ts.rmg_molecule.getLabeledAtom("*2").sortingLabel
+        ind3 = ts.rmg_molecule.getLabeledAtom("*3").sortingLabel
+
+        combos = ""
+        combos += "{0} {1} F\n".format(ind1, ind2)
+        combos += "{0} {1} F\n".format(ind2, ind3)
+        combos += "{0} {1} {2} F\n".format(ind1, indX, ind2)
+        combos += "{0} {1} {2} F\n".format(ind3, indX, ind2)
+
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
