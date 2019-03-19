@@ -249,26 +249,15 @@ class Gaussian(Calculator):
         if not os.path.isdir(new_scratch):
             os.makedirs(new_scratch)
 
-        logging.info("Adding in dummy atom for reaction center freezing...")
-        coords = (
-            ts.rmg_molecule.getLabeledAtom("*1").coords +
-            ts.rmg_molecule.getLabeledAtom("*3").coords 
-        ) / 2
-
-        ts.ase_molecule.append(Atom("X", position=coords))
-        for indX, num in enumerate(ts.ase_molecule.numbers):
-            if num == 0:
-                break
 
         ind1 = ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
         ind2 = ts.rmg_molecule.getLabeledAtom("*2").sortingLabel
         ind3 = ts.rmg_molecule.getLabeledAtom("*3").sortingLabel
 
         combos = ""
-        combos += "{0} {1} F\n".format(ind1, ind2)
-        combos += "{0} {1} F\n".format(ind2, ind3)
-        combos += "{0} {1} {2} F\n".format(ind1, indX, ind2)
-        combos += "{0} {1} {2} F\n".format(ind3, indX, ind2)
+        combos += "{0} {1} F\n".format(ind1+1, ind2+1)
+        combos += "{0} {1} F\n".format(ind2+1, ind3+1)
+        combos += "{0} {1} {2} F".format(ind1+1, ind2+1, ind3+1)
 
 
         calc = ASEGaussian(mem=mem,
@@ -279,7 +268,7 @@ class Gaussian(Calculator):
                            basis=basis,
                            extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1) scf=(maxcycle=900)",
                            multiplicity=ts.rmg_molecule.multiplicity,
-                           addsec=[combos[:-1]])
+                           addsec=[combos])
         calc.atoms = ts.ase_molecule
         del calc.parameters['force']
 
