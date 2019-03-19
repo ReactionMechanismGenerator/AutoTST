@@ -53,6 +53,15 @@ def find_all_combos(
         chiral_centers=True):
     """
     A function to find all possible conformer combinations for a given conformer
+
+    Params:
+    - conformer: `Conformer`, an AutoTST `Conformer` object of interest
+    - delta: int or float, a number between 0 and 180 or how many conformers to generate per dihedral
+    - cistrans: bool, indication of if one wants to consider cistrans bonds
+    - chiral_centers: bool, indication of if one wants to consider chiral centers bonds
+
+    Returns:
+    - all_combos: list, a list corresponding to the number of unique conformers created.
     """
 
     terminal_torsions, torsions = find_terminal_torsions(conformer)
@@ -110,20 +119,18 @@ def find_all_combos(
 def systematic_search(conformer,
                       delta=float(60),
                       cistrans=True,
-                      chiral_centers=True,
-                      store_results=False,
-                      store_directory="."):
+                      chiral_centers=True):
     """
-    Perfoms a brute force conformer analysis of a molecule or a transition state
+    Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
 
-    :param autotst_object: am autotst_ts, autotst_rxn, or autotst_molecule that you want to perform conformer analysis on
-       * the ase_object of the autotst_object must have a calculator attached to it.
-    :param store_generations: do you want to store pickle files of each generation
-    :param store_directory: the director where you want the pickle files stored
-    :param delta: the degree change in dihedral angle between each possible dihedral angle
+    Params:
+    - conformer, `Conformer` or `TS`, a `Conformer` or `TS` object of interest
+    - delta: int or float, a number between 0 and 180 or how many conformers to generate per dihedral
+    - cistrans: bool, indication of if one wants to consider cistrans bonds
+    - chiral_centers: bool, indication of if one wants to consider chiral centers bonds
 
-    :return results: a DataFrame containing the final generation
-    :return unique_conformers: a dictionary with indicies of unique torsion combinations and entries of energy of those torsions
+    Returns:
+    - confs: list, a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
     """
     # Takes each of the molecule objects
 
@@ -185,6 +192,10 @@ def systematic_search(conformer,
     final_results = []
 
     def opt_conf(conformer, calculator, i):
+        """
+        A helper function to optimize the geometry of a conformer. 
+        Only for use within this parent function
+        """
 
         combo = combinations[i]
         if isinstance(conformer, TS):
