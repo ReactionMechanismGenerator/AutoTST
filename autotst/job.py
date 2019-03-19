@@ -98,36 +98,6 @@ class Job():
                 ase_calculator.label + ".ase"
             ))
 
-    def fix_io_file(self, calc=None):
-        """
-        A method that removes the `left` and `right` text from a log, ase, and
-        com files and turns it back into a smiles structure
-        """
-        if calc:
-            old_log_file = calc.label + ".log"
-            old_log_path = os.path.join(calc.scratch, old_log_file)
-            if os.path.exists(old_log_path):
-                new_log_path = old_log_path.replace(
-                    "left", "(").replace("right", ")")
-                os.rename(old_log_path, new_log_path)
-
-            old_ase_file = calc.label + ".ase"
-            old_ase_path = os.path.join(calc.scratch, old_ase_file)
-            if os.path.exists(old_ase_path):
-                new_ase_path = old_ase_path.replace(
-                    "left", "(").replace("right", ")")
-                os.rename(old_ase_path, new_ase_path)
-
-            old_com_file = calc.label + ".com"
-            old_com_path = os.path.join(calc.scratch, old_com_file)
-            if os.path.exists(old_com_path):
-                new_com_path = old_com_path.replace(
-                    "left", "(").replace("right", ")")
-                os.rename(old_com_path, new_com_path)
-
-        else:
-            logging.info("No calculator object provided... not doing anything")
-
     def submit(self, calculator, partition):
         """
         A methods to submit a job based on the calculator and partition provided
