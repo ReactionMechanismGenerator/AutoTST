@@ -107,8 +107,13 @@ class Job():
         complete_file_path = file_path.replace(
             "left", "(").replace("right", ")")
         command = calculator.command.split()[0]
+        
+        if isinstance(calculator, ase.calculators.gaussian.Gaussian):
+            os.environ["COMMAND"] = "g16"
+        else:
+            logging.info("Assuming this is a Gaussian Calculator...")
+            os.environ["COMMAND"] = "g16"
 
-        os.environ["COMMAND"] = "g16"
         os.environ["FILE_PATH"] = os.path.join(scratch, file_path)
 
         if os.path.exists(complete_file_path + ".log"):
