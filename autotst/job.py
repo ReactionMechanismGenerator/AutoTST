@@ -464,15 +464,19 @@ class Job():
             time.sleep(30)
         logging.info("{} is complete!".format(calc.label))
         try:
-            ts.ase_molecule = self.read_log(os.path.join(
+            file_name = os.path.join(
                 calc.scratch,
                 calc.label + ".log"
-            ))
-            ts.update_coords()
-            logging.info("{} was successful!".format(calc.label))
+            )
+            if all(calculator.verify_output_file(file_name)):
+                ts.ase_molecule = self.read_log(file_name)
+                ts.update_coords()
+                logging.info("{} was successful!".format(calc.label))
+            else:
+                logging.info("FAILED: {} calculation".format(calc.label))
+                return False
         except BaseException:
             logging.info("FAILED: {} calculation".format(calc.label))
-            #TODO: Make a way to unfreeze d13 distance
             return False
 
         # For center
@@ -482,12 +486,17 @@ class Job():
             time.sleep(30)
         logging.info("{} is complete!".format(calc.label))
         try:
-            ts.ase_molecule = self.read_log(os.path.join(
+            file_name = os.path.join(
                 calc.scratch,
                 calc.label + ".log"
-            ))
-            ts.update_coords()
-            logging.info("{} was successful!".format(calc.label))
+            )
+            if all(calculator.verify_output_file(file_name)):
+                ts.ase_molecule = self.read_log(file_name)
+                ts.update_coords()
+                logging.info("{} was successful!".format(calc.label))
+            else:
+                logging.info("FAILED: {} calculation".format(calc.label))
+                return False
         except BaseException:
             logging.info("FAILED: {} calculation".format(calc.label))
             return False
@@ -499,12 +508,17 @@ class Job():
             time.sleep(30)
         logging.info("{} is complete!".format(calc.label))
         try:
-            ts.ase_molecule = self.read_log(os.path.join(
+            file_name = os.path.join(
                 calc.scratch,
                 calc.label + ".log"
-            ))
-            ts.update_coords()
-            logging.info("{} was successful!".format(calc.label))
+            )
+            if all(calculator.verify_output_file(file_name)):
+                ts.ase_molecule = self.read_log(file_name)
+                ts.update_coords()
+                logging.info("{} was successful!".format(calc.label))
+            else:
+                logging.info("FAILED: {} calculation".format(calc.label))
+                return False
         except BaseException:
             logging.info("FAILED: {} calculation".format(calc.label))
             return False
