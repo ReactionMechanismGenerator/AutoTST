@@ -323,7 +323,7 @@ class Gaussian(Calculator):
                            scratch=new_scratch,
                            method=method,
                            basis=basis,
-                           extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1) scf=(maxcycle=900)",
+                           extra="Opt=(ts,calcfc,noeigentest,ModRedun,maxcycles=900) scf=(maxcycle=900)",
                            multiplicity=ts.rmg_molecule.multiplicity,
                            addsec=[combos[:-1]])
         calc.atoms = ts.ase_molecule

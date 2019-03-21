@@ -527,6 +527,8 @@ class Job():
         if vibrational_analysis:  # If we're running vibrational analysis
             from autotst.calculators.vibrational_analysis import VibrationalAnalysis, percent_change
             vib = VibrationalAnalysis(ts=ts, scratch=calculator.scratch)
+            print calculator.scratch
+            print vib.get_log_file(calculator.scratch, ts)
             result = vib.validate_ts()
 
             if not result:

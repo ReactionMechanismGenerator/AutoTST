@@ -73,7 +73,11 @@ class VibrationalAnalysis():
         
 
         log_file = os.path.join(
-            scratch, ts.reaction_label + "_" + str(ts.index) + ".log")
+            scratch, 
+            "ts", 
+            ts.reaction_label, 
+            "conformers", 
+            ts.reaction_label + "_" + str(ts.index) + ".log")
         
         return log_file
 
