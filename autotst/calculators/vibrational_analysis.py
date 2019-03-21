@@ -44,13 +44,13 @@ def percent_change(original, new):
 
 class VibrationalAnalysis():
     """
-    A class that allows one to perform vibrational analysis. It takes an
-    AutoTST_Reaction and uses it to parse out the finalized geometry from a
+    A class that allows one to perform vibrational analysis. It takes a
+    TS and uses it to parse out the finalized geometry from a
     corresponding log file, and then compares the geometry before and after
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, ts, scratch="."):
+    def __init__(self, ts=None, scratch="."):
         """
         reaction: (AutoTST_Reaction) a reaction that proives the connectivity
         and label name for this analysis
@@ -59,32 +59,42 @@ class VibrationalAnalysis():
         self.scratch = scratch
 
     def __repr__(self):
-        return '<AutoTST Vibrational Analysis "{0}">'.format(
-            self.ts.reaction_label)
+        if self.ts is None:
+            label = None
+        else:
+            label = self.ts.reaction_label
+        return '<Vibrational Analysis "{0}">'.format(
+            label)
 
-    def get_log_file(self, scratch, ts):
+    def get_log_file(self, scratch=".", ts=None):
         """
-        This method obtains the logfile name from the AutoTST_Reaction
+        This method obtains the logfile name from the TS
         """
+        
 
-        self.log_file = os.path.join(
+        log_file = os.path.join(
             scratch, ts.reaction_label + "_" + str(ts.index) + ".log")
+        
+        return log_file
 
-    def parse_vibrations(self):
+    def parse_vibrations(self, log_file=None):
         """
         This method obtains the vibrations from the log file of interest using
         cclib. It then creates a zipped list with the vibrational frequencies
         and their corresponding displacements.
         """
+        
+        if not log_file:
+            log_file = self.log_file
 
-        assert os.path.exists(self.log_file)
+        assert os.path.exists(log_file), "Log file provided does not exist"
 
-        log_file_info = ccread(self.log_file)
-        self.vibrations = zip(log_file_info.vibfreqs, log_file_info.vibdisps)
+        log_file_info = ccread(log_file)
+        vibrations = zip(log_file_info.vibfreqs, log_file_info.vibdisps)
 
-        return self.vibrations
+        return vibrations
 
-    def obtain_geometries(self, ts):
+    def obtain_geometries(self, ts, vibrations):
         """
         This method obtains the previbrational geometry (the geometry returned
         by a quantum optimizer), and the postvibrational geometry.
@@ -92,17 +102,16 @@ class VibrationalAnalysis():
 
         assert isinstance(ts, TS)
 
-        self.before_geometry = ts.ase_molecule.copy()
-        self.post_geometry = ts.ase_molecule.copy()
+        pre_geometry = ts.ase_molecule.copy()
+        post_geometry = ts.ase_molecule.copy()
 
-        for vib, displacements in self.vibrations:
+        for vib, displacements in vibrations:
             if vib < 0:  # Finding the imaginary frequency
-                got_imaginary_frequency = True
-                self.post_geometry.arrays["positions"] -= displacements
+                post_geometry.arrays["positions"] -= displacements
 
-        return self.before_geometry, self.post_geometry
+        return pre_geometry, post_geometry
 
-    def obtain_percent_changes(self, ts):
+    def obtain_percent_changes(self, ts, before_geometry, post_geometry):
         """
         This method takes the connectivity of an AutoTST_Reaction and then uses
         that to identify the percent change of the bonds, angles, and dihedrals
@@ -117,31 +126,35 @@ class VibrationalAnalysis():
 
         for bond in ts.bonds:
             i, j = bond.atom_indices
-            before = self.before_geometry.get_distance(i, j)
-            after = self.post_geometry.get_distance(i, j)
+            before = before_geometry.get_distance(i, j)
+            after = post_geometry.get_distance(i, j)
             results.append([bond.index, bond.atom_indices,
                             bond.reaction_center, percent_change(before, after)])
 
         results = pd.DataFrame(results)
         results.columns = ["index", "atom_indices", "center", "percent_change"]
 
-        self.percent_changes = results
+        return results
 
-    def validate_ts(self):
+    def validate_ts(self, scratch=None, ts=None):
         """
         A method designed to run the above and return a bool that states if we
         have arrived at a TS. We say we have arrived at a TS if the average
         change of geometries in the reaction center is one order of magnitude
         geater elsewhere.
         """
+        if scratch is None:
+            scratch = self.scratch
+        if ts is None:
+            ts = self.ts
 
-        self.get_log_file(self.scratch, self.ts)
+        self.log_file = self.get_log_file(self.scratch, ts)
 
-        self.parse_vibrations()
+        self.vibrations = self.parse_vibrations(self.log_file)
 
-        self.obtain_geometries(self.ts)
+        self.pre_geometry, self.post_geometry = self.obtain_geometries(self.ts, self.vibrations)
 
-        self.obtain_percent_changes(self.ts)
+        self.percent_changes = self.obtain_percent_changes(self.ts, self.pre_geometry, self.post_geometry)
 
         if (np.log10(((self.percent_changes[self.percent_changes.center].mean()))) > np.log10(
                 ((self.percent_changes[self.percent_changes.center != True].mean()))) + 1).all():
@@ -150,5 +163,6 @@ class VibrationalAnalysis():
 
         else:
             logging.info(
-                "Cannot reasonably say that we have arrived at a TS through vibrational analysis.\nRunning an IRC calc.")
+                "Cannot reasonably say that we have arrived at a TS through vibrational analysis.")
             return False
+

@@ -525,7 +525,7 @@ class Job():
 
         # For validation
         if vibrational_analysis:  # If we're running vibrational analysis
-            from autotst.calculators.vibrational_analysis import VibrationalAnalysis
+            from autotst.calculators.vibrational_analysis import VibrationalAnalysis, percent_change
             vib = VibrationalAnalysis(ts=ts, scratch=calculator.scratch)
             result = vib.validate_ts()
 
