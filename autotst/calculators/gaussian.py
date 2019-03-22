@@ -751,12 +751,12 @@ class Gaussian(Calculator):
 
             for react in r.split("+"):
                 react = RMGMolecule(SMILES=react)
-                react.toSingleBonds()
+                react = react.toSingleBonds()
                 reactants.append(react)
 
             for prod in p.split("+"):
                 prod = RMGMolecule(SMILES=prod)
-                prod.toSingleBonds()
+                prod = prod.toSingleBonds()
                 products.append(prod)
 
             targetReaction = RMGReaction(
