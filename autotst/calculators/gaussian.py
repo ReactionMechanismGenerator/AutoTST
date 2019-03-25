@@ -678,8 +678,9 @@ class Gaussian(Calculator):
         reaction_label = reaction_label.replace("left", "(").replace("right", ")")
 
         logging.info("Validating IRC file...")
-        irc_path = os.path.join(calc.scratch,
-                                calc.label + ".log")
+        irc_path = os.path.join(
+            calc.scratch,
+            calc.label + ".log")
         if not os.path.exists(irc_path):
             logging.info(
                 "It seems that the file was `fixed`, reading in the `fixed` version.")
