@@ -680,8 +680,6 @@ class Gaussian(Calculator):
         logging.info("Validating IRC file...")
         irc_path = os.path.join(
             calc.scratch,
-            reaction_label,
-            "irc",
             calc.label + ".log")
         if not os.path.exists(irc_path):
             logging.info(

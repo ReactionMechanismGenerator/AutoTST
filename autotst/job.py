@@ -585,19 +585,17 @@ class Job():
         if vibrational_analysis:  # If we're running vibrational analysis
             from autotst.calculators.vibrational_analysis import VibrationalAnalysis, percent_change
             vib = VibrationalAnalysis(ts=ts, scratch=calculator.scratch)
-            print calculator.scratch
-            print vib.get_log_file(calculator.scratch, ts)
             result = vib.validate_ts()
 
             if not result:
                 logging.info(
                     "Vibrational analysis not definitive. Running IRC instead")
                 self.submit_irc(ts=ts, calculator=calculator)
-                calc = calculator.get_irc_calc(ts)
+                calc = calculator.get_irc_calc(ts=ts, scratch=calculator.scratch)
                 while not self.check_complete(ase_calculator=calc):
                     time.sleep(30)
                 logging.info("{} is complete!".format(calc.label))
-
+                logging.info("The scratch directory is {}".format(calc.scratch))
                 result = calculator.validate_irc(calc=calc)
                 if not result:
                     logging.info("Cannot validate via IRC... Job failed")
