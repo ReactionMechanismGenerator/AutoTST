@@ -123,7 +123,7 @@ class Job():
             except BaseException:
                 logging.info("This file failed... running it again")
                 subprocess.call(
-                    """sbatch --exclude=c5003 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
                         calculator.label, partition), shell=True)
         elif os.path.exists(file_path + ".log"):
             # a workaround for if a file already exists
@@ -134,11 +134,11 @@ class Job():
             except BaseException:
                 logging.info("This file failed... running it again")
                 subprocess.call(
-                    """sbatch --exclude=c5003 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
                         calculator.label, partition), shell=True)
         else:
             subprocess.call(
-                """sbatch --exclude=c5003 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
                     calculator.label, partition), shell=True)
 
     def check_complete(self, ase_calculator=None):
@@ -506,7 +506,7 @@ class Job():
                                        )
         logging.info("Submitting {} TS".format(calc.label))
         self.write_input(ts, calc)
-        self.submit(calc, "west")
+        self.submit(calc, "general")
 
     def submit_ts(self, ts=None, calculator=None, vibrational_analysis=True):
         """
