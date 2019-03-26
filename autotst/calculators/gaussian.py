@@ -752,23 +752,43 @@ class Gaussian(Calculator):
 
             for react in r.split("+"):
                 react = RMGMolecule(SMILES=react)
-                react = react.toSingleBonds()
                 reactants.append(react)
 
             for prod in p.split("+"):
                 prod = RMGMolecule(SMILES=prod)
-                prod = prod.toSingleBonds()
                 products.append(prod)
 
-            targetReaction = RMGReaction(
-                reactants=reactants,
-                products=products,
-            )
+            possible_reactants = []
+            possible_products = []
+            for reactant in reactants:
+                possible_reactants.append(reactant.generate_resonance_structures())
+                
+            for product in products:
+                possible_products.append(product.generate_resonance_structures())
+                
+            possible_reactants = list(itertools.product(*possible_reactants))
+            possible_products = list(itertools.product(*possible_products))
 
-            if targetReaction.isIsomorphic(testReaction):
-                return True
-            else:
-                return False
+            for possible_reactant in possible_reactants:
+                reactant_list = []
+                for react in possible_reactant:
+                    reactant_list.append(react.toSingleBonds())
+                    
+                for possible_product in possible_products:
+                    product_list = []
+                    for prod in possible_product:
+                        product_list.append(prod.toSingleBonds())
+                    
+                    targetReaction = RMGReaction(
+                        reactants = list(reactant_list),
+                        products = list(product_list)
+                    )
+
+                    if targetReaction.isIsomorphic(testReaction):
+                        logging.info("IRC calculation was successful!")
+                        return True
+            logging.info("IRC calculation failed :(")
+            return False
 
     def run(self,
             conformer=None,
