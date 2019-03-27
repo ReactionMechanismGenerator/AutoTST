@@ -72,10 +72,16 @@ class Species():
 
             if isinstance(rmg_species, rmgpy.molecule.Molecule):
                 rmg_species = RMGSpecies(molecule=[rmg_species])
-                rmg_species.generate_resonance_structures()
+                try:
+                    rmg_species.generate_resonance_structures()
+                except:
+                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
 
             else:
-                rmg_species.generate_resonance_structures()
+                try:
+                    rmg_species.generate_resonance_structures()
+                except:
+                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
 
             smiles_list = []
             for rmg_mol in rmg_species.molecule:
@@ -103,10 +109,16 @@ class Species():
 
             if isinstance(rmg_species, rmgpy.molecule.Molecule):
                 rmg_species = RMGSpecies(molecule=[rmg_species])
-                rmg_species.generate_resonance_structures()
+                try:
+                    rmg_species.generate_resonance_structures()
+                except:
+                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
 
             else:
-                rmg_species.generate_resonance_structures()
+                try:
+                    rmg_species.generate_resonance_structures()
+                except:
+                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
 
             smiles = []
             for rmg_mol in rmg_species.molecule:
