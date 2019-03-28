@@ -31,6 +31,9 @@ import logging
 import pandas as pd
 import numpy as np
 import os
+import multiprocessing
+from multiprocessing import Process, Manager
+import time
 
 import ase
 from ase import Atoms
@@ -38,16 +41,27 @@ from ase import calculators
 from ase.optimize import BFGS
 
 import autotst
+from autotst.species import Conformer
+from autotst.reaction import TS
 from autotst.conformer.utilities import get_energy, find_terminal_torsions
 
 
 def find_all_combos(
         conformer,
-        delta=float(30),
+        delta=float(60),
         cistrans=True,
         chiral_centers=True):
     """
     A function to find all possible conformer combinations for a given conformer
+
+    Params:
+    - conformer: `Conformer`, an AutoTST `Conformer` object of interest
+    - delta: int or float, a number between 0 and 180 or how many conformers to generate per dihedral
+    - cistrans: bool, indication of if one wants to consider cistrans bonds
+    - chiral_centers: bool, indication of if one wants to consider chiral centers bonds
+
+    Returns:
+    - all_combos: list, a list corresponding to the number of unique conformers created.
     """
 
     terminal_torsions, torsions = find_terminal_torsions(conformer)
@@ -103,22 +117,20 @@ def find_all_combos(
 
 
 def systematic_search(conformer,
-                      delta=float(30),
+                      delta=float(60),
                       cistrans=True,
-                      chiral_centers=True,
-                      store_results=False,
-                      store_directory="."):
+                      chiral_centers=True):
     """
-    Perfoms a brute force conformer analysis of a molecule or a transition state
+    Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
 
-    :param autotst_object: am autotst_ts, autotst_rxn, or autotst_molecule that you want to perform conformer analysis on
-       * the ase_object of the autotst_object must have a calculator attached to it.
-    :param store_generations: do you want to store pickle files of each generation
-    :param store_directory: the director where you want the pickle files stored
-    :param delta: the degree change in dihedral angle between each possible dihedral angle
+    Params:
+    - conformer, `Conformer` or `TS`, a `Conformer` or `TS` object of interest
+    - delta: int or float, a number between 0 and 180 or how many conformers to generate per dihedral
+    - cistrans: bool, indication of if one wants to consider cistrans bonds
+    - chiral_centers: bool, indication of if one wants to consider chiral centers bonds
 
-    :return results: a DataFrame containing the final generation
-    :return unique_conformers: a dictionary with indicies of unique torsion combinations and entries of energy of those torsions
+    Returns:
+    - confs: list, a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
     """
     # Takes each of the molecule objects
 
@@ -128,13 +140,22 @@ def systematic_search(conformer,
         cistrans=cistrans,
         chiral_centers=chiral_centers)
 
+    if not np.any(combos):
+        logging.info("This species has no torsions, cistrans bonds, or chiral centers")
+        logging.info("Returning origional conformer")
+        return [conformer]
+
     terminal_torsions, torsions = find_terminal_torsions(conformer)
     file_name = conformer.smiles + "_brute_force.csv"
 
     calc = conformer.ase_molecule.get_calculator()
 
     results = []
-    for combo in combos:
+    conformers = {}
+    combinations = {}
+    for index, combo in enumerate(combos):
+
+        combinations[index] = combo
 
         torsions, cistrans, chiral_centers = combo
 
@@ -160,55 +181,109 @@ def systematic_search(conformer,
 
         for i, s_r in enumerate(chiral_centers):
             center = conformer.chiral_centers[i]
-            conformer.set_chiral_center(center.index, s_r)
+            conformer.set_chirality(center.atom_index, s_r)
 
-        conformer.ase_molecule.set_calculator(calc)
-        # Something funky happening with this optimization
-        # conformer.update_coords()
-        #opt = BFGS(conformer.ase_molecule)
-        # opt.run()
-        conformer.update_coords()
-        try:
-            energy = get_energy(conformer)
-        except BaseException:
-            energy = 1e5
+        conformer.update_coords_from("ase")
 
-        sample = ["torsion_{}", "cistrans_{}", "chiral_center_{}"]
-        columns = ["energy"]
-        long_combo = [energy]
+        conformers[index] = conformer.copy()
 
-        for c, name in zip(combo, sample):
-            for i, info in enumerate(c):
-                columns.append(name.format(i))
-                long_combo.append(info)
+    logging.info("There are {} unique conformers generated".format(len(conformers)))
 
-        results.append(long_combo)
+    final_results = []
 
-    brute_force = pd.DataFrame(results, columns=columns)
+    def opt_conf(conformer, calculator, i):
+        """
+        A helper function to optimize the geometry of a conformer. 
+        Only for use within this parent function
+        """
 
-    if store_results:
-        f = os.path.join(store_directory, file_name)
-        brute_force.to_csv(f)
+        combo = combinations[i]
+        if isinstance(conformer, TS):
+            atoms = conformer.rmg_molecule.getLabeledAtoms()
+            labels = []
+            labels.append([atoms["*1"].sortingLabel, atoms["*2"].sortingLabel])
+            labels.append([atoms["*3"].sortingLabel, atoms["*2"].sortingLabel])
+            #labels.append([atoms["*1"].sortingLabel, atoms["*3"].sortingLabel])
+            from ase.constraints import FixBondLengths
+            c = FixBondLengths(labels)
+            conformer.ase_molecule.set_constraint(c)
+            label = conformer.reaction_label
+
+        else:
+            label = conformer.smiles
+
+        conformer.ase_molecule.set_calculator(calculator)
+        
+        opt = BFGS(conformer.ase_molecule, logfile=None)
+        #try:
+        opt.run()
+        conformer.update_coords_from("ase")
+        energy = get_energy(conformer)
+
+        return_dict[i] = (energy, conformer.ase_molecule.arrays, conformer.ase_molecule.get_all_distances())
+
+    manager = Manager()
+    return_dict = manager.dict()
+
+    processes = []
+    for i, conf in conformers.items():
+        p = Process(target=opt_conf, args=(conf,calc,i))
+        processes.append(p)
+
+    active_processes = []
+    for process in processes:
+        if len(active_processes) < multiprocessing.cpu_count():
+            process.start()
+            active_processes.append(process)
+            continue
+
+        else:
+            one_done = False
+            while not one_done:
+                for i, p in enumerate(active_processes):
+                    if not p.is_alive():
+                        one_done = True
+                        break
+
+            process.start()
+            active_processes[i] = process
+    complete = np.zeros_like(active_processes, dtype=bool)
+    while not np.all(complete):
+        for i, p in enumerate(active_processes):
+            if not p.is_alive():
+                complete[i] = True
 
     from ase import units
+    results = []
+    for key, values in return_dict.items():
+        results.append(values)
+        
+    df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])
+    df = df[df.energy < df.energy.min() + units.kcal / units.mol / units.eV].sort_values("energy")
+    scratch_index = []
+    unique_index = []
+    for index, distances in zip(df.index, df.distances):
+        if index in scratch_index:
+            continue
 
-    unique_conformers = []
-    for i, ind in enumerate(brute_force[brute_force.energy < (
-            brute_force.energy.min() + units.kcal / units.mol / units.eV)].index):
+            
+        unique_index.append(index)
+        is_close = (np.sqrt(((df.distances[index] - df.distances)**2).apply(np.mean)) > 0.1)
+        scratch_index += [d for d in is_close[is_close == False].index if not (d in scratch_index)]
+        
+    logging.info("We have identified {} unique conformers for {}".format(len(unique_index), conformer))
+    confs = []
+    i = 0 
+    for info in df[["energy", "arrays"]].loc[unique_index].values:
         copy_conf = conformer.copy()
-        copy_conf.index = i
-        for col in brute_force.columns[1:]:
-            geometry = col.split("_")[0]
-            index = int(col.split("_")[-1])
-            value = brute_force.loc[ind][col]
-
-            if "torsion" in geometry:
-                copy_conf.set_torsion(index, float(value))
-            elif "cistrans" in geometry.lower():
-                copy_conf.set_cistrans(index, value)
-            elif "chiral" in geometry.lower():
-                copy_conf.set_chirality(index, value)
-
-        unique_conformers.append(copy_conf)
-
-    return brute_force, unique_conformers
+        
+        energy, array = info
+        copy_conf.energy = energy
+        copy_conf.ase_molecule.set_positions(array["positions"])
+        copy_conf.update_coords_from("ase")
+        c = copy_conf.copy()
+        c.index = i
+        confs.append(c)
+        i += 1
+        
+    return confs

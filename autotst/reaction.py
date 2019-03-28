@@ -29,6 +29,8 @@
 
 import os
 import logging
+import numpy as np
+from copy import deepcopy
 
 import rdkit
 from rdkit import DistanceGeometry
@@ -75,7 +77,7 @@ class Reaction():
     possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
         "R_Addition_MultipleBond",
         "H_Abstraction",
-        "intra_H_migration"
+        "intra_H_migration",
     ]
 
     def __init__(
@@ -274,10 +276,17 @@ class Reaction():
         assert rmg_reaction, "try calling get_rmg_reactions() first"
         self._distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(
             rmg_reaction)
-        logging.info("The distance data is as follows: \n{}".format(
-            self.distance_data))
 
-        return self.distance_data
+        if np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"], 
+              self._distance_data.distances["d13"], 
+              atol=0.01):
+            logging.info("Distance between *1 and *3 is too small, setting it to lower bound of uncertainty")
+    
+            self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"]
+
+        logging.info("The distance data is as follows: \n{}".format(
+            self._distance_data))
+
 
     def generate_reactants_and_products(self, rmg_reaction=None):
         """
@@ -313,6 +322,7 @@ class Reaction():
 
         label_reaction = None
         rmg_reaction_reaction = None
+        test_reactions = []
 
         if label:
             rmg_reactants = []
@@ -331,9 +341,9 @@ class Reaction():
 
             if rmg_reaction:
                 assert rmg_reaction.isIsomorphic(label_reaction)
-                test_reaction = label_reaction
+                test_reactions = [label_reaction]
             else:
-                test_reaction = label_reaction
+                test_reactions = [label_reaction]
 
         elif rmg_reaction:
             rmg_reactants = []
@@ -367,42 +377,52 @@ class Reaction():
                 for i in l1:
                     for j in l2:
                         test_products.append([i, j])
+            match = False
+            for name, family in self.rmg_database.kinetics.families.items():
+                if match:
+                    break
+                for test_reactant in test_reactants:
+                    for test_products in test_products:
 
-            for test_reactant in test_reactants:
-                for test_products in test_products:
-                    test_reaction = RMGReaction(
-                        reactants=test_reactant, products=test_products)
-                    if rmg_reaction.isIsomorphic(test_reaction):
-                        break
+                        if match:
+                            continue
 
-        got_one = False
-        for name, family in self.rmg_database.kinetics.families.items():
-            try:
-                labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
-                    test_reaction.reactants, test_reaction.products)
+                        test_reaction = RMGReaction(
+                            reactants=test_reactant, products=test_products)
 
-                if not (labeled_r and labeled_p):
-                    continue
-                got_one = True
+                        labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                            test_reaction.reactants, test_reaction.products)
+                        if not (labeled_r and labeled_p):
+                            continue
 
-            except BaseException:
-                logging.info("Couldn't match {} family...".format(family))
+                        if ((len(labeled_r) > 0) and (len(labeled_p) > 0)):
+                            logging.info( "Matched reaction to {} family".format(name))
 
-            if got_one:
-                break
-        assert got_one, "Couldn't find a match"
 
+                            labeled_reactants = deepcopy(labeled_r)
+                            labeled_products = deepcopy(labeled_p)
+                            test_reaction.reactants = labeled_r[:]
+                            test_reaction.products = labeled_p[:]
+                            logging.info("\n{}".format(labeled_r))
+                            logging.info("\n{}".format(labeled_p))
+                            match = True
+                            final_name = name
+                            break
+        assert match, "Could not idetify labeled reactants and products"
+
+        
+        
         reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
-            test_reaction.reactants, test_reaction.products, only_families=[name])
-
+            test_reaction.reactants, test_reaction.products, only_families=[final_name])
         assert reaction_list, "Could not match a reaction to a reaction family..."
 
         for reaction in reaction_list:
-            if reaction.isIsomorphic(test_reaction):
-                reaction.reactants = labeled_r
-                reaction.products = labeled_p
+            
+            if test_reaction.isIsomorphic(reaction):
+                
+                reaction.reactants = labeled_reactants
+                reaction.products = labeled_products
                 break
-
         return reaction, name
 
     def get_reaction_label(self, rmg_reaction=None):
@@ -445,14 +465,19 @@ class Reaction():
             if isinstance(react, RMGMolecule):
                 reactant_complex = reactant_complex.merge(react)
             elif isinstance(react, RMGSpecies):
-                reactant_complex = reactant_complex.merge(react.molecule[0])
-
+                for mol in react.molecule:
+                    if len(mol.getLabeledAtoms()) > 0:
+                        reactant_complex = reactant_complex.merge(mol)
+        print reactant_complex.getLabeledAtoms()
         product_complex = RMGMolecule()
         for prod in rmg_reaction.products:
             if isinstance(prod, RMGMolecule):
                 product_complex = product_complex.merge(prod)
             elif isinstance(prod, RMGSpecies):
-                product_complex = product_complex.merge(prod.molecule[0])
+                for mol in prod.molecule:
+                    if len(mol.getLabeledAtoms()) > 0:
+                        product_complex = product_complex.merge(mol)
+        print product_complex.getLabeledAtoms()
 
         reactant_complex.updateMultiplicity()
         product_complex.updateMultiplicity()
@@ -482,7 +507,7 @@ class Reaction():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
             #print conformer.ase_molecule.get_calculator()
-            _, conformers = systematic_search(conformer)
+            conformers = systematic_search(conformer, delta=60)
             self.ts[direction] = conformers
 
         return self.ts
@@ -556,6 +581,7 @@ class TS(Conformer):
         copy_conf._pseudo_geometry = self._pseudo_geometry.__copy__()
         copy_conf.ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
+        copy_conf.energy = self.energy
         return copy_conf
 
     @property
