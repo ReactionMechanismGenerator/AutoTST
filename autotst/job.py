@@ -98,14 +98,34 @@ class Job():
                 ase_calculator.label + ".ase"
             ))
 
-    def submit(self, calculator, partition):
+    def submit_conformers(self, conformer, scratch=".", partition, opt_kind=None):
         """
         A methods to submit a job based on the calculator and partition provided
         """
-        scratch = calculator.scratch
-        file_path = os.path.join(scratch, calculator.label)
-        complete_file_path = file_path.replace(
-            "left", "(").replace("right", ")")
+        assert conformer, "Please provide a conformer to submit a job"
+        assert opt_kind in [None, "shell", "center", "overall"], "The kind of TS optimization you want to perform is not supported"
+        if isinstance(conformer, TS):
+            label = conformer.reaction_label
+            scratch = os.path.join(scratch, "ts", label, "conformers")
+            assert ts_kind, "Please provide the kind of ts optimization you want to perform"
+        elif isinstance(conformer, Conformer):
+            label = conformer.smiles
+            scratch = os.path.join(scratch, "species", label, "conformers")
+
+        else:
+            assert False, "Please provide a Conformer or a TS object when submitting a job"
+
+        number_of_files = -1
+        for f in os.listdir(scratch):
+            if f.endswith(".com"):
+                if isinstance(conformer, TS) and (opt_kind in f)
+                    number_of_files +=1
+                else:
+                    number_of_files +=1
+        
+        assert number_of_files > -1, "No optimization files were written..."
+
+        file_path = os.path.join(scratch, label)
         command = calculator.command.split()[0]
         
         if isinstance(calculator, ase.calculators.gaussian.Gaussian):
@@ -114,7 +134,7 @@ class Job():
             logging.info("Assuming this is a Gaussian Calculator...")
             os.environ["COMMAND"] = "g16"
 
-        os.environ["FILE_PATH"] = os.path.join(scratch, file_path)
+        os.environ["FILE_PATH"] = file_path
 
         if os.path.exists(complete_file_path + ".log"):
             logging.info("It looks like this has already been attempted")
@@ -123,8 +143,8 @@ class Job():
             except BaseException:
                 logging.info("This file failed... running it again")
                 subprocess.call(
-                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
-                        calculator.label, partition), shell=True)
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=0-{2} submit.sh""".format(
+                        label, partition, number_of_files), shell=True)
         elif os.path.exists(file_path + ".log"):
             # a workaround for if a file already exists
             logging.info("It looks like this has already been attempted")
@@ -134,18 +154,18 @@ class Job():
             except BaseException:
                 logging.info("This file failed... running it again")
                 subprocess.call(
-                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
-                        calculator.label, partition), shell=True)
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=1-{2} submit.sh""".format(
+                        calculator.label, partition, number_of_files ), shell=True)
         else:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
-                    calculator.label, partition), shell=True)
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=1-{2} submit.sh""".format(
+                    calculator.label, partition, number_of_files ), shell=True)
 
-    def check_complete(self, ase_calculator=None):
+    def check_complete(self, label):
         """
         A method to determine if a job is still running
         """
-        command = """squeue -n "{}" """.format(ase_calculator.label)
+        command = """squeue -n "{}" """.format(label)
         output = subprocess.Popen(
             command,
             shell=True,
@@ -155,40 +175,24 @@ class Job():
         else:
             return False
 
-    # This portion is specific for Species / Conformers
-    def submit_conformer(self, conformer=None, calculator=None):
-        """
-        A method that uses submit to run the geometry optimization of a single conformer
-        """
-        calc = calculator.get_species_calc(conformer=conformer,
-                                        mem=calculator.mem,
-                                        nprocshared=calculator.nprocshared,
-                                        scratch=calculator.scratch,
-                                        method=calculator.method,
-                                        basis=calculator.basis
-                                        )
-        logging.info("Submitting {} conformer".format(calc.label))
-        logging.info("{} has the following torsions".format(calc.label))
-        for torsion in conformer.torsions:
-            logging.info(torsion)
-            logging.info("\t-{}".format(torsion.mask))
-
-            
-        self.write_input(conformer, calc)
-        self.submit(calc, "general")
-        return calc
-
     def submit_species(self, species=None, calculator=None):
         """
         A method that uses submit to run the geometry optimization of an entire species
         """
         calcs = []
-        for smiles, confs in species.conformers.items():
-            for conf in confs:
-                calc = self.submit_conformer(
-                    conformer=conf, calculator=calculator)
-                calcs.append(calc)
-        return calcs
+        for smiles, conformers in species.conformers.items():
+            for conformer in conformers:
+                calc = calculator.get_conformer_calc(
+                    conformer=conformer,
+                    mem=calculator.mem,
+                    nprocshared=calculator.nprocshared,
+                    scratch=calculator.scratch,
+                    method=calculator.method,
+                    basis=calculator.basis
+                )
+                self.write_input(conformer=conformer, ase_calculator=calc)
+            self.submit_conformers(conformer=conformer, scratch=calculator.scratch, partition="general")
+        return species.conformers.keys()
 
     def calculate_species(self, species=None, conformer_calculator=None, calculator=None):
         """
@@ -200,53 +204,20 @@ class Job():
         if conformer_calculator:
             species.generate_conformers(calculator=conformer_calculator)
         
-        calcs = self.submit_species(species=species, calculator=calculator)
+        labels = self.submit_species(species=species, calculator=calculator)
         complete = {}
-        first_try = {}
-        for calc in calcs:
-            complete[calc.label] = False
-            first_try[calc.label] = False
+        for label in labels:
+            complete[label] = False
 
         while not all(complete.values()):
-            for smiles, confs in species.conformers.items():
-                for conf in confs:
-                    calc = calculator.get_species_calc(conf)
-                    if complete[calc.label]:
-                        continue
-                    if self.check_complete(ase_calculator=calc):
-                        if not first_try[calc.label]:
-                            logging.info("{} is complete!".format(calc.label))
-                            try:  # reading in results after the first attempt
-                                conf.ase_molecule = self.read_log(
-                                    os.path.join(calc.scratch, calc.label + ".log"))
-                                conf.update_coords() ### Broken cuz of RDKit
-                                conf.energy = conf.ase_molecule.get_potential_energy()
-                                complete[calc.label] = True
-                                first_try[calc.label] = True
-                            except BaseException:
-                                logging.info(
-                                    "{} failed, trying it again...".format(
-                                        calc.label))
-                                self.submit_conformer(
-                                    conformer=conf, calculator=calculator)
-                                first_try[calc.label] = True
-                        else:  # look into trying something
-                            logging.info("{} second attempt is complete")
-                            try:
-                                conf.ase_molecule = self.read_log(
-                                    os.path.join(calc.scratch, calc.label + ".log"))
-                                conf.update_coords() ### Broken cuz of RDKit
-                                conf.energy = conf.ase_molecule.get_potential_energy()
-                                complete[calc.label] = True
-                            except BaseException:
-                                logging.info(
-                                    "{} failed a second time...".format(
-                                        calc.label))
-                                complete[calc.label] = True
-    
+            for label in labels:
+                complete[label] self.check_complete(label)
+        logging.info("Completed calculations for {}".format(species))
+
+    """ Skipping over this for now
     def run_rotor(self, conformer, torsion, steps, step_size):
         """
-        a method to run a hindered rotor calculation for a single rotor
+        #a method to run a hindered rotor calculation for a single rotor
         """
         calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
         logging.info("Running hindered rotor calculation for {}".format(torsion))
@@ -255,7 +226,7 @@ class Job():
 
     def run_rotors(self, conformer, steps, step_size):
         """
-        A method to run hindered rotor scans for all torsions in a conformer
+        #A method to run hindered rotor scans for all torsions in a conformer
         """
 
         for torsion in conformer.torsions:
@@ -263,7 +234,7 @@ class Job():
 
     def calculate_rotors(self, conformer, calculator, steps, step_size):
         """
-        A method to submit and verify all hindered rotor scans for a conformer
+        #A method to submit and verify all hindered rotor scans for a conformer
         """
         self.run_rotors(conformer=conformer, steps=steps, step_size=step_size)
         complete = {}
@@ -445,7 +416,7 @@ class Job():
         atomcoords = parser.atomcoords[min_opt_idx]
         
         return [first_is_lowest, min_energy, atomnos, atomcoords]
-
+"""
 
     def submit_shell(self, ts=None, calculator=None):
         """
@@ -645,7 +616,7 @@ class Job():
         while not all(complete.values()):
             for smiles, confs in species.conformers.items():
                 for conf in confs:
-                    calc = calculator.get_species_calc(conf)
+                    calc = calculator.get_conformer_calc(conf)
                     if complete[calc.label]:
                         continue
                     if self.check_complete(ase_calculator=calc):
