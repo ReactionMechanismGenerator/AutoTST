@@ -127,6 +127,8 @@ class Job():
         assert number_of_files > -1, "No optimization files were written..."
 
         file_path = os.path.join(scratch, label)
+        print file_path
+        
         """command = calculator.command.split()[0]
         
         if isinstance(calculator, ase.calculators.gaussian.Gaussian):
@@ -138,13 +140,14 @@ class Job():
 
         os.environ["FILE_PATH"] = file_path
 
-        if number_of_files == 0:
+        if number_of_files != 0:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} --array=0-{2} -N 1 -n 20 --mem=100000 submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} --array=0-{2} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
                     label, partition, number_of_files), shell=True)
         else:
+            os.environ["SLURM_ARRAY_TASK_ID"] = '0'
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
                     label, partition), shell=True)
 
         """if os.path.exists(complete_file_path + ".log"):
@@ -296,10 +299,10 @@ class Job():
                     logging.info("{} was successful and was validated!".format(f))
                     results[f] = True
 
-            log_file = os.path.join(scratch, "validated.yaml")
+            log_file = os.path.join(scratch_dir, "validated.yaml")
 
             with open(log_file, "w") as to_write:
-                yaml.dump(results, log_file, default_flow_style=False)
+                yaml.dump(results, to_write, default_flow_style=False)
         
 
     """ Skipping over this for now
