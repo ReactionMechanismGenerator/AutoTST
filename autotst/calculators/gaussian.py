@@ -32,7 +32,6 @@ import itertools
 import logging
 import numpy as np
 from cclib.io import ccread
-from rdkit import Chem
 
 import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
@@ -85,8 +84,7 @@ class Gaussian(Calculator):
             return self.conformer.reaction_label + \
                 "_{}".format(self.conformer.index)
         elif isinstance(self.conformer, Conformer):
-            label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
-                Chem.MolFromSmiles(self.conformer.smiles))).strip("-N")
+            label = self.conformer.smiles
             label += "_{}".format(self.conformer.index)
             return label
         else:
@@ -130,8 +128,7 @@ class Gaussian(Calculator):
             t = "ts"
             d = self.label
         elif isinstance(conformer, Conformer):
-            label = d = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
-                Chem.MolFromSmiles(conformer.smiles))).strip("-N")
+            label = d = conformer.smiles
             label += "_tor{}{}".format(j, k)
             t = "species"
             
@@ -187,9 +184,7 @@ class Gaussian(Calculator):
         # using this round about way of doing stuff because rmg's
         # `toAugumentedInChIKey` method doesn't work on our cluster
 
-        smiles = conformer.rmg_molecule.toSMILES()
-        short_label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
-            Chem.MolFromSmiles(smiles))).strip("-N") 
+        short_label = conformer.smiles
         label = short_label + "_{}".format(conformer.index)
 
         new_scratch = os.path.join(
