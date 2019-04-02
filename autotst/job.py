@@ -28,6 +28,7 @@ import subprocess
 from shutil import move
 import cclib
 import time
+import yaml
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
@@ -213,6 +214,85 @@ class Job():
             for label in labels:
                 complete[label] self.check_complete(label)
         logging.info("Completed calculations for {}".format(species))
+        
+        for label in labels:
+            results = {}
+            results[label] = {}
+            starting_molecule = RMGMolecule(SMILES=label)
+            starting_molecule = starting_molecule.toSingleBonds()
+
+            scratch_dir = os.path.join(
+                calculator.scratch,
+                "species",
+                label,
+                "conformers"
+            )
+            files = os.listdir(scratch_dir)
+
+
+            for f in files:
+                if not f.endswith(".log"):
+                    continue
+                result = calculator.verify_output_file(
+                    os.path.join(
+                        scratch_dir, 
+                        f
+                    )
+                )
+
+                if not result:
+                    logging.info("{} failed QM optimization".format(f))
+                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    move(
+                        os.path.join(
+                            scratch_dir,
+                            f
+                        ),
+                        os.path.join(
+                            scratch_dir,
+                            "failures",
+                            f
+                        )
+                    )
+                    results[f] = False
+                    continue
+                
+                atoms = self.read_log(
+                    os.path.join(
+                        scratch_dir,
+                        f
+                    )
+                )
+                test_molecule = RMGMolecule()
+                test_molecule.fromXYZ(
+                    atoms.arrays["numbers"],
+                    atoms.arrays["positions"]
+                )
+                
+                if not starting_molecule.isIsomorphic(test_molecule):
+                    logging.info("Output geometry of {} is not isomorphic with input geometry".format(f))
+                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    move(
+                        os.path.join(
+                            scratch_dir,
+                            f
+                        ),
+                        os.path.join(
+                            scratch_dir,
+                            "failures",
+                            f
+                        )
+                    )
+                    results[f] = False
+                else:
+                    logging.info("{} was successful and was validated!".format(f))
+                    results[f] = True
+
+            log_file = os.path.join(scratch, "validated.yaml")
+
+            with open(log_file, "w") as to_write:
+                yaml.dump(results, log_file, default_flow_style=False)
+        
 
     """ Skipping over this for now
     def run_rotor(self, conformer, torsion, steps, step_size):
