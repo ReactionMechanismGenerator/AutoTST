@@ -9,7 +9,7 @@ from ase.atoms import Atom, Atoms
 from autotst.calculators.calculator import Calculator
 from ase.io.gaussian import read_gaussian_out
 from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
-from autotst.molecule import Molecule
+from autotst.species import Species, Conformer
 from autotst.reaction import Reaction, TS
 import os, time
 from rmgpy.data.rmg import RMGDatabase
@@ -99,7 +99,7 @@ class Job():
                 ase_calculator.label + ".ase"
             ))
 
-    def submit_conformers(self, conformer, scratch=".", partition, opt_kind=None):
+    def submit_conformers(self, conformer, scratch=".", partition="general", opt_kind=None):
         """
         A methods to submit a job based on the calculator and partition provided
         """
@@ -119,7 +119,7 @@ class Job():
         number_of_files = -1
         for f in os.listdir(scratch):
             if f.endswith(".com"):
-                if isinstance(conformer, TS) and (opt_kind in f)
+                if isinstance(conformer, TS) and (opt_kind in f):
                     number_of_files +=1
                 else:
                     number_of_files +=1
@@ -127,25 +127,33 @@ class Job():
         assert number_of_files > -1, "No optimization files were written..."
 
         file_path = os.path.join(scratch, label)
-        command = calculator.command.split()[0]
+        """command = calculator.command.split()[0]
         
         if isinstance(calculator, ase.calculators.gaussian.Gaussian):
             os.environ["COMMAND"] = "g16"
         else:
             logging.info("Assuming this is a Gaussian Calculator...")
-            os.environ["COMMAND"] = "g16"
+        """
+        os.environ["COMMAND"] = "g16"
 
         os.environ["FILE_PATH"] = file_path
 
-        if os.path.exists(complete_file_path + ".log"):
+        if number_of_files == 0:
+            subprocess.call(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} --array=0-{2} -N 1 -n 20 --mem=100000 submit.sh""".format(
+                    label, partition, number_of_files), shell=True)
+        else:
+            subprocess.call(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 submit.sh""".format(
+                    label, partition), shell=True)
+
+        """if os.path.exists(complete_file_path + ".log"):
             logging.info("It looks like this has already been attempted")
             try:
                 self.read_log(complete_file_path + ".log")
             except BaseException:
                 logging.info("This file failed... running it again")
-                subprocess.call(
-                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=0-{2} submit.sh""".format(
-                        label, partition, number_of_files), shell=True)
+
         elif os.path.exists(file_path + ".log"):
             # a workaround for if a file already exists
             logging.info("It looks like this has already been attempted")
@@ -155,12 +163,12 @@ class Job():
             except BaseException:
                 logging.info("This file failed... running it again")
                 subprocess.call(
-                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=1-{2} submit.sh""".format(
+                    sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=1-{2} submit.shformat(
                         calculator.label, partition, number_of_files ), shell=True)
         else:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=1-{2} submit.sh""".format(
-                    calculator.label, partition, number_of_files ), shell=True)
+                sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=1-{2} submit.shformat(
+                    calculator.label, partition, number_of_files ), shell=True)"""
 
     def check_complete(self, label):
         """
@@ -212,7 +220,7 @@ class Job():
 
         while not all(complete.values()):
             for label in labels:
-                complete[label] self.check_complete(label)
+                complete[label] = self.check_complete(label)
         logging.info("Completed calculations for {}".format(species))
         
         for label in labels:
@@ -296,26 +304,26 @@ class Job():
 
     """ Skipping over this for now
     def run_rotor(self, conformer, torsion, steps, step_size):
-        """
+        
         #a method to run a hindered rotor calculation for a single rotor
-        """
+        
         calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
         logging.info("Running hindered rotor calculation for {}".format(torsion))
         self.write_input(conformer, calc)
         self.submit(calc, "general")
 
     def run_rotors(self, conformer, steps, step_size):
-        """
+        ""
         #A method to run hindered rotor scans for all torsions in a conformer
-        """
+        
 
         for torsion in conformer.torsions:
             self.run_rotor(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
 
     def calculate_rotors(self, conformer, calculator, steps, step_size):
-        """
+        
         #A method to submit and verify all hindered rotor scans for a conformer
-        """
+        
         self.run_rotors(conformer=conformer, steps=steps, step_size=step_size)
         complete = {}
         verified = {}
