@@ -260,16 +260,24 @@ def systematic_search(conformer,
         
     df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])
     df = df[df.energy < df.energy.min() + units.kcal / units.mol / units.eV].sort_values("energy")
+
+    tolerance = 0.1
     scratch_index = []
     unique_index = []
-    for index, distances in zip(df.index, df.distances):
+    for index in df.index:
         if index in scratch_index:
             continue
-
-            
         unique_index.append(index)
-        is_close = (np.sqrt(((df.distances[index] - df.distances)**2).apply(np.mean)) > 0.1)
-        scratch_index += [d for d in is_close[is_close == False].index if not (d in scratch_index)]
+        scratch_index.append(index)
+        distances = df.distances[index]
+        for other_index in df.index:
+            if other_index in scratch_index:
+                continue
+                
+            other_distances = df.distances[other_index]
+            
+            if tolerance > np.sqrt((distances - other_distances)**2).mean():
+                scratch_index.append(other_index)
         
     logging.info("We have identified {} unique conformers for {}".format(len(unique_index), conformer))
     confs = []
