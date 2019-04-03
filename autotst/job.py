@@ -50,12 +50,16 @@ class Job():
         self.reaction = reaction
         if isinstance(reaction, Reaction):
             self.label = reaction.label
+        elif reaction is None:
+            self.label = None
+        else:
+            assert False, "Reaction provided was not a reaction object"
 
         self.dft_calculator = dft_calculator
         self.conformer_calculator = conformer_calculator
 
     def __repr__(self):
-        return "< Job '{}'>".format(self.calculator, self.label)
+        return "< Job '{}'>".format(self.dft_calculator, self.label)
 
     def read_log(self, file_path=None):
         """
@@ -83,23 +87,31 @@ class Job():
         """
         A helper method that will write an input file and move it to the correct scratch directory
         """
-        ase_calculator.write_input(conformer.ase_molecule)
-
-        move(
-            ase_calculator.label + ".com", 
+        if not os.path.exists(
             os.path.join(
                 ase_calculator.scratch,
                 ase_calculator.label + ".com"
-            ))
+            )
+        ):
+            ase_calculator.write_input(conformer.ase_molecule)
 
-        move(
-            ase_calculator.label + ".ase", 
-            os.path.join(
-                ase_calculator.scratch,
-                ase_calculator.label + ".ase"
-            ))
+            move(
+                ase_calculator.label + ".com", 
+                os.path.join(
+                    ase_calculator.scratch,
+                    ase_calculator.label + ".com"
+                ))
 
-    def submit_conformers(self, conformer, scratch=".", partition="general", opt_kind=None):
+            move(
+                ase_calculator.label + ".ase", 
+                os.path.join(
+                    ase_calculator.scratch,
+                    ase_calculator.label + ".ase"
+                ))
+        else:
+            logging.info("File you're attempting to write already exists...")
+
+    def submit_conformers(self, conformer, scratch=".", partition="general", opt_kind=None, direction='forward'):
         """
         A methods to submit a job based on the calculator and partition provided
         """
@@ -108,10 +120,13 @@ class Job():
         if isinstance(conformer, TS):
             label = conformer.reaction_label
             scratch = os.path.join(scratch, "ts", label, "conformers")
-            assert ts_kind, "Please provide the kind of ts optimization you want to perform"
+            assert opt_kind, "Please provide the kind of ts optimization you want to perform"
+            assert direction in ["forward", "reverse"]
+
         elif isinstance(conformer, Conformer):
             label = conformer.smiles
             scratch = os.path.join(scratch, "species", label, "conformers")
+            direction = None
 
         else:
             assert False, "Please provide a Conformer or a TS object when submitting a job"
@@ -119,15 +134,27 @@ class Job():
         number_of_files = -1
         for f in os.listdir(scratch):
             if f.endswith(".com"):
-                if isinstance(conformer, TS) and (opt_kind in f):
-                    number_of_files +=1
+                if isinstance(conformer, TS):
+                    print "ts"
+                    if (opt_kind in f) and (direction in f):
+                        print "shell or center = {}".format(opt_kind)
+                        number_of_files += 1
+                    elif (opt_kind == "overall") and ("shell" not in f) and ("center" not in f) and (direction in f):
+                        print "overall = {}".format(f)
+                        number_of_files += 1
                 else:
+                    print "species"
                     number_of_files +=1
         
         assert number_of_files > -1, "No optimization files were written..."
+        print number_of_files
 
         file_path = os.path.join(scratch, label)
-        print file_path
+        if direction:
+            if opt_kind != "overall":
+                file_path += "_{}_{}".format(direction, opt_kind)
+            else:
+                file_path += "_{}".format(direction)
         
         """command = calculator.command.split()[0]
         
@@ -510,11 +537,316 @@ class Job():
         
         return [first_is_lowest, min_energy, atomnos, atomcoords]
 """
-
-    def submit_shell(self, ts=None, calculator=None):
+    def submit_shells(self, reaction=None, calculator=None):
         """
         A method to submit a calculation for the reaction shell
         """
+        calcs = []
+        for direction, transitionstates in reaction.ts.items():
+            for transitionstate in transitionstates:
+                calc = calculator.get_shell_calc(transitionstate,
+                                                direction=direction,
+                                                mem=calculator.mem,
+                                                nprocshared=calculator.nprocshared,
+                                                scratch=calculator.scratch,
+                                                method=calculator.method,
+                                                basis=calculator.basis
+                                                )
+                self.write_input(conformer=transitionstate, ase_calculator=calc)
+            self.submit_conformers(
+                conformer=transitionstate, 
+                scratch=calculator.scratch, 
+                partition="general", 
+                direction=direction, 
+                opt_kind="shell")
+        return ["forward", "reverse"]
+
+    def submit_centers(self, reaction=None, calculator=None, results=None):
+        """
+        A method to submit a calculation for the reaction centers
+        """
+        calcs = []
+        for direction, transitionstates in reaction.ts.items():
+            for transitionstate in transitionstates:
+                calc = calculator.get_center_calc(transitionstate,
+                                                direction=direction,
+                                                mem=calculator.mem,
+                                                nprocshared=calculator.nprocshared,
+                                                scratch=calculator.scratch,
+                                                method=calculator.method,
+                                                basis=calculator.basis
+                                                )
+                if results:
+                    if not results[calc.label.replace( "center_", "shell_") + ".log"]:
+                        logging.info("Shell optimization for {} failed, not running a center opt".format(transitionstate))
+                        transitionstate.ase_molecule = Atoms() #removing the atoms cuz they suck
+                self.write_input(conformer=transitionstate, ase_calculator=calc)
+            self.submit_conformers(
+                conformer=transitionstate, 
+                scratch=calculator.scratch, 
+                partition="general", 
+                direction=direction, 
+                opt_kind="center")
+        return ["forward", "reverse"]
+
+    def submit_overalls(self, reaction=None, calculator=None):
+        """
+        A method to submit a calculation for the overall reaction transition state
+        """
+        calcs = []
+        for direction, transitionstates in reaction.ts.items():
+            for transitionstate in transitionstates:
+                calc = calculator.get_overall_calc(transitionstate,
+                                                direction=direction,
+                                                mem=calculator.mem,
+                                                nprocshared=calculator.nprocshared,
+                                                scratch=calculator.scratch,
+                                                method=calculator.method,
+                                                basis=calculator.basis
+                                                )
+                self.write_input(conformer=transitionstate, ase_calculator=calc)
+            self.submit_conformers(
+                conformer=transitionstate, 
+                scratch=calculator.scratch, 
+                partition="general", 
+                direction=direction, 
+                opt_kind="overall")
+        return ["forward", "reverse"]
+
+    def calculate_ts(self=None, reaction=None, conformer_calculator=None, calculator=None):
+        logging.info("Submitting {}".format(species))
+
+        if conformer_calculator:
+            species.generate_conformers(calculator=conformer_calculator)
+        ######################################
+        ### for submitting reaction shells ###
+        ######################################
+        directions = self.submit_shells(reaction=reaction, calculator=calculator)
+        complete = {}
+        for direction in directions:
+            complete[direction] = False
+
+        while not all(complete.values()):
+            for direction in directions:
+                job_id = reaction.label + "_" + direction + "_shell"
+                complete[label] = self.check_complete(job_id)
+        logging.info("Completed calculations for {}".format(reaction))
+        master_results = {}
+        results = {}
+        for direction in directions:
+            scratch_dir = os.path.join(
+                calculator.scratch,
+                "ts",
+                reaction.label,
+                "conformers"
+            )
+            files = os.listdir(scratch_dir)
+
+
+            for f in files:
+                if ((not f.endswith(".log")) or (not "{}_shell".format(direction) in f)):
+                    continue
+                logging.info("Found shell log file: {}".format(f))
+                complete, converged = calculator.verify_output_file(
+                    os.path.join(scratch_dir,f)
+                )
+                if not complete:
+                    logging.info("It appears that this job was killed prematurely")
+                    results[f] = False
+
+                elif not converged:
+                    logging.info("{} failed QM optimization".format(f))
+                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    move(
+                        os.path.join(scratch_dir,f
+                        ),
+                        os.path.join(
+                            scratch_dir, "failures", f
+                        )
+                    )
+                    results[f] = False
+                    continue
+
+                else:
+                    logging.info("{} was successful and was validated!".format(f))
+                    results[f] = True
+                    
+                    
+        for file_name, result in results.items():
+            r, p, direction, _, index = file_name.strip(".log").split("_")
+            
+            for ts in reaction.ts[direction]:
+                if ts.index != str(index):
+                    continue
+                if not result:
+                    ts.ase_molecule = Atoms()
+                    logging.info("Failed shell calculation for {}, removing atoms for future calculations".format(ts))
+                else:
+                    ts.ase_molecule = self.read_log(os.path.join(scratch_dir, file_name))
+                    ts.update_coords_from("ase")
+                
+        master_results["shell"] = results
+        
+        #######################################
+        ### for submitting reaction centers ###
+        #######################################
+        directions = self.submit_centers(reaction=reaction, calculator=calculator)
+        complete = {}
+        for direction in directions:
+            complete[direction] = False
+
+        while not all(complete.values()):
+            for direction in directions:
+                job_id = reaction.label + "_" + direction + "_center"
+                complete[label] = self.check_complete(job_id)
+        logging.info("Completed calculations for {}".format(reaction))
+
+        results = {}
+        for direction in directions:
+            
+            rmg_reaction = reaction.rmg_reaction
+            
+            reactants = []
+            products = []
+            for reactant in reaction.rmg_reaction.reactants:
+                reactants.append(reactant.toSingleBonds())
+            for product in reaction.rmg_reaction.products:
+                products.append(product.toSingleBonds())
+
+            scratch_dir = os.path.join(
+                calculator.scratch,
+                "ts",
+                reaction.label,
+                "conformers"
+            )
+            files = os.listdir(scratch_dir)
+
+
+            for f in files:
+                if ((not f.endswith(".log")) or (not "{}_center".format(direction) in f)):
+                    continue
+                logging.info("Found center log file: {}".format(f))
+                complete, converged = calculator.verify_output_file(
+                    os.path.join(scratch_dir,f)
+                )
+                if not complete:
+                    logging.info("It appears that this job was killed prematurely")
+                    results[f] = False
+
+                elif not converged:
+                    logging.info("{} failed QM optimization".format(f))
+                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    move(
+                        os.path.join(scratch_dir,f
+                        ),
+                        os.path.join(
+                            scratch_dir, "failures", f
+                        )
+                    )
+                    results[f] = False
+                    continue
+
+                else:
+                    logging.info("{} was successful and was validated!".format(f))
+                    results[f] = True
+                    
+                    
+        for file_name, result in results.items():
+            r, p, direction, _, index = file_name.strip(".log").split("_")
+            
+            for ts in reaction.ts[direction]:
+                if ts.index != str(index):
+                    continue
+                if not result:
+                    ts.ase_molecule = Atoms()
+                    logging.info("Failed shell calculation for {}, removing atoms for future calculations".format(ts))
+                else:
+                    ts.ase_molecule = self.read_log(os.path.join(scratch_dir, file_name))
+                    ts.update_coords_from("ase")
+                
+        master_results["center"] = results
+        
+        ############################
+        ### For overall reaction ###
+        ############################
+        directions = self.submit_overalls(reaction=reaction, calculator=calculator)
+        complete = {}
+        for direction in directions:
+            complete[direction] = False
+
+        while not all(complete.values()):
+            for direction in directions:
+                job_id = reaction.label + "_" + direction
+                complete[label] = self.check_complete(job_id)
+        logging.info("Completed calculations for {}".format(reaction))
+
+        results = {}
+        for direction in directions:
+            
+            rmg_reaction = reaction.rmg_reaction
+
+            scratch_dir = os.path.join(
+                calculator.scratch,
+                "ts",
+                reaction.label,
+                "conformers"
+            )
+            files = os.listdir(scratch_dir)
+
+            for f in files:
+                if ((not f.endswith(".log")) or ("center" in f) or ("shell" in f)):
+                    continue
+                logging.info("Found overall log file: {}".format(f))
+                complete, converged = calculator.verify_output_file(
+                    os.path.join(scratch_dir,f)
+                )
+                if not complete:
+                    logging.info("It appears that this job was killed prematurely")
+                    results[f] = False
+
+                elif not converged:
+                    logging.info("{} failed QM optimization".format(f))
+                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    move(
+                        os.path.join(scratch_dir,f
+                        ),
+                        os.path.join(
+                            scratch_dir, "failures", f
+                        )
+                    )
+                    results[f] = False
+                    continue
+
+                else:
+                    logging.info("{} was successful and was validated!".format(f))
+                    results[f] = True
+                    
+                    
+        for file_name, result in results.items():
+            r, p, direction, _, index = file_name.strip(".log").split("_")
+            
+            for ts in reaction.ts[direction]:
+                if ts.index != str(index):
+                    continue
+                if not result:
+                    ts.ase_molecule = Atoms()
+                    logging.info("Failed shell calculation for {}, removing atoms for future calculations".format(ts))
+                else:
+                    ts.ase_molecule = self.read_log(os.path.join(scratch_dir, file_name))
+                    ts.update_coords_from("ase")
+                
+        master_results["overall"] = results
+        
+        log_file = os.path.join(scratch_dir, "validations.yaml")
+
+        with open(log_file, "w") as to_write:
+            yaml.dump(master_results, to_write, default_flow_style=False)
+        
+        
+        
+
+    def submit_shell(self, ts=None, calculator=None):
+
         scratch = calculator.scratch
         calc = calculator.get_shell_calc(ts,
                                          mem=calculator.mem,

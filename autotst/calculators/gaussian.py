@@ -213,12 +213,15 @@ class Gaussian(Calculator):
 
     def get_shell_calc(self,
                        ts=None,
+                       direction="forward",
                        mem="5GB",
                        nprocshared=20,
                        scratch=".",
                        method="m062x",
                        basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
+
+        assert direction.lower() in ["forward", "reverse"]
 
         if ts is None:
             if self.ts is None:
@@ -232,7 +235,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label + "_shell_" + str(ts.index)
+        label = ts.reaction_label + "_" + direction.lower() + "_shell_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
@@ -271,12 +274,15 @@ class Gaussian(Calculator):
 
     def get_center_calc(self,
                         ts=None,
+                        direction="forward",
                         mem="5GB",
                         nprocshared=20,
                         scratch=".",
                         method="m062x",
                         basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
+
+        assert direction.lower() in ["forward", "reverse"]
 
         if ts is None:
             if self.ts is None:
@@ -300,7 +306,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label + "_center_" + str(ts.index)
+        label = ts.reaction_label + "_" + direction.lower() + "_center_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
@@ -328,12 +334,15 @@ class Gaussian(Calculator):
 
     def get_overall_calc(self,
                          ts=None,
+                         direction="forward",
                          mem="5GB",
                          nprocshared=20,
                          scratch=".",
                          method="m062x",
                          basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
+
+        assert direction.lower() in ["forward", "reverse"]
 
         if ts is None:
             if self.ts is None:
@@ -347,7 +356,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label + "_" + str(ts.index)
+        label = ts.reaction_label + "_" + direction.lower() + "_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
