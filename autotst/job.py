@@ -228,7 +228,6 @@ class Job():
         
         for label in labels:
             results = {}
-            results[label] = {}
             starting_molecule = RMGMolecule(SMILES=label)
             starting_molecule = starting_molecule.toSingleBonds()
 
@@ -244,14 +243,17 @@ class Job():
             for f in files:
                 if not f.endswith(".log"):
                     continue
-                result = calculator.verify_output_file(
+                complete, converged = calculator.verify_output_file(
                     os.path.join(
                         scratch_dir, 
                         f
                     )
                 )
+                if not complete:
+                    logging.info("It appears that this job was killed prematurely")
+                    results[f] = False
 
-                if not result:
+                if not converged:
                     logging.info("{} failed QM optimization".format(f))
                     os.makedirs(os.path.join(scratch_dir, "failures"))
                     move(
@@ -299,7 +301,7 @@ class Job():
                     logging.info("{} was successful and was validated!".format(f))
                     results[f] = True
 
-            log_file = os.path.join(scratch_dir, "validated.yaml")
+            log_file = os.path.join(scratch_dir, "validations.yaml")
 
             with open(log_file, "w") as to_write:
                 yaml.dump(results, to_write, default_flow_style=False)
