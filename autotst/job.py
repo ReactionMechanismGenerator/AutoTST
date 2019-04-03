@@ -135,19 +135,14 @@ class Job():
         for f in os.listdir(scratch):
             if f.endswith(".com"):
                 if isinstance(conformer, TS):
-                    print "ts"
                     if (opt_kind in f) and (direction in f):
-                        print "shell or center = {}".format(opt_kind)
                         number_of_files += 1
                     elif (opt_kind == "overall") and ("shell" not in f) and ("center" not in f) and (direction in f):
-                        print "overall = {}".format(f)
                         number_of_files += 1
                 else:
-                    print "species"
                     number_of_files +=1
         
         assert number_of_files > -1, "No optimization files were written..."
-        print number_of_files
 
         file_path = os.path.join(scratch, label)
         if direction:
@@ -614,10 +609,10 @@ class Job():
         return ["forward", "reverse"]
 
     def calculate_ts(self=None, reaction=None, conformer_calculator=None, calculator=None):
-        logging.info("Submitting {}".format(species))
+        logging.info("Submitting {}".format(reaction))
 
         if conformer_calculator:
-            species.generate_conformers(calculator=conformer_calculator)
+            reaction.generate_conformers(calculator=conformer_calculator)
         ######################################
         ### for submitting reaction shells ###
         ######################################
@@ -629,7 +624,7 @@ class Job():
         while not all(complete.values()):
             for direction in directions:
                 job_id = reaction.label + "_" + direction + "_shell"
-                complete[label] = self.check_complete(job_id)
+                complete[direction] = self.check_complete(job_id)
         logging.info("Completed calculations for {}".format(reaction))
         master_results = {}
         results = {}
@@ -698,7 +693,7 @@ class Job():
         while not all(complete.values()):
             for direction in directions:
                 job_id = reaction.label + "_" + direction + "_center"
-                complete[label] = self.check_complete(job_id)
+                complete[direction] = self.check_complete(job_id)
         logging.info("Completed calculations for {}".format(reaction))
 
         results = {}
@@ -777,7 +772,7 @@ class Job():
         while not all(complete.values()):
             for direction in directions:
                 job_id = reaction.label + "_" + direction
-                complete[label] = self.check_complete(job_id)
+                complete[direction] = self.check_complete(job_id)
         logging.info("Completed calculations for {}".format(reaction))
 
         results = {}
