@@ -277,7 +277,9 @@ class Job():
 
                 if not converged:
                     logging.info("{} failed QM optimization".format(f))
-                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    fail_dir = os.path.join(scratch_dir, "failures")
+                    if not os.path.exists(fail_dir):
+                        os.makedirs(os.path.join(scratch_dir, "failures"))
                     move(
                         os.path.join(
                             scratch_dir,
@@ -306,7 +308,9 @@ class Job():
                 
                 if not starting_molecule.isIsomorphic(test_molecule):
                     logging.info("Output geometry of {} is not isomorphic with input geometry".format(f))
-                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    fail_dir = os.path.join(scratch_dir, "failures")
+                    if not os.path.exists(fail_dir):
+                        os.makedirs(os.path.join(scratch_dir, "failures"))
                     move(
                         os.path.join(
                             scratch_dir,
@@ -651,7 +655,9 @@ class Job():
 
                 elif not converged:
                     logging.info("{} failed QM optimization".format(f))
-                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    fail_dir = os.path.join(scratch_dir, "failures")
+                    if not os.path.exists(fail_dir):
+                        os.makedirs(os.path.join(scratch_dir, "failures"))
                     move(
                         os.path.join(scratch_dir,f
                         ),
@@ -730,7 +736,9 @@ class Job():
 
                 elif not converged:
                     logging.info("{} failed QM optimization".format(f))
-                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    fail_dir = os.path.join(scratch_dir, "failures")
+                    if not os.path.exists(fail_dir):
+                        os.makedirs(os.path.join(scratch_dir, "failures"))
                     move(
                         os.path.join(scratch_dir,f
                         ),
@@ -801,7 +809,9 @@ class Job():
 
                 elif not converged:
                     logging.info("{} failed QM optimization".format(f))
-                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                    fail_dir = os.path.join(scratch_dir, "failures")
+                    if not os.path.exists(fail_dir):
+                        os.makedirs(os.path.join(scratch_dir, "failures"))
                     move(
                         os.path.join(scratch_dir,f
                         ),

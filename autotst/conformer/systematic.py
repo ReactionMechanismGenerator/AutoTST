@@ -140,7 +140,7 @@ def systematic_search(conformer,
         cistrans=cistrans,
         chiral_centers=chiral_centers)
 
-    if not np.any(combos):
+    if len(combos) == 0:
         logging.info("This species has no torsions, cistrans bonds, or chiral centers")
         logging.info("Returning origional conformer")
         return [conformer]
