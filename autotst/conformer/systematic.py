@@ -198,17 +198,15 @@ def systematic_search(conformer,
         """
 
         combo = combinations[i]
-        if isinstance(conformer, TS):
-            atoms = conformer.rmg_molecule.getLabeledAtoms()
-            labels = []
-            labels.append([atoms["*1"].sortingLabel, atoms["*2"].sortingLabel])
-            labels.append([atoms["*3"].sortingLabel, atoms["*2"].sortingLabel])
-            #labels.append([atoms["*1"].sortingLabel, atoms["*3"].sortingLabel])
-            from ase.constraints import FixBondLengths
-            c = FixBondLengths(labels)
-            conformer.ase_molecule.set_constraint(c)
-            label = conformer.reaction_label
+        labels = []
+        for bond in conformer.bonds:
+            labels.append(bond.atom_indices)
 
+        from ase.constraints import FixBondLengths
+        c = FixBondLengths(labels)
+        conformer.ase_molecule.set_constraint(c)
+        if isinstance(conformer, TS):
+            label = conformer.reaction_label
         else:
             label = conformer.smiles
 
