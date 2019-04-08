@@ -148,9 +148,11 @@ class Job():
         if direction:
             if opt_kind != "overall":
                 file_path += "_{}_{}".format(direction, opt_kind)
+                label += "_{}_{}".format(direction, opt_kind)
             else:
                 file_path += "_{}".format(direction)
-        
+                label += "_{}".format(direction)
+
         """command = calculator.command.split()[0]
         
         if isinstance(calculator, ase.calculators.gaussian.Gaussian):
@@ -331,6 +333,33 @@ class Job():
 
             with open(log_file, "w") as to_write:
                 yaml.dump(results, to_write, default_flow_style=False)
+
+
+            lowest_energy = 1e5
+            lowest_file_name = None
+            for file_name, r in results.items():
+                complete, converged = r
+                if converged:
+                    p = ccread(os.path.join(scratch_dir, file_name))
+                    energy = p.scfenergies[-1]
+
+                    if energy < lowest_energy:
+                        lowest_file_name = file_name
+                        lowest_energy = energy
+
+            if lowest_file_name:
+                logging.info("The lowest energy conformer is {}".format(lowest_file_name))
+                import shutil
+                shutil.copy(
+                    os.path.join(scratch_dir, lowest_file_name),
+                    os.path.join(
+                        calculator.scratch,
+                        "species",
+                        label,
+                        lowest_file_name[:-6] + ".log")
+                )
+            else:
+                logging.info("None of the conformer analyses were successful... :(")
         
 
     """ Skipping over this for now
@@ -575,10 +604,7 @@ class Job():
                                                 method=calculator.method,
                                                 basis=calculator.basis
                                                 )
-                if results:
-                    if not results[calc.label.replace( "center_", "shell_") + ".log"]:
-                        logging.info("Shell optimization for {} failed, not running a center opt".format(transitionstate))
-                        transitionstate.ase_molecule = Atoms() #removing the atoms cuz they suck
+
                 self.write_input(conformer=transitionstate, ase_calculator=calc)
             self.submit_conformers(
                 conformer=transitionstate, 
@@ -621,6 +647,7 @@ class Job():
         ### for submitting reaction shells ###
         ######################################
         directions = self.submit_shells(reaction=reaction, calculator=calculator)
+
         complete = {}
         for direction in directions:
             complete[direction] = False
@@ -629,9 +656,10 @@ class Job():
             for direction in directions:
                 job_id = reaction.label + "_" + direction + "_shell"
                 complete[direction] = self.check_complete(job_id)
-        logging.info("Completed calculations for {}".format(reaction))
+        logging.info("Completed calculations for {} shell".format(reaction))
         master_results = {}
         results = {}
+        
         for direction in directions:
             scratch_dir = os.path.join(
                 calculator.scratch,
@@ -643,8 +671,9 @@ class Job():
 
 
             for f in files:
-                if ((not f.endswith(".log")) or (not "{}_shell".format(direction) in f)):
+                if not (("shell" in f) and (f.endswith(".log"))and (direction in f)):
                     continue
+                logging.info(f)
                 logging.info("Found shell log file: {}".format(f))
                 complete, converged = calculator.verify_output_file(
                     os.path.join(scratch_dir,f)
@@ -674,17 +703,25 @@ class Job():
                     
                     
         for file_name, result in results.items():
+            logging.info("For {}".format(file_name))
             r, p, direction, _, index = file_name.strip(".log").split("_")
             
+            got_one = False
             for ts in reaction.ts[direction]:
-                if ts.index != str(index):
+
+                if (got_one) or (ts.index != str(index)): 
                     continue
                 if not result:
                     ts.ase_molecule = Atoms()
                     logging.info("Failed shell calculation for {}, removing atoms for future calculations".format(ts))
+                    got_one = True
                 else:
+                    logging.info("Reading log file for {}".format(file_name))
+                    logging.info("The first atom's positions are {}".format(ts.ase_molecule.get_positions()[0]))
                     ts.ase_molecule = self.read_log(os.path.join(scratch_dir, file_name))
                     ts.update_coords_from("ase")
+                    got_one = True
+                    logging.info("The updated positions are {}".format(ts.ase_molecule.get_positions()[0]))
                 
         master_results["shell"] = results
         

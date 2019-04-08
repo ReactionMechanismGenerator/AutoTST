@@ -223,7 +223,7 @@ class StatMech(Calculator):
         label = Chem.rdinchi.InchiToInchiKey(
             Chem.MolToInchi(Chem.MolFromSmiles(mol.toSMILES()))).strip("-N")
 
-        external_symmetry = mol.getSymmetryNumber()
+        external_symmetry = conformer.get_symmetry_number()
 
         output += ["",
                    "linear = False",
