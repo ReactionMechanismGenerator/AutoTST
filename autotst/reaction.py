@@ -576,7 +576,7 @@ class TS(Conformer):
             self.rmg_molecule.updateMultiplicity()
             self.get_mols()
             self.get_geometries()
-            self.symmetry_number = self.calculate_symmetry_number()
+            self._symmetry_number = None
 
         else:
             self.smiles = None
@@ -589,7 +589,7 @@ class TS(Conformer):
             self.torsions = []
             self.cistrans = []
             self.chiral_centers = []
-            self.symmetry_number = None
+            self._symmetry_number = None
 
     def __repr__(self):
         return '<TS "{}">'.format(self.smiles)
@@ -605,8 +605,15 @@ class TS(Conformer):
         copy_conf.ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
         copy_conf.energy = self.energy
-        copy_conf.symmetry_number = self.calculate_symmetry_number()
+        copy_conf._symmetry_number = self._symmetry_number
         return copy_conf
+
+    @property
+    def symmetry_number(self):
+
+        if not self._symmetry_number:
+            self._symmetry_number = self.calculate_symmetry_number()
+        return self._symmetry_number
 
     @property
     def rdkit_molecule(self):
