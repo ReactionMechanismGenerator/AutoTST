@@ -236,6 +236,7 @@ class Conformer():
             self.torsions = []
             self.cistrans = []
             self.chiral_centers = []
+            self.symmetry_number = None
 
     def __repr__(self):
         return '<Conformer "{}">'.format(self.smiles)
