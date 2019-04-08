@@ -224,6 +224,7 @@ class Conformer():
             self.rmg_molecule.updateMultiplicity()
             self.get_mols()
             self.get_geometries()
+            self.symmetry_number = self.calculate_symmetry_number()
 
         else:
             self.smiles = None
@@ -235,6 +236,7 @@ class Conformer():
             self.torsions = []
             self.cistrans = []
             self.chiral_centers = []
+            self.symmetry_number = None
 
     def __repr__(self):
         return '<Conformer "{}">'.format(self.smiles)
@@ -837,12 +839,15 @@ class Conformer():
                 ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
 
             self.ase_molecule = Atoms(ase_atoms)
+            self.calculate_symmetry_number()
 
         elif mol_type.lower() == "ase":
             conf = self.rdkit_molecule.GetConformers()[0]
             for i, position in enumerate(self.ase_molecule.get_positions()):
                 self.rmg_molecule.atoms[i].coords = position
                 conf.SetAtomPosition(i, position)
+
+            self.calculate_symmetry_number()
 
         elif mol_type.lower() == "rdkit":
 
@@ -855,6 +860,7 @@ class Conformer():
                 atom.coords = np.array(coords)
 
             self.get_ase_mol()
+            self.calculate_symmetry_number()
 
     def set_bond_length(self, bond_index, length):
         return None
@@ -1020,3 +1026,29 @@ class Conformer():
         self.update_coords_from(mol_type="ase")
 
         return self
+
+    def calculate_symmetry_number(self):
+        from rmgpy.qm.symmetry import PointGroupCalculator
+        from rmgpy.qm.qmdata import QMData
+
+        atom_numbers = self.ase_molecule.get_atomic_numbers()
+        coordinates = self.ase_molecule.get_positions()
+
+        qmdata = QMData(
+            groundStateDegeneracy=1,  # Only needed to check if valid QMData
+            numberOfAtoms=len(atom_numbers),
+            atomicNumbers=atom_numbers,
+            atomCoords=(coordinates, str('angstrom')),
+            energy=(0.0, str('kcal/mol'))  # Only needed to avoid error
+        )
+        settings = type(str(''), (), dict(symmetryPath=str('symmetry'), scratchDirectory="."))()  # Creates anonymous class
+        pgc = PointGroupCalculator(settings, self.smiles, qmdata)
+        pg = pgc.calculate()
+        os.remove("{}.symm".format(self.smiles))
+
+        if pg is not None:
+            symmetry_number = pg.symmetryNumber
+        else:
+            symmetry_number = 1
+
+        return symmetry_number
