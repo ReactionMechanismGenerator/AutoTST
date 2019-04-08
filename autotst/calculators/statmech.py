@@ -49,7 +49,7 @@ def find_lowest_energy_conformer(species, scratch="."):
 
     elif isinstance(species, Reaction):
         conf_dict = species.ts
-        label = species.label
+        label = species.reaction_label
 
     else:
         logging.info("This isn't an appropirate object.")
@@ -194,10 +194,22 @@ class StatMech(Calculator):
 
         return bondDict
 
-    def write_arkane_for_reacts_and_prods(self, conformer):
+    def write_arkane_species(self, species, scratch="."):
         """
         a method to write species to an arkane input file. Mol is an RMGMolecule
         """
+        """
+        TODO: Identify lowest energy conformer from a species object
+        """
+        assert isinstance(species, Species), "The object you provided is not an AutoTST Species object... "
+
+        for smiles, confs in species.conformers:
+            if os.path.exits(os.path.join(scratch, "species", smiles, smiles +".log")):
+                logginf.info("Lowest energy conformer log file exists")
+            else:
+                #for f in os.listdir(os.path.join(scratch, "species", smiles, "conformers")):
+                print "oops"
+
         conf = conformer
 
         mol = conf.rmg_molecule
@@ -220,13 +232,12 @@ class StatMech(Calculator):
         else:
             output.append('bonds = {}')
         
-        label = Chem.rdinchi.InchiToInchiKey(
-            Chem.MolToInchi(Chem.MolFromSmiles(mol.toSMILES()))).strip("-N")
+        label = mol.toSMILES()
 
-        external_symmetry = conformer.get_symmetry_number()
+        external_symmetry = conformer.calculate_symmetry_number()
 
         output += ["",
-                   "linear = False",
+                   "linear = {}".format(mol.isLinear),
                    "",
                    "externalSymmetry = {}".format(external_symmetry),
                    "",
@@ -234,6 +245,10 @@ class StatMech(Calculator):
                    "",
                    "opticalIsomers = 1",
                    ""]
+
+        """
+        TODO: Update logfile path to correct location
+        """
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
             self.model_chemistry, label), "}", ""]
@@ -243,10 +258,13 @@ class StatMech(Calculator):
         output += [
             "frequencies = Log('{0}.log')".format(label), ""]
 
+        """
+        TODO: add rotor information @carl
         output += ["rotors = ["]
         for torsion in conf.torsions:
             output += [self.get_rotor_info(conf, torsion)]
         output += ["]"]
+        """
 
         input_string = ""
 
@@ -296,7 +314,7 @@ class StatMech(Calculator):
 
         return info
 
-    def write_statmech_ts(self, rxn):
+    def write_statmech_ts(self, transitionstate):
 
         conf = find_lowest_energy_conformer(rxn, self.scratch)
         output = ['#!/usr/bin/env python',

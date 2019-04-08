@@ -153,49 +153,26 @@ class Job():
                 file_path += "_{}".format(direction)
                 label += "_{}".format(direction)
 
-        """command = calculator.command.split()[0]
-        
-        if isinstance(calculator, ase.calculators.gaussian.Gaussian):
-            os.environ["COMMAND"] = "g16"
-        else:
-            logging.info("Assuming this is a Gaussian Calculator...")
-        """
-        os.environ["COMMAND"] = "g16"
+        os.environ["COMMAND"] = "g16" #only using gaussian for now haha
 
         os.environ["FILE_PATH"] = file_path
-
-        if number_of_files != 0:
-            subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} --array=0-{2} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
-                    label, partition, number_of_files), shell=True)
-        else:
-            os.environ["SLURM_ARRAY_TASK_ID"] = '0'
-            subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
-                    label, partition), shell=True)
-
-        """if os.path.exists(complete_file_path + ".log"):
-            logging.info("It looks like this has already been attempted")
-            try:
-                self.read_log(complete_file_path + ".log")
-            except BaseException:
-                logging.info("This file failed... running it again")
-
-        elif os.path.exists(file_path + ".log"):
-            # a workaround for if a file already exists
-            logging.info("It looks like this has already been attempted")
-            try:
-                self.read_log(file_path + ".log")
-
-            except BaseException:
-                logging.info("This file failed... running it again")
+        attempted = False
+        for f in os.listdir(scratch):
+            if (f.endswith(".log") and (label in f)):
+                attempted = True
+                logging.info("It appears that this job has already been run")
+                
+        if not attempted:
+            if number_of_files != 0:
                 subprocess.call(
-                    sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=1-{2} submit.shformat(
-                        calculator.label, partition, number_of_files ), shell=True)
-        else:
-            subprocess.call(
-                sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 --array=1-{2} submit.shformat(
-                    calculator.label, partition, number_of_files ), shell=True)"""
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} --array=0-{2} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
+                        label, partition, number_of_files), shell=True)
+            else:
+                os.environ["SLURM_ARRAY_TASK_ID"] = '0'
+                subprocess.call(
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
+                        label, partition), shell=True)
+
 
     def check_complete(self, label):
         """
@@ -701,27 +678,24 @@ class Job():
                     logging.info("{} was successful and was validated!".format(f))
                     results[f] = True
                     
-                    
+
         for file_name, result in results.items():
             logging.info("For {}".format(file_name))
             r, p, direction, _, index = file_name.strip(".log").split("_")
             
             got_one = False
             for ts in reaction.ts[direction]:
-
-                if (got_one) or (ts.index != str(index)): 
+                if (got_one) or (ts.index != int(index)): 
                     continue
                 if not result:
                     ts.ase_molecule = Atoms()
                     logging.info("Failed shell calculation for {}, removing atoms for future calculations".format(ts))
                     got_one = True
                 else:
-                    logging.info("Reading log file for {}".format(file_name))
-                    logging.info("The first atom's positions are {}".format(ts.ase_molecule.get_positions()[0]))
                     ts.ase_molecule = self.read_log(os.path.join(scratch_dir, file_name))
                     ts.update_coords_from("ase")
                     got_one = True
-                    logging.info("The updated positions are {}".format(ts.ase_molecule.get_positions()[0]))
+
                 
         master_results["shell"] = results
         
@@ -795,7 +769,7 @@ class Job():
             r, p, direction, _, index = file_name.strip(".log").split("_")
             
             for ts in reaction.ts[direction]:
-                if ts.index != str(index):
+                if ts.index != int(index):
                     continue
                 if not result:
                     ts.ase_molecule = Atoms()
@@ -868,7 +842,7 @@ class Job():
             r, p, direction, _, index = file_name.strip(".log").split("_")
             
             for ts in reaction.ts[direction]:
-                if ts.index != str(index):
+                if ts.index != int(index):
                     continue
                 if not result:
                     ts.ase_molecule = Atoms()
