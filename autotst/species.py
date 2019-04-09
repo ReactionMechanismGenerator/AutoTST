@@ -373,8 +373,6 @@ class Conformer():
                     rmg_molecule.atoms[j].label)):
                 center = True
 
-            mask = self.get_mask(bond, rdmol_copy, ase_molecule)
-
             bond = Bond(index=index,
                         atom_indices=indices,
                         length=length,
@@ -713,7 +711,6 @@ class Conformer():
             ase_molecule = self.ase_molecule
 
         rdkit_atoms = rdmol_copy.GetAtoms()
-
         if (isinstance(geometry, autotst.geometry.Torsion) or
                 isinstance(geometry, autotst.geometry.CisTrans)):
 
@@ -731,7 +728,7 @@ class Conformer():
         elif isinstance(geometry, autotst.geometry.Bond):
             a1, a2 = geometry.atom_indices
             LHS_atoms_index = [a1]
-            RHS_atom_index = [a2]
+            RHS_atoms_index = [a2]
 
         complete_RHS = False
         i = 0
