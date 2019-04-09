@@ -373,10 +373,14 @@ class Conformer():
                     rmg_molecule.atoms[j].label)):
                 center = True
 
+            mask = self.get_mask(bond, rdmol_copy, ase_molecule)
+
             bond = Bond(index=index,
                         atom_indices=indices,
                         length=length,
                         reaction_center=center)
+            mask = self.get_mask(bond, rdmol_copy, ase_molecule)
+            bond.mask = mask
 
             bonds.append(bond)
 
@@ -697,7 +701,7 @@ class Conformer():
 
     def get_mask(
             self,
-            torsion_or_angle,
+            geometry,
             rdkit_molecule=None,
             ase_molecule=None):
 
@@ -710,19 +714,24 @@ class Conformer():
 
         rdkit_atoms = rdmol_copy.GetAtoms()
 
-        if (isinstance(torsion_or_angle, autotst.geometry.Torsion) or
-                isinstance(torsion_or_angle, autotst.geometry.CisTrans)):
+        if (isinstance(geometry, autotst.geometry.Torsion) or
+                isinstance(geometry, autotst.geometry.CisTrans)):
 
-            L1, L0, R0, R1 = torsion_or_angle.atom_indices
+            L1, L0, R0, R1 = geometry.atom_indices
 
             # trying to get the left hand side of this torsion
             LHS_atoms_index = [L0, L1]
             RHS_atoms_index = [R0, R1]
 
-        elif isinstance(torsion_or_angle, autotst.geometry.Angle):
-            a1, a2, a3 = torsion_or_angle.atom_indices
+        elif isinstance(geometry, autotst.geometry.Angle):
+            a1, a2, a3 = geometry.atom_indices
             LHS_atoms_index = [a2, a1]
             RHS_atoms_index = [a2, a3]
+        
+        elif isinstance(geometry, autotst.geometry.Bond):
+            a1, a2 = geometry.atom_indices
+            LHS_atoms_index = [a1]
+            RHS_atom_index = [a2]
 
         complete_RHS = False
         i = 0
