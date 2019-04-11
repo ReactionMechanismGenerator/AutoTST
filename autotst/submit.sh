@@ -1,3 +1,3 @@
 #!/bin/sh
-echo "$FILE_PATH"_"$SLURM_ARRAY_TASK_ID.com"
-$COMMAND < "$FILE_PATH"_"$SLURM_ARRAY_TASK_ID.com" > "$FILE_PATH"_"$SLURM_ARRAY_TASK_ID.log"
+
+$COMMAND < "$FILE_PATH.com" > "$FILE_PATH.log"

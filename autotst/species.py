@@ -249,7 +249,6 @@ class Conformer():
         copy_conf.ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
         copy_conf.energy = self.energy
-        copy_conf._symmetry_number = self._symmetry_number
         return copy_conf
 
     @property
@@ -852,7 +851,7 @@ class Conformer():
                 ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
 
             self.ase_molecule = Atoms(ase_atoms)
-            self.calculate_symmetry_number()
+            #self.calculate_symmetry_number()
 
         elif mol_type.lower() == "ase":
             conf = self.rdkit_molecule.GetConformers()[0]
@@ -860,7 +859,7 @@ class Conformer():
                 self.rmg_molecule.atoms[i].coords = position
                 conf.SetAtomPosition(i, position)
 
-            self.calculate_symmetry_number()
+            #self.calculate_symmetry_number()
 
         elif mol_type.lower() == "rdkit":
 
@@ -873,7 +872,7 @@ class Conformer():
                 atom.coords = np.array(coords)
 
             self.get_ase_mol()
-            self.calculate_symmetry_number()
+            #self.calculate_symmetry_number()
 
     def set_bond_length(self, bond_index, length):
         return None
