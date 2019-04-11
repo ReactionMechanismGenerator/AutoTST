@@ -123,14 +123,14 @@ class Job():
         self.write_input(conformer, ase_calculator)
 
         label = conformer.smiles + "_{}".format(conformer.index) 
-        scratch = os.path.join(scratch, "species", conformer.smiles, "conformers")
+        scratch = ase_calculator.scratch
         file_path = os.path.join(scratch, label)
 
         os.environ["COMMAND"] = "g16" #only using gaussian for now 
         os.environ["FILE_PATH"] = file_path
 
         attempted = False
-        if os.path.exists(file_path + ".log")
+        if os.path.exists(file_path + ".log"):
             attempted = True
             logging.info("It appears that this job has already been run, not running it a second time.")
                 
@@ -149,14 +149,15 @@ class Job():
 
         self.write_input(transitionstate, ase_calculator)
         label = ase_calculator.label
-        scratch = os.path.join(ase_calculator.scratch, "ts", transitionstate.reaction_label, "conformers")
+        scratch = ase_calculator.scratch
+        print scratch
         file_path = os.path.join(scratch, label)
 
         os.environ["COMMAND"] = "g16" #only using gaussian for now 
         os.environ["FILE_PATH"] = file_path
 
         attempted = False
-        if os.path.exists(file_path + ".log")
+        if os.path.exists(file_path + ".log"):
             attempted = True
             logging.info("It appears that this job has already been run")
                 
@@ -176,7 +177,7 @@ class Job():
         #######################
         ##### For shells  #####
         #######################
-        direction = ts.direction
+        direction = transitionstate.direction
 
         calc = calculator.get_shell_calc(transitionstate,
                                 direction=direction,
@@ -188,7 +189,7 @@ class Job():
                                 )
 
         self.write_input(transitionstate, calc)
-        label = self.submit_transitionstate(transitionstate, calc, "general")
+        label = self.submit_transitionstate(transitionstate, calc, "west")
 
         while not self.check_complete(label):
             time.sleep(15)
@@ -277,21 +278,35 @@ class Job():
 
 
         currently_running = [] 
+        processes = {}
         for direction, transitionstates in reaction.ts.items():
 
-            for transitionstate in transitionstates
+            for transitionstate in transitionstates:
 
-                process = Process(target=self.calculate_transitionstate, args=(transitionstate, calculator, direction))
+                process = Process(target=self.calculate_transitionstate, args=(transitionstate, calculator))
+                processes[process.name] = process
+                
 
-                while len(currently_running) >= 50:
-                    for running in currently_running:
-                        if not running.is_alive():
-                            currently_running.remove(running.name)
+        for name, process in processes.items():
+            print process
+            while len(currently_running) >= 50:
+                for running in currently_running:
+                    if not running.is_alive():
+                        currently_running.remove(name)
+            process.start()
+            #process.join()
+            currently_running.append(name)
 
-                process.start()
-                process.join()
-                currently_running.append(process.name)
-        
+        complete = False
+        print len(currently_running), currently_running
+        while len(currently_running) > 0:
+            for name, process in processes.items():
+                if not (name in currently_running):
+                    continue
+                if not process.is_alive():
+                    currently_running.remove(name)
+
+        print "Here"
         lowest_energy_f = None
         lowest_energy = 1e5
         for direction, transitionstates in reaction.ts.items():
@@ -411,7 +426,7 @@ class Job():
                 
                 if not starting_molecule.isIsomorphic(test_molecule):
                     logging.info("Output geometry of {} is not isomorphic with input geometry".format(calc.label))
-                    result False
+                    result = False
                 else:
                     logging.info("{} was successful and was validated!".format(calc.label))
                     result = True
