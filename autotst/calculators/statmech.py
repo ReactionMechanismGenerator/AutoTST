@@ -80,7 +80,7 @@ class StatMech(Calculator):
 
     def __init__(
             self,
-            reaction,
+            reaction=None,
             scratch=".",
             output_directory=".",
             model_chemistry="M06-2X/cc-pVTZ",
