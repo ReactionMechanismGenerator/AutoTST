@@ -90,29 +90,24 @@ class Job():
         """
         A helper method that will write an input file and move it to the correct scratch directory
         """
-        if not os.path.exists(
+
+        ase_calculator.write_input(conformer.ase_molecule)
+        if not os.path.exists(ase_calculator.scratch):
+            os.makedirs(ase_calculator.scratch)
+        move(
+            ase_calculator.label + ".com", 
             os.path.join(
                 ase_calculator.scratch,
                 ase_calculator.label + ".com"
-            )
-        ):
-            ase_calculator.write_input(conformer.ase_molecule)
+            ))
 
-            move(
-                ase_calculator.label + ".com", 
-                os.path.join(
-                    ase_calculator.scratch,
-                    ase_calculator.label + ".com"
-                ))
+        move(
+            ase_calculator.label + ".ase", 
+            os.path.join(
+                ase_calculator.scratch,
+                ase_calculator.label + ".ase"
+            ))
 
-            move(
-                ase_calculator.label + ".ase", 
-                os.path.join(
-                    ase_calculator.scratch,
-                    ase_calculator.label + ".ase"
-                ))
-        else:
-            logging.info("File you're attempting to write already exists...")
 
     def submit_conformer(self, conformer, ase_calculator, partition="general"):
         """
