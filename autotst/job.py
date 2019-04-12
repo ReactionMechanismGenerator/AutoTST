@@ -93,8 +93,11 @@ class Job():
         """
 
         ase_calculator.write_input(conformer.ase_molecule)
-        if not os.path.exists(ase_calculator.scratch):
+        try: 
             os.makedirs(ase_calculator.scratch)
+        except OSError:
+            logging.info("{} already exists...".format(ase_calculator.scratch))
+            
         move(
             ase_calculator.label + ".com", 
             os.path.join(
@@ -238,8 +241,10 @@ class Job():
 
             if not result:
                 fail_dir = os.path.join(scratch_dir, "failures")
-                if not os.path.exists(fail_dir):
+                try: 
                     os.makedirs(os.path.join(scratch_dir, "failures"))
+                except OSError:
+                    logging.info("{} already exists...".format(fail_dir))
                 move(
                     os.path.join(scratch_dir, f),
                     os.path.join(scratch_dir, "failures", f)

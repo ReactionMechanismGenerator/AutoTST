@@ -200,8 +200,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.exists(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            logging.info("{} already exists...".format(new_scratch))
 
         calc = ASEGaussian(
             mem=mem,
@@ -250,8 +252,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.exists(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            logging.info("{} already exists...".format(new_scratch))
 
 
         ind1 = ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
@@ -321,8 +325,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.exists(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            logging.info("{} already exists...".format(new_scratch))
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -371,8 +377,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.exists(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            logging.info("{} already exists...".format(new_scratch))
 
         calc = ASEGaussian(
             mem=mem,
@@ -414,8 +422,10 @@ class Gaussian(Calculator):
                 ts.reaction_label,
                 "irc"
             )
-        if not os.path.exists(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            logging.info("{} already exists...".format(new_scratch))
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
