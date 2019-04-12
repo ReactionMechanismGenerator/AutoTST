@@ -96,7 +96,7 @@ class Job():
         try: 
             os.makedirs(ase_calculator.scratch)
         except OSError:
-            logging.info("{} already exists...".format(ase_calculator.scratch))
+            pass
             
         move(
             ase_calculator.label + ".com", 

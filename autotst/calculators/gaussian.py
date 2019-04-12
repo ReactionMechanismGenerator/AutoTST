@@ -203,7 +203,7 @@ class Gaussian(Calculator):
         try: 
             os.makedirs(new_scratch)
         except OSError:
-            logging.info("{} already exists...".format(new_scratch))
+            pass
 
         calc = ASEGaussian(
             mem=mem,
@@ -255,7 +255,7 @@ class Gaussian(Calculator):
         try: 
             os.makedirs(new_scratch)
         except OSError:
-            logging.info("{} already exists...".format(new_scratch))
+            pass
 
 
         ind1 = ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
@@ -328,7 +328,7 @@ class Gaussian(Calculator):
         try: 
             os.makedirs(new_scratch)
         except OSError:
-            logging.info("{} already exists...".format(new_scratch))
+            pass
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -380,7 +380,7 @@ class Gaussian(Calculator):
         try: 
             os.makedirs(new_scratch)
         except OSError:
-            logging.info("{} already exists...".format(new_scratch))
+            pass
 
         calc = ASEGaussian(
             mem=mem,
@@ -425,7 +425,7 @@ class Gaussian(Calculator):
         try: 
             os.makedirs(new_scratch)
         except OSError:
-            logging.info("{} already exists...".format(new_scratch))
+            pass
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
