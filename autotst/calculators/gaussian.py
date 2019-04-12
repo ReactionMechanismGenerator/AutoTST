@@ -513,15 +513,11 @@ class Gaussian(Calculator):
         irc_path = os.path.join(
             calc.scratch,
             calc.label + ".log")
+
         if not os.path.exists(irc_path):
             logging.info(
-                "It seems that the file was `fixed`, reading in the `fixed` version.")
-            irc_path = irc_path.replace("left", "(").replace("right", ")")
-
-            if not os.path.exists(irc_path):
-                logging.info(
-                    "It seems that the IRC claculation has not been run.")
-                return False
+                "It seems that the IRC claculation has not been run.")
+            return False
 
         f = open(irc_path, "r")
         file_lines = f.readlines()[-5:]

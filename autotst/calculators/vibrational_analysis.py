@@ -76,8 +76,7 @@ class VibrationalAnalysis():
             scratch, 
             "ts", 
             ts.reaction_label, 
-            "conformers", 
-            ts.reaction_label + "_" + str(ts.index) + ".log")
+            ts.reaction_label +".log")
         
         return log_file
 
@@ -151,22 +150,26 @@ class VibrationalAnalysis():
             scratch = self.scratch
         if ts is None:
             ts = self.ts
+        try:
+            self.log_file = self.get_log_file(self.scratch, ts)
 
-        self.log_file = self.get_log_file(self.scratch, ts)
+            self.vibrations = self.parse_vibrations(self.log_file)
 
-        self.vibrations = self.parse_vibrations(self.log_file)
+            self.pre_geometry, self.post_geometry = self.obtain_geometries(self.ts, self.vibrations)
 
-        self.pre_geometry, self.post_geometry = self.obtain_geometries(self.ts, self.vibrations)
+            self.percent_changes = self.obtain_percent_changes(self.ts, self.pre_geometry, self.post_geometry)
 
-        self.percent_changes = self.obtain_percent_changes(self.ts, self.pre_geometry, self.post_geometry)
+            if (np.log10(((self.percent_changes[self.percent_changes.center].mean()))) > np.log10(
+                    ((self.percent_changes[self.percent_changes.center != True].mean()))) + 1).all():
+                logging.info("Vibrational analysis was successful")
+                return True
 
-        if (np.log10(((self.percent_changes[self.percent_changes.center].mean()))) > np.log10(
-                ((self.percent_changes[self.percent_changes.center != True].mean()))) + 1).all():
-            logging.info("Vibrational analysis was successful")
-            return True
-
-        else:
-            logging.info(
-                "Cannot reasonably say that we have arrived at a TS through vibrational analysis.")
+            else:
+                logging.info(
+                    "Cannot reasonably say that we have arrived at a TS through vibrational analysis.")
+                return False
+        except:
+            logging.info("Something went wrong...")
+            logging.info("Cannot verify via vibrational analysis")
             return False
 
