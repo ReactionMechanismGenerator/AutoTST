@@ -200,7 +200,7 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        if not os.path.exists(new_scratch):
             os.makedirs(new_scratch)
 
         calc = ASEGaussian(
@@ -250,7 +250,7 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        if not os.path.exists(new_scratch):
             os.makedirs(new_scratch)
 
 
@@ -321,7 +321,7 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        if not os.path.exists(new_scratch):
             os.makedirs(new_scratch)
 
         calc = ASEGaussian(mem=mem,
@@ -371,7 +371,7 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        if not os.path.exists(new_scratch):
             os.makedirs(new_scratch)
 
         calc = ASEGaussian(
@@ -400,7 +400,7 @@ class Gaussian(Calculator):
         if ts is None:
             if self.ts is None:
                 return None
-            elif not isinstance(self.conformer, TS):
+            elif not isinstance(self.conformer, TS): 
                 return None
             else:
                 ts = self.conformer
@@ -414,7 +414,7 @@ class Gaussian(Calculator):
                 ts.reaction_label,
                 "irc"
             )
-        if not os.path.isdir(new_scratch):
+        if not os.path.exists(new_scratch):
             os.makedirs(new_scratch)
 
         calc = ASEGaussian(mem=mem,
