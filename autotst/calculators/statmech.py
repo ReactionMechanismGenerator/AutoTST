@@ -41,40 +41,6 @@ FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 
-def find_lowest_energy_conformer(species, scratch="."):
-
-    if isinstance(species, Species):
-        conf_dict = species.conformers
-        label = None
-
-    elif isinstance(species, Reaction):
-        conf_dict = species.ts
-        label = species.reaction_label
-
-    else:
-        logging.info("This isn't an appropirate object.")
-        return None
-
-    min_e = 1e5
-    lowest_energy_conformer = None
-    for smiles, conformers in conf_dict.iteritems():
-        for conformer in conformers:
-            if isinstance(species, Species):
-                label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(Chem.MolFromSmiles(
-                    conformer.rmg_molecule.toSMILES()))).strip("-N") + "_{}".format(conformer.index)
-
-            if lowest_energy_conformer is None:
-                lowest_energy_conformer = conformer
-            if not os.path.exists(os.path.join(scratch, label + ".log")):
-                logging.info(
-                    "Output log files don't exist for {}".format(conformer))
-                continue
-
-            if conformer.energy and (conformer.energy < min_e):
-                lowest_energy_conformer = conformer
-
-    return lowest_energy_conformer
-
 
 class StatMech(Calculator):
 
@@ -96,13 +62,13 @@ class StatMech(Calculator):
         self.reaction = reaction
         self.scratch = scratch
 
-        self.arkane_job = RMGArkane()
+        self.kinetics_job = RMGArkane()
+        self.thermo_job = RMGArkane()
         self.output_directory = output_directory
-        self.arkane_job.outputDirectory = self.output_directory
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
 
-    def get_atoms(self, conformer):
+    def get_atoms(self, conformer=None):
         """
         A method to create an atom dictionary for an rmg molecule
         """
@@ -127,7 +93,7 @@ class StatMech(Calculator):
 
         return atom_dict
 
-    def get_bonds(self, conformer):
+    def get_bonds(self, conformer=None):
 
         conf = conformer
 
@@ -194,36 +160,57 @@ class StatMech(Calculator):
 
         return bondDict
 
-    def write_arkane_species(self, species, scratch="."):
-        """
-        a method to write species to an arkane input file. Mol is an RMGMolecule
-        """
-        """
-        TODO: Identify lowest energy conformer from a species object
-        """
-        assert isinstance(species, Species), "The object you provided is not an AutoTST Species object... "
+    def write_species_files(self, species=None, scratch="."):
 
-        for smiles, confs in species.conformers:
-            if os.path.exits(os.path.join(scratch, "species", smiles, smiles +".log")):
-                logginf.info("Lowest energy conformer log file exists")
+        for smiles, confs in species.conformers.items():
+            if os.path.exists(os.path.join(scratch, "species", smiles, smiles +".log")):
+                logging.info("Lowest energy conformer log file exists for {}".format(smiles))
+                write_arkane_conformer(conformer=confs[0], scratch=scratch)
             else:
-                #for f in os.listdir(os.path.join(scratch, "species", smiles, "conformers")):
-                print "oops"
-
+                logging.info("Lowest energy conformer log file DOES NOT exist for {}".format(smiles))
+        
+    def write_conformer_file(self, conformer=None, scratch="."):
+        
         conf = conformer
 
+        
+        label = conf.smiles
+        
+        if not os.path.exists(os.path.join(scratch,"species", label, label + ".log")):
+            logging.info("There is no lowest energy conformer file...")
+            return False
+        
+        parser = ccread(os.path.join(scratch,"species", label, label + ".log"))
+        symbol_dict = {
+            17: "Cl",
+            9:  "F",
+            8:  "O",
+            7:  "N",
+            6:  "C",
+            1:  "H",
+        }
+        
+        atoms = []
+
+
+        for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
+            atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+            
+        conf.ase_molecule = Atoms(atoms)
+        conf.update_coords_from("ase")
         mol = conf.rmg_molecule
 
+        mol = conf.rmg_molecule
         output = ['#!/usr/bin/env python',
-                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
+                '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
-        atom_dict = self.get_atoms(conf)
+        atom_dict = self.get_atoms(conformer=conf) ### Fix this
 
         for atom, count in atom_dict.iteritems():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
-        bond_dict = self.get_bonds(conf)
+        bond_dict = self.get_bonds(conformer=conf) ### fix this
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.iteritems():
@@ -231,27 +218,22 @@ class StatMech(Calculator):
             output.append("}")
         else:
             output.append('bonds = {}')
-        
-        label = mol.toSMILES()
 
         external_symmetry = conformer.calculate_symmetry_number()
 
         output += ["",
-                   "linear = {}".format(mol.isLinear),
-                   "",
-                   "externalSymmetry = {}".format(external_symmetry),
-                   "",
-                   "spinMultiplicity = {}".format(mol.multiplicity),
-                   "",
-                   "opticalIsomers = 1",
-                   ""]
-
-        """
-        TODO: Update logfile path to correct location
-        """
+                "linear = {}".format(mol.isLinear()),
+                "",
+                "externalSymmetry = {}".format(external_symmetry),
+                "",
+                "spinMultiplicity = {}".format(mol.multiplicity),
+                "",
+                "opticalIsomers = 1",
+                ""]
+        
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
-            self.model_chemistry, label), "}", ""]
+            self.model_chemistry, label), "}", ""] ###fix this
 
         output += ["geometry = Log('{0}.log')".format(label), ""]
 
@@ -271,9 +253,10 @@ class StatMech(Calculator):
         for t in output:
             input_string += t + "\n"
 
-   
-        with open(os.path.join(self.scratch, label + '.py'), "w") as f:
+
+        with open(os.path.join(scratch,"species", label, label + '.py'), "w") as f:
             f.write(input_string)
+        return True
 
     def get_rotor_info(self, conformer, torsion):
         """
@@ -314,19 +297,43 @@ class StatMech(Calculator):
 
         return info
 
-    def write_statmech_ts(self, transitionstate):
 
-        conf = find_lowest_energy_conformer(rxn, self.scratch)
+    def write_ts_input(self, transitionstate=None, scratch=None):
+        
+        label = transitionstate.reaction_label
+        
+        if not os.path.exists(os.path.join(scratch,"ts", label, label + ".log")):
+            logging.info("There is no lowest energy conformer file...")
+            return False
+        
+        parser = ccread(os.path.join(scratch,"ts", label, label + ".log"))
+        symbol_dict = {
+            17: "Cl",
+            9:  "F",
+            8:  "O",
+            7:  "N",
+            6:  "C",
+            1:  "H",
+        }
+        
+        atoms = []
+        for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
+            atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+            
+        transitionstate.ase_molecule = Atoms(atoms)
+        transitionstate.update_coords_from("ase")
+        mol = transitionstate.rmg_molecule
+
         output = ['#!/usr/bin/env python',
-                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
+                '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
-        atom_dict = self.get_atoms(rxn)
+        atom_dict = get_atoms(conformer=transitionstate) # need to fix
 
         for atom, count in atom_dict.iteritems():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
-        bond_dict = self.get_bonds(rxn)
+        bond_dict = get_bonds(conformer=transitionstate) # need to fix
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.iteritems():
@@ -335,106 +342,200 @@ class StatMech(Calculator):
             output.append("}")
         else:
             output.append('bonds = {}')
-        conf.rmg_molecule.updateMultiplicity()
-        external_symmetry = conf.rmg_molecule.getSymmetryNumber()
+        transitionstate.rmg_molecule.updateMultiplicity()
+        
+        external_symmetry = transitionstate.calculate_symmetry_number()
 
         output += ["",
-                   "linear = False",
-                   "",
-                   "externalSymmetry = {}".format(external_symmetry),
-                   "",
-                   "spinMultiplicity = {}".format(conf.rmg_molecule.multiplicity),
-                   "",
-                   "opticalIsomers = 1",
-                   ""]
+                "linear = False",
+                "",
+                "externalSymmetry = {}".format(external_symmetry),
+                "",
+                "spinMultiplicity = {}".format(transitionstate.rmg_molecule.multiplicity),
+                "",
+                "opticalIsomers = 1",
+                ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
-            self.model_chemistry, rxn.label), "}", ""]
+            self.model_chemistry, label), "}", ""] #fix this 
 
-        output += ["geometry = Log('{0}.log')".format(rxn.label), ""]
+        output += ["geometry = Log('{0}.log')".format(label), ""]
 
         output += [
-            "frequencies = Log('{0}.log')".format(rxn.label), ""]
+            "frequencies = Log('{0}.log')".format(label), ""]
 
-        output += ["rotors = []", ""]
+        output += ["rotors = []", ""] ### TODO: Fix this
 
         input_string = ""
 
         for t in output:
             input_string += t + "\n"
 
-        with open(os.path.join(self.scratch, rxn.label + ".py"), "w") as f:
+        with open(os.path.join(scratch,"ts", label, label + '.py'), "w") as f:
             f.write(input_string)
+        return True
 
-    def write_arkane_ts(self, rxn):
+    def write_kinetics_input(self, reaction=None, scratch="."):
+        
         top = [
             "#!/usr/bin/env python",
             "# -*- coding: utf-8 -*-",
             "",
             'modelChemistry = "{0}"'.format(
-                self.model_chemistry),
+                self.model_chemistry), #fix this
             "frequencyScaleFactor = {0}".format(
-                self.freq_scale_factor),
-            "useHinderedRotors = False",
+                self.freq_scale_factor), #fix this
+            "useHinderedRotors = False", #fix this @carl
             "useBondCorrections = False",
             ""]
 
         labels = []
         r_smiles = []
         p_smiles = []
-        for react in rxn.reactants:
-            conf = find_lowest_energy_conformer(react, self.scratch)
-            r_smiles.append(conf.smiles)
-            label = Chem.rdinchi.InchiToInchiKey(
-                Chem.MolToInchi(Chem.MolFromSmiles(conf.smiles))).strip("-N")
+        for i, react in enumerate(reaction.reactants):
+            lowest_energy = 1e5
+            lowest_energy_conf = None
+            
+            if len(react.conformers.keys()) > 1:
+                for smiles in react.conformers.keys():
+                    path = os.path.join(scratch, "species", smiles, smiles + ".log")
+                    if not os.path.exists(path):
+                        logging.info("It looks like {} doesn't have any optimized geometries".format(smiles))
+                        continue
+                    
+                    parser = ccread(path)
+                    energy = parser.scfenergies[-1]
+                    if energy < lowest_energy:
+                        lowest_energy = energy
+                        lowest_energy_conf = react.conformers[smiles][0]
+                            
+            else:
+                smiles = react.conformers.keys()[0]
+                path = os.path.join(scratch, "species", smiles, smiles + ".log")
+                if not os.path.exists(path):
+                    logging.info("It looks like {} doesn't have any optimized geometries".format(smiles))
+                    continue
+
+                parser = ccread(path)
+                lowest_energy = parser.scfenergies[-1]
+                lowest_energy_conf = react.conformers.values()[0][0]
+
+            #r_smiles.append(lowest_energy_conf.smiles)
+            r_smiles.append("react_{}".format(i))
+            label = lowest_energy_conf.smiles
             if label in labels:
                 continue
             else:
                 labels.append(label)
-            line = "species('{0}', '{1}')".format(
-                conf.smiles, label + ".py")
+            line = "species('{0}', '{1}', structure=SMILES('{2}'))".format(
+                "react_{}".format(i), os.path.join("..", "..","species", label, label + ".py"), label)
             top.append(line)
+                
+        for i, prod in enumerate(reaction.products):
+            print prod
+            lowest_energy = 1e5
+            lowest_energy_conf = None
+            
+            print len(prod.conformers.keys())
+            
+            if len(prod.conformers.keys()) > 1:
+                for smiles in prod.conformers.keys():
+                    path = os.path.join(scratch, "species", smiles, smiles + ".log")
+                    if not os.path.exists(path):
+                        logging.info("It looks like {} doesn't have any optimized geometries".format(smiles))
+                        continue
+                    
+                    parser = ccread(path)
+                    energy = parser.scfenergies[-1]
+                    if energy < lowest_energy:
+                        lowest_energy = energy
+                        lowest_energy_conf = prod.conformers[smiles][0]
+                            
+            else:
+                print prod
+                smiles = prod.conformers.keys()[0]
+                path = os.path.join(scratch, "species", smiles, smiles + ".log")
+                if not os.path.exists(path):
+                    logging.info("It looks like {} doesn't have any optimized geometries".format(smiles))
+                    continue
 
-        for prod in rxn.products:
-            conf = find_lowest_energy_conformer(prod, self.scratch)
-            p_smiles.append(conf.smiles)
-            label = Chem.rdinchi.InchiToInchiKey(
-                Chem.MolToInchi(Chem.MolFromSmiles(conf.smiles))).strip("-N")
+                parser = ccread(path)
+                lowest_energy = parser.scfenergies[-1]
+                lowest_energy_conf = prod.conformers.values()[0][0]
+
+            #p_smiles.append(lowest_energy_conf.smiles)
+            p_smiles.append("prod_{}".format(i))
+            label = lowest_energy_conf.smiles
             if label in labels:
                 continue
             else:
                 labels.append(label)
-            line = "species('{0}', '{1}')".format(
-                conf.smiles, label + ".py")
+            line = "species('{0}', '{1}', structure=SMILES('{2}'))".format(
+                "prod_{}".format(i), os.path.join("..", "..", "species", label, label + ".py"), label)
             top.append(line)
 
-        line = "transitionState('TS', '{0}')".format(rxn.label + ".py")
+        line = "transitionState('TS', '{0}')".format(reaction.label + ".py")
         top.append(line)
 
         line = ["",
                 "reaction(",
-                "    label = '{0}',".format(rxn.label),
-                "    reactants = ['{0}', '{1}'],".format(
-                    r_smiles[0], r_smiles[1]),
-                "    products = ['{0}', '{1}'],".format(
-                    p_smiles[0], p_smiles[1]),
+                "    label = '{0}',".format(reaction.label),
+                "    reactants = {},".format(
+                    r_smiles),
+                "    products = {},".format(
+                    p_smiles),
                 "    transitionState = 'TS',",
                 "    tunneling = 'Eckart',",
                 ")",
                 "",
                 "statmech('TS')",
-                "kinetics('{0}')".format(rxn.label)]
+                "kinetics('{0}')".format(reaction.label)]
+
         top += line
+        
+        input_string = ""
+
+        for t in top:
+            input_string += t + "\n"
+
+        with open(os.path.join(scratch, "ts", reaction.label, reaction.label + ".kinetics.py"), "w") as f:
+            f.write(input_string)
+
+    def write_thermo_input(self, conformer=None, scratch="."): 
+        model_chemistry="M06-2X/cc-pVTZ"
+        freq_scale_factor=0.982
+        
+        top = [
+            "#!/usr/bin/env python",
+            "# -*- coding: utf-8 -*-",
+            "",
+            'modelChemistry = "{0}"'.format(
+                model_chemistry), #fix this
+            "frequencyScaleFactor = {0}".format(
+                freq_scale_factor), #fix this
+            "useHinderedRotors = False", #fix this @carl
+            "useBondCorrections = False",
+            ""]
+
+
+        line = "species('species', '{1}', structure=SMILES('{2}'))".format(
+            "species", os.path.join(conformer.smiles + ".py"), conformer.smiles)
+        top.append(line)
+            
+        top.append("statmech('species')")
+        top.append("thermo('species', 'NASA')")
 
         input_string = ""
 
         for t in top:
             input_string += t + "\n"
 
-        with open(os.path.join(self.scratch, rxn.label + ".ark.py"), "w") as f:
+        with open(os.path.join(scratch, "species", conformer.smiles, conformer.smiles + ".thermo.py"), "w") as f:
             f.write(input_string)
+########################################
 
     def write_files(self):
+
         for mol in self.reaction.reactants:
 
             self.write_arkane_for_reacts_and_prods(mol)
