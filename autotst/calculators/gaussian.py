@@ -121,24 +121,30 @@ class Gaussian(Calculator):
             string += "B {} {}\n".format(i + 1, j + 1)
 
         i, j, k, l = torsion.atom_indices
-        string += "D {} {} {} {} S {} {}".format(i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
+        string += "D {} {} {} {} S {} {}\n".format(i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
 
         if isinstance(conformer, TS):
-            label = self.label + "_tor_{}_{}".format(j, k)
+            label = da = conformer.reaction_label 
+            label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
             t = "ts"
-            d = self.label
         elif isinstance(conformer, Conformer):
-            label = d = conformer.smiles
-            label += "_tor{}{}".format(j, k)
+            label = da = conformer.smiles
+            label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
             t = "species"
-            
+
+        for locked_torsion in conformer.torsions: ## TODO: maybe doesn't work;
+            print locked_torsion
+            if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
+                a, b, c, d = locked_torsion.atom_indices
+                string += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)
+    
         conformer.rmg_molecule.updateMultiplicity()
         mult = conformer.rmg_molecule.multiplicity
 
         new_scratch = os.path.join(
                 scratch,
                 t,
-                d,
+                da,
                 "rotors"
             )
 
@@ -150,7 +156,7 @@ class Gaussian(Calculator):
                            basis=basis,
                            extra="Opt=(CalcFC,ModRedun)",
                            multiplicity=mult,
-                           addsec=[string])
+                           addsec=[string[:-1]])
 
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
@@ -194,8 +200,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
         calc = ASEGaussian(
             mem=mem,
@@ -204,7 +212,7 @@ class Gaussian(Calculator):
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(2/16=3) scf=(maxcycle=900)",
+            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
             multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
@@ -244,8 +252,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
 
         ind1 = ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
@@ -315,8 +325,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -365,8 +377,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
         calc = ASEGaussian(
             mem=mem,
@@ -375,7 +389,7 @@ class Gaussian(Calculator):
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900)",
+            extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900) IOP(7/33=1,2/16=3)",
             multiplicity=ts.rmg_molecule.multiplicity)
         calc.atoms = ts.ase_molecule
         del calc.parameters['force']
@@ -394,7 +408,7 @@ class Gaussian(Calculator):
         if ts is None:
             if self.ts is None:
                 return None
-            elif not isinstance(self.conformer, TS):
+            elif not isinstance(self.conformer, TS): 
                 return None
             else:
                 ts = self.conformer
@@ -408,8 +422,10 @@ class Gaussian(Calculator):
                 ts.reaction_label,
                 "irc"
             )
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -507,15 +523,11 @@ class Gaussian(Calculator):
         irc_path = os.path.join(
             calc.scratch,
             calc.label + ".log")
+
         if not os.path.exists(irc_path):
             logging.info(
-                "It seems that the file was `fixed`, reading in the `fixed` version.")
-            irc_path = irc_path.replace("left", "(").replace("right", ")")
-
-            if not os.path.exists(irc_path):
-                logging.info(
-                    "It seems that the IRC claculation has not been run.")
-                return False
+                "It seems that the IRC claculation has not been run.")
+            return False
 
         f = open(irc_path, "r")
         file_lines = f.readlines()[-5:]

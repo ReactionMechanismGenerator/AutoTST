@@ -23,12 +23,17 @@ from rdkit.Chem.Pharm3D import EmbedLib
 from rdkit.Chem import AllChem
 from rdkit import Chem
 import numpy as np
+import pandas as pd
 import logging
 import subprocess
 from shutil import move
 import cclib
+from cclib.io import ccread
 import time
 import yaml
+import multiprocessing
+from multiprocessing import Process, Manager
+from shutil import copyfile
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
@@ -44,7 +49,7 @@ class Job():
     def __init__(
             self,
             reaction=None,
-            dft_calculator=None,
+            calculator=None,
             conformer_calculator=None):
 
         self.reaction = reaction
@@ -55,7 +60,7 @@ class Job():
         else:
             assert False, "Reaction provided was not a reaction object"
 
-        self.dft_calculator = dft_calculator
+        self.calculator = calculator
         self.conformer_calculator = conformer_calculator
 
     def __repr__(self):
@@ -65,20 +70,19 @@ class Job():
         """
         A helper method that allows one to easily parse log files
         """
-
         symbol_dict = {
-            8: "O",
-            6: "C",
-            7: "N",
-            1: "H",
+            17: "Cl",
+            9:  "F",
+            8:  "O",
+            7:  "N",
+            6:  "C",
+            1:  "H",
         }
-
         atoms = []
-        from cclib.io import ccread
+
         parser = ccread(file_path)
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
-
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
 
         return Atoms(atoms)
@@ -87,92 +91,26 @@ class Job():
         """
         A helper method that will write an input file and move it to the correct scratch directory
         """
-        if not os.path.exists(
+
+        ase_calculator.write_input(conformer.ase_molecule)
+        try: 
+            os.makedirs(ase_calculator.scratch)
+        except OSError:
+            pass
+            
+        move(
+            ase_calculator.label + ".com", 
             os.path.join(
                 ase_calculator.scratch,
                 ase_calculator.label + ".com"
-            )
-        ):
-            ase_calculator.write_input(conformer.ase_molecule)
+            ))
 
-            move(
-                ase_calculator.label + ".com", 
-                os.path.join(
-                    ase_calculator.scratch,
-                    ase_calculator.label + ".com"
-                ))
-
-            move(
-                ase_calculator.label + ".ase", 
-                os.path.join(
-                    ase_calculator.scratch,
-                    ase_calculator.label + ".ase"
-                ))
-        else:
-            logging.info("File you're attempting to write already exists...")
-
-    def submit_conformers(self, conformer, scratch=".", partition="general", opt_kind=None, direction='forward'):
-        """
-        A methods to submit a job based on the calculator and partition provided
-        """
-        assert conformer, "Please provide a conformer to submit a job"
-        assert opt_kind in [None, "shell", "center", "overall"], "The kind of TS optimization you want to perform is not supported"
-        if isinstance(conformer, TS):
-            label = conformer.reaction_label
-            scratch = os.path.join(scratch, "ts", label, "conformers")
-            assert opt_kind, "Please provide the kind of ts optimization you want to perform"
-            assert direction in ["forward", "reverse"]
-
-        elif isinstance(conformer, Conformer):
-            label = conformer.smiles
-            scratch = os.path.join(scratch, "species", label, "conformers")
-            direction = None
-
-        else:
-            assert False, "Please provide a Conformer or a TS object when submitting a job"
-
-        number_of_files = -1
-        for f in os.listdir(scratch):
-            if f.endswith(".com"):
-                if isinstance(conformer, TS):
-                    if (opt_kind in f) and (direction in f):
-                        number_of_files += 1
-                    elif (opt_kind == "overall") and ("shell" not in f) and ("center" not in f) and (direction in f):
-                        number_of_files += 1
-                else:
-                    number_of_files +=1
-        
-        assert number_of_files > -1, "No optimization files were written..."
-
-        file_path = os.path.join(scratch, label)
-        if direction:
-            if opt_kind != "overall":
-                file_path += "_{}_{}".format(direction, opt_kind)
-                label += "_{}_{}".format(direction, opt_kind)
-            else:
-                file_path += "_{}".format(direction)
-                label += "_{}".format(direction)
-
-        os.environ["COMMAND"] = "g16" #only using gaussian for now haha
-
-        os.environ["FILE_PATH"] = file_path
-        attempted = False
-        for f in os.listdir(scratch):
-            if (f.endswith(".log") and (label in f)):
-                attempted = True
-                logging.info("It appears that this job has already been run")
-                
-        if not attempted:
-            if number_of_files != 0:
-                subprocess.call(
-                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} --array=0-{2} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
-                        label, partition, number_of_files), shell=True)
-            else:
-                os.environ["SLURM_ARRAY_TASK_ID"] = '0'
-                subprocess.call(
-                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
-                        label, partition), shell=True)
-
+        move(
+            ase_calculator.label + ".ase", 
+            os.path.join(
+                ase_calculator.scratch,
+                ase_calculator.label + ".ase"
+            ))
 
     def check_complete(self, label):
         """
@@ -188,12 +126,46 @@ class Job():
         else:
             return False
 
-    def submit_species(self, species=None, calculator=None):
+#################################################################################
+
+    def submit_conformer(self, conformer, ase_calculator, partition="general"):
         """
-        A method that uses submit to run the geometry optimization of an entire species
+        A methods to submit a job based on the calculator and partition provided
         """
-        calcs = []
+        assert conformer, "Please provide a conformer to submit a job"
+
+        self.write_input(conformer, ase_calculator)
+
+        label = conformer.smiles + "_{}".format(conformer.index) 
+        scratch = ase_calculator.scratch
+        file_path = os.path.join(scratch, label)
+
+        os.environ["COMMAND"] = "g16" #only using gaussian for now 
+        os.environ["FILE_PATH"] = file_path
+
+        attempted = False
+        if os.path.exists(file_path + ".log"):
+            attempted = True
+            logging.info("It appears that this job has already been run, not running it a second time.")
+                
+        if not attempted:
+            subprocess.call(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
+                    label, partition), shell=True)
+
+        return label
+
+    def calculate_species(self, species=None, conformer_calculator=None, calculator=None):
+
+        logging.info("Calculating geometries for {}".format(species))
+
+        if conformer_calculator:
+            species.generate_conformers(calculator=conformer_calculator)
+
+        to_calculate = []
+        results = {}
         for smiles, conformers in species.conformers.items():
+            results[smiles] = {}
             for conformer in conformers:
                 calc = calculator.get_conformer_calc(
                     conformer=conformer,
@@ -203,82 +175,57 @@ class Job():
                     method=calculator.method,
                     basis=calculator.basis
                 )
-                self.write_input(conformer=conformer, ase_calculator=calc)
-            self.submit_conformers(conformer=conformer, scratch=calculator.scratch, partition="general")
-        return species.conformers.keys()
+                to_calculate.append([conformer, calc])
 
-    def calculate_species(self, species=None, conformer_calculator=None, calculator=None):
-        """
-        A method that submits all conformers for a species and checks if the jobs are complete
-        """
+        currently_running = []
+        for conformer, calc in to_calculate:
 
-        logging.info("Submitting {}".format(species))
-        # This doesn't work rn because RDKit is acting up on discovery
-        if conformer_calculator:
-            species.generate_conformers(calculator=conformer_calculator)
-        
-        labels = self.submit_species(species=species, calculator=calculator)
-        complete = {}
-        for label in labels:
-            complete[label] = False
+            while len(currently_running) >= 50:
+                for running_label in currently_running:
+                    if self.check_complete(running_label):
+                        currently_running.remove(running_label)
 
-        while not all(complete.values()):
-            for label in labels:
-                complete[label] = self.check_complete(label)
-        logging.info("Completed calculations for {}".format(species))
-        
-        for label in labels:
-            results = {}
-            starting_molecule = RMGMolecule(SMILES=label)
+            label = self.submit_conformer(conformer, calc, "general")
+            currently_running.append(label)
+        scratch = calculator.scratch
+        for conformer, calc in to_calculate:
+            
+            
+            starting_molecule = RMGMolecule(SMILES=conformer.smiles)
             starting_molecule = starting_molecule.toSingleBonds()
 
             scratch_dir = os.path.join(
                 calculator.scratch,
                 "species",
-                label,
+                conformer.smiles,
                 "conformers"
             )
-            files = os.listdir(scratch_dir)
+            f = calc.label + ".log"
+            if not os.path.exists(os.path.join(scratch_dir, f)):
+                logging.info("It seems that {} was never run...".format(calc.label))
+                result = False
 
+            complete, converged = calculator.verify_output_file(
+                os.path.join(scratch_dir, f)
+            )
 
-            for f in files:
-                if not f.endswith(".log"):
-                    continue
-                complete, converged = calculator.verify_output_file(
-                    os.path.join(
-                        scratch_dir, 
-                        f
-                    )
-                )
-                if not complete:
-                    logging.info("It appears that this job was killed prematurely")
-                    results[f] = False
-
-                if not converged:
-                    logging.info("{} failed QM optimization".format(f))
-                    fail_dir = os.path.join(scratch_dir, "failures")
-                    if not os.path.exists(fail_dir):
-                        os.makedirs(os.path.join(scratch_dir, "failures"))
-                    move(
-                        os.path.join(
-                            scratch_dir,
-                            f
-                        ),
-                        os.path.join(
-                            scratch_dir,
-                            "failures",
-                            f
-                        )
-                    )
-                    results[f] = False
-                    continue
+            if not complete:
+                logging.info("It appears that {} was killed prematurely".format(calc.label))
+                result = False
                 
+
+            elif not converged:
+                logging.info("{} failed QM optimization".format(calc.label))
+                result = False
+                
+            else:
                 atoms = self.read_log(
-                    os.path.join(
-                        scratch_dir,
-                        f
-                    )
+                    os.path.join(scratch_dir,f)
                 )
+
+                starting_molecule = RMGMolecule(SMILES=conformer.smiles)
+                starting_molecule = starting_molecule.toSingleBonds()
+
                 test_molecule = RMGMolecule()
                 test_molecule.fromXYZ(
                     atoms.arrays["numbers"],
@@ -286,124 +233,456 @@ class Job():
                 )
                 
                 if not starting_molecule.isIsomorphic(test_molecule):
-                    logging.info("Output geometry of {} is not isomorphic with input geometry".format(f))
-                    fail_dir = os.path.join(scratch_dir, "failures")
-                    if not os.path.exists(fail_dir):
-                        os.makedirs(os.path.join(scratch_dir, "failures"))
-                    move(
-                        os.path.join(
-                            scratch_dir,
-                            f
-                        ),
-                        os.path.join(
-                            scratch_dir,
-                            "failures",
-                            f
-                        )
-                    )
-                    results[f] = False
+                    logging.info("Output geometry of {} is not isomorphic with input geometry".format(calc.label))
+                    result = False
                 else:
-                    logging.info("{} was successful and was validated!".format(f))
-                    results[f] = True
+                    logging.info("{} was successful and was validated!".format(calc.label))
+                    result = True
+
+            if not result:
+                fail_dir = os.path.join(scratch_dir, "failures")
+                try: 
+                    os.makedirs(os.path.join(scratch_dir, "failures"))
+                except OSError:
+                    logging.info("{} already exists...".format(fail_dir))
+                move(
+                    os.path.join(scratch_dir, f),
+                    os.path.join(scratch_dir, "failures", f)
+                )
+            results[conformer.smiles][f] = result
+
+        for smiles, smiles_results in results.items():
+            scratch_dir = os.path.join(
+                calculator.scratch,
+                "species",
+                conformer.smiles,
+                "conformers"
+            )
 
             log_file = os.path.join(scratch_dir, "validations.yaml")
 
             with open(log_file, "w") as to_write:
-                yaml.dump(results, to_write, default_flow_style=False)
+                yaml.dump(smiles_results, to_write, default_flow_style=False)
 
-
+            lowest_energy_f = None
             lowest_energy = 1e5
-            lowest_file_name = None
-            for file_name, r in results.items():
-                complete, converged = r
-                if converged:
-                    p = ccread(os.path.join(scratch_dir, file_name))
-                    energy = p.scfenergies[-1]
 
-                    if energy < lowest_energy:
-                        lowest_file_name = file_name
-                        lowest_energy = energy
+            for f, result in smiles_results.items():
+                if result:
+                    parser = ccread(os.path.join(scratch_dir, f))
+                    if parser.scfenergies[-1] < lowest_energy:
+                        lowest_energy = parser.scfenergies[-1]
+                        lowest_energy_f = f
 
-            if lowest_file_name:
-                logging.info("The lowest energy conformer is {}".format(lowest_file_name))
-                import shutil
-                shutil.copy(
-                    os.path.join(scratch_dir, lowest_file_name),
-                    os.path.join(
-                        calculator.scratch,
-                        "species",
-                        label,
-                        lowest_file_name[:-6] + ".log")
+            logging.info("The lowest energy conformer is {}".format(lowest_file_name))
+
+            copyfile(
+                os.path.join(scratch_dir, lowest_energy_f),
+                os.path.join(
+                    calculator.scratch,
+                    "species",
+                    label,
+                    lowest_energy_f[:-6] + ".log")
+            )
+
+#################################################################################
+    
+    def submit_transitionstate(self, transitionstate, ase_calculator, partition="general"):
+        """
+        A methods to submit a job for a TS object based on a single calculator
+        """
+        assert transitionstate, "Please provide a transitionstate to submit a job"
+
+        self.write_input(transitionstate, ase_calculator)
+        label = ase_calculator.label
+        scratch = ase_calculator.scratch
+        file_path = os.path.join(scratch, label)
+
+        os.environ["COMMAND"] = "g16" #only using gaussian for now 
+        os.environ["FILE_PATH"] = file_path
+
+        attempted = False
+        if os.path.exists(file_path + ".log"):
+            attempted = True
+            logging.info("It appears that this job has already been run")
+                
+        if not attempted:
+            subprocess.call(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
+                    label, partition), shell=True)
+
+        return label
+
+    def calculate_transitionstate(self, transitionstate, calculator):
+        """
+        A method to perform the partial optimizations for a transitionstate and arrive
+        at a final geometry. Returns True if we arrived at a final geometry, returns false
+        if there is an error along the way.
+        """
+        #######################
+        ##### For shells  #####
+        #######################
+        direction = transitionstate.direction
+
+        calc = calculator.get_shell_calc(transitionstate,
+                                direction=direction,
+                                mem=calculator.mem,
+                                nprocshared=calculator.nprocshared,
+                                scratch=calculator.scratch,
+                                method=calculator.method,
+                                basis=calculator.basis
+                                )
+
+        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
+            self.write_input(transitionstate, calc)
+            label = self.submit_transitionstate(transitionstate, calc, "general")
+            while not self.check_complete(label):
+                time.sleep(15)
+
+        else:
+            logging.info("It appears that we already have a complete log file")
+
+            complete, converged = calculator.verify_output_file(
+                    os.path.join(calc.scratch, calc.label + ".log")
                 )
+            if not complete:
+                logging.info("It seems that the overall file never completed, running again")
+                self.write_input(transitionstate, calc)
+                label = self.submit_transitionstate(transitionstate, calc, "general")
+                while not self.check_complete(label):
+                    time.sleep(15)
+
+        complete, converged = calculator.verify_output_file(
+                os.path.join(calc.scratch, calc.label + ".log")
+            )
+
+        if not (complete and converged):
+            logging.info("{} failed the overall optimization".format(calc.label))
+            return False 
+
+        transitionstate.ase_molecule = self.read_log(os.path.join(calc.scratch, calc.label + ".log"))
+        transitionstate.update_coords_from("ase")
+
+        #######################
+        ##### For centers #####
+        #######################
+        calc = calculator.get_center_calc(transitionstate,
+                                direction=direction,
+                                mem=calculator.mem,
+                                nprocshared=calculator.nprocshared,
+                                scratch=calculator.scratch,
+                                method=calculator.method,
+                                basis=calculator.basis
+                                )
+
+        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
+            self.write_input(transitionstate, calc)
+            label = self.submit_transitionstate(transitionstate, calc, "general")
+            while not self.check_complete(label):
+                time.sleep(15)
+
+        else:
+            logging.info("It appears that we already have a complete log file")
+
+            complete, converged = calculator.verify_output_file(
+                    os.path.join(calc.scratch, calc.label + ".log")
+                )
+            if not complete:
+                logging.info("It seems that the overall file never completed, running again")
+                self.write_input(transitionstate, calc)
+                label = self.submit_transitionstate(transitionstate, calc, "general")
+                while not self.check_complete(label):
+                    time.sleep(15)
+
+        complete, converged = calculator.verify_output_file(
+                os.path.join(calc.scratch, calc.label + ".log")
+            )
+
+        if not (complete and converged):
+            logging.info("{} failed the overall optimization".format(calc.label))
+            return False 
+
+        transitionstate.ase_molecule = self.read_log(os.path.join(calc.scratch, calc.label + ".log"))
+        transitionstate.update_coords_from("ase")
+
+        #######################
+        ##### For overall #####
+        #######################
+        calc = calculator.get_overall_calc(transitionstate,
+                                direction=direction,
+                                mem=calculator.mem,
+                                nprocshared=calculator.nprocshared,
+                                scratch=calculator.scratch,
+                                method=calculator.method,
+                                basis=calculator.basis
+                                )
+
+
+        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
+            self.write_input(transitionstate, calc)
+            label = self.submit_transitionstate(transitionstate, calc, "general")
+            while not self.check_complete(label):
+                time.sleep(15)
+
+        else:
+            logging.info("It appears that we already have a complete log file for {}".format(calc.label))
+
+            complete, converged = calculator.verify_output_file(
+                    os.path.join(calc.scratch, calc.label + ".log")
+                )
+            if not complete:
+                logging.info("It seems that {} never completed, running again".format(calc.label))
+                self.write_input(transitionstate, calc)
+                label = self.submit_transitionstate(transitionstate, calc, "general")
+                while not self.check_complete(label):
+                    time.sleep(15)
+
+        complete, converged = calculator.verify_output_file(
+                os.path.join(calc.scratch, calc.label + ".log")
+            )
+
+        if not (complete and converged):
+            logging.info("{} failed the overall optimization".format(calc.label))
+            return False 
+
+        transitionstate.ase_molecule = self.read_log(os.path.join(calc.scratch, calc.label + ".log"))
+        transitionstate.update_coords_from("ase")
+
+        logging.info("Calculations for {}_{}_{} were successful!".format(transitionstate.reaction_label, direction, transitionstate.index ))
+        return True
+
+    def calculate_reaction(self, reaction=None, conformer_calculator=None, calculator=None, vibrational_analysis=True):
+        """
+        A method to run calculations for all tranitionstates for a reaction
+        """
+
+        logging.info("Calculating geometries for {}".format(reaction))
+
+        if conformer_calculator:
+            reaction.generate_conformers(calculator=conformer_calculator)
+
+
+        currently_running = [] 
+        processes = {}
+        for direction, transitionstates in reaction.ts.items():
+
+            for transitionstate in transitionstates:
+
+                process = Process(target=self.calculate_transitionstate, args=(transitionstate, calculator))
+                processes[process.name] = process
+                
+
+        for name, process in processes.items():
+            while len(currently_running) >= 50:
+                for running in currently_running:
+                    if not running.is_alive():
+                        currently_running.remove(name)
+            process.start()
+            #process.join()
+            currently_running.append(name)
+
+        complete = False
+        while len(currently_running) > 0:
+            for name, process in processes.items():
+                if not (name in currently_running):
+                    continue
+                if not process.is_alive():
+                    currently_running.remove(name)
+
+
+        results = []
+        for direction, transitionstates in reaction.ts.items():
+            for transitionstate in transitionstates:
+                f = "{}_{}_{}.log".format(reaction.label, direction, transitionstate.index)
+                path = os.path.join(calculator.scratch, "ts", reaction.label, "conformers", f)
+                print path
+                if not os.path.exists(path):
+                    logging.info("It appears that {} failed...".format(f))
+                    continue
+                parser = ccread(path)
+                if parser is None:
+                    logging.info("Something went wrong when reading in results for {}...".format(f))
+                    continue
+                energy = parser.scfenergies[-1]
+
+                results.append([energy, transitionstate, f])
+
+        results = pd.DataFrame(results, columns=["energy", "transitionstate", "file"]).sort_values("energy")
+        
+        if results.shape[0] == 0:
+            logging.info("No transition state for {} was successfully calculated :(".format(reaction))
+            return False
+        got_one = False
+        for index in range(results.shape[0]):
+            ts = results.transitionstate[index]
+            got_one = self.validate_transitionstate(transitionstate=ts, calculator=calculator, vibrational_analysis=vibrational_analysis)
+            if got_one:
+                lowest_energy_file = results.file[index]
+                break
+
+        if not got_one:
+            logging.info("None of the transition states could be validated :(")
+            return False
+        
+
+        copyfile(
+            os.path.join(calculator.scratch, "ts", reaction.label, "conformers", lowest_energy_file),
+            os.path.join(calculator.scratch, "ts", reaction.label, lowest_energy_file[:-6] + ".log")
+        )
+        logging.info("The lowest energy file is {}".format(lowest_energy_file))
+        return True
+
+    def validate_transitionstate(self, transitionstate, calculator, vibrational_analysis=True):
+
+        validated = False
+        if vibrational_analysis:
+            vib = VibrationalAnalysis(ts=transitionstate, scratch=calculator.scratch)
+            validated = vib.validate_ts()
+        if not validated:
+            logging.info("Running an IRC to validate")
+            irc_calc = calculator.get_irc_calc(
+                ts=transitionstate,
+                mem=calculator.mem,
+                nprocshared=calculator.nprocshared,
+                scratch=calculator.scratch,
+                method=calculator.method,
+                basis=calculator.basis
+            )
+            label = self.submit_transitionstate(transitionstate, irc_calc, "west")
+            while not self.check_complete(label):
+                time.sleep(15)
+            result = calculator.valicate_irc(calc=irc_calc)
+            if result:
+                logging.info("Validated via IRC")
+                return True
             else:
-                logging.info("None of the conformer analyses were successful... :(")
-        
+                logging.info("Could not validate this conformer... trying the next lowest energy conformer")
+                return False   
+        else:
+            logging.info("Validated via Vibrational Analysis")
+            return True
+                
+#################################################################################
 
-    """ Skipping over this for now
-    def run_rotor(self, conformer, torsion, steps, step_size):
-        
-        #a method to run a hindered rotor calculation for a single rotor
-        
-        calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
-        logging.info("Running hindered rotor calculation for {}".format(torsion))
-        self.write_input(conformer, calc)
-        self.submit(calc, "general")
+    def submit_rotor(self, conformer, ase_calculator, partition="general"):
+        """
+        A methods to submit a job based on the calculator and partition provided
+        """
+        assert conformer, "Please provide a conformer to submit a job"
 
-    def run_rotors(self, conformer, steps, step_size):
-        ""
-        #A method to run hindered rotor scans for all torsions in a conformer
-        
+        self.write_input(conformer, ase_calculator)
 
-        for torsion in conformer.torsions:
-            self.run_rotor(conformer=conformer, torsion=torsion, steps=steps, step_size=step_size)
+        label = ase_calculator.label
+        scratch = ase_calculator.scratch
+        file_path = os.path.join(scratch, label)
 
-    def calculate_rotors(self, conformer, calculator, steps, step_size):
-        
-        #A method to submit and verify all hindered rotor scans for a conformer
-        
-        self.run_rotors(conformer=conformer, steps=steps, step_size=step_size)
+        os.environ["COMMAND"] = "g16" #only using gaussian for now 
+        os.environ["FILE_PATH"] = file_path
+
+        attempted = False
+        if os.path.exists(file_path + ".log"):
+            attempted = True
+            logging.info("It appears that this job has already been run, not running it a second time.")
+                
+        if not attempted:
+            subprocess.call(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
+                    label, partition), shell=True)
+
+        return label
+
+    def calculate_rotors(self, conformer, calculator, steps=36, step_size=10.0):
+
         complete = {}
+        calculators = {}
         verified = {}
         for torsion in conformer.torsions:
-            complete[torsion.index] = False
-            verified[torsion.index] = False
+            calc = calculator.get_rotor_calc(
+                conformer=conformer,
+                torsion=torsion,
+                mem=calculator.mem,
+                nprocshared=calculator.nprocshared,
+                scratch=calculator.scratch,
+                method=calculator.method,
+                basis=calculator.basis,
+                steps=steps,
+                step_size=step_size,
+            )
+            label = self.submit_rotor(conformer=conformer, ase_calculator=calc, partition="general")
+            complete[label] = False
+            calculators[label] = calc
+            verified[label] = False
+        
+        conformer_error = False
+        lowest_energy_label = None
+        while (not all(complete.values())) or (not conformer_error):
+            for label in complete.keys():
+                if not self.check_complete(label):
+                    continue
+                complete[label] = True
+                lowest_conf, continuous, good_slope, opt_count_check = self.verify_rotor(steps=steps, step_size=step_size)
+                
+                if not lowest_conf:
+                    logging.info("A lower energy conformer was found... Going to optimize this insted")
+                    conformer_error = True
+                    lowest_energy_label = label
 
-        while not all(complete.values()):
-            for torsion in conformer.torsions:
-                calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion)
-                if self.check_complete(calc):
-                    complete[torsion.index] = True
-        
-        for torsion in conformer.torsions:
-            calc = calculator.get_rotor_calc(conformer=conformer, torsion=torsion)
-            if self.verify_rotor(conformer=conformer, ase_calculator=calc, steps=steps, step_size=step_size):
-                verified[torsion.index] = True
-            else:
-                logging.info("Something went wrong with {}".format(torsion))
+                if all([lowest_conf, continuous, good_slope, opt_count_check]):
+                    verified[label] = True
+                else:
+                    verified[label] = False
+
+        if conformer_error:
+            for label in complete.keys():
+                command = """scancel -n '{}'""".format(label)
+            ase_calculator = calculators[label]
+            file_name = os.path.join(ase_calculator.scratch, lowest_energy_label + ".log")
+            parser = ccread(file_name)
+            first_is_lowest, min_energy, atomnos, atomcoords = self.check_rotor_lowest_conf(parser=parser)
+            symbol_dict = {
+                17: "Cl",
+                9:  "F",
+                8:  "O",
+                7:  "N",
+                6:  "C",
+                1:  "H",
+            }
+            atoms = []
+            for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
+                atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+            conformer.ase_molecule = Atoms(atoms)
+            conformer.update_coords_from("ase")
+
+            if isinstance(conformer, TS):
+                calc = calculator.get_overall_calc(conformer,
+                        direction=conformer.direction,
+                        mem=calculator.mem,
+                        nprocshared=calculator.nprocshared,
+                        scratch=calculator.scratch,
+                        method=calculator.method,
+                        basis=calculator.basis
+                        )
+                label = self.submit_transitionstate(transitionstate=conformer, ase_calculator=calc)
+                    
+
+            
 
 
-    def verify_rotor(self, steps, step_size, ase_calculator=None, file_name=None, parser=None):
+    def verify_rotor(self, steps=36, step_size=10.0, ase_calculator=None):
         
-        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
+        assert (ase_calculator is not None) 
         
-        if parser is None:
-            if file_name is None:
-                assert ase_calculator is not None
-                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+        file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
+        parser = cclib.io.ccread(file_name)
 
-            parser = cclib.io.ccread(file_name)
-        
-        continuous = self.check_rotor_continuous(steps, step_size, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
-        
-        good_slope = self.check_rotor_slope(steps, step_size, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
-        
-        [lowest_conf, energy, atomnos, atomcoords] = self.check_rotor_lowest_conf(ase_calculator=ase_calculator, file_name=file_name, parser=parser)
-        
-        opt_count_check = self.check_rotor_opts(steps, ase_calculator=ase_calculator, file_name=file_name, parser=parser)
+        continuous = self.check_rotor_continuous(steps, step_size, parser=parser)
+        good_slope = self.check_rotor_slope(steps, step_size, parser=parser)
+        [lowest_conf, energy, atomnos, atomcoords] = self.check_rotor_lowest_conf(parser=parser)
+        opt_count_check = self.check_rotor_opts(steps, parser=parser)
         
         return [lowest_conf, continuous, good_slope, opt_count_check] 
 
-    def check_rotor_opts(self, steps, ase_calculator=None, file_name=None, parser=None):
+    def check_rotor_opts(self, steps, parser=None):
         
         assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
         
@@ -413,8 +692,9 @@ class Job():
                 file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
 
             parser = cclib.io.ccread(file_name)
-
-        opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        
+        #opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        opt_indices = [i for i, status in enumerate(parser.optstatus) if status>1]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
         
         n_opts_check = (steps + 1)==len(opt_SCFEnergies)
@@ -422,17 +702,9 @@ class Job():
         return n_opts_check
     
     
-    
-    def check_rotor_slope(self, steps, step_size, ase_calculator=None, file_name=None, parser=None, tol=0.35):
+    def check_rotor_slope(self, steps, step_size, parser=None, tol=0.35):
         
-        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
-        
-        if parser is None:
-            if file_name is None:
-                assert ase_calculator is not None
-                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
-
-            parser = cclib.io.ccread(file_name)
+        assert (parser is not None)
 
         opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
@@ -452,20 +724,10 @@ class Job():
         return True
         
         
-    def check_rotor_continuous(self, steps, step_size, ase_calculator=None, file_name=None, parser=None, tol=0.05):
+    def check_rotor_continuous(self, steps, step_size, parser=None, tol=0.05):
         
         assert isinstance(step_size, float)
-        
-        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
-        
-        if parser is None:
-            if file_name is None:
-                assert ase_calculator is not None
-                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
-
-            assert os.path.isfile(file_name)
-            parser = cclib.io.ccread(file_name)
-
+        assert (parser is not None)
             
         opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
@@ -501,27 +763,16 @@ class Job():
 
         return continuous
     
-    
-    
-    def check_rotor_lowest_conf(self, ase_calculator=None, file_name=None, parser=None, tol=0.03):
+    def check_rotor_lowest_conf(self, parser=None, tol=0.03):
         
-        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
+        assert (parser is not None)
         
-        if parser is None:
-            if file_name is None:
-                assert ase_calculator is not None
-                file_name = os.path.join(ase_calculator.scratch, ase_calculator.label + ".log")
-
-            assert os.path.isfile(file_name)
-            parser = cclib.io.ccread(file_name)
-
         opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
         
         max_energy = max(opt_SCFEnergies)
         min_energy = min(opt_SCFEnergies)
         energy_tol = tol*(max_energy - min_energy)
-        
         
         first_is_lowest = True #Therefore...
         min_idx = 0
@@ -541,554 +792,3 @@ class Job():
         atomcoords = parser.atomcoords[min_opt_idx]
         
         return [first_is_lowest, min_energy, atomnos, atomcoords]
-"""
-    def submit_shells(self, reaction=None, calculator=None):
-        """
-        A method to submit a calculation for the reaction shell
-        """
-        calcs = []
-        for direction, transitionstates in reaction.ts.items():
-            for transitionstate in transitionstates:
-                calc = calculator.get_shell_calc(transitionstate,
-                                                direction=direction,
-                                                mem=calculator.mem,
-                                                nprocshared=calculator.nprocshared,
-                                                scratch=calculator.scratch,
-                                                method=calculator.method,
-                                                basis=calculator.basis
-                                                )
-                self.write_input(conformer=transitionstate, ase_calculator=calc)
-            self.submit_conformers(
-                conformer=transitionstate, 
-                scratch=calculator.scratch, 
-                partition="general", 
-                direction=direction, 
-                opt_kind="shell")
-        return ["forward", "reverse"]
-
-    def submit_centers(self, reaction=None, calculator=None, results=None):
-        """
-        A method to submit a calculation for the reaction centers
-        """
-        calcs = []
-        for direction, transitionstates in reaction.ts.items():
-            for transitionstate in transitionstates:
-                calc = calculator.get_center_calc(transitionstate,
-                                                direction=direction,
-                                                mem=calculator.mem,
-                                                nprocshared=calculator.nprocshared,
-                                                scratch=calculator.scratch,
-                                                method=calculator.method,
-                                                basis=calculator.basis
-                                                )
-
-                self.write_input(conformer=transitionstate, ase_calculator=calc)
-            self.submit_conformers(
-                conformer=transitionstate, 
-                scratch=calculator.scratch, 
-                partition="general", 
-                direction=direction, 
-                opt_kind="center")
-        return ["forward", "reverse"]
-
-    def submit_overalls(self, reaction=None, calculator=None):
-        """
-        A method to submit a calculation for the overall reaction transition state
-        """
-        calcs = []
-        for direction, transitionstates in reaction.ts.items():
-            for transitionstate in transitionstates:
-                calc = calculator.get_overall_calc(transitionstate,
-                                                direction=direction,
-                                                mem=calculator.mem,
-                                                nprocshared=calculator.nprocshared,
-                                                scratch=calculator.scratch,
-                                                method=calculator.method,
-                                                basis=calculator.basis
-                                                )
-                self.write_input(conformer=transitionstate, ase_calculator=calc)
-            self.submit_conformers(
-                conformer=transitionstate, 
-                scratch=calculator.scratch, 
-                partition="general", 
-                direction=direction, 
-                opt_kind="overall")
-        return ["forward", "reverse"]
-
-    def calculate_ts(self=None, reaction=None, conformer_calculator=None, calculator=None):
-        logging.info("Submitting {}".format(reaction))
-
-        if conformer_calculator:
-            reaction.generate_conformers(calculator=conformer_calculator)
-        ######################################
-        ### for submitting reaction shells ###
-        ######################################
-        directions = self.submit_shells(reaction=reaction, calculator=calculator)
-
-        complete = {}
-        for direction in directions:
-            complete[direction] = False
-
-        while not all(complete.values()):
-            for direction in directions:
-                job_id = reaction.label + "_" + direction + "_shell"
-                complete[direction] = self.check_complete(job_id)
-        logging.info("Completed calculations for {} shell".format(reaction))
-        master_results = {}
-        results = {}
-        
-        for direction in directions:
-            scratch_dir = os.path.join(
-                calculator.scratch,
-                "ts",
-                reaction.label,
-                "conformers"
-            )
-            files = os.listdir(scratch_dir)
-
-
-            for f in files:
-                if not (("shell" in f) and (f.endswith(".log"))and (direction in f)):
-                    continue
-                logging.info(f)
-                logging.info("Found shell log file: {}".format(f))
-                complete, converged = calculator.verify_output_file(
-                    os.path.join(scratch_dir,f)
-                )
-                if not complete:
-                    logging.info("It appears that this job was killed prematurely")
-                    results[f] = False
-
-                elif not converged:
-                    logging.info("{} failed QM optimization".format(f))
-                    fail_dir = os.path.join(scratch_dir, "failures")
-                    if not os.path.exists(fail_dir):
-                        os.makedirs(os.path.join(scratch_dir, "failures"))
-                    move(
-                        os.path.join(scratch_dir,f
-                        ),
-                        os.path.join(
-                            scratch_dir, "failures", f
-                        )
-                    )
-                    results[f] = False
-                    continue
-
-                else:
-                    logging.info("{} was successful and was validated!".format(f))
-                    results[f] = True
-                    
-
-        for file_name, result in results.items():
-            logging.info("For {}".format(file_name))
-            r, p, direction, _, index = file_name.strip(".log").split("_")
-            
-            got_one = False
-            for ts in reaction.ts[direction]:
-                if (got_one) or (ts.index != int(index)): 
-                    continue
-                if not result:
-                    ts.ase_molecule = Atoms()
-                    logging.info("Failed shell calculation for {}, removing atoms for future calculations".format(ts))
-                    got_one = True
-                else:
-                    ts.ase_molecule = self.read_log(os.path.join(scratch_dir, file_name))
-                    ts.update_coords_from("ase")
-                    got_one = True
-
-                
-        master_results["shell"] = results
-        
-        #######################################
-        ### for submitting reaction centers ###
-        #######################################
-        directions = self.submit_centers(reaction=reaction, calculator=calculator)
-        complete = {}
-        for direction in directions:
-            complete[direction] = False
-
-        while not all(complete.values()):
-            for direction in directions:
-                job_id = reaction.label + "_" + direction + "_center"
-                complete[direction] = self.check_complete(job_id)
-        logging.info("Completed calculations for {}".format(reaction))
-
-        results = {}
-        for direction in directions:
-            
-            rmg_reaction = reaction.rmg_reaction
-            
-            reactants = []
-            products = []
-            for reactant in reaction.rmg_reaction.reactants:
-                reactants.append(reactant.toSingleBonds())
-            for product in reaction.rmg_reaction.products:
-                products.append(product.toSingleBonds())
-
-            scratch_dir = os.path.join(
-                calculator.scratch,
-                "ts",
-                reaction.label,
-                "conformers"
-            )
-            files = os.listdir(scratch_dir)
-
-
-            for f in files:
-                if ((not f.endswith(".log")) or (not "{}_center".format(direction) in f)):
-                    continue
-                logging.info("Found center log file: {}".format(f))
-                complete, converged = calculator.verify_output_file(
-                    os.path.join(scratch_dir,f)
-                )
-                if not complete:
-                    logging.info("It appears that this job was killed prematurely")
-                    results[f] = False
-
-                elif not converged:
-                    logging.info("{} failed QM optimization".format(f))
-                    fail_dir = os.path.join(scratch_dir, "failures")
-                    if not os.path.exists(fail_dir):
-                        os.makedirs(os.path.join(scratch_dir, "failures"))
-                    move(
-                        os.path.join(scratch_dir,f
-                        ),
-                        os.path.join(
-                            scratch_dir, "failures", f
-                        )
-                    )
-                    results[f] = False
-                    continue
-
-                else:
-                    logging.info("{} was successful and was validated!".format(f))
-                    results[f] = True
-                    
-                    
-        for file_name, result in results.items():
-            r, p, direction, _, index = file_name.strip(".log").split("_")
-            
-            for ts in reaction.ts[direction]:
-                if ts.index != int(index):
-                    continue
-                if not result:
-                    ts.ase_molecule = Atoms()
-                    logging.info("Failed shell calculation for {}, removing atoms for future calculations".format(ts))
-                else:
-                    ts.ase_molecule = self.read_log(os.path.join(scratch_dir, file_name))
-                    ts.update_coords_from("ase")
-                
-        master_results["center"] = results
-        
-        ############################
-        ### For overall reaction ###
-        ############################
-        directions = self.submit_overalls(reaction=reaction, calculator=calculator)
-        complete = {}
-        for direction in directions:
-            complete[direction] = False
-
-        while not all(complete.values()):
-            for direction in directions:
-                job_id = reaction.label + "_" + direction
-                complete[direction] = self.check_complete(job_id)
-        logging.info("Completed calculations for {}".format(reaction))
-
-        results = {}
-        for direction in directions:
-            
-            rmg_reaction = reaction.rmg_reaction
-
-            scratch_dir = os.path.join(
-                calculator.scratch,
-                "ts",
-                reaction.label,
-                "conformers"
-            )
-            files = os.listdir(scratch_dir)
-
-            for f in files:
-                if ((not f.endswith(".log")) or ("center" in f) or ("shell" in f)):
-                    continue
-                logging.info("Found overall log file: {}".format(f))
-                complete, converged = calculator.verify_output_file(
-                    os.path.join(scratch_dir,f)
-                )
-                if not complete:
-                    logging.info("It appears that this job was killed prematurely")
-                    results[f] = False
-
-                elif not converged:
-                    logging.info("{} failed QM optimization".format(f))
-                    fail_dir = os.path.join(scratch_dir, "failures")
-                    if not os.path.exists(fail_dir):
-                        os.makedirs(os.path.join(scratch_dir, "failures"))
-                    move(
-                        os.path.join(scratch_dir,f
-                        ),
-                        os.path.join(
-                            scratch_dir, "failures", f
-                        )
-                    )
-                    results[f] = False
-                    continue
-
-                else:
-                    logging.info("{} was successful and was validated!".format(f))
-                    results[f] = True
-                    
-                    
-        for file_name, result in results.items():
-            r, p, direction, _, index = file_name.strip(".log").split("_")
-            
-            for ts in reaction.ts[direction]:
-                if ts.index != int(index):
-                    continue
-                if not result:
-                    ts.ase_molecule = Atoms()
-                    logging.info("Failed shell calculation for {}, removing atoms for future calculations".format(ts))
-                else:
-                    ts.ase_molecule = self.read_log(os.path.join(scratch_dir, file_name))
-                    ts.update_coords_from("ase")
-                
-        master_results["overall"] = results
-        
-        log_file = os.path.join(scratch_dir, "validations.yaml")
-
-        with open(log_file, "w") as to_write:
-            yaml.dump(master_results, to_write, default_flow_style=False)
-        
-        
-        
-
-    def submit_shell(self, ts=None, calculator=None):
-
-        scratch = calculator.scratch
-        calc = calculator.get_shell_calc(ts,
-                                         mem=calculator.mem,
-                                         nprocshared=calculator.nprocshared,
-                                         scratch=calculator.scratch,
-                                         method=calculator.method,
-                                         basis=calculator.basis
-                                         )
-        logging.info("Submitting {} TS".format(calc.label))
-        self.write_input(ts, calc)
-        self.submit(calc, "general")
-
-    def submit_center(self, ts=None, calculator=None):
-        """
-        A method to submit a calculation for the reaction center
-        """
-        scratch = calculator.scratch
-        calc = calculator.get_center_calc(ts,
-                                          mem=calculator.mem,
-                                          nprocshared=calculator.nprocshared,
-                                          scratch=calculator.scratch,
-                                          method=calculator.method,
-                                          basis=calculator.basis
-                                          )
-        logging.info("Submitting {} TS".format(calc.label))
-        self.write_input(ts, calc)
-        self.submit(calc, "general")
-
-    def submit_overall(self, ts=None, calculator=None):
-        """
-        A method to submit a calculation for the entire ts
-        """
-        scratch = calculator.scratch
-        calc = calculator.get_overall_calc(ts,
-                                           mem=calculator.mem,
-                                           nprocshared=calculator.nprocshared,
-                                           scratch=calculator.scratch,
-                                           method=calculator.method,
-                                           basis=calculator.basis
-                                           )
-        logging.info("Submitting {} TS".format(calc.label))
-        self.write_input(ts, calc)
-        self.submit(calc, "general")
-
-    def submit_irc(self, ts=None, calculator=None):
-        scratch = calculator.scratch
-        calc = calculator.get_irc_calc(ts,
-                                       mem=calculator.mem,
-                                       nprocshared=calculator.nprocshared,
-                                       scratch=calculator.scratch,
-                                       method=calculator.method,
-                                       basis=calculator.basis
-                                       )
-        logging.info("Submitting {} TS".format(calc.label))
-        self.write_input(ts, calc)
-        self.submit(calc, "general")
-
-    def submit_ts(self, ts=None, calculator=None, vibrational_analysis=True):
-        """
-        A method to perform the entire ts optimization for a transition state
-        """
-
-        assert isinstance(ts, TS), "The object provided is not a TS object"
-
-        # For shell
-        self.submit_shell(ts=ts, calculator=calculator)
-        calc = calculator.get_shell_calc(ts, scratch=calculator.scratch)
-        while not self.check_complete(ase_calculator=calc):
-            time.sleep(30)
-        logging.info("{} is complete!".format(calc.label))
-        try:
-            file_name = os.path.join(
-                calc.scratch,
-                calc.label + ".log"
-            )
-            if all(calculator.verify_output_file(file_name)):
-                ts.ase_molecule = self.read_log(file_name)
-                ts.update_coords()
-                logging.info("{} was successful!".format(calc.label))
-            else:
-                logging.info("FAILED: {} calculation".format(calc.label))
-                return False
-        except BaseException:
-            logging.info("FAILED: {} calculation".format(calc.label))
-            return False
-
-        # For center
-        self.submit_center(ts=ts, calculator=calculator)
-        calc = calculator.get_center_calc(ts, scratch=calculator.scratch)
-        while not self.check_complete(ase_calculator=calc):
-            time.sleep(30)
-        logging.info("{} is complete!".format(calc.label))
-        try:
-            file_name = os.path.join(
-                calc.scratch,
-                calc.label + ".log"
-            )
-            if all(calculator.verify_output_file(file_name)):
-                ts.ase_molecule = self.read_log(file_name)
-                ts.update_coords()
-                logging.info("{} was successful!".format(calc.label))
-            else:
-                logging.info("FAILED: {} calculation".format(calc.label))
-                return False
-        except BaseException:
-            logging.info("FAILED: {} calculation".format(calc.label))
-            return False
-
-        # For overall
-        self.submit_overall(ts=ts, calculator=calculator)
-        calc = calculator.get_overall_calc(ts, scratch=calculator.scratch)
-        while not self.check_complete(ase_calculator=calc):
-            time.sleep(30)
-        logging.info("{} is complete!".format(calc.label))
-        try:
-            file_name = os.path.join(
-                calc.scratch,
-                calc.label + ".log"
-            )
-            if all(calculator.verify_output_file(file_name)):
-                ts.ase_molecule = self.read_log(file_name)
-                ts.update_coords()
-                logging.info("{} was successful!".format(calc.label))
-            else:
-                logging.info("FAILED: {} calculation".format(calc.label))
-                return False
-        except BaseException:
-            logging.info("FAILED: {} calculation".format(calc.label))
-            return False
-
-        # For validation
-        if vibrational_analysis:  # If we're running vibrational analysis
-            from autotst.calculators.vibrational_analysis import VibrationalAnalysis, percent_change
-            vib = VibrationalAnalysis(ts=ts, scratch=calculator.scratch)
-            result = vib.validate_ts()
-
-            if not result:
-                logging.info(
-                    "Vibrational analysis not definitive. Running IRC instead")
-                self.submit_irc(ts=ts, calculator=calculator)
-                calc = calculator.get_irc_calc(ts=ts, scratch=calculator.scratch)
-                while not self.check_complete(ase_calculator=calc):
-                    time.sleep(30)
-                logging.info("{} is complete!".format(calc.label))
-                logging.info("The scratch directory is {}".format(calc.scratch))
-                result = calculator.validate_irc(calc=calc)
-                if not result:
-                    logging.info("Cannot validate via IRC... Job failed")
-                    return False
-                return True
-
-        else:
-            self.submit_irc(ts=ts, calculator=calculator)
-            calc = calculator.get_irc_calc(ts, scratch=calculator.scratch)
-            while not self.check_complete(ase_calculator=calc):
-                time.sleep(30)
-            logging.info("{} is complete!".format(calc.label))
-
-            result = calculator.validate_irc(calc=calc)
-
-            if not result:
-                logging.info("Cannot validate via IRC... Job failed")
-                return False
-            return True
-
-    def submit_reaction(self, reaction=None, calculator=None, vibrational_analysis=True):
-        """
-        A method that uses submit to run the geometry optimization of an entire species
-        """
-        processes = []
-        for smiles, transitionstates in reaction.ts.items():
-            for ts in transitionstates:
-                p = Process(target=self.submit_ts, args=(ts, calculator, vibrational_analysis))
-                p.start()
-                processes.append(p)
-        return processes
-
-    def calculate_reaction(self, reaction=None, calculator=None):
-
-        logging.info("Submitting {}".format(reaction))
-        # This doesn't work rn because RDKit is acting up on discovery
-        if conformer_calculator:
-            reaction.generate_conformers(calculator=conformer_calculator)
-        
-        calcs = self.submit_species(species=species, calculator=calculator)
-        complete = {}
-        first_try = {}
-        for calc in calcs:
-            complete[calc.label] = False
-            first_try[calc.label] = False
-
-        while not all(complete.values()):
-            for smiles, confs in species.conformers.items():
-                for conf in confs:
-                    calc = calculator.get_conformer_calc(conf)
-                    if complete[calc.label]:
-                        continue
-                    if self.check_complete(ase_calculator=calc):
-                        if not first_try[calc.label]:
-                            logging.info("{} is complete!".format(calc.label))
-                            try:  # reading in results after the first attempt
-                                conf.ase_molecule = self.read_log(
-                                    os.path.join(calc.scratch, calc.label + ".log"))
-                                conf.update_coords() ### Broken cuz of RDKit
-                                conf.energy = conf.ase_molecule.get_potential_energy()
-                                complete[calc.label] = True
-                                first_try[calc.label] = True
-                            except BaseException:
-                                logging.info(
-                                    "{} failed, trying it again...".format(
-                                        calc.label))
-                                self.submit_conformer(
-                                    conformer=conf, calculator=calculator)
-                                first_try[calc.label] = True
-                        else:  # look into trying something
-                            logging.info("{} second attempt is complete")
-                            try:
-                                conf.ase_molecule = self.read_log(
-                                    os.path.join(calc.scratch, calc.label + ".log"))
-                                conf.update_coords() ### Broken cuz of RDKit
-                                conf.energy = conf.ase_molecule.get_potential_energy()
-                                complete[calc.label] = True
-                            except BaseException:
-                                logging.info(
-                                    "{} failed a second time...".format(
-                                        calc.label))
-                                complete[calc.label] = True
-
-
