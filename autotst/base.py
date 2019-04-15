@@ -45,7 +45,7 @@ from rmgpy.quantity import Quantity, constants
 from rmgpy.reaction import Reaction, ReactionError
 from rmgpy.molecule import Bond, GroupBond, Group, Molecule as RMGMolecule, Atom, getElement
 
-from rmgpy.data.kinetics.common import KineticsError, saveEntry
+from rmgpy.data.kinetics.common import KineticsError #, saveEntry
 
 from rmgpy.species import Species as RMGSpecies, TransitionState
 from rmgpy.reaction import Reaction
@@ -203,11 +203,12 @@ class TransitionStates(Database):
         """
         if local_context is None:
             local_context = {}
-        local_context['DistanceData'] = DistanceData
+            local_context['DistanceData'] = DistanceData
 
         fpath = os.path.join(path, 'TS_training', 'reactions.py')
-        logging.debug(
-            "Loading transitions state family training set from {0}".format(fpath))
+        
+        logging.debug("Loading transitions state family training set from {0}".format(fpath))
+        
         depository = TransitionStateDepository(
             label='{0}/TS_training'.format(path.split('/')[-1]))  # 'intra_H_migration/TS_training')
         depository.load(fpath, local_context, global_context)
@@ -256,7 +257,7 @@ class TransitionStates(Database):
 
         # Save the entries
         for entry in entries:
-            saveEntry(f, entry)
+            self.saveEntry(f, entry)
 
         # Write the tree
         if len(self.groups.top) > 0:
@@ -267,7 +268,109 @@ class TransitionStates(Database):
             f.write(')\n\n')
 
         f.close()
+        return
+    
+    def saveEntry(self, f, entry):
+        """
+        Save an `entry` in the kinetics database by writing a string to
+        the given file object `f`.
+        """
+        from arkane.output import prettify
+        
+        def sortEfficiencies(efficiencies0):
+            efficiencies = {}
+            for mol, eff in efficiencies0.iteritems():
+                if isinstance(mol, str):
+                    # already in SMILES string format
+                    smiles = mol
+                else:
+                    smiles = mol.toSMILES()
 
+                efficiencies[smiles] = eff
+            keys = efficiencies.keys()
+            keys.sort()
+            return [(key, efficiencies[key]) for key in keys]
+
+        f.write('entry(\n')
+        f.write('    index = {0:d},\n'.format(entry.index))
+        if entry.label != '':
+            f.write('    label = "{0}",\n'.format(entry.label))
+
+
+        #Entries for kinetic rules, libraries, training reactions
+        #and depositories will have a Reaction object for its item
+        if isinstance(entry.item, Reaction):
+            #Write out additional data if depository or library
+            #kinetic rules would have a Group object for its reactants instead of Species
+            if isinstance(entry.item.reactants[0], RMGSpecies):
+                # Add degeneracy if the reaction is coming from a depository or kinetics library
+                f.write('    degeneracy = {0:.1f},\n'.format(entry.item.degeneracy))
+                if entry.item.duplicate:
+                    f.write('    duplicate = {0!r},\n'.format(entry.item.duplicate))
+                if not entry.item.reversible:
+                    f.write('    reversible = {0!r},\n'.format(entry.item.reversible))
+                if entry.item.allow_pdep_route:
+                    f.write('    allow_pdep_route = {0!r},\n'.format(entry.item.allow_pdep_route))
+                if entry.item.elementary_high_p:
+                    f.write('    elementary_high_p = {0!r},\n'.format(entry.item.elementary_high_p))
+                if entry.item.allow_max_rate_violation:
+                    f.write('    allow_max_rate_violation = {0!r},\n'.format(entry.item.allow_max_rate_violation))
+            #Entries for groups with have a group or logicNode for its item
+        elif isinstance(entry.item, Group):
+            f.write('    group = \n')
+            f.write('"""\n')
+            f.write(entry.item.toAdjacencyList())
+            f.write('""",\n')
+        elif isinstance(entry.item, LogicNode):
+            f.write('    group = "{0}",\n'.format(entry.item))
+        else:
+            raise DatabaseError("Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
+
+        # Write distances
+        if isinstance(entry.data, DistanceData):
+            data_str = prettify(repr(entry.data))
+            data_str = data_str.replace('\n', '\n    ')
+            f.write('    distances = {},\n'.format(data_str))
+        else:
+            assert False
+        
+        
+        # Write reference
+        if entry.reference is not None:
+            reference = entry.reference.toPrettyRepr()
+            lines = reference.splitlines()
+            f.write('    reference = {0}\n'.format(lines[0]))
+            for line in lines[1:-1]:
+                f.write('    {0}\n'.format(line))
+            f.write('    ),\n'.format(lines[0]))
+
+        if entry.referenceType != "":
+            f.write('    referenceType = "{0}",\n'.format(entry.referenceType))
+        if entry.rank is not None:
+            f.write('    rank = {0},\n'.format(entry.rank))
+
+        if entry.shortDesc.strip() !='':
+            f.write('    shortDesc = u"""')
+            try:
+                f.write(entry.shortDesc.encode('utf-8'))
+            except:
+                f.write(entry.shortDesc.strip().encode('ascii', 'ignore')+ "\n")
+            f.write('""",\n')
+
+        if entry.longDesc.strip() !='':
+            f.write('    longDesc = \n')
+            f.write('u"""\n')
+            try:
+                f.write(entry.longDesc.strip().encode('utf-8') + "\n")
+            except:
+                f.write(entry.longDesc.strip().encode('ascii', 'ignore')+ "\n")
+            f.write('""",\n')
+
+        f.write(')\n\n')
+        
+        return
+
+    
     def generateReactions(self, reactants, products=None, **options):
         """
         Generate all reactions between the provided list of one or two
@@ -595,11 +698,119 @@ class TransitionStateDepository(Database):
         self.entries['{0:d}:{1}'.format(index, label)] = entry
         return entry
 
+    """def saveEntry(self, f, entry):
+        
+        #Write the given `entry` in the database to the file object `f`.
+        
+        return saveEntry(f, entry)
+    """
+    
+    
+    
     def saveEntry(self, f, entry):
         """
-        Write the given `entry` in the database to the file object `f`.
+        Save an `entry` in the kinetics database by writing a string to
+        the given file object `f`.
         """
-        return saveEntry(f, entry)
+        from arkane.output import prettify
+        
+        def sortEfficiencies(efficiencies0):
+            efficiencies = {}
+            for mol, eff in efficiencies0.iteritems():
+                if isinstance(mol, str):
+                    # already in SMILES string format
+                    smiles = mol
+                else:
+                    smiles = mol.toSMILES()
+
+                efficiencies[smiles] = eff
+            keys = efficiencies.keys()
+            keys.sort()
+            return [(key, efficiencies[key]) for key in keys]
+
+        f.write('entry(\n')
+        f.write('    index = {0:d},\n'.format(entry.index))
+        if entry.label != '':
+            f.write('    label = "{0}",\n'.format(entry.label))
+
+
+        #Entries for kinetic rules, libraries, training reactions
+        #and depositories will have a Reaction object for its item
+        if isinstance(entry.item, Reaction):
+            #Write out additional data if depository or library
+            #kinetic rules would have a Group object for its reactants instead of Species
+            if isinstance(entry.item.reactants[0], RMGSpecies):
+                # Add degeneracy if the reaction is coming from a depository or kinetics library
+                f.write('    degeneracy = {0:.1f},\n'.format(entry.item.degeneracy))
+                if entry.item.duplicate:
+                    f.write('    duplicate = {0!r},\n'.format(entry.item.duplicate))
+                if not entry.item.reversible:
+                    f.write('    reversible = {0!r},\n'.format(entry.item.reversible))
+                if entry.item.allow_pdep_route:
+                    f.write('    allow_pdep_route = {0!r},\n'.format(entry.item.allow_pdep_route))
+                if entry.item.elementary_high_p:
+                    f.write('    elementary_high_p = {0!r},\n'.format(entry.item.elementary_high_p))
+                if entry.item.allow_max_rate_violation:
+                    f.write('    allow_max_rate_violation = {0!r},\n'.format(entry.item.allow_max_rate_violation))
+            #Entries for groups with have a group or logicNode for its item
+        elif isinstance(entry.item, Group):
+            f.write('    group = \n')
+            f.write('"""\n')
+            f.write(entry.item.toAdjacencyList())
+            f.write('""",\n')
+        elif isinstance(entry.item, LogicNode):
+            f.write('    group = "{0}",\n'.format(entry.item))
+        else:
+            raise DatabaseError("Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
+
+        # Write distances
+        if isinstance(entry.data, DistanceData):
+            data_str = prettify(repr(entry.data))
+            
+            data_str = data_str.replace('\n', '\n   ')
+            
+            f.write('    distances = {},\n'.format(data_str))
+        else:
+            assert False
+        
+        
+        # Write reference
+        if entry.reference is not None:
+            reference = entry.reference.toPrettyRepr()
+            lines = reference.splitlines()
+            f.write('    reference = {0}\n'.format(lines[0]))
+            for line in lines[1:-1]:
+                f.write('    {0}\n'.format(line))
+            f.write('    ),\n'.format(lines[0]))
+
+        if entry.referenceType != "":
+            f.write('    referenceType = "{0}",\n'.format(entry.referenceType))
+        if entry.rank is not None:
+            f.write('    rank = {0},\n'.format(entry.rank))
+
+        if entry.shortDesc.strip() !='':
+            f.write('    shortDesc = u"""')
+            try:
+                f.write(entry.shortDesc.encode('utf-8'))
+            except:
+                f.write(entry.shortDesc.strip().encode('ascii', 'ignore')+ "\n")
+            f.write('""",\n')
+
+        if entry.longDesc.strip() !='':
+            f.write('    longDesc = \n')
+            f.write('u"""\n')
+            try:
+                f.write(entry.longDesc.strip().encode('utf-8') + "\n")
+            except:
+                f.write(entry.longDesc.strip().encode('ascii', 'ignore')+ "\n")
+            f.write('""",\n')
+
+        f.write(')\n\n')
+        
+        return
+
+    
+    
 
 
 ##########################################################################
