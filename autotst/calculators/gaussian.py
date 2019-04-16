@@ -133,7 +133,6 @@ class Gaussian(Calculator):
             t = "species"
 
         for locked_torsion in conformer.torsions: ## TODO: maybe doesn't work;
-            print locked_torsion
             if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
                 a, b, c, d = locked_torsion.atom_indices
                 string += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)

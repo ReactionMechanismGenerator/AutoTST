@@ -150,7 +150,7 @@ class Job():
                 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/submit.sh""".format(
                     label, partition), shell=True)
 
         return label
@@ -308,7 +308,7 @@ class Job():
                 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/submit.sh""".format(
                     label, partition), shell=True)
 
         return label
@@ -495,15 +495,18 @@ class Job():
             for transitionstate in transitionstates:
                 f = "{}_{}_{}.log".format(reaction.label, direction, transitionstate.index)
                 path = os.path.join(calculator.scratch, "ts", reaction.label, "conformers", f)
-                print path
                 if not os.path.exists(path):
                     logging.info("It appears that {} failed...".format(f))
                     continue
-                parser = ccread(path)
-                if parser is None:
-                    logging.info("Something went wrong when reading in results for {}...".format(f))
-                    continue
-                energy = parser.scfenergies[-1]
+                try:
+                    parser = ccread(path)
+                    if parser is None:
+                        logging.info("Something went wrong when reading in results for {}...".format(f))
+                        continue
+                    energy = parser.scfenergies[-1]
+                except:
+                    logging.info("The parser does not have an scf energies attribute")
+                    energy = 1e5
 
                 results.append([energy, transitionstate, f])
 
@@ -551,7 +554,7 @@ class Job():
             label = self.submit_transitionstate(transitionstate, irc_calc, "west")
             while not self.check_complete(label):
                 time.sleep(15)
-            result = calculator.valicate_irc(calc=irc_calc)
+            result = calculator.validate_irc(calc=irc_calc)
             if result:
                 logging.info("Validated via IRC")
                 return True
@@ -664,9 +667,6 @@ class Job():
                         )
                 label = self.submit_transitionstate(transitionstate=conformer, ase_calculator=calc)
                     
-
-            
-
 
     def verify_rotor(self, steps=36, step_size=10.0, ase_calculator=None):
         

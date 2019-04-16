@@ -75,8 +75,9 @@ class VibrationalAnalysis():
         log_file = os.path.join(
             scratch, 
             "ts", 
-            ts.reaction_label, 
-            ts.reaction_label +".log")
+            ts.reaction_label,
+            "conformers",
+            "{}_{}_{}.log".format(ts.reaction_label, ts.direction, ts.index))
         
         return log_file
 
@@ -153,14 +154,19 @@ class VibrationalAnalysis():
         try:
             self.log_file = self.get_log_file(self.scratch, ts)
 
+
             self.vibrations = self.parse_vibrations(self.log_file)
+
 
             self.pre_geometry, self.post_geometry = self.obtain_geometries(self.ts, self.vibrations)
 
+
             self.percent_changes = self.obtain_percent_changes(self.ts, self.pre_geometry, self.post_geometry)
 
-            if (np.log10(((self.percent_changes[self.percent_changes.center].mean()))) > np.log10(
-                    ((self.percent_changes[self.percent_changes.center != True].mean()))) + 1).all():
+            center_values = np.log(self.percent_changes[self.percent_changes.center].percent_change.mean())
+            shell_values = np.log(self.percent_changes[self.percent_changes.center != True].percent_change.mean())
+
+            if center_values > shell_values + 1:
                 logging.info("Vibrational analysis was successful")
                 return True
 
