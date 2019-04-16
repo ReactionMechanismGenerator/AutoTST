@@ -32,7 +32,6 @@ import itertools
 import logging
 import numpy as np
 from cclib.io import ccread
-from rdkit import Chem
 
 import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
@@ -85,8 +84,7 @@ class Gaussian(Calculator):
             return self.conformer.reaction_label + \
                 "_{}".format(self.conformer.index)
         elif isinstance(self.conformer, Conformer):
-            label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
-                Chem.MolFromSmiles(self.conformer.smiles))).strip("-N")
+            label = self.conformer.smiles
             label += "_{}".format(self.conformer.index)
             return label
         else:
@@ -123,25 +121,29 @@ class Gaussian(Calculator):
             string += "B {} {}\n".format(i + 1, j + 1)
 
         i, j, k, l = torsion.atom_indices
-        string += "D {} {} {} {} S {} {}".format(i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
+        string += "D {} {} {} {} S {} {}\n".format(i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
 
         if isinstance(conformer, TS):
-            label = self.label + "_tor_{}_{}".format(j, k)
+            label = da = conformer.reaction_label 
+            label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
             t = "ts"
-            d = self.label
         elif isinstance(conformer, Conformer):
-            label = d = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
-                Chem.MolFromSmiles(conformer.smiles))).strip("-N")
-            label += "_tor{}{}".format(j, k)
+            label = da = conformer.smiles
+            label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
             t = "species"
-            
+
+        for locked_torsion in conformer.torsions: ## TODO: maybe doesn't work;
+            if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
+                a, b, c, d = locked_torsion.atom_indices
+                string += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)
+    
         conformer.rmg_molecule.updateMultiplicity()
         mult = conformer.rmg_molecule.multiplicity
 
         new_scratch = os.path.join(
                 scratch,
                 t,
-                d,
+                da,
                 "rotors"
             )
 
@@ -153,14 +155,14 @@ class Gaussian(Calculator):
                            basis=basis,
                            extra="Opt=(CalcFC,ModRedun)",
                            multiplicity=mult,
-                           addsec=[string])
+                           addsec=[string[:-1]])
 
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
 
         return calc
 
-    def get_species_calc(self,
+    def get_conformer_calc(self,
                          conformer=None,
                          mem="5GB",
                          nprocshared=20,
@@ -187,9 +189,7 @@ class Gaussian(Calculator):
         # using this round about way of doing stuff because rmg's
         # `toAugumentedInChIKey` method doesn't work on our cluster
 
-        smiles = conformer.rmg_molecule.toSMILES()
-        short_label = Chem.rdinchi.InchiToInchiKey(Chem.MolToInchi(
-            Chem.MolFromSmiles(smiles))).strip("-N") 
+        short_label = conformer.smiles
         label = short_label + "_{}".format(conformer.index)
 
         new_scratch = os.path.join(
@@ -199,8 +199,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
         calc = ASEGaussian(
             mem=mem,
@@ -209,7 +211,7 @@ class Gaussian(Calculator):
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(2/16=3) scf=(maxcycle=900)",
+            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
             multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
@@ -218,12 +220,15 @@ class Gaussian(Calculator):
 
     def get_shell_calc(self,
                        ts=None,
+                       direction="forward",
                        mem="5GB",
                        nprocshared=20,
                        scratch=".",
                        method="m062x",
                        basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
+
+        assert direction.lower() in ["forward", "reverse"]
 
         if ts is None:
             if self.ts is None:
@@ -237,7 +242,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label + "_shell_" + str(ts.index)
+        label = ts.reaction_label + "_" + direction.lower() + "_shell_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
@@ -246,8 +251,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
 
         ind1 = ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
@@ -276,12 +283,15 @@ class Gaussian(Calculator):
 
     def get_center_calc(self,
                         ts=None,
+                        direction="forward",
                         mem="5GB",
                         nprocshared=20,
                         scratch=".",
                         method="m062x",
                         basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
+
+        assert direction.lower() in ["forward", "reverse"]
 
         if ts is None:
             if self.ts is None:
@@ -305,7 +315,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label + "_center_" + str(ts.index)
+        label = ts.reaction_label + "_" + direction.lower() + "_center_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
@@ -314,8 +324,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -333,12 +345,15 @@ class Gaussian(Calculator):
 
     def get_overall_calc(self,
                          ts=None,
+                         direction="forward",
                          mem="5GB",
                          nprocshared=20,
                          scratch=".",
                          method="m062x",
                          basis="cc-pVTZ"):
         "A method to create a calculator that optimizes the reaction shell"
+
+        assert direction.lower() in ["forward", "reverse"]
 
         if ts is None:
             if self.ts is None:
@@ -352,7 +367,7 @@ class Gaussian(Calculator):
 
         ts.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label + "_" + str(ts.index)
+        label = ts.reaction_label + "_" + direction.lower() + "_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
@@ -361,8 +376,10 @@ class Gaussian(Calculator):
                 "conformers"
             )
 
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
         calc = ASEGaussian(
             mem=mem,
@@ -371,7 +388,7 @@ class Gaussian(Calculator):
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900)",
+            extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900) IOP(7/33=1,2/16=3)",
             multiplicity=ts.rmg_molecule.multiplicity)
         calc.atoms = ts.ase_molecule
         del calc.parameters['force']
@@ -390,7 +407,7 @@ class Gaussian(Calculator):
         if ts is None:
             if self.ts is None:
                 return None
-            elif not isinstance(self.conformer, TS):
+            elif not isinstance(self.conformer, TS): 
                 return None
             else:
                 ts = self.conformer
@@ -404,8 +421,10 @@ class Gaussian(Calculator):
                 ts.reaction_label,
                 "irc"
             )
-        if not os.path.isdir(new_scratch):
+        try: 
             os.makedirs(new_scratch)
+        except OSError:
+            pass
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -419,184 +438,6 @@ class Gaussian(Calculator):
         del calc.parameters['force']
 
         return calc
-
-    def calculate(self, conformer=None, calc=None):
-        """
-        A method to perform a calculation given a calculator and an AutoTST
-        object. If the corresponding log file already exists, we will skip it
-
-        :params:
-        autotst_object: (Molecule, TS, Reaction) an
-        AutoTST object that you want to run calculations on
-        calc: (ase.calculators.calculator) the calculator that you want to run
-        """
-
-        assert conformer, "A Conformer or TS object needs to be provided to run calculate..."
-        assert calc, "An ASECalculator object must be provided to run calculate..."
-
-        current_path = os.getcwd()
-        scratch_path = os.path.expanduser(
-            calc.scratch)
-
-        new_file_name = calc.label.replace(
-            "left", "(").replace("right", ")") + ".log"
-        old_file_name = calc.label + ".log"
-
-        os.chdir(scratch_path)
-
-        if os.path.exists(new_file_name):
-            # We found a finished file file... it should be fixed
-            logging.info(
-                "Found previous file for {}, verifying it...".format(new_file_name))
-            complete, success = self.verify_output_file(new_file_name)
-            if success:
-                logging.info("Old output file verified, reading it in...")
-                conformer.ase_molecule = read_gaussian_out(new_file_name)
-                conformer.energy = conformer.ase_molecule.get_potential_energy()
-                conformer.update_coords()
-                os.chdir(current_path)
-                return conformer, True
-
-            elif complete:
-                logging.info(
-                    "Output file did not converge, attempting to run one last time...")
-                try:
-                    calc.calculate(conformer.ase_molecule)
-                    conformer.ase_molecule = read_gaussian_out(
-                        old_file_name)
-                    conformer.energy = conformer.ase_molecule.get_potential_energy()
-                    conformer.update_coords()
-                    os.chdir(current_path)
-                    return conformer, True
-
-                except BaseException:  # TODO: add error for seg fault
-                    logging.info("{} failed... again...".format(new_file_name))
-                    os.chdir(current_path)
-                    return conformer, False
-
-            elif (new_file_name == old_file_name) and (not complete):
-                # The file names are identical and the job isn't complete yet
-
-                logging.info(
-                    "Job appears to be running for this calculation, waiting for it to complete...")
-
-                from time import sleep
-
-                f = open(old_file_name)
-                lines = f.readlines()[:5]
-                num = ""
-                for line in lines:
-                    if "Entering Link" in line:
-                        num = line.split()[-1][:-1]
-                scratch_file = "Gau-" + num + ".int"
-                while os.path.exists(scratch_file):
-                    sleep(60)
-                logging.info(
-                    "Job complete, reading in results now by running calculate again...")
-
-                # waiting a lil while to make sure that the file is fixed...
-                # just in case...
-                sleep(15)
-                try:
-                    conformer.ase_molecule = read_gaussian_out(
-                        old_file_name)
-                    conformer.energy = conformer.ase_molecule.get_potential_energy()
-                    conformer.update_coords()
-                    os.chdir(current_path)
-                    return conformer, True
-                except IndexError:
-                    logging.info(
-                        "It appears that the previous log file wasn't finished... removing the files and rerunning")
-                    os.remove(old_file_name)
-                    os.remove(old_file_name.replace(".log", ".ase"))
-                    os.remove(old_file_name.replace(".log", ".com"))
-                    return self.calculate(conformer, calc)
-
-            else:
-                logging.info(
-                    "Something went wrong... File is neither complete nor successful...")
-
-                return conformer, False
-
-        elif os.path.exists(old_file_name):
-            complete, success = self.verify_output_file(old_file_name)
-
-            if not complete:
-                logging.info(
-                    "Job appears to be running already, waiting for it to complete...")
-
-                from time import sleep
-
-                f = open(old_file_name)
-                lines = f.readlines()[:5]
-                num = None
-                for line in lines:
-                    if "Entering Link" in line:
-                        num = line.split()[-1][:-1]
-
-                if not num:
-                    logging.info(
-                        "Something is wrong... it seems this run was interupted...")
-                    logging.info(
-                        "deleting {} and recalculating...".format(old_file_name))
-                    os.remove(old_file_name)
-                    return self.calculate(conformer, calc)
-
-                scratch_file = "Gau-" + num + ".int"
-                while os.path.exists(scratch_file):
-                    sleep(60)
-                logging.info(
-                    "Job complete, reading in results now by running calculate again...")
-
-                # waiting a lil while to make sure that the file is fixed...
-                # just in case...
-                sleep(30)
-
-                return self.calculate(conformer, calc)
-
-            else:
-                logging.info(
-                    "Found previous file for {}, verifying it...".format(old_file_name))
-                if success:
-                    logging.info("Old output file verified, reading it in...")
-                    conformer.ase_molecule = read_gaussian_out(old_file_name)
-                    conformer.energy = conformer.ase_molecule.get_potential_energy()
-                    conformer.update_coords()
-                    os.chdir(current_path)
-                    return conformer, True
-                else:
-                    logging.info(
-                        "Something went wrong... File is neither complete nor successful...")
-
-                    return conformer, False
-        # Seeing if the file exists
-        else:
-            # File doesn't exist, running calculations
-            logging.info(
-                "Starting calculation for {}...".format(new_file_name))
-            try:
-                calc.calculate(conformer.ase_molecule)
-                conformer.ase_molecule = read_gaussian_out(old_file_name)
-                conformer.energy = conformer.ase_molecule.get_potential_energy()
-                conformer.update_coords()
-                os.chdir(current_path)
-                return conformer, True
-            except BaseException:  # TODO: add error for seg fault
-                # first calc failed, trying it once more
-                logging.info(
-                    "Failed first attempt for {}. Trying it once more...".format(new_file_name))
-                try:
-                    calc.calculate(conformer.ase_molecule)
-                    conformer.ase_molecule = read_gaussian_out(old_file_name)
-                    conformer.energy = conformer.ase_molecule.get_potential_energy()
-                    conformer.update_coords()
-                    os.chdir(current_path)
-                    return conformer, True
-                except BaseException:  # TODO: add error for seg fault
-                    logging.info(
-                        "{} failed first and second attempt...".format(new_file_name))
-                    os.chdir(current_path)
-                    return conformer, False
 
     def verify_output_file(self, path):
         """
@@ -681,15 +522,11 @@ class Gaussian(Calculator):
         irc_path = os.path.join(
             calc.scratch,
             calc.label + ".log")
+
         if not os.path.exists(irc_path):
             logging.info(
-                "It seems that the file was `fixed`, reading in the `fixed` version.")
-            irc_path = irc_path.replace("left", "(").replace("right", ")")
-
-            if not os.path.exists(irc_path):
-                logging.info(
-                    "It seems that the IRC claculation has not been run.")
-                return False
+                "It seems that the IRC claculation has not been run.")
+            return False
 
         f = open(irc_path, "r")
         file_lines = f.readlines()[-5:]
@@ -790,143 +627,4 @@ class Gaussian(Calculator):
             logging.info("IRC calculation failed :(")
             return False
 
-    def run(self,
-            conformer=None,
-            vibrational_analysis=True,
-            hindered_rotors=True,):
-        """
-        A method to perform all the necessary calculations required for a particular conformer
-        """
 
-        if not conformer:
-            conformer = self.conformer
-
-        assert isinstance(conformer, (Conformer, TS)
-                          ), "`conformer` provided not a Conformer type..."
-
-        if isinstance(conformer, TS):
-            # Performing the TS optimizations
-            logging.info("Conformer provided is a TS object")
-
-            shell = self.get_shell_calc(conformer)
-            logging.info("Running optimization of reaction shell")
-            conformer, result = self.calculate(conformer, shell)
-            self.fix_io_file(shell)
-            if not result:
-                logging.info("FAILED SHELL CALCULATION")
-                return result
-
-            center = self.get_center_calc(conformer)
-            logging.info("Running optization of reaction center")
-            conformer, result = self.calculate(conformer, center)
-            self.fix_io_file(center)
-            if not result:
-                logging.info("FAILED CENTER CALCULATION")
-                return result
-
-            overall = self.get_overall_calc(conformer)
-            logging.info("Running overall optimization of TS")
-            conformer, result = self.calculate(conformer, overall)
-            self.fix_io_file(overall)
-            if not result:
-                logging.info("FAILED OVERALL CALCULATION")
-
-            if not vibrational_analysis:
-                logging.info(
-                    "Running without vibrational analysis. \nRunning IRC instead")
-                irc = self.get_irc_calc(conformer)
-                self.run_irc(conformer, irc)
-                result = self.validate_irc(irc)
-                self.fix_io_file(irc)
-
-            else:
-                from autotst.calculators.vibrational_analysis import VibrationalAnalysis
-                vib = VibrationalAnalysis(ts=conformer, scratch=self.scratch)
-                result = vib.validate_ts()
-
-                if not result:
-                    logging.info(
-                        "Vibrational Analysis not conclusive...\n Running IRC instead")
-                    irc = self.get_irc_calc(conformer)
-                    self.run_irc(conformer, irc)
-                    result = self.validate_irc(irc)
-                    self.fix_io_file(irc)
-
-            if result:
-                logging.info(
-                    "TS validated, now running hindered rotor calculations")
-                # Add hindered rotor work here
-                logging.info("jk, this feature hasn't been added just yet")
-
-            if result:
-                logging.info("Arrived at a TS!")
-                return result
-
-            else:
-                logging.info("Could not arrive at a TS!")
-                return result
-
-        elif isinstance(conformer, Conformer):
-            logging.info("Conformer provided is NOT a TS object")
-
-            calc = self.get_species_calc(conformer)
-            conformer, result = self.calculate(conformer, calc)
-            self.fix_io_file(calc)
-
-            if result:
-                logging.info(
-                    "TS validated, now running hindered rotor calculations")
-                # Add hindered rotor work here
-                logging.info("jk, this feature hasn't been added just yet")
-
-            if result:
-                logging.info("Conformer species successfully optimized")
-                return result
-
-            else:
-                logging.info("Could not optimize species geometry")
-                return result
-
-
-"""
-def calculate_rotor(self, conformer, calculator):
-
-    A method to run hindered rotor calculations
-
-
-    try:
-        calc.calculate(conformer.ase_molecule)
-    except:
-        pass
-
-    path = os.path.join(calc.scratch, calc.label + ".log")
-
-    if not (self.verify_rotor(path) and self.verify_output_file(path)):
-        logging.info(
-            "Could not verify the rotor, this file will not be included in calculations.")
-        logging.info("File {} renamed as {}...".format(
-            path, path.replace(".log", "-failed.log")))
-        os.rename(path, path.replace(".log", "-failed.log"))
-
-def verify_rotor(self, path):
-    "This could be extrapolated to the general calculators class...?"
-
-    parser = ccread(path)
-
-    smallest = max(parser.scfenergies) + 1
-    results = []
-    for i in parser.scfenergies:
-        if i < smallest:
-            smallest = i
-        else:
-            results.append(smallest)
-            smallest = max(parser.scfenergies) + 1
-    # adding the last one which should be a converged geometry
-    results.append(smallest)
-
-    if ((results[0] - results[-1] < 1e-5) and # The energy difference is less than 1e-5 eV
-        (((parser.converged_geometries[0] - parser.converged_geometries[i]) ** 2).mean() < 0.01)): # the RMSE between initial and final geometries is less than 1%
-        return True
-
-    else:
-        return False"""

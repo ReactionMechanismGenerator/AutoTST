@@ -39,11 +39,12 @@ class Bond:
         i.e. atoms i and j are labeled (*1, *2, *3)
     """
 
-    def __init__(self, index, atom_indices, length, reaction_center=False):
+    def __init__(self, index, atom_indices, length, mask=None, reaction_center=False):
         self.index = index
         self.atom_indices = atom_indices
         self.length = length
         self.reaction_center = reaction_center
+        self.mask = mask
 
     def __repr__(self):
         return '<Bond "{}">'.format(self.atom_indices)

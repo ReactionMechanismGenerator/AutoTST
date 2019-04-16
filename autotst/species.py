@@ -224,6 +224,7 @@ class Conformer():
             self.rmg_molecule.updateMultiplicity()
             self.get_mols()
             self.get_geometries()
+            self._symmetry_number = None
 
         else:
             self.smiles = None
@@ -235,6 +236,7 @@ class Conformer():
             self.torsions = []
             self.cistrans = []
             self.chiral_centers = []
+            self._symmetry_number = None
 
     def __repr__(self):
         return '<Conformer "{}">'.format(self.smiles)
@@ -248,6 +250,12 @@ class Conformer():
         copy_conf.get_geometries()
         copy_conf.energy = self.energy
         return copy_conf
+
+    @property
+    def symmetry_number(self):
+        if not self._symmetry_number:
+            self._symmetry_number = self.calculate_symmetry_number()
+        return self._symmetry_number
 
     def get_rdkit_mol(self, rmg_molecule=None):
         """
@@ -368,6 +376,8 @@ class Conformer():
                         atom_indices=indices,
                         length=length,
                         reaction_center=center)
+            mask = self.get_mask(bond, rdmol_copy, ase_molecule)
+            bond.mask = mask
 
             bonds.append(bond)
 
@@ -688,7 +698,7 @@ class Conformer():
 
     def get_mask(
             self,
-            torsion_or_angle,
+            geometry,
             rdkit_molecule=None,
             ase_molecule=None):
 
@@ -700,20 +710,24 @@ class Conformer():
             ase_molecule = self.ase_molecule
 
         rdkit_atoms = rdmol_copy.GetAtoms()
+        if (isinstance(geometry, autotst.geometry.Torsion) or
+                isinstance(geometry, autotst.geometry.CisTrans)):
 
-        if (isinstance(torsion_or_angle, autotst.geometry.Torsion) or
-                isinstance(torsion_or_angle, autotst.geometry.CisTrans)):
-
-            L1, L0, R0, R1 = torsion_or_angle.atom_indices
+            L1, L0, R0, R1 = geometry.atom_indices
 
             # trying to get the left hand side of this torsion
             LHS_atoms_index = [L0, L1]
             RHS_atoms_index = [R0, R1]
 
-        elif isinstance(torsion_or_angle, autotst.geometry.Angle):
-            a1, a2, a3 = torsion_or_angle.atom_indices
+        elif isinstance(geometry, autotst.geometry.Angle):
+            a1, a2, a3 = geometry.atom_indices
             LHS_atoms_index = [a2, a1]
             RHS_atoms_index = [a2, a3]
+        
+        elif isinstance(geometry, autotst.geometry.Bond):
+            a1, a2 = geometry.atom_indices
+            LHS_atoms_index = [a1]
+            RHS_atoms_index = [a2]
 
         complete_RHS = False
         i = 0
@@ -837,12 +851,15 @@ class Conformer():
                 ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
 
             self.ase_molecule = Atoms(ase_atoms)
+            #self.calculate_symmetry_number()
 
         elif mol_type.lower() == "ase":
             conf = self.rdkit_molecule.GetConformers()[0]
             for i, position in enumerate(self.ase_molecule.get_positions()):
                 self.rmg_molecule.atoms[i].coords = position
                 conf.SetAtomPosition(i, position)
+
+            #self.calculate_symmetry_number()
 
         elif mol_type.lower() == "rdkit":
 
@@ -855,9 +872,35 @@ class Conformer():
                 atom.coords = np.array(coords)
 
             self.get_ase_mol()
+            #self.calculate_symmetry_number()
 
     def set_bond_length(self, bond_index, length):
-        return None
+
+        assert isinstance(length, (float, int))
+
+        matched = False
+        for bond in self.bonds:
+            if bond.index == bond_index:
+                matched = True
+                break
+
+        if not matched:
+            print "Angle index provided is out of range. Nothing was changed."
+            return self
+
+        i, j = bond.atom_indices
+        self.ase_molecule.set_distance(
+            a0=i,
+            a1=j,
+            distance=length,
+            mask=bond.mask,
+            fix=0
+        )
+
+        bond.length = length
+
+        self.update_coords_from(mol_type="ase")
+        return self
 
     def set_angle(self, angle_index, angle):
         """
@@ -882,7 +925,6 @@ class Conformer():
             a1=i,
             a2=j,
             a3=k,
-            a4=l,
             angle=angle,
             mask=angle.mask
         )
@@ -1020,3 +1062,29 @@ class Conformer():
         self.update_coords_from(mol_type="ase")
 
         return self
+
+    def calculate_symmetry_number(self):
+        from rmgpy.qm.symmetry import PointGroupCalculator
+        from rmgpy.qm.qmdata import QMData
+
+        atom_numbers = self.ase_molecule.get_atomic_numbers()
+        coordinates = self.ase_molecule.get_positions()
+
+        qmdata = QMData(
+            groundStateDegeneracy=1,  # Only needed to check if valid QMData
+            numberOfAtoms=len(atom_numbers),
+            atomicNumbers=atom_numbers,
+            atomCoords=(coordinates, str('angstrom')),
+            energy=(0.0, str('kcal/mol'))  # Only needed to avoid error
+        )
+        settings = type(str(''), (), dict(symmetryPath=str('symmetry'), scratchDirectory="."))()  # Creates anonymous class
+        pgc = PointGroupCalculator(settings, self.smiles, qmdata)
+        pg = pgc.calculate()
+        os.remove("{}.symm".format(self.smiles))
+
+        if pg is not None:
+            symmetry_number = pg.symmetryNumber
+        else:
+            symmetry_number = 1
+
+        return symmetry_number

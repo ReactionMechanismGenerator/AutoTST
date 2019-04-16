@@ -96,6 +96,7 @@ class Reaction():
         self.calculator = calculator
 
         if rmg_reaction:
+            logging.info("oops")
             self.rmg_reaction, self.reaction_family = self.get_labeled_reaction(
                 rmg_reaction=rmg_reaction)
             if label:
@@ -174,6 +175,7 @@ class Reaction():
             for direction, mol in self.get_complexes().iteritems():
                 ts = TS(
                     reaction_label=self.label,
+                    direction=direction,
                     rmg_molecule=mol,
                     reaction_family=self.reaction_family,
                     distance_data=self.distance_data
@@ -323,7 +325,7 @@ class Reaction():
         label_reaction = None
         rmg_reaction_reaction = None
         test_reactions = []
-
+        match = False
         if label:
             rmg_reactants = []
             rmg_products = []
@@ -336,14 +338,32 @@ class Reaction():
                 s = RMGMolecule(SMILES=prod)
                 rmg_products.append(s)
 
-            label_reaction = RMGReaction(
+            test_reaction = RMGReaction(
                 reactants=rmg_reactants, products=rmg_products)
 
             if rmg_reaction:
-                assert rmg_reaction.isIsomorphic(label_reaction)
-                test_reactions = [label_reaction]
-            else:
-                test_reactions = [label_reaction]
+                assert rmg_reaction.isIsomorphic(test_reaction), "The reaction label provided does not match the RMGReaction provided..."
+
+
+            for name, family in self.rmg_database.kinetics.families.items():
+                if match:
+                    break
+
+                labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                    test_reaction.reactants, test_reaction.products)
+                if not (labeled_r and labeled_p):
+                    continue
+
+                if ((len(labeled_r) > 0) and (len(labeled_p) > 0)):
+                    logging.info( "Matched reaction to {} family".format(name))
+
+                    labeled_reactants = deepcopy(labeled_r)
+                    labeled_products = deepcopy(labeled_p)
+                    test_reaction.reactants = labeled_r[:]
+                    test_reaction.products = labeled_p[:]
+                    match = True
+                    final_name = name
+                    break
 
         elif rmg_reaction:
             rmg_reactants = []
@@ -377,7 +397,6 @@ class Reaction():
                 for i in l1:
                     for j in l2:
                         test_products.append([i, j])
-            match = False
             for name, family in self.rmg_database.kinetics.families.items():
                 if match:
                     break
@@ -414,12 +433,11 @@ class Reaction():
         
         reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
             test_reaction.reactants, test_reaction.products, only_families=[final_name])
+
         assert reaction_list, "Could not match a reaction to a reaction family..."
 
         for reaction in reaction_list:
-            
             if test_reaction.isIsomorphic(reaction):
-                
                 reaction.reactants = labeled_reactants
                 reaction.products = labeled_products
                 break
@@ -468,7 +486,6 @@ class Reaction():
                 for mol in react.molecule:
                     if len(mol.getLabeledAtoms()) > 0:
                         reactant_complex = reactant_complex.merge(mol)
-        print reactant_complex.getLabeledAtoms()
         product_complex = RMGMolecule()
         for prod in rmg_reaction.products:
             if isinstance(prod, RMGMolecule):
@@ -477,7 +494,6 @@ class Reaction():
                 for mol in prod.molecule:
                     if len(mol.getLabeledAtoms()) > 0:
                         product_complex = product_complex.merge(mol)
-        print product_complex.getLabeledAtoms()
 
         reactant_complex.updateMultiplicity()
         product_complex.updateMultiplicity()
@@ -507,7 +523,9 @@ class Reaction():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
             #print conformer.ase_molecule.get_calculator()
-            conformers = systematic_search(conformer, delta=60)
+            conformers = systematic_search(conformer, delta=120)
+            for conformer in conformers:
+                conformer.direction = direction
             self.ts[direction] = conformers
 
         return self.ts
@@ -522,6 +540,7 @@ class TS(Conformer):
             self,
             smiles=None,
             reaction_label=None,
+            direction='forward',
             rmg_molecule=None,
             reaction_family="H_Abstraction",
             distance_data=None,
@@ -530,7 +549,9 @@ class TS(Conformer):
         #####################################################
         #####################################################
         assert reaction_label, "A reaction label needs to be provided in addition to a smiles or rmg_molecule"
+        assert direction in ["forward", "reverse"], "Please provide a valid direction"
         self.reaction_label = reaction_label
+        self.direction = direction.lower()
         self._rdkit_molecule = None
         self._ase_molecule = None
         self.reaction_family = reaction_family
@@ -555,6 +576,7 @@ class TS(Conformer):
             self.rmg_molecule.updateMultiplicity()
             self.get_mols()
             self.get_geometries()
+            self._symmetry_number = None
 
         else:
             self.smiles = None
@@ -567,6 +589,7 @@ class TS(Conformer):
             self.torsions = []
             self.cistrans = []
             self.chiral_centers = []
+            self._symmetry_number = None
 
     def __repr__(self):
         return '<TS "{}">'.format(self.smiles)
@@ -582,7 +605,15 @@ class TS(Conformer):
         copy_conf.ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
         copy_conf.energy = self.energy
+        copy_conf._symmetry_number = self._symmetry_number
         return copy_conf
+
+    @property
+    def symmetry_number(self):
+
+        if not self._symmetry_number:
+            self._symmetry_number = self.calculate_symmetry_number()
+        return self._symmetry_number
 
     @property
     def rdkit_molecule(self):
