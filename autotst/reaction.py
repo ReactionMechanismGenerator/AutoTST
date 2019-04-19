@@ -284,7 +284,7 @@ class Reaction():
               atol=0.01):
             logging.info("Distance between *1 and *3 is too small, setting it to lower bound of uncertainty")
     
-            self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"]
+            self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"] / 2
 
         logging.info("The distance data is as follows: \n{}".format(
             self._distance_data))

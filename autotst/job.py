@@ -324,6 +324,8 @@ class Job():
         #######################
         direction = transitionstate.direction
 
+        ts_identifier = "{}_{}_{}".format(transitionstate.reaction_label, direction, transitionstate.index)
+
         calc = calculator.get_shell_calc(transitionstate,
                                 direction=direction,
                                 mem=calculator.mem,
@@ -334,19 +336,20 @@ class Job():
                                 )
 
         if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
+            logging.info("Submitting SHELL calculations for {}".format(ts_identifier))
             self.write_input(transitionstate, calc)
             label = self.submit_transitionstate(transitionstate, calc, "general")
             while not self.check_complete(label):
                 time.sleep(15)
 
         else:
-            logging.info("It appears that we already have a complete log file")
+            logging.info("It appears that we already have a complete SHELL log file for {}".format(ts_identifier))
 
             complete, converged = calculator.verify_output_file(
                     os.path.join(calc.scratch, calc.label + ".log")
                 )
             if not complete:
-                logging.info("It seems that the overall file never completed, running again")
+                logging.info("It seems that the SHELL file never completed for {} never completed, running it again".format(ts_identifier))
                 self.write_input(transitionstate, calc)
                 label = self.submit_transitionstate(transitionstate, calc, "general")
                 while not self.check_complete(label):
@@ -357,9 +360,9 @@ class Job():
             )
 
         if not (complete and converged):
-            logging.info("{} failed the overall optimization".format(calc.label))
+            logging.info("{} failed the SHELL optimization".format(ts_identifier))
             return False 
-
+        logging.info("{} successfully completed the SHELL optimization!".format(ts_identifier))
         transitionstate.ase_molecule = self.read_log(os.path.join(calc.scratch, calc.label + ".log"))
         transitionstate.update_coords_from("ase")
 
@@ -376,19 +379,20 @@ class Job():
                                 )
 
         if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
+            logging.info("Submitting CENTER calculations for {}".format(ts_identifier))
             self.write_input(transitionstate, calc)
             label = self.submit_transitionstate(transitionstate, calc, "general")
             while not self.check_complete(label):
                 time.sleep(15)
 
         else:
-            logging.info("It appears that we already have a complete log file")
+            logging.info("It appears that we already have a complete CENTER log file for {}".format(ts_identifier))
 
             complete, converged = calculator.verify_output_file(
                     os.path.join(calc.scratch, calc.label + ".log")
                 )
             if not complete:
-                logging.info("It seems that the overall file never completed, running again")
+                logging.info("It seems that the CENTER file never completed for {} never completed, running it again".format(ts_identifier))
                 self.write_input(transitionstate, calc)
                 label = self.submit_transitionstate(transitionstate, calc, "general")
                 while not self.check_complete(label):
@@ -399,9 +403,9 @@ class Job():
             )
 
         if not (complete and converged):
-            logging.info("{} failed the overall optimization".format(calc.label))
+            logging.info("{} failed the CENTER optimization".format(ts_identifier))
             return False 
-
+        logging.info("{} successfully completed the CENTER optimization!".format(ts_identifier))
         transitionstate.ase_molecule = self.read_log(os.path.join(calc.scratch, calc.label + ".log"))
         transitionstate.update_coords_from("ase")
 
@@ -417,21 +421,21 @@ class Job():
                                 basis=calculator.basis
                                 )
 
-
         if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
+            logging.info("Submitting OVERALL calculations for {}".format(ts_identifier))
             self.write_input(transitionstate, calc)
             label = self.submit_transitionstate(transitionstate, calc, "general")
             while not self.check_complete(label):
                 time.sleep(15)
 
         else:
-            logging.info("It appears that we already have a complete log file for {}".format(calc.label))
+            logging.info("It appears that we already have a complete OVERALL log file for {}".format(ts_identifier))
 
             complete, converged = calculator.verify_output_file(
                     os.path.join(calc.scratch, calc.label + ".log")
                 )
             if not complete:
-                logging.info("It seems that {} never completed, running again".format(calc.label))
+                logging.info("It seems that the OVERALL file never completed for {} never completed, running it again".format(ts_identifier))
                 self.write_input(transitionstate, calc)
                 label = self.submit_transitionstate(transitionstate, calc, "general")
                 while not self.check_complete(label):
@@ -442,13 +446,13 @@ class Job():
             )
 
         if not (complete and converged):
-            logging.info("{} failed the overall optimization".format(calc.label))
+            logging.info("{} failed the OVERALL optimization".format(ts_identifier))
             return False 
-
+        logging.info("{} successfully completed the OVERALL optimization!".format(ts_identifier))
         transitionstate.ase_molecule = self.read_log(os.path.join(calc.scratch, calc.label + ".log"))
         transitionstate.update_coords_from("ase")
 
-        logging.info("Calculations for {}_{}_{} were successful!".format(transitionstate.reaction_label, direction, transitionstate.index ))
+        logging.info("Calculations for {} are complete and resulted in a normal termination!".format(ts_identifier ))
         return True
 
     def calculate_reaction(self, reaction=None, conformer_calculator=None, calculator=None, vibrational_analysis=True):
@@ -505,7 +509,7 @@ class Job():
                         continue
                     energy = parser.scfenergies[-1]
                 except:
-                    logging.info("The parser does not have an scf energies attribute")
+                    logging.info("The parser does not have an scf energies attribute, we are not considering {}".format(f))
                     energy = 1e5
 
                 results.append([energy, transitionstate, f])
@@ -513,7 +517,7 @@ class Job():
         results = pd.DataFrame(results, columns=["energy", "transitionstate", "file"]).sort_values("energy")
         
         if results.shape[0] == 0:
-            logging.info("No transition state for {} was successfully calculated :(".format(reaction))
+            logging.info("No transition state for {} was successfully calculated... :(".format(reaction))
             return False
         got_one = False
         for index in range(results.shape[0]):
@@ -524,15 +528,15 @@ class Job():
                 break
 
         if not got_one:
-            logging.info("None of the transition states could be validated :(")
+            logging.info("None of the transition states could be validated... :(")
             return False
         
 
         copyfile(
             os.path.join(calculator.scratch, "ts", reaction.label, "conformers", lowest_energy_file),
-            os.path.join(calculator.scratch, "ts", reaction.label, lowest_energy_file[:-6] + ".log")
+            os.path.join(calculator.scratch, "ts", reaction.label, reaction.label + ".log")
         )
-        logging.info("The lowest energy file is {}".format(lowest_energy_file))
+        logging.info("The lowest energy file is {}! :)".format(lowest_energy_file))
         return True
 
     def validate_transitionstate(self, transitionstate, calculator, vibrational_analysis=True):
