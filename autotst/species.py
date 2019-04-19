@@ -875,7 +875,32 @@ class Conformer():
             #self.calculate_symmetry_number()
 
     def set_bond_length(self, bond_index, length):
-        return None
+
+        assert isinstance(length, (float, int))
+
+        matched = False
+        for bond in self.bonds:
+            if bond.index == bond_index:
+                matched = True
+                break
+
+        if not matched:
+            print "Angle index provided is out of range. Nothing was changed."
+            return self
+
+        i, j = bond.atom_indices
+        self.ase_molecule.set_distance(
+            a0=i,
+            a1=j,
+            distance=length,
+            mask=bond.mask,
+            fix=0
+        )
+
+        bond.length = length
+
+        self.update_coords_from(mol_type="ase")
+        return self
 
     def set_angle(self, angle_index, angle):
         """
@@ -900,7 +925,6 @@ class Conformer():
             a1=i,
             a2=j,
             a3=k,
-            a4=l,
             angle=angle,
             mask=angle.mask
         )
