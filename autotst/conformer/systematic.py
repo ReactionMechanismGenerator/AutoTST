@@ -202,22 +202,24 @@ def systematic_search(conformer,
         for bond in conformer.bonds:
             labels.append(bond.atom_indices)
 
+        if isinstance(conformer, TS):
+            label = conformer.reaction_label
+            ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
+            ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
+            labels.append([ind1, ind2])
+        else:
+            label = conformer.smiles
+
         from ase.constraints import FixBondLengths
         c = FixBondLengths(labels)
         conformer.ase_molecule.set_constraint(c)
-        if isinstance(conformer, TS):
-            label = conformer.reaction_label
-        else:
-            label = conformer.smiles
 
         conformer.ase_molecule.set_calculator(calculator)
         
         opt = BFGS(conformer.ase_molecule, logfile=None)
-        #try:
         opt.run()
         conformer.update_coords_from("ase")
         energy = get_energy(conformer)
-
         return_dict[i] = (energy, conformer.ase_molecule.arrays, conformer.ase_molecule.get_all_distances())
 
     manager = Manager()

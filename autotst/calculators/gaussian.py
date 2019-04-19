@@ -413,7 +413,7 @@ class Gaussian(Calculator):
                 ts = self.conformer
 
         ts.rmg_molecule.updateMultiplicity()
-        label = ts.reaction_label + "_irc_" + str(ts.index)
+        label = ts.reaction_label + "_irc_" + ts.direction + "_" + str(ts.index)
 
         new_scratch = os.path.join(
                 scratch,
