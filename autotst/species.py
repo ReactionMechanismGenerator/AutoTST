@@ -133,16 +133,23 @@ class Species():
             species_list = []
             for smile in smiles:
                 molecule = RMGMolecule(SMILES=smile)
-                s = RMGSpecies(molecule=[molecule])
-                s.generate_resonance_structures()
-                species_list.append(s)
+                species_list.append(molecule.generate_resonance_structures())
 
-            for s1 in species_list:
-                for s2 in species_list:
-                    assert s1.isIsomorphic(
-                        s2), "SMILESs provided describe different species"
+            if len(smiles) != 1:
+                got_one = False
+                for s1 in species_list:
+                    for s2 in species_list:
+                        for m1 in s1:
+                            for m2 in s2:
+                                if m1.isIsomorphic(m2):
+                                    got_one = True
+                assert got_one, "SMILESs provided describe different species"
 
-            self.smiles = smiles
+            smiles_list = []
+            for mol in species_list[0]:
+                smiles_list.append(mol.toSMILES())
+
+            self.smiles = smiles_list
             self.rmg_species = species_list[0]
 
         else:

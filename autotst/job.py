@@ -64,7 +64,7 @@ class Job():
         self.conformer_calculator = conformer_calculator
 
     def __repr__(self):
-        return "< Job '{}'>".format(self.dft_calculator, self.label)
+        return "< Job '{}'>".format(self.label)
 
     def read_log(self, file_path=None):
         """
