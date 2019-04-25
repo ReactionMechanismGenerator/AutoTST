@@ -616,29 +616,37 @@ class Job():
                 step_size=step_size,
             )
             label = self.submit_rotor(conformer=conformer, ase_calculator=calc, partition="general")
+            logging.info(label)
             complete[label] = False
             calculators[label] = calc
             verified[label] = False
         
-        conformer_error = False
+        done = False
         lowest_energy_label = None
-        while (not all(complete.values())) or (not conformer_error):
+        conformer_error = False
+        while not done:
             for label in complete.keys():
                 if not self.check_complete(label):
                     continue
+                if done:
+                    continue
+                logging.info("{} complete!".format(label))
                 complete[label] = True
                 ase_calc = calculators[label]
                 lowest_conf, continuous, good_slope, opt_count_check = self.verify_rotor(steps=steps, step_size=step_size, ase_calculator=ase_calc)
-                
-                if not lowest_conf:
-                    logging.info("A lower energy conformer was found... Going to optimize this insted")
-                    conformer_error = True
-                    lowest_energy_label = label
-
-                if all([lowest_conf, continuous, good_slope, opt_count_check]):
+                if all([lowest_conf, continuous]):
                     verified[label] = True
                 else:
                     verified[label] = False
+
+                if not lowest_conf:
+                    logging.info("A lower energy conformer was found... Going to optimize this insted")
+                    done = True
+                    lowest_energy_label = label
+                    conformer_error = True
+                    continue
+                elif all(complete.values()):
+                    done = True
 
         if conformer_error:
             for label in complete.keys():
@@ -670,6 +678,10 @@ class Job():
                         method=calculator.method,
                         basis=calculator.basis
                         )
+
+                calc.scratch = calc.scratch.strip("/conformers")
+                conformer.direction = "forward"
+                conformer.index = "X"
                 label = self.submit_transitionstate(transitionstate=conformer, ase_calculator=calc)
             else:
                 calc = calculator.get_conformer_calc(conformer,
@@ -679,9 +691,30 @@ class Job():
                         method=calculator.method,
                         basis=calculator.basis
                 )
-            calc.scratch
-            label = self.submit_conformer(conformer, calc, "general")
-                    
+                calc.scratch = calc.scratch.strip("/conformers")
+                conformer.index = "X"
+                label = self.submit_conformer(conformer, calc, "general")
+
+            while not self.check_complete(label):
+                os.sleep(15)
+
+            logging.info("Reoptimization complete... performing hindered rotors scans again")
+            return self.calculate_rotors(conformer, calculator, steps, step_size)
+
+        else:
+            for label, boolean in verified.items():
+                if not boolean:
+                    calc = calculators[label]
+                    try: 
+                        os.mkdir(os.path.join(calc.scratch, "failures"))
+                    except:
+                        pass
+                    move(
+                        os.path.join(calc.scratch, calc.label + ".log"),
+                        os.path.join(calc.scratch, "failures", calc.label +".log" )
+                    )
+            return verified
+
 
     def verify_rotor(self, steps=36, step_size=10.0, ase_calculator=None):
         
@@ -773,8 +806,6 @@ class Job():
                     mismatch = True
                     continuous = False
                     return False
-
-                #print abs_theta, theta, checked_energy, energy, mismatch, abs_diff, energy_tol
 
         return continuous
     
