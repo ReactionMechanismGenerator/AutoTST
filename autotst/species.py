@@ -882,6 +882,12 @@ class Conformer():
             #self.calculate_symmetry_number()
 
     def set_bond_length(self, bond_index, length):
+        """
+        This is a method to set bond lengths
+        Variabels:
+        - bond_index (int): the index of the bond you want to edit
+        - length (float, int): the distance you want to set the bond (in angstroms)
+        """
 
         assert isinstance(length, (float, int))
 
@@ -918,8 +924,8 @@ class Conformer():
             angle, (int, float)), "Plese provide a float or an int for the angle"
 
         matched = False
-        for angle in self.angles:
-            if angle.index == angle_index:
+        for a in self.angles:
+            if a.index == angle_index:
                 matched = True
                 break
 
@@ -927,16 +933,16 @@ class Conformer():
             print "Angle index provided is out of range. Nothing was changed."
             return self
 
-        i, j, k = angle.atom_indices
+        i, j, k = a.atom_indices
         self.ase_molecule.set_angle(
             a1=i,
             a2=j,
             a3=k,
             angle=angle,
-            mask=angle.mask
+            mask=a.mask
         )
 
-        angle.degree = angle
+        a.degree = angle
 
         self.update_coords_from(mol_type="ase")
 
@@ -1033,7 +1039,7 @@ class Conformer():
 
         match = False
         for chiral_center in self.chiral_centers:
-            if chiral_center.atom_index == chiral_center_index:
+            if chiral_center.index == chiral_center_index:
                 match = True
                 break
 
@@ -1044,7 +1050,7 @@ class Conformer():
         rdmol.GetAtomWithIdx(chiral_center_index).SetChiralTag(
             centers_dict[stero.upper()])
 
-        rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
+        #rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
 
         old_torsions = self.torsions[:] + self.cistrans[:]
 
