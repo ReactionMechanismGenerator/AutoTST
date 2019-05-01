@@ -115,6 +115,11 @@ class Gaussian(Calculator):
         assert isinstance(
             conformer, Conformer), "A Conformer object was not provided..."
 
+        if isinstance(conformer, TS):
+            extra="Opt=(ts,CalcFC,ModRedun)"
+        else:
+            extra="Opt=(CalcFC,ModRedun)"
+
         string = ""
         for bond in conformer.bonds:
             i, j = bond.atom_indices
@@ -153,7 +158,7 @@ class Gaussian(Calculator):
                            scratch=new_scratch,
                            method=method,
                            basis=basis,
-                           extra="Opt=(CalcFC,ModRedun)",
+                           extra=extra,
                            multiplicity=mult,
                            addsec=[string[:-1]])
 

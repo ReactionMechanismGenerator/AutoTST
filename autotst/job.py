@@ -555,7 +555,7 @@ class Job():
                 method=calculator.method,
                 basis=calculator.basis
             )
-            label = self.submit_transitionstate(transitionstate, irc_calc, "west")
+            label = self.submit_transitionstate(transitionstate, irc_calc, "general")
             while not self.check_complete(label):
                 time.sleep(15)
             result = calculator.validate_irc(calc=irc_calc)
@@ -619,18 +619,20 @@ class Job():
             logging.info(label)
             complete[label] = False
             calculators[label] = calc
-            verified[label] = False
+            verified[label] = False 
         
         done = False
         lowest_energy_label = None
         conformer_error = False
+        if len(conformer.torsions) == 0:
+            logging.info("No torsions to run scans on.") 
+            return {}
         while not done:
             for label in complete.keys():
                 if not self.check_complete(label):
                     continue
                 if done:
                     continue
-                logging.info("{} complete!".format(label))
                 complete[label] = True
                 ase_calc = calculators[label]
                 lowest_conf, continuous, good_slope, opt_count_check = self.verify_rotor(steps=steps, step_size=step_size, ase_calculator=ase_calc)
@@ -640,7 +642,7 @@ class Job():
                     verified[label] = False
 
                 if not lowest_conf:
-                    logging.info("A lower energy conformer was found... Going to optimize this insted")
+                    
                     done = True
                     lowest_energy_label = label
                     conformer_error = True
@@ -649,6 +651,7 @@ class Job():
                     done = True
 
         if conformer_error:
+            logging.info("A lower energy conformer was found... Going to optimize this insted")
             for label in complete.keys():
                 command = """scancel -n '{}'""".format(label)
             ase_calculator = calculators[label]
