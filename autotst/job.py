@@ -616,30 +616,42 @@ class Job():
                 step_size=step_size,
             )
             label = self.submit_rotor(conformer=conformer, ase_calculator=calc, partition="general")
+            logging.info(label)
             complete[label] = False
             calculators[label] = calc
-            verified[label] = False
+            verified[label] = False 
         
-        conformer_error = False
+        done = False
         lowest_energy_label = None
-        while (not all(complete.values())) or (not conformer_error):
+        conformer_error = False
+        if len(conformer.torsions) == 0:
+            logging.info("No torsions to run scans on.") 
+            return {}
+        while not done:
             for label in complete.keys():
                 if not self.check_complete(label):
                     continue
+                if done:
+                    continue
                 complete[label] = True
-                lowest_conf, continuous, good_slope, opt_count_check = self.verify_rotor(steps=steps, step_size=step_size)
-                
-                if not lowest_conf:
-                    logging.info("A lower energy conformer was found... Going to optimize this insted")
-                    conformer_error = True
-                    lowest_energy_label = label
-
-                if all([lowest_conf, continuous, good_slope, opt_count_check]):
+                ase_calc = calculators[label]
+                lowest_conf, continuous, good_slope, opt_count_check = self.verify_rotor(steps=steps, step_size=step_size, ase_calculator=ase_calc)
+                if all([lowest_conf, continuous]):
                     verified[label] = True
                 else:
                     verified[label] = False
 
+                if not lowest_conf:
+                    
+                    done = True
+                    lowest_energy_label = label
+                    conformer_error = True
+                    continue
+                elif all(complete.values()):
+                    done = True
+
         if conformer_error:
+            logging.info("A lower energy conformer was found... Going to optimize this insted")
             for label in complete.keys():
                 command = """scancel -n '{}'""".format(label)
             ase_calculator = calculators[label]
@@ -669,8 +681,43 @@ class Job():
                         method=calculator.method,
                         basis=calculator.basis
                         )
+
+                calc.scratch = calc.scratch.strip("/conformers")
+                conformer.direction = "forward"
+                conformer.index = "X"
                 label = self.submit_transitionstate(transitionstate=conformer, ase_calculator=calc)
-                    
+            else:
+                calc = calculator.get_conformer_calc(conformer,
+                        mem=calculator.mem,
+                        nprocshared=calculator.nprocshared,
+                        scratch=calculator.scratch,
+                        method=calculator.method,
+                        basis=calculator.basis
+                )
+                calc.scratch = calc.scratch.strip("/conformers")
+                conformer.index = "X"
+                label = self.submit_conformer(conformer, calc, "general")
+
+            while not self.check_complete(label):
+                os.sleep(15)
+
+            logging.info("Reoptimization complete... performing hindered rotors scans again")
+            return self.calculate_rotors(conformer, calculator, steps, step_size)
+
+        else:
+            for label, boolean in verified.items():
+                if not boolean:
+                    calc = calculators[label]
+                    try: 
+                        os.mkdir(os.path.join(calc.scratch, "failures"))
+                    except:
+                        pass
+                    move(
+                        os.path.join(calc.scratch, calc.label + ".log"),
+                        os.path.join(calc.scratch, "failures", calc.label +".log" )
+                    )
+            return verified
+
 
     def verify_rotor(self, steps=36, step_size=10.0, ase_calculator=None):
         
@@ -688,7 +735,7 @@ class Job():
 
     def check_rotor_opts(self, steps, parser=None):
         
-        assert (ase_calculator is not None) or (file_name is not None) or (parser is not None)
+        assert (parser is not None)
         
         if parser is None:
             if file_name is None:
@@ -706,11 +753,11 @@ class Job():
         return n_opts_check
     
     
-    def check_rotor_slope(self, steps, step_size, parser=None, tol=0.35):
+    def check_rotor_slope(self, steps, step_size, parser=None, tol=0.1):
         
         assert (parser is not None)
 
-        opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        opt_indices = [i for i, status in enumerate(parser.optstatus) if status in [2,4]]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
         
         max_energy = max(opt_SCFEnergies)
@@ -728,12 +775,12 @@ class Job():
         return True
         
         
-    def check_rotor_continuous(self, steps, step_size, parser=None, tol=0.05):
+    def check_rotor_continuous(self, steps, step_size, parser=None, tol=0.1):
         
         assert isinstance(step_size, float)
         assert (parser is not None)
             
-        opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        opt_indices = [i for i, status in enumerate(parser.optstatus) if status in [2,4]]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
         
         max_energy = max(opt_SCFEnergies)
@@ -763,15 +810,12 @@ class Job():
                     continuous = False
                     return False
 
-                #print abs_theta, theta, checked_energy, energy, mismatch, abs_diff, energy_tol
-
         return continuous
     
-    def check_rotor_lowest_conf(self, parser=None, tol=0.03):
+    def check_rotor_lowest_conf(self, parser=None, tol=0.1):
         
         assert (parser is not None)
-        
-        opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
+        opt_indices = [i for i, status in enumerate(parser.optstatus) if status in [2, 4]]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
         
         max_energy = max(opt_SCFEnergies)
