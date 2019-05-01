@@ -555,7 +555,7 @@ class Job():
                 method=calculator.method,
                 basis=calculator.basis
             )
-            label = self.submit_transitionstate(transitionstate, irc_calc, "west")
+            label = self.submit_transitionstate(transitionstate, irc_calc, "general")
             while not self.check_complete(label):
                 time.sleep(15)
             result = calculator.validate_irc(calc=irc_calc)

@@ -53,42 +53,22 @@ from ase.calculators.gaussian import Gaussian as ASEGaussian
 class Gaussian(Calculator):
 
     def __init__(self,
-                 conformer=None,
                  mem="5GB",
                  nprocshared=20,
                  scratch=".",
                  method="m062x",
-                 basis="cc-pVTZ",
-                 save_directory="."):
+                 basis="cc-pVTZ"):
 
         self.command = "g16"
-
-        assert isinstance(conformer, (type(None), Conformer)), "Please provide a Conformer object"
-        self.conformer = conformer
         self.mem = mem
         self.nprocshared = nprocshared
         self.scratch = scratch
         self.method = method
         self.basis = basis
-        self.save_directory = save_directory
 
 
     def __repr__(self):
-        if not self.conformer:
-            return '<Gaussian Calculator "">'.format(None)
-        return '<Gaussian Calculator "{0}">'.format(self.conformer.smiles)
-
-    @property
-    def label(self):
-        if isinstance(self.conformer, TS):
-            return self.conformer.reaction_label + \
-                "_{}".format(self.conformer.index)
-        elif isinstance(self.conformer, Conformer):
-            label = self.conformer.smiles
-            label += "_{}".format(self.conformer.index)
-            return label
-        else:
-            return None
+        return '<Gaussian Calculator>'.format(None)
 
     def get_rotor_calc(self,
                        conformer=None,
@@ -106,11 +86,6 @@ class Gaussian(Calculator):
 
         assert (torsion and (isinstance(torsion, Torsion))
                 ), "To create a rotor calculator, you must provide a Torsion object."
-
-        if not conformer:
-            if not self.conformer:
-                return None
-            conformer = self.conformer
 
         assert isinstance(
             conformer, Conformer), "A Conformer object was not provided..."
@@ -171,11 +146,6 @@ class Gaussian(Calculator):
                          basis="cc-pVTZ"):
         "A method that creates a calculator for a reactant or product that will perform a geometry optimization"
 
-        if not conformer:
-            if not self.conformer:
-                return None
-            conformer = self.conformer
-
         if isinstance(conformer, TS):
             logging.info(
                 "TS object provided, cannot obtain a species calculator for a TS")
@@ -229,14 +199,6 @@ class Gaussian(Calculator):
         "A method to create a calculator that optimizes the reaction shell"
 
         assert direction.lower() in ["forward", "reverse"]
-
-        if ts is None:
-            if self.ts is None:
-                return None
-            elif not isinstance(self.conformer, TS):
-                return None
-            else:
-                ts = self.conformer
 
         assert isinstance(ts, TS), "A TS object was not provided..."
 
@@ -293,14 +255,6 @@ class Gaussian(Calculator):
 
         assert direction.lower() in ["forward", "reverse"]
 
-        if ts is None:
-            if self.ts is None:
-                return None
-            elif not isinstance(self.conformer, TS):
-                return None
-            else:
-                ts = self.conformer
-
         assert isinstance(ts, TS), "A TS object was not provided..."
 
         indicies = []
@@ -355,14 +309,6 @@ class Gaussian(Calculator):
 
         assert direction.lower() in ["forward", "reverse"]
 
-        if ts is None:
-            if self.ts is None:
-                return None
-            elif not isinstance(self.conformer, TS):
-                return None
-            else:
-                ts = self.conformer
-
         assert isinstance(ts, TS), "A TS object was not provided..."
 
         ts.rmg_molecule.updateMultiplicity()
@@ -404,13 +350,7 @@ class Gaussian(Calculator):
                      basis="cc-pVTZ"):
         "A method to create the IRC calculator object"
 
-        if ts is None:
-            if self.ts is None:
-                return None
-            elif not isinstance(self.conformer, TS): 
-                return None
-            else:
-                ts = self.conformer
+        assert isinstance(ts, TS), "A TS object was not provided..."
 
         ts.rmg_molecule.updateMultiplicity()
         label = ts.reaction_label + "_irc_" + ts.direction + "_" + str(ts.index)
@@ -461,53 +401,6 @@ class Gaussian(Calculator):
 
         return verified
 
-    def run_irc(self, conformer=None, calc=None):
-        "A method to run the IRC calculation"
-
-        assert "irc" in calc.label, "The calculator provided is not an IRC calculator"
-        logging.info("Running IRC calculation")
-
-        current_path = os.getcwd()
-        scratch_path = os.path.expanduser(
-            calc.scratch)
-
-        new_file_name = calc.label.replace(
-            "left", "(").replace("right", ")") + ".log"
-        old_file_name = self.irc_calc.label + ".log"
-
-        os.chdir(scratch_path)
-        if os.path.exists(new_file_name):
-            logging.info(
-                "It seems that an old IRC has been run, seeing if it's complete...")
-            complete, converged = self.verify_output_file(new_file_name)
-            if complete and converged:
-                logging.info(
-                    "Previous IRC complete and resulted in Normal Termination, verifying it...")
-                os.chdir(current_path)
-
-            else:
-                logging.info(
-                    "Previous IRC was not successful or incomplete... Rerunning it...")
-                try:
-                    calc.calculate(conformer.ase_molecule)
-                except BaseException:
-                    # This normally fails because of an issue with ase's
-                    # `read_results` method.
-                    os.chdir(current_path)
-                    pass
-                logging.info("IRC calc complete!")
-        else:
-            logging.info(
-                "No previous IRC clac has been run, starting a new one...")
-            try:
-                calc.calculate(conformer.ase_molecule)
-            except BaseException:
-                # This normally fails because of an issue with ase's
-                # `read_results` method.
-                os.chdir(current_path)
-                pass
-            logging.info("IRC calc complete!")
-
     def validate_irc(self, calc=None):
         """
         A method to verify an IRC calc
@@ -515,8 +408,6 @@ class Gaussian(Calculator):
         assert "irc" in calc.label, "The calculator provided is not an IRC calculator"
 
         reaction_label = calc.label.split("_irc")[0]
-
-        reaction_label = reaction_label.replace("left", "(").replace("right", ")")
 
         logging.info("Validating IRC file...")
         irc_path = os.path.join(
@@ -624,7 +515,7 @@ class Gaussian(Calculator):
                     if targetReaction.isIsomorphic(testReaction):
                         logging.info("IRC calculation was successful!")
                         return True
-            logging.info("IRC calculation failed :(")
+            logging.info("IRC calculation failed for {} :(".format(calc.label))
             return False
 
 

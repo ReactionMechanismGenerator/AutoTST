@@ -32,6 +32,8 @@ import logging
 import rmgpy
 from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob, ThermoJob
 from rdkit import Chem
+from ase import Atom, Atoms
+from cclib.io import ccread
 
 from autotst.reaction import Reaction, TS
 from autotst.species import Species
@@ -327,13 +329,13 @@ class StatMech(Calculator):
         output = ['#!/usr/bin/env python',
                 '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
-        atom_dict = get_atoms(conformer=transitionstate) # need to fix
+        atom_dict = self.get_atoms(conformer=transitionstate) # need to fix
 
         for atom, count in atom_dict.iteritems():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
-        bond_dict = get_bonds(conformer=transitionstate) # need to fix
+        bond_dict = self.get_bonds(conformer=transitionstate) # need to fix
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.iteritems():
@@ -428,15 +430,14 @@ class StatMech(Calculator):
             else:
                 labels.append(label)
             line = "species('{0}', '{1}', structure=SMILES('{2}'))".format(
-                "react_{}".format(i), os.path.join("..", "..","species", label, label + ".py"), label)
+                "react_{}".format(i), os.path.join(scratch,"species", label, label + ".py"), label)
             top.append(line)
                 
         for i, prod in enumerate(reaction.products):
-            print prod
+
             lowest_energy = 1e5
             lowest_energy_conf = None
             
-            print len(prod.conformers.keys())
             
             if len(prod.conformers.keys()) > 1:
                 for smiles in prod.conformers.keys():
@@ -452,7 +453,6 @@ class StatMech(Calculator):
                         lowest_energy_conf = prod.conformers[smiles][0]
                             
             else:
-                print prod
                 smiles = prod.conformers.keys()[0]
                 path = os.path.join(scratch, "species", smiles, smiles + ".log")
                 if not os.path.exists(path):
@@ -471,10 +471,10 @@ class StatMech(Calculator):
             else:
                 labels.append(label)
             line = "species('{0}', '{1}', structure=SMILES('{2}'))".format(
-                "prod_{}".format(i), os.path.join("..", "..", "species", label, label + ".py"), label)
+                "prod_{}".format(i), os.path.join(scratch, "species", label, label + ".py"), label)
             top.append(line)
 
-        line = "transitionState('TS', '{0}')".format(reaction.label + ".py")
+        line = "transitionState('TS', '{0}')".format(os.path.join(scratch, "ts", reaction.label, reaction.label + ".py"))
         top.append(line)
 
         line = ["",
@@ -537,26 +537,30 @@ class StatMech(Calculator):
     def write_files(self):
 
         for mol in self.reaction.reactants:
-
-            self.write_arkane_for_reacts_and_prods(mol)
+            for smiles, confs in mol.conformers.items():
+                conf =  confs[0]
+                self.write_conformer_file(conf, scratch=self.scratch)
 
         for mol in self.reaction.products:
-            self.write_arkane_for_reacts_and_prods(mol)
+            for smiles, confs in mol.conformers.items():
+                conf =  confs[0]
+                self.write_conformer_file(conf, scratch=self.scratch)
 
-        self.write_statmech_ts(self.reaction)
+        self.write_ts_input(self.reaction.ts["forward"][0], scratch=self.scratch)
 
-        self.write_arkane_ts(self.reaction)
+        self.write_kinetics_input(self.reaction, scratch=self.scratch)
 
     def run(self):
-
-        self.arkane_job.inputFile = os.path.join(
-            self.scratch, self.reaction.label + ".ark.py")
-        self.arkane_job.plot = False
+        
+        self.kinetics_job.inputFile = os.path.join(
+            self.scratch, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
+        self.kinetics_job.plot = False
+        self.kinetics_job.outputDirectory = os.path.join(self.scratch, "ts")
         # try:
-        self.arkane_job.execute()
+        self.kinetics_job.execute()
         # except IOError:
 
-        for job in self.arkane_job.jobList:
+        for job in self.kinetics_job.jobList:
             if isinstance(job, KineticsJob):
                 self.kinetics_job = job
             elif isinstance(job, ThermoJob):
