@@ -1,13 +1,11 @@
 import rdkit.DistanceGeometry
 import rdkit.Chem.rdDistGeom
 import rdkit
-from autotst.calculators.statmech import StatMech
-from autotst.calculators.vibrational_analysis import VibrationalAnalysis, percent_change
-from autotst.calculators.gaussian import Gaussian
+from autotst.calculator.statmech import StatMech
+from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
+from autotst.calculator.gaussian import Gaussian
 from ase.calculators.gaussian import Gaussian as ASEGaussian
 from ase.atoms import Atom, Atoms
-from autotst.calculators.calculator import Calculator
-from ase.io.gaussian import read_gaussian_out
 from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
 from autotst.species import Species, Conformer
 from autotst.reaction import Reaction, TS
