@@ -66,7 +66,7 @@ def get_unknown_species(reactions, known_species):
                     found_species[rel_species] = label
                     relavent_labels[rel_species] = label
 
-            if rel_species not in found_species.keys():
+            if rel_species not in list(found_species.keys()):
                 need_to_add.append(rel_species.toSMILES())
 
     need_to_add = list(set(need_to_add))
@@ -122,7 +122,7 @@ def update_dictionary_entries(old_entries, need_to_add):
 
             if group.isIsomorphic(old_entry.item):
                 duplicate = True
-                print '{} found to be duplicate'.format(old_entry)
+                print('{} found to be duplicate'.format(old_entry))
                 continue
 
             if rel_label not in old_label:
@@ -149,7 +149,7 @@ def update_dictionary_entries(old_entries, need_to_add):
             entry = Entry()
             entry.label = rel_label
             entry.item = group
-            assert rel_label not in old_entries.keys()
+            assert rel_label not in list(old_entries.keys())
             old_entries[rel_label] = entry
 
     entry_labels = [old_entries[key].label for key in old_entries]
@@ -165,7 +165,7 @@ def check_dictionary_entries(dict_entries):
     """
     entry_adjlists = []
     entry_labels = []
-    for entry in dict_entries.values():
+    for entry in list(dict_entries.values()):
         adjlist = entry.item.toAdjacencyList()
 
         assert adjlist not in entry_adjlists, 'Non-unique adjacencies for dictionary'
@@ -215,7 +215,7 @@ def rote_save_dictionary(path, entries):
     """
     f = open(path, 'w')
 
-    for entry in entries.values():
+    for entry in list(entries.values()):
         multiplicity = entry.item.multiplicity
         adjlist = entry.item.toAdjacencyList()
 
@@ -262,7 +262,7 @@ def update_known_reactions(
     need_to_add = []
 
     Index = 0
-    for entry in r_db.entries.values():
+    for entry in list(r_db.entries.values()):
         if Index < entry.index:
             Index = entry.index
     Index = Index + 1
@@ -284,7 +284,7 @@ def update_known_reactions(
                 if known_spec.isIsomorphic(rel_species):
                     found_species[rel_species] = label
 
-            if rel_species not in found_species.keys():
+            if rel_species not in list(found_species.keys()):
                 need_to_add.append(rel_species.toSMILES())
                 logging.warning(
                     '{} not found in species dictionary'.format(rel_species))
@@ -562,8 +562,8 @@ class DatabaseUpdater:
         global_context = {'__builtins__': None}
         local_context = {'DistanceData': DistanceData}
 
-        assert self.family in rmg_database.kinetics.families.keys(
-        ), "{} not found in kinetics families. Could not Load".format(family)
+        assert self.family in list(rmg_database.kinetics.families.keys(
+        )), "{} not found in kinetics families. Could not Load".format(family)
         family = rmg_database.kinetics.families[self.family]
         ts_database.family = family
         ts_database.load(path, local_context, global_context)
@@ -573,7 +573,7 @@ class DatabaseUpdater:
         logging.info("Getting Training Data for {}".format(family))
         training_data = [
             (entry.item, entry.data.distances) for entry in list(
-                ts_database.depository.entries.itervalues())]
+                ts_database.depository.entries.values())]
 
         self.training_set = training_data
         logging.info("Total Distances Count: {}".format(
@@ -626,7 +626,7 @@ class DatabaseUpdater:
                     if isinstance(reactant, rmgpy.species.Species):
                         reactant = reactant.molecule[0]
 
-                    atoms = list(reactant.getLabeledAtoms().itervalues())
+                    atoms = list(reactant.getLabeledAtoms().values())
                     assert atoms is not None
 
                     #temp_group = self.database.groups.descendTree(reactant, atoms, root=top_node)
@@ -650,7 +650,7 @@ class DatabaseUpdater:
             ancestors = [direct_group] + \
                 self.database.groups.ancestors(direct_group)
             for ancestor in ancestors:
-                if ancestor in all_ancestors.keys():
+                if ancestor in list(all_ancestors.keys()):
                     continue
                 else:
                     all_ancestors[ancestor] = [ancestor] + \
