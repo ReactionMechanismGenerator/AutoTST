@@ -116,7 +116,7 @@ class StatMech():
 
         bondList = []
         for atom in rmg_mol.atoms:
-            for bond in atom.bonds.values():
+            for bond in list(atom.bonds.values()):
                 bondList.append(bond)
         bonds = list(set(bondList))
         bondDict = {}
@@ -187,7 +187,7 @@ class StatMech():
         - None
         """
 
-        for smiles, confs in species.conformers.items():
+        for smiles, confs in list(species.conformers.items()):
             if os.path.exists(os.path.join(scratch, "species", smiles, smiles + ".log")):
                 logging.info(
                     "Lowest energy conformer log file exists for {}".format(smiles))
@@ -242,14 +242,14 @@ class StatMech():
 
         atom_dict = self.get_atoms(conformer=conf)  # Fix this
 
-        for atom, count in atom_dict.iteritems():
+        for atom, count in atom_dict.items():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
         bond_dict = self.get_bonds(conformer=conf)  # fix this
         if bond_dict != {}:
             output.append('bonds = {')
-            for bond_type, num in bond_dict.iteritems():
+            for bond_type, num in bond_dict.items():
                 output.append("    '{0}': {1},".format(bond_type, num))
             output.append("}")
         else:
@@ -391,14 +391,14 @@ class StatMech():
 
         atom_dict = self.get_atoms(conformer=transitionstate)  # need to fix
 
-        for atom, count in atom_dict.iteritems():
+        for atom, count in atom_dict.items():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
         bond_dict = self.get_bonds(conformer=transitionstate)  # need to fix
         if bond_dict != {}:
             output.append('bonds = {')
-            for bond_type, num in bond_dict.iteritems():
+            for bond_type, num in bond_dict.items():
                 output.append("    '{0}': {1},".format(bond_type, num))
 
             output.append("}")
@@ -469,8 +469,8 @@ class StatMech():
             lowest_energy = 1e5
             lowest_energy_conf = None
 
-            if len(react.conformers.keys()) > 1:
-                for smiles in react.conformers.keys():
+            if len(list(react.conformers.keys())) > 1:
+                for smiles in list(react.conformers.keys()):
                     path = os.path.join(scratch, "species",
                                         smiles, smiles + ".log")
                     if not os.path.exists(path):
@@ -485,7 +485,7 @@ class StatMech():
                         lowest_energy_conf = react.conformers[smiles][0]
 
             else:
-                smiles = react.conformers.keys()[0]
+                smiles = list(react.conformers.keys())[0]
                 path = os.path.join(scratch, "species",
                                     smiles, smiles + ".log")
                 if not os.path.exists(path):
@@ -495,7 +495,7 @@ class StatMech():
 
                 parser = ccread(path)
                 lowest_energy = parser.scfenergies[-1]
-                lowest_energy_conf = react.conformers.values()[0][0]
+                lowest_energy_conf = list(react.conformers.values())[0][0]
 
             # r_smiles.append(lowest_energy_conf.smiles)
             r_smiles.append("react_{}".format(i))
@@ -513,8 +513,8 @@ class StatMech():
             lowest_energy = 1e5
             lowest_energy_conf = None
 
-            if len(prod.conformers.keys()) > 1:
-                for smiles in prod.conformers.keys():
+            if len(list(prod.conformers.keys())) > 1:
+                for smiles in list(prod.conformers.keys()):
                     path = os.path.join(scratch, "species",
                                         smiles, smiles + ".log")
                     if not os.path.exists(path):
@@ -529,7 +529,7 @@ class StatMech():
                         lowest_energy_conf = prod.conformers[smiles][0]
 
             else:
-                smiles = prod.conformers.keys()[0]
+                smiles = list(prod.conformers.keys())[0]
                 path = os.path.join(scratch, "species",
                                     smiles, smiles + ".log")
                 if not os.path.exists(path):
@@ -539,7 +539,7 @@ class StatMech():
 
                 parser = ccread(path)
                 lowest_energy = parser.scfenergies[-1]
-                lowest_energy_conf = prod.conformers.values()[0][0]
+                lowest_energy_conf = list(prod.conformers.values())[0][0]
 
             # p_smiles.append(lowest_energy_conf.smiles)
             p_smiles.append("prod_{}".format(i))
@@ -634,12 +634,12 @@ class StatMech():
         """
 
         for mol in self.reaction.reactants:
-            for smiles, confs in mol.conformers.items():
+            for smiles, confs in list(mol.conformers.items()):
                 conf = confs[0]
                 self.write_conformer_file(conf, scratch=self.scratch)
 
         for mol in self.reaction.products:
-            for smiles, confs in mol.conformers.items():
+            for smiles, confs in list(mol.conformers.items()):
                 conf = confs[0]
                 self.write_conformer_file(conf, scratch=self.scratch)
 
