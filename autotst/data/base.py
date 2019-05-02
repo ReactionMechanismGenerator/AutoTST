@@ -139,7 +139,7 @@ class DistanceData():
         self.distances = distances
         self.uncertainties = uncertainties
         self.method = method
-        self.comment = u''
+        self.comment = ''
         assert isinstance(distances, dict), "distances should be a dict"
         if method:
             assert isinstance(method, str), "method should be a string"
@@ -172,10 +172,10 @@ class DistanceData():
             self.distances) == len(
             other.distances), "self and other must have the same size dictionary of distances, but self={0!r} and other={1!r}".format(
             self, other)
-        for key, value in other.distances.iteritems():
+        for key, value in other.distances.items():
             self.distances[key] += value
         if self.uncertainties and other.uncertainties:
-            for key, value in other.uncertainties.iteritems():
+            for key, value in other.uncertainties.items():
                 self.uncertainties[key] += value
         else:
             self.uncertainties = None
@@ -280,7 +280,7 @@ class TransitionStates(Database):
 
         def sortEfficiencies(efficiencies0):
             efficiencies = {}
-            for mol, eff in efficiencies0.iteritems():
+            for mol, eff in efficiencies0.items():
                 if isinstance(mol, str):
                     # already in SMILES string format
                     smiles = mol
@@ -288,7 +288,7 @@ class TransitionStates(Database):
                     smiles = mol.toSMILES()
 
                 efficiencies[smiles] = eff
-            keys = efficiencies.keys()
+            keys = list(efficiencies.keys())
             keys.sort()
             return [(key, efficiencies[key]) for key in keys]
 
@@ -532,13 +532,13 @@ class TransitionStates(Database):
                 reaction.distances['d12'] = entry.data['d23']
                 reaction.distances['d23'] = entry.data['d12']
             elif len(reverse) > 0 and len(forward) > 0:
-                print 'FAIL: Multiple reactions found for {0!r}.'.format(
-                    entry.label)
+                print('FAIL: Multiple reactions found for {0!r}.'.format(
+                    entry.label))
             elif len(reverse) == 0 and len(forward) == 0:
-                print 'FAIL: No reactions found for "%s".' % (entry.label)
+                print('FAIL: No reactions found for "%s".' % (entry.label))
             else:
-                print 'FAIL: Unable to estimate distances for {0!r}.'.format(
-                    entry.label)
+                print('FAIL: Unable to estimate distances for {0!r}.'.format(
+                    entry.label))
 
         assert reaction is not None
         assert template is not None
@@ -628,7 +628,7 @@ class TransitionStateDepository(Database):
         speciesDict = self.getSpecies(os.path.join(
             os.path.dirname(path), 'dictionary.txt'))
         # Make sure all of the reactions draw from only this set
-        entries = self.entries.values()
+        entries = list(self.entries.values())
         for entry in entries:
             # Create a new reaction per entry
             rxn = entry.item
@@ -721,7 +721,7 @@ class TransitionStateDepository(Database):
 
         def sortEfficiencies(efficiencies0):
             efficiencies = {}
-            for mol, eff in efficiencies0.iteritems():
+            for mol, eff in efficiencies0.items():
                 if isinstance(mol, str):
                     # already in SMILES string format
                     smiles = mol
@@ -729,7 +729,7 @@ class TransitionStateDepository(Database):
                     smiles = mol.toSMILES()
 
                 efficiencies[smiles] = eff
-            keys = efficiencies.keys()
+            keys = list(efficiencies.keys())
             keys.sort()
             return [(key, efficiencies[key]) for key in keys]
 
@@ -946,13 +946,13 @@ class TSGroups(Database):
                     str(reaction), str(self)))
             logging.warning(" Trying to match " + str(forwardTemplate))
             logging.warning(" Matched " + str(template))
-            print str(self), template, forwardTemplate
+            print(str(self), template, forwardTemplate)
             for n, reactant in enumerate(reaction.reactants):
-                print "Reactant", n
-                print reactant.toAdjacencyList() + '\n'
+                print("Reactant", n)
+                print(reactant.toAdjacencyList() + '\n')
             for n, product in enumerate(reaction.products):
-                print "Product", n
-                print product.toAdjacencyList() + '\n'
+                print("Product", n)
+                print(product.toAdjacencyList() + '\n')
             raise KineticsError(reaction)
 
         for reactant in reaction.reactants:
@@ -1005,7 +1005,7 @@ class TSGroups(Database):
         """
         # keep track of previous values so we can detect if they change
         old_entries = dict()
-        for label, entry in self.entries.items():
+        for label, entry in list(self.entries.items()):
             if entry.data is not None:
                 old_entries[label] = entry.data
 
@@ -1168,12 +1168,12 @@ class TSGroups(Database):
                     entry.data = DistanceData()
 
         changed = False
-        for label, entry in self.entries.items():
+        for label, entry in list(self.entries.items()):
             if entry.data is not None:
                 continue  # because this is broken:
                 if label in old_entries:
                     old_entry = old_entries[label][label][0]
-                    for key, distance in entry.data.iteritems():
+                    for key, distance in entry.data.items():
                         diff = 0
                         for k in range(3):
                             diff += abs(distance[0][k] / old_entry[k] - 1)
