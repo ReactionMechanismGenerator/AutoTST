@@ -34,9 +34,9 @@ import numpy
 
 import autotst
 from autotst.reaction import Reaction, TS
-from autotst.species import Species
-from autotst.calculators.vibrational_analysis import VibrationalAnalysis
-from autotst.base import QMData
+from autotst.species import Species, Conformer
+from autotst.calculator.vibrational_analysis import VibrationalAnalysis
+from autotst.data.base import QMData
 import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.molecule import Atom, getElement
@@ -61,14 +61,17 @@ def get_possible_names(reactants, products):
     return fileNames
 
 
-class Calculator():
+class InputOutput():
     """
-    A base class for all autotst calculators.
-    This class is designed to deal with the
-    input and output of `.ts` and `.kinetics` files.
+    A class that allows users to read and write .ts and .kinetics files for validated TSs and Reactions
     """
 
     def __init__(self, reaction=None, save_directory="."):
+        """
+        Variables:
+        - reaction (Reaction): the reaction of interest
+        - save_directory (str): the directory where you want .ts and .kinetics files saved
+        """
         self.reaction = reaction
         if reaction:
             self.label = reaction.label
@@ -77,10 +80,19 @@ class Calculator():
         self.save_directory = save_directory
 
     def copy(self):
+        """
+        A method to generate a copy of this object
+        """
         from copy import deepcopy
         return deepcopy(self)
 
     def get_qm_data(self, file_path):
+        """
+        A method to create a QMData object from a log file at file_path
+
+        Variables:
+        - file_path (str): the location of the log file you want in
+        """
 
         return QMData().get_qmdata(file_path=file_path)
 
@@ -94,7 +106,12 @@ class Calculator():
 
     def save_ts(self, reaction, method, qmData):
         """
-        Save the generated TS data.
+        A method to save the .ts data to a file
+
+        Variables:
+        - reaction (Reaction): the reaction of interest
+        - method (str): the computational methods that were used
+        - qmData (QMData): the data that you want to save
         """
         file_path = self.get_ts_file_path(reaction)
         logging.info("Saving TS result file {}".format(file_path))
@@ -104,11 +121,14 @@ class Calculator():
             resultFile.write("qmData = {0!r}\n".format(qmData))
 
     def save_kinetics(self, method, reaction):
+        """
+        A method to save the .ts data to a file
+
+        Variables:
+        - reaction (Reaction): the reaction of interest
+        - method (str): the computational methods that were used
+        """
         filePath = self.get_kinetics_file_path(reaction)
-        """
-        Save the calculated kinetics. `reaction` is a CanTherm reaction object that
-        should include the molecular parameters.
-        """
         logging.info("Saving kinetics data file {}".format(filePath))
         with open(filePath, 'w') as resultFile:
 
@@ -127,9 +147,11 @@ class Calculator():
         """
         Load the specified transition state data file and return the dictionary of its contents.
 
-        Returns `None` if the file is invalid or missing.
+        Variables:
+        - reaction (Reaction): the reaction of interest
 
-        Checks that the returned dictionary contains at least rxnLabel, method, qmData.
+        Returns:
+        - local_context (dict): the content of the .ts file. Will return None if there is an error
         """
 
         r, p = reaction.label.split("_")
@@ -185,9 +207,11 @@ class Calculator():
         """
         Load the specified kinetic data file and return the dictionary of its contents.
 
-        Returns `None` if the file is invalid or missing.
+        Variables:
+        - reaction (Reaction): the reaction of interest
 
-        Checks that the returned dictionary contains at least method, Reaction.
+        Returns:
+        - local_context (dict): the content of the .kinetics file. Will return None if there is an error
         """
         r, p = reaction.label.split("_")
         reacts = r.split("+")
