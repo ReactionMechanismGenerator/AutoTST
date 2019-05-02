@@ -68,8 +68,8 @@ class Gaussian():
             "nprocshared": 20,
         }
 
-        for setting, value in default_settings.items():
-            if setting in settings.keys():
+        for setting, value in list(default_settings.items()):
+            if setting in list(settings.keys()):
                 assert isinstance(settings[setting], type(
                     value)), "{} is not a proper instance..."
             else:
