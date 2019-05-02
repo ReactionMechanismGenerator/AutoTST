@@ -178,7 +178,7 @@ class Reaction():
         """
         if self._ts is None:
             ts_dict = {}
-            for direction, mol in self.get_complexes().iteritems():
+            for direction, mol in self.get_complexes().items():
                 ts = TS(
                     reaction_label=self.label,
                     direction=direction,
@@ -381,7 +381,7 @@ class Reaction():
                 assert rmg_reaction.isIsomorphic(
                     test_reaction), "The reaction label provided does not match the RMGReaction provided..."
 
-            for name, family in self.rmg_database.kinetics.families.items():
+            for name, family in list(self.rmg_database.kinetics.families.items()):
                 if match:
                     break
 
@@ -433,7 +433,7 @@ class Reaction():
                 for i in l1:
                     for j in l2:
                         test_products.append([i, j])
-            for name, family in self.rmg_database.kinetics.families.items():
+            for name, family in list(self.rmg_database.kinetics.families.items()):
                 if match:
                     break
                 for test_reactant in test_reactants:
@@ -572,7 +572,7 @@ class Reaction():
 
         from autotst.conformer.systematic import systematic_search, find_all_combos
 
-        for direction, conformers in self.ts.iteritems():
+        for direction, conformers in self.ts.items():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
             #print conformer.ase_molecule.get_calculator()
@@ -794,7 +794,7 @@ class TS(Conformer):
 
         sect is the list of atom indices belonging to one species.
         """
-        others = range(len(bm))
+        others = list(range(len(bm)))
         for idx in sect:
             others.remove(idx)
 
