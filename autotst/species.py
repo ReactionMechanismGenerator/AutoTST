@@ -198,7 +198,7 @@ class Species():
 
         from autotst.conformer.systematic import systematic_search, find_all_combos
 
-        for smiles, conformers in self.conformers.iteritems():
+        for smiles, conformers in self.conformers.items():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
             conformers = systematic_search(conformer)
@@ -902,7 +902,7 @@ class Conformer():
                 break
 
         if not matched:
-            print "Angle index provided is out of range. Nothing was changed."
+            print("Angle index provided is out of range. Nothing was changed.")
             return self
 
         i, j = bond.atom_indices
@@ -934,7 +934,7 @@ class Conformer():
                 break
 
         if not matched:
-            print "Angle index provided is out of range. Nothing was changed."
+            print("Angle index provided is out of range. Nothing was changed.")
             return self
 
         i, j, k = a.atom_indices
@@ -967,7 +967,7 @@ class Conformer():
                 break
 
         if not matched:
-            print "Torsion index provided is out of range. Nothing was changed."
+            print("Torsion index provided is out of range. Nothing was changed.")
             return self
 
         i, j, k, l = torsion.atom_indices
@@ -1000,7 +1000,7 @@ class Conformer():
                 break
 
         if not matched:
-            print "CisTrans index provided is out of range. Nothing was changed."
+            print("CisTrans index provided is out of range. Nothing was changed.")
             return self
 
         if cistrans.stero == stero.upper():
@@ -1048,7 +1048,7 @@ class Conformer():
                 break
 
         if not match:
-            print "ChiralCenter index provided is out of range. Nothing was changed"
+            print("ChiralCenter index provided is out of range. Nothing was changed")
             return self
 
         rdmol.GetAtomWithIdx(chiral_center_index).SetChiralTag(
