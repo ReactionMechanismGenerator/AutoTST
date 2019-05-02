@@ -52,8 +52,9 @@ class VibrationalAnalysis():
 
     def __init__(self, ts=None, scratch="."):
         """
-        reaction: (AutoTST_Reaction) a reaction that proives the connectivity
-        and label name for this analysis
+        Variables:
+        - ts (TS): A TS object that you want to run vibratinal analysis on
+        - scratch (str): the directory where log files of the TS are located
         """
         self.ts = ts
         self.scratch = scratch
@@ -69,16 +70,20 @@ class VibrationalAnalysis():
     def get_log_file(self, scratch=".", ts=None):
         """
         This method obtains the logfile name from the TS
-        """
-        
 
+        Variables:
+        - scratch (str): The directory where the log files are located in
+        - ts (TS): the TS object of interest
+
+        Returns:
+        - log_file (str): a path to the log file of interest
+        """
         log_file = os.path.join(
             scratch, 
             "ts", 
             ts.reaction_label,
             "conformers",
             "{}_{}_{}.log".format(ts.reaction_label, ts.direction, ts.index))
-        
         return log_file
 
     def parse_vibrations(self, log_file=None):
@@ -86,6 +91,12 @@ class VibrationalAnalysis():
         This method obtains the vibrations from the log file of interest using
         cclib. It then creates a zipped list with the vibrational frequencies
         and their corresponding displacements.
+
+        Variables:
+        - log_file (str): the log file you want to obtain vibrations from. Often found from `get_log_file`
+
+        Returns:
+        - vibrations (list): a list of the vibrations and their corresponding displacements in XYZ coordinates
         """
         
         if not log_file:
@@ -102,6 +113,14 @@ class VibrationalAnalysis():
         """
         This method obtains the previbrational geometry (the geometry returned
         by a quantum optimizer), and the postvibrational geometry.
+
+        Variables:
+        - ts (TS): A transition state object of interest
+        - vibrations (list): a list of the vibrations and their corresponding displacements in XYZ coords. Often from `parse_vibrations`
+
+        Returns:
+        - pre_geometry (ASEAtoms): an ASEAtoms object containing the geometry before applying the vibrations
+        - post_geometry (ASEAtoms): an ASEAtoms object containing the geometry after applying the vibrations
         """
 
         assert isinstance(ts, TS)
@@ -117,13 +136,23 @@ class VibrationalAnalysis():
 
     def obtain_percent_changes(self, ts, before_geometry, post_geometry):
         """
-        This method takes the connectivity of an AutoTST_Reaction and then uses
-        that to identify the percent change of the bonds, angles, and dihedrals
+        This method takes the connectivity of a TS and then uses
+        that to identify the percent change of the bonds
         between the before_geometry and the post_geometryself.
 
         This returns a dataframe with the type of geometry, the indicies in it,
         if it is close to the reaction center, and the percent change of that
         geometry.
+
+        Variables:
+        - ts (TS): the transition state of interest
+        - berfore_geometry (ASEAtoms): the ASEAtoms object describing the geometry before applying the vibrations
+        - post_geometry (ASEAtoms): the ASEAtoms object describing the geometry after applying the vibrations
+
+        Returns:
+        - results (DataFrame): a pandas dataframe containing the bond index, atom indicies of those bonds,
+            if the bond is in the reaction center, and percent change of all bonds
+
         """
 
         results = []
@@ -146,6 +175,13 @@ class VibrationalAnalysis():
         have arrived at a TS. We say we have arrived at a TS if the average
         change of geometries in the reaction center is one order of magnitude
         geater elsewhere.
+
+        Variables:
+        - scratch (str): the path to where the log file of the optimized transition state is
+        - ts (TS): the transition state of interest
+
+        Returns:
+        - (bool): True if the TS can be validated via vibrational analysis and False if it cannot
         """
         if scratch is None:
             scratch = self.scratch
