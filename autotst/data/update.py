@@ -9,7 +9,7 @@ from rmgpy.species import Species as RMGSpecies
 from rmgpy.kinetics import Arrhenius, ArrheniusEP, KineticsData
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.quantity import constants
-from autotst.base import *
+from autotst.data.base import *
 import rmgpy
 import re
 import os
@@ -23,7 +23,8 @@ import scipy.stats
 import matplotlib
 matplotlib.rc('mathtext', fontset='stixsans', default='regular')
 
-from autotst.reaction import Reaction
+from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
 
 def update_all(reactions, family, method='', shortDesc=''):
     """

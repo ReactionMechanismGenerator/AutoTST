@@ -55,13 +55,13 @@ def find_all_combos(
     A function to find all possible conformer combinations for a given conformer
 
     Params:
-    - conformer: `Conformer`, an AutoTST `Conformer` object of interest
-    - delta: int or float, a number between 0 and 180 or how many conformers to generate per dihedral
-    - cistrans: bool, indication of if one wants to consider cistrans bonds
-    - chiral_centers: bool, indication of if one wants to consider chiral centers bonds
+    - conformer (`Conformer`) an AutoTST `Conformer` object of interest
+    - delta (int or float): a number between 0 and 180 or how many conformers to generate per dihedral
+    - cistrans (bool): indication of if one wants to consider cistrans bonds
+    - chiral_centers (bool): indication of if one wants to consider chiral centers bonds
 
     Returns:
-    - all_combos: list, a list corresponding to the number of unique conformers created.
+    - all_combos (list): a list corresponding to the number of unique conformers created.
     """
 
     terminal_torsions, torsions = find_terminal_torsions(conformer)
@@ -123,14 +123,14 @@ def systematic_search(conformer,
     """
     Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
 
-    Params:
-    - conformer, `Conformer` or `TS`, a `Conformer` or `TS` object of interest
-    - delta: int or float, a number between 0 and 180 or how many conformers to generate per dihedral
-    - cistrans: bool, indication of if one wants to consider cistrans bonds
-    - chiral_centers: bool, indication of if one wants to consider chiral centers bonds
+    Variables:
+    - conformer (`Conformer` or `TS`): a `Conformer` or `TS` object of interest
+    - delta (int or float): a number between 0 and 180 or how many conformers to generate per dihedral
+    - cistrans (bool): indication of if one wants to consider cistrans bonds
+    - chiral_centers (bool): indication of if one wants to consider chiral centers bonds
 
     Returns:
-    - confs: list, a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
+    - confs (list): a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
     """
     # Takes each of the molecule objects
 
