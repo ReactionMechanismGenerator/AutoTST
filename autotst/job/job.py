@@ -159,7 +159,7 @@ class Job():
 
         to_calculate = []
         results = {}
-        for smiles, conformers in species.conformers.items():
+        for smiles, conformers in list(species.conformers.items()):
             results[smiles] = {}
             for conformer in conformers:
                 calc = calculator.get_conformer_calc(
@@ -248,7 +248,7 @@ class Job():
                 )
             results[conformer.smiles][f] = result
 
-        for smiles, smiles_results in results.items():
+        for smiles, smiles_results in list(results.items()):
             scratch_dir = os.path.join(
                 calculator.scratch,
                 "species",
@@ -264,7 +264,7 @@ class Job():
             lowest_energy_f = None
             lowest_energy = 1e5
 
-            for f, result in smiles_results.items():
+            for f, result in list(smiles_results.items()):
                 if result:
                     parser = ccread(os.path.join(scratch_dir, f))
                     if parser.scfenergies[-1] < lowest_energy:
@@ -491,7 +491,7 @@ class Job():
 
         currently_running = []
         processes = {}
-        for direction, transitionstates in reaction.ts.items():
+        for direction, transitionstates in list(reaction.ts.items()):
 
             for transitionstate in transitionstates:
 
@@ -499,7 +499,7 @@ class Job():
                     transitionstate, calculator))
                 processes[process.name] = process
 
-        for name, process in processes.items():
+        for name, process in list(processes.items()):
             while len(currently_running) >= 50:
                 for running in currently_running:
                     if not running.is_alive():
@@ -510,14 +510,14 @@ class Job():
 
         complete = False
         while len(currently_running) > 0:
-            for name, process in processes.items():
+            for name, process in list(processes.items()):
                 if not (name in currently_running):
                     continue
                 if not process.is_alive():
                     currently_running.remove(name)
 
         results = []
-        for direction, transitionstates in reaction.ts.items():
+        for direction, transitionstates in list(reaction.ts.items()):
             for transitionstate in transitionstates:
                 f = "{}_{}_{}.log".format(
                     reaction.label, direction, transitionstate.index)
@@ -665,7 +665,7 @@ class Job():
             logging.info("No torsions to run scans on.")
             return {}
         while not done:
-            for label in complete.keys():
+            for label in list(complete.keys()):
                 if not self.check_complete(label):
                     continue
                 if done:
@@ -691,7 +691,7 @@ class Job():
         if conformer_error:
             logging.info(
                 "A lower energy conformer was found... Going to optimize this insted")
-            for label in complete.keys():
+            for label in list(complete.keys()):
                 command = """scancel -n '{}'""".format(label)
             ase_calculator = calculators[label]
             file_name = os.path.join(
@@ -749,7 +749,7 @@ class Job():
             return self.calculate_rotors(conformer, calculator, steps, step_size)
 
         else:
-            for label, boolean in verified.items():
+            for label, boolean in list(verified.items()):
                 if not boolean:
                     calc = calculators[label]
                     try:
