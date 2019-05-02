@@ -71,7 +71,13 @@ class StatMech():
 
     def get_atoms(self, conformer=None):
         """
-        A method to create an atom dictionary for an rmg molecule
+        A method to create an atom dictionary for an rmg molecule from a `Conformer` object.
+
+        Parameters:
+        - conformer (Conformer): a conformer object that you want atom info from
+
+        Returns:
+        - atom_dict (dict): a dictionary containing counts of different atom types
         """
         atom_dict = {}
 
@@ -95,6 +101,15 @@ class StatMech():
         return atom_dict
 
     def get_bonds(self, conformer=None):
+        """
+        A method to create a bond dictionary for an rmg molecule from a `Conformer` object.
+
+        Parameters:
+        - conformer (Conformer): a conformer object that you want bond info from
+
+        Returns:
+        - bondDict (dict): a dictionary containing counts of different bond types
+        """
 
         conf = conformer
 
@@ -162,18 +177,37 @@ class StatMech():
         return bondDict
 
     def write_species_files(self, species=None, scratch="."):
+        """
+        A method to write Arkane files for all conformers in a Species object
+
+        Parameters:
+        - species (Species): a species object that you want to write arkane files for
+        - scratch (str): the directory where you want to write arkane files to, there should be a 'species/SMILES/' subdirectory
+
+        Returns:
+        - None
+        """
 
         for smiles, confs in species.conformers.items():
             if os.path.exists(os.path.join(scratch, "species", smiles, smiles +".log")):
                 logging.info("Lowest energy conformer log file exists for {}".format(smiles))
-                write_arkane_conformer(conformer=confs[0], scratch=scratch)
+                self.write_conformer_file(conformer=confs[0], scratch=scratch)
             else:
                 logging.info("Lowest energy conformer log file DOES NOT exist for {}".format(smiles))
         
     def write_conformer_file(self, conformer=None, scratch="."):
+        """
+        A method to write Arkane files for a single Conformer object
+        
+        Parameters:
+        - conformer (Conformer): a Conformer object that you want to write an Arkane file for
+        - scratch (str): the directory where you want to write arkane files to, there should be a 'species/SMILES/' subdirectory
+
+        Returns:
+        - None
+        """
         
         conf = conformer
-
         
         label = conf.smiles
         
@@ -192,7 +226,6 @@ class StatMech():
         }
         
         atoms = []
-
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
@@ -259,18 +292,22 @@ class StatMech():
             f.write(input_string)
         return True
 
-    def get_rotor_info(self, conformer, torsion):
+    def get_rotor_info(self, conformer, torsion, scratch="."):
         """
         Formats and returns info about torsion as it should appear in an Arkane species.py
 
-        conformer :: autotst conformer object
-        torsion   :: autotst torsion object 
+        The following are needed for an Arkane input file:
+        - scanLog :: Gaussian output log of freq calculation on optimized geometry
+        - pivots  :: torsion center: j,k of i,j,k,l (Note Arkane begins indexing with 1)
+        - top     :: ID of all atoms in one top (Note Arkane begins indexing with 1)
 
-        Needed for Arkane species file:
-        scanLog :: Gaussian output log of freq calculation on optimized geometry
-        pivots  :: torsion center: j,k of i,j,k,l (Note Arkane begins indexing with 1)
-        top     :: ID of all atoms in one top (Note Arkane begins indexing with 1)
+        Parameters:
+        - conformer (Conformer): autotst conformer object
+        - torsion (Torsion): autotst torsion object 
 
+
+        Returns:
+        - info (str): a string containing all of the relevant information for a hindered rotor scan
         """
         i,j,k,l = torsion.atom_indices
 
@@ -279,14 +316,24 @@ class StatMech():
 
         if isinstance(conformer, TS):
             tor_log = os.path.join(
-                self.scratch,
-                comformer.reaction_label + "_tor{0}{1}.log".format(j,k)
+                scratch,
+                "ts",
+                conformer.reaction_label,
+                "torsions",
+                comformer.reaction_label + "_36by10_{0}_{1}.log".format(j,k)
             )
         else:
             tor_log = os.path.join(
-                self.scratch,
-                conformer.rmg_molecule.toAugmentedInChIKey().strip("-N") + '_tor{0}{1}.log'.format(j,k)
+                scratch,
+                "species",
+                conformer.smiles,
+                "torsions",
+                conformer.smiles + '_36by10_{0}_{1}.log'.format(j,k)
             )
+
+        if not os.path.exists(tor_log):
+            logging.file("Torsion log file does not exist for {}".format(torsion))
+            return ""
 
         top_IDs = []
         for num, tf in enumerate(torsion.mask):
@@ -300,6 +347,16 @@ class StatMech():
 
 
     def write_ts_input(self, transitionstate=None, scratch=None):
+        """
+        A method to write Arkane files for a single TS object
+        
+        Parameters:
+        - transitionstate (TS): a TS object that you want to write an Arkane file for
+        - scratch (str): the directory where you want to write arkane files to, there should be a 'ts/REACTION_LABEL/' subdirectory
+
+        Returns:
+        - None
+        """
         
         label = transitionstate.reaction_label
         
@@ -377,6 +434,16 @@ class StatMech():
         return True
 
     def write_kinetics_input(self, reaction=None, scratch="."):
+        """
+        A method to write Arkane file to obtain kinetics for a Reaction object
+        
+        Parameters:
+        - reaction (Reaction): a Reaction object that you want to write an Arkane kinetics job file for.
+        - scratch (str): the directory where you want to write arkane files to, there should be a 'species/SMILES/' subdirectory
+
+        Returns:
+        - None
+        """
         
         top = [
             "#!/usr/bin/env python",
@@ -501,8 +568,19 @@ class StatMech():
             f.write(input_string)
 
     def write_thermo_input(self, conformer=None, scratch="."): 
-        model_chemistry="M06-2X/cc-pVTZ"
-        freq_scale_factor=0.982
+        """
+        A method to write Arkane file to obtain thermochemistry for a Conformer object
+        
+        Parameters:
+        - conformer (Conformer): a Conformer object that you want to write an Arkane thermo job file for.
+        - scratch (str): the directory where you want to write arkane files to, there should be a 'species/SMILES/' subdirectory
+
+        Returns:
+        - None
+        """
+
+        model_chemistry=self.model_chemistry
+        freq_scale_factor=self.freq_scale_factor
         
         top = [
             "#!/usr/bin/env python",
@@ -531,9 +609,17 @@ class StatMech():
 
         with open(os.path.join(scratch, "species", conformer.smiles, conformer.smiles + ".thermo.py"), "w") as f:
             f.write(input_string)
-########################################
 
     def write_files(self):
+        """
+        A method to write all species, transition state, and kinetics job files to obtain kinetic parameters
+        
+        Parameters:
+        - None
+
+        Returns:
+        - None
+        """
 
         for mol in self.reaction.reactants:
             for smiles, confs in mol.conformers.items():
@@ -550,6 +636,15 @@ class StatMech():
         self.write_kinetics_input(self.reaction, scratch=self.scratch)
 
     def run(self):
+        """
+        A method to write run a kinetics job from all of the files written `write_files`
+        
+        Parameters:
+        - None
+
+        Returns:
+        - None
+        """
         
         self.kinetics_job.inputFile = os.path.join(
             self.scratch, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
@@ -566,6 +661,15 @@ class StatMech():
                 self.thermo_job = job
 
     def set_reactants_and_products(self):
+        """
+        A method to set the RMGReaction from the kinetics job to the RMGReaction of the input Reaction
+        
+        Parameters:
+        - None
+
+        Returns:
+        - None
+        """
 
         for reactant in self.reaction.rmg_reaction.reactants:
             for r in self.kinetics_job.reaction.reactants:
