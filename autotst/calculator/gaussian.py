@@ -447,7 +447,7 @@ class Gaussian():
 
     def get_irc_calc(self,
                      ts=None,
-                     direction="forward"
+                     direction="forward",
                      settings=None,
                      scratch=None):
         """

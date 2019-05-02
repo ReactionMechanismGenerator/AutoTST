@@ -52,7 +52,7 @@ from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
 import autotst
-from autotst.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
+from autotst.data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
 from autotst.species import Species, Conformer
 from autotst.geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
 
