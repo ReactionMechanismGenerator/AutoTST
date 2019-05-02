@@ -229,7 +229,7 @@ def systematic_search(conformer,
     return_dict = manager.dict()
 
     processes = []
-    for i, conf in conformers.items():
+    for i, conf in list(conformers.items()):
         p = Process(target=opt_conf, args=(conf, calc, i))
         processes.append(p)
 
@@ -258,7 +258,7 @@ def systematic_search(conformer,
 
     from ase import units
     results = []
-    for key, values in return_dict.items():
+    for key, values in list(return_dict.items()):
         results.append(values)
 
     df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])
