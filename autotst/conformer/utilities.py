@@ -92,7 +92,7 @@ def find_terminal_torsions(conformer):
 
         if (atom_j.isCarbon()) and (len(atom_j.bonds) == 4):
             num_hydrogens = 0
-            for atom_other in atom_j.bonds.keys():
+            for atom_other in list(atom_j.bonds.keys()):
                 if atom_other.isHydrogen():
                     num_hydrogens += 1
 
@@ -101,7 +101,7 @@ def find_terminal_torsions(conformer):
 
         if (atom_k.isCarbon()) and (len(atom_k.bonds) == 4):
             num_hydrogens = 0
-            for atom_other in atom_k.bonds.keys():
+            for atom_other in list(atom_k.bonds.keys()):
                 if atom_other.isHydrogen():
                     num_hydrogens += 1
 
