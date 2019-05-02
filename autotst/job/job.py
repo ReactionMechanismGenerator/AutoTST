@@ -1,43 +1,41 @@
+import os, time, yaml
+from shutil import move, copyfile
+import numpy as np
+import pandas as pd
+import subprocess
+import multiprocessing
+from multiprocessing import Process, Manager
+import logging
+FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
+logging.basicConfig(format=FORMAT, level=logging.INFO)
+
+import rdkit
+from rdkit import Chem
+from rdkit.Chem import AllChem
+from rdkit.Chem.Pharm3D import EmbedLib
 import rdkit.DistanceGeometry
 import rdkit.Chem.rdDistGeom
-import rdkit
-from autotst.calculator.statmech import StatMech
-from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
-from autotst.calculator.gaussian import Gaussian
-from ase.calculators.gaussian import Gaussian as ASEGaussian
+
+import ase
 from ase.atoms import Atom, Atoms
-from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
-from autotst.species import Species, Conformer
-from autotst.reaction import Reaction, TS
-import os, time
+from ase.calculators.gaussian import Gaussian as ASEGaussian
+
+import rmgpy
 from rmgpy.data.rmg import RMGDatabase
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.reaction import Reaction as RMGReaction, ReactionError
 from rmgpy.species import Species as RMGSpecies
 from rmgpy.molecule import Molecule as RMGMolecule
-import rmgpy
-import ase
-from rdkit.Chem.Pharm3D import EmbedLib
-from rdkit.Chem import AllChem
-from rdkit import Chem
-import numpy as np
-import pandas as pd
-import logging
-import subprocess
-from shutil import move
+
 import cclib
 from cclib.io import ccread
-import time
-import yaml
-import multiprocessing
-from multiprocessing import Process, Manager
-from shutil import copyfile
-FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
-logging.basicConfig(format=FORMAT, level=logging.INFO)
 
-
-# To perform TS search
-
+from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
+from autotst.species import Species, Conformer
+from autotst.reaction import Reaction, TS
+from autotst.calculator.statmech import StatMech
+from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
+from autotst.calculator.gaussian import Gaussian
 
 class Job():
     """
@@ -148,7 +146,7 @@ class Job():
                 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, partition), shell=True)
 
         return label
@@ -306,7 +304,7 @@ class Job():
                 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, partition), shell=True)
 
         return label
@@ -591,7 +589,7 @@ class Job():
                 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/job/submit.sh""".format(
                     label, partition), shell=True)
 
         return label
