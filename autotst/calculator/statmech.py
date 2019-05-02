@@ -42,7 +42,6 @@ FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 
-
 class StatMech():
 
     def __init__(
@@ -59,7 +58,7 @@ class StatMech():
         :param: model_chemistry: (str) The supported model_chemistry described by http://reactionmechanismgenerator.github.io/RMG-Py/users/arkane/input.html#model-chemistry
         :param: freq_scale_factor: (float) The scaling factor corresponding to the model chemistry - source:https://comp.chem.umn.edu/freqscale/version3b1.htm
         """
-  
+
         self.reaction = reaction
         self.scratch = scratch
 
@@ -189,16 +188,18 @@ class StatMech():
         """
 
         for smiles, confs in species.conformers.items():
-            if os.path.exists(os.path.join(scratch, "species", smiles, smiles +".log")):
-                logging.info("Lowest energy conformer log file exists for {}".format(smiles))
+            if os.path.exists(os.path.join(scratch, "species", smiles, smiles + ".log")):
+                logging.info(
+                    "Lowest energy conformer log file exists for {}".format(smiles))
                 self.write_conformer_file(conformer=confs[0], scratch=scratch)
             else:
-                logging.info("Lowest energy conformer log file DOES NOT exist for {}".format(smiles))
-        
+                logging.info(
+                    "Lowest energy conformer log file DOES NOT exist for {}".format(smiles))
+
     def write_conformer_file(self, conformer=None, scratch="."):
         """
         A method to write Arkane files for a single Conformer object
-        
+
         Parameters:
         - conformer (Conformer): a Conformer object that you want to write an Arkane file for
         - scratch (str): the directory where you want to write arkane files to, there should be a 'species/SMILES/' subdirectory
@@ -206,16 +207,17 @@ class StatMech():
         Returns:
         - None
         """
-        
+
         conf = conformer
-        
+
         label = conf.smiles
-        
-        if not os.path.exists(os.path.join(scratch,"species", label, label + ".log")):
+
+        if not os.path.exists(os.path.join(scratch, "species", label, label + ".log")):
             logging.info("There is no lowest energy conformer file...")
             return False
-        
-        parser = ccread(os.path.join(scratch,"species", label, label + ".log"))
+
+        parser = ccread(os.path.join(
+            scratch, "species", label, label + ".log"))
         symbol_dict = {
             17: "Cl",
             9:  "F",
@@ -224,27 +226,27 @@ class StatMech():
             6:  "C",
             1:  "H",
         }
-        
+
         atoms = []
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
-            
+
         conf.ase_molecule = Atoms(atoms)
         conf.update_coords_from("ase")
         mol = conf.rmg_molecule
 
         mol = conf.rmg_molecule
         output = ['#!/usr/bin/env python',
-                '# -*- coding: utf-8 -*-', '', 'atoms = {']
+                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
-        atom_dict = self.get_atoms(conformer=conf) ### Fix this
+        atom_dict = self.get_atoms(conformer=conf)  # Fix this
 
         for atom, count in atom_dict.iteritems():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
-        bond_dict = self.get_bonds(conformer=conf) ### fix this
+        bond_dict = self.get_bonds(conformer=conf)  # fix this
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.iteritems():
@@ -256,18 +258,17 @@ class StatMech():
         external_symmetry = conformer.calculate_symmetry_number()
 
         output += ["",
-                "linear = {}".format(mol.isLinear()),
-                "",
-                "externalSymmetry = {}".format(external_symmetry),
-                "",
-                "spinMultiplicity = {}".format(mol.multiplicity),
-                "",
-                "opticalIsomers = 1",
-                ""]
-        
+                   "linear = {}".format(mol.isLinear()),
+                   "",
+                   "externalSymmetry = {}".format(external_symmetry),
+                   "",
+                   "spinMultiplicity = {}".format(mol.multiplicity),
+                   "",
+                   "opticalIsomers = 1",
+                   ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
-            self.model_chemistry, label), "}", ""] ###fix this
+            self.model_chemistry, label), "}", ""]  # fix this
 
         output += ["geometry = Log('{0}.log')".format(label), ""]
 
@@ -287,8 +288,7 @@ class StatMech():
         for t in output:
             input_string += t + "\n"
 
-
-        with open(os.path.join(scratch,"species", label, label + '.py'), "w") as f:
+        with open(os.path.join(scratch, "species", label, label + '.py'), "w") as f:
             f.write(input_string)
         return True
 
@@ -309,10 +309,11 @@ class StatMech():
         Returns:
         - info (str): a string containing all of the relevant information for a hindered rotor scan
         """
-        i,j,k,l = torsion.atom_indices
+        i, j, k, l = torsion.atom_indices
 
-        tor_center = [j,k]
-        tor_center_adj = [j+1, k+1] # Adjusted since mol's IDs start from 0 while Arkane's start from 1
+        tor_center = [j, k]
+        # Adjusted since mol's IDs start from 0 while Arkane's start from 1
+        tor_center_adj = [j+1, k+1]
 
         if isinstance(conformer, TS):
             tor_log = os.path.join(
@@ -320,7 +321,7 @@ class StatMech():
                 "ts",
                 conformer.reaction_label,
                 "torsions",
-                comformer.reaction_label + "_36by10_{0}_{1}.log".format(j,k)
+                comformer.reaction_label + "_36by10_{0}_{1}.log".format(j, k)
             )
         else:
             tor_log = os.path.join(
@@ -328,28 +329,31 @@ class StatMech():
                 "species",
                 conformer.smiles,
                 "torsions",
-                conformer.smiles + '_36by10_{0}_{1}.log'.format(j,k)
+                conformer.smiles + '_36by10_{0}_{1}.log'.format(j, k)
             )
 
         if not os.path.exists(tor_log):
-            logging.file("Torsion log file does not exist for {}".format(torsion))
+            logging.file(
+                "Torsion log file does not exist for {}".format(torsion))
             return ""
 
         top_IDs = []
         for num, tf in enumerate(torsion.mask):
-            if tf: top_IDs.append(num)
+            if tf:
+                top_IDs.append(num)
 
-        top_IDs_adj = [ID+1 for ID in top_IDs] # Adjusted to start from 1 instead of 0
+        # Adjusted to start from 1 instead of 0
+        top_IDs_adj = [ID+1 for ID in top_IDs]
 
-        info = "     HinderedRotor(scanLog=Log('{0}'), pivots={1}, top={2}, fit='fourier'),".format(tor_log, tor_center_adj, top_IDs_adj)
+        info = "     HinderedRotor(scanLog=Log('{0}'), pivots={1}, top={2}, fit='fourier'),".format(
+            tor_log, tor_center_adj, top_IDs_adj)
 
         return info
-
 
     def write_ts_input(self, transitionstate=None, scratch=None):
         """
         A method to write Arkane files for a single TS object
-        
+
         Parameters:
         - transitionstate (TS): a TS object that you want to write an Arkane file for
         - scratch (str): the directory where you want to write arkane files to, there should be a 'ts/REACTION_LABEL/' subdirectory
@@ -357,14 +361,14 @@ class StatMech():
         Returns:
         - None
         """
-        
+
         label = transitionstate.reaction_label
-        
-        if not os.path.exists(os.path.join(scratch,"ts", label, label + ".log")):
+
+        if not os.path.exists(os.path.join(scratch, "ts", label, label + ".log")):
             logging.info("There is no lowest energy conformer file...")
             return False
-        
-        parser = ccread(os.path.join(scratch,"ts", label, label + ".log"))
+
+        parser = ccread(os.path.join(scratch, "ts", label, label + ".log"))
         symbol_dict = {
             17: "Cl",
             9:  "F",
@@ -373,25 +377,25 @@ class StatMech():
             6:  "C",
             1:  "H",
         }
-        
+
         atoms = []
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
-            
+
         transitionstate.ase_molecule = Atoms(atoms)
         transitionstate.update_coords_from("ase")
         mol = transitionstate.rmg_molecule
 
         output = ['#!/usr/bin/env python',
-                '# -*- coding: utf-8 -*-', '', 'atoms = {']
+                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
 
-        atom_dict = self.get_atoms(conformer=transitionstate) # need to fix
+        atom_dict = self.get_atoms(conformer=transitionstate)  # need to fix
 
         for atom, count in atom_dict.iteritems():
             output.append("    '{0}': {1},".format(atom, count))
         output = output + ['}', '']
 
-        bond_dict = self.get_bonds(conformer=transitionstate) # need to fix
+        bond_dict = self.get_bonds(conformer=transitionstate)  # need to fix
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.iteritems():
@@ -401,42 +405,43 @@ class StatMech():
         else:
             output.append('bonds = {}')
         transitionstate.rmg_molecule.updateMultiplicity()
-        
+
         external_symmetry = transitionstate.calculate_symmetry_number()
 
         output += ["",
-                "linear = False",
-                "",
-                "externalSymmetry = {}".format(external_symmetry),
-                "",
-                "spinMultiplicity = {}".format(transitionstate.rmg_molecule.multiplicity),
-                "",
-                "opticalIsomers = 1",
-                ""]
+                   "linear = False",
+                   "",
+                   "externalSymmetry = {}".format(external_symmetry),
+                   "",
+                   "spinMultiplicity = {}".format(
+                       transitionstate.rmg_molecule.multiplicity),
+                   "",
+                   "opticalIsomers = 1",
+                   ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
-            self.model_chemistry, label), "}", ""] #fix this 
+            self.model_chemistry, label), "}", ""]  # fix this
 
         output += ["geometry = Log('{0}.log')".format(label), ""]
 
         output += [
             "frequencies = Log('{0}.log')".format(label), ""]
 
-        output += ["rotors = []", ""] ### TODO: Fix this
+        output += ["rotors = []", ""]  # TODO: Fix this
 
         input_string = ""
 
         for t in output:
             input_string += t + "\n"
 
-        with open(os.path.join(scratch,"ts", label, label + '.py'), "w") as f:
+        with open(os.path.join(scratch, "ts", label, label + '.py'), "w") as f:
             f.write(input_string)
         return True
 
     def write_kinetics_input(self, reaction=None, scratch="."):
         """
         A method to write Arkane file to obtain kinetics for a Reaction object
-        
+
         Parameters:
         - reaction (Reaction): a Reaction object that you want to write an Arkane kinetics job file for.
         - scratch (str): the directory where you want to write arkane files to, there should be a 'species/SMILES/' subdirectory
@@ -444,16 +449,16 @@ class StatMech():
         Returns:
         - None
         """
-        
+
         top = [
             "#!/usr/bin/env python",
             "# -*- coding: utf-8 -*-",
             "",
             'modelChemistry = "{0}"'.format(
-                self.model_chemistry), #fix this
+                self.model_chemistry),  # fix this
             "frequencyScaleFactor = {0}".format(
-                self.freq_scale_factor), #fix this
-            "useHinderedRotors = False", #fix this @carl
+                self.freq_scale_factor),  # fix this
+            "useHinderedRotors = False",  # fix this @carl
             "useBondCorrections = False",
             ""]
 
@@ -463,32 +468,36 @@ class StatMech():
         for i, react in enumerate(reaction.reactants):
             lowest_energy = 1e5
             lowest_energy_conf = None
-            
+
             if len(react.conformers.keys()) > 1:
                 for smiles in react.conformers.keys():
-                    path = os.path.join(scratch, "species", smiles, smiles + ".log")
+                    path = os.path.join(scratch, "species",
+                                        smiles, smiles + ".log")
                     if not os.path.exists(path):
-                        logging.info("It looks like {} doesn't have any optimized geometries".format(smiles))
+                        logging.info(
+                            "It looks like {} doesn't have any optimized geometries".format(smiles))
                         continue
-                    
+
                     parser = ccread(path)
                     energy = parser.scfenergies[-1]
                     if energy < lowest_energy:
                         lowest_energy = energy
                         lowest_energy_conf = react.conformers[smiles][0]
-                            
+
             else:
                 smiles = react.conformers.keys()[0]
-                path = os.path.join(scratch, "species", smiles, smiles + ".log")
+                path = os.path.join(scratch, "species",
+                                    smiles, smiles + ".log")
                 if not os.path.exists(path):
-                    logging.info("It looks like {} doesn't have any optimized geometries".format(smiles))
+                    logging.info(
+                        "It looks like {} doesn't have any optimized geometries".format(smiles))
                     continue
 
                 parser = ccread(path)
                 lowest_energy = parser.scfenergies[-1]
                 lowest_energy_conf = react.conformers.values()[0][0]
 
-            #r_smiles.append(lowest_energy_conf.smiles)
+            # r_smiles.append(lowest_energy_conf.smiles)
             r_smiles.append("react_{}".format(i))
             label = lowest_energy_conf.smiles
             if label in labels:
@@ -496,40 +505,43 @@ class StatMech():
             else:
                 labels.append(label)
             line = "species('{0}', '{1}', structure=SMILES('{2}'))".format(
-                "react_{}".format(i), os.path.join(scratch,"species", label, label + ".py"), label)
+                "react_{}".format(i), os.path.join(scratch, "species", label, label + ".py"), label)
             top.append(line)
-                
+
         for i, prod in enumerate(reaction.products):
 
             lowest_energy = 1e5
             lowest_energy_conf = None
-            
-            
+
             if len(prod.conformers.keys()) > 1:
                 for smiles in prod.conformers.keys():
-                    path = os.path.join(scratch, "species", smiles, smiles + ".log")
+                    path = os.path.join(scratch, "species",
+                                        smiles, smiles + ".log")
                     if not os.path.exists(path):
-                        logging.info("It looks like {} doesn't have any optimized geometries".format(smiles))
+                        logging.info(
+                            "It looks like {} doesn't have any optimized geometries".format(smiles))
                         continue
-                    
+
                     parser = ccread(path)
                     energy = parser.scfenergies[-1]
                     if energy < lowest_energy:
                         lowest_energy = energy
                         lowest_energy_conf = prod.conformers[smiles][0]
-                            
+
             else:
                 smiles = prod.conformers.keys()[0]
-                path = os.path.join(scratch, "species", smiles, smiles + ".log")
+                path = os.path.join(scratch, "species",
+                                    smiles, smiles + ".log")
                 if not os.path.exists(path):
-                    logging.info("It looks like {} doesn't have any optimized geometries".format(smiles))
+                    logging.info(
+                        "It looks like {} doesn't have any optimized geometries".format(smiles))
                     continue
 
                 parser = ccread(path)
                 lowest_energy = parser.scfenergies[-1]
                 lowest_energy_conf = prod.conformers.values()[0][0]
 
-            #p_smiles.append(lowest_energy_conf.smiles)
+            # p_smiles.append(lowest_energy_conf.smiles)
             p_smiles.append("prod_{}".format(i))
             label = lowest_energy_conf.smiles
             if label in labels:
@@ -540,7 +552,8 @@ class StatMech():
                 "prod_{}".format(i), os.path.join(scratch, "species", label, label + ".py"), label)
             top.append(line)
 
-        line = "transitionState('TS', '{0}')".format(os.path.join(scratch, "ts", reaction.label, reaction.label + ".py"))
+        line = "transitionState('TS', '{0}')".format(os.path.join(
+            scratch, "ts", reaction.label, reaction.label + ".py"))
         top.append(line)
 
         line = ["",
@@ -558,7 +571,7 @@ class StatMech():
                 "kinetics('{0}')".format(reaction.label)]
 
         top += line
-        
+
         input_string = ""
 
         for t in top:
@@ -567,10 +580,10 @@ class StatMech():
         with open(os.path.join(scratch, "ts", reaction.label, reaction.label + ".kinetics.py"), "w") as f:
             f.write(input_string)
 
-    def write_thermo_input(self, conformer=None, scratch="."): 
+    def write_thermo_input(self, conformer=None, scratch="."):
         """
         A method to write Arkane file to obtain thermochemistry for a Conformer object
-        
+
         Parameters:
         - conformer (Conformer): a Conformer object that you want to write an Arkane thermo job file for.
         - scratch (str): the directory where you want to write arkane files to, there should be a 'species/SMILES/' subdirectory
@@ -579,26 +592,25 @@ class StatMech():
         - None
         """
 
-        model_chemistry=self.model_chemistry
-        freq_scale_factor=self.freq_scale_factor
-        
+        model_chemistry = self.model_chemistry
+        freq_scale_factor = self.freq_scale_factor
+
         top = [
             "#!/usr/bin/env python",
             "# -*- coding: utf-8 -*-",
             "",
             'modelChemistry = "{0}"'.format(
-                model_chemistry), #fix this
+                model_chemistry),  # fix this
             "frequencyScaleFactor = {0}".format(
-                freq_scale_factor), #fix this
-            "useHinderedRotors = False", #fix this @carl
+                freq_scale_factor),  # fix this
+            "useHinderedRotors = False",  # fix this @carl
             "useBondCorrections = False",
             ""]
-
 
         line = "species('species', '{1}', structure=SMILES('{2}'))".format(
             "species", os.path.join(conformer.smiles + ".py"), conformer.smiles)
         top.append(line)
-            
+
         top.append("statmech('species')")
         top.append("thermo('species', 'NASA')")
 
@@ -613,7 +625,7 @@ class StatMech():
     def write_files(self):
         """
         A method to write all species, transition state, and kinetics job files to obtain kinetic parameters
-        
+
         Parameters:
         - None
 
@@ -623,29 +635,30 @@ class StatMech():
 
         for mol in self.reaction.reactants:
             for smiles, confs in mol.conformers.items():
-                conf =  confs[0]
+                conf = confs[0]
                 self.write_conformer_file(conf, scratch=self.scratch)
 
         for mol in self.reaction.products:
             for smiles, confs in mol.conformers.items():
-                conf =  confs[0]
+                conf = confs[0]
                 self.write_conformer_file(conf, scratch=self.scratch)
 
-        self.write_ts_input(self.reaction.ts["forward"][0], scratch=self.scratch)
+        self.write_ts_input(
+            self.reaction.ts["forward"][0], scratch=self.scratch)
 
         self.write_kinetics_input(self.reaction, scratch=self.scratch)
 
     def run(self):
         """
         A method to write run a kinetics job from all of the files written `write_files`
-        
+
         Parameters:
         - None
 
         Returns:
         - None
         """
-        
+
         self.kinetics_job.inputFile = os.path.join(
             self.scratch, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
         self.kinetics_job.plot = False
@@ -663,7 +676,7 @@ class StatMech():
     def set_reactants_and_products(self):
         """
         A method to set the RMGReaction from the kinetics job to the RMGReaction of the input Reaction
-        
+
         Parameters:
         - None
 

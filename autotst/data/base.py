@@ -45,7 +45,7 @@ from rmgpy.quantity import Quantity, constants
 from rmgpy.reaction import Reaction, ReactionError
 from rmgpy.molecule import Bond, GroupBond, Group, Molecule as RMGMolecule, Atom, getElement
 
-from rmgpy.data.kinetics.common import KineticsError #, saveEntry
+from rmgpy.data.kinetics.common import KineticsError  # , saveEntry
 
 from rmgpy.species import Species as RMGSpecies, TransitionState
 from rmgpy.reaction import Reaction
@@ -206,9 +206,10 @@ class TransitionStates(Database):
             local_context['DistanceData'] = DistanceData
 
         fpath = os.path.join(path, 'TS_training', 'reactions.py')
-        
-        logging.debug("Loading transitions state family training set from {0}".format(fpath))
-        
+
+        logging.debug(
+            "Loading transitions state family training set from {0}".format(fpath))
+
         depository = TransitionStateDepository(
             label='{0}/TS_training'.format(path.split('/')[-1]))  # 'intra_H_migration/TS_training')
         depository.load(fpath, local_context, global_context)
@@ -269,14 +270,14 @@ class TransitionStates(Database):
 
         f.close()
         return
-    
+
     def saveEntry(self, f, entry):
         """
         Save an `entry` in the kinetics database by writing a string to
         the given file object `f`.
         """
         from arkane.output import prettify
-        
+
         def sortEfficiencies(efficiencies0):
             efficiencies = {}
             for mol, eff in efficiencies0.iteritems():
@@ -296,26 +297,31 @@ class TransitionStates(Database):
         if entry.label != '':
             f.write('    label = "{0}",\n'.format(entry.label))
 
-
-        #Entries for kinetic rules, libraries, training reactions
-        #and depositories will have a Reaction object for its item
+        # Entries for kinetic rules, libraries, training reactions
+        # and depositories will have a Reaction object for its item
         if isinstance(entry.item, Reaction):
-            #Write out additional data if depository or library
-            #kinetic rules would have a Group object for its reactants instead of Species
+            # Write out additional data if depository or library
+            # kinetic rules would have a Group object for its reactants instead of Species
             if isinstance(entry.item.reactants[0], RMGSpecies):
                 # Add degeneracy if the reaction is coming from a depository or kinetics library
-                f.write('    degeneracy = {0:.1f},\n'.format(entry.item.degeneracy))
+                f.write('    degeneracy = {0:.1f},\n'.format(
+                    entry.item.degeneracy))
                 if entry.item.duplicate:
-                    f.write('    duplicate = {0!r},\n'.format(entry.item.duplicate))
+                    f.write('    duplicate = {0!r},\n'.format(
+                        entry.item.duplicate))
                 if not entry.item.reversible:
-                    f.write('    reversible = {0!r},\n'.format(entry.item.reversible))
+                    f.write('    reversible = {0!r},\n'.format(
+                        entry.item.reversible))
                 if entry.item.allow_pdep_route:
-                    f.write('    allow_pdep_route = {0!r},\n'.format(entry.item.allow_pdep_route))
+                    f.write('    allow_pdep_route = {0!r},\n'.format(
+                        entry.item.allow_pdep_route))
                 if entry.item.elementary_high_p:
-                    f.write('    elementary_high_p = {0!r},\n'.format(entry.item.elementary_high_p))
+                    f.write('    elementary_high_p = {0!r},\n'.format(
+                        entry.item.elementary_high_p))
                 if entry.item.allow_max_rate_violation:
-                    f.write('    allow_max_rate_violation = {0!r},\n'.format(entry.item.allow_max_rate_violation))
-            #Entries for groups with have a group or logicNode for its item
+                    f.write('    allow_max_rate_violation = {0!r},\n'.format(
+                        entry.item.allow_max_rate_violation))
+            # Entries for groups with have a group or logicNode for its item
         elif isinstance(entry.item, Group):
             f.write('    group = \n')
             f.write('"""\n')
@@ -324,7 +330,8 @@ class TransitionStates(Database):
         elif isinstance(entry.item, LogicNode):
             f.write('    group = "{0}",\n'.format(entry.item))
         else:
-            raise DatabaseError("Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
+            raise DatabaseError(
+                "Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
 
         # Write distances
         if isinstance(entry.data, DistanceData):
@@ -333,8 +340,7 @@ class TransitionStates(Database):
             f.write('    distances = {},\n'.format(data_str))
         else:
             assert False
-        
-        
+
         # Write reference
         if entry.reference is not None:
             reference = entry.reference.toPrettyRepr()
@@ -349,28 +355,29 @@ class TransitionStates(Database):
         if entry.rank is not None:
             f.write('    rank = {0},\n'.format(entry.rank))
 
-        if entry.shortDesc.strip() !='':
+        if entry.shortDesc.strip() != '':
             f.write('    shortDesc = u"""')
             try:
                 f.write(entry.shortDesc.encode('utf-8'))
             except:
-                f.write(entry.shortDesc.strip().encode('ascii', 'ignore')+ "\n")
+                f.write(entry.shortDesc.strip().encode(
+                    'ascii', 'ignore') + "\n")
             f.write('""",\n')
 
-        if entry.longDesc.strip() !='':
+        if entry.longDesc.strip() != '':
             f.write('    longDesc = \n')
             f.write('u"""\n')
             try:
                 f.write(entry.longDesc.strip().encode('utf-8') + "\n")
             except:
-                f.write(entry.longDesc.strip().encode('ascii', 'ignore')+ "\n")
+                f.write(entry.longDesc.strip().encode(
+                    'ascii', 'ignore') + "\n")
             f.write('""",\n')
 
         f.write(')\n\n')
-        
+
         return
 
-    
     def generateReactions(self, reactants, products=None, **options):
         """
         Generate all reactions between the provided list of one or two
@@ -704,16 +711,14 @@ class TransitionStateDepository(Database):
         
         return saveEntry(f, entry)
     """
-    
-    
-    
+
     def saveEntry(self, f, entry):
         """
         Save an `entry` in the kinetics database by writing a string to
         the given file object `f`.
         """
         from arkane.output import prettify
-        
+
         def sortEfficiencies(efficiencies0):
             efficiencies = {}
             for mol, eff in efficiencies0.iteritems():
@@ -733,26 +738,31 @@ class TransitionStateDepository(Database):
         if entry.label != '':
             f.write('    label = "{0}",\n'.format(entry.label))
 
-
-        #Entries for kinetic rules, libraries, training reactions
-        #and depositories will have a Reaction object for its item
+        # Entries for kinetic rules, libraries, training reactions
+        # and depositories will have a Reaction object for its item
         if isinstance(entry.item, Reaction):
-            #Write out additional data if depository or library
-            #kinetic rules would have a Group object for its reactants instead of Species
+            # Write out additional data if depository or library
+            # kinetic rules would have a Group object for its reactants instead of Species
             if isinstance(entry.item.reactants[0], RMGSpecies):
                 # Add degeneracy if the reaction is coming from a depository or kinetics library
-                f.write('    degeneracy = {0:.1f},\n'.format(entry.item.degeneracy))
+                f.write('    degeneracy = {0:.1f},\n'.format(
+                    entry.item.degeneracy))
                 if entry.item.duplicate:
-                    f.write('    duplicate = {0!r},\n'.format(entry.item.duplicate))
+                    f.write('    duplicate = {0!r},\n'.format(
+                        entry.item.duplicate))
                 if not entry.item.reversible:
-                    f.write('    reversible = {0!r},\n'.format(entry.item.reversible))
+                    f.write('    reversible = {0!r},\n'.format(
+                        entry.item.reversible))
                 if entry.item.allow_pdep_route:
-                    f.write('    allow_pdep_route = {0!r},\n'.format(entry.item.allow_pdep_route))
+                    f.write('    allow_pdep_route = {0!r},\n'.format(
+                        entry.item.allow_pdep_route))
                 if entry.item.elementary_high_p:
-                    f.write('    elementary_high_p = {0!r},\n'.format(entry.item.elementary_high_p))
+                    f.write('    elementary_high_p = {0!r},\n'.format(
+                        entry.item.elementary_high_p))
                 if entry.item.allow_max_rate_violation:
-                    f.write('    allow_max_rate_violation = {0!r},\n'.format(entry.item.allow_max_rate_violation))
-            #Entries for groups with have a group or logicNode for its item
+                    f.write('    allow_max_rate_violation = {0!r},\n'.format(
+                        entry.item.allow_max_rate_violation))
+            # Entries for groups with have a group or logicNode for its item
         elif isinstance(entry.item, Group):
             f.write('    group = \n')
             f.write('"""\n')
@@ -761,19 +771,19 @@ class TransitionStateDepository(Database):
         elif isinstance(entry.item, LogicNode):
             f.write('    group = "{0}",\n'.format(entry.item))
         else:
-            raise DatabaseError("Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
+            raise DatabaseError(
+                "Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
 
         # Write distances
         if isinstance(entry.data, DistanceData):
             data_str = prettify(repr(entry.data))
-            
+
             data_str = data_str.replace('\n', '\n   ')
-            
+
             f.write('    distances = {},\n'.format(data_str))
         else:
             assert False
-        
-        
+
         # Write reference
         if entry.reference is not None:
             reference = entry.reference.toPrettyRepr()
@@ -788,29 +798,28 @@ class TransitionStateDepository(Database):
         if entry.rank is not None:
             f.write('    rank = {0},\n'.format(entry.rank))
 
-        if entry.shortDesc.strip() !='':
+        if entry.shortDesc.strip() != '':
             f.write('    shortDesc = u"""')
             try:
                 f.write(entry.shortDesc.encode('utf-8'))
             except:
-                f.write(entry.shortDesc.strip().encode('ascii', 'ignore')+ "\n")
+                f.write(entry.shortDesc.strip().encode(
+                    'ascii', 'ignore') + "\n")
             f.write('""",\n')
 
-        if entry.longDesc.strip() !='':
+        if entry.longDesc.strip() != '':
             f.write('    longDesc = \n')
             f.write('u"""\n')
             try:
                 f.write(entry.longDesc.strip().encode('utf-8') + "\n")
             except:
-                f.write(entry.longDesc.strip().encode('ascii', 'ignore')+ "\n")
+                f.write(entry.longDesc.strip().encode(
+                    'ascii', 'ignore') + "\n")
             f.write('""",\n')
 
         f.write(')\n\n')
-        
-        return
 
-    
-    
+        return
 
 
 ##########################################################################

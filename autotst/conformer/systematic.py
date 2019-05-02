@@ -141,7 +141,8 @@ def systematic_search(conformer,
         chiral_centers=chiral_centers)
 
     if len(combos) == 0:
-        logging.info("This species has no torsions, cistrans bonds, or chiral centers")
+        logging.info(
+            "This species has no torsions, cistrans bonds, or chiral centers")
         logging.info("Returning origional conformer")
         return [conformer]
 
@@ -187,7 +188,8 @@ def systematic_search(conformer,
 
         conformers[index] = conformer.copy()
 
-    logging.info("There are {} unique conformers generated".format(len(conformers)))
+    logging.info(
+        "There are {} unique conformers generated".format(len(conformers)))
 
     final_results = []
 
@@ -215,19 +217,20 @@ def systematic_search(conformer,
         conformer.ase_molecule.set_constraint(c)
 
         conformer.ase_molecule.set_calculator(calculator)
-        
+
         opt = BFGS(conformer.ase_molecule, logfile=None)
         opt.run()
         conformer.update_coords_from("ase")
         energy = get_energy(conformer)
-        return_dict[i] = (energy, conformer.ase_molecule.arrays, conformer.ase_molecule.get_all_distances())
+        return_dict[i] = (energy, conformer.ase_molecule.arrays,
+                          conformer.ase_molecule.get_all_distances())
 
     manager = Manager()
     return_dict = manager.dict()
 
     processes = []
     for i, conf in conformers.items():
-        p = Process(target=opt_conf, args=(conf,calc,i))
+        p = Process(target=opt_conf, args=(conf, calc, i))
         processes.append(p)
 
     active_processes = []
@@ -257,9 +260,10 @@ def systematic_search(conformer,
     results = []
     for key, values in return_dict.items():
         results.append(values)
-        
+
     df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])
-    df = df[df.energy < df.energy.min() + units.kcal / units.mol / units.eV].sort_values("energy")
+    df = df[df.energy < df.energy.min() + units.kcal / units.mol /
+            units.eV].sort_values("energy")
 
     tolerance = 0.1
     scratch_index = []
@@ -273,18 +277,19 @@ def systematic_search(conformer,
         for other_index in df.index:
             if other_index in scratch_index:
                 continue
-                
+
             other_distances = df.distances[other_index]
-            
+
             if tolerance > np.sqrt((distances - other_distances)**2).mean():
                 scratch_index.append(other_index)
-        
-    logging.info("We have identified {} unique conformers for {}".format(len(unique_index), conformer))
+
+    logging.info("We have identified {} unique conformers for {}".format(
+        len(unique_index), conformer))
     confs = []
-    i = 0 
+    i = 0
     for info in df[["energy", "arrays"]].loc[unique_index].values:
         copy_conf = conformer.copy()
-        
+
         energy, array = info
         copy_conf.energy = energy
         copy_conf.ase_molecule.set_positions(array["positions"])
@@ -293,5 +298,5 @@ def systematic_search(conformer,
         c.index = i
         confs.append(c)
         i += 1
-        
+
     return confs

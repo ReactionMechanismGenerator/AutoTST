@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from autotst.species import Species, Conformer
+from autotst.reaction import Reaction, TS
 import itertools
 import pandas as pd
 from collections import defaultdict, OrderedDict
@@ -23,21 +25,20 @@ import scipy.stats
 import matplotlib
 matplotlib.rc('mathtext', fontset='stixsans', default='regular')
 
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
 
 def update_all(reactions, family, method='', shortDesc=''):
     """
     Given reactions of designated family, updates corresponding reactions.py, dictionary.txt and TS_Groups.py
-    
+
     reactions :: autotst reaction object
     family    :: family of reaction
     """
-    
-    update_databases(reactions, method=method, shortDesc=shortDesc, reaction_family=family, overwrite=True)
-    
+
+    update_databases(reactions, method=method, shortDesc=shortDesc,
+                     reaction_family=family, overwrite=True)
+
     TS_Database_Update([family], path=None, auto_save=True)
-    
+
     return
 
 
@@ -358,10 +359,10 @@ def update_databases(reactions, method='', shortDesc='', reaction_family='', ove
 
     Saves the new reactions and new species found in those reactions
     """
-    
+
     if isinstance(reactions, Reaction):
         reactions = [reactions]
-        
+
     import logging
     import os
 
@@ -376,18 +377,16 @@ def update_databases(reactions, method='', shortDesc='', reaction_family='', ove
 
     general_path = os.path.join(os.path.expandvars(
         '$AutoTST'), 'database', reaction_family, 'TS_training')
-    
+
     dict_path = os.path.join(general_path, 'dictionary.txt')
     old_reactions_path = os.path.join(general_path, 'reactions.py')
-    
+
     if overwrite:
         new_dict_path = os.path.join(general_path, 'dictionary.txt')
         new_reactions_path = os.path.join(general_path, 'reactions.py')
     else:
         new_dict_path = os.path.join(general_path, 'updated_dictionary.txt')
         new_reactions_path = os.path.join(general_path, 'updated_reactions.py')
-
-    
 
     known_species = rmgpy.data.base.Database().getSpecies(dict_path)
     unknown_species = get_unknown_species(reactions, known_species)
@@ -400,7 +399,7 @@ def update_databases(reactions, method='', shortDesc='', reaction_family='', ove
 
         all_dict_entries = update_dictionary_entries(
             old_dict_entries, unknown_species)
-        
+
         assert len(known_species) + \
             len(unknown_species) == len(all_dict_entries)
 
@@ -479,7 +478,8 @@ def TS_Database_Update(families, path=None, auto_save=False):
                           solvation=False,
                           )
     except BaseException:
-        logging.error("Failed to Load RMG Database at {}".format(database_path))
+        logging.error(
+            "Failed to Load RMG Database at {}".format(database_path))
 
     Databases = {family: DatabaseUpdater(
         family, rmg_database, path=path) for family in families}
@@ -532,7 +532,7 @@ class DatabaseUpdater:
     def __init__(self, family, rmg_database, path=None):
 
         self.database = None
-        
+
         if path is not None:
             self.path = path
         else:
@@ -548,7 +548,6 @@ class DatabaseUpdater:
         self.initialize_entry_attributes()
         self.adjust_distances()
         self.set_entry_data()
-        
 
     def set_TS_training_data(self, rmg_database):
         """
@@ -556,14 +555,15 @@ class DatabaseUpdater:
         """
         from autotst.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
         ts_database = TransitionStates()
-        
+
         #path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", self.family)
         path = self.path
-        
+
         global_context = {'__builtins__': None}
         local_context = {'DistanceData': DistanceData}
-        
-        assert self.family in rmg_database.kinetics.families.keys(), "{} not found in kinetics families. Could not Load".format(family)
+
+        assert self.family in rmg_database.kinetics.families.keys(
+        ), "{} not found in kinetics families. Could not Load".format(family)
         family = rmg_database.kinetics.families[self.family]
         ts_database.family = family
         ts_database.load(path, local_context, global_context)
@@ -574,11 +574,11 @@ class DatabaseUpdater:
         training_data = [
             (entry.item, entry.data.distances) for entry in list(
                 ts_database.depository.entries.itervalues())]
-        
+
         self.training_set = training_data
         logging.info("Total Distances Count: {}".format(
             len(self.training_set)))
-        
+
         return
 
     def update_indices(self):

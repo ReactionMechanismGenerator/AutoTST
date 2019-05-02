@@ -48,36 +48,38 @@ from ase import Atom, Atoms
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian as ASEGaussian
 
+
 class Gaussian():
 
     def __init__(self,
                  settings={
-                    "method":"m062x",
-                    "basis":"cc-pVTZ",
-                    "mem":"5GB",
-                    "nprocshared":20,
+                     "method": "m062x",
+                     "basis": "cc-pVTZ",
+                     "mem": "5GB",
+                     "nprocshared": 20,
                  },
                  scratch="."
                  ):
-                
-        default_settings={
-            "method":"m062x",
-            "basis":"cc-pVTZ",
-            "mem":"5GB",
-            "nprocshared":20,
+
+        default_settings = {
+            "method": "m062x",
+            "basis": "cc-pVTZ",
+            "mem": "5GB",
+            "nprocshared": 20,
         }
 
         for setting, value in default_settings.items():
             if setting in settings.keys():
-                assert isinstance(settings[setting], type(value)), "{} is not a proper instance..."
+                assert isinstance(settings[setting], type(
+                    value)), "{} is not a proper instance..."
             else:
-                logging.info("{} not specified, setting it to the default value of {}".format(setting, value))
+                logging.info("{} not specified, setting it to the default value of {}".format(
+                    setting, value))
                 settings[setting] = value
 
         self.command = "g16"
         self.settings = settings
         self.scratch = scratch
-
 
     def __repr__(self):
         return '<Gaussian Calculator>'.format(None)
@@ -120,9 +122,9 @@ class Gaussian():
             conformer, Conformer), "A Conformer object was not provided..."
 
         if isinstance(conformer, TS):
-            extra="Opt=(ts,CalcFC,ModRedun)"
+            extra = "Opt=(ts,CalcFC,ModRedun)"
         else:
-            extra="Opt=(CalcFC,ModRedun)"
+            extra = "Opt=(CalcFC,ModRedun)"
 
         string = ""
         for bond in conformer.bonds:
@@ -130,10 +132,11 @@ class Gaussian():
             string += "B {} {}\n".format(i + 1, j + 1)
 
         i, j, k, l = torsion.atom_indices
-        string += "D {} {} {} {} S {} {}\n".format(i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
+        string += "D {} {} {} {} S {} {}\n".format(
+            i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
 
         if isinstance(conformer, TS):
-            label = da = conformer.reaction_label 
+            label = da = conformer.reaction_label
             label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
             t = "ts"
         elif isinstance(conformer, Conformer):
@@ -141,20 +144,20 @@ class Gaussian():
             label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
             t = "species"
 
-        for locked_torsion in conformer.torsions: ## TODO: maybe doesn't work;
+        for locked_torsion in conformer.torsions:  # TODO: maybe doesn't work;
             if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
                 a, b, c, d = locked_torsion.atom_indices
                 string += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)
-    
+
         conformer.rmg_molecule.updateMultiplicity()
         mult = conformer.rmg_molecule.multiplicity
 
         new_scratch = os.path.join(
-                scratch,
-                t,
-                da,
-                "rotors"
-            )
+            scratch,
+            t,
+            da,
+            "rotors"
+        )
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -172,10 +175,10 @@ class Gaussian():
         return calc
 
     def get_conformer_calc(self,
-                         conformer=None,
-                         settings=None,
-                         scratch=None
-                         ):
+                           conformer=None,
+                           settings=None,
+                           scratch=None
+                           ):
         """
         A method that creates a calculator for a `Conformer` that will perform a geometry optimization
 
@@ -214,13 +217,13 @@ class Gaussian():
         label = short_label + "_{}".format(conformer.index)
 
         new_scratch = os.path.join(
-                scratch,
-                "species",
-                short_label,
-                "conformers"
-            )
+            scratch,
+            "species",
+            short_label,
+            "conformers"
+        )
 
-        try: 
+        try:
             os.makedirs(new_scratch)
         except OSError:
             pass
@@ -276,13 +279,13 @@ class Gaussian():
         label = ts.reaction_label + "_" + direction.lower() + "_shell_" + str(ts.index)
 
         new_scratch = os.path.join(
-                scratch,
-                "ts",
-                ts.reaction_label,
-                "conformers"
-            )
+            scratch,
+            "ts",
+            ts.reaction_label,
+            "conformers"
+        )
 
-        try: 
+        try:
             os.makedirs(new_scratch)
         except OSError:
             pass
@@ -295,7 +298,6 @@ class Gaussian():
         combos += "{0} {1} F\n".format(ind1+1, ind2+1)
         combos += "{0} {1} F\n".format(ind2+1, ind3+1)
         combos += "{0} {1} {2} F".format(ind1+1, ind2+1, ind3+1)
-
 
         calc = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
@@ -358,13 +360,13 @@ class Gaussian():
         label = ts.reaction_label + "_" + direction.lower() + "_center_" + str(ts.index)
 
         new_scratch = os.path.join(
-                scratch,
-                "ts",
-                ts.reaction_label,
-                "conformers"
-            )
+            scratch,
+            "ts",
+            ts.reaction_label,
+            "conformers"
+        )
 
-        try: 
+        try:
             os.makedirs(new_scratch)
         except OSError:
             pass
@@ -420,13 +422,13 @@ class Gaussian():
         label = ts.reaction_label + "_" + direction.lower() + "_" + str(ts.index)
 
         new_scratch = os.path.join(
-                scratch,
-                "ts",
-                ts.reaction_label,
-                "conformers"
-            )
+            scratch,
+            "ts",
+            ts.reaction_label,
+            "conformers"
+        )
 
-        try: 
+        try:
             os.makedirs(new_scratch)
         except OSError:
             pass
@@ -479,12 +481,12 @@ class Gaussian():
         label = ts.reaction_label + "_irc_" + direction + "_" + str(ts.index)
 
         new_scratch = os.path.join(
-                scratch,
-                "ts",
-                ts.reaction_label,
-                "irc"
-            )
-        try: 
+            scratch,
+            "ts",
+            ts.reaction_label,
+            "irc"
+        )
+        try:
             os.makedirs(new_scratch)
         except OSError:
             pass
@@ -612,11 +614,13 @@ class Gaussian():
             possible_reactants = []
             possible_products = []
             for reactant in reactants:
-                possible_reactants.append(reactant.generate_resonance_structures())
-                
+                possible_reactants.append(
+                    reactant.generate_resonance_structures())
+
             for product in products:
-                possible_products.append(product.generate_resonance_structures())
-                
+                possible_products.append(
+                    product.generate_resonance_structures())
+
             possible_reactants = list(itertools.product(*possible_reactants))
             possible_products = list(itertools.product(*possible_products))
 
@@ -624,15 +628,15 @@ class Gaussian():
                 reactant_list = []
                 for react in possible_reactant:
                     reactant_list.append(react.toSingleBonds())
-                    
+
                 for possible_product in possible_products:
                     product_list = []
                     for prod in possible_product:
                         product_list.append(prod.toSingleBonds())
-                    
+
                     targetReaction = RMGReaction(
-                        reactants = list(reactant_list),
-                        products = list(product_list)
+                        reactants=list(reactant_list),
+                        products=list(product_list)
                     )
 
                     if targetReaction.isIsomorphic(testReaction):
@@ -640,5 +644,3 @@ class Gaussian():
                         return True
             logging.info("IRC calculation failed for {} :(".format(calc.label))
             return False
-
-

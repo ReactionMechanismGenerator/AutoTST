@@ -199,7 +199,7 @@ class Reaction():
 
         Calls generate_distance_data() if it has not previously been found.
         To update, call create_distance_data()
-        
+
         Variables:
         - None
 
@@ -218,7 +218,7 @@ class Reaction():
 
         Variables:
         - force_reload (bool):if set to True then forces a reload, even if already loaded.
-        
+
         Returns:
         - None
         """
@@ -297,16 +297,16 @@ class Reaction():
         self._distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(
             rmg_reaction)
 
-        if np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"], 
-              self._distance_data.distances["d13"], 
-              atol=0.01):
-            logging.info("Distance between *1 and *3 is too small, setting it to lower bound of uncertainty")
-    
+        if np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"],
+                      self._distance_data.distances["d13"],
+                      atol=0.01):
+            logging.info(
+                "Distance between *1 and *3 is too small, setting it to lower bound of uncertainty")
+
             self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"] / 2
 
         logging.info("The distance data is as follows: \n{}".format(
             self._distance_data))
-
 
     def generate_reactants_and_products(self, rmg_reaction=None):
         """
@@ -378,8 +378,8 @@ class Reaction():
                 reactants=rmg_reactants, products=rmg_products)
 
             if rmg_reaction:
-                assert rmg_reaction.isIsomorphic(test_reaction), "The reaction label provided does not match the RMGReaction provided..."
-
+                assert rmg_reaction.isIsomorphic(
+                    test_reaction), "The reaction label provided does not match the RMGReaction provided..."
 
             for name, family in self.rmg_database.kinetics.families.items():
                 if match:
@@ -391,7 +391,7 @@ class Reaction():
                     continue
 
                 if ((len(labeled_r) > 0) and (len(labeled_p) > 0)):
-                    logging.info( "Matched reaction to {} family".format(name))
+                    logging.info("Matched reaction to {} family".format(name))
 
                     labeled_reactants = deepcopy(labeled_r)
                     labeled_products = deepcopy(labeled_p)
@@ -451,8 +451,8 @@ class Reaction():
                             continue
 
                         if ((len(labeled_r) > 0) and (len(labeled_p) > 0)):
-                            logging.info( "Matched reaction to {} family".format(name))
-
+                            logging.info(
+                                "Matched reaction to {} family".format(name))
 
                             labeled_reactants = deepcopy(labeled_r)
                             labeled_products = deepcopy(labeled_p)
@@ -465,8 +465,6 @@ class Reaction():
                             break
         assert match, "Could not idetify labeled reactants and products"
 
-        
-        
         reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
             test_reaction.reactants, test_reaction.products, only_families=[final_name])
 
@@ -604,7 +602,8 @@ class TS(Conformer):
         #####################################################
         #####################################################
         assert reaction_label, "A reaction label needs to be provided in addition to a smiles or rmg_molecule"
-        assert direction in ["forward", "reverse"], "Please provide a valid direction"
+        assert direction in ["forward",
+                             "reverse"], "Please provide a valid direction"
         self.reaction_label = reaction_label
         self.direction = direction.lower()
         self._rdkit_molecule = None

@@ -75,13 +75,15 @@ class Species():
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
-                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
+                    logging.info(
+                        "Could not generate resonance structures for this species... Using molecule provided")
 
             else:
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
-                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
+                    logging.info(
+                        "Could not generate resonance structures for this species... Using molecule provided")
 
             smiles_list = []
             for rmg_mol in rmg_species.molecule:
@@ -112,13 +114,15 @@ class Species():
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
-                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
+                    logging.info(
+                        "Could not generate resonance structures for this species... Using molecule provided")
 
             else:
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
-                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
+                    logging.info(
+                        "Could not generate resonance structures for this species... Using molecule provided")
 
             smiles = []
             for rmg_mol in rmg_species.molecule:
@@ -730,7 +734,7 @@ class Conformer():
             a1, a2, a3 = geometry.atom_indices
             LHS_atoms_index = [a2, a1]
             RHS_atoms_index = [a2, a3]
-        
+
         elif isinstance(geometry, autotst.geometry.Bond):
             a1, a2 = geometry.atom_indices
             LHS_atoms_index = [a1]
@@ -858,7 +862,7 @@ class Conformer():
                 ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
 
             self.ase_molecule = Atoms(ase_atoms)
-            #self.calculate_symmetry_number()
+            # self.calculate_symmetry_number()
 
         elif mol_type.lower() == "ase":
             conf = self.rdkit_molecule.GetConformers()[0]
@@ -866,7 +870,7 @@ class Conformer():
                 self.rmg_molecule.atoms[i].coords = position
                 conf.SetAtomPosition(i, position)
 
-            #self.calculate_symmetry_number()
+            # self.calculate_symmetry_number()
 
         elif mol_type.lower() == "rdkit":
 
@@ -879,7 +883,7 @@ class Conformer():
                 atom.coords = np.array(coords)
 
             self.get_ase_mol()
-            #self.calculate_symmetry_number()
+            # self.calculate_symmetry_number()
 
     def set_bond_length(self, bond_index, length):
         """
@@ -1050,7 +1054,7 @@ class Conformer():
         rdmol.GetAtomWithIdx(chiral_center_index).SetChiralTag(
             centers_dict[stero.upper()])
 
-        #rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
+        # rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
 
         old_torsions = self.torsions[:] + self.cistrans[:]
 
@@ -1090,7 +1094,8 @@ class Conformer():
             atomCoords=(coordinates, str('angstrom')),
             energy=(0.0, str('kcal/mol'))  # Only needed to avoid error
         )
-        settings = type(str(''), (), dict(symmetryPath=str('symmetry'), scratchDirectory="."))()  # Creates anonymous class
+        settings = type(str(''), (), dict(symmetryPath=str(
+            'symmetry'), scratchDirectory="."))()  # Creates anonymous class
         pgc = PointGroupCalculator(settings, self.smiles, qmdata)
         pg = pgc.calculate()
         os.remove("{}.symm".format(self.smiles))
