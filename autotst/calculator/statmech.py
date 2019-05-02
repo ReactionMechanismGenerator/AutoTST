@@ -37,14 +37,13 @@ from cclib.io import ccread
 
 from autotst.reaction import Reaction, TS
 from autotst.species import Species
-from autotst.calculators.calculator import Calculator
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 
 
-class StatMech(Calculator):
+class StatMech():
 
     def __init__(
             self,
