@@ -35,7 +35,6 @@ from ase.optimize import BFGS
 from ase.constraints import FixBondLengths
 from ase import units
 import ase
-import cPickle as pickle
 import pandas as pd
 from numpy import array
 import numpy as np
