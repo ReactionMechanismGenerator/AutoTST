@@ -31,6 +31,11 @@ Now, create the anaconda environment for AutoTST
 
 - `conda env create -f environment.yml`
 
+Finally, RMG has a dependency on `openbabel` but this dependency causes AutoTST to crash. So, we have to uninstall it with the following line of code:
+
+- `conda uninstall --force openbabel`
+
+
 Modify environment variables. Add AutoTST to the `PYTHONPATH` to ensure that you can access modules from any folder. Modify your ~/.bashrc file by adding the following line:
 
 - `export PYTHONPATH=$PYTHONPATH:your_folder/AutoTST`
