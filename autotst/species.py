@@ -75,13 +75,15 @@ class Species():
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
-                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
+                    logging.info(
+                        "Could not generate resonance structures for this species... Using molecule provided")
 
             else:
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
-                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
+                    logging.info(
+                        "Could not generate resonance structures for this species... Using molecule provided")
 
             smiles_list = []
             for rmg_mol in rmg_species.molecule:
@@ -112,13 +114,15 @@ class Species():
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
-                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
+                    logging.info(
+                        "Could not generate resonance structures for this species... Using molecule provided")
 
             else:
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
-                    logging.info("Could not generate resonance structures for this species... Using molecule provided")
+                    logging.info(
+                        "Could not generate resonance structures for this species... Using molecule provided")
 
             smiles = []
             for rmg_mol in rmg_species.molecule:
@@ -133,16 +137,23 @@ class Species():
             species_list = []
             for smile in smiles:
                 molecule = RMGMolecule(SMILES=smile)
-                s = RMGSpecies(molecule=[molecule])
-                s.generate_resonance_structures()
-                species_list.append(s)
+                species_list.append(molecule.generate_resonance_structures())
 
-            for s1 in species_list:
-                for s2 in species_list:
-                    assert s1.isIsomorphic(
-                        s2), "SMILESs provided describe different species"
+            if len(smiles) != 1:
+                got_one = False
+                for s1 in species_list:
+                    for s2 in species_list:
+                        for m1 in s1:
+                            for m2 in s2:
+                                if m1.isIsomorphic(m2):
+                                    got_one = True
+                assert got_one, "SMILESs provided describe different species"
 
-            self.smiles = smiles
+            smiles_list = []
+            for mol in species_list[0]:
+                smiles_list.append(mol.toSMILES())
+
+            self.smiles = smiles_list
             self.rmg_species = species_list[0]
 
         else:
@@ -187,7 +198,7 @@ class Species():
 
         from autotst.conformer.systematic import systematic_search, find_all_combos
 
-        for smiles, conformers in self.conformers.iteritems():
+        for smiles, conformers in self.conformers.items():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
             conformers = systematic_search(conformer)
@@ -723,7 +734,7 @@ class Conformer():
             a1, a2, a3 = geometry.atom_indices
             LHS_atoms_index = [a2, a1]
             RHS_atoms_index = [a2, a3]
-        
+
         elif isinstance(geometry, autotst.geometry.Bond):
             a1, a2 = geometry.atom_indices
             LHS_atoms_index = [a1]
@@ -851,7 +862,7 @@ class Conformer():
                 ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
 
             self.ase_molecule = Atoms(ase_atoms)
-            #self.calculate_symmetry_number()
+            # self.calculate_symmetry_number()
 
         elif mol_type.lower() == "ase":
             conf = self.rdkit_molecule.GetConformers()[0]
@@ -859,7 +870,7 @@ class Conformer():
                 self.rmg_molecule.atoms[i].coords = position
                 conf.SetAtomPosition(i, position)
 
-            #self.calculate_symmetry_number()
+            # self.calculate_symmetry_number()
 
         elif mol_type.lower() == "rdkit":
 
@@ -872,9 +883,15 @@ class Conformer():
                 atom.coords = np.array(coords)
 
             self.get_ase_mol()
-            #self.calculate_symmetry_number()
+            # self.calculate_symmetry_number()
 
     def set_bond_length(self, bond_index, length):
+        """
+        This is a method to set bond lengths
+        Variabels:
+        - bond_index (int): the index of the bond you want to edit
+        - length (float, int): the distance you want to set the bond (in angstroms)
+        """
 
         assert isinstance(length, (float, int))
 
@@ -885,7 +902,7 @@ class Conformer():
                 break
 
         if not matched:
-            print "Angle index provided is out of range. Nothing was changed."
+            print("Angle index provided is out of range. Nothing was changed.")
             return self
 
         i, j = bond.atom_indices
@@ -911,25 +928,25 @@ class Conformer():
             angle, (int, float)), "Plese provide a float or an int for the angle"
 
         matched = False
-        for angle in self.angles:
-            if angle.index == angle_index:
+        for a in self.angles:
+            if a.index == angle_index:
                 matched = True
                 break
 
         if not matched:
-            print "Angle index provided is out of range. Nothing was changed."
+            print("Angle index provided is out of range. Nothing was changed.")
             return self
 
-        i, j, k = angle.atom_indices
+        i, j, k = a.atom_indices
         self.ase_molecule.set_angle(
             a1=i,
             a2=j,
             a3=k,
             angle=angle,
-            mask=angle.mask
+            mask=a.mask
         )
 
-        angle.degree = angle
+        a.degree = angle
 
         self.update_coords_from(mol_type="ase")
 
@@ -950,7 +967,7 @@ class Conformer():
                 break
 
         if not matched:
-            print "Torsion index provided is out of range. Nothing was changed."
+            print("Torsion index provided is out of range. Nothing was changed.")
             return self
 
         i, j, k, l = torsion.atom_indices
@@ -983,7 +1000,7 @@ class Conformer():
                 break
 
         if not matched:
-            print "CisTrans index provided is out of range. Nothing was changed."
+            print("CisTrans index provided is out of range. Nothing was changed.")
             return self
 
         if cistrans.stero == stero.upper():
@@ -1026,18 +1043,18 @@ class Conformer():
 
         match = False
         for chiral_center in self.chiral_centers:
-            if chiral_center.atom_index == chiral_center_index:
+            if chiral_center.index == chiral_center_index:
                 match = True
                 break
 
         if not match:
-            print "ChiralCenter index provided is out of range. Nothing was changed"
+            print("ChiralCenter index provided is out of range. Nothing was changed")
             return self
 
         rdmol.GetAtomWithIdx(chiral_center_index).SetChiralTag(
             centers_dict[stero.upper()])
 
-        rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
+        # rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
 
         old_torsions = self.torsions[:] + self.cistrans[:]
 
@@ -1077,7 +1094,8 @@ class Conformer():
             atomCoords=(coordinates, str('angstrom')),
             energy=(0.0, str('kcal/mol'))  # Only needed to avoid error
         )
-        settings = type(str(''), (), dict(symmetryPath=str('symmetry'), scratchDirectory="."))()  # Creates anonymous class
+        settings = type(str(''), (), dict(symmetryPath=str(
+            'symmetry'), scratchDirectory="."))()  # Creates anonymous class
         pgc = PointGroupCalculator(settings, self.smiles, qmdata)
         pg = pgc.calculate()
         os.remove("{}.symm".format(self.smiles))

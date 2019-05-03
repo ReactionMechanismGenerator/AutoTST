@@ -19,6 +19,7 @@
 
 # ipython checkpoints
 **/.ipynb_checkpoints/**
+.vscode/*
 
 # csv files
 *.csv
@@ -30,4 +31,3 @@
 *.ase
 *.com
 *.log
-Gau*

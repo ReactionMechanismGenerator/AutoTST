@@ -55,13 +55,13 @@ def find_all_combos(
     A function to find all possible conformer combinations for a given conformer
 
     Params:
-    - conformer: `Conformer`, an AutoTST `Conformer` object of interest
-    - delta: int or float, a number between 0 and 180 or how many conformers to generate per dihedral
-    - cistrans: bool, indication of if one wants to consider cistrans bonds
-    - chiral_centers: bool, indication of if one wants to consider chiral centers bonds
+    - conformer (`Conformer`) an AutoTST `Conformer` object of interest
+    - delta (int or float): a number between 0 and 180 or how many conformers to generate per dihedral
+    - cistrans (bool): indication of if one wants to consider cistrans bonds
+    - chiral_centers (bool): indication of if one wants to consider chiral centers bonds
 
     Returns:
-    - all_combos: list, a list corresponding to the number of unique conformers created.
+    - all_combos (list): a list corresponding to the number of unique conformers created.
     """
 
     terminal_torsions, torsions = find_terminal_torsions(conformer)
@@ -123,14 +123,14 @@ def systematic_search(conformer,
     """
     Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
 
-    Params:
-    - conformer, `Conformer` or `TS`, a `Conformer` or `TS` object of interest
-    - delta: int or float, a number between 0 and 180 or how many conformers to generate per dihedral
-    - cistrans: bool, indication of if one wants to consider cistrans bonds
-    - chiral_centers: bool, indication of if one wants to consider chiral centers bonds
+    Variables:
+    - conformer (`Conformer` or `TS`): a `Conformer` or `TS` object of interest
+    - delta (int or float): a number between 0 and 180 or how many conformers to generate per dihedral
+    - cistrans (bool): indication of if one wants to consider cistrans bonds
+    - chiral_centers (bool): indication of if one wants to consider chiral centers bonds
 
     Returns:
-    - confs: list, a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
+    - confs (list): a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
     """
     # Takes each of the molecule objects
 
@@ -141,7 +141,8 @@ def systematic_search(conformer,
         chiral_centers=chiral_centers)
 
     if len(combos) == 0:
-        logging.info("This species has no torsions, cistrans bonds, or chiral centers")
+        logging.info(
+            "This species has no torsions, cistrans bonds, or chiral centers")
         logging.info("Returning origional conformer")
         return [conformer]
 
@@ -187,7 +188,8 @@ def systematic_search(conformer,
 
         conformers[index] = conformer.copy()
 
-    logging.info("There are {} unique conformers generated".format(len(conformers)))
+    logging.info(
+        "There are {} unique conformers generated".format(len(conformers)))
 
     final_results = []
 
@@ -202,30 +204,33 @@ def systematic_search(conformer,
         for bond in conformer.bonds:
             labels.append(bond.atom_indices)
 
-        from ase.constraints import FixBondLengths
-        c = FixBondLengths(labels)
-        conformer.ase_molecule.set_constraint(c)
         if isinstance(conformer, TS):
             label = conformer.reaction_label
+            ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
+            ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
+            labels.append([ind1, ind2])
         else:
             label = conformer.smiles
 
+        from ase.constraints import FixBondLengths
+        c = FixBondLengths(labels)
+        conformer.ase_molecule.set_constraint(c)
+
         conformer.ase_molecule.set_calculator(calculator)
-        
+
         opt = BFGS(conformer.ase_molecule, logfile=None)
-        #try:
         opt.run()
         conformer.update_coords_from("ase")
         energy = get_energy(conformer)
-
-        return_dict[i] = (energy, conformer.ase_molecule.arrays, conformer.ase_molecule.get_all_distances())
+        return_dict[i] = (energy, conformer.ase_molecule.arrays,
+                          conformer.ase_molecule.get_all_distances())
 
     manager = Manager()
     return_dict = manager.dict()
 
     processes = []
-    for i, conf in conformers.items():
-        p = Process(target=opt_conf, args=(conf,calc,i))
+    for i, conf in list(conformers.items()):
+        p = Process(target=opt_conf, args=(conf, calc, i))
         processes.append(p)
 
     active_processes = []
@@ -253,11 +258,12 @@ def systematic_search(conformer,
 
     from ase import units
     results = []
-    for key, values in return_dict.items():
+    for key, values in list(return_dict.items()):
         results.append(values)
-        
+
     df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])
-    df = df[df.energy < df.energy.min() + units.kcal / units.mol / units.eV].sort_values("energy")
+    df = df[df.energy < df.energy.min() + units.kcal / units.mol /
+            units.eV].sort_values("energy")
 
     tolerance = 0.1
     scratch_index = []
@@ -271,18 +277,19 @@ def systematic_search(conformer,
         for other_index in df.index:
             if other_index in scratch_index:
                 continue
-                
+
             other_distances = df.distances[other_index]
-            
+
             if tolerance > np.sqrt((distances - other_distances)**2).mean():
                 scratch_index.append(other_index)
-        
-    logging.info("We have identified {} unique conformers for {}".format(len(unique_index), conformer))
+
+    logging.info("We have identified {} unique conformers for {}".format(
+        len(unique_index), conformer))
     confs = []
-    i = 0 
+    i = 0
     for info in df[["energy", "arrays"]].loc[unique_index].values:
         copy_conf = conformer.copy()
-        
+
         energy, array = info
         copy_conf.energy = energy
         copy_conf.ase_molecule.set_positions(array["positions"])
@@ -291,5 +298,5 @@ def systematic_search(conformer,
         c.index = i
         confs.append(c)
         i += 1
-        
+
     return confs

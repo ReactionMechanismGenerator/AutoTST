@@ -52,7 +52,7 @@ from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
 
 import autotst
-from autotst.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
+from autotst.data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
 from autotst.species import Species, Conformer
 from autotst.geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
 
@@ -169,10 +169,16 @@ class Reaction():
 
         Calls create_ts_geometries() if it has not previously been found.
         To update, call create_ts_geometries() manually.
+
+        Variables:
+        - None
+
+        Return:
+        - _ts (dict): the dictionary containing the forward and reverse TSs
         """
         if self._ts is None:
             ts_dict = {}
-            for direction, mol in self.get_complexes().iteritems():
+            for direction, mol in self.get_complexes().items():
                 ts = TS(
                     reaction_label=self.label,
                     direction=direction,
@@ -193,7 +199,12 @@ class Reaction():
 
         Calls generate_distance_data() if it has not previously been found.
         To update, call create_distance_data()
-        :return:
+
+        Variables:
+        - None
+
+        Return:
+        - _distance_data (DistanceData): a container for the key distance data
         """
         if self._distance_data is None:
             self.generate_distance_data()
@@ -205,8 +216,11 @@ class Reaction():
         Load the RMG and AutoTST databases, if they have not already been loaded,
         into the class level variables where they are stored.
 
-        :param force_reload: if set to True then forces a reload, even if already loaded.
-        :return: None
+        Variables:
+        - force_reload (bool):if set to True then forces a reload, even if already loaded.
+
+        Returns:
+        - None
         """
         if cls.rmg_database and cls.ts_databases and not force_reload:
             return
@@ -271,7 +285,11 @@ class Reaction():
         Requires self.rmg_reaction
         Stores it in self.distance_data.
 
-        :return: None
+        Variables:
+        - rmg_reaction (RMGReaction): The RMGReaction of interest
+
+        Returns:
+        - None
         """
         if not rmg_reaction:
             rmg_reaction = self.rmg_reaction
@@ -279,20 +297,28 @@ class Reaction():
         self._distance_data = self.ts_database.groups.estimateDistancesUsingGroupAdditivity(
             rmg_reaction)
 
-        if np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"], 
-              self._distance_data.distances["d13"], 
-              atol=0.01):
-            logging.info("Distance between *1 and *3 is too small, setting it to lower bound of uncertainty")
-    
-            self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"]
+        if np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"],
+                      self._distance_data.distances["d13"],
+                      atol=0.01):
+            logging.info(
+                "Distance between *1 and *3 is too small, setting it to lower bound of uncertainty")
+
+            self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"] / 2
 
         logging.info("The distance data is as follows: \n{}".format(
             self._distance_data))
 
-
     def generate_reactants_and_products(self, rmg_reaction=None):
         """
-        A module that will generate AutoTST molecules for a given reaction
+        A module that will generate AutoTST Species for a given reaction's 
+        reactants and products
+
+        Variabels:
+        - rmg_reaction (RMGReaction): the RMGReaction of interest
+
+        Returns:
+        - reactants (list): a list of AutoTST Species corresponding to the reactnats
+        - products (list): a list of AutoTST Species corresponding to the products
         """
 
         if not rmg_reaction:
@@ -317,6 +343,16 @@ class Reaction():
     def get_labeled_reaction(self, label=None, rmg_reaction=None):
         """
         A method that will return a labeled reaction given a reaction label or rmg_reaction
+        A label or an rmg_reaction needs to be provided in order for this method to work.
+        If both are provided, we assert that the label matches the reaction.
+
+        Variables:
+        - label (str): the reaction label of interest
+        - rmg_reaction (RMGReaction): the reaction of interest
+
+        Returns:
+        - reaction (RMGReaction): An RMGReaction with labeled reactants and products
+        - name (str): The string corresponding to the reaction family matched to the reaction of interest
         """
 
         assert (
@@ -342,10 +378,10 @@ class Reaction():
                 reactants=rmg_reactants, products=rmg_products)
 
             if rmg_reaction:
-                assert rmg_reaction.isIsomorphic(test_reaction), "The reaction label provided does not match the RMGReaction provided..."
+                assert rmg_reaction.isIsomorphic(
+                    test_reaction), "The reaction label provided does not match the RMGReaction provided..."
 
-
-            for name, family in self.rmg_database.kinetics.families.items():
+            for name, family in list(self.rmg_database.kinetics.families.items()):
                 if match:
                     break
 
@@ -355,7 +391,7 @@ class Reaction():
                     continue
 
                 if ((len(labeled_r) > 0) and (len(labeled_p) > 0)):
-                    logging.info( "Matched reaction to {} family".format(name))
+                    logging.info("Matched reaction to {} family".format(name))
 
                     labeled_reactants = deepcopy(labeled_r)
                     labeled_products = deepcopy(labeled_p)
@@ -397,7 +433,7 @@ class Reaction():
                 for i in l1:
                     for j in l2:
                         test_products.append([i, j])
-            for name, family in self.rmg_database.kinetics.families.items():
+            for name, family in list(self.rmg_database.kinetics.families.items()):
                 if match:
                     break
                 for test_reactant in test_reactants:
@@ -415,8 +451,8 @@ class Reaction():
                             continue
 
                         if ((len(labeled_r) > 0) and (len(labeled_p) > 0)):
-                            logging.info( "Matched reaction to {} family".format(name))
-
+                            logging.info(
+                                "Matched reaction to {} family".format(name))
 
                             labeled_reactants = deepcopy(labeled_r)
                             labeled_products = deepcopy(labeled_p)
@@ -429,8 +465,6 @@ class Reaction():
                             break
         assert match, "Could not idetify labeled reactants and products"
 
-        
-        
         reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
             test_reaction.reactants, test_reaction.products, only_families=[final_name])
 
@@ -446,6 +480,12 @@ class Reaction():
     def get_reaction_label(self, rmg_reaction=None):
         """
         A method to get the reaction label corresponding to an rmg_reaction
+
+        Variables:
+        - rmg_reaction (RMGReaction): The RMGReaction of interest
+
+        Returns:
+        - string (str): the reaction label in the format r1+r2_p1+p2
         """
 
         if not rmg_reaction:
@@ -473,6 +513,12 @@ class Reaction():
     def get_complexes(self, rmg_reaction=None):
         """
         A method to create a forward and reverse TS complexes used to initialize transition state geometries
+
+        Variables:
+        - rmg_reaction (RMGReaction): The RMGReaction of interest
+
+        Returns:
+        - complexes (dict): a dictionary containing RMGMolecules of the forward and reverse reaction complexes
         """
 
         if not rmg_reaction:
@@ -506,12 +552,19 @@ class Reaction():
 
     def generate_conformers(self, method="systematic", calculator=None):
         """
-        This isn't working right now...
+        A method to generate an ensemble of low energy conformers.
+        Currently only supports a systematic search with the goal of adding evolutionary searches
+
+        Variables: 
+        - method (str): the method of the conformer search. Currently only systematic is supported
+        - calculator (ASECalculator): the calculator you want to evaluate your conformers with.
+
+        Returns:
+        - ts (dict): a dictionary containing an ensemble of low energy transition state geometries in 
+            the forward and reverse direction
         """
         possible_methods = [
             "systematic",
-            # "ga",
-            # "es"
         ]
 
         assert calculator, "Please provide an ASE calculator object"
@@ -519,7 +572,7 @@ class Reaction():
 
         from autotst.conformer.systematic import systematic_search, find_all_combos
 
-        for direction, conformers in self.ts.iteritems():
+        for direction, conformers in self.ts.items():
             conformer = conformers[0]
             conformer.ase_molecule.set_calculator(calculator)
             #print conformer.ase_molecule.get_calculator()
@@ -549,7 +602,8 @@ class TS(Conformer):
         #####################################################
         #####################################################
         assert reaction_label, "A reaction label needs to be provided in addition to a smiles or rmg_molecule"
-        assert direction in ["forward", "reverse"], "Please provide a valid direction"
+        assert direction in ["forward",
+                             "reverse"], "Please provide a valid direction"
         self.reaction_label = reaction_label
         self.direction = direction.lower()
         self._rdkit_molecule = None
@@ -740,7 +794,7 @@ class TS(Conformer):
 
         sect is the list of atom indices belonging to one species.
         """
-        others = range(len(bm))
+        others = list(range(len(bm)))
         for idx in sect:
             others.remove(idx)
 

@@ -35,7 +35,6 @@ from ase.optimize import BFGS
 from ase.constraints import FixBondLengths
 from ase import units
 import ase
-import cPickle as pickle
 import pandas as pd
 from numpy import array
 import numpy as np
@@ -51,6 +50,13 @@ logging.basicConfig(format=FORMAT, level=logging.INFO)
 def get_energy(conformer):
     """
     A function to find the potential energy of a conformer
+
+    Variables:
+    - conformer (Conformer): the conformer object of interest
+
+    Returns:
+    - energy (float): the corresponding energy of that conformer. 
+        Will result in an error if there is no ASECalculator object attached to the ase_molecule
     """
 
     energy = conformer.ase_molecule.get_potential_energy()
@@ -61,6 +67,13 @@ def get_energy(conformer):
 def find_terminal_torsions(conformer):
     """
     A function that can find the terminal and non terminal torsions in a conformer object
+
+    Variables:
+    - conformer (Conformer): the conformer object of interest
+
+    Returns:
+    - terminal_torsions (list): a list of the terminal torsions that are not important in a conformer search
+    - non_terminal_torsions (list): a list of the internal torsions that are needed in a conformer search
     """
     terminal_torsions = []
     non_terminal_torsions = []
@@ -78,7 +91,7 @@ def find_terminal_torsions(conformer):
 
         if (atom_j.isCarbon()) and (len(atom_j.bonds) == 4):
             num_hydrogens = 0
-            for atom_other in atom_j.bonds.keys():
+            for atom_other in list(atom_j.bonds.keys()):
                 if atom_other.isHydrogen():
                     num_hydrogens += 1
 
@@ -87,7 +100,7 @@ def find_terminal_torsions(conformer):
 
         if (atom_k.isCarbon()) and (len(atom_k.bonds) == 4):
             num_hydrogens = 0
-            for atom_other in atom_k.bonds.keys():
+            for atom_other in list(atom_k.bonds.keys()):
                 if atom_other.isHydrogen():
                     num_hydrogens += 1
 

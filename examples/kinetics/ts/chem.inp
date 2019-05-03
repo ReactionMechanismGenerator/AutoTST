@@ -1,0 +1,39 @@
+ELEMENTS
+	H
+	D /2.014/
+	T /3.016/
+	C
+	CI /13.003/
+	O
+	OI /18.000/
+	N
+	Ne
+	Ar
+	He
+	Si
+	S
+	Cl
+END
+
+SPECIES
+
+
+END
+
+
+
+THERM ALL
+    300.000  1000.000  5000.000
+
+
+END
+
+
+
+REACTIONS    KCAL/MOLE   MOLES
+
+! Fitted to 59 data points; dA = *|/ 1.20266, dn = +|- 0.0242191, dEa = +|- 0.13323 kJ/mol
+react_0 + react_1 <=> prod_0 + prod_1               2.037e-03     4.257    -0.363
+
+END
+

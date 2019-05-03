@@ -31,12 +31,14 @@
 class Bond:
     """
     A class that acts as a container for bond information.
-    The information stored is as follows:
 
-    * indicies (list of ints): indicies of atoms that describe the dihedral
-    * length (float): the angle (in degrees) of the dihedral
-    * reaction_center (bool): a bood that states if this bond is in the reaction center
+    Variables:
+    - index (int): the unique bond index
+    - atom_indicies (list): indicies of atoms that describe the bond
+    - length (float): the length of the bond in angstroms
+    - reaction_center (bool): a bool that states if this bond is in the reaction center
         i.e. atoms i and j are labeled (*1, *2, *3)
+    - mask (list): a list of bools that describe if atoms are on the right side of the bond
     """
 
     def __init__(self, index, atom_indices, length, mask=None, reaction_center=False):
@@ -53,14 +55,14 @@ class Bond:
 class Angle:
     """
     A class that acts as a container for angle information.
-    The information stored is as follows:
 
-    * indicies (list of ints): indicies of atoms that describe the dihedral
-    * dihedral (float): the angle (in degrees) of the dihedral
-    * LHS (list of ints): indices of atoms that are branced off the left side of the torsion
-    * RHS (list of ints): indices of atoms that are branced off the right side of the torsion
-    * reaction_center (bool): a bool that states if this angle is in the reaction center
-        i.e. atoms i, j and, k are labeled (*1, *2, *3)
+    Variables:
+    - index (int): the unique angle index
+    - atom_indicies (list): indicies of atoms that describe the angle
+    - degree (float): the angle of the bond in degrees
+    - reaction_center (bool): a bool that states if this angle is in the reaction center
+        i.e. atoms i and j are labeled (*1, *2, *3)
+    - mask (list): a list of bools that describe if atoms are on the right side of the angle
     """
 
     def __init__(
@@ -83,13 +85,14 @@ class Angle:
 class Torsion:
     """
     A class that acts as a container for torsion information.
-    The information stored is as follows:
 
-    * indicies (list of ints): indicies of atoms that describe the dihedral
-    * dihedral (float): the angle (in degrees) of the dihedral
-    * LHS (list of ints): indices of atoms that are branced off the left side of the torsion
-    * RHS (list of ints): indices of atoms that are branced off the right side of the torsion
-        i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
+    Variables:
+    - index (int): the unique torsion index
+    - atom_indicies (list): indicies of atoms that describe the torsion
+    - dihedral (float): the angle of the dihedral in degrees
+    - reaction_center (bool): a bood that states if this torsion is in the reaction center
+        i.e. atoms i and j are labeled (*1, *2, *3)
+    - mask (list): a list of bools that describe if atoms are on the right side of the torsion
     """
 
     def __init__(
@@ -112,13 +115,15 @@ class Torsion:
 class CisTrans():
     """
     A class that acts as a container for CisTrans information.
-    The information stored is as follows:
 
-    * indicies (list of ints): indicies of atoms that describe the dihedral
-    * dihedral (float): the angle (in degrees) of the dihedral
-    * LHS (list of ints): indices of atoms that are branced off the left side of the torsion
-    * RHS (list of ints): indices of atoms that are branced off the right side of the torsion
-        i.e. (atoms i, j, and k) or (atoms j, k, and l) are labeled (*1, *2, *3)
+    Variables:
+    - index (int): the unique cistrans index
+    - atom_indicies (list): indicies of atoms that describe the cistrans
+    - dihedral (float): the angle of the dihedral in degrees
+    - reaction_center (bool): a bood that states if this cistrans is in the reaction center
+        i.e. atoms i and j are labeled (*1, *2, *3)
+    - mask (list): a list of bools that describe if atoms are on the right side of the cistrans
+    - stero (str): the sterochemistry of this cistrans bond
     """
 
     def __init__(
@@ -141,6 +146,14 @@ class CisTrans():
 
 
 class ChiralCenter():
+    """
+    A class that acts as a container for ChiralCenter information.
+
+    Variables:
+    - index (int): the unique chiralcenter index
+    - atom_index (int): index of atom that describe the chiralcenter
+    - chirality (str): the sterochemistry of this chiralcenter bond
+    """
 
     def __init__(self, index, atom_index, chirality):
         self.index = index
