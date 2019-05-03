@@ -136,7 +136,7 @@ class Job():
 
         os.environ["COMMAND"] = "g16"  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
-
+        
         attempted = False
         if os.path.exists(file_path + ".log"):
             attempted = True
@@ -163,12 +163,7 @@ class Job():
             results[smiles] = {}
             for conformer in conformers:
                 calc = calculator.get_conformer_calc(
-                    conformer=conformer,
-                    mem=calculator.mem,
-                    nprocshared=calculator.nprocshared,
-                    scratch=calculator.scratch,
-                    method=calculator.method,
-                    basis=calculator.basis
+                    conformer=conformer
                 )
                 to_calculate.append([conformer, calc])
 
@@ -326,12 +321,7 @@ class Job():
             transitionstate.reaction_label, direction, transitionstate.index)
 
         calc = calculator.get_shell_calc(transitionstate,
-                                         direction=direction,
-                                         mem=calculator.mem,
-                                         nprocshared=calculator.nprocshared,
-                                         scratch=calculator.scratch,
-                                         method=calculator.method,
-                                         basis=calculator.basis
+                                         direction=direction
                                          )
 
         if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
@@ -377,12 +367,7 @@ class Job():
         ##### For centers #####
         #######################
         calc = calculator.get_center_calc(transitionstate,
-                                          direction=direction,
-                                          mem=calculator.mem,
-                                          nprocshared=calculator.nprocshared,
-                                          scratch=calculator.scratch,
-                                          method=calculator.method,
-                                          basis=calculator.basis
+                                          direction=direction
                                           )
 
         if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
@@ -428,12 +413,7 @@ class Job():
         ##### For overall #####
         #######################
         calc = calculator.get_overall_calc(transitionstate,
-                                           direction=direction,
-                                           mem=calculator.mem,
-                                           nprocshared=calculator.nprocshared,
-                                           scratch=calculator.scratch,
-                                           method=calculator.method,
-                                           basis=calculator.basis
+                                           direction=direction
                                            )
 
         if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
@@ -581,12 +561,7 @@ class Job():
         if not validated:
             logging.info("Running an IRC to validate")
             irc_calc = calculator.get_irc_calc(
-                ts=transitionstate,
-                mem=calculator.mem,
-                nprocshared=calculator.nprocshared,
-                scratch=calculator.scratch,
-                method=calculator.method,
-                basis=calculator.basis
+                ts=transitionstate
             )
             label = self.submit_transitionstate(
                 transitionstate, irc_calc, "general")
@@ -643,11 +618,6 @@ class Job():
             calc = calculator.get_rotor_calc(
                 conformer=conformer,
                 torsion=torsion,
-                mem=calculator.mem,
-                nprocshared=calculator.nprocshared,
-                scratch=calculator.scratch,
-                method=calculator.method,
-                basis=calculator.basis,
                 steps=steps,
                 step_size=step_size,
             )
@@ -716,12 +686,7 @@ class Job():
 
             if isinstance(conformer, TS):
                 calc = calculator.get_overall_calc(conformer,
-                                                   direction=conformer.direction,
-                                                   mem=calculator.mem,
-                                                   nprocshared=calculator.nprocshared,
-                                                   scratch=calculator.scratch,
-                                                   method=calculator.method,
-                                                   basis=calculator.basis
+                                                   direction=conformer.direction
                                                    )
 
                 calc.scratch = calc.scratch.strip("/conformers")
@@ -730,12 +695,7 @@ class Job():
                 label = self.submit_transitionstate(
                     transitionstate=conformer, ase_calculator=calc)
             else:
-                calc = calculator.get_conformer_calc(conformer,
-                                                     mem=calculator.mem,
-                                                     nprocshared=calculator.nprocshared,
-                                                     scratch=calculator.scratch,
-                                                     method=calculator.method,
-                                                     basis=calculator.basis
+                calc = calculator.get_conformer_calc(conformer
                                                      )
                 calc.scratch = calc.scratch.strip("/conformers")
                 conformer.index = "X"
