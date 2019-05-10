@@ -136,7 +136,7 @@ class Job():
 
         os.environ["COMMAND"] = "g16"  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
-        
+
         attempted = False
         if os.path.exists(file_path + ".log"):
             attempted = True
@@ -267,7 +267,7 @@ class Job():
                         lowest_energy_f = f
 
             logging.info(
-                "The lowest energy conformer is {}".format(lowest_file_name))
+                "The lowest energy conformer is {}".format(lowest_energy_f))
 
             copyfile(
                 os.path.join(scratch_dir, lowest_energy_f),
