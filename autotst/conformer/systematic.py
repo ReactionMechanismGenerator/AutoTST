@@ -38,6 +38,7 @@ import time
 import ase
 from ase import Atoms
 from ase import calculators
+from ase.calculators.calculator import FileIOCalculator
 from ase.optimize import BFGS
 
 import autotst
@@ -150,6 +151,8 @@ def systematic_search(conformer,
     file_name = conformer.smiles + "_brute_force.csv"
 
     calc = conformer.ase_molecule.get_calculator()
+    if isinstance(calc, FileIOCalculator):
+        logging.info("The calculator generates input and output files.")
 
     results = []
     conformers = {}
@@ -211,6 +214,10 @@ def systematic_search(conformer,
             labels.append([ind1, ind2])
         else:
             label = conformer.smiles
+
+        if isinstance(calc, FileIOCalculator):
+            calculator.directory = "systematic_{}".format(str(i))
+            calculator.atoms = conformer.ase_molecule
 
         from ase.constraints import FixBondLengths
         c = FixBondLengths(labels)
