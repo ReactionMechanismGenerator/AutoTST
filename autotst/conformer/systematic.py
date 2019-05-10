@@ -198,7 +198,7 @@ def systematic_search(conformer,
 
     def opt_conf(conformer, calculator, i):
         """
-        A helper function to optimize the geometry of a conformer. 
+        A helper function to optimize the geometry of a conformer.
         Only for use within this parent function
         """
 
@@ -216,7 +216,7 @@ def systematic_search(conformer,
             label = conformer.smiles
 
         if isinstance(calc, FileIOCalculator):
-            calculator.directory = "systematic_{}".format(str(i))
+            calculator.directory = "systematic_{}_{}".format(str(conformer.smiles),i)
             calculator.atoms = conformer.ase_molecule
 
         from ase.constraints import FixBondLengths
