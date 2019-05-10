@@ -270,12 +270,13 @@ class Job():
                 "The lowest energy conformer is {}".format(lowest_energy_f))
 
             copyfile(
+                os.path.join(scratch_dir, lowest_energy_f),
                 os.path.join(
                     calculator.scratch,
                     "species",
                     label,
-                    lowest_energy_f[:-6] + ".log"),
-                os.path.join(scratch_dir, lowest_energy_f))
+                    lowest_energy_f[:-6] + ".log")
+            )
 
 #################################################################################
 
