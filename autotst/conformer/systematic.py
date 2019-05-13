@@ -223,7 +223,7 @@ def systematic_search(conformer,
                 type,
                 label,
                 "systematic",
-                 i)
+                 str(i))
             if not os.path.exists(calculator.directory):
                 try:
                     os.mkdirs(calculator.directory)
