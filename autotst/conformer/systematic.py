@@ -220,7 +220,7 @@ def systematic_search(conformer,
         if isinstance(calc, FileIOCalculator):
             calculator.directory = os.path.join(
                 calculator.scratch,
-                type
+                type,
                 label,
                 "systematic",
                  i)
