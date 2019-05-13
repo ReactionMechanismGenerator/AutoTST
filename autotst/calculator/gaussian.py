@@ -235,7 +235,7 @@ class Gaussian():
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(calcfc,verytight,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
+            extra="opt=(calcfc,verytight,maxcycles=900) freq IOP(5/13=1,7/33=1,2/16=3) scf=(maxcycle=900)",
             multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
