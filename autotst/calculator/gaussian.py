@@ -94,7 +94,7 @@ class Gaussian():
         """
         A method to create all of the calculators needed to perform hindered rotor calculations given a `Conformer` and a `Torsion`.
 
-        Parameters: 
+        Parameters:
         - conformer (Conformer): A `Conformer` object that you want to perform hindered rotor calculations on
         - torsion (Torsion): A `Torsion` object that you want to perform hindered rotor calculations about
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -182,7 +182,7 @@ class Gaussian():
         """
         A method that creates a calculator for a `Conformer` that will perform a geometry optimization
 
-        Parameters: 
+        Parameters:
         - conformer (Conformer): A `Conformer` object that you want to perform hindered rotor calculations on
         - torsion (Torsion): A `Torsion` object that you want to perform hindered rotor calculations about
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -235,7 +235,7 @@ class Gaussian():
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
+            extra="opt=(calcfc,verytight,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
             multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
@@ -250,7 +250,7 @@ class Gaussian():
         """
         A method to create a calculator that optimizes the reaction shell of a `TS` object
 
-        Parameters: 
+        Parameters:
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -321,7 +321,7 @@ class Gaussian():
         """
         A method to create a calculator that optimizes the reaction center of a `TS` object
 
-        Parameters: 
+        Parameters:
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -393,7 +393,7 @@ class Gaussian():
         """
         A method to create a calculator that optimizes the overall geometry of a `TS` object
 
-        Parameters: 
+        Parameters:
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -455,7 +455,7 @@ class Gaussian():
         """
         A method to create a calculator that runs an IRC calculation the overall geometry of a `TS` object
 
-        Parameters: 
+        Parameters:
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
