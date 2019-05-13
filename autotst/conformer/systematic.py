@@ -212,11 +212,24 @@ def systematic_search(conformer,
             ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
             ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
             labels.append([ind1, ind2])
+            type = "ts"
         else:
             label = conformer.smiles
+            type = "species"
 
         if isinstance(calc, FileIOCalculator):
-            calculator.directory = "systematic_{}_{}".format(str(conformer.smiles),i)
+            calculator.directory = os.path.join(
+                calculator.scratch,
+                type
+                label,
+                "systematic",
+                 i)
+            if not os.path.exists(calculator.directory):
+                try:
+                    os.mkdirs(calculator.directory)
+                except:
+                    logging.info("An error occured when creating {}".format(calculator.directory))
+
             calculator.atoms = conformer.ase_molecule
 
         from ase.constraints import FixBondLengths
