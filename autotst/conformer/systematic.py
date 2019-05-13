@@ -219,7 +219,7 @@ def systematic_search(conformer,
 
         if isinstance(calc, FileIOCalculator):
             calculator.directory = os.path.join(
-                calculator.scratch,
+                'conformer_logs',
                 type,
                 label,
                 "systematic",
