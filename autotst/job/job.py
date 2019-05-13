@@ -170,13 +170,24 @@ class Job():
         currently_running = []
         for conformer, calc in to_calculate:
 
+            # Pause if you already have 50 jobs, to be more polite to the queue
             while len(currently_running) >= 50:
                 for running_label in currently_running:
                     if self.check_complete(running_label):
                         currently_running.remove(running_label)
+                time.sleep(15)
 
             label = self.submit_conformer(conformer, calc, "general")
             currently_running.append(label)
+
+        # Wait until they're all finished
+        while len(currently_running) > 0:
+            for running_label in currently_running:
+                if self.check_complete(running_label):
+                    currently_running.remove(running_label)
+            logging.info("Waiting for {} conformers to finish.".format(len(currently_running)))
+            time.sleep(15)
+
         scratch = calculator.scratch
         for conformer, calc in to_calculate:
 
