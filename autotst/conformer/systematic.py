@@ -203,15 +203,16 @@ def systematic_search(conformer,
         """
 
         combo = combinations[i]
-        labels = []
+        #labels = []
         for bond in conformer.bonds:
             labels.append(bond.atom_indices)
 
         if isinstance(conformer, TS):
             label = conformer.reaction_label
             ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
-            ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
-            labels.append([ind1, ind2])
+            ind2 = conformer.rmg_molecule.getLabeledAtom("*2").sortingLabel
+            ind3 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
+            labels = [[ind1, ind2],[ind1,ind3],[ind2,ind3]]
             type = "ts"
         else:
             label = conformer.smiles
