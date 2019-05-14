@@ -203,9 +203,9 @@ def systematic_search(conformer,
         """
 
         combo = combinations[i]
-        #labels = []
-        for bond in conformer.bonds:
-            labels.append(bond.atom_indices)
+        # labels = []
+        # for bond in conformer.bonds:
+        #     labels.append(bond.atom_indices)
 
         if isinstance(conformer, TS):
             label = conformer.reaction_label
