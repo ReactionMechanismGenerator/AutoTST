@@ -65,7 +65,7 @@ class Job():
         A helper method that allows one to easily parse log files
         """
         symbol_dict = {
-            35: "Br"
+            35: "Br",
             17: "Cl",
             9:  "F",
             8:  "O",
