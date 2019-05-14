@@ -233,12 +233,11 @@ def systematic_search(conformer,
 
             calculator.atoms = conformer.ase_molecule
 
-        from ase.constraints import FixBondLengths,FixAtoms
-        a = FixAtoms(indices=[ind1,ind2,ind3])
+        from ase.constraints import FixBondLengths
         c = FixBondLengths(labels)
         conformer.ase_molecule.set_constraint(c)
-        conformer.ase_molecule.set_constraint(a)
-        
+
+
         conformer.ase_molecule.set_calculator(calculator)
 
         opt = BFGS(conformer.ase_molecule, logfile=None)
