@@ -218,30 +218,18 @@ def systematic_search(conformer,
             label = conformer.smiles
             type = "species"
 
-        calculator.directory = os.path.join(
-            'conformer_logs',
-            type,
-            label,
-            "systematic",
-             '{}_{}'.format(conformer.smiles,i))
-        if not os.path.exists(calculator.directory):
-            try:
-                os.mkdirs(calculator.directory)
-            except:
-                logging.info("An error occured when creating {}".format(calculator.directory))
-
         if isinstance(calc, FileIOCalculator):
-            # calculator.directory = os.path.join(
-            #     'conformer_logs',
-            #     type,
-            #     label,
-            #     "systematic",
-            #      '{}_{}'.format(conformer.smiles,i))
-            # if not os.path.exists(calculator.directory):
-            #     try:
-            #         os.mkdirs(calculator.directory)
-            #     except:
-            #         logging.info("An error occured when creating {}".format(calculator.directory))
+            calculator.directory = os.path.join(
+                'conformer_logs',
+                type,
+                label,
+                "systematic",
+                 '{}_{}'.format(conformer.smiles,i))
+            if not os.path.exists(calculator.directory):
+                try:
+                    os.mkdirs(calculator.directory)
+                except:
+                    logging.info("An error occured when creating {}".format(calculator.directory))
 
             calculator.atoms = conformer.ase_molecule
 
@@ -252,7 +240,7 @@ def systematic_search(conformer,
 
         conformer.ase_molecule.set_calculator(calculator)
 
-        opt = BFGS(conformer.ase_molecule, logfile='{}/{}_{}.log'.format(calculator.directory,conformer.smiles,i))
+        opt = BFGS(conformer.ase_molecule, logfile=False)
         opt.run(fmax=0.1)
         conformer.update_coords_from("ase")
         energy = get_energy(conformer)
