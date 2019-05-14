@@ -240,9 +240,9 @@ def systematic_search(conformer,
 
         conformer.ase_molecule.set_calculator(calculator)
 
-        opt = BFGS(conformer.ase_molecule, logfile=False)
-        opt.run(fmax=0.1)
-        conformer.update_coords_from("ase")
+        #opt = BFGS(conformer.ase_molecule, logfile=False)
+        #opt.run(fmax=0.1)
+        #conformer.update_coords_from("ase")
         energy = get_energy(conformer)
         return_dict[i] = (energy, conformer.ase_molecule.arrays,
                           conformer.ase_molecule.get_all_distances())
