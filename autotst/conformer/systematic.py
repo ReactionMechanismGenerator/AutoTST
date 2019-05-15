@@ -233,17 +233,21 @@ def systematic_search(conformer,
 
             calculator.atoms = conformer.ase_molecule
 
-        from ase.constraints import FixBondLengths
-        c = FixBondLengths(labels)
-        conformer.ase_molecule.set_constraint(c)
+        # from ase.constraints import FixBondLengths
+        # c = FixBondLengths(labels)
+        # conformer.ase_molecule.set_constraint(c)
 
 
         conformer.ase_molecule.set_calculator(calculator)
 
-        #opt = BFGS(conformer.ase_molecule, logfile=False)
-        #opt.run(fmax=0.1)
-        #conformer.update_coords_from("ase")
-        energy = get_energy(conformer)
+        if type == 'species':
+            opt = BFGS(conformer.ase_molecule, logfile=False)
+            opt.run()
+            conformer.update_coords_from("ase")
+            energy = get_energy(conformer)
+        if type == 'ts':
+            energy = get_energy(conformer)
+
         return_dict[i] = (energy, conformer.ase_molecule.arrays,
                           conformer.ase_molecule.get_all_distances())
 
