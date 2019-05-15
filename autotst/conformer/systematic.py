@@ -241,7 +241,7 @@ def systematic_search(conformer,
         conformer.ase_molecule.set_calculator(calculator)
 
         if type == 'species':
-            opt = BFGS(conformer.ase_molecule, logfile=False)
+            opt = BFGS(conformer.ase_molecule, logfile=None)
             opt.run()
             conformer.update_coords_from("ase")
             energy = get_energy(conformer)
