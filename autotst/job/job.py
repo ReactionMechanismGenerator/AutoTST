@@ -89,11 +89,6 @@ class Job():
         A helper method that will write an input file and move it to the correct scratch directory
         """
 
-        try:
-            os.makedirs(directory)
-        except OSError:
-            pass
-
         if isinstance(conformer, TS):
             label = conformer.reaction_label
             index = conformer.index
@@ -106,7 +101,10 @@ class Job():
             index = conformer.index
             file_name = label + "_" + str(index) +"_input.xyz"
             directory = os.path.join(directory, "species", label, "conformers")
-
+        try:
+            os.makedirs(directory)
+        except OSError:
+            pass
         file_path = os.path.join(directory, file_name)
         write(file_path, conformer.ase_molecule)
 
@@ -135,10 +133,12 @@ class Job():
         assert conformer, "Please provide a conformer to submit a job"
 
         file_path, label = self.write_geometry(conformer=conformer, directory=directory)
+        print(label)
 
         os.environ["FILE_PATH"] = file_path
         os.environ["CALC_LABEL"] = calculator_label
         os.environ["OPT_TYPE"] = "species"
+        os.environ["DIRECTORY"] = directory
         
         attempted = False
         if os.path.exists(file_path.replace("_input.xyz", ".xyz")):
@@ -191,6 +191,7 @@ class Job():
                     currently_running.remove(running_label)
 
         for conformer, label in calculated:
+            print(label)
 
             starting_molecule = RMGMolecule(SMILES=conformer.smiles)
             starting_molecule = starting_molecule.toSingleBonds()
@@ -244,7 +245,7 @@ class Job():
 
         for smiles, smiles_results in list(results.items()):
             scratch_dir = os.path.join(
-                calculator.scratch,
+                directory,
                 "species",
                 conformer.smiles,
                 "conformers"

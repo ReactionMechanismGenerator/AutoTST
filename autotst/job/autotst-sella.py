@@ -13,6 +13,7 @@ from ase.calculators.emt import EMT
 file_path = os.environ["FILE_PATH"]
 calc_label = os.environ["CALC_LABEL"]
 opt_type = os.environ["OPT_TYPE"]
+directory = os.environ["DIRECTORY"]
 
 atom_indicies = None
 if opt_type in ["shell", "center"]:
@@ -35,19 +36,24 @@ assert calc_label in possible_calculators, "Calculator requested is not availabl
 if calc_label.lower() == "gaussian":
     from ase.calculators.gaussian import Gaussian as ASEGaussian
     calc = ASEGaussian(
+        label=file_path.strip(".xyz"),
         method="m062x",
-        basis="cc-pVTZ"
+        basis="cc-pVTZ",
+        directory=directory
     )
+    calc.command = calc.command.replace("g09", "g16")
 elif calc_label.lower() == "nwchem":
     from ase.calculators.nwchem import NWChem as ASENWChem
     calc = ASENWChem(
+        label=file_path.strip(".xyz"),
         method="m062x",
-        basis="cc-pVTZ"
+        basis="cc-pVTZ",
+        directory=directory
     )
     
-calc = EMT()
+#calc = EMT()
 ### Setting the optimization type and the tolerance based on the 
-assert opt_type.lower() in ["overall", "shell", "center"], "Please provide a valid TS optimization type"
+assert opt_type.lower() in ["overall", "shell", "center", "species"], "Please provide a valid TS optimization type"
 
 if opt_type.lower() in ["overall", "center"]:
     order = 1
@@ -82,7 +88,7 @@ x1 = optimize(myminmode,    # Your MinMode object
               maxres=0.1,   # Maximum residual for eigensolver convergence (should be <= 1)
               )
 
-write(file_path.replace("input.xyz", ".xyz"), myminmode.atoms)
+write(file_path.replace("_input.xyz", ".xyz"), myminmode.atoms)
 
 
         

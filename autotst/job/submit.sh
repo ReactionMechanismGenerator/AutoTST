@@ -1,4 +1,4 @@
 #!/bin/sh
 
-conda activate sella
-python3 $AUTOTST/autotst/job/sella.py
+source activate sella
+python3 $AUTOTST/autotst/job/autotst-sella.py
