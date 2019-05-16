@@ -133,7 +133,6 @@ class Job():
         assert conformer, "Please provide a conformer to submit a job"
 
         file_path, label = self.write_geometry(conformer=conformer, directory=directory)
-        print(label)
 
         os.environ["FILE_PATH"] = file_path
         os.environ["CALC_LABEL"] = calculator_label
@@ -191,7 +190,6 @@ class Job():
                     currently_running.remove(running_label)
 
         for conformer, label in calculated:
-            print(label)
 
             starting_molecule = RMGMolecule(SMILES=conformer.smiles)
             starting_molecule = starting_molecule.toSingleBonds()
@@ -274,7 +272,7 @@ class Job():
                 os.path.join(
                     directory,
                     "species",
-                    label,
+                    conformer.smiles,
                     lowest_energy_f[:-6] + ".xyz")
             )
 
