@@ -88,6 +88,7 @@ class Job():
         """
         A helper method that will write an input file and move it to the correct scratch directory
         """
+
         try:
             os.makedirs(directory)
         except OSError:
@@ -98,19 +99,18 @@ class Job():
             index = conformer.index
             direction = conformer.direction
             assert opt_type in ["shell", "center", "overall"]
-
-            file_name = label + "_" + str(opt_type) + "_" + direction + "_" + str(index) + ".xyz"
+            file_name = label + "_" + str(opt_type) + "_" + direction + "_" + str(index) + "_input.xyz"
+            directory = os.path.join(directory, "ts", label, "conformers")
+        else:
+            label = conformer.smiles
+            index = conformer.index
+            file_name = label + "_" + str(index) +"_input.xyz"
+            directory = os.path.join(directory, "species", label, "conformers")
 
         file_path = os.path.join(directory, file_name)
         write(file_path, conformer.ase_molecule)
 
-        ase_calculator.write_input(conformer.ase_molecule)
-        try:
-            os.makedirs(ase_calculator.scratch)
-        except OSError:
-            pass
-
-        return file_path
+        return file_path, file_name.strip("_input.xyz")
 
     def check_complete(self, label):
         """
@@ -134,17 +134,14 @@ class Job():
         """
         assert conformer, "Please provide a conformer to submit a job"
 
-        self.write_input(conformer, ase_calculator)
+        file_path, label = self.write_geometry(conformer=conformer, directory=directory)
 
-        label = conformer.smiles + "_{}".format(conformer.index)
-        scratch = ase_calculator.scratch
-        file_path = os.path.join(scratch, label)
-
-        os.environ["COMMAND"] = "g16"  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
+        os.environ["CALC_LABEL"] = calculator_label
+        os.environ["OPT_TYPE"] = "species"
         
         attempted = False
-        if os.path.exists(file_path + ".log"):
+        if os.path.exists(file_path.replace("_input.xyz", ".xyz")):
             attempted = True
             logging.info(
                 "It appears that this job has already been run, not running it a second time.")
@@ -156,7 +153,7 @@ class Job():
 
         return label
 
-    def calculate_species(self, species=None, conformer_calculator=None, calculator=None):
+    def calculate_species(self, species=None, conformer_calculator=None, calculator_label=None, directory=".", partition="general"):
 
         logging.info("Calculating geometries for {}".format(species))
 
@@ -168,54 +165,50 @@ class Job():
         for smiles, conformers in list(species.conformers.items()):
             results[smiles] = {}
             for conformer in conformers:
-                calc = calculator.get_conformer_calc(
-                    conformer=conformer
-                )
-                to_calculate.append([conformer, calc])
+                to_calculate.append(conformer)
 
         currently_running = []
-        for conformer, calc in to_calculate:
+        calculated = []
+        for conformer in to_calculate:
 
             while len(currently_running) >= 50:
                 for running_label in currently_running:
                     if self.check_complete(running_label):
                         currently_running.remove(running_label)
 
-            label = self.submit_conformer(conformer, calc, "general")
+            label = self.submit_conformer(
+                conformer=conformer, 
+                directory=directory, 
+                calculator_label=calculator_label, 
+                partition=partition
+                )
+            calculated.append((conformer, label))
             currently_running.append(label)
-        scratch = calculator.scratch
-        for conformer, calc in to_calculate:
+            
+        while len(currently_running) > 0:
+            for running_label in currently_running:
+                if self.check_complete(running_label):
+                    currently_running.remove(running_label)
+
+        for conformer, label in calculated:
 
             starting_molecule = RMGMolecule(SMILES=conformer.smiles)
             starting_molecule = starting_molecule.toSingleBonds()
 
             scratch_dir = os.path.join(
-                calculator.scratch,
+                directory,
                 "species",
                 conformer.smiles,
                 "conformers"
             )
-            f = calc.label + ".log"
+            f = label + ".xyz"
             if not os.path.exists(os.path.join(scratch_dir, f)):
                 logging.info(
-                    "It seems that {} was never run...".format(calc.label))
-                result = False
-
-            complete, converged = calculator.verify_output_file(
-                os.path.join(scratch_dir, f)
-            )
-
-            if not complete:
-                logging.info(
-                    "It appears that {} was killed prematurely".format(calc.label))
-                result = False
-
-            elif not converged:
-                logging.info("{} failed QM optimization".format(calc.label))
+                    "It seems that {} was not successful...".format(label))
                 result = False
 
             else:
-                atoms = self.read_log(
+                atoms = self.read_geometry(
                     os.path.join(scratch_dir, f)
                 )
 
@@ -230,14 +223,14 @@ class Job():
 
                 if not starting_molecule.isIsomorphic(test_molecule):
                     logging.info(
-                        "Output geometry of {} is not isomorphic with input geometry".format(calc.label))
+                        "Output geometry of {} is not isomorphic with input geometry".format(label))
                     result = False
                 else:
                     logging.info(
-                        "{} was successful and was validated!".format(calc.label))
+                        "{} was successful and was validated!".format(label))
                     result = True
 
-            if not result:
+            """if not result:
                 fail_dir = os.path.join(scratch_dir, "failures")
                 try:
                     os.makedirs(os.path.join(scratch_dir, "failures"))
@@ -246,7 +239,7 @@ class Job():
                 move(
                     os.path.join(scratch_dir, f),
                     os.path.join(scratch_dir, "failures", f)
-                )
+                )"""
             results[conformer.smiles][f] = result
 
         for smiles, smiles_results in list(results.items()):
@@ -257,31 +250,31 @@ class Job():
                 "conformers"
             )
 
-            log_file = os.path.join(scratch_dir, "validations.yaml")
+            """log_file = os.path.join(scratch_dir, "validations.yaml")
 
             with open(log_file, "w") as to_write:
-                yaml.dump(smiles_results, to_write, default_flow_style=False)
+                yaml.dump(smiles_results, to_write, default_flow_style=False)"""
 
             lowest_energy_f = None
             lowest_energy = 1e5
 
             for f, result in list(smiles_results.items()):
                 if result:
-                    parser = ccread(os.path.join(scratch_dir, f))
-                    if parser.scfenergies[-1] < lowest_energy:
-                        lowest_energy = parser.scfenergies[-1]
+                    atoms = read(os.path.join(scratch_dir, f))
+                    if atoms.get_potential_energy() < lowest_energy:
+                        lowest_energy = atoms.get_potential_energy()
                         lowest_energy_f = f
 
             logging.info(
-                "The lowest energy conformer is {}".format(lowest_file_name))
+                "The lowest energy conformer is {}".format(lowest_energy_f))
 
             copyfile(
                 os.path.join(scratch_dir, lowest_energy_f),
                 os.path.join(
-                    calculator.scratch,
+                    directory,
                     "species",
                     label,
-                    lowest_energy_f[:-6] + ".log")
+                    lowest_energy_f[:-6] + ".xyz")
             )
 
 #################################################################################
