@@ -278,24 +278,25 @@ class Job():
 
 #################################################################################
 
-    def submit_transitionstate(self, transitionstate, ase_calculator, partition="general"):
+    def submit_transitionstate(self, transitionstate, directory=".", calculator_label="gaussian", partition="general", opt_type=None):
         """
         A methods to submit a job for a TS object based on a single calculator
         """
-        assert transitionstate, "Please provide a transitionstate to submit a job"
+        assert transitionstate, "Please provide a conformer to submit a job"
+        assert opt_type and (opt_type in ["center", "shell", "overall"]), "Please provide an optimization type you would like to perform."
 
-        self.write_input(transitionstate, ase_calculator)
-        label = ase_calculator.label
-        scratch = ase_calculator.scratch
-        file_path = os.path.join(scratch, label)
+        file_path, label = self.write_geometry(conformer=conformer, directory=directory)
 
-        os.environ["COMMAND"] = "g16"  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
-
+        os.environ["CALC_LABEL"] = calculator_label
+        os.environ["OPT_TYPE"] = opt_type
+        os.environ["DIRECTORY"] = directory
+        
         attempted = False
-        if os.path.exists(file_path + ".log"):
+        if os.path.exists(file_path.replace("_input.xyz", ".xyz")):
             attempted = True
-            logging.info("It appears that this job has already been run")
+            logging.info(
+                "It appears that this job has already been run, not running it a second time.")
 
         if not attempted:
             subprocess.call(
@@ -304,157 +305,53 @@ class Job():
 
         return label
 
-    def calculate_transitionstate(self, transitionstate, calculator):
+    def calculate_transitionstate(self, transitionstate, directory=".", calculator_label="gaussian", partition="general"):
         """
         A method to perform the partial optimizations for a transitionstate and arrive
         at a final geometry. Returns True if we arrived at a final geometry, returns false
         if there is an error along the way.
         """
-        #######################
-        ##### For shells  #####
-        #######################
-        direction = transitionstate.direction
 
-        ts_identifier = "{}_{}_{}".format(
-            transitionstate.reaction_label, direction, transitionstate.index)
+        for opt_type in ["shell", "center", "overall"]:
 
-        calc = calculator.get_shell_calc(transitionstate,
-                                         direction=direction
-                                         )
+            ts_identifier = "{}_{}_{}_{}".format(
+                transitionstate.reaction_label, opt_type, direction, transitionstate.index)
 
-        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-            logging.info(
-                "Submitting SHELL calculations for {}".format(ts_identifier))
-            self.write_input(transitionstate, calc)
-            label = self.submit_transitionstate(
-                transitionstate, calc, "general")
-            while not self.check_complete(label):
-                time.sleep(15)
-
-        else:
-            logging.info(
-                "It appears that we already have a complete SHELL log file for {}".format(ts_identifier))
-
-            complete, converged = calculator.verify_output_file(
-                os.path.join(calc.scratch, calc.label + ".log")
-            )
-            if not complete:
-                logging.info(
-                    "It seems that the SHELL file never completed for {} never completed, running it again".format(ts_identifier))
-                self.write_input(transitionstate, calc)
+            if not os.path.exists(os.path.join(directory, "ts", transitionstate.reaction_label, "conformers", ts_identifier + ".xyz")):
                 label = self.submit_transitionstate(
-                    transitionstate, calc, "general")
+                    transitionstate, 
+                    directory=directory,
+                    calculator_label=calculator_label,
+                    partition=partition,
+                    opt_type=opt_type)
+
                 while not self.check_complete(label):
                     time.sleep(15)
 
-        complete, converged = calculator.verify_output_file(
-            os.path.join(calc.scratch, calc.label + ".log")
-        )
+                logging.info("Calculations for {}'s {} are complete".format(ts_identifier, opt_type.upper()))
 
-        if not (complete and converged):
-            logging.info(
-                "{} failed the SHELL optimization".format(ts_identifier))
-            return False
-        logging.info(
-            "{} successfully completed the SHELL optimization!".format(ts_identifier))
-        transitionstate.ase_molecule = self.read_log(
-            os.path.join(calc.scratch, calc.label + ".log"))
-        transitionstate.update_coords_from("ase")
+                try:
+                    geometry = self.read_geometry(
+                        os.path.join(directory, "ts", transitionstate.reaction_label, "conformers", ts_identifier + ".xyz")
+                    )
+                    transitionstate.ase_molecule = geometry
+                    transitionstate.update_coords_from("ase")
+                    logging.info("Calculations for {}'s {} optimization were successful!".format(ts_identifier, opt_type.upper())))
+                except:
+                    logging.info("Calculations for {}'s {} optimization failed... :(".format(ts_identifier, opt_type.upper())))
+                    return False
+            else:
+                logging.info("Calculations for {}'s {} optimization have already been run and are complete. Reading in info.")
 
-        #######################
-        ##### For centers #####
-        #######################
-        calc = calculator.get_center_calc(transitionstate,
-                                          direction=direction
-                                          )
+                geometry = self.read_geometry(
+                    os.path.join(directory, "ts", transitionstate.reaction_label, "conformers", ts_identifier + ".xyz")
+                )
 
-        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-            logging.info(
-                "Submitting CENTER calculations for {}".format(ts_identifier))
-            self.write_input(transitionstate, calc)
-            label = self.submit_transitionstate(
-                transitionstate, calc, "general")
-            while not self.check_complete(label):
-                time.sleep(15)
-
-        else:
-            logging.info(
-                "It appears that we already have a complete CENTER log file for {}".format(ts_identifier))
-
-            complete, converged = calculator.verify_output_file(
-                os.path.join(calc.scratch, calc.label + ".log")
-            )
-            if not complete:
-                logging.info(
-                    "It seems that the CENTER file never completed for {} never completed, running it again".format(ts_identifier))
-                self.write_input(transitionstate, calc)
-                label = self.submit_transitionstate(
-                    transitionstate, calc, "general")
-                while not self.check_complete(label):
-                    time.sleep(15)
-
-        complete, converged = calculator.verify_output_file(
-            os.path.join(calc.scratch, calc.label + ".log")
-        )
-
-        if not (complete and converged):
-            logging.info(
-                "{} failed the CENTER optimization".format(ts_identifier))
-            return False
-        logging.info(
-            "{} successfully completed the CENTER optimization!".format(ts_identifier))
-        transitionstate.ase_molecule = self.read_log(
-            os.path.join(calc.scratch, calc.label + ".log"))
-        transitionstate.update_coords_from("ase")
-
-        #######################
-        ##### For overall #####
-        #######################
-        calc = calculator.get_overall_calc(transitionstate,
-                                           direction=direction
-                                           )
-
-        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-            logging.info(
-                "Submitting OVERALL calculations for {}".format(ts_identifier))
-            self.write_input(transitionstate, calc)
-            label = self.submit_transitionstate(
-                transitionstate, calc, "general")
-            while not self.check_complete(label):
-                time.sleep(15)
-
-        else:
-            logging.info(
-                "It appears that we already have a complete OVERALL log file for {}".format(ts_identifier))
-
-            complete, converged = calculator.verify_output_file(
-                os.path.join(calc.scratch, calc.label + ".log")
-            )
-            if not complete:
-                logging.info(
-                    "It seems that the OVERALL file never completed for {} never completed, running it again".format(ts_identifier))
-                self.write_input(transitionstate, calc)
-                label = self.submit_transitionstate(
-                    transitionstate, calc, "general")
-                while not self.check_complete(label):
-                    time.sleep(15)
-
-        complete, converged = calculator.verify_output_file(
-            os.path.join(calc.scratch, calc.label + ".log")
-        )
-
-        if not (complete and converged):
-            logging.info(
-                "{} failed the OVERALL optimization".format(ts_identifier))
-            return False
-        logging.info(
-            "{} successfully completed the OVERALL optimization!".format(ts_identifier))
-        transitionstate.ase_molecule = self.read_log(
-            os.path.join(calc.scratch, calc.label + ".log"))
-        transitionstate.update_coords_from("ase")
+                transitionstate.ase_molecule = geometry
+                transitionstate.update_coords_from("ase")
 
         logging.info(
-            "Calculations for {} are complete and resulted in a normal termination!".format(ts_identifier))
+            "Calculations for {} are complete and resulted in a normal termination!".format(transitionstate.reaction_label))
         return True
 
     def calculate_reaction(self, reaction=None, conformer_calculator=None, calculator=None, vibrational_analysis=True):
