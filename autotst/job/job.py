@@ -15,6 +15,7 @@ import rmgpy
 from ase.calculators.gaussian import Gaussian as ASEGaussian
 from ase.atoms import Atom, Atoms
 import ase
+from ase.io import read, write
 import rdkit.Chem.rdDistGeom
 import rdkit.DistanceGeometry
 from rdkit.Chem.Pharm3D import EmbedLib
@@ -44,7 +45,9 @@ class Job():
             self,
             reaction=None,
             calculator=None,
-            conformer_calculator=None):
+            conformer_calculator=None,
+            directory="."
+            ):
 
         self.reaction = reaction
         if isinstance(reaction, Reaction):
@@ -60,7 +63,7 @@ class Job():
     def __repr__(self):
         return "< Job '{}'>".format(self.label)
 
-    def read_log(self, file_path=None):
+    def read_geometry(self, file_path=None):
         """
         A helper method that allows one to easily parse log files
         """
@@ -81,10 +84,25 @@ class Job():
 
         return Atoms(atoms)
 
-    def write_input(self, conformer, ase_calculator):
+    def write_geometry(self, conformer, directory=".", opt_type=None):
         """
         A helper method that will write an input file and move it to the correct scratch directory
         """
+        try:
+            os.makedirs(directory)
+        except OSError:
+            pass
+
+        if isinstance(conformer, TS):
+            label = conformer.reaction_label
+            index = conformer.index
+            direction = conformer.direction
+            assert opt_type in ["shell", "center", "overall"]
+
+            file_name = label + "_" + str(opt_type) + "_" + direction + "_" + str(index) + ".xyz"
+
+        file_path = os.path.join(directory, file_name)
+        write(file_path, conformer.ase_molecule)
 
         ase_calculator.write_input(conformer.ase_molecule)
         try:
@@ -92,19 +110,7 @@ class Job():
         except OSError:
             pass
 
-        move(
-            ase_calculator.label + ".com",
-            os.path.join(
-                ase_calculator.scratch,
-                ase_calculator.label + ".com"
-            ))
-
-        move(
-            ase_calculator.label + ".ase",
-            os.path.join(
-                ase_calculator.scratch,
-                ase_calculator.label + ".ase"
-            ))
+        return file_path
 
     def check_complete(self, label):
         """
@@ -122,7 +128,7 @@ class Job():
 
 #################################################################################
 
-    def submit_conformer(self, conformer, ase_calculator, partition="general"):
+    def submit_conformer(self, conformer, directory=".", calculator_label="gaussian", partition="general"):
         """
         A methods to submit a job based on the calculator and partition provided
         """

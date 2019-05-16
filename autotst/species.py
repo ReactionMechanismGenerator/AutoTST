@@ -348,7 +348,7 @@ class Conformer():
         p = py3Dmol.view(width=600, height=600)
         p.addModel(mb, "sdf")
         p.setStyle({'stick': {}})
-        p.setBackgroundColor('0xeeeeee')
+        p.setBackgroundColor('0xffffff')
         p.zoomTo()
         return p.show()
 
