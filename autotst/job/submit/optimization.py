@@ -14,6 +14,7 @@ file_path = os.environ["FILE_PATH"]
 calc_label = os.environ["CALC_LABEL"]
 opt_type = os.environ["OPT_TYPE"]
 directory = os.environ["DIRECTORY"]
+multiplicity = os.environ["MULT"]
 
 atom_indicies = None
 if opt_type in ["shell", "center"]:
@@ -39,7 +40,8 @@ if calc_label.lower() == "gaussian":
         label=file_path.strip(".xyz"),
         method="m062x",
         basis="cc-pVTZ",
-        directory=directory
+        directory=directory,
+        multiplicity=int(multiplicity)
     )
     calc.command = calc.command.replace("g09", "g16")
 elif calc_label.lower() == "nwchem":

@@ -95,7 +95,7 @@ class Job():
             direction = conformer.direction
             assert opt_type in ["shell", "center", "overall", "irc"]
             file_name = label + "_" + str(opt_type) + "_" + direction + "_" + str(index) + "_input.xyz"
-            if opt_type == "irc"
+            if opt_type == "irc":
                 directory = os.path.join(directory, "ts", label, "irc")
             else:
                 directory = os.path.join(directory, "ts", label, "conformers")
@@ -141,6 +141,7 @@ class Job():
         os.environ["CALC_LABEL"] = calculator_label
         os.environ["OPT_TYPE"] = "species"
         os.environ["DIRECTORY"] = directory
+        os.environ["MULT"] = str(conformer.rmg_molecule.multiplicity)
         
         attempted = False
         if os.path.exists(file_path.replace("_input.xyz", ".xyz")):
@@ -288,12 +289,26 @@ class Job():
         assert transitionstate, "Please provide a conformer to submit a job"
         assert opt_type and (opt_type in ["center", "shell", "overall", "irc"]), "Please provide an optimization type you would like to perform."
 
-        file_path, label = self.write_geometry(conformer=conformer, directory=directory)
+        file_path, label = self.write_geometry(conformer=transitionstate, directory=directory, opt_type=opt_type)
 
         os.environ["FILE_PATH"] = file_path
         os.environ["CALC_LABEL"] = calculator_label
         os.environ["OPT_TYPE"] = opt_type
         os.environ["DIRECTORY"] = directory
+        os.environ["MULT"] = str(transitionstate.rmg_molecule.multiplicity)
+
+        if opt_type == "shell":
+            indicies = ""
+            for atom in transitionstate.rmg_molecule.atoms:
+                if atom.label != "":
+                    indicies += str(atom.sortingLabel) + ","
+            os.environ["ATOM_INDICIES"] = indicies
+        elif opt_type == "center":
+            indicies = ""
+            for atom in transitionstate.rmg_molecule.atoms:
+                if atom.label == "":
+                    indicies += str(atom.sortingLabel) + ","
+            os.environ["ATOM_INDICIES"] = indicies
         
         attempted = False
         if os.path.exists(file_path.replace("_input.xyz", ".xyz")):
@@ -323,7 +338,7 @@ class Job():
         for opt_type in ["shell", "center", "overall"]:
 
             ts_identifier = "{}_{}_{}_{}".format(
-                transitionstate.reaction_label, opt_type, direction, transitionstate.index)
+                transitionstate.reaction_label, opt_type, transitionstate.direction, transitionstate.index)
 
             if not os.path.exists(os.path.join(directory, "ts", transitionstate.reaction_label, "conformers", ts_identifier + ".xyz")):
                 label = self.submit_transitionstate(
@@ -344,9 +359,9 @@ class Job():
                     )
                     transitionstate.ase_molecule = geometry
                     transitionstate.update_coords_from("ase")
-                    logging.info("Calculations for {}'s {} optimization were successful!".format(ts_identifier, opt_type.upper())))
+                    logging.info("Calculations for {}'s {} optimization were successful!".format(ts_identifier, opt_type.upper()))
                 except:
-                    logging.info("Calculations for {}'s {} optimization failed... :(".format(ts_identifier, opt_type.upper())))
+                    logging.info("Calculations for {}'s {} optimization failed... :(".format(ts_identifier, opt_type.upper()))
                     return False
             else:
                 logging.info("Calculations for {}'s {} optimization have already been run and are complete. Reading in info.")
@@ -379,7 +394,7 @@ class Job():
             for transitionstate in transitionstates:
 
                 process = Process(target=self.calculate_transitionstate, args=(
-                    transitionstate, directory, calculator_label="gaussian", partition="general"))
+                    transitionstate, directory, "gaussian", partition))
                 processes[process.name] = process
 
         for name, process in list(processes.items()):
