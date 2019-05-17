@@ -177,7 +177,8 @@ class Gaussian():
     def get_conformer_calc(self,
                            conformer=None,
                            settings=None,
-                           scratch=None
+                           scratch=None,
+                           convergence=None
                            ):
         """
         A method that creates a calculator for a `Conformer` that will perform a geometry optimization
@@ -189,6 +190,7 @@ class Gaussian():
         - scratch (str): a directory where you want log files to be written to
         - steps (int): the number of steps you want performed in this scan
         - step_size (float): the size, in degrees, of the step you to scan along
+        - convergence (str): ['verytight','tight','' (default)], specifies the convergence criteria of the geometry optimization
 
         Returns:
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
@@ -197,6 +199,8 @@ class Gaussian():
             settings = self.settings
         if scratch is None:
             scratch = self.scratch
+        if convergence is None:
+            convergence = ''
 
         method = settings["method"]
         basis = settings["basis"]
@@ -235,7 +239,7 @@ class Gaussian():
             scratch=new_scratch,
             method=method,
             basis=basis,
-            extra="opt=(CalcFC,Tight,MaxCycles=900) freq IOp(7/33=1,2/16=3) scf=(MaxCycle=900)",
+            extra="opt=(CalcFC,MaxCycles=900,{}) freq IOp(7/33=1,2/16=3) scf=(MaxCycle=900)".format(convergence),
             multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
         del calc.parameters['force']
