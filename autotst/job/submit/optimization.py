@@ -48,9 +48,10 @@ elif calc_label.lower() == "nwchem":
     from ase.calculators.nwchem import NWChem as ASENWChem
     calc = ASENWChem(
         label=file_path.strip(".xyz"),
-        method="m062x",
+        xc="m062x",
         basis="cc-pVTZ",
-        directory=directory
+        #directory=directory,
+        multiplicity=int(multiplicity)
     )
     
 #calc = EMT()
