@@ -93,9 +93,12 @@ class Job():
             label = conformer.reaction_label
             index = conformer.index
             direction = conformer.direction
-            assert opt_type in ["shell", "center", "overall"]
+            assert opt_type in ["shell", "center", "overall", "irc"]
             file_name = label + "_" + str(opt_type) + "_" + direction + "_" + str(index) + "_input.xyz"
-            directory = os.path.join(directory, "ts", label, "conformers")
+            if opt_type == "irc"
+                directory = os.path.join(directory, "ts", label, "irc")
+            else:
+                directory = os.path.join(directory, "ts", label, "conformers")
         else:
             label = conformer.smiles
             index = conformer.index
@@ -283,7 +286,7 @@ class Job():
         A methods to submit a job for a TS object based on a single calculator
         """
         assert transitionstate, "Please provide a conformer to submit a job"
-        assert opt_type and (opt_type in ["center", "shell", "overall"]), "Please provide an optimization type you would like to perform."
+        assert opt_type and (opt_type in ["center", "shell", "overall", "irc"]), "Please provide an optimization type you would like to perform."
 
         file_path, label = self.write_geometry(conformer=conformer, directory=directory)
 
@@ -299,9 +302,14 @@ class Job():
                 "It appears that this job has already been run, not running it a second time.")
 
         if not attempted:
-            subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/job/submit/optimization.sh""".format(
-                    label, partition), shell=True)
+            if "irc" == opt_type:
+                subprocess.call(
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/job/submit/irc.sh""".format(
+                        label, partition), shell=True)
+            else:
+                subprocess.call(
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/job/submit/optimization.sh""".format(
+                        label, partition), shell=True)
 
         return label
 
@@ -354,7 +362,7 @@ class Job():
             "Calculations for {} are complete and resulted in a normal termination!".format(transitionstate.reaction_label))
         return True
 
-    def calculate_reaction(self, reaction=None, conformer_calculator=None, calculator=None, vibrational_analysis=True):
+    def calculate_reaction(self, reaction, directory=".", calculator_label="gaussian", conformer_calculator=None, partition="general", vibrational_analysis=False):
         """
         A method to run calculations for all tranitionstates for a reaction
         """
@@ -371,7 +379,7 @@ class Job():
             for transitionstate in transitionstates:
 
                 process = Process(target=self.calculate_transitionstate, args=(
-                    transitionstate, calculator))
+                    transitionstate, directory, calculator_label="gaussian", partition="general"))
                 processes[process.name] = process
 
         for name, process in list(processes.items()):
@@ -380,7 +388,6 @@ class Job():
                     if not running.is_alive():
                         currently_running.remove(name)
             process.start()
-            # process.join()
             currently_running.append(name)
 
         complete = False
@@ -391,10 +398,14 @@ class Job():
                 if not process.is_alive():
                     currently_running.remove(name)
 
+        # Currently cannot validate TSs using sella because of the following issues
+        #   - Unsure how to use IRC package in sella
+        #   -   
+        """
         results = []
         for direction, transitionstates in list(reaction.ts.items()):
             for transitionstate in transitionstates:
-                f = "{}_{}_{}.log".format(
+                f = "{}_{}_{}.xyz".format(
                     reaction.label, direction, transitionstate.index)
                 path = os.path.join(calculator.scratch, "ts",
                                     reaction.label, "conformers", f)
@@ -415,21 +426,32 @@ class Job():
 
                 results.append([energy, transitionstate, f])
 
-        results = pd.DataFrame(
-            results, columns=["energy", "transitionstate", "file"]).sort_values("energy")
+        for direction, transitionstates in list(reaction.ts.items()):
 
-        if results.shape[0] == 0:
-            logging.info(
-                "No transition state for {} was successfully calculated... :(".format(reaction))
-            return False
-        got_one = False
-        for index in range(results.shape[0]):
-            ts = results.transitionstate[index]
-            got_one = self.validate_transitionstate(
-                transitionstate=ts, calculator=calculator, vibrational_analysis=vibrational_analysis)
-            if got_one:
-                lowest_energy_file = results.file[index]
-                break
+            for transitionstate in transitionstates:
+
+                process = Process(target=self.validate_transitionstate, args=(
+                    transitionstate, directory,calculator_label,partition ))
+                processes[process.name] = process
+
+        for name, process in list(processes.items()):
+            while len(currently_running) >= 50:
+                for running in currently_running:
+                    if not running.is_alive():
+                        currently_running.remove(name)
+            process.start()
+            # process.join()
+            currently_running.append(name)
+
+        complete = False
+        while len(currently_running) > 0:
+            for name, process in list(processes.items()):
+                if not (name in currently_running):
+                    continue
+                if not process.is_alive():
+                    currently_running.remove(name)
+
+
 
         if not got_one:
             logging.info(
@@ -444,10 +466,22 @@ class Job():
         )
         logging.info("The lowest energy file is {}! :)".format(
             lowest_energy_file))
+        """
         return True
 
-    def validate_transitionstate(self, transitionstate, calculator, vibrational_analysis=True):
 
+    def validate_transitionstate(self, transitionstate, directory=".", calculator_label="gaussian", partition="general"):
+        
+        label = self.submit_transitionstate(
+            transitionstate, 
+            directory=directory, 
+            calculator_label=calculator_label, 
+            partition=partition, 
+            opt_type="irc")
+        while not self.check_complete(label):
+            time.sleep(15)
+
+        
         validated = False
         if vibrational_analysis:
             vib = VibrationalAnalysis(
