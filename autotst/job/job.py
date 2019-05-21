@@ -152,7 +152,12 @@ class Job():
         return label
 
     def calculate_conformer(self, conformer, calculator):
-        calc = calculator.get_conformer_calc(conformer=conformer)
+
+        if isinstance(calculator,Gaussian):
+            calc = calculator.get_conformer_calc(conformer=conformer,convergence='Tight')
+
+        else:
+            calc = calculator.get_conformer_calc(conformer=conformer)
 
         label = self.submit_conformer(conformer, calc, "general")
         currently_running.append(label)
