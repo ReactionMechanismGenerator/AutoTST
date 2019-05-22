@@ -587,8 +587,6 @@ class TS(Conformer):
                 self.rmg_molecule = RMGMolecule(SMILES=smiles)
 
             self.rmg_molecule.updateMultiplicity()
-            #self.get_molecules()
-            #self.get_geometries()
             self._symmetry_number = None
 
         else:
@@ -631,7 +629,7 @@ class TS(Conformer):
     @property
     def rdkit_molecule(self):
         if (self._rdkit_molecule is None) and self.distance_data:
-            self._rdkit_molecule = self.get_rdkit_mol()[0]
+            self._rdkit_molecule = self.get_rdkit_mol()
         return self._rdkit_molecule
 
     @property
@@ -646,8 +644,6 @@ class TS(Conformer):
         returns both the rdkit_molecule and the bm
         """
         self.rdkit_molecule = Conformer(rmg_molecule=self.rmg_molecule).get_rdkit_mol()
-        
-
 
         self.get_labels()
         for i, atom in enumerate(self.rmg_molecule.atoms):
@@ -686,7 +682,7 @@ class TS(Conformer):
             logging.info("Now attempting to embed using edited bounds matrix.")
 
             self.rd_embed()
-        return self.rdkit_molecule, self.bm
+        return self.rdkit_molecule
 
     def get_bounds_matrix(self):
         """

@@ -52,7 +52,7 @@ from ase.calculators.gaussian import Gaussian as ASEGaussian
 class Gaussian():
 
     def __init__(self,
-                 conformer=None
+                 conformer=None, # Either a transition state or a conformer
                  settings={
                      "method": "m062x",
                      "basis": "cc-pVTZ",
@@ -71,6 +71,7 @@ class Gaussian():
 
         self.conformer = conformer
 
+        # setting the settings accordingly 
         for setting, value in list(default_settings.items()):
             if setting in list(settings.keys()):
                 assert isinstance(settings[setting], type(
@@ -85,12 +86,12 @@ class Gaussian():
         self.directory = directory
 
     def __repr__(self):
-        if isinstance(self.conformer, TS)
+        if isinstance(self.conformer, TS):
             return '<Gaussian Calculator {}>'.format(self.conformer.reaction_label)
         elif isinstance(self.conformer, Conformer):
             return '<Gaussian Calculator {}>'.format(self.conformer.smiles)
         else:
-            return '<Gaussian Calculator {}>'.format(None)
+            return '<Gaussian Calculator>'
 
     def get_rotor_calc(self,
                        torsion_index=0,
@@ -111,10 +112,6 @@ class Gaussian():
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
         torsion = self.conformer.torsions[torsion_index]
-        method = self.settings["method"]
-        basis = self.settings["basis"]
-        mem = self.settings["mem"]
-        nprocshared = self.settings["nprocshared"]
 
         assert (torsion and (isinstance(torsion, Torsion))
                 ), "To create a rotor calculator, you must provide a Torsion object."
@@ -133,11 +130,11 @@ class Gaussian():
 
         if isinstance(self.conformer, TS):
             extra = "Opt=(ts,CalcFC,ModRedun)"
-            label = conformer_dir = conformer.reaction_label
+            label = conformer_dir = self.conformer.reaction_label
             label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
             conformer_type = "ts"
         elif isinstance(self.conformer, Conformer):
-            label = conformer_dir = conformer.smiles
+            label = conformer_dir = self.conformer.smiles
             label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
             conformer_type = "species"
             extra = "Opt=(CalcFC,ModRedun)"
@@ -157,15 +154,16 @@ class Gaussian():
             "rotors"
         )
 
-        ase_gaussian = ASEGaussian(mem=mem,
-                           nprocshared=nprocshared,
-                           label=label,
-                           scratch=new_scratch,
-                           method=method,
-                           basis=basis,
-                           extra=extra,
-                           multiplicity=mult,
-                           addsec=[addsec[:-1]])
+        ase_gaussian = ASEGaussian(
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
+            label=label,
+            scratch=new_scratch,
+            method=self.settings["method"],
+            basis=self.settings["basis"],
+            extra=extra,
+            multiplicity=mult,
+            addsec=[addsec[:-1]])
 
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
@@ -184,12 +182,6 @@ class Gaussian():
         Returns:
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
-
-
-        method = self.settings["method"]
-        basis = self.settings["basis"]
-        mem = self.settings["mem"]
-        nprocshared = self.settings["nprocshared"]
 
         if isinstance(self.conformer, TS):
             logging.info(
@@ -222,7 +214,7 @@ class Gaussian():
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
+            extra="opt=(calcfc,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
@@ -269,21 +261,21 @@ class Gaussian():
         combos += "{0} {1} F\n".format(ind2+1, ind3+1)
         combos += "{0} {1} {2} F".format(ind1+1, ind2+1, ind3+1)
 
-        calc = ASEGaussian(
+        ase_gaussian = ASEGaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
             label=label,
             scratch=new_scratch,
-            method=self.settings["method",
-            basis=self.settings["basis",
+            method=self.settings["method"],
+            basis=self.settings["basis"],
             extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1) scf=(maxcycle=900)",
             multiplicity=self.conformer.rmg_molecule.multiplicity,
             addsec=[combos]
         )
-        calc.atoms = self.conformer.ase_molecule
-        del calc.parameters['force']
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        del ase_gaussian.parameters['force']
 
-        return calc
+        return ase_gaussian
 
     def get_center_calc(self):
         """
@@ -299,7 +291,7 @@ class Gaussian():
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
 
-        assert direction.lower() in ["forward", "reverse"]
+        assert self.conformer.direction.lower() in ["forward", "reverse"]
 
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
@@ -318,7 +310,7 @@ class Gaussian():
         label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_center_" + str(self.conformer.index)
 
         new_scratch = os.path.join(
-            scratch,
+            self.directory,
             "ts",
             self.conformer.reaction_label,
             "conformers"
@@ -359,11 +351,6 @@ class Gaussian():
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
 
-        method = settings["method"]
-        basis = settings["basis"]
-        mem = settings["mem"]
-        nprocshared = settings["nprocshared"]
-
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
         self.conformer.rmg_molecule.updateMultiplicity()
@@ -371,7 +358,7 @@ class Gaussian():
         label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_" + str(self.conformer.index)
 
         new_scratch = os.path.join(
-            scratch,
+            self.directory,
             "ts",
             self.conformer.reaction_label,
             "conformers"
@@ -382,7 +369,7 @@ class Gaussian():
         except OSError:
             pass
 
-        calc = ASEGaussian(
+        ase_gaussian = ASEGaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
             label=label,
@@ -391,10 +378,10 @@ class Gaussian():
             basis=self.settings["basis"],
             extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900) IOP(7/33=1,2/16=3)",
             multiplicity=self.conformer.rmg_molecule.multiplicity)
-        calc.atoms = self.conformer.ase_molecule
-        del calc.parameters['force']
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        del ase_gaussian.parameters['force']
 
-        return calc
+        return ase_gaussian
 
     def get_irc_calc(self):
         """
@@ -413,10 +400,10 @@ class Gaussian():
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
         self.conformer.rmg_molecule.updateMultiplicity()
-        label = self.conformer.reaction_label + "_irc_" + direction + "_" + str(self.conformer.index)
+        label = self.conformer.reaction_label + "_irc_" + self.conformer.direction + "_" + str(self.conformer.index)
 
         new_scratch = os.path.join(
-            scratch,
+            self.directory,
             "ts",
             self.conformer.reaction_label,
             "irc"
@@ -467,9 +454,6 @@ class Gaussian():
         """
         A method to verify an IRC calc
         """
-        assert "irc" in calc.label, "The calculator provided is not an IRC calculator"
-
-        reaction_label = calc.label.split("_irc")[0]
 
         logging.info("Validating IRC file...")
         irc_path = os.path.join(
@@ -477,14 +461,14 @@ class Gaussian():
             "ts",
             self.conformer.reaction_label,
             "irc",
-            self.conformer.reaction_label + "_irc_" + direction + "_" + str(self.conformer.index) + ".log")
-
-        if not os.path.exists(irc_path):
-            logging.info(
-                "It seems that the IRC claculation has not been run.")
-            return False
+            self.conformer.reaction_label + "_irc_" + self.conformer.direction + "_" + str(self.conformer.index) + ".log"
+        )
 
         complete, converged = self.verify_output_file(irc_path)
+        if not complete:
+            logging.info(
+                "It seems that the IRC claculation did not complete")
+            return False
         if not converged:
             logging.info("The IRC calculation did not converge...")
             return False
@@ -513,14 +497,11 @@ class Gaussian():
             pth1End = sum(steps[:pth1[-1]])
             # Compare the reactants and products
             ircParse = ccread(irc_path)
-            # cf.
-            # http://cclib.sourceforge.net/wiki/index.php/Using_cclib#Additional_information
+
 
             atomcoords = ircParse.atomcoords
             atomnos = ircParse.atomnos
-            # Convert the IRC geometries into RMG molecules
-            # We don't know which is reactant or product, so take the two at the end of the
-            # paths and compare to the reactants and products
+
             mol1 = RMGMolecule()
             mol1.fromXYZ(atomnos, atomcoords[pth1End])
             mol2 = RMGMolecule()
@@ -531,7 +512,7 @@ class Gaussian():
                 products=mol2.split(),
             )
 
-            r, p = reaction_label.split("_")
+            r, p = self.conformer.reaction_label.split("_")
 
             reactants = []
             products = []
