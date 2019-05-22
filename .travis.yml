@@ -1,0 +1,32 @@
+language: c
+sudo: false
+
+stages:
+  - test
+  - name: test
+    if: branch = unittests AND type = push
+
+before_install:
+  - cd ..
+  # Install miniconda
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget http://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh -O miniconda.sh; fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH=$HOME/miniconda/bin:$PATH
+  # Update conda
+  - conda update --yes conda
+  - conda info -a
+  # Set git info
+  - git config --global user.name "Travis Deploy"
+  - git config --global user.email "sirumalla.s@husky.neu.edu"
+
+jobs:
+  include:
+    - stage: test
+      install:
+        - cd AutoTST
+        - conda env create -q -f environment.yml
+        - source activate tst_env
+        # Install codecov for coverage report
+        - conda install -y -c conda-forge codecov
+        - conda list
