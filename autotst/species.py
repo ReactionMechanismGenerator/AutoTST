@@ -180,7 +180,7 @@ class Species():
     def generate_structures(self):
         conformers = {}
         for smile in self.smiles:
-            conf = Conformer(smiles=smiles)
+            conf = Conformer(smiles=smile)
             conformers[smile] = [conf]
 
         return conformers
@@ -259,7 +259,7 @@ class Conformer():
             self._symmetry_number = self.calculate_symmetry_number()
         return self._symmetry_number
 
-    def get_rdkit_mol(self, rmg_molecule=None):
+    def get_rdkit_mol(self):
         """
         A method for creating an rdkit geometry from an rmg mol
         """
@@ -317,6 +317,7 @@ class Conformer():
             self.rmg_molecule = RMGMolecule(SMILES=self.smiles)
         self.rdkit_molecule = self.get_rdkit_mol()
         self.ase_molecule = self.get_ase_mol()
+        self.get_geometries()
 
         return self.rdkit_molecule, self.ase_molecule
 
