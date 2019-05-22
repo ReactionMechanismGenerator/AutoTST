@@ -58,6 +58,9 @@ class Species():
     """
 
     def __init__(self, smiles=[], rmg_species=None):
+        """
+        A class that holds information for Species object
+        """
 
         assert isinstance(smiles, list)
 
@@ -174,33 +177,21 @@ class Species():
             self._conformers = self.generate_structures()
         return self._conformers
 
-    def generate_structure(self, smiles=None, rmg_molecule=None):
-
-        return Conformer(smiles=smiles, rmg_molecule=rmg_molecule)
-
     def generate_structures(self):
         conformers = {}
         for smile in self.smiles:
-            conf = self.generate_structure(smiles=smile)
+            conf = Conformer(smiles=smiles)
             conformers[smile] = [conf]
 
         return conformers
 
-    def generate_conformers(self, method="systematic", calculator=None):
-        possible_methods = [
-            "systematic",
-            # "ga",
-            # "es"
-        ]
-
-        assert calculator, "Please provide an ASE calculator object"
-        assert method in possible_methods, "Please provide a valid conformer search method."
+    def generate_conformers(self, ase_calculator):
 
         from autotst.conformer.systematic import systematic_search, find_all_combos
 
         for smiles, conformers in self.conformers.items():
             conformer = conformers[0]
-            conformer.ase_molecule.set_calculator(calculator)
+            conformer.ase_molecule.set_calculator(ase_calculator)
             conformers = systematic_search(conformer)
             self.conformers[smiles] = conformers
 
@@ -272,17 +263,15 @@ class Conformer():
         """
         A method for creating an rdkit geometry from an rmg mol
         """
-        if not rmg_molecule:
-            rmg_molecule = self.rmg_molecule
 
-        assert rmg_molecule, "Cannot create an RDKit geometry without an RMG molecule object"
+        assert self.rmg_molecule, "Cannot create an RDKit geometry without an RMG molecule object"
 
-        RDMol = rmg_molecule.toRDKitMol(removeHs=False)
+        RDMol = self.rmg_molecule.toRDKitMol(removeHs=False)
         rdkit.Chem.AllChem.EmbedMolecule(RDMol)
         self.rdkit_molecule = RDMol
 
         mol_list = AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
-        for i, atom in enumerate(rmg_molecule.atoms):
+        for i, atom in enumerate(self.rmg_molecule.atoms):
             j = i + 4
             coords = mol_list[j].split()[:3]
             for k, coord in enumerate(coords):
@@ -291,16 +280,13 @@ class Conformer():
 
         return self.rdkit_molecule
 
-    def get_ase_mol(self, rmg_molecule=None):
+    def get_ase_mol(self):
         """
         A method for creating an ase atoms object from an rdkit mol
         """
 
-        if not rmg_molecule:
-            rmg_molecule = self.rmg_molecule
-
         if not self.rdkit_molecule:
-            self.get_rdkit_mol(rmg_molecule=rmg_molecule)
+            self.get_rdkit_mol()
 
         mol_list = AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
         ase_atoms = []
@@ -326,24 +312,17 @@ class Conformer():
 
         return self.ase_molecule
 
-    def get_mols(self, rmg_molecule=None):
+    def get_mols(self):
 
-        try:
-            rmg_molecule = self.rmg_molecule
-        except NameError:
-            rmg_molecule = rmg_molecule
+        self.rdkit_molecule = self.get_rdkit_mol()
+        self.ase_molecule = self.get_ase_mol()
 
-        rdmol = self.get_rdkit_mol()
-        asemol = self.get_ase_mol()
+        return self.rdkit_molecule, self.ase_molecule
 
-        return rdmol, asemol
-
-    def view(self, rdkit_molecule=None):
+    def view(self):
         """
         A method designed to create a 3D figure of the AutoTST_Molecule with py3Dmol from the rdkit_molecule
         """
-        if not rdkit_molecule:
-            rdkit_molecule = self.rdkit_molecule
         mb = Chem.MolToMolBlock(rdkit_molecule)
         p = py3Dmol.view(width=600, height=600)
         p.addModel(mb, "sdf")
@@ -352,42 +331,29 @@ class Conformer():
         p.zoomTo()
         return p.show()
 
-    def get_bonds(
-            self,
-            rdkit_molecule=None,
-            ase_molecule=None,
-            rmg_molecule=None):
+    def get_bonds(self):
         """
         A method for identifying all of the bonds in a conformer
         """
-
-        if not rdkit_molecule:
-            rdkit_molecule = self.rdkit_molecule
-        if not ase_molecule:
-            ase_molecule = self.ase_molecule
-        if not rmg_molecule:
-            rmg_molecule = self.rmg_molecule
-        rdmol_copy = rdkit_molecule
-
         bond_list = []
-        for bond in rdmol_copy.GetBonds():
+        for bond in self.rdkit_molecule.GetBonds():
             bond_list.append((bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()))
 
         bonds = []
         for index, indices in enumerate(bond_list):
             i, j = indices
 
-            length = ase_molecule.get_distance(i, j)
+            length = self.ase_molecule.get_distance(i, j)
             center = False
-            if ((rmg_molecule.atoms[i].label) and (
-                    rmg_molecule.atoms[j].label)):
+            if ((self.rmg_molecule.atoms[i].label) and (
+                    self.rmg_molecule.atoms[j].label)):
                 center = True
 
             bond = Bond(index=index,
                         atom_indices=indices,
                         length=length,
                         reaction_center=center)
-            mask = self.get_mask(bond, rdmol_copy, ase_molecule)
+            mask = self.get_mask(bond)
             bond.mask = mask
 
             bonds.append(bond)
@@ -396,19 +362,13 @@ class Conformer():
 
         return self.bonds
 
-    def get_angles(self, rdkit_molecule=None, ase_molecule=None):
+    def get_angles(self):
         """
-        A method for identifying all of the angles in a conforemr
+        A method for identifying all of the angles in a conformer
         """
-        if not rdkit_molecule:
-            rdkit_molecule = self.rdkit_molecule
-        rdmol_copy = rdkit_molecule
-
-        if not ase_molecule:
-            ase_molecule = self.ase_molecule
 
         angle_list = []
-        for atom1 in rdmol_copy.GetAtoms():
+        for atom1 in self.rdkit_molecule.GetAtoms():
             for atom2 in atom1.GetNeighbors():
                 for atom3 in atom2.GetNeighbors():
                     if atom1.GetIdx() == atom3.GetIdx():
@@ -424,12 +384,12 @@ class Conformer():
         for index, indices in enumerate(angle_list):
             i, j, k = indices
 
-            degree = ase_molecule.get_angle(i, j, k)
+            degree = self.ase_molecule.get_angle(i, j, k)
             ang = Angle(index=index,
                         atom_indices=indices,
                         degree=degree,
                         mask=[])
-            mask = self.get_mask(ang, rdmol_copy, ase_molecule)
+            mask = self.get_mask(ang)
             reaction_center = False
 
             angles.append(Angle(index=index,
@@ -440,17 +400,12 @@ class Conformer():
         self.angles = angles
         return self.angles
 
-    def get_torsions(self, rdkit_molecule=None, ase_molecule=None):
-
-        if not rdkit_molecule:
-            rdkit_molecule = self.rdkit_molecule
-        rdmol_copy = rdkit_molecule
-
-        if not ase_molecule:
-            ase_molecule = self.ase_molecule
-
+    def get_torsions(self):
+        """
+        A method for identifying all of the torsions in a conformer
+        """
         torsion_list = []
-        for bond1 in rdmol_copy.GetBonds():
+        for bond1 in self.rdkit_molecule.GetBonds():
             atom1 = bond1.GetBeginAtom()
             atom2 = bond1.GetEndAtom()
             if atom1.IsInRing() or atom2.IsInRing():
@@ -502,13 +457,13 @@ class Conformer():
             # eached
             if (
                 "SINGLE" in str(
-                    rdmol_copy.GetBondBetweenAtoms(
+                    self.rdkit_molecule.GetBondBetweenAtoms(
                         atom1.GetIdx(),
-                        atom2.GetIdx()).GetBondType()) and rdmol_copy.GetBondBetweenAtoms(
+                        atom2.GetIdx()).GetBondType()) and self.rdkit_molecule.GetBondBetweenAtoms(
                     atom0.GetIdx(),
-                    atom1.GetIdx()) and rdmol_copy.GetBondBetweenAtoms(
+                    atom1.GetIdx()) and self.rdkit_molecule.GetBondBetweenAtoms(
                     atom1.GetIdx(),
-                    atom2.GetIdx()) and rdmol_copy.GetBondBetweenAtoms(
+                    atom2.GetIdx()) and self.rdkit_molecule.GetBondBetweenAtoms(
                         atom2.GetIdx(),
                     atom3.GetIdx())):
 
@@ -530,12 +485,12 @@ class Conformer():
         for index, indices in enumerate(torsion_list):
             i, j, k, l = indices
 
-            dihedral = ase_molecule.get_dihedral(i, j, k, l)
+            dihedral = self.ase_molecule.get_dihedral(i, j, k, l)
             tor = Torsion(index=index,
                           atom_indices=indices,
                           dihedral=dihedral,
                           mask=[])
-            mask = self.get_mask(tor, rdmol_copy, ase_molecule)
+            mask = self.get_mask(tor)
             reaction_center = False
 
             torsions.append(Torsion(index=index,
@@ -551,11 +506,9 @@ class Conformer():
         """
         A method for identifying all possible cistrans bonds in a molecule
         """
-        rdmol_copy = self.rdkit_molecule.__copy__()
-
         torsion_list = []
         cistrans_list = []
-        for bond1 in rdmol_copy.GetBonds():
+        for bond1 in self.rdkit_molecule.GetBonds():
             atom1 = bond1.GetBeginAtom()
             atom2 = bond1.GetEndAtom()
             if atom1.IsInRing() or atom2.IsInRing():
@@ -607,13 +560,13 @@ class Conformer():
             # eached
             if (
                 "DOUBLE" in str(
-                    rdmol_copy.GetBondBetweenAtoms(
+                    self.rdkit_molecule.GetBondBetweenAtoms(
                         atom1.GetIdx(),
-                        atom2.GetIdx()).GetBondType()) and rdmol_copy.GetBondBetweenAtoms(
+                        atom2.GetIdx()).GetBondType()) and self.rdkit_molecule.GetBondBetweenAtoms(
                     atom0.GetIdx(),
-                    atom1.GetIdx()) and rdmol_copy.GetBondBetweenAtoms(
+                    atom1.GetIdx()) and self.rdkit_molecule.GetBondBetweenAtoms(
                     atom1.GetIdx(),
-                    atom2.GetIdx()) and rdmol_copy.GetBondBetweenAtoms(
+                    atom2.GetIdx()) and self.rdkit_molecule.GetBondBetweenAtoms(
                         atom2.GetIdx(),
                     atom3.GetIdx())):
 
@@ -636,18 +589,18 @@ class Conformer():
         for ct_index, indices in enumerate(cistrans_list):
             i, j, k, l = indices
 
-            b0 = rdmol_copy.GetBondBetweenAtoms(i, j)
-            b1 = rdmol_copy.GetBondBetweenAtoms(j, k)
-            b2 = rdmol_copy.GetBondBetweenAtoms(k, l)
+            b0 = self.rdkit_molecule.GetBondBetweenAtoms(i, j)
+            b1 = self.rdkit_molecule.GetBondBetweenAtoms(j, k)
+            b2 = self.rdkit_molecule.GetBondBetweenAtoms(k, l)
 
             b0.SetBondDir(Chem.BondDir.ENDUPRIGHT)
             b2.SetBondDir(Chem.BondDir.ENDDOWNRIGHT)
 
-            Chem.AssignStereochemistry(rdmol_copy, force=True)
+            Chem.AssignStereochemistry(self.rdkit_molecule, force=True)
 
             if "STEREOZ" in str(b1.GetStereo()):
                 if round(self.ase_molecule.get_dihedral(i, j, k, l), -1) == 0:
-                    atom = rdmol_copy.GetAtomWithIdx(k)
+                    atom = self.rdkit_molecule.GetAtomWithIdx(k)
                     bonds = atom.GetBonds()
                     for bond in bonds:
                         indexes = [
@@ -669,7 +622,7 @@ class Conformer():
                 if round(
                     self.ase_molecule.get_dihedral(
                         i, j, k, l), -1) == 180:
-                    atom = rdmol_copy.GetAtomWithIdx(k)
+                    atom = self.rdkit_molecule.GetAtomWithIdx(k)
                     bonds = atom.GetBonds()
                     for bond in bonds:
                         indexes = [
@@ -707,20 +660,17 @@ class Conformer():
         self.cistrans = cistrans
         return self.cistrans
 
-    def get_mask(
-            self,
-            geometry,
-            rdkit_molecule=None,
-            ase_molecule=None):
+    def get_mask(self, geometry):
+        """
+        Getting the right hand mask for a geometry object:
 
-        if not rdkit_molecule:
-            rdkit_molecule = self.rdkit_molecule
-        rdmol_copy = rdkit_molecule
+        - self: an AutoTST Conformer object
+        - geometry: a Bond, Angle, Dihedral, or Torsion object 
 
-        if not ase_molecule:
-            ase_molecule = self.ase_molecule
 
-        rdkit_atoms = rdmol_copy.GetAtoms()
+        """
+
+        rdkit_atoms = self.rdkit_molecule.GetAtoms()
         if (isinstance(geometry, autotst.geometry.Torsion) or
                 isinstance(geometry, autotst.geometry.CisTrans)):
 
@@ -759,7 +709,7 @@ class Conformer():
                 complete_RHS = True
 
         mask = [index in RHS_atoms_index for index in range(
-            len(ase_molecule))]
+            len(self.ase_molecule))]
 
         return mask
 
@@ -1098,7 +1048,7 @@ class Conformer():
             'symmetry'), scratchDirectory="."))()  # Creates anonymous class
         pgc = PointGroupCalculator(settings, self.smiles, qmdata)
         pg = pgc.calculate()
-        os.remove("{}.symm".format(self.smiles))
+        #os.remove("{}.symm".format(self.smiles))
 
         if pg is not None:
             symmetry_number = pg.symmetryNumber
