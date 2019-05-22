@@ -224,7 +224,7 @@ class Conformer():
                 self.rmg_molecule = RMGMolecule(SMILES=smiles)
 
             self.rmg_molecule.updateMultiplicity()
-            self.get_mols()
+            self.get_molecules()
             self.get_geometries()
             self._symmetry_number = None
 
@@ -312,8 +312,9 @@ class Conformer():
 
         return self.ase_molecule
 
-    def get_mols(self):
-
+    def get_molecules(self):
+        if not self.rmg_molecule:
+            self.rmg_molecule = RMGMolecule(SMILES=self.smiles)
         self.rdkit_molecule = self.get_rdkit_mol()
         self.ase_molecule = self.get_ase_mol()
 
@@ -323,7 +324,7 @@ class Conformer():
         """
         A method designed to create a 3D figure of the AutoTST_Molecule with py3Dmol from the rdkit_molecule
         """
-        mb = Chem.MolToMolBlock(rdkit_molecule)
+        mb = Chem.MolToMolBlock(self.rdkit_molecule)
         p = py3Dmol.view(width=600, height=600)
         p.addModel(mb, "sdf")
         p.setStyle({'stick': {}})

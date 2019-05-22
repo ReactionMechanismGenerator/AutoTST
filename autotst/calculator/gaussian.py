@@ -52,13 +52,14 @@ from ase.calculators.gaussian import Gaussian as ASEGaussian
 class Gaussian():
 
     def __init__(self,
+                 conformer=None
                  settings={
                      "method": "m062x",
                      "basis": "cc-pVTZ",
                      "mem": "5GB",
                      "nprocshared": 20,
                  },
-                 scratch="."
+                 directory=".",
                  ):
 
         default_settings = {
@@ -67,6 +68,8 @@ class Gaussian():
             "mem": "5GB",
             "nprocshared": 20,
         }
+
+        self.conformer = conformer
 
         for setting, value in list(default_settings.items()):
             if setting in list(settings.keys()):
@@ -79,16 +82,18 @@ class Gaussian():
 
         self.command = "g16"
         self.settings = settings
-        self.scratch = scratch
+        self.directory = directory
 
     def __repr__(self):
-        return '<Gaussian Calculator>'.format(None)
+        if isinstance(self.conformer, TS)
+            return '<Gaussian Calculator {}>'.format(self.conformer.reaction_label)
+        elif isinstance(self.conformer, Conformer):
+            return '<Gaussian Calculator {}>'.format(self.conformer.smiles)
+        else:
+            return '<Gaussian Calculator {}>'.format(None)
 
     def get_rotor_calc(self,
-                       conformer=None,
-                       torsion=None,
-                       settings=None,
-                       scratch=None,
+                       torsion_index=0,
                        steps=36,
                        step_size=10.0):
         """
@@ -105,61 +110,54 @@ class Gaussian():
         Returns:
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
-        if settings is None:
-            settings = self.settings
-        if scratch is None:
-            scratch = self.scratch
-
-        method = settings["method"]
-        basis = settings["basis"]
-        mem = settings["mem"]
-        nprocshared = settings["nprocshared"]
+        torsion = self.conformer.torsions[torsion_index]
+        method = self.settings["method"]
+        basis = self.settings["basis"]
+        mem = self.settings["mem"]
+        nprocshared = self.settings["nprocshared"]
 
         assert (torsion and (isinstance(torsion, Torsion))
                 ), "To create a rotor calculator, you must provide a Torsion object."
 
         assert isinstance(
-            conformer, Conformer), "A Conformer object was not provided..."
+            self.conformer, Conformer), "A Conformer object was not provided..."
 
-        if isinstance(conformer, TS):
-            extra = "Opt=(ts,CalcFC,ModRedun)"
-        else:
-            extra = "Opt=(CalcFC,ModRedun)"
-
-        string = ""
-        for bond in conformer.bonds:
+        addsec = ""
+        for bond in self.conformer.bonds:
             i, j = bond.atom_indices
-            string += "B {} {}\n".format(i + 1, j + 1)
+            addsec += "B {} {}\n".format(i + 1, j + 1)
 
         i, j, k, l = torsion.atom_indices
-        string += "D {} {} {} {} S {} {}\n".format(
+        addsec += "D {} {} {} {} S {} {}\n".format(
             i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
 
-        if isinstance(conformer, TS):
-            label = da = conformer.reaction_label
+        if isinstance(self.conformer, TS):
+            extra = "Opt=(ts,CalcFC,ModRedun)"
+            label = conformer_dir = conformer.reaction_label
             label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
-            t = "ts"
-        elif isinstance(conformer, Conformer):
-            label = da = conformer.smiles
+            conformer_type = "ts"
+        elif isinstance(self.conformer, Conformer):
+            label = conformer_dir = conformer.smiles
             label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
-            t = "species"
+            conformer_type = "species"
+            extra = "Opt=(CalcFC,ModRedun)"
 
-        for locked_torsion in conformer.torsions:  # TODO: maybe doesn't work;
+        for locked_torsion in self.conformer.torsions:  # TODO: maybe doesn't work;
             if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
                 a, b, c, d = locked_torsion.atom_indices
-                string += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)
+                addsec += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)
 
-        conformer.rmg_molecule.updateMultiplicity()
-        mult = conformer.rmg_molecule.multiplicity
+        self.conformer.rmg_molecule.updateMultiplicity()
+        mult = self.conformer.rmg_molecule.multiplicity
 
         new_scratch = os.path.join(
-            scratch,
-            t,
-            da,
+            self.directory,
+            conformer_type,
+            conformer_dir,
             "rotors"
         )
 
-        calc = ASEGaussian(mem=mem,
+        ase_gaussian = ASEGaussian(mem=mem,
                            nprocshared=nprocshared,
                            label=label,
                            scratch=new_scratch,
@@ -167,18 +165,13 @@ class Gaussian():
                            basis=basis,
                            extra=extra,
                            multiplicity=mult,
-                           addsec=[string[:-1]])
+                           addsec=[addsec[:-1]])
 
-        calc.atoms = conformer.ase_molecule
-        del calc.parameters['force']
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        del ase_gaussian.parameters['force']
+        return ase_gaussian
 
-        return calc
-
-    def get_conformer_calc(self,
-                           conformer=None,
-                           settings=None,
-                           scratch=None
-                           ):
+    def get_conformer_calc(self):
         """
         A method that creates a calculator for a `Conformer` that will perform a geometry optimization
 
@@ -187,39 +180,33 @@ class Gaussian():
         - torsion (Torsion): A `Torsion` object that you want to perform hindered rotor calculations about
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
         - scratch (str): a directory where you want log files to be written to
-        - steps (int): the number of steps you want performed in this scan
-        - step_size (float): the size, in degrees, of the step you to scan along
 
         Returns:
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
-        if settings is None:
-            settings = self.settings
-        if scratch is None:
-            scratch = self.scratch
 
-        method = settings["method"]
-        basis = settings["basis"]
-        mem = settings["mem"]
-        nprocshared = settings["nprocshared"]
 
-        if isinstance(conformer, TS):
+        method = self.settings["method"]
+        basis = self.settings["basis"]
+        mem = self.settings["mem"]
+        nprocshared = self.settings["nprocshared"]
+
+        if isinstance(self.conformer, TS):
             logging.info(
                 "TS object provided, cannot obtain a species calculator for a TS")
             return None
 
         assert isinstance(
-            conformer, Conformer), "A Conformer object was not provided..."
+            self.conformer, Conformer), "A Conformer object was not provided..."
 
-        conformer.rmg_molecule.updateMultiplicity()
+        self.conformer.rmg_molecule.updateMultiplicity()
 
-        short_label = conformer.smiles
-        label = short_label + "_{}".format(conformer.index)
+        label = "{}_{}".format(self.conformer.smiles, self.conformer.index)
 
         new_scratch = os.path.join(
-            scratch,
+            self.directory,
             "species",
-            short_label,
+            self.conformer.smiles,
             "conformers"
         )
 
@@ -228,25 +215,20 @@ class Gaussian():
         except OSError:
             pass
 
-        calc = ASEGaussian(
-            mem=mem,
-            nprocshared=nprocshared,
+        ase_gaussian = ASEGaussian(
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
             label=label,
             scratch=new_scratch,
-            method=method,
-            basis=basis,
+            method=self.settings["method"],
+            basis=self.settings["basis"],
             extra="opt=(calcfc,verytight,gdiis,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
-            multiplicity=conformer.rmg_molecule.multiplicity)
-        calc.atoms = conformer.ase_molecule
-        del calc.parameters['force']
+            multiplicity=self.conformer.rmg_molecule.multiplicity)
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        del ase_gaussian.parameters['force']
+        return ase_gaussian
 
-        return calc
-
-    def get_shell_calc(self,
-                       ts=None,
-                       direction="forward",
-                       settings=None,
-                       scratch=None):
+    def get_shell_calc(self):
         """
         A method to create a calculator that optimizes the reaction shell of a `TS` object
 
@@ -254,34 +236,22 @@ class Gaussian():
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
-        - scratch (str): a directory where you want log files to be written to
+        - directory (str): a directory where you want log files to be written to
 
         Returns:
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
+        assert isinstance(self.conformer, TS), "A TS object was not provided..."
+        assert self.conformer.direction.lower() in ["forward", "reverse"]
 
-        if settings is None:
-            settings = self.settings
-        if scratch is None:
-            scratch = self.scratch
+        self.conformer.rmg_molecule.updateMultiplicity()
 
-        method = settings["method"]
-        basis = settings["basis"]
-        mem = settings["mem"]
-        nprocshared = settings["nprocshared"]
-
-        assert direction.lower() in ["forward", "reverse"]
-
-        assert isinstance(ts, TS), "A TS object was not provided..."
-
-        ts.rmg_molecule.updateMultiplicity()
-
-        label = ts.reaction_label + "_" + direction.lower() + "_shell_" + str(ts.index)
+        label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_shell_" + str(self.conformer.index)
 
         new_scratch = os.path.join(
-            scratch,
+            self.directory,
             "ts",
-            ts.reaction_label,
+            self.conformer.reaction_label,
             "conformers"
         )
 
@@ -290,34 +260,32 @@ class Gaussian():
         except OSError:
             pass
 
-        ind1 = ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
-        ind2 = ts.rmg_molecule.getLabeledAtom("*2").sortingLabel
-        ind3 = ts.rmg_molecule.getLabeledAtom("*3").sortingLabel
+        ind1 = self.conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
+        ind2 = self.conformer.rmg_molecule.getLabeledAtom("*2").sortingLabel
+        ind3 = self.conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
 
         combos = ""
         combos += "{0} {1} F\n".format(ind1+1, ind2+1)
         combos += "{0} {1} F\n".format(ind2+1, ind3+1)
         combos += "{0} {1} {2} F".format(ind1+1, ind2+1, ind3+1)
 
-        calc = ASEGaussian(mem=mem,
-                           nprocshared=nprocshared,
-                           label=label,
-                           scratch=new_scratch,
-                           method=method,
-                           basis=basis,
-                           extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1) scf=(maxcycle=900)",
-                           multiplicity=ts.rmg_molecule.multiplicity,
-                           addsec=[combos])
-        calc.atoms = ts.ase_molecule
+        calc = ASEGaussian(
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
+            label=label,
+            scratch=new_scratch,
+            method=self.settings["method",
+            basis=self.settings["basis",
+            extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1) scf=(maxcycle=900)",
+            multiplicity=self.conformer.rmg_molecule.multiplicity,
+            addsec=[combos]
+        )
+        calc.atoms = self.conformer.ase_molecule
         del calc.parameters['force']
 
         return calc
 
-    def get_center_calc(self,
-                        ts=None,
-                        direction="forward",
-                        settings=None,
-                        scratch=None):
+    def get_center_calc(self):
         """
         A method to create a calculator that optimizes the reaction center of a `TS` object
 
@@ -331,38 +299,28 @@ class Gaussian():
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
 
-        if settings is None:
-            settings = self.settings
-        if scratch is None:
-            scratch = self.scratch
-
-        method = settings["method"]
-        basis = settings["basis"]
-        mem = settings["mem"]
-        nprocshared = settings["nprocshared"]
-
         assert direction.lower() in ["forward", "reverse"]
 
-        assert isinstance(ts, TS), "A TS object was not provided..."
+        assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
         indicies = []
-        for i, atom in enumerate(ts.rmg_molecule.atoms):
+        for i, atom in enumerate(self.conformer.rmg_molecule.atoms):
             if not (atom.label != ""):
                 indicies.append(i)
 
-        combos = ""
+        addsec = ""
         for combo in list(itertools.combinations(indicies, 2)):
             a, b = combo
-            combos += "{0} {1} F\n".format(a + 1, b + 1)
+            addsec += "{0} {1} F\n".format(a + 1, b + 1)
 
-        ts.rmg_molecule.updateMultiplicity()
+        self.conformer.rmg_molecule.updateMultiplicity()
 
-        label = ts.reaction_label + "_" + direction.lower() + "_center_" + str(ts.index)
+        label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_center_" + str(self.conformer.index)
 
         new_scratch = os.path.join(
             scratch,
             "ts",
-            ts.reaction_label,
+            self.conformer.reaction_label,
             "conformers"
         )
 
@@ -371,25 +329,23 @@ class Gaussian():
         except OSError:
             pass
 
-        calc = ASEGaussian(mem=mem,
-                           nprocshared=nprocshared,
-                           label=label,
-                           scratch=new_scratch,
-                           method=method,
-                           basis=basis,
-                           extra="Opt=(ts,calcfc,noeigentest,ModRedun,maxcycles=900) scf=(maxcycle=900)",
-                           multiplicity=ts.rmg_molecule.multiplicity,
-                           addsec=[combos[:-1]])
-        calc.atoms = ts.ase_molecule
-        del calc.parameters['force']
+        ase_gaussian = ASEGaussian(
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
+            label=label,
+            scratch=new_scratch,
+            method=self.settings["method"],
+            basis=self.settings["basis"],
+            extra="Opt=(ts,calcfc,noeigentest,ModRedun,maxcycles=900) scf=(maxcycle=900)",
+            multiplicity=self.conformer.rmg_molecule.multiplicity,
+            addsec=[addsec[:-1]]
+        )
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        del ase_gaussian.parameters['force']
 
-        return calc
+        return ase_gaussian
 
-    def get_overall_calc(self,
-                         ts=None,
-                         direction="forward",
-                         settings=None,
-                         scratch=None):
+    def get_overall_calc(self):
         """
         A method to create a calculator that optimizes the overall geometry of a `TS` object
 
@@ -403,28 +359,21 @@ class Gaussian():
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
 
-        if settings is None:
-            settings = self.settings
-        if scratch is None:
-            scratch = self.scratch
-
         method = settings["method"]
         basis = settings["basis"]
         mem = settings["mem"]
         nprocshared = settings["nprocshared"]
 
-        assert direction.lower() in ["forward", "reverse"]
+        assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
-        assert isinstance(ts, TS), "A TS object was not provided..."
+        self.conformer.rmg_molecule.updateMultiplicity()
 
-        ts.rmg_molecule.updateMultiplicity()
-
-        label = ts.reaction_label + "_" + direction.lower() + "_" + str(ts.index)
+        label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_" + str(self.conformer.index)
 
         new_scratch = os.path.join(
             scratch,
             "ts",
-            ts.reaction_label,
+            self.conformer.reaction_label,
             "conformers"
         )
 
@@ -434,24 +383,20 @@ class Gaussian():
             pass
 
         calc = ASEGaussian(
-            mem=mem,
-            nprocshared=nprocshared,
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
             label=label,
             scratch=new_scratch,
-            method=method,
-            basis=basis,
+            method=self.settings["method"],
+            basis=self.settings["basis"],
             extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900) IOP(7/33=1,2/16=3)",
-            multiplicity=ts.rmg_molecule.multiplicity)
-        calc.atoms = ts.ase_molecule
+            multiplicity=self.conformer.rmg_molecule.multiplicity)
+        calc.atoms = self.conformer.ase_molecule
         del calc.parameters['force']
 
         return calc
 
-    def get_irc_calc(self,
-                     ts=None,
-                     direction="forward",
-                     settings=None,
-                     scratch=None):
+    def get_irc_calc(self):
         """
         A method to create a calculator that runs an IRC calculation the overall geometry of a `TS` object
 
@@ -465,25 +410,15 @@ class Gaussian():
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
 
-        if settings is None:
-            settings = self.settings
-        if scratch is None:
-            scratch = self.scratch
+        assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
-        method = settings["method"]
-        basis = settings["basis"]
-        mem = settings["mem"]
-        nprocshared = settings["nprocshared"]
-
-        assert isinstance(ts, TS), "A TS object was not provided..."
-
-        ts.rmg_molecule.updateMultiplicity()
-        label = ts.reaction_label + "_irc_" + direction + "_" + str(ts.index)
+        self.conformer.rmg_molecule.updateMultiplicity()
+        label = self.conformer.reaction_label + "_irc_" + direction + "_" + str(self.conformer.index)
 
         new_scratch = os.path.join(
             scratch,
             "ts",
-            ts.reaction_label,
+            self.conformer.reaction_label,
             "irc"
         )
         try:
@@ -491,18 +426,20 @@ class Gaussian():
         except OSError:
             pass
 
-        calc = ASEGaussian(mem=mem,
-                           nprocshared=nprocshared,
-                           label=label,
-                           scratch=new_scratch,
-                           method=method,
-                           basis=basis,
-                           extra="irc=(calcall)",
-                           multiplicity=ts.rmg_molecule.multiplicity)
-        calc.atoms = ts.ase_molecule
-        del calc.parameters['force']
+        ase_gaussian = ASEGaussian(
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
+            label=label,
+            scratch=new_scratch,
+            method=self.settings["method"],
+            basis=self.settings["basis"],
+            extra="irc=(calcall)",
+            multiplicity=self.conformer.rmg_molecule.multiplicity
+        )
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        del ase_gaussian.parameters['force']
 
-        return calc
+        return ase_gaussian
 
     def verify_output_file(self, path):
         """
@@ -526,7 +463,7 @@ class Gaussian():
 
         return verified
 
-    def validate_irc(self, calc=None):
+    def validate_irc(self):
         """
         A method to verify an IRC calc
         """
@@ -536,24 +473,20 @@ class Gaussian():
 
         logging.info("Validating IRC file...")
         irc_path = os.path.join(
-            calc.scratch,
-            calc.label + ".log")
+            self.directory,
+            "ts",
+            self.conformer.reaction_label,
+            "irc",
+            self.conformer.reaction_label + "_irc_" + direction + "_" + str(self.conformer.index) + ".log")
 
         if not os.path.exists(irc_path):
             logging.info(
                 "It seems that the IRC claculation has not been run.")
             return False
 
-        f = open(irc_path, "r")
-        file_lines = f.readlines()[-5:]
-
-        completed = False
-        for file_line in file_lines:
-            if "Normal termination" in file_line:
-                logging.info("IRC successfully ran")
-                completed = True
-        if not completed:
-            logging.info("IRC failed... could not be validated...")
+        complete, converged = self.verify_output_file(irc_path)
+        if not converged:
+            logging.info("The IRC calculation did not converge...")
             return False
 
         pth1 = list()
