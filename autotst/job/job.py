@@ -321,7 +321,7 @@ class Job():
         attempted = False
         if os.path.exists(file_path + ".log"):
             attempted = True
-            logging.info("It appears that this job has already been run")
+            logging.info("It appears that {} has already been attempted...".format(label))
 
         if (not attempted) or restart:
             subprocess.call(
@@ -330,16 +330,12 @@ class Job():
 
         return label
 
-    def calculate_transitionstate(self, transitionstate):
+    def calculate_transitionstate(self, transitionstate, vibrational_analysis=True):
         """
         A method to perform the partial optimizations for a transitionstate and arrive
         at a final geometry. Returns True if we arrived at a final geometry, returns false
         if there is an error along the way.
         """
-        #######################
-        ##### For shells  #####
-        #######################
-        direction = transitionstate.direction
 
         ts_identifier = "{}_{}_{}".format(
             transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
@@ -347,12 +343,19 @@ class Job():
         for opt_type in ["shell", "center", "overall"]:
             self.calculator.conformer = transitionstate
 
+            if opt_type == "overall":
+                 file_path = "{}_{}_{}.log".format(transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
+            else:
+                 file_path = "{}_{}_{}_{}.log".format(transitionstate.reaction_label, transitionstate.direction, opt_type, transitionstate.index)
+
             file_path = os.path.join(
                 self.directory, 
                 "ts", 
                 transitionstate.reaction_label, 
-                "conformers", "{}_{}_{}_{}.log".format(transitionstate.reaction_label, transitionstate.direction, opt_type, transitionstate.index)
+                "conformers", 
+                file_path
             )
+
 
             if not os.path.exists(file_path):
                 logging.info(
@@ -365,13 +368,13 @@ class Job():
 
             else:
                 logging.info(
-                    "It appears that we already have a complete SHELL log file for {}".format(ts_identifier))
+                    "It appears that we already have a complete {} log file for {}".format(opt_type.upper(), ts_identifier))
 
                 complete, converged = self.calculator.verify_output_file(file_path)
                 
                 if not complete:
                     logging.info(
-                        "It seems that the SHELL file never completed for {} never completed, running it again".format(ts_identifier))
+                        "It seems that the {} file never completed for {} never completed, running it again".format(opt_type.upper(), ts_identifier))
                     label = self.submit_transitionstate(
                         transitionstate, opt_type=opt_type.lower(), restart=True)
                     while not self.check_complete(label):
@@ -382,6 +385,7 @@ class Job():
             if not (complete and converged):
                 logging.info(
                     "{} failed the {} optimization".format(ts_identifier, opt_type.upper()))
+                results[ts_identifier] = False
                 return False
             logging.info(
                 "{} successfully completed the {} optimization!".format(ts_identifier, opt_type.upper()))
@@ -390,7 +394,15 @@ class Job():
 
         logging.info(
             "Calculations for {} are complete and resulted in a normal termination!".format(ts_identifier))
-        return True
+
+        got_one = self.validate_transitionstate(
+                transitionstate=transitionstate, vibrational_analysis=vibrational_analysis)
+        if got_one:
+            results[ts_identifier] = True
+            return True
+        else:
+            results[ts_identifier] = False
+            return False
 
     def calculate_reaction(self, vibrational_analysis=True):
         """
@@ -404,6 +416,10 @@ class Job():
 
         currently_running = []
         processes = {}
+        manager = multiprocessing.Manager()
+        results = manager.dict()
+        global results
+
         for direction, transitionstates in list(self.reaction.ts.items()):
 
             for transitionstate in transitionstates:
@@ -420,7 +436,6 @@ class Job():
             process.start()
             currently_running.append(name)
 
-        complete = False
         while len(currently_running) > 0:
             for name, process in list(processes.items()):
                 if not (name in currently_running):
@@ -428,59 +443,50 @@ class Job():
                 if not process.is_alive():
                     currently_running.remove(name)
 
-        results = []
-        for direction, transitionstates in list(self.reaction.ts.items()):
-            for transitionstate in transitionstates:
-                f = "{}_{}_{}.log".format(
-                    self.reaction.label, direction, transitionstate.index)
-                path = os.path.join(self.calculator.directory, "ts",
-                                    self.reaction.label, "conformers", f)
-                if not os.path.exists(path):
-                    logging.info("It appears that {} failed...".format(f))
-                    continue
-                try:
-                    parser = ccread(path)
-                    if parser is None:
-                        logging.info(
-                            "Something went wrong when reading in results for {}...".format(f))
-                        continue
-                    energy = parser.scfenergies[-1]
-                except:
+        energies = []
+        for label, result in results.items():
+            if not result:
+                logging.info("Calculations for {} FAILED".format(label))
+            f = "{}.log".format(label)
+            path = os.path.join(self.calculator.directory, "ts",
+                    self.reaction.label, "conformers", f)
+            if not os.path.exists(path):
+                logging.info("It appears that {} failed...".format(f))
+                continue
+            try:
+                parser = ccread(path)
+                if parser is None:
                     logging.info(
-                        "The parser does not have an scf energies attribute, we are not considering {}".format(f))
-                    energy = 1e5
+                        "Something went wrong when reading in results for {}...".format(f))
+                    continue
+                energy = parser.scfenergies[-1]
+            except:
+                logging.info(
+                    "The parser does not have an scf energies attribute, we are not considering {}".format(f))
+                energy = 1e5
 
-                results.append([energy, transitionstate, f])
+            energies.append([energy, transitionstate, f])
 
-        results = pd.DataFrame(
-            results, columns=["energy", "transitionstate", "file"]).sort_values("energy").reset_index(inplace=True)
+        energies = pd.DataFrame(
+            energies, columns=["energy", "transitionstate", "file"]).sort_values("energy")
 
-        if results.shape[0] == 0:
+        if energies.shape[0] == 0:
             logging.info(
                 "No transition state for {} was successfully calculated... :(".format(self.reaction))
             return False
-        got_one = False
-        for index in range(results.shape[0]):
-            ts = results.transitionstate[index]
-            got_one = self.validate_transitionstate(
-                transitionstate=ts, vibrational_analysis=vibrational_analysis)
-            if got_one:
-                lowest_energy_file = results.file[index]
-                break
 
-        if not got_one:
-            logging.info(
-                "None of the transition states could be validated... :(")
-            return False
+        energies.reset_index(inplace=True)
+        lowest_energy_label = energies.iloc[0].file
+        logging.info("The lowest energy transition state is {}".format(lowest_energy_label))
 
         copyfile(
             os.path.join(self.calculator.directory, "ts", self.reaction.label,
-                         "conformers", lowest_energy_file),
+                         "conformers", lowest_energy_label + ".log"),
             os.path.join(self.calculator.directory, "ts",
                          self.reaction.label, self.reaction.label + ".log")
         )
         logging.info("The lowest energy file is {}! :)".format(
-            lowest_energy_file))
+            lowest_energy_label + ".log"))
         return True
 
     def validate_transitionstate(self, transitionstate, vibrational_analysis=True):
@@ -488,7 +494,7 @@ class Job():
         validated = False
         if vibrational_analysis:
             vib = VibrationalAnalysis(
-                ts=transitionstate, directory=self.directory)
+                transitionstate=transitionstate, directory=self.directory)
             validated = vib.validate_ts()
         if not validated:
             logging.info("Could not validate with Vibrational Analysis... Running an IRC to validate instead...")

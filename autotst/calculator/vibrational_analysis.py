@@ -57,6 +57,7 @@ class VibrationalAnalysis():
         - scratch (str): the directory where log files of the TS are located
         """
         self.ts = transitionstate
+        self.ts.get_geometries()
         self.directory = directory
 
         self.log_file = None
@@ -158,10 +159,10 @@ class VibrationalAnalysis():
         """
 
         results = []
-
+        
         for bond in self.ts.bonds:
             i, j = bond.atom_indices
-            before = self.before_geometry.get_distance(i, j)
+            before = self.pre_geometry.get_distance(i, j)
             after = self.post_geometry.get_distance(i, j)
             results.append([bond.index, bond.atom_indices,
                             bond.reaction_center, percent_change(before, after)])
@@ -184,12 +185,15 @@ class VibrationalAnalysis():
         Returns:
         - (bool): True if the TS can be validated via vibrational analysis and False if it cannot
         """
-
         try:
             self.get_log_file()
+
             self.parse_vibrations()
+
             self.obtain_geometries()
+
             self.percent_changes = self.obtain_percent_changes()
+
 
             center_values = np.log(
                 self.percent_changes[self.percent_changes.center].percent_change.mean())
@@ -204,6 +208,6 @@ class VibrationalAnalysis():
                     "Cannot reasonably say that we have arrived at a TS through vibrational analysis.")
                 return False
         except:
-            logging.info("Something went wrong...")
+            logging.info("Something went wrong when attempting vibrational analysis...")
             logging.info("Cannot verify via vibrational analysis")
             return False
