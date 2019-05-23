@@ -160,7 +160,6 @@ class Job():
             calc = calculator.get_conformer_calc(conformer=conformer)
 
         label = self.submit_conformer(conformer, calc, "general")
-        currently_running.append(label)
 
         scratch = calculator.scratch
 
@@ -212,10 +211,10 @@ class Job():
             logging.info("{} did not converge".format(calc.label))
             result = False
             if isinstance(calculator,Gaussian):
-                if calculator.convergence == "":
+                if not calculator.convergence.lower() in ["tight", "verytight", "loose"]:
                     logging.info("{} failed QM optimization".format(calc.label))
                 else:
-                    logging.info("resubmitting {} with default convergence criteria".format(calc.label))
+                    logging.info("Resubmitting {} with default convergence criteria".format(calc.label))
                     atoms = self.read_log(os.path.join(scratch_dir, f))
                     conformer.ase_molecule = atoms
                     conformer.update_coords_from("ase")
@@ -223,13 +222,16 @@ class Job():
                         conformer,
                         convergence=""
                     )
+                    logging.info("Removing the old log file that didn't converge, restarting from last geometry")
+                    os.remove(os.path.join(scratch_dir, f))
+
                     label = self.submit_conformer(conformer, calc, "general")
 
                     scratch_dir = os.path.join(
-                    calculator.scratch,
-                    "species",
-                    conformer.smiles,
-                    "conformers"
+                        calculator.scratch,
+                        "species",
+                        conformer.smiles,
+                        "conformers"
                     )
                     f = calc.label + ".log"
                     if not os.path.exists(os.path.join(scratch_dir, f)):
@@ -238,7 +240,7 @@ class Job():
                         result = False
 
                     complete, converged = calculator.verify_output_file(
-                    os.path.join(scratch_dir, f)
+                        os.path.join(scratch_dir, f)
                     )
 
                     if not complete:
@@ -331,7 +333,7 @@ class Job():
                     conformer.smiles,
                     "conformers"
                 )
-                f = calc.label + ".log"
+                f = "{}_{}.log".format(conformer.smiles, conformer.index)
                 path = os.path.join(scratch_dir, f)
                 if not os.path.exists(os.path.join(scratch_dir, f)):
                     logging.info(
