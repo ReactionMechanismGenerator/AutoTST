@@ -409,8 +409,8 @@ class Reaction():
                             break
         assert match, "Could not idetify labeled reactants and products"
 
-        reaction_list = self.rmg_database.kinetics.generate_reactions_from_families(
-            test_reaction.reactants, test_reaction.products, only_families=[final_name])
+        reaction_list = self.rmg_database.kinetics.generate_reactions(
+            test_reaction.reactants, test_reaction.products)
 
         assert reaction_list, "Could not match a reaction to a reaction family..."
 

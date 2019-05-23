@@ -340,7 +340,7 @@ class Job():
         ts_identifier = "{}_{}_{}".format(
             transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
 
-        for opt_type in ["shell", "center", "overall"]:
+        for opt_type in ["shell", "overall"]:
             self.calculator.conformer = transitionstate
 
             if opt_type == "overall":
@@ -362,7 +362,6 @@ class Job():
                     "Submitting {} calculations for {}".format(opt_type.upper(),ts_identifier))
                 label = self.submit_transitionstate(
                     transitionstate, opt_type=opt_type.lower())
-                print label
                 while not self.check_complete(label):
                     time.sleep(15)
 
