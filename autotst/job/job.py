@@ -351,7 +351,7 @@ class Job():
                 self.directory, 
                 "ts", 
                 transitionstate.reaction_label, 
-                "conformers", "{}_{}_shell_{}.log".format(transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
+                "conformers", "{}_{}_{}_{}.log".format(transitionstate.reaction_label, transitionstate.direction, opt_type, transitionstate.index)
             )
 
             if not os.path.exists(file_path):
@@ -359,6 +359,7 @@ class Job():
                     "Submitting {} calculations for {}".format(opt_type.upper(),ts_identifier))
                 label = self.submit_transitionstate(
                     transitionstate, opt_type=opt_type.lower())
+                print label
                 while not self.check_complete(label):
                     time.sleep(15)
 
@@ -366,7 +367,7 @@ class Job():
                 logging.info(
                     "It appears that we already have a complete SHELL log file for {}".format(ts_identifier))
 
-                complete, converged = calculator.verify_output_file(file_path)
+                complete, converged = self.calculator.verify_output_file(file_path)
                 
                 if not complete:
                     logging.info(
