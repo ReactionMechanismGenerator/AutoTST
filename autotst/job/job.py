@@ -159,8 +159,6 @@ class Job():
         else:
             calc = calculator.get_conformer_calc(conformer=conformer)
 
-        label = self.submit_conformer(conformer, calc, "general")
-
         scratch = calculator.scratch
 
         scratch_dir = os.path.join(
@@ -170,10 +168,26 @@ class Job():
             "conformers")
 
         f = calc.label + ".log"
+
         if not os.path.exists(os.path.join(scratch_dir, f)):
             logging.info(
-                "It seems that {} was never run...".format(calc.label))
-            result = False
+            "Submitting conformer calculation for {}".format(calc.label))
+            label = self.submit_conformer(conformer, calc, "general")
+            while not self.check_complete(label):
+                time.sleep(15)
+
+
+        else:
+            logging.info(
+            "It appears that we already have a complete log file for {}".format(calc.label))
+
+            complete, converged = calculator.verify_output_file(os.path.join(scratch_dir, f))
+            if not complete:
+                logging.info(
+                    "It seems that the file never completed for {} completed, running it again".format(calc.label))
+                label = self.submit_conformer(conformer, calc, "general")
+                while not self.check_complete(label):
+                    time.sleep(15)
 
         complete, converged = calculator.verify_output_file(os.path.join(scratch_dir, f))
 
@@ -226,7 +240,9 @@ class Job():
                     os.remove(os.path.join(scratch_dir, f))
 
                     label = self.submit_conformer(conformer, calc, "general")
-
+                    while not self.check_complete(label):
+                        time.sleep(15)
+                        
                     scratch_dir = os.path.join(
                         calculator.scratch,
                         "species",
@@ -337,7 +353,7 @@ class Job():
                 path = os.path.join(scratch_dir, f)
                 if not os.path.exists(os.path.join(scratch_dir, f)):
                     logging.info(
-                        "It seems that {} was never run...".format(calc.label))
+                        "It seems that {} was never run...".format(f))
                     continue
                 try:
                     parser = ccread(path)
