@@ -57,9 +57,10 @@ class Job():
             assert False, "Reaction provided was not a reaction object"
 
         self.calculator = calculator
-        if self.calclator:
+        if self.calculator:
             self.directory = self.calculator.directory
         self.conformer_calculator = conformer_calculator
+        self.partition = partition
 
     def __repr__(self):
         return "< Job '{}'>".format(self.label)
@@ -294,7 +295,7 @@ class Job():
         A methods to submit a job for a TS object based on a single calculator
         """
         assert transitionstate, "Please provide a transitionstate to submit a job"
-        lowest_energy_f
+        
         if opt_type.lower() == "shell":
             ase_calculator = self.calculator.get_shell_calc()
             time = "12:00:00"
@@ -344,7 +345,7 @@ class Job():
             transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
 
         for opt_type in ["shell", "center", "overall"]:
-            calculator.conformer = transitionstate
+            self.calculator.conformer = transitionstate
 
             file_path = os.path.join(
                 self.directory, 
@@ -375,7 +376,7 @@ class Job():
                     while not self.check_complete(label):
                         time.sleep(15)
 
-            complete, converged = calculator.verify_output_file(file_path))
+            complete, converged = self.calculator.verify_output_file(file_path)
 
             if not (complete and converged):
                 logging.info(
@@ -390,24 +391,24 @@ class Job():
             "Calculations for {} are complete and resulted in a normal termination!".format(ts_identifier))
         return True
 
-    def calculate_reaction(self, reaction, vibrational_analysis=True):
+    def calculate_reaction(self, vibrational_analysis=True):
         """
         A method to run calculations for all tranitionstates for a reaction
         """
 
-        logging.info("Calculating geometries for {}".format(reaction))
+        logging.info("Calculating geometries for {}".format(self.reaction))
 
         if self.conformer_calculator:
-            reaction.generate_conformers(calculator=self.conformer_calculator)
+            self.reaction.generate_conformers(ase_calculator=self.conformer_calculator)
 
         currently_running = []
         processes = {}
-        for direction, transitionstates in list(reaction.ts.items()):
+        for direction, transitionstates in list(self.reaction.ts.items()):
 
             for transitionstate in transitionstates:
 
                 process = Process(target=self.calculate_transitionstate, args=(
-                    transitionstate))
+                    transitionstate,))
                 processes[process.name] = process
 
         for name, process in list(processes.items()):
@@ -427,12 +428,12 @@ class Job():
                     currently_running.remove(name)
 
         results = []
-        for direction, transitionstates in list(reaction.ts.items()):
+        for direction, transitionstates in list(self.reaction.ts.items()):
             for transitionstate in transitionstates:
                 f = "{}_{}_{}.log".format(
-                    reaction.label, direction, transitionstate.index)
-                path = os.path.join(calculator.scratch, "ts",
-                                    reaction.label, "conformers", f)
+                    self.reaction.label, direction, transitionstate.index)
+                path = os.path.join(self.calculator.directory, "ts",
+                                    self.reaction.label, "conformers", f)
                 if not os.path.exists(path):
                     logging.info("It appears that {} failed...".format(f))
                     continue
@@ -455,7 +456,7 @@ class Job():
 
         if results.shape[0] == 0:
             logging.info(
-                "No transition state for {} was successfully calculated... :(".format(reaction))
+                "No transition state for {} was successfully calculated... :(".format(self.reaction))
             return False
         got_one = False
         for index in range(results.shape[0]):
@@ -472,10 +473,10 @@ class Job():
             return False
 
         copyfile(
-            os.path.join(calculator.scratch, "ts", reaction.label,
+            os.path.join(self.calculator.directory, "ts", self.reaction.label,
                          "conformers", lowest_energy_file),
-            os.path.join(calculator.scratch, "ts",
-                         reaction.label, reaction.label + ".log")
+            os.path.join(self.calculator.directory, "ts",
+                         self.reaction.label, self.reaction.label + ".log")
         )
         logging.info("The lowest energy file is {}! :)".format(
             lowest_energy_file))

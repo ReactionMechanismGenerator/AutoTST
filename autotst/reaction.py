@@ -481,7 +481,7 @@ class Reaction():
         """
 
         if self.rmg_reaction is None:
-            self.get_rmg_reaction()
+            self.get_labeled_reaction()
 
         reactant_complex = RMGMolecule()
         for react in self.rmg_reaction.reactants:

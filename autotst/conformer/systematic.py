@@ -65,6 +65,8 @@ def find_all_combos(
     - all_combos (list): a list corresponding to the number of unique conformers created.
     """
 
+    conformer.get_geometries()
+
     terminal_torsions, torsions = find_terminal_torsions(conformer)
     cistranss = conformer.cistrans
     chiral_centers = conformer.chiral_centers
