@@ -50,14 +50,16 @@ class VibrationalAnalysis():
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, ts=None, scratch="."):
+    def __init__(self, transitionstate=None, directory="."):
         """
         Variables:
         - ts (TS): A TS object that you want to run vibratinal analysis on
         - scratch (str): the directory where log files of the TS are located
         """
-        self.ts = ts
-        self.scratch = scratch
+        self.ts = transitionstate
+        self.directory = directory
+
+        self.log_file = None
 
     def __repr__(self):
         if self.ts is None:
@@ -67,7 +69,7 @@ class VibrationalAnalysis():
         return '<Vibrational Analysis "{0}">'.format(
             label)
 
-    def get_log_file(self, scratch=".", ts=None):
+    def get_log_file(self):
         """
         This method obtains the logfile name from the TS
 
@@ -78,15 +80,15 @@ class VibrationalAnalysis():
         Returns:
         - log_file (str): a path to the log file of interest
         """
-        log_file = os.path.join(
-            scratch,
+        self.log_file = os.path.join(
+            self.directory,
             "ts",
-            ts.reaction_label,
+            self.ts.reaction_label,
             "conformers",
-            "{}_{}_{}.log".format(ts.reaction_label, ts.direction, ts.index))
-        return log_file
+            "{}_{}_{}.log".format(self.ts.reaction_label, self.ts.direction, self.ts.index))
+        return self.log_file
 
-    def parse_vibrations(self, log_file=None):
+    def parse_vibrations(self,):
         """
         This method obtains the vibrations from the log file of interest using
         cclib. It then creates a zipped list with the vibrational frequencies
@@ -99,17 +101,17 @@ class VibrationalAnalysis():
         - vibrations (list): a list of the vibrations and their corresponding displacements in XYZ coordinates
         """
 
-        if not log_file:
-            log_file = self.log_file
+        if not self.log_file:
+            self.get_log_file()
 
-        assert os.path.exists(log_file), "Log file provided does not exist"
+        assert os.path.exists(self.log_file), "Log file provided does not exist"
 
-        log_file_info = ccread(log_file)
-        vibrations = list(zip(log_file_info.vibfreqs, log_file_info.vibdisps))
+        log_file_info = ccread(self.log_file)
+        self.vibrations = list(zip(log_file_info.vibfreqs, log_file_info.vibdisps))
+        
+        return self.vibrations
 
-        return vibrations
-
-    def obtain_geometries(self, ts, vibrations):
+    def obtain_geometries(self):
         """
         This method obtains the previbrational geometry (the geometry returned
         by a quantum optimizer), and the postvibrational geometry.
@@ -123,18 +125,18 @@ class VibrationalAnalysis():
         - post_geometry (ASEAtoms): an ASEAtoms object containing the geometry after applying the vibrations
         """
 
-        assert isinstance(ts, TS)
+        assert isinstance(self.ts, TS)
 
-        pre_geometry = ts.ase_molecule.copy()
-        post_geometry = ts.ase_molecule.copy()
+        self.pre_geometry = self.ts.ase_molecule.copy()
+        self.post_geometry = self.ts.ase_molecule.copy()
 
-        for vib, displacements in vibrations:
+        for vib, displacements in self.vibrations:
             if vib < 0:  # Finding the imaginary frequency
-                post_geometry.arrays["positions"] -= displacements
+                self.post_geometry.arrays["positions"] -= displacements
 
-        return pre_geometry, post_geometry
+        return self.pre_geometry, self.post_geometry
 
-    def obtain_percent_changes(self, ts, before_geometry, post_geometry):
+    def obtain_percent_changes(self):
         """
         This method takes the connectivity of a TS and then uses
         that to identify the percent change of the bonds
@@ -157,19 +159,18 @@ class VibrationalAnalysis():
 
         results = []
 
-        for bond in ts.bonds:
+        for bond in self.ts.bonds:
             i, j = bond.atom_indices
-            before = before_geometry.get_distance(i, j)
-            after = post_geometry.get_distance(i, j)
+            before = self.before_geometry.get_distance(i, j)
+            after = self.post_geometry.get_distance(i, j)
             results.append([bond.index, bond.atom_indices,
                             bond.reaction_center, percent_change(before, after)])
 
-        results = pd.DataFrame(results)
-        results.columns = ["index", "atom_indices", "center", "percent_change"]
+        self.percent_changes = pd.DataFrame(results, columns=["index", "atom_indices", "center", "percent_change"])
 
-        return results
+        return self.percent_changes
 
-    def validate_ts(self, scratch=None, ts=None):
+    def validate_ts(self):
         """
         A method designed to run the above and return a bool that states if we
         have arrived at a TS. We say we have arrived at a TS if the average
@@ -183,20 +184,12 @@ class VibrationalAnalysis():
         Returns:
         - (bool): True if the TS can be validated via vibrational analysis and False if it cannot
         """
-        if scratch is None:
-            scratch = self.scratch
-        if ts is None:
-            ts = self.ts
+
         try:
-            self.log_file = self.get_log_file(self.scratch, ts)
-
-            self.vibrations = self.parse_vibrations(self.log_file)
-
-            self.pre_geometry, self.post_geometry = self.obtain_geometries(
-                self.ts, self.vibrations)
-
-            self.percent_changes = self.obtain_percent_changes(
-                self.ts, self.pre_geometry, self.post_geometry)
+            self.get_log_file()
+            self.parse_vibrations()
+            self.obtain_geometries()
+            self.percent_changes = self.obtain_percent_changes()
 
             center_values = np.log(
                 self.percent_changes[self.percent_changes.center].percent_change.mean())
@@ -206,7 +199,6 @@ class VibrationalAnalysis():
             if center_values > shell_values + 1:
                 logging.info("Vibrational analysis was successful")
                 return True
-
             else:
                 logging.info(
                     "Cannot reasonably say that we have arrived at a TS through vibrational analysis.")
