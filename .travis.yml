@@ -15,8 +15,12 @@ install:
   - git config --global user.name "Travis Deploy"
   - git config --global user.email "sirumalla.s@husky.neu.edu"
   - cd AutoTST
+  - export AutoTST=$(pwd)
+  - echo $AutoTST
+  - export PYTHONPATH=$PYTHONPATH:$AutoTST
   - conda env create -f environment.yml
   - source activate tst_env 
+  - conda uninstall --force openbabel
 
 script:
   python autotst/geometryTest.py -v
