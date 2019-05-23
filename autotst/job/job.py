@@ -369,13 +369,21 @@ class Job():
         logging.info(
             "The lowest energy conformer is {}".format(lowest_energy_file))
 
-        dest = os.path.join(calculator.scratch,"species",conformer,lowest_energy_file + ".log")
+        lowest_energy_file_path = os.path.join(calculator.scratch,"species",conformer.smiles,"conformers",lowest_energy_file)
+        dest1 = os.path.join(calculator.scratch,"species",conformer.smiles,lowest_energy_file)
+        dest2 = os.path.join(calculator.scratch,"species","{}_{}".format(conformer.smiles,conformer.index),conformer.smiles + '.log')
 
         try:
-            copyfile(os.path.join(scratch_dir, lowest_energy_file),dest)
+            copyfile(lowest_energy_file_path,dest1)
         except IOError:
-            os.makedirs(os.path.dirname(dest))
-            copyfile(os.path.join(scratch_dir, lowest_energy_file),dest)
+            os.makedirs(os.path.dirname(dest1))
+            copyfile(lowest_energy_file_path,dest1)
+
+        try:
+            copyfile(lowest_energy_file_path,dest2)
+        except IOError:
+            os.makedirs(os.path.dirname(dest2))
+            copyfile(lowest_energy_file_path,dest2)
 
         logging.info("The lowest energy file is {}! :)".format(
             lowest_energy_file))
