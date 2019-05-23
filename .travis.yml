@@ -16,7 +16,6 @@ install:
   - git config --global user.email "sirumalla.s@husky.neu.edu"
   - cd AutoTST
   - conda env create -f environment.yml
-  - conda uninstall --force openbabel
   - source activate tst_env 
 
 script:
