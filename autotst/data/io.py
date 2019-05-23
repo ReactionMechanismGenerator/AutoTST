@@ -66,18 +66,16 @@ class InputOutput():
     A class that allows users to read and write .ts and .kinetics files for validated TSs and Reactions
     """
 
-    def __init__(self, reaction=None, save_directory="."):
+    def __init__(self, reaction, method="m062x", directory="."):
         """
         Variables:
         - reaction (Reaction): the reaction of interest
         - save_directory (str): the directory where you want .ts and .kinetics files saved
         """
+        self.method = method
         self.reaction = reaction
-        if reaction:
-            self.label = reaction.label
-        else:
-            self.label = None
-        self.save_directory = save_directory
+        self.label = self.reaction.label
+        self.directory = directory
 
     def copy(self):
         """
@@ -86,7 +84,7 @@ class InputOutput():
         from copy import deepcopy
         return deepcopy(self)
 
-    def get_qm_data(self, file_path):
+    def get_qm_data(self):
         """
         A method to create a QMData object from a log file at file_path
 
@@ -94,15 +92,21 @@ class InputOutput():
         - file_path (str): the location of the log file you want in
         """
 
-        return QMData().get_qmdata(file_path=file_path)
+        file_path = os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")
+        if not os.path.exists(file_path):
+            logging.info("Sorry, we cannot find a valid file path for {}...".format(self.reaction))
+            self.qm_data = None
+            return self.qm_data
+        self.qm_data = QMData().get_qmdata(file_path=file_path)
+        return self.qm_data
 
-    def get_ts_file_path(self, reaction):
+    def get_ts_file_path(self):
 
-        return os.path.join(self.save_directory, reaction.label + ".ts")
+        return os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".ts")
 
     def get_kinetics_file_path(self, reaction):
 
-        return os.path.join(self.save_directory, reaction.label + ".kinetics")
+        return os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics")
 
     def save_ts(self, reaction, method, qmData):
         """
@@ -113,12 +117,17 @@ class InputOutput():
         - method (str): the computational methods that were used
         - qmData (QMData): the data that you want to save
         """
-        file_path = self.get_ts_file_path(reaction)
+        self.get_qm_data()
+        if not self.qm_data:
+            logging.info("No QMData for {}...".format(self.reaction))
+            return False
+        file_path = self.get_ts_file_path()
         logging.info("Saving TS result file {}".format(file_path))
         with open(file_path, 'w') as resultFile:
-            resultFile.write('rxnLabel = "{0!s}"\n'.format(reaction.label))
-            resultFile.write('method = "{0!s}"\n'.format(method))
-            resultFile.write("qmData = {0!r}\n".format(qmData))
+            resultFile.write('rxnLabel = "{0!s}"\n'.format(self.reaction.label))
+            resultFile.write('method = "{0!s}"\n'.format(self.method))
+            resultFile.write("qmData = {0!r}\n".format(self.qm_data))
+        return True
 
     def save_kinetics(self, method, reaction):
         """
@@ -128,22 +137,19 @@ class InputOutput():
         - reaction (Reaction): the reaction of interest
         - method (str): the computational methods that were used
         """
-        filePath = self.get_kinetics_file_path(reaction)
+        if not self.reaction.rmg_reaction.kinetics:
+            logging.info("The reaction you're trying to save info for doesn't have any kinetic information... aborting.")
+            return False
+        filePath = self.get_kinetics_file_path()
         logging.info("Saving kinetics data file {}".format(filePath))
         with open(filePath, 'w') as resultFile:
 
-            if isinstance(reaction, rmgpy.reaction.Reaction):
-                assert reaction.kinetics, "No kinetics calclated for this reaction..."
-                resultFile.write('method = "{0!s}"\n'.format(method))
+            assert reaction.rmg_reaction.kinetics, "No kinetics calclated for this reaction..."
+            resultFile.write('method = "{0!s}"\n'.format(self.method))
+            resultFile.write(
+                'reaction = {0!r}\n'.format(self.reaction.rmg_reaction))
 
-                resultFile.write('reaction = {0!r}\n'.format(reaction))
-            elif isinstance(reaction, autotst.reaction.Reaction):
-                assert reaction.rmg_reaction.kinetics, "No kinetics calclated for this reaction..."
-                resultFile.write('method = "{0!s}"\n'.format(method))
-                resultFile.write(
-                    'reaction = {0!r}\n'.format(reaction.rmg_reaction))
-
-    def read_ts_file(self, reaction):
+    def read_ts_file(self):
         """
         Load the specified transition state data file and return the dictionary of its contents.
 
@@ -154,7 +160,7 @@ class InputOutput():
         - local_context (dict): the content of the .ts file. Will return None if there is an error
         """
 
-        r, p = reaction.label.split("_")
+        r, p = self.reaction.label.split("_")
         reacts = r.split("+")
         prods = p.split("+")
 
@@ -162,7 +168,7 @@ class InputOutput():
 
         got_file = False
         for file_name in file_names:
-            ts_file = os.path.join(self.save_directory, file_name + ".ts")
+            ts_file = os.path.join(self.directory, file_name + ".ts")
             if os.path.exists(ts_file):
                 got_file = True
                 path = ts_file
@@ -203,7 +209,7 @@ class InputOutput():
             return None
         return local_context
 
-    def read_kinetics_file(self, reaction):
+    def read_kinetics_file(self):
         """
         Load the specified kinetic data file and return the dictionary of its contents.
 
@@ -213,7 +219,7 @@ class InputOutput():
         Returns:
         - local_context (dict): the content of the .kinetics file. Will return None if there is an error
         """
-        r, p = reaction.label.split("_")
+        r, p = self.reaction.label.split("_")
         reacts = r.split("+")
         prods = p.split("+")
 

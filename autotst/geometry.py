@@ -52,7 +52,7 @@ class Bond:
         return '<Bond "{}">'.format(self.atom_indices)
 
 
-class Angle:
+class Angle():
     """
     A class that acts as a container for angle information.
 
@@ -82,7 +82,7 @@ class Angle:
         return '<Angle "{0}">'.format(self.atom_indices)
 
 
-class Torsion:
+class Torsion():
     """
     A class that acts as a container for torsion information.
 

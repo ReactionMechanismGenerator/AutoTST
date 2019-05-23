@@ -43,19 +43,24 @@ class Job():
     def __init__(
             self,
             reaction=None,
-            calculator=None,
-            conformer_calculator=None):
+            calculator=None, # An AutoTST Gaussian calculator with proper directory settings
+            conformer_calculator=None,
+            partition="general" # The partition to run calculations on
+            ):
 
         self.reaction = reaction
         if isinstance(reaction, Reaction):
-            self.label = reaction.label
+            self.label = self.reaction.label
         elif reaction is None:
             self.label = None
         else:
             assert False, "Reaction provided was not a reaction object"
 
         self.calculator = calculator
+        if self.calculator:
+            self.directory = self.calculator.directory
         self.conformer_calculator = conformer_calculator
+        self.partition = partition
 
     def __repr__(self):
         return "< Job '{}'>".format(self.label)
@@ -122,17 +127,18 @@ class Job():
 
 #################################################################################
 
-    def submit_conformer(self, conformer, ase_calculator, partition="general"):
+    def submit_conformer(self, conformer):
         """
         A methods to submit a job based on the calculator and partition provided
         """
         assert conformer, "Please provide a conformer to submit a job"
 
+        self.calculator.conformer = conformer
+        ase_calculator = self.calculator.get_conformer_calc()
         self.write_input(conformer, ase_calculator)
 
         label = conformer.smiles + "_{}".format(conformer.index)
-        scratch = ase_calculator.scratch
-        file_path = os.path.join(scratch, label)
+        file_path = os.path.join(ase_calculator.scratch, label)
 
         os.environ["COMMAND"] = "g16"  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
@@ -145,51 +151,55 @@ class Job():
 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
-                    label, partition), shell=True)
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 12:00:00 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition), shell=True)
 
         return label
 
-    def calculate_species(self, species=None, conformer_calculator=None, calculator=None):
+    def calculate_species(self, species):
+
+
+        assert isinstance(species, Species), "Please provide a species object for this type of calculation"
 
         logging.info("Calculating geometries for {}".format(species))
 
-        if conformer_calculator:
-            species.generate_conformers(calculator=conformer_calculator)
+        if self.conformer_calculator:
+            species.generate_conformers(calculator=self.conformer_calculator)
 
         to_calculate = []
         results = {}
         for smiles, conformers in list(species.conformers.items()):
             results[smiles] = {}
             for conformer in conformers:
-                calc = calculator.get_conformer_calc(
-                    conformer=conformer
-                )
-                to_calculate.append([conformer, calc])
+                to_calculate.append([conformer])
 
         currently_running = []
-        for conformer, calc in to_calculate:
-
+        for conformer in to_calculate:
             while len(currently_running) >= 50:
                 for running_label in currently_running:
                     if self.check_complete(running_label):
                         currently_running.remove(running_label)
 
-            label = self.submit_conformer(conformer, calc, "general")
+            label = self.submit_conformer(conformer)
             currently_running.append(label)
-        scratch = calculator.scratch
-        for conformer, calc in to_calculate:
+
+        while len(currently_running) != 0:
+            for running_label in currently_running:
+                if self.check_complete(running_label):
+                    currently_running.remove(running_label)
+
+        for conformer in to_calculate:
 
             starting_molecule = RMGMolecule(SMILES=conformer.smiles)
             starting_molecule = starting_molecule.toSingleBonds()
 
             scratch_dir = os.path.join(
-                calculator.scratch,
+                self.directory,
                 "species",
                 conformer.smiles,
                 "conformers"
             )
-            f = calc.label + ".log"
+            f = "{}_{}.log".format(conformer.smiles, conformer.index)
             if not os.path.exists(os.path.join(scratch_dir, f)):
                 logging.info(
                     "It seems that {} was never run...".format(calc.label))
@@ -201,11 +211,11 @@ class Job():
 
             if not complete:
                 logging.info(
-                    "It appears that {} was killed prematurely".format(calc.label))
+                    "It appears that {} was killed prematurely".format(f))
                 result = False
 
             elif not converged:
-                logging.info("{} failed QM optimization".format(calc.label))
+                logging.info("{} failed QM optimization".format(f))
                 result = False
 
             else:
@@ -245,7 +255,7 @@ class Job():
 
         for smiles, smiles_results in list(results.items()):
             scratch_dir = os.path.join(
-                calculator.scratch,
+                self.directory,
                 "species",
                 conformer.smiles,
                 "conformers"
@@ -267,26 +277,40 @@ class Job():
                         lowest_energy_f = f
 
             logging.info(
-                "The lowest energy conformer is {}".format(lowest_file_name))
+                "The lowest energy conformer is {}".format(lowest_energy_f))
 
             copyfile(
                 os.path.join(scratch_dir, lowest_energy_f),
                 os.path.join(
-                    calculator.scratch,
+                    self.directory,
                     "species",
-                    label,
-                    lowest_energy_f[:-6] + ".log")
+                    conformer.smiles,
+                    conformer.smiles + ".log")
             )
 
 #################################################################################
 
-    def submit_transitionstate(self, transitionstate, ase_calculator, partition="general"):
+    def submit_transitionstate(self, transitionstate, opt_type, restart=False):
         """
         A methods to submit a job for a TS object based on a single calculator
         """
         assert transitionstate, "Please provide a transitionstate to submit a job"
+        
+        if opt_type.lower() == "shell":
+            ase_calculator = self.calculator.get_shell_calc()
+            time = "12:00:00"
+        elif opt_type.lower() == "center":
+            ase_calculator = self.calculator.get_center_calc()
+            time = "12:00:00"
+        elif opt_type.lower() == "overall":
+            ase_calculator = self.calculator.get_overall_calc()
+            time = "12:00:00"
+        elif opt_type.lower() == "irc":
+            ase_calculator = self.calculator.get_irc_calc()
+            time = "24:00:00"
 
         self.write_input(transitionstate, ase_calculator)
+
         label = ase_calculator.label
         scratch = ase_calculator.scratch
         file_path = os.path.join(scratch, label)
@@ -297,186 +321,110 @@ class Job():
         attempted = False
         if os.path.exists(file_path + ".log"):
             attempted = True
-            logging.info("It appears that this job has already been run")
+            logging.info("It appears that {} has already been attempted...".format(label))
 
-        if not attempted:
+        if (not attempted) or restart:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
-                    label, partition), shell=True)
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB -t {2} $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition, time), shell=True)
 
         return label
 
-    def calculate_transitionstate(self, transitionstate, calculator):
+    def calculate_transitionstate(self, transitionstate, vibrational_analysis=True):
         """
         A method to perform the partial optimizations for a transitionstate and arrive
         at a final geometry. Returns True if we arrived at a final geometry, returns false
         if there is an error along the way.
         """
-        #######################
-        ##### For shells  #####
-        #######################
-        direction = transitionstate.direction
 
         ts_identifier = "{}_{}_{}".format(
-            transitionstate.reaction_label, direction, transitionstate.index)
+            transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
 
-        calc = calculator.get_shell_calc(transitionstate,
-                                         direction=direction
-                                         )
+        for opt_type in ["shell", "overall"]:
+            self.calculator.conformer = transitionstate
 
-        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-            logging.info(
-                "Submitting SHELL calculations for {}".format(ts_identifier))
-            self.write_input(transitionstate, calc)
-            label = self.submit_transitionstate(
-                transitionstate, calc, "general")
-            while not self.check_complete(label):
-                time.sleep(15)
+            if opt_type == "overall":
+                 file_path = "{}_{}_{}.log".format(transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
+            else:
+                 file_path = "{}_{}_{}_{}.log".format(transitionstate.reaction_label, transitionstate.direction, opt_type, transitionstate.index)
 
-        else:
-            logging.info(
-                "It appears that we already have a complete SHELL log file for {}".format(ts_identifier))
-
-            complete, converged = calculator.verify_output_file(
-                os.path.join(calc.scratch, calc.label + ".log")
+            file_path = os.path.join(
+                self.directory, 
+                "ts", 
+                transitionstate.reaction_label, 
+                "conformers", 
+                file_path
             )
-            if not complete:
+
+
+            if not os.path.exists(file_path):
                 logging.info(
-                    "It seems that the SHELL file never completed for {} never completed, running it again".format(ts_identifier))
-                self.write_input(transitionstate, calc)
+                    "Submitting {} calculations for {}".format(opt_type.upper(),ts_identifier))
                 label = self.submit_transitionstate(
-                    transitionstate, calc, "general")
+                    transitionstate, opt_type=opt_type.lower())
                 while not self.check_complete(label):
                     time.sleep(15)
 
-        complete, converged = calculator.verify_output_file(
-            os.path.join(calc.scratch, calc.label + ".log")
-        )
-
-        if not (complete and converged):
-            logging.info(
-                "{} failed the SHELL optimization".format(ts_identifier))
-            return False
-        logging.info(
-            "{} successfully completed the SHELL optimization!".format(ts_identifier))
-        transitionstate.ase_molecule = self.read_log(
-            os.path.join(calc.scratch, calc.label + ".log"))
-        transitionstate.update_coords_from("ase")
-
-        #######################
-        ##### For centers #####
-        #######################
-        calc = calculator.get_center_calc(transitionstate,
-                                          direction=direction
-                                          )
-
-        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-            logging.info(
-                "Submitting CENTER calculations for {}".format(ts_identifier))
-            self.write_input(transitionstate, calc)
-            label = self.submit_transitionstate(
-                transitionstate, calc, "general")
-            while not self.check_complete(label):
-                time.sleep(15)
-
-        else:
-            logging.info(
-                "It appears that we already have a complete CENTER log file for {}".format(ts_identifier))
-
-            complete, converged = calculator.verify_output_file(
-                os.path.join(calc.scratch, calc.label + ".log")
-            )
-            if not complete:
+            else:
                 logging.info(
-                    "It seems that the CENTER file never completed for {} never completed, running it again".format(ts_identifier))
-                self.write_input(transitionstate, calc)
-                label = self.submit_transitionstate(
-                    transitionstate, calc, "general")
-                while not self.check_complete(label):
-                    time.sleep(15)
+                    "It appears that we already have a complete {} log file for {}".format(opt_type.upper(), ts_identifier))
 
-        complete, converged = calculator.verify_output_file(
-            os.path.join(calc.scratch, calc.label + ".log")
-        )
+                complete, converged = self.calculator.verify_output_file(file_path)
+                
+                if not complete:
+                    logging.info(
+                        "It seems that the {} file never completed for {} never completed, running it again".format(opt_type.upper(), ts_identifier))
+                    label = self.submit_transitionstate(
+                        transitionstate, opt_type=opt_type.lower(), restart=True)
+                    while not self.check_complete(label):
+                        time.sleep(15)
 
-        if not (complete and converged):
-            logging.info(
-                "{} failed the CENTER optimization".format(ts_identifier))
-            return False
-        logging.info(
-            "{} successfully completed the CENTER optimization!".format(ts_identifier))
-        transitionstate.ase_molecule = self.read_log(
-            os.path.join(calc.scratch, calc.label + ".log"))
-        transitionstate.update_coords_from("ase")
+            complete, converged = self.calculator.verify_output_file(file_path)
 
-        #######################
-        ##### For overall #####
-        #######################
-        calc = calculator.get_overall_calc(transitionstate,
-                                           direction=direction
-                                           )
-
-        if not os.path.exists(os.path.join(calc.scratch, calc.label + ".log")):
-            logging.info(
-                "Submitting OVERALL calculations for {}".format(ts_identifier))
-            self.write_input(transitionstate, calc)
-            label = self.submit_transitionstate(
-                transitionstate, calc, "general")
-            while not self.check_complete(label):
-                time.sleep(15)
-
-        else:
-            logging.info(
-                "It appears that we already have a complete OVERALL log file for {}".format(ts_identifier))
-
-            complete, converged = calculator.verify_output_file(
-                os.path.join(calc.scratch, calc.label + ".log")
-            )
-            if not complete:
+            if not (complete and converged):
                 logging.info(
-                    "It seems that the OVERALL file never completed for {} never completed, running it again".format(ts_identifier))
-                self.write_input(transitionstate, calc)
-                label = self.submit_transitionstate(
-                    transitionstate, calc, "general")
-                while not self.check_complete(label):
-                    time.sleep(15)
-
-        complete, converged = calculator.verify_output_file(
-            os.path.join(calc.scratch, calc.label + ".log")
-        )
-
-        if not (complete and converged):
+                    "{} failed the {} optimization".format(ts_identifier, opt_type.upper()))
+                results[ts_identifier] = False
+                return False
             logging.info(
-                "{} failed the OVERALL optimization".format(ts_identifier))
-            return False
-        logging.info(
-            "{} successfully completed the OVERALL optimization!".format(ts_identifier))
-        transitionstate.ase_molecule = self.read_log(
-            os.path.join(calc.scratch, calc.label + ".log"))
-        transitionstate.update_coords_from("ase")
+                "{} successfully completed the {} optimization!".format(ts_identifier, opt_type.upper()))
+            transitionstate.ase_molecule = self.read_log(file_path)
+            transitionstate.update_coords_from("ase")
 
         logging.info(
             "Calculations for {} are complete and resulted in a normal termination!".format(ts_identifier))
-        return True
 
-    def calculate_reaction(self, reaction=None, conformer_calculator=None, calculator=None, vibrational_analysis=True):
+        got_one = self.validate_transitionstate(
+                transitionstate=transitionstate, vibrational_analysis=vibrational_analysis)
+        if got_one:
+            results[ts_identifier] = True
+            return True
+        else:
+            results[ts_identifier] = False
+            return False
+
+    def calculate_reaction(self, vibrational_analysis=True):
         """
         A method to run calculations for all tranitionstates for a reaction
         """
 
-        logging.info("Calculating geometries for {}".format(reaction))
+        logging.info("Calculating geometries for {}".format(self.reaction))
 
-        if conformer_calculator:
-            reaction.generate_conformers(calculator=conformer_calculator)
+        if self.conformer_calculator:
+            self.reaction.generate_conformers(ase_calculator=self.conformer_calculator)
 
         currently_running = []
         processes = {}
-        for direction, transitionstates in list(reaction.ts.items()):
+        manager = multiprocessing.Manager()
+        results = manager.dict()
+        global results
+
+        for direction, transitionstates in list(self.reaction.ts.items()):
 
             for transitionstate in transitionstates:
 
                 process = Process(target=self.calculate_transitionstate, args=(
-                    transitionstate, calculator))
+                    transitionstate,))
                 processes[process.name] = process
 
         for name, process in list(processes.items()):
@@ -485,10 +433,8 @@ class Job():
                     if not running.is_alive():
                         currently_running.remove(name)
             process.start()
-            # process.join()
             currently_running.append(name)
 
-        complete = False
         while len(currently_running) > 0:
             for name, process in list(processes.items()):
                 if not (name in currently_running):
@@ -496,75 +442,63 @@ class Job():
                 if not process.is_alive():
                     currently_running.remove(name)
 
-        results = []
-        for direction, transitionstates in list(reaction.ts.items()):
-            for transitionstate in transitionstates:
-                f = "{}_{}_{}.log".format(
-                    reaction.label, direction, transitionstate.index)
-                path = os.path.join(calculator.scratch, "ts",
-                                    reaction.label, "conformers", f)
-                if not os.path.exists(path):
-                    logging.info("It appears that {} failed...".format(f))
-                    continue
-                try:
-                    parser = ccread(path)
-                    if parser is None:
-                        logging.info(
-                            "Something went wrong when reading in results for {}...".format(f))
-                        continue
-                    energy = parser.scfenergies[-1]
-                except:
+        energies = []
+        for label, result in results.items():
+            if not result:
+                logging.info("Calculations for {} FAILED".format(label))
+            f = "{}.log".format(label)
+            path = os.path.join(self.calculator.directory, "ts",
+                    self.reaction.label, "conformers", f)
+            if not os.path.exists(path):
+                logging.info("It appears that {} failed...".format(f))
+                continue
+            try:
+                parser = ccread(path)
+                if parser is None:
                     logging.info(
-                        "The parser does not have an scf energies attribute, we are not considering {}".format(f))
-                    energy = 1e5
+                        "Something went wrong when reading in results for {}...".format(f))
+                    continue
+                energy = parser.scfenergies[-1]
+            except:
+                logging.info(
+                    "The parser does not have an scf energies attribute, we are not considering {}".format(f))
+                energy = 1e5
 
-                results.append([energy, transitionstate, f])
+            energies.append([energy, transitionstate, f])
 
-        results = pd.DataFrame(
-            results, columns=["energy", "transitionstate", "file"]).sort_values("energy")
+        energies = pd.DataFrame(
+            energies, columns=["energy", "transitionstate", "file"]).sort_values("energy")
 
-        if results.shape[0] == 0:
+        if energies.shape[0] == 0:
             logging.info(
-                "No transition state for {} was successfully calculated... :(".format(reaction))
+                "No transition state for {} was successfully calculated... :(".format(self.reaction))
             return False
-        got_one = False
-        for index in range(results.shape[0]):
-            ts = results.transitionstate[index]
-            got_one = self.validate_transitionstate(
-                transitionstate=ts, calculator=calculator, vibrational_analysis=vibrational_analysis)
-            if got_one:
-                lowest_energy_file = results.file[index]
-                break
 
-        if not got_one:
-            logging.info(
-                "None of the transition states could be validated... :(")
-            return False
+        energies.reset_index(inplace=True)
+        lowest_energy_label = energies.iloc[0].file
+        logging.info("The lowest energy transition state is {}".format(lowest_energy_label))
 
         copyfile(
-            os.path.join(calculator.scratch, "ts", reaction.label,
-                         "conformers", lowest_energy_file),
-            os.path.join(calculator.scratch, "ts",
-                         reaction.label, reaction.label + ".log")
+            os.path.join(self.calculator.directory, "ts", self.reaction.label,
+                         "conformers", lowest_energy_label + ".log"),
+            os.path.join(self.calculator.directory, "ts",
+                         self.reaction.label, self.reaction.label + ".log")
         )
         logging.info("The lowest energy file is {}! :)".format(
-            lowest_energy_file))
+            lowest_energy_label + ".log"))
         return True
 
-    def validate_transitionstate(self, transitionstate, calculator, vibrational_analysis=True):
+    def validate_transitionstate(self, transitionstate, vibrational_analysis=True):
 
         validated = False
         if vibrational_analysis:
             vib = VibrationalAnalysis(
-                ts=transitionstate, scratch=calculator.scratch)
+                transitionstate=transitionstate, directory=self.directory)
             validated = vib.validate_ts()
         if not validated:
-            logging.info("Running an IRC to validate")
-            irc_calc = calculator.get_irc_calc(
-                ts=transitionstate
-            )
+            logging.info("Could not validate with Vibrational Analysis... Running an IRC to validate instead...")
             label = self.submit_transitionstate(
-                transitionstate, irc_calc, "general")
+                transitionstate, opt_type="irc")
             while not self.check_complete(label):
                 time.sleep(15)
             result = calculator.validate_irc(calc=irc_calc)
@@ -581,17 +515,17 @@ class Job():
 
 #################################################################################
 
-    def submit_rotor(self, conformer, ase_calculator, partition="general"):
+    def submit_rotor(self, conformer, torsion_index):
         """
         A methods to submit a job based on the calculator and partition provided
         """
         assert conformer, "Please provide a conformer to submit a job"
 
+        ase_calculator = self.calculator.get_rotor_calc(conformer, torsion_index)
+
         self.write_input(conformer, ase_calculator)
 
-        label = ase_calculator.label
-        scratch = ase_calculator.scratch
-        file_path = os.path.join(scratch, label)
+        file_path = os.path.join(ase_calculator.scratch, ase_calculator.label)
 
         os.environ["COMMAND"] = "g16"  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
@@ -604,36 +538,31 @@ class Job():
 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=100000 $AUTOTST/autotst/job/submit.sh""".format(
-                    label, partition), shell=True)
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 8:00:00 --mem=100000 $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition), shell=True)
 
         return label
 
-    def calculate_rotors(self, conformer, calculator, steps=36, step_size=10.0):
+    def calculate_rotors(self, conformer, steps=36, step_size=10.0):
 
         complete = {}
         calculators = {}
         verified = {}
+        if len(conformer.torsions) == 0:
+            logging.info("No torsions to run scans on.")
+            return {}
+
         for torsion in conformer.torsions:
-            calc = calculator.get_rotor_calc(
-                conformer=conformer,
-                torsion=torsion,
-                steps=steps,
-                step_size=step_size,
-            )
             label = self.submit_rotor(
-                conformer=conformer, ase_calculator=calc, partition="general")
+                conformer, torsion.index)
             logging.info(label)
             complete[label] = False
-            calculators[label] = calc
             verified[label] = False
 
         done = False
         lowest_energy_label = None
         conformer_error = False
-        if len(conformer.torsions) == 0:
-            logging.info("No torsions to run scans on.")
-            return {}
+
         while not done:
             for label in list(complete.keys()):
                 if not self.check_complete(label):
@@ -641,16 +570,14 @@ class Job():
                 if done:
                     continue
                 complete[label] = True
-                ase_calc = calculators[label]
-                lowest_conf, continuous, good_slope, opt_count_check = self.verify_rotor(
-                    steps=steps, step_size=step_size, ase_calculator=ase_calc)
+                lowest_conf, continuous, good_slope, opt_count_check = self.verify_rotor( ##################################
+                    conformer, label)
                 if all([lowest_conf, continuous]):
                     verified[label] = True
                 else:
                     verified[label] = False
 
                 if not lowest_conf:
-
                     done = True
                     lowest_energy_label = label
                     conformer_error = True
@@ -662,10 +589,13 @@ class Job():
             logging.info(
                 "A lower energy conformer was found... Going to optimize this insted")
             for label in list(complete.keys()):
-                command = """scancel -n '{}'""".format(label)
-            ase_calculator = calculators[label]
-            file_name = os.path.join(
-                ase_calculator.scratch, lowest_energy_label + ".log")
+                subprocess.call("""scancel -n '{}'""".format(label), shell=True)
+            if isinstance(conformer, TS):
+                file_name = os.path.join(
+                    self.directory, "ts", conformer.reaction_label, "rotors", lowest_energy_label + ".log")
+            else:
+                file_name = os.path.join(
+                    self.directory, "species",conformer.smiles , "rotors", lowest_energy_label + ".log")
             parser = ccread(file_name)
             first_is_lowest, min_energy, atomnos, atomcoords = self.check_rotor_lowest_conf(
                 parser=parser)
@@ -683,52 +613,50 @@ class Job():
                     Atom(symbol=symbol_dict[atom_num], position=coords))
             conformer.ase_molecule = Atoms(atoms)
             conformer.update_coords_from("ase")
+            for index in ["X", "Y", "Z"]:
+                if index != conformer.index:
+                    logging.info("Setting index of {} to {}...".format(conformer, index))
+                    conformer.index = index
+                    break
 
-            if isinstance(conformer, TS):
-                calc = calculator.get_overall_calc(conformer,
-                                                   direction=conformer.direction
-                                                   )
-
-                calc.scratch = calc.scratch.strip("/conformers")
-                conformer.direction = "forward"
-                conformer.index = "X"
-                label = self.submit_transitionstate(
-                    transitionstate=conformer, ase_calculator=calc)
-            else:
-                calc = calculator.get_conformer_calc(conformer
-                                                     )
-                calc.scratch = calc.scratch.strip("/conformers")
-                conformer.index = "X"
-                label = self.submit_conformer(conformer, calc, "general")
+            label = self.submit_conformer(conformer)
 
             while not self.check_complete(label):
-                os.sleep(15)
+                time.sleep(15)
 
             logging.info(
                 "Reoptimization complete... performing hindered rotors scans again")
-            return self.calculate_rotors(conformer, calculator, steps, step_size)
+            return self.calculate_rotors(conformer, steps, step_size)
 
         else:
             for label, boolean in list(verified.items()):
                 if not boolean:
-                    calc = calculators[label]
                     try:
-                        os.mkdir(os.path.join(calc.scratch, "failures"))
+                        if isinstance(conformer, TS):
+                            file_path = os.path.join(
+                                self.directory, "ts", conformer.reaction_label, "rotors")
+                        else:
+                            file_path = os.path.join(
+                                self.directory, "species",conformer.smiles , "rotors")
+
+                        os.mkdirs(os.path.join(file_path, failures))
                     except:
                         pass
                     move(
-                        os.path.join(calc.scratch, calc.label + ".log"),
-                        os.path.join(calc.scratch, "failures",
-                                     calc.label + ".log")
+                        os.path.join(file_path, label + ".log"),
+                        os.path.join(file_path, "failures",
+                                     label + ".log")
                     )
             return verified
 
-    def verify_rotor(self, steps=36, step_size=10.0, ase_calculator=None):
+    def verify_rotor(self, conformer, label, steps=36, step_size=10.0):
 
-        assert (ase_calculator is not None)
-
-        file_name = os.path.join(
-            ase_calculator.scratch, ase_calculator.label + ".log")
+        if isinstance(conformer, TS):
+            file_name = os.path.join(
+                self.directory, "ts", conformer.reaction_label, "rotors", label  + ".log")
+        elif isinstance(conformer, Conformer):
+             file_name = os.path.join(
+                self.directory, "species", conformer.smiles, "rotors", label  + ".log")           
         parser = cclib.io.ccread(file_name)
 
         continuous = self.check_rotor_continuous(
@@ -740,17 +668,8 @@ class Job():
 
         return [lowest_conf, continuous, good_slope, opt_count_check]
 
-    def check_rotor_opts(self, steps, parser=None):
+    def check_rotor_opts(self, steps, parser):
 
-        assert (parser is not None)
-
-        if parser is None:
-            if file_name is None:
-                assert ase_calculator is not None
-                file_name = os.path.join(
-                    ase_calculator.scratch, ase_calculator.label + ".log")
-
-            parser = cclib.io.ccread(file_name)
 
         #opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_indices = [i for i, status in enumerate(
@@ -761,9 +680,8 @@ class Job():
 
         return n_opts_check
 
-    def check_rotor_slope(self, steps, step_size, parser=None, tol=0.1):
+    def check_rotor_slope(self, steps, step_size, parser, tol=0.1):
 
-        assert (parser is not None)
 
         opt_indices = [i for i, status in enumerate(
             parser.optstatus) if status in [2, 4]]
@@ -783,10 +701,9 @@ class Job():
 
         return True
 
-    def check_rotor_continuous(self, steps, step_size, parser=None, tol=0.1):
+    def check_rotor_continuous(self, steps, step_size, parser, tol=0.1):
 
         assert isinstance(step_size, float)
-        assert (parser is not None)
 
         opt_indices = [i for i, status in enumerate(
             parser.optstatus) if status in [2, 4]]
@@ -821,9 +738,8 @@ class Job():
 
         return continuous
 
-    def check_rotor_lowest_conf(self, parser=None, tol=0.1):
+    def check_rotor_lowest_conf(self, parser, tol=0.1):
 
-        assert (parser is not None)
         opt_indices = [i for i, status in enumerate(
             parser.optstatus) if status in [2, 4]]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
