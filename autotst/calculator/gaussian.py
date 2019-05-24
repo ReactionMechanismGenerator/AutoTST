@@ -204,6 +204,8 @@ class Gaussian():
         if convergence is None:
             convergence = self.convergence
 
+        self.convergence = convergence
+
         assert convergence.lower() in ["", "verytight", "tight", "loose"]
 
         method = settings["method"]
