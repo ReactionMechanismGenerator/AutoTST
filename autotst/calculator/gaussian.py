@@ -58,7 +58,8 @@ class Gaussian():
                      "mem": "5GB",
                      "nprocshared": 20,
                  },
-                 scratch="."
+                 scratch=".",
+                 convergence=""
                  ):
 
         default_settings = {
@@ -80,6 +81,7 @@ class Gaussian():
         self.command = "g16"
         self.settings = settings
         self.scratch = scratch
+        self.convergence = convergence
 
     def __repr__(self):
         return '<Gaussian Calculator>'.format(None)
@@ -200,7 +202,7 @@ class Gaussian():
         if scratch is None:
             scratch = self.scratch
         if convergence is None:
-            convergence = ''
+            convergence = self.convergence
 
         assert convergence.lower() in ["", "verytight", "tight", "loose"]
 
