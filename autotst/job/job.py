@@ -225,7 +225,7 @@ class Job():
             logging.info("{} did not converge".format(calc.label))
             result = False
             if isinstance(calculator,Gaussian):
-                if not calculator.convergence.lower() in ["tight", "verytight", "loose"]:
+                if not calc.convergence.lower() in ["tight", "verytight", "loose"]:
                     logging.info("{} failed QM optimization".format(calc.label))
                 else:
                     logging.info("Resubmitting {} with default convergence criteria".format(calc.label))
@@ -242,7 +242,7 @@ class Job():
                     label = self.submit_conformer(conformer, calc, "general")
                     while not self.check_complete(label):
                         time.sleep(15)
-                        
+
                     scratch_dir = os.path.join(
                         calculator.scratch,
                         "species",
