@@ -23,7 +23,10 @@ install:
   - yes | conda uninstall --force openbabel
 
 script:
-  python autotst/geometryTest.py -v
+  - python autotst/geometryTest.py
+  - python autotst/speciesTest.py
+  - python autotst/reactionTest.py -v
+
 
 after_failure:
   - cat config.log
