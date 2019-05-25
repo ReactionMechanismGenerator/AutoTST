@@ -204,8 +204,6 @@ class Gaussian():
         if convergence is None:
             convergence = self.convergence
 
-        self.convergence = convergence
-
         assert convergence.lower() in ["", "verytight", "tight", "loose"]
 
         method = settings["method"]
@@ -248,6 +246,7 @@ class Gaussian():
             extra="opt=(CalcFC,MaxCycles=900,{}) freq IOp(7/33=1,2/16=3) scf=(MaxCycle=900)".format(convergence),
             multiplicity=conformer.rmg_molecule.multiplicity)
         calc.atoms = conformer.ase_molecule
+        calc.convergence = convergence
         del calc.parameters['force']
 
         return calc
