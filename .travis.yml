@@ -23,12 +23,12 @@ install:
   - yes | conda uninstall --force openbabel
   - git clone https://github.com/pekkosk/hotbit.git
   - mkdir hb 
-  - python $HOME/hotbit/setup.py install --home=$HOME/hb
-  - export HOTBIT_DIR="$HOME/hb/lib/python"
-  - export PATH="$HOME/hb/:$PATH"
-  - export HOTBIT_PARAMETERS="HOME/hb//param"
+  - python $HOME/build/hotbit/setup.py install --home=$HOME/hb
+  - export HOTBIT_DIR="$HOME//build/hb/lib/python"
+  - export PATH="$HOME/build/hb/:$PATH"
+  - export HOTBIT_PARAMETERS="HOME/build/hb/param"
   - export PYTHONPATH="$PYTHONPATH:$HOTBIT_DIR"
-  - mv $HOME/hb/param/fixed_parameters/* $HOME/hb/param/ 
+  - mv $HOME/build/hb/param/fixed_parameters/* $HOME/build/hb/param/ 
 
 script:
   - python autotst/geometryTest.py
