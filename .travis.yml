@@ -26,6 +26,7 @@ script:
   - python autotst/geometryTest.py
   - python autotst/speciesTest.py
   - python autotst/reactionTest.py -v
+  - python autotst/calculator/gaussianTest.py
 
 
 after_failure:
