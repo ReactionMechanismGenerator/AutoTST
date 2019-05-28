@@ -21,9 +21,21 @@ install:
   - conda env create -f environment.yml
   - source activate tst_env 
   - yes | conda uninstall --force openbabel
+  - mkdir hb  
+  - git clone https://github.com/pekkosk/hotbit.git hb/hotbit
+  - python hb/hotbit/setup.py install --home=hb/
+  - export HOTBIT_DIR="hb/lib/python"
+  - export PATH="/hb/:$PATH"
+  - export HOTBIT_PARAMETERS="hb/param"
+  - export PYTHONPATH="$PYTHONPATH:$HOTBIT_DIR"
+  - mv hb/param/fixed_parameters/* hb/param/ 
 
 script:
-  python autotst/geometryTest.py -v
+  - python autotst/geometryTest.py
+  - python autotst/speciesTest.py
+  - python autotst/reactionTest.py -v
+  - python autotst/calculator/gaussianTest.py
+
 
 after_failure:
   - cat config.log
