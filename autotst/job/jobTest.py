@@ -1,0 +1,98 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+##########################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+##########################################################################
+
+import os, sys, subprocess
+import unittest
+from autotst.reaction import Reaction, TS
+from autotst.data.base import TransitionStates
+from autotst.job.job import Job
+from autotst.calculator.gaussian import Gaussian
+from rmgpy.reaction import Reaction as RMGReaction
+from rmgpy.species import Species as RMGSpecies
+from rmgpy.molecule import Molecule as RMGMolecule
+from rmgpy.data.rmg import RMGDatabase
+from rdkit.Chem.rdchem import Mol, RWMol
+from ase import Atoms
+
+class JobTest(unittest.TestCase):
+
+    def setUp(self):
+        self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
+        self.calculator = Gaussian(directory="$AUTOTST/test_scratch")
+        self.job = Job(
+            reaction = self.reaction,
+            calculator = self.calculator,
+            partition = "test"
+        )
+        subprocess.call("alias squeue=echo", shell=True)
+        subprocess.call("alias sbatch=echo", shell=True)
+
+    def test_read_log(self):
+
+        path = os.path.expandvars("$AUTOTST/test_scratch/species/CC/conformers/CC_0.log")
+
+        atoms = self.job.read_log(path)
+
+        self.assertEqual(len(atoms), 8)
+
+        carbon_count = 0
+        hydrogen_count = 0
+        for atom in atoms:
+            if atom.symbol == "H":
+                hydrogen_count += 1
+            elif atom.symbol == "C":
+                carbon_count += 1
+
+        self.assertEqual(hydrogen_count, 6)
+        self.assertEqual(carbon_count, 2)
+
+    def test_write_input(self):
+        self.assert_(True)
+
+    def test_check_complete(self):
+        subprocess.call("""alias squeue="echo 1 " """, shell=True)
+        self.assertTrue(self.job.check_complete("test"))
+        subprocess.call("""alias squeue="echo 1 && echo 2 && echo 3" """, shell=True)
+        self.assertFalse(self.job.check_complete("test"))
+
+    ### For conformers
+    def test_submit_conformer(self):
+        self.reaction.generate_reactants_and_products()
+        conformer = self.reaction.reactants[0].conformers.values()[0][0]
+        label = self.job.submit_conformer(conformer)
+        self.assertEquals(label, "{}_{}".format(conformer.smiles , conformer.index))
+
+        
+
+    
+
+
+if __name__ == "__main__":
+  unittest.main()
+
