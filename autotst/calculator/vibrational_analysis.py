@@ -31,6 +31,7 @@ import os
 import logging
 import pandas as pd
 import numpy as np
+from ase import Atom, Atoms
 from cclib.io import ccread
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
@@ -89,7 +90,7 @@ class VibrationalAnalysis():
             "{}_{}_{}.log".format(self.ts.reaction_label, self.ts.direction, self.ts.index))
         return self.log_file
 
-    def parse_vibrations(self,):
+    def parse_vibrations(self):
         """
         This method obtains the vibrations from the log file of interest using
         cclib. It then creates a zipped list with the vibrational frequencies
@@ -127,6 +128,25 @@ class VibrationalAnalysis():
         """
 
         assert isinstance(self.ts, TS)
+
+        
+        symbol_dict = {
+            17: "Cl",
+            9:  "F",
+            8:  "O",
+            7:  "N",
+            6:  "C",
+            1:  "H",
+        }
+        atoms = []
+
+        parser = ccread(self.log_file)
+
+        for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
+            atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+        
+        self.ts.ase_molecule = Atoms(atoms)
+        self.ts.update_coords_from("ase")
 
         self.pre_geometry = self.ts.ase_molecule.copy()
         self.post_geometry = self.ts.ase_molecule.copy()
