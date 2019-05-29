@@ -66,7 +66,7 @@ class QMData():
                  stericEnergy=None,
                  molecularMass=(0, "amu"),
                  energy=(0, 'eV/molecule'),
-                 atomicNumbers=array([]),
+                 atomicNumbers=np.array([]),
                  rotationalConstants=([], "cm^-1"),
                  atomCoords=([[]], "angstrom"),
                  frequencies=([], "cm^-1"),

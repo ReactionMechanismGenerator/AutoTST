@@ -41,7 +41,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem.Pharm3D import EmbedLib
 
-import ase
+import ase 
 
 import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule

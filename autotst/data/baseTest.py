@@ -31,8 +31,8 @@
 import unittest
 import os
 import logging
-
-from autotst.data.base import * #QMData #, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
+import numpy as np
+from autotst.data.base import QMData #, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
 
 class TestQMData(unittest.TestCase):
     def setUp(self):
@@ -45,7 +45,7 @@ class TestQMData(unittest.TestCase):
         self.assertEqual(self.qmdata.energy[0], 0)
         self.assertEqual(len(self.qmdata.atomicNumbers), 0)
         self.assertEqual(len(self.qmdata.rotationalConstants[0]), 0)
-        self.assertEqual(len(self.qmdata.atomCoords[0]), 0)
+        self.assertEqual(len(self.qmdata.atomCoords[0]), 1)
         self.assertEqual(len(self.qmdata.frequencies[0]), 0)
         self.assertEqual(self.qmdata.source, None)
         self.assertEqual(self.qmdata.method, None)

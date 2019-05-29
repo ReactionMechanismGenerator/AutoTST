@@ -42,8 +42,6 @@ from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
 from autotst.geometry import Torsion
 
-from cclib.io import ccread
-
 from ase import Atom, Atoms
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian as ASEGaussian
