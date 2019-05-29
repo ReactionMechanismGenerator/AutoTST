@@ -30,9 +30,7 @@
 import os
 import itertools
 import logging
-import numpy
-
-import autotst
+import numpy as np
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
 from autotst.calculator.vibrational_analysis import VibrationalAnalysis
@@ -184,8 +182,8 @@ class InputOutput():
                     'True': True,
                     'False': False,
                     'QMData': QMData,
-                    'array': numpy.array,
-                    'int32': numpy.int32,
+                    'array': np.array,
+                    'int32': np.int32,
                 }
                 exec resultFile in global_context, local_context
         except IOError as e:
@@ -253,8 +251,8 @@ class InputOutput():
                     'NonlinearRotor': NonlinearRotor,
                     'HarmonicOscillator': HarmonicOscillator,
                     'LinearRotor': LinearRotor,
-                    'array': numpy.array,
-                    'int32': numpy.int32,
+                    'array': np.array,
+                    'int32': np.int32,
                     'Molecule': RMGMolecule
                 }
                 exec resultFile in global_context, local_context

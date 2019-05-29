@@ -36,9 +36,9 @@ import os
 import os.path
 import logging
 import codecs
-import numpy
+import numpy as np
+from cclib.io import ccread
 from copy import deepcopy
-from numpy import array
 from rmgpy.data.base import Database, Entry, makeLogicNode, LogicNode, DatabaseError
 
 from rmgpy.quantity import Quantity, constants
@@ -115,18 +115,17 @@ class QMData():
         "A helper function to fill in the qmdata using CCLib"
 
         parser = ccread(file_path)
-        atoms = read_gaussian_out(file_path)
 
         self.groundStateDegeneracy = parser.mult
-        self.atomNumbers = atoms.numbers
-        self.atomCoords = (atoms.arrays["positions"], "angstrom")
+        self.atomNumbers = parser.atomnos
+        self.atomCoords = (parser.atomcoords[-1], "angstrom")
         self.stericEnergy = None  # Need to fix this
         self.molecularMass = (parser.atommasses.sum(), "amu")
-        self.energy = (atoms.get_potential_energy(), "eV/molecule")
+        self.energy = (parser.scfenergies[-1], "eV/molecule")
         self.atomicNumbers = parser.atomnos
         self.rotationalConstants = ([], "cm^-1")  # Need to fix this
         self.frequencies = (parser.vibfreqs, "cm^-1")
-        self.source = None
+        self.source = "AutoTST"
         self.method = parser.metadata["functional"]
 
 
@@ -705,13 +704,6 @@ class TransitionStateDepository(Database):
         self.entries['{0:d}:{1}'.format(index, label)] = entry
         return entry
 
-    """def saveEntry(self, f, entry):
-        
-        #Write the given `entry` in the database to the file object `f`.
-        
-        return saveEntry(f, entry)
-    """
-
     def saveEntry(self, f, entry):
         """
         Save an `entry` in the kinetics database by writing a string to
@@ -1080,21 +1072,21 @@ class TSGroups(Database):
                     'Unable to fit kinetics groups for family "{0}"; no valid data found.'.format(
                         self.label))
                 return
-            A = numpy.array(A)
-            b = numpy.array(b)
-            distance_data = numpy.array(distance_data)
+            A = np.array(A)
+            b = np.array(b)
+            distance_data = np.array(distance_data)
 
-            x, residues, rank, s = numpy.linalg.lstsq(A, b)
+            x, residues, rank, s = np.linalg.lstsq(A, b)
 
             for t, distance_key in enumerate(distance_keys):
 
                 # Determine error in each group
-                stdev = numpy.zeros(len(groupList) + 1, numpy.float64)
-                count = numpy.zeros(len(groupList) + 1, numpy.int)
+                stdev = np.zeros(len(groupList) + 1, np.float64)
+                count = np.zeros(len(groupList) + 1, np.int)
 
                 for index in range(len(trainingSet)):
                     template, distances = trainingSet[index]
-                    d = numpy.float64(distance_data[index, t])
+                    d = np.float64(distance_data[index, t])
                     dm = x[-1, t] + sum([x[groupList.index(group), t]
                                          for group in template if group in groupList])
                     variance = (dm - d)**2
@@ -1110,10 +1102,10 @@ class TSGroups(Database):
                     count[-1] += 1
 
                 import scipy.stats
-                ci = numpy.zeros(len(count))
+                ci = np.zeros(len(count))
                 for i in range(len(count)):
                     if count[i] > 1:
-                        stdev[i] = numpy.sqrt(stdev[i] / (count[i] - 1))
+                        stdev[i] = np.sqrt(stdev[i] / (count[i] - 1))
                         ci[i] = scipy.stats.t.ppf(
                             0.975, count[i] - 1) * stdev[i]
                     else:
@@ -1141,12 +1133,12 @@ class TSGroups(Database):
             for entry in groupEntries:
                 if groupValues[entry] is not None:
                     if not any(
-                        numpy.isnan(
-                            numpy.array(
+                        np.isnan(
+                            np.array(
                                 groupUncertainties[entry]))):
                         # should be entry.data.* (e.g.
                         # entry.data.uncertainties)
-                        uncertainties = numpy.array(groupUncertainties[entry])
+                        uncertainties = np.array(groupUncertainties[entry])
                         uncertaintyType = '+|-'
                     else:
                         uncertainties = {}
