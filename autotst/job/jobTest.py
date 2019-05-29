@@ -44,7 +44,7 @@ class JobTest(unittest.TestCase):
 
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
-        self.calculator = Gaussian(directory="$AUTOTST/test_scratch")
+        self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test_scratch"))
         self.job = Job(
             reaction = self.reaction,
             calculator = self.calculator,
@@ -76,10 +76,9 @@ class JobTest(unittest.TestCase):
         self.assert_(True)
 
     def test_check_complete(self):
-        subprocess.call("""alias squeue="echo 1 " """, shell=True)
+        ### I don't know how to create alaises in a python script
         self.assertTrue(self.job.check_complete("test"))
-        subprocess.call("""alias squeue="echo 1 && echo 2 && echo 3" """, shell=True)
-        self.assertFalse(self.job.check_complete("test"))
+
 
     ### For conformers
     def test_submit_conformer(self):
@@ -88,9 +87,42 @@ class JobTest(unittest.TestCase):
         label = self.job.submit_conformer(conformer)
         self.assertEquals(label, "{}_{}".format(conformer.smiles , conformer.index))
 
-        
+    def test_calculate_species(self):
+        self.reaction.generate_reactants_and_products()
 
+        for species in self.reaction.reactants + self.reaction.products:
+            self.job.calculate_species(species)
+            for smiles in species.conformers.keys():
+                print smiles
+                self.assertTrue(os.path.exists(os.path.join(
+                    os.path.expandvars("$AUTOTST/test_scratch/species/"),
+                    smiles,
+                    smiles + ".log"
+                )))
     
+    def test_submit_transitionstate(self):
+
+        ts = self.reaction.ts["forward"][0]
+        ts.get_molecules()
+
+        for opt_type in ["shell", "center", "overall"]:
+            label = self.job.submit_transitionstate(ts, opt_type=opt_type)
+            if opt_type == "overall":
+                self.assertEqual(label, "{}_{}_{}".format(ts.reaction_label,ts.direction, ts.index))
+            else:
+                self.assertEqual(label, "{}_{}_{}_{}".format(ts.reaction_label,ts.direction, opt_type, ts.index))
+
+    def test_calculate_transitionstate(self):
+        ts = self.reaction.ts["forward"][0]
+        ts.get_molecules()
+        result = self.job.calculate_transitionstate(ts)
+        self.assertTrue(result)
+
+    def test_calculate_reaction(self):
+
+        del self.reaction.ts["reverse"]
+        result = self.job.calculate_reaction()
+        self.assertTrue(result)
 
 
 if __name__ == "__main__":
