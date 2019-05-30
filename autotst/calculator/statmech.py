@@ -320,7 +320,7 @@ class StatMech():
             )
 
         if not os.path.exists(tor_log):
-            logging.file(
+            logging.info(
                 "Torsion log file does not exist for {}".format(torsion))
             return ""
 
@@ -662,7 +662,7 @@ class StatMech():
             elif isinstance(job, ThermoJob):
                 self.thermo_job = job
 
-    def set_reactants_and_products(self):
+    def set_results(self):
         """
         A method to set the RMGReaction from the kinetics job to the RMGReaction of the input Reaction
 

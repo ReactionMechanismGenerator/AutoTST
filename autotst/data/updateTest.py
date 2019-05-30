@@ -31,7 +31,7 @@ import unittest, os, sys, shutil
 from autotst.reaction import Reaction
 import autotst.update as UpdateMethods
 
-def TestUpdateMethods(unitest.TestCase):
+class TestUpdateMethods(unittest.TestCase):
 
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
