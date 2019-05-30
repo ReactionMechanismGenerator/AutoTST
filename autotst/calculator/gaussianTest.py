@@ -1,6 +1,6 @@
 import unittest
 
-import os
+import os, shutil
 import itertools
 import logging
 import numpy as np
@@ -74,7 +74,13 @@ class TestGaussian(unittest.TestCase):
         calc_dict = autotst_gaussian_irc.todict()
         self.assertIsInstance(autotst_gaussian_irc,ASEGaussian)
         self.assertIsInstance(calc_dict,dict)
-    
+
+    def tearDown(self):
+
+        if os.path.exists(os.path.expandvars("$AUTOTST/autotst/calculator/ts")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/autotst/calculator/ts"))
+        if os.path.exists(os.path.expandvars("$AUTOTST/autotst/calculator/species")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/autotst/calculator/species"))
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
