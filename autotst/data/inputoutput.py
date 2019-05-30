@@ -68,7 +68,7 @@ class InputOutput():
         """
         Variables:
         - reaction (Reaction): the reaction of interest
-        - save_directory (str): the directory where you want .ts and .kinetics files saved
+        - directory (str): the directory where you want .ts and .kinetics files saved
         """
         self.method = method
         self.reaction = reaction
@@ -82,7 +82,7 @@ class InputOutput():
         from copy import deepcopy
         return deepcopy(self)
 
-    def get_qm_data(self):
+    def get_qmdata(self):
         """
         A method to create a QMData object from a log file at file_path
 
@@ -93,20 +93,21 @@ class InputOutput():
         file_path = os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")
         if not os.path.exists(file_path):
             logging.info("Sorry, we cannot find a valid file path for {}...".format(self.reaction))
-            self.qm_data = None
-            return self.qm_data
-        self.qm_data = QMData().get_qmdata(file_path=file_path)
-        return self.qm_data
+            self.qmdata = None
+            return self.qmdata
+        self.qmdata = QMData()
+        self.qmdata.get_qmdata(file_path=file_path)
+        return self.qmdata
 
     def get_ts_file_path(self):
 
         return os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".ts")
 
-    def get_kinetics_file_path(self, reaction):
+    def get_kinetics_file_path(self):
 
         return os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics")
 
-    def save_ts(self, reaction, method, qmData):
+    def save_ts(self):
         """
         A method to save the .ts data to a file
 
@@ -115,8 +116,8 @@ class InputOutput():
         - method (str): the computational methods that were used
         - qmData (QMData): the data that you want to save
         """
-        self.get_qm_data()
-        if not self.qm_data:
+        self.get_qmdata()
+        if not self.qmdata:
             logging.info("No QMData for {}...".format(self.reaction))
             return False
         file_path = self.get_ts_file_path()
@@ -124,10 +125,10 @@ class InputOutput():
         with open(file_path, 'w') as resultFile:
             resultFile.write('rxnLabel = "{0!s}"\n'.format(self.reaction.label))
             resultFile.write('method = "{0!s}"\n'.format(self.method))
-            resultFile.write("qmData = {0!r}\n".format(self.qm_data))
+            resultFile.write("qmData = {0!r}\n".format(self.qmdata))
         return True
 
-    def save_kinetics(self, method, reaction):
+    def save_kinetics(self):
         """
         A method to save the .ts data to a file
 
@@ -142,10 +143,11 @@ class InputOutput():
         logging.info("Saving kinetics data file {}".format(filePath))
         with open(filePath, 'w') as resultFile:
 
-            assert reaction.rmg_reaction.kinetics, "No kinetics calclated for this reaction..."
+            assert self.reaction.rmg_reaction.kinetics, "No kinetics calclated for this reaction..."
             resultFile.write('method = "{0!s}"\n'.format(self.method))
             resultFile.write(
                 'reaction = {0!r}\n'.format(self.reaction.rmg_reaction))
+        return True
 
     def read_ts_file(self):
         """
@@ -158,20 +160,11 @@ class InputOutput():
         - local_context (dict): the content of the .ts file. Will return None if there is an error
         """
 
-        r, p = self.reaction.label.split("_")
-        reacts = r.split("+")
-        prods = p.split("+")
-
-        file_names = get_possible_names(reacts, prods)
-
-        got_file = False
-        for file_name in file_names:
-            ts_file = os.path.join(self.directory, file_name + ".ts")
-            if os.path.exists(ts_file):
-                got_file = True
-                path = ts_file
-
-        if not got_file:
+        ts_file = self.get_ts_file_path()
+        if os.path.exists(ts_file):
+            path = ts_file
+        else:
+            logging.info("We could not file a ts file for {}".format(self.reaction.label))
             return None
         try:
             with open(path) as resultFile:
@@ -217,21 +210,12 @@ class InputOutput():
         Returns:
         - local_context (dict): the content of the .kinetics file. Will return None if there is an error
         """
-        r, p = self.reaction.label.split("_")
-        reacts = r.split("+")
-        prods = p.split("+")
 
-        file_names = get_possible_names(reacts, prods)
-
-        got_file = False
-        for file_name in file_names:
-            ts_file = os.path.join(self.save_directory,
-                                   file_name + ".kinetics")
-            if os.path.exists(ts_file):
-                got_file = True
-                path = ts_file
-
-        if not got_file:
+        ts_file = self.get_kinetics_file_path()
+        if os.path.exists(ts_file):
+            path = ts_file
+        else:
+            logging.info("We could not file a kinetics file for {}".format(self.reaction.label))
             return None
         try:
             with open(path) as resultFile:
