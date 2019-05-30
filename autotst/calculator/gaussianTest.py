@@ -22,12 +22,12 @@ from ase import Atom, Atoms
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian as ASEGaussian
 
-from hotbit import Hotbit
-class test_gaussian(unittest.TestCase):
+class TestGaussian(unittest.TestCase):
     def setUp(self):
         rxn = Reaction(label='C+[O]O_[CH3]+OO')
-        rxn.generate_conformers(ase_calculator=Hotbit())
-        self.gaussian = Gaussian(conformer=rxn.ts['forward'][0])
+        ts = rxn.ts["forward"][0]
+        ts.get_molecules()
+        self.gaussian = Gaussian(conformer=ts)
     def test_rotor_calc(self):
         autotst_gaussian_rotor = self.gaussian.get_rotor_calc()
         calc_dict = autotst_gaussian_rotor.todict()
@@ -77,6 +77,6 @@ class test_gaussian(unittest.TestCase):
     
 
 if __name__ == "__main__":
-  unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
+    unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
     
     

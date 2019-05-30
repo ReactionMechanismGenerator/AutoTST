@@ -7,6 +7,7 @@ from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
 import autotst
 import ase
+import os
 from ase import Atom, Atoms
 import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
@@ -64,6 +65,7 @@ class TestConformer(unittest.TestCase):
         self.assertIsInstance(geometries[4],list)
     def test_calculate_symmetry_number(self):
         self.assertEquals(self.conformer.calculate_symmetry_number(),1)
+        os.remove("./CC.symm")
 
 class TestSpecies(unittest.TestCase):
     def setUp(self):
@@ -73,4 +75,4 @@ class TestSpecies(unittest.TestCase):
         self.assertIsInstance(self.species.generate_structures().values()[0][0],Conformer)
 
 if __name__ == "__main__":
-  unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
+    unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
