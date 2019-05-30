@@ -28,7 +28,7 @@
 ##########################################################################
 
 import unittest
-import os
+import os, shutil
 import logging
 import pandas as pd
 import numpy as np
@@ -41,15 +41,35 @@ from autotst.calculator.vibrational_analysis import percent_change, VibrationalA
 class VibrationalAnalysisTest(unittest.TestCase):
 
     def setUp(self):
-
-        self.ts = Reaction("CC+[O]O_[CH2]C+OO").ts["forward"][0]
+        self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
+        self.reaction.get_labeled_reaction()
+        self.ts = self.reaction.ts["forward"][0]
         self.ts.get_molecules()
-        self.directory = os.path.expandvars("$AUTOTST/test_scratch")
+
+        directory = os.path.expandvars("$AUTOTST/test")
+        if not os.path.exists(os.path.join(directory, "ts", self.reaction.label, "conformers")):
+            os.makedirs(os.path.join(directory, "ts", self.reaction.label, "conformers"))
+        if not os.path.exists(os.path.join(directory, "ts", self.reaction.label, self.reaction.label + ".log")):
+            shutil.copy(
+                os.path.join(directory, "bin", "log-files", self.reaction.label + "_forward_0.log"),
+                os.path.join(directory, "ts", self.reaction.label, "conformers", self.reaction.label + "_forward_0.log")
+            )
+
+        self.directory = directory
         self.vibrational_analysis = VibrationalAnalysis(
             transitionstate = self.ts,
             directory = self.directory
         )
-    
+    def tearDown(self):
+        directory = os.path.expandvars("$AUTOTST/test")
+        if os.path.exists(os.path.join(directory, "ts")):
+            shutil.rmtree(os.path.join(directory, "ts"))
+
+        for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+            for fi in files:
+                if fi.endswith(".symm"):
+                    os.remove(os.path.join(head, fi))
+
     def test_get_log_file(self):
         log_file = self.vibrational_analysis.get_log_file()
 

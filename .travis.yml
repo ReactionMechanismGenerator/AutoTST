@@ -30,7 +30,7 @@ script:
   - python autotst/data/baseTest.py
   - python autotst/data/inputoutputTest.py
   - python autotst/job/jobTest.py
-
+  - python autotst/calculator/vibrational_analysisTest.py
 
 after_failure:
   - cat config.log
