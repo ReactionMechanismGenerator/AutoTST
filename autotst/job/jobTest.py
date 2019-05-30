@@ -27,7 +27,7 @@
 #
 ##########################################################################
 
-import os, sys, subprocess
+import os, sys, subprocess, shutil
 import unittest
 from autotst.reaction import Reaction, TS
 from autotst.data.base import TransitionStates
@@ -44,18 +44,18 @@ class JobTest(unittest.TestCase):
 
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
-        self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test_scratch"))
+        self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
         self.job = Job(
             reaction = self.reaction,
             calculator = self.calculator,
             partition = "test"
         )
-        subprocess.call("alias squeue=echo", shell=True)
-        subprocess.call("alias sbatch=echo", shell=True)
 
+        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
+        
     def test_read_log(self):
 
-        path = os.path.expandvars("$AUTOTST/test_scratch/species/CC/conformers/CC_0.log")
+        path = os.path.expandvars("$AUTOTST/test/bin/log-files/CC_0.log")
 
         atoms = self.job.read_log(path)
 
@@ -77,31 +77,36 @@ class JobTest(unittest.TestCase):
 
     def test_check_complete(self):
         ### I don't know how to create alaises in a python script
-        self.assertTrue(self.job.check_complete("test"))
+        self.assertFalse(self.job.check_complete("test1"))
+        self.assertTrue(self.job.check_complete("test2"))
 
 
     ### For conformers
     def test_submit_conformer(self):
+        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         self.reaction.generate_reactants_and_products()
         conformer = self.reaction.reactants[0].conformers.values()[0][0]
         label = self.job.submit_conformer(conformer)
         self.assertEquals(label, "{}_{}".format(conformer.smiles , conformer.index))
 
     def test_calculate_species(self):
+        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         self.reaction.generate_reactants_and_products()
 
         for species in self.reaction.reactants + self.reaction.products:
             self.job.calculate_species(species)
             for smiles in species.conformers.keys():
-                print smiles
                 self.assertTrue(os.path.exists(os.path.join(
-                    os.path.expandvars("$AUTOTST/test_scratch/species/"),
+                    os.path.expandvars("$AUTOTST/test/species/"),
                     smiles,
                     smiles + ".log"
                 )))
     
     def test_submit_transitionstate(self):
-
+        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
         ts = self.reaction.ts["forward"][0]
         ts.get_molecules()
 
@@ -113,6 +118,8 @@ class JobTest(unittest.TestCase):
                 self.assertEqual(label, "{}_{}_{}_{}".format(ts.reaction_label,ts.direction, opt_type, ts.index))
 
     def test_calculate_transitionstate(self):
+        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
         ts = self.reaction.ts["forward"][0]
         ts.get_molecules()
         result = self.job.calculate_transitionstate(ts)
@@ -123,8 +130,15 @@ class JobTest(unittest.TestCase):
         del self.reaction.ts["reverse"]
         result = self.job.calculate_reaction()
         self.assertTrue(result)
-
+    
+    def tearDown(self):
+        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
+        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
+    
 
 if __name__ == "__main__":
-  unittest.main()
+    unittest.main()
+
 

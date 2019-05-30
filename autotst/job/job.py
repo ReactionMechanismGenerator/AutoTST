@@ -124,6 +124,7 @@ class Job():
             command,
             shell=True,
             stdout=subprocess.PIPE).communicate()[0]
+        
         if len(output.split("\n")) <= 2:
             return True
         else:
@@ -144,7 +145,7 @@ class Job():
         label = conformer.smiles + "_{}".format(conformer.index)
         file_path = os.path.join(ase_calculator.scratch, label)
 
-        os.environ["COMMAND"] = "g16"  # only using gaussian for now
+        os.environ["COMMAND"] = self.calculator.command  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
         
         attempted = False
