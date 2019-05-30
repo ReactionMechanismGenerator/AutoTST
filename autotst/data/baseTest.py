@@ -35,6 +35,7 @@ import numpy as np
 import rmgpy
 from rmgpy.data.rmg import RMGDatabase
 import autotst
+from autotst.reaction import Reaction
 from autotst.data.base import QMData, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
 
 class TestQMData(unittest.TestCase):
@@ -59,7 +60,7 @@ class TestQMData(unittest.TestCase):
         A method that is designed to obtain the QM data for a transitionstate or molecule
         Returns a qmdata object
         """
-        self.qmdata.get_qmdata(os.path.expandvars("$AUTOTST/test_scratch/ts/CC+[O]O_[CH2]C+OO/CC+[O]O_[CH2]C+OO.log"))
+        self.qmdata.get_qmdata(os.path.expandvars("$AUTOTST/test/bin/log-files/CC+[O]O_[CH2]C+OO_forward_0.log"))
 
         self.assertEqual(self.qmdata.groundStateDegeneracy, 2)
         self.assertAlmostEqual(self.qmdata.molecularMass[0], 126.1, places=1)
@@ -106,6 +107,14 @@ class TestTransitionStates(unittest.TestCase):
             solvation=False,
         )
         self.rmg_database = rmg_database
+        ts_database = TransitionStates()
+        path = os.path.join(autotst.settings["tst_database_path"], "H_Abstraction")
+        global_context = {'__builtins__': None}
+        local_context = {'DistanceData': DistanceData}
+        family = self.rmg_database.kinetics.families["H_Abstraction"]
+        ts_database.family = family
+        ts_database.load(path, local_context, global_context)
+        self.ts_database = ts_database
 
     def test_load(self):
 
@@ -116,7 +125,90 @@ class TestTransitionStates(unittest.TestCase):
         family = self.rmg_database.kinetics.families["H_Abstraction"]
         ts_database.family = family
         ts_database.load(path, local_context, global_context)
-        
+
+        self.assertIsInstance(ts_database.depository, TransitionStateDepository)
+        self.assertIsInstance(ts_database.groups, TSGroups)
+
+    def test_estimate_distances(self):
+
+        reaction = Reaction("CC+[O]O_[CH2]C+OO")
+        labeled_reaction, _ = reaction.get_labeled_reaction()
+
+        distance_data = self.ts_database.estimateDistances(labeled_reaction)
+
+        d12 = 1.38
+        d13 = 2.53
+        # d13 in reactionTest is smaller than the distance in baseTest.py because
+        # d13 is edited to be smaller in reaction.py. The value returned from the database
+        # is ~2.53 but is reduced to ~2.43 when called from the reaction object itself
+        d23 = 1.16
+
+        self.assertAlmostEquals(d12, distance_data.distances["d12"], places=1)
+        self.assertAlmostEquals(d13, distance_data.distances["d13"], places=1)
+        self.assertAlmostEquals(d23, distance_data.distances["d23"], places=1)
+
+class TestTransitionStateDepository(unittest.TestCase):
+
+    def setUp(self):
+        self.ts_depository = TransitionStateDepository(label="test")
+
+        self.settings = {
+            "file_path": os.path.join(
+                os.path.expandvars("$AUTOTST"), "database", "H_Abstraction", "TS_training", "reactions.py"
+            ),
+            "local_context": {"DistanceData":DistanceData},
+            "global_context": {'__builtins__': None}
+        }
+
+    def test_load(self):
+
+        self.ts_depository.load(
+            self.settings["file_path"],
+            self.settings["local_context"],
+            self.settings["global_context"]
+        )
+
+class TestTSGroups(unittest.TestCase):
+
+    def setUp(self):
+
+        self.ts_groups = TSGroups(label="test")
+
+        self.settings = {
+            "file_path": os.path.join(
+                os.path.expandvars("$AUTOTST"), "database", "H_Abstraction", "TS_groups.py"
+            ),
+            "local_context": {"DistanceData":DistanceData},
+            "global_context": {'__builtins__': None}
+        }
+    def test_load(self):
+
+        self.ts_groups.load(
+            self.settings["file_path"],
+            self.settings["local_context"],
+            self.settings["global_context"]
+        )
+
+    def test_estimate_distances_using_group_additivity(self):
+
+        self.test_load()
+
+        reaction = Reaction("CC+[O]O_[CH2]C+OO")
+        labeled_reaction, _ = reaction.get_labeled_reaction()
+
+        distance_data = self.ts_groups.estimateDistancesUsingGroupAdditivity(labeled_reaction)
+
+        d12 = 1.38
+        d13 = 2.53
+        # d13 in reactionTest is smaller than the distance in baseTest.py because
+        # d13 is edited to be smaller in reaction.py. The value returned from the database
+        # is ~2.53 but is reduced to ~2.43 when called from the reaction object itself
+        d23 = 1.16
+
+        self.assertAlmostEquals(d12, distance_data.distances["d12"], places=1)
+        self.assertAlmostEquals(d13, distance_data.distances["d13"], places=1)
+        self.assertAlmostEquals(d23, distance_data.distances["d23"], places=1)
+
 
 
 if __name__ == "__main__":

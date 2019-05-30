@@ -41,19 +41,19 @@ from ase import Atoms
 
 class TestReaction(unittest.TestCase):
     def setUp(self):
-        self.reaction = Reaction("C+[O]O_[CH3]+OO")
+        self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
 
     def test_label(self):
-        self.assertEqual(self.reaction.label, "C+[O]O_[CH3]+OO")
+        self.assertEqual(self.reaction.label, "CC+[O]O_[CH2]C+OO")
 
     def test_rmg_reaction(self):
         test_reaction = RMGReaction(
             reactants=[
-                RMGMolecule(SMILES="C"),
+                RMGMolecule(SMILES="CC"),
                 RMGMolecule(SMILES="[O]O")
             ],
             products = [
-                RMGMolecule(SMILES="[CH3]"),
+                RMGMolecule(SMILES="[CH2]C"),
                 RMGMolecule(SMILES="OO")
             ]
         )
@@ -67,9 +67,12 @@ class TestReaction(unittest.TestCase):
         self.assertIsInstance(ts_databases["H_Abstraction"], TransitionStates)
 
     def test_disance_data(self):
-        d12 = 1.42
-        d13 = 2.43
-        d23 = 1.12
+        d12 = 1.38
+        d13 = 2.43 
+        # d13 in reactionTest is smaller than the distance in baseTest.py because
+        # d13 is edited to be smaller in reaction.py. The value returned from the database
+        # is ~2.53 but is reduced to 2.43 when called from the reaction object itself
+        d23 = 1.16
 
         self.assertAlmostEquals(d12, self.reaction.distance_data.distances["d12"], places=1)
         self.assertAlmostEquals(d13, self.reaction.distance_data.distances["d13"], places=1)
@@ -86,11 +89,11 @@ class TestReaction(unittest.TestCase):
     def test_labeled_reaction(self):
         test_reaction = RMGReaction(
             reactants=[
-                RMGMolecule(SMILES="C"),
+                RMGMolecule(SMILES="CC"),
                 RMGMolecule(SMILES="[O]O")
             ],
             products = [
-                RMGMolecule(SMILES="[CH3]"),
+                RMGMolecule(SMILES="[CH2]C"),
                 RMGMolecule(SMILES="OO")
             ]
         )
@@ -128,34 +131,34 @@ class TestReaction(unittest.TestCase):
 class TestTS(unittest.TestCase):
 
     def setUp(self):
-        self.reaction = Reaction("C+[O]O_[CH3]+OO")
+        self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.ts = self.reaction.ts["forward"][0]
         self.ts.get_molecules()
         
     def test_reaction_label(self):
-        self.assertEquals(self.ts.reaction_label, "C+[O]O_[CH3]+OO")
+        self.assertEquals(self.ts.reaction_label, "CC+[O]O_[CH2]C+OO")
     
     def test_smiles(self):
-        self.assertEquals(self.ts.smiles, "C.[O]O")
+        self.assertEquals(self.ts.smiles, "CC.[O]O")
     
     def test_rdkit_molecule(self):
         rdkit_molecule = self.ts.rdkit_molecule
         self.assertIsInstance(rdkit_molecule, Mol)
-        self.assertEquals(len(rdkit_molecule.GetAtoms()), 8)
-        self.assertEquals(len(rdkit_molecule.GetBonds()), 6)
+        self.assertEquals(len(rdkit_molecule.GetAtoms()), 11)
+        self.assertEquals(len(rdkit_molecule.GetBonds()), 9)
     
     def test_pseudo_geometry(self):
         self.assertIsInstance(self.ts._pseudo_geometry, RWMol)
-        self.assertEquals(len(self.ts._pseudo_geometry.GetBonds()), 7)
+        self.assertEquals(len(self.ts._pseudo_geometry.GetBonds()), 10)
 
     def test_ase_molecule(self):
         ase_molecule = self.ts.ase_molecule
         self.assertIsInstance(ase_molecule, Atoms)
-        self.assertEquals(len(ase_molecule.get_atomic_numbers()), 8)
+        self.assertEquals(len(ase_molecule.get_atomic_numbers()), 11)
     
     def test_symmetry_number(self):
         self.assertEquals(self.ts.symmetry_number, 1)
-        os.remove("./C.[O]O.symm")
+        os.remove("./CC.[O]O.symm")
 
     def test_bounds_matrix(self):
 
@@ -179,17 +182,17 @@ class TestTS(unittest.TestCase):
         self.assertAlmostEqual(d23, bm[low, high], delta=u23/2 )
         
     def test_get_bonds(self):
-        self.assertEqual(len(self.ts.get_bonds()), 7)
+        self.assertEqual(len(self.ts.get_bonds()), 10)
         true_count = 0
         for bond in self.ts.get_bonds():
             if bond.reaction_center: true_count += 1
         self.assertEqual(true_count, 2)
 
     def test_get_angles(self):
-        self.assertEqual(len(self.ts.get_angles()), 9)
+        self.assertEqual(len(self.ts.get_angles()), 15)
 
     def test_get_torsions(self):
-        self.assertEqual(len(self.ts.get_torsions()), 3)
+        self.assertEqual(len(self.ts.get_torsions()), 4)
 
 
 if __name__ == "__main__":
