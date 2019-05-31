@@ -1,6 +1,8 @@
 # Automated Transition State Theory Calculator | AutoTST
 [![Build Status](https://travis-ci.com/ReactionMechanismGenerator/AutoTST.svg?branch=master)](https://travis-ci.com/ReactionMechanismGenerator/AutoTST)
 [![codecov](https://codecov.io/gh/reactionmechanismgenerator/autotst/branch/master/graph/badge.svg)](https://codecov.io/gh/reactionmechanismgenerator/autotst)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+![Release](https://img.shields.io/badge/version-0.1.0-brightgreen.svg)
 
 ## Descritpion
 
