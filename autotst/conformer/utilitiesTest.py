@@ -32,6 +32,27 @@ from autotst.species import Conformer
 from autotst.conformer.utilities import get_energy, find_terminal_torsions
 from ase.calculators.emt import EMT
 
+class TestUtilities(unittest.TestCase):
+
+    def setUp(self):
+        self.conformer = Conformer("NC(O)C=CC")
+        self.conformer.get_molecules()
+
+    def test_get_potential_energy(self):
+
+        self.conformer.ase_molecule.set_calculator(EMT())
+        test_energy = get_energy(self.conformer)
+        energy = self.conformer.ase_molecule.get_potential_energy()
+        self.assertAlmostEqual(test_energy, energy, places=2)
+
+    def test_find_torsions(self):
+
+        terminal_torsions, non_terminal_torsions = find_terminal_torsions(self.conformer)
+        self.assertEqual(len(self.conformer.torsions), len(terminal_torsions + non_terminal_torsions))
+        self.assertEqual(len(terminal_torsions), 1) # only one terminal methyl group
+        self.assertEqual(len(non_terminal_torsions), 3) # N-C, O-C, C-C
+
+    
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))

@@ -70,6 +70,8 @@ def find_terminal_torsions(conformer):
 
     Variables:
     - conformer (Conformer): the conformer object of interest
+    ### DEFINITION OF A TERMINAL TORSION ###
+    # A terminal torsion is a symmetric top at the end of a molecule #
 
     Returns:
     - terminal_torsions (list): a list of the terminal torsions that are not important in a conformer search
