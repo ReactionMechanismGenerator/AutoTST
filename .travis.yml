@@ -13,7 +13,7 @@ install:
   - conda info -a
   # Set git info
   - git config --global user.name "Travis Deploy"
-  - git config --global user.email "sirumalla.s@husky.neu.edu"
+  - git config --global user.email "harms.n@husky.neu.edu"
   - cd AutoTST
   - export AUTOTST=$(pwd)
   - echo $AUTOTST
@@ -23,18 +23,8 @@ install:
   - yes | conda uninstall --force openbabel
 
 script:
-  - python autotst/geometryTest.py
-  - python autotst/speciesTest.py
-  - python autotst/reactionTest.py
-  - python autotst/data/baseTest.py
-  - python autotst/data/inputoutputTest.py
-  - python autotst/data/updateTest.py
-  - python autotst/calculator/gaussianTest.py
-  - python autotst/calculator/vibrational_analysisTest.py
-  - python autotst/calculator/statmechTest.py
-  - python autotst/conformer/utilitiesTest.py
-  - python autotst/conformer/systematicTest.py
-  - python autotst/job/jobTest.py
+  - make unittests
+  - codecov --token 5db618e2-9768-489b-81ce-5a9795c92c75
 
 after_failure:
   - cat config.log
