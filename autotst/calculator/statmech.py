@@ -102,11 +102,7 @@ class StatMech():
         - bondDict (dict): a dictionary containing counts of different bond types
         """
 
-        bondList = []
-        for atom in conformer.rmg_molecule.atoms:
-            for bond in list(atom.bonds.values()):
-                bondList.append(bond)
-        bonds = list(set(bondList))
+        bonds = conformer.rmg_molecule.getAllEdges()
         bondDict = {}
         for bond in bonds:
             if bond.isSingle():

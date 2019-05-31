@@ -86,8 +86,10 @@ class TestStatMech(unittest.TestCase):
     def test_get_bonds(self):
         ts = self.reaction.ts["forward"][0]
         bond_dict = self.statmech.get_bonds(ts)
+        self.assertEqual(bond_dict["O-O"], 1)
+        self.assertEqual(bond_dict["O-H"], 1)
         self.assertEqual(bond_dict["C-C"], 1)
-        self.assertTrue(bond_dict["C-H"] <= 6)
+        self.assertEqual(bond_dict["C-H"], 6)
 
     def test_write_conformer_file(self):
         species = self.reaction.reactants[0]
