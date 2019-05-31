@@ -53,6 +53,5 @@ class TestUtilities(unittest.TestCase):
         self.assertEqual(len(non_terminal_torsions), 3) # N-C, O-C, C-C
 
     
-
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
