@@ -25,7 +25,7 @@ install:
 script:
   - python autotst/geometryTest.py
   - python autotst/speciesTest.py
-  - python autotst/reactionTest.py -v
+  - python autotst/reactionTest.py
   - python autotst/data/baseTest.py
   - python autotst/data/inputoutputTest.py
   - python autotst/data/updateTest.py
