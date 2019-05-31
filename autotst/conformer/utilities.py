@@ -27,22 +27,14 @@
 #
 ##########################################################################
 
+import os, sys, logging, itertools
+import pandas as pd
+import numpy as np
+import autotst
 from autotst.reaction import Reaction, TS
 from autotst.species import Species
 from autotst.geometry import Bond, Angle, Torsion, CisTrans
-import autotst
-from ase.optimize import BFGS
-from ase.constraints import FixBondLengths
-from ase import units
 import ase
-import pandas as pd
-from numpy import array
-import numpy as np
-import random
-import itertools
-import os
-import sys
-import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
@@ -70,6 +62,8 @@ def find_terminal_torsions(conformer):
 
     Variables:
     - conformer (Conformer): the conformer object of interest
+    ### DEFINITION OF A TERMINAL TORSION ###
+    # A terminal torsion is a symmetric top at the end of a molecule #
 
     Returns:
     - terminal_torsions (list): a list of the terminal torsions that are not important in a conformer search
@@ -79,7 +73,7 @@ def find_terminal_torsions(conformer):
     non_terminal_torsions = []
     for torsion in conformer.torsions:
 
-        i, j, k, l = torsion.atom_indices
+        _, j, k, _ = torsion.atom_indices
         rmg_mol = conformer.rmg_molecule
 
         assert rmg_mol
