@@ -11,6 +11,7 @@
 *.pyc
 *.so
 *.pyd
+*.coverage
 
 # Image files generated
 *.png
