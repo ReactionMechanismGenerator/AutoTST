@@ -186,7 +186,7 @@ class TestStatMech(unittest.TestCase):
                 self.statmech.kinetics_job.reaction
             )
         )
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
 
     

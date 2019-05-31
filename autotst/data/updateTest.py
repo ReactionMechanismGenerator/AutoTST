@@ -41,5 +41,8 @@ class TestUpdateMethods(unittest.TestCase):
 
     def test_update(self):
         UpdateMethods.update_al(self.reaction, self.family, method=self.method, shortDesc=self.short_description)
+        self.assertTrue(True)
+
+        
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))

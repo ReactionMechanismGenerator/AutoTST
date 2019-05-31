@@ -127,8 +127,6 @@ class VibrationalAnalysisTest(unittest.TestCase):
     def test_validate_ts(self):
         self.assertTrue(self.vibrational_analysis.validate_ts())
 
-
-
 if __name__ == "__main__":
-  unittest.main()
+    unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
 
