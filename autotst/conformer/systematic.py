@@ -250,7 +250,7 @@ def systematic_search(conformer,
         results.append(values)
 
     df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])
-    df = df[df.energy < df.energy.min() + 3 * units.kcal / units.mol /
+    df = df[df.energy < df.energy.min() + units.kcal / units.mol /
             units.eV].sort_values("energy")
 
     tolerance = 0.1
