@@ -67,47 +67,29 @@ def find_all_combos(
 
     conformer.get_geometries()
 
-    terminal_torsions, torsions = find_terminal_torsions(conformer)
+    _, torsions = find_terminal_torsions(conformer)
     cistranss = conformer.cistrans
     chiral_centers = conformer.chiral_centers
 
     torsion_angles = np.arange(0, 360, delta)
-    torsion_combos = list(itertools.combinations_with_replacement(
-        torsion_angles, len(torsions)))
-    if len(torsions) != 1:
-        torsion_combos = list(
-            set(
-                torsion_combos +
-                list(itertools.combinations_with_replacement(
-                    torsion_angles[::-1], len(torsions)
-                ))))
+    torsion_combos = list(itertools.product(
+        torsion_angles, repeat=len(torsions)))
 
     if cistrans:
         cistrans_options = ["E", "Z"]
-        cistrans_combos = list(itertools.combinations_with_replacement(
-            cistrans_options, len(cistranss)))
-        if len(cistranss) != 1:
-            cistrans_combos = list(
-                set(
-                    cistrans_combos +
-                    list(itertools.combinations_with_replacement(
-                        cistrans_options[::-1], len(cistranss)
-                    ))))
+        cistrans_combos = list(itertools.product(
+            cistrans_options, repeat=len(cistranss)))
+
+
 
     else:
         cistrans_combos = [()]
 
     if chiral_centers:
         chiral_options = ["R", "S"]
-        chiral_combos = list(itertools.combinations_with_replacement(
-            chiral_options, len(chiral_centers)))
-        if len(chiral_centers) != 1:
-            chiral_combos = list(
-                set(
-                    chiral_combos +
-                    list(itertools.combinations_with_replacement(
-                        chiral_options[::-1], len(chiral_centers)
-                    ))))
+        chiral_combos = list(itertools.product(
+            chiral_options, repeat=len(chiral_centers)))
+
     else:
         chiral_combos = [()]
 
@@ -149,8 +131,7 @@ def systematic_search(conformer,
         logging.info("Returning origional conformer")
         return [conformer]
 
-    terminal_torsions, torsions = find_terminal_torsions(conformer)
-    file_name = conformer.smiles + "_brute_force.csv"
+    _, torsions = find_terminal_torsions(conformer)
 
     calc = conformer.ase_molecule.get_calculator()
     if isinstance(calc, FileIOCalculator):
@@ -187,7 +168,7 @@ def systematic_search(conformer,
 
         for i, s_r in enumerate(chiral_centers):
             center = conformer.chiral_centers[i]
-            conformer.set_chirality(center.atom_index, s_r)
+            conformer.set_chirality(center.index, s_r)
 
         conformer.update_coords_from("ase")
 
@@ -196,7 +177,6 @@ def systematic_search(conformer,
     logging.info(
         "There are {} unique conformers generated".format(len(conformers)))
 
-    final_results = []
 
     def opt_conf(conformer, calculator, i):
         """
@@ -204,7 +184,6 @@ def systematic_search(conformer,
         Only for use within this parent function
         """
 
-        combo = combinations[i]
         labels = []
         for bond in conformer.bonds:
             labels.append(bond.atom_indices)
@@ -267,7 +246,7 @@ def systematic_search(conformer,
 
     from ase import units
     results = []
-    for key, values in list(return_dict.items()):
+    for _, values in list(return_dict.items()):
         results.append(values)
 
     df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])

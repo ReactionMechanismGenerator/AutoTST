@@ -102,11 +102,7 @@ class StatMech():
         - bondDict (dict): a dictionary containing counts of different bond types
         """
 
-        bondList = []
-        for atom in conformer.rmg_molecule.atoms:
-            for bond in list(atom.bonds.values()):
-                bondList.append(bond)
-        bonds = list(set(bondList))
+        bonds = conformer.rmg_molecule.getAllEdges()
         bondDict = {}
         for bond in bonds:
             if bond.isSingle():
@@ -320,7 +316,7 @@ class StatMech():
             )
 
         if not os.path.exists(tor_log):
-            logging.file(
+            logging.info(
                 "Torsion log file does not exist for {}".format(torsion))
             return ""
 
@@ -662,7 +658,7 @@ class StatMech():
             elif isinstance(job, ThermoJob):
                 self.thermo_job = job
 
-    def set_reactants_and_products(self):
+    def set_results(self):
         """
         A method to set the RMGReaction from the kinetics job to the RMGReaction of the input Reaction
 

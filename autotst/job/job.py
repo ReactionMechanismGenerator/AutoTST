@@ -62,6 +62,10 @@ class Job():
         self.conformer_calculator = conformer_calculator
         self.partition = partition
 
+        manager = multiprocessing.Manager()
+        results = manager.dict()
+        global results
+
     def __repr__(self):
         return "< Job '{}'>".format(self.label)
 
@@ -120,6 +124,7 @@ class Job():
             command,
             shell=True,
             stdout=subprocess.PIPE).communicate()[0]
+        
         if len(output.split("\n")) <= 2:
             return True
         else:
@@ -140,7 +145,7 @@ class Job():
         label = conformer.smiles + "_{}".format(conformer.index)
         file_path = os.path.join(ase_calculator.scratch, label)
 
-        os.environ["COMMAND"] = "g16"  # only using gaussian for now
+        os.environ["COMMAND"] = self.calculator.command  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
         
         attempted = False
@@ -171,7 +176,7 @@ class Job():
         for smiles, conformers in list(species.conformers.items()):
             results[smiles] = {}
             for conformer in conformers:
-                to_calculate.append([conformer])
+                to_calculate.append(conformer)
 
         currently_running = []
         for conformer in to_calculate:
@@ -179,7 +184,6 @@ class Job():
                 for running_label in currently_running:
                     if self.check_complete(running_label):
                         currently_running.remove(running_label)
-
             label = self.submit_conformer(conformer)
             currently_running.append(label)
 
@@ -202,10 +206,10 @@ class Job():
             f = "{}_{}.log".format(conformer.smiles, conformer.index)
             if not os.path.exists(os.path.join(scratch_dir, f)):
                 logging.info(
-                    "It seems that {} was never run...".format(calc.label))
+                    "It seems that {} was never run...".format(f.strip(".log")))
                 result = False
 
-            complete, converged = calculator.verify_output_file(
+            complete, converged = self.calculator.verify_output_file(
                 os.path.join(scratch_dir, f)
             )
 
@@ -234,11 +238,11 @@ class Job():
 
                 if not starting_molecule.isIsomorphic(test_molecule):
                     logging.info(
-                        "Output geometry of {} is not isomorphic with input geometry".format(calc.label))
+                        "Output geometry of {} is not isomorphic with input geometry".format(f.strip(".log")))
                     result = False
                 else:
                     logging.info(
-                        "{} was successful and was validated!".format(calc.label))
+                        "{} was successful and was validated!".format(f.strip(".log")))
                     result = True
 
             if not result:
@@ -295,7 +299,7 @@ class Job():
         A methods to submit a job for a TS object based on a single calculator
         """
         assert transitionstate, "Please provide a transitionstate to submit a job"
-        
+        self.calculator.conformer = transitionstate
         if opt_type.lower() == "shell":
             ase_calculator = self.calculator.get_shell_calc()
             time = "12:00:00"
@@ -415,9 +419,6 @@ class Job():
 
         currently_running = []
         processes = {}
-        manager = multiprocessing.Manager()
-        results = manager.dict()
-        global results
 
         for direction, transitionstates in list(self.reaction.ts.items()):
 
@@ -480,7 +481,7 @@ class Job():
 
         copyfile(
             os.path.join(self.calculator.directory, "ts", self.reaction.label,
-                         "conformers", lowest_energy_label + ".log"),
+                         "conformers", lowest_energy_label),
             os.path.join(self.calculator.directory, "ts",
                          self.reaction.label, self.reaction.label + ".log")
         )

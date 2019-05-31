@@ -36,9 +36,9 @@ import os
 import os.path
 import logging
 import codecs
-import numpy
+import numpy as np
+from cclib.io import ccread
 from copy import deepcopy
-from numpy import array
 from rmgpy.data.base import Database, Entry, makeLogicNode, LogicNode, DatabaseError
 
 from rmgpy.quantity import Quantity, constants
@@ -66,7 +66,7 @@ class QMData():
                  stericEnergy=None,
                  molecularMass=(0, "amu"),
                  energy=(0, 'eV/molecule'),
-                 atomicNumbers=array([]),
+                 atomicNumbers=np.array([]),
                  rotationalConstants=([], "cm^-1"),
                  atomCoords=([[]], "angstrom"),
                  frequencies=([], "cm^-1"),
@@ -115,18 +115,18 @@ class QMData():
         "A helper function to fill in the qmdata using CCLib"
 
         parser = ccread(file_path)
-        atoms = read_gaussian_out(file_path)
 
         self.groundStateDegeneracy = parser.mult
-        self.atomNumbers = atoms.numbers
-        self.atomCoords = (atoms.arrays["positions"], "angstrom")
+        self.atomNumbers = parser.atomnos
+        self.numberOfAtoms = len(parser.atomnos)
+        self.atomCoords = (parser.atomcoords[-1], "angstrom")
         self.stericEnergy = None  # Need to fix this
         self.molecularMass = (parser.atommasses.sum(), "amu")
-        self.energy = (atoms.get_potential_energy(), "eV/molecule")
+        self.energy = (parser.scfenergies[-1], "eV/molecule")
         self.atomicNumbers = parser.atomnos
         self.rotationalConstants = ([], "cm^-1")  # Need to fix this
         self.frequencies = (parser.vibfreqs, "cm^-1")
-        self.source = None
+        self.source = "AutoTST"
         self.method = parser.metadata["functional"]
 
 
@@ -378,229 +378,6 @@ class TransitionStates(Database):
 
         return
 
-    def generateReactions(self, reactants, products=None, **options):
-        """
-        Generate all reactions between the provided list of one or two
-        `reactants`, which should be :class:`Molecule` objects. This method
-        searches the depository, libraries, and groups, in that order.
-        """
-        reactionList = []
-        reactionList.extend(self.generateReactionsFromLibraries(
-            reactants, products, **options))
-        reactionList.extend(self.generateReactionsFromFamilies(
-            reactants, products, **options))
-        return reactionList
-
-    def generateReactionsFromFamilies(
-            self,
-            reactants,
-            products,
-            only_families=None,
-            families=None,
-            **options):
-        """
-        Generate all reactions between the provided list of one or two
-        `reactants`, which should be :class:`Molecule` objects. This method
-        applies the reaction family.
-        If `only_families` is a list of strings, only families with those labels
-        are used.
-        """
-        # If there are two structures and they are the same, then make a copy
-        # of the second one so we can independently manipulate both of them
-        # This is for the case where A + A --> products
-        if len(reactants) == 2 and reactants[0] == reactants[1]:
-            reactants[1] = reactants[1].copy(deep=True)
-
-        reactionList = []
-        reactionList.extend(families.generateReactions(reactants, **options))
-
-        if products:
-            reactionList = filterReactions(reactants, products, reactionList)
-
-        return reactionList
-
-    def getForwardReactionForFamilyEntry(
-            self, entry, family, groups, rxnFamily):
-        """
-        For a given `entry` for a reaction of the given reaction `family` (the
-        string label of the family), return the reaction with transition state
-        distances for the "forward" direction as defined by the reaction
-        family. For families that are their own reverse, the direction the
-        kinetics is given in will be preserved. If the entry contains
-        functional groups for the reactants, assume that it is given in the
-        forward direction and do nothing. Returns the reaction in the direction
-        consistent with the reaction family template, and the matching template.
-        """
-        def matchSpeciesToMolecules(species, molecules):
-            if len(species) == len(molecules) == 1:
-                return species[0].isIsomorphic(molecules[0])
-            elif len(species) == len(molecules) == 2:
-                if species[0].isIsomorphic(
-                        molecules[0]) and species[1].isIsomorphic(
-                        molecules[1]):
-                    return True
-                elif species[0].isIsomorphic(molecules[1]) and species[1].isIsomorphic(molecules[0]):
-                    return True
-            return False
-
-        reaction = None
-        template = None
-
-        # Get the indicated reaction family
-        if groups is None:
-            raise ValueError(
-                'Invalid value "{0}" for family parameter.'.format(family))
-
-        if all([(isinstance(reactant, Group) or isinstance(reactant, LogicNode))
-                for reactant in entry.item.reactants]):
-            # The entry is a rate rule, containing functional groups only
-            # By convention, these are always given in the forward direction and
-            # have kinetics defined on a per-site basis
-            reaction = Reaction(
-                reactants=entry.item.reactants[:],
-                products=[],
-                kinetics=entry.data,
-                degeneracy=1,
-            )
-            template = [groups.entries[label]
-                        for label in entry.label.split(';')]
-
-        elif (all([isinstance(reactant, (RMGMolecule, RMGSpecies)) for reactant in entry.item.reactants]) and
-              all([isinstance(product, (RMGMolecule, RMGSpecies)) for product in entry.item.products])):
-            # The entry is a real reaction, containing molecules
-            # These could be defined for either the forward or reverse direction
-            # and could have a reaction-path degeneracy
-
-            reaction = Reaction(reactants=[], products=[])
-            for molecule in entry.item.reactants:
-                if isinstance(molecule, RMGMolecule):
-                    reactant = RMGSpecies(molecule=[molecule])
-                else:
-                    reactant = molecule
-                reactant.generateResonanceIsomers()
-                reaction.reactants.append(reactant)
-            for molecule in entry.item.products:
-                if isinstance(molecule, RMGMolecule):
-                    product = RMGSpecies(molecule=[molecule])
-                else:
-                    product = molecule
-                product.generateResonanceIsomers()
-                reaction.products.append(product)
-
-            # Generate all possible reactions involving the reactant species
-            generatedReactions = self.generateReactionsFromFamilies(
-                [
-                    reactant.molecule[0] for reactant in reaction.reactants],
-                [],
-                only_families=[family],
-                families=rxnFamily)
-
-            # Remove from that set any reactions that don't produce the desired
-            # reactants and products
-            forward = []
-            reverse = []
-            for rxn in generatedReactions:
-                if matchSpeciesToMolecules(
-                        reaction.reactants,
-                        rxn.reactants) and matchSpeciesToMolecules(
-                        reaction.products,
-                        rxn.products):
-                    forward.append(rxn)
-                if matchSpeciesToMolecules(
-                        reaction.reactants,
-                        rxn.products) and matchSpeciesToMolecules(
-                        reaction.products,
-                        rxn.reactants):
-                    reverse.append(rxn)
-
-            # We should now know whether the reaction is given in the forward or
-            # reverse direction
-            if len(forward) == 1 and len(reverse) == 0:
-                # The reaction is in the forward direction, so use as-is
-                reaction = forward[0]
-                template = reaction.template
-                # Don't forget to overwrite the estimated distances from the
-                # database with the distances for this entry
-                reaction.distances = entry.data
-            elif len(reverse) == 1 and len(forward) == 0:
-                # The reaction is in the reverse direction
-                # The reaction is in the forward direction, so use as-is
-                reaction = forward[0]
-                template = reaction.template
-                # The distances to the H atom are reversed
-                reaction.distances = entry.data
-                reaction.distances['d12'] = entry.data['d23']
-                reaction.distances['d23'] = entry.data['d12']
-            elif len(reverse) > 0 and len(forward) > 0:
-                print('FAIL: Multiple reactions found for {0!r}.'.format(
-                    entry.label))
-            elif len(reverse) == 0 and len(forward) == 0:
-                print('FAIL: No reactions found for "%s".' % (entry.label))
-            else:
-                print('FAIL: Unable to estimate distances for {0!r}.'.format(
-                    entry.label))
-
-        assert reaction is not None
-        assert template is not None
-        return reaction, template
-
-
-def filterReactions(reactants, products, reactionList):
-    """
-    Remove any reactions from the given `reactionList` whose reactants do
-    not involve all the given `reactants` or whose products do not involve
-    all the given `products`. This method checks both forward and reverse
-    directions, and only filters out reactions that don't match either.
-    """
-
-    # Convert from molecules to species and generate resonance isomers.
-    reactant_species = []
-    for mol in reactants:
-        s = RMGSpecies(molecule=mol)
-        s.generateResonanceIsomers()
-        reactant_species.append(s)
-    reactants = reactant_species
-    product_species = []
-    for mol in products:
-        s = RMGSpecies(molecule=mol)
-        s.generateResonanceIsomers()
-        product_species.append(s)
-    products = product_species
-
-    reactions = reactionList[:]
-
-    for reaction in reactionList:
-        # Forward direction
-        reactants0 = [r for r in reaction.reactants]
-        for reactant in reactants:
-            for reactant0 in reactants0:
-                if reactant.isIsomorphic(reactant0):
-                    reactants0.remove(reactant0)
-                    break
-        products0 = [p for p in reaction.products]
-        for product in products:
-            for product0 in products0:
-                if product.isIsomorphic(product0):
-                    products0.remove(product0)
-                    break
-        forward = not (len(reactants0) != 0 or len(products0) != 0)
-        # Reverse direction
-        reactants0 = [r for r in reaction.products]
-        for reactant in reactants:
-            for reactant0 in reactants0:
-                if reactant.isIsomorphic(reactant0):
-                    reactants0.remove(reactant0)
-                    break
-        products0 = [p for p in reaction.reactants]
-        for product in products:
-            for product0 in products0:
-                if product.isIsomorphic(product0):
-                    products0.remove(product0)
-                    break
-        reverse = not (len(reactants0) != 0 or len(products0) != 0)
-        if not forward and not reverse:
-            reactions.remove(reaction)
-    return reactions
 
 ##########################################################################
 
@@ -704,13 +481,6 @@ class TransitionStateDepository(Database):
         )
         self.entries['{0:d}:{1}'.format(index, label)] = entry
         return entry
-
-    """def saveEntry(self, f, entry):
-        
-        #Write the given `entry` in the database to the file object `f`.
-        
-        return saveEntry(f, entry)
-    """
 
     def saveEntry(self, f, entry):
         """
@@ -1080,21 +850,21 @@ class TSGroups(Database):
                     'Unable to fit kinetics groups for family "{0}"; no valid data found.'.format(
                         self.label))
                 return
-            A = numpy.array(A)
-            b = numpy.array(b)
-            distance_data = numpy.array(distance_data)
+            A = np.array(A)
+            b = np.array(b)
+            distance_data = np.array(distance_data)
 
-            x, residues, rank, s = numpy.linalg.lstsq(A, b)
+            x, residues, rank, s = np.linalg.lstsq(A, b)
 
             for t, distance_key in enumerate(distance_keys):
 
                 # Determine error in each group
-                stdev = numpy.zeros(len(groupList) + 1, numpy.float64)
-                count = numpy.zeros(len(groupList) + 1, numpy.int)
+                stdev = np.zeros(len(groupList) + 1, np.float64)
+                count = np.zeros(len(groupList) + 1, np.int)
 
                 for index in range(len(trainingSet)):
                     template, distances = trainingSet[index]
-                    d = numpy.float64(distance_data[index, t])
+                    d = np.float64(distance_data[index, t])
                     dm = x[-1, t] + sum([x[groupList.index(group), t]
                                          for group in template if group in groupList])
                     variance = (dm - d)**2
@@ -1110,10 +880,10 @@ class TSGroups(Database):
                     count[-1] += 1
 
                 import scipy.stats
-                ci = numpy.zeros(len(count))
+                ci = np.zeros(len(count))
                 for i in range(len(count)):
                     if count[i] > 1:
-                        stdev[i] = numpy.sqrt(stdev[i] / (count[i] - 1))
+                        stdev[i] = np.sqrt(stdev[i] / (count[i] - 1))
                         ci[i] = scipy.stats.t.ppf(
                             0.975, count[i] - 1) * stdev[i]
                     else:
@@ -1141,12 +911,12 @@ class TSGroups(Database):
             for entry in groupEntries:
                 if groupValues[entry] is not None:
                     if not any(
-                        numpy.isnan(
-                            numpy.array(
+                        np.isnan(
+                            np.array(
                                 groupUncertainties[entry]))):
                         # should be entry.data.* (e.g.
                         # entry.data.uncertainties)
-                        uncertainties = numpy.array(groupUncertainties[entry])
+                        uncertainties = np.array(groupUncertainties[entry])
                         uncertaintyType = '+|-'
                     else:
                         uncertainties = {}

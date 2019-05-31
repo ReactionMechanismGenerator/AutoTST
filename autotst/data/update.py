@@ -5,6 +5,7 @@ from autotst.species import Species, Conformer
 from autotst.reaction import Reaction, TS
 import itertools
 import pandas as pd
+import numpy as np
 from collections import defaultdict, OrderedDict
 from rmgpy.data.rmg import RMGDatabase
 from rmgpy.species import Species as RMGSpecies
@@ -22,8 +23,7 @@ import logging
 
 import pylab
 import scipy.stats
-import matplotlib
-matplotlib.rc('mathtext', fontset='stixsans', default='regular')
+
 
 
 def update_all(reactions, family, method='', shortDesc=''):
@@ -246,7 +246,6 @@ def update_known_reactions(
     Returns database object of both old and new reactions, just the old reactions, and just the new reactions
     """
     # Loading reactions database
-    from autotst.base import TransitionStateDepository, DistanceData
     r_db = TransitionStateDepository()
     local_context = {'DistanceData': DistanceData}
     r_db.load(path, local_context=local_context)
@@ -376,7 +375,7 @@ def update_databases(reactions, method='', shortDesc='', reaction_family='', ove
             'Defaulting to reaction family of {}'.format(reaction_family))
 
     general_path = os.path.join(os.path.expandvars(
-        '$AutoTST'), 'database', reaction_family, 'TS_training')
+        '$AUTOTST'), 'database', reaction_family, 'TS_training')
 
     dict_path = os.path.join(general_path, 'dictionary.txt')
     old_reactions_path = os.path.join(general_path, 'reactions.py')
@@ -451,7 +450,7 @@ def TS_Database_Update(families, path=None, auto_save=False):
     assert isinstance(
         families, list), "Families must be a list. If singular family, still keep it in list"
     acceptable_families = os.listdir(os.path.join(
-        os.path.expandvars("$AutoTST"), "database"))
+        os.path.expandvars("$AUTOTST"), "database"))
     for family in families:
         assert isinstance(
             family, str), "Family names must be provided as strings"
@@ -537,7 +536,7 @@ class DatabaseUpdater:
             self.path = path
         else:
             self.path = os.path.join(os.path.expandvars(
-                "$AutoTST"), "database", family)
+                "$AUTOTST"), "database", family)
 
         self.family = family
 
@@ -553,7 +552,7 @@ class DatabaseUpdater:
         """
         Loads Database, sets it as class attribute, sets training_set from database
         """
-        from autotst.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
+        from autotst.data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
         ts_database = TransitionStates()
 
         #path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", self.family)
@@ -745,8 +744,8 @@ class DatabaseUpdater:
 
                     self.groupComments[group].add('{0!s}'.format(template))
 
-        self.A = numpy.array(A)
-        self.b = numpy.array(b)
+        self.A = np.array(A)
+        self.b = np.array(b)
         return
 
     def set_entry_data(self):
@@ -765,19 +764,19 @@ class DatabaseUpdater:
         distance_keys = sorted(self.training_set[0][1].keys())
         # distance_keys are ['d12', 'd13', 'd23']
 
-        x, residuals, rank, s = numpy.linalg.lstsq(self.A, self.b)
+        x, residuals, rank, s = np.linalg.lstsq(self.A, self.b)
         for i, distance_key in enumerate(distance_keys):
             # Determine error in each group
-            variance_sums = numpy.zeros(
-                len(self.nodes_to_update) + 1, numpy.float64)
-            stdev = numpy.zeros(len(self.nodes_to_update) + 1, numpy.float64)
-            counts = numpy.zeros(len(self.nodes_to_update) + 1, numpy.int)
+            variance_sums = np.zeros(
+                len(self.nodes_to_update) + 1, np.float64)
+            stdev = np.zeros(len(self.nodes_to_update) + 1, np.float64)
+            counts = np.zeros(len(self.nodes_to_update) + 1, np.int)
 
             for reaction, distances in self.training_set:
                 template = self.reaction_templates[reaction]
 
                 distances_list = [distances[key] for key in distance_keys]
-                d = numpy.float64(distances_list[i])
+                d = np.float64(distances_list[i])
                 # dm found by manually summing residuals
                 dm = x[-1, i] + sum([x[self.nodes_to_update.index(group), i]
                                      for group in template])
@@ -793,11 +792,11 @@ class DatabaseUpdater:
                 variance_sums[-1] += variance
                 counts[-1] += 1
 
-            ci = numpy.zeros(len(counts))
+            ci = np.zeros(len(counts))
 
             for j, count in enumerate(counts):
                 if count > 2:
-                    stdev[j] = numpy.sqrt(variance_sums[j] / (count - 1))
+                    stdev[j] = np.sqrt(variance_sums[j] / (count - 1))
                     ci[j] = scipy.stats.t.ppf(0.975, count - 1) * stdev[j]
                 else:
                     stdev[j] = None
@@ -823,12 +822,12 @@ class DatabaseUpdater:
             for entry in self.all_entries:
                 if self.groupValues[entry] is not None:
                     if not any(
-                        numpy.isnan(
-                            numpy.array(
+                        np.isnan(
+                            np.array(
                                 self.groupUncertainties[entry]))):
                         # should be entry.data.* (e.g.
                         # entry.data.uncertainties)
-                        uncertainties = numpy.array(
+                        uncertainties = np.array(
                             self.groupUncertainties[entry])
                         uncertaintyType = '+|-'
                     else:

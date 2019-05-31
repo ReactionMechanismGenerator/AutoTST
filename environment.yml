@@ -9,3 +9,5 @@ dependencies:
   - cclib
   - py3dmol
   - rdkit
+  - nose
+  - codecov
