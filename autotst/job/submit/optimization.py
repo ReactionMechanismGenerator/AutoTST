@@ -9,7 +9,7 @@ from sella import MinModeAtoms, optimize
 from ase.calculators.emt import EMT
 
 
-### python3 autotst-sella.py Path/To/File.xyz CalcLabel OptType
+### python3 autotst-sella.py Path/To/File_input.xyz CalcLabel OptType
 file_path = os.environ["FILE_PATH"]
 calc_label = os.environ["CALC_LABEL"]
 opt_type = os.environ["OPT_TYPE"]

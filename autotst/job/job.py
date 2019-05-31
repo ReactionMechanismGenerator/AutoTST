@@ -44,7 +44,8 @@ class Job():
     def __init__(
             self,
             reaction=None,
-            calculator=None, # An AutoTST Gaussian calculator with proper directory settings
+            directory=".",
+            calculator="gaussian",
             conformer_calculator=None,
             partition="general" # The partition to run calculations on
             ):
@@ -58,8 +59,7 @@ class Job():
             assert False, "Reaction provided was not a reaction object"
 
         self.calculator = calculator
-        if self.calculator:
-            self.directory = self.calculator.directory
+        self.directory = directory
         self.conformer_calculator = conformer_calculator
         self.partition = partition
 
@@ -91,7 +91,7 @@ class Job():
 
         return Atoms(atoms)
 
-    def write_geometry(self, conformer, directory=".", opt_type=None):
+    def write_geometry(self, conformer, opt_type=None):
         """
         A helper method that will write an input file and move it to the correct scratch directory
         """
@@ -103,14 +103,14 @@ class Job():
             assert opt_type in ["shell", "center", "overall", "irc"]
             file_name = label + "_" + str(opt_type) + "_" + direction + "_" + str(index) + "_input.xyz"
             if opt_type == "irc":
-                directory = os.path.join(directory, "ts", label, "irc")
+                directory = os.path.join(self.directory, "ts", label, "irc")
             else:
-                directory = os.path.join(directory, "ts", label, "conformers")
+                directory = os.path.join(self.directory, "ts", label, "conformers")
         else:
             label = conformer.smiles
             index = conformer.index
             file_name = label + "_" + str(index) +"_input.xyz"
-            directory = os.path.join(directory, "species", label, "conformers")
+            directory = os.path.join(self.directory, "species", label, "conformers")
         try:
             os.makedirs(directory)
         except OSError:
@@ -144,19 +144,13 @@ class Job():
         assert conformer, "Please provide a conformer to submit a job"
 
         self.calculator.conformer = conformer
-        ase_calculator = self.calculator.get_conformer_calc()
-        self.write_input(conformer, ase_calculator)
-        file_path, label = self.write_geometry(conformer=conformer, directory=directory)
+        file_path, label = self.write_geometry(conformer=conformer)
 
-        label = conformer.smiles + "_{}".format(conformer.index)
-        scratch = ase_calculator.scratch
-        file_path = os.path.join(scratch, label)
-
-        os.environ["COMMAND"] = "g16"  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
-        os.environ["CALC_LABEL"] = calculator_label
+        os.environ["CALC_LABEL"] = self.calculator_label
+        # TODO: Add in gaussian calculator with just settings attached
         os.environ["OPT_TYPE"] = "species"
-        os.environ["DIRECTORY"] = directory
+        os.environ["DIRECTORY"] = self.directory
         os.environ["MULT"] = str(conformer.rmg_molecule.multiplicity)
         
         attempted = False
@@ -168,12 +162,11 @@ class Job():
         if not attempted:
             subprocess.call(
                 """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB $AUTOTST/autotst/job/submit/optimization.sh""".format(
-                    label, partition), shell=True)
+                    label, self.partition), shell=True)
 
         return label
 
     def calculate_species(self, species):
-
 
         assert isinstance(species, Species), "Please provide a species object for this type of calculation"
 
@@ -190,9 +183,7 @@ class Job():
                 to_calculate.append(conformer)
 
         currently_running = []
-        calculated = []
         for conformer in to_calculate:
-
             while len(currently_running) >= 50:
                 for running_label in currently_running:
                     if self.check_complete(running_label):
@@ -220,7 +211,7 @@ class Job():
             if not os.path.exists(os.path.join(scratch_dir, f)):
                 logging.info(
                     "It seems that {} was not successful...".format(label))
-                result = False
+                return False
 
             else:
                 atoms = self.read_geometry(
@@ -239,46 +230,26 @@ class Job():
                 if not starting_molecule.isIsomorphic(test_molecule):
                     logging.info(
                         "Output geometry of {} is not isomorphic with input geometry".format(f.strip(".xyz")))
-                    result = False
+                    return False
                 else:
                     logging.info(
                         "{} was successful and was validated!".format(f.strip(".xyz")))
-                    result = True
+                    return True
 
-            """if not result:
-                fail_dir = os.path.join(scratch_dir, "failures")
-                try:
-                    os.makedirs(os.path.join(scratch_dir, "failures"))
-                except OSError:
-                    logging.info("{} already exists...".format(fail_dir))
-                move(
-                    os.path.join(scratch_dir, f),
-                    os.path.join(scratch_dir, "failures", f)
-                )"""
             results[conformer.smiles][f] = result
 
         for smiles, smiles_results in list(results.items()):
-            scratch_dir = os.path.join(
-                self.directory,
-                "species",
-                conformer.smiles,
-                "conformers"
-            )
-
-            """log_file = os.path.join(scratch_dir, "validations.yaml")
-
-            with open(log_file, "w") as to_write:
-                yaml.dump(smiles_results, to_write, default_flow_style=False)"""
 
             lowest_energy_f = None
             lowest_energy = 1e5
 
             for f, result in list(smiles_results.items()):
-                if result:
-                    atoms = read(os.path.join(scratch_dir, f))
-                    if atoms.get_potential_energy() < lowest_energy:
-                        lowest_energy = atoms.get_potential_energy()
-                        lowest_energy_f = f
+                if not result:
+                    continue
+                atoms = read(os.path.join(scratch_dir, f))
+                if atoms.get_potential_energy() < lowest_energy:
+                    lowest_energy = atoms.get_potential_energy()
+                    lowest_energy_f = f
 
             logging.info(
                 "The lowest energy conformer is {}".format(lowest_energy_f))
