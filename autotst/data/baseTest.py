@@ -209,6 +209,5 @@ class TestTSGroups(unittest.TestCase):
         self.assertAlmostEquals(d13, distance_data.distances["d13"], places=1)
         self.assertAlmostEquals(d23, distance_data.distances["d23"], places=1)
 
-
- if __name__ == "__main__":
+if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))

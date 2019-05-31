@@ -29,7 +29,7 @@
 
 import unittest, os, sys, shutil
 from autotst.reaction import Reaction
-import autotst.update as UpdateMethods
+#import autotst.update as UpdateMethods
 
 class TestUpdateMethods(unittest.TestCase):
 
@@ -38,10 +38,10 @@ class TestUpdateMethods(unittest.TestCase):
         self.family = "H_Abstraction"
         self.method = "m062x/cc-pVTZ"
         self.short_description = "test case"
-
+    """
     def test_update(self):
         UpdateMethods.update_al(self.reaction, self.family, method=self.method, shortDesc=self.short_description)
-        self.assertTrue(True)
+        self.assertTrue(True)"""
 
         
 if __name__ == "__main__":

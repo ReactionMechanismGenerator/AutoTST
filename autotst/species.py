@@ -854,7 +854,7 @@ class Conformer():
                 break
 
         if not matched:
-            print("Angle index provided is out of range. Nothing was changed.")
+            logging.info("Angle index provided is out of range. Nothing was changed.")
             return self
 
         i, j = bond.atom_indices
@@ -886,7 +886,7 @@ class Conformer():
                 break
 
         if not matched:
-            print("Angle index provided is out of range. Nothing was changed.")
+            logging.info("Angle index provided is out of range. Nothing was changed.")
             return self
 
         i, j, k = a.atom_indices
@@ -919,7 +919,7 @@ class Conformer():
                 break
 
         if not matched:
-            print("Torsion index provided is out of range. Nothing was changed.")
+            logging.info("Torsion index provided is out of range. Nothing was changed.")
             return self
 
         i, j, k, l = torsion.atom_indices
@@ -952,7 +952,7 @@ class Conformer():
                 break
 
         if not matched:
-            print("CisTrans index provided is out of range. Nothing was changed.")
+            logging.info("CisTrans index provided is out of range. Nothing was changed.")
             return self
 
         if cistrans.stero == stero.upper():
@@ -991,8 +991,6 @@ class Conformer():
 
         rdmol = self.rdkit_molecule.__copy__()
 
-        chiral_centers = self.chiral_centers
-
         match = False
         for chiral_center in self.chiral_centers:
             if chiral_center.index == chiral_center_index:
@@ -1000,13 +998,13 @@ class Conformer():
                 break
 
         if not match:
-            print("ChiralCenter index provided is out of range. Nothing was changed")
+            logging.info("ChiralCenter index provided is out of range. Nothing was changed")
             return self
 
-        rdmol.GetAtomWithIdx(chiral_center_index).SetChiralTag(
+        rdmol.GetAtomWithIdx(chiral_center.atom_index).SetChiralTag(
             centers_dict[stero.upper()])
 
-        # rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
+        rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
 
         old_torsions = self.torsions[:] + self.cistrans[:]
 
@@ -1016,7 +1014,6 @@ class Conformer():
         # Now resetting dihedral angles in case if they changed.
 
         for torsion in old_torsions:
-            dihedral = torsion.dihedral
             i, j, k, l = torsion.atom_indices
 
             self.ase_molecule.set_dihedral(

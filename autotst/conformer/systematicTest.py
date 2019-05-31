@@ -28,6 +28,27 @@
 ##########################################################################
 
 import unittest, os, sys, shutil
+from autotst.species import Conformer
+from autotst.conformer.utilities import get_energy, find_terminal_torsions
+from autotst.conformer.systematic import find_all_combos, systematic_search
+from ase.calculators.emt import EMT
+
+class TestSystematic(unittest.TestCase):
+
+    def setUp(self):
+        self.conformer = Conformer("NC(O)C=CC")
+        self.conformer.get_molecules()
+
+    def test_find_all_combos(self):
+         combos = find_all_combos(self.conformer, delta=120, cistrans=True, chiral_centers=True)
+         self.assertTrue(len(combos), 108)
+         self.assertTrue(len(combos[0]), 3)
+        
+    def test_systematic_search(self):
+        self.conformer.ase_molecule.set_calculator(EMT())
+        confs = systematic_search(self.conformer, delta=180 )
+        self.assertTrue(0 < len(confs) <= 3)
+
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
