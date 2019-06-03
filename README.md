@@ -41,7 +41,9 @@ Finally, RMG has a dependency on `openbabel` but this dependency causes AutoTST 
 
 Modify environment variables. Add AutoTST to the `PYTHONPATH` to ensure that you can access modules from any folder. Modify your ~/.bashrc file by adding the following line:
 
-- `export PYTHONPATH=$PYTHONPATH:your_folder/AutoTST`
+- `export AUTOTST="your_folder/AutoTST`
+
+- `export PYTHONPATH=$AUTOTST:$PYTHONPATH`
 
 To be able to run AutoTST in any conda environment, you can set your path to the following by modifing your ~/.bashrc: 
 
