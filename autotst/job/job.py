@@ -44,7 +44,7 @@ class Job():
             self,
             reaction=None,
             calculator=None, # An AutoTST Gaussian calculator with proper directory settings
-            conformer_calculator=None,
+            conformer_calculator = None, # an ASE Calculator object
             partition="general" # The partition to run calculations on
             ):
 
@@ -75,6 +75,7 @@ class Job():
         A helper method that allows one to easily parse log files
         """
         symbol_dict = {
+            35: "Br",
             17: "Cl",
             9:  "F",
             8:  "O",
@@ -169,53 +170,109 @@ class Job():
 
         return label
 
-    def calculate_species(self, species):
+    def calculate_conformer(self, conformer):
+        """
 
+        """
 
-        assert isinstance(species, Species), "Please provide a species object for this type of calculation"
+        self.calculator.conformer = conformer # this might be dangerous if running several of these at once?
+        self.calculator.convergence = "Tight"
+        calc = self.calculator.get_conformer_calc()
+        scratch_dir = os.path.join(
+            self.calculator.directory,
+            "species",
+            conformer.smiles,
+            "conformers")
+        f = calc.label + ".log"
 
-        logging.info("Calculating geometries for {}".format(species))
+        logging.info(
+            "Submitting conformer calculation for {}".format(calc.label))
+        label = self.submit_conformer(conformer)
+        while not self.check_complete(label):
+            time.sleep(15)
 
-        if self.conformer_calculator:
-            species.generate_conformers(calculator=self.conformer_calculator)
+        complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
 
-        to_calculate = []
-        results = {}
-        for smiles, conformers in list(species.conformers.items()):
-            results[smiles] = {}
-            for conformer in conformers:
-                to_calculate.append(conformer)
+        if not complete:
+            logging.info(
+                "It seems that the file never completed for {} completed, running it again".format(calc.label))
+            label = self.submit_conformer(conformer, restart=True)
+            while not self.check_complete(label):
+                time.sleep(15)
 
-        currently_running = []
-        for conformer in to_calculate:
-            while len(currently_running) >= 50:
-                for running_label in currently_running:
-                    if self.check_complete(running_label):
-                        currently_running.remove(running_label)
-            label = self.submit_conformer(conformer)
-            currently_running.append(label)
+            complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
 
-        while len(currently_running) != 0:
-            for running_label in currently_running:
-                if self.check_complete(running_label):
-                    currently_running.remove(running_label)
+        #####
 
-        for conformer in to_calculate:
-
+        def check_isomorphic(conformer):
+            """
+            Compares whatever is in the log file 'f' 
+            to the SMILES of the passed in 'conformer'
+            """
             starting_molecule = RMGMolecule(SMILES=conformer.smiles)
             starting_molecule = starting_molecule.toSingleBonds()
 
-            scratch_dir = os.path.join(
-                self.directory,
-                "species",
-                conformer.smiles,
-                "conformers"
+            atoms = self.read_log(
+                os.path.join(scratch_dir, f)
             )
-            f = "{}_{}.log".format(conformer.smiles, conformer.index)
+
+            test_molecule = RMGMolecule()
+            test_molecule.fromXYZ(
+                atoms.arrays["numbers"],
+                atoms.arrays["positions"]
+            )
+            if not starting_molecule.isIsomorphic(test_molecule):
+                logging.info(
+                    "Output geometry of {} is not isomorphic with input geometry".format(calc.label))
+                return False
+            else:
+                logging.info(
+                "{} was successful and was validated!".format(calc.label))
+                return True
+
+        #####
+
+        if (complete and converged):
+            return check_isomorphic(conformer)
+
+        if not complete: # try again
+            logging.info(
+                "It appears that {} was killed prematurely".format(calc.label))
+            label = self.submit_conformer(conformer, restart=True)
+            while not self.check_complete(label):
+                time.sleep(15)
+
+            complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
+            if (complete and converged):
+                return check_isomorphic(conformer)
+            elif not complete:
+                logging.info(
+                    "It appears that {} was killed prematurely or never completed :(".format(calc.label))
+                return False
+            # else complete but not converged
+
+        if not converged:
+            logging.info("{} did not converge, trying it as a looser convergence criteria".format(calc.label))
+
+            logging.info("Resubmitting {} with default convergence criteria".format(conformer))
+            atoms = self.read_log(os.path.join(scratch_dir, f))
+            conformer.ase_molecule = atoms
+            conformer.update_coords_from("ase")
+            self.calculator.conformer = conformer # again, be careful setting this in multiple processes?
+            self.calculator.convergence = ""
+            calc = self.calculator.get_conformer_calc()
+
+            logging.info("Removing the old log file that didn't converge, restarting from last geometry")
+            os.remove(os.path.join(scratch_dir, f))
+
+            label = self.submit_conformer(conformer)
+            while not self.check_complete(label):
+                time.sleep(15)
+
             if not os.path.exists(os.path.join(scratch_dir, f)):
                 logging.info(
-                    "It seems that {} was never run...".format(f.strip(".log")))
-                result = False
+                "It seems that {}'s loose optimization was never run...".format(calc.label))
+                return False
 
             complete, converged = self.calculator.verify_output_file(
                 os.path.join(scratch_dir, f)
@@ -223,83 +280,118 @@ class Job():
 
             if not complete:
                 logging.info(
-                    "It appears that {} was killed prematurely".format(f))
-                result = False
+                "It appears that {} was killed prematurely or never completed :(".format(calc.label))
+                return False
 
             elif not converged:
-                logging.info("{} failed QM optimization".format(f))
-                result = False
+                logging.info("{} failed second QM optimization :(".format(calc.label))
+                return False
 
             else:
-                atoms = self.read_log(
-                    os.path.join(scratch_dir, f)
-                )
+                return check_isomorphic(conformer)
 
-                starting_molecule = RMGMolecule(SMILES=conformer.smiles)
-                starting_molecule = starting_molecule.toSingleBonds()
+        raise Exception("Shoudn't reach here")
 
-                test_molecule = RMGMolecule()
-                test_molecule.fromXYZ(
-                    atoms.arrays["numbers"],
-                    atoms.arrays["positions"]
-                )
 
-                if not starting_molecule.isIsomorphic(test_molecule):
-                    logging.info(
-                        "Output geometry of {} is not isomorphic with input geometry".format(f.strip(".log")))
-                    result = False
-                else:
-                    logging.info(
-                        "{} was successful and was validated!".format(f.strip(".log")))
-                    result = True
+    def calculate_species(self, species):
+        """
+        Call this first
+        """
 
-            if not result:
-                fail_dir = os.path.join(scratch_dir, "failures")
-                try:
-                    os.makedirs(os.path.join(scratch_dir, "failures"))
-                except OSError:
-                    logging.info("{} already exists...".format(fail_dir))
-                move(
-                    os.path.join(scratch_dir, f),
-                    os.path.join(scratch_dir, "failures", f)
-                )
-            results[conformer.smiles][f] = result
+        logging.info("Calculating geometries for {}".format(species))
 
-        for smiles, smiles_results in list(results.items()):
-            scratch_dir = os.path.join(
-                self.directory,
-                "species",
-                conformer.smiles,
-                "conformers"
-            )
+        if self.conformer_calculator:
+            species.generate_conformers(calculator=self.conformer_calculator)
 
-            log_file = os.path.join(scratch_dir, "validations.yaml")
+        currently_running = []
+        processes = {}
+        for smiles, conformers in list(species.conformers.items()):
 
-            with open(log_file, "w") as to_write:
-                yaml.dump(smiles_results, to_write, default_flow_style=False)
+            for conformer in conformers:
 
-            lowest_energy_f = None
-            lowest_energy = 1e5
+                process = Process(target=self.calculate_conformer, args=(
+                    conformer,))
+                processes[process.name] = process
 
-            for f, result in list(smiles_results.items()):
-                if result:
-                    parser = ccread(os.path.join(scratch_dir, f))
-                    if parser.scfenergies[-1] < lowest_energy:
-                        lowest_energy = parser.scfenergies[-1]
-                        lowest_energy_f = f
+        # This loop will block until everything in processes 
+        # has been started, and added to currently_running
+        for name, process in list(processes.items()):
+            while len(currently_running) >= 50:
+                for running in currently_running:
+                    if not running.is_alive():
+                        currently_running.remove(name)
+                time.sleep(15)
+            process.start()
+            currently_running.append(name)
 
-            logging.info(
-                "The lowest energy conformer is {}".format(lowest_energy_f))
+        # This loop will block until everything in currently_running
+        # has finished.
+        while len(currently_running) > 0:
+            for name, process in list(processes.items()):
+                if not (name in currently_running):
+                    continue
+                if not process.is_alive():
+                    currently_running.remove(name)
+            time.sleep(15)
 
-            copyfile(
-                os.path.join(scratch_dir, lowest_energy_f),
-                os.path.join(
-                    self.directory,
+        results = []
+        for smiles, conformers in list(species.conformers.items()):
+            for conformer in conformers:
+                scratch_dir = os.path.join(
+                    self.calculator.directory,
                     "species",
                     conformer.smiles,
-                    conformer.smiles + ".log")
-            )
+                    "conformers"
+                )
+                f = "{}_{}.log".format(conformer.smiles, conformer.index)
+                path = os.path.join(scratch_dir, f)
+                if not os.path.exists(path):
+                    logging.info(
+                        "It seems that {} was never run...".format(f))
+                    continue
+                try:
+                    parser = ccread(path)
+                    if parser is None:
+                        logging.info(
+                            "Something went wrong when reading in results for {} using cclib...".format(f))
+                        continue
+                    energy = parser.scfenergies[-1]
+                except:
+                    logging.info(
+                        "The parser does not have an scf energies attribute, we are not considering {}".format(f))
+                    energy = 1e5
 
+                results.append([energy, conformer, f])
+
+        results = pd.DataFrame(
+            results, columns=["energy", "conformer", "file"]).sort_values("energy").reset_index()
+
+        if results.shape[0] == 0:
+            logging.info(
+                "No conformer for {} was successfully calculated... :(".format(species))
+            return False
+
+        for index in range(results.shape[0]):
+            conformer = results.conformer[index]
+            lowest_energy_file = results.file[index]
+            break
+
+        logging.info(
+            "The lowest energy conformer is {}".format(lowest_energy_file))
+
+        lowest_energy_file_path = os.path.join(self.calculator.directory,"species",conformer.smiles,"conformers",lowest_energy_file)
+        dest = os.path.join(self.calculator.directory,"species",conformer.smiles,conformer.smiles+".log")
+
+        try:
+            copyfile(lowest_energy_file_path,dest)
+        except IOError:
+            os.makedirs(os.path.dirname(dest))
+            copyfile(lowest_energy_file_path,dest)
+
+        logging.info("The lowest energy file is {}! :)".format(
+            lowest_energy_file))
+
+        return True
 #################################################################################
 
     def submit_transitionstate(self, transitionstate, opt_type, restart=False):
@@ -476,7 +568,7 @@ class Job():
             energies.append([energy, transitionstate, f])
 
         energies = pd.DataFrame(
-            energies, columns=["energy", "transitionstate", "file"]).sort_values("energy")
+            energies, columns=["energy", "transitionstate", "file"]).sort_values("energy").reset_index()
 
         if energies.shape[0] == 0:
             logging.info(
@@ -510,7 +602,7 @@ class Job():
                 transitionstate, opt_type="irc")
             while not self.check_complete(label):
                 time.sleep(15)
-            result = calculator.validate_irc(calc=irc_calc)
+            result = self.calculator.validate_irc(calc=irc_calc)
             if result:
                 logging.info("Validated via IRC")
                 return True
