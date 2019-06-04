@@ -83,6 +83,8 @@ class Gaussian():
         self.command = "g16"
         self.settings = settings
         self.convergence = convergence
+        convergence_options = ["", "verytight", "tight", "loose"]
+        assert self.convergence.lower() in convergence_options,"{} is not among the supported convergence options {}".format(self.convergence,convergence_options)
         self.directory = directory
 
     def __repr__(self):
@@ -186,7 +188,6 @@ class Gaussian():
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
 
-        assert self.convergence.lower() in ["", "verytight", "tight", "loose"]
 
         if isinstance(self.conformer, TS):
             logging.info(
