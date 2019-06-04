@@ -180,7 +180,7 @@ def systematic_search(conformer,
 
     def opt_conf(conformer, calculator, i):
         """
-        A helper function to optimize the geometry of a conformer. 
+        A helper function to optimize the geometry of a conformer.
         Only for use within this parent function
         """
 
@@ -193,8 +193,10 @@ def systematic_search(conformer,
             ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
             ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
             labels.append([ind1, ind2])
+            type = 'ts'
         else:
             label = conformer.smiles
+            type = 'species'
 
         if isinstance(calc, FileIOCalculator):
             calculator.directory = os.path.join(
