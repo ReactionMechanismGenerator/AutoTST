@@ -197,7 +197,18 @@ def systematic_search(conformer,
             label = conformer.smiles
 
         if isinstance(calc, FileIOCalculator):
-            calculator.directory = "systematic_{}".format(str(i))
+            calculator.directory = os.path.join(
+                'conformer_logs',
+                type,
+                label,
+                "systematic",
+                 '{}_{}'.format(conformer.smiles,i))
+            if not os.path.exists(calculator.directory):
+                try:
+                    os.mkdirs(calculator.directory)
+                except:
+                    logging.info("An error occured when creating {}".format(calculator.directory))
+
             calculator.atoms = conformer.ase_molecule
 
         from ase.constraints import FixBondLengths
