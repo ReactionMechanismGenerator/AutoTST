@@ -198,6 +198,7 @@ class Gaussian():
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
 
+        assert self.convergence.lower() in ["", "verytight", "tight", "loose"]
 
         if isinstance(self.conformer, TS):
             logging.info(
