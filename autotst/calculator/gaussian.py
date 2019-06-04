@@ -192,6 +192,8 @@ class Gaussian():
         - torsion (Torsion): A `Torsion` object that you want to perform hindered rotor calculations about
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
         - scratch (str): a directory where you want log files to be written to
+        - steps (int): the number of steps you want performed in this scan
+        - step_size (float): the size, in degrees, of the step you to scan along
         - convergence (str): ['verytight','tight','' (default)], specifies the convergence criteria of the geometry optimization
 
         Returns:
