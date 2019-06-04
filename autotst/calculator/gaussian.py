@@ -57,6 +57,7 @@ class Gaussian():
                      "mem": "5GB",
                      "nprocshared": 20,
                  },
+                 convergence="",
                  directory=".",
                  ):
 
@@ -81,6 +82,7 @@ class Gaussian():
 
         self.command = "g16"
         self.settings = settings
+        self.convergence = convergence
         self.directory = directory
 
     def __repr__(self):
@@ -176,10 +178,13 @@ class Gaussian():
         - torsion (Torsion): A `Torsion` object that you want to perform hindered rotor calculations about
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
         - scratch (str): a directory where you want log files to be written to
+        - convergence (str): ['verytight','tight','' (default)], specifies the convergence criteria of the geometry optimization
 
         Returns:
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
+
+        assert self.convergence.lower() in ["", "verytight", "tight", "loose"]
 
         if isinstance(self.conformer, TS):
             logging.info(
@@ -212,7 +217,7 @@ class Gaussian():
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra="opt=(calcfc,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
+            extra="opt=(calcfc,maxcycles=900,{}) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)".format(self.convergence),
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
