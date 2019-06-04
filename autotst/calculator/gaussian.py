@@ -57,6 +57,7 @@ class Gaussian():
                      "mem": "5GB",
                      "nprocshared": 20,
                  },
+                 scratch=".",
                  convergence="",
                  directory=".",
                  ):
@@ -82,6 +83,7 @@ class Gaussian():
 
         self.command = "g16"
         self.settings = settings
+        self.scratch = scratch
         self.convergence = convergence
         self.directory = directory
 
