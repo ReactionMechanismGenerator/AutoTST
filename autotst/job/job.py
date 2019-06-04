@@ -63,8 +63,9 @@ class Job():
         self.partition = partition
 
         manager = multiprocessing.Manager()
-        results = manager.dict()
-        global results
+        global global_results
+        global_results = manager.dict()
+
 
     def __repr__(self):
         return "< Job '{}'>".format(self.label)
@@ -395,7 +396,7 @@ class Job():
             if not (complete and converged):
                 logging.info(
                     "{} failed the {} optimization".format(ts_identifier, opt_type.upper()))
-                results[ts_identifier] = False
+                global_results[ts_identifier] = False
                 return False
             logging.info(
                 "{} successfully completed the {} optimization!".format(ts_identifier, opt_type.upper()))
@@ -408,10 +409,10 @@ class Job():
         got_one = self.validate_transitionstate(
                 transitionstate=transitionstate, vibrational_analysis=vibrational_analysis)
         if got_one:
-            results[ts_identifier] = True
+            global_results[ts_identifier] = True
             return True
         else:
-            results[ts_identifier] = False
+            global_results[ts_identifier] = False
             return False
 
     def calculate_reaction(self, vibrational_analysis=True):
@@ -451,7 +452,7 @@ class Job():
                     currently_running.remove(name)
 
         energies = []
-        for label, result in results.items():
+        for label, result in global_results.items():
             if not result:
                 logging.info("Calculations for {} FAILED".format(label))
             f = "{}.log".format(label)
