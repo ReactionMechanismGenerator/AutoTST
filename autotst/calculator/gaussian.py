@@ -57,7 +57,6 @@ class Gaussian():
                      "mem": "5GB",
                      "nprocshared": 20,
                  },
-                 scratch=".",
                  convergence="",
                  directory=".", #where you want input and log files to be written, default is current directory
                  scratch=None  #where you want temporary files to be written
@@ -84,7 +83,6 @@ class Gaussian():
 
         self.command = "g16"
         self.settings = settings
-        self.scratch = scratch
         self.convergence = convergence
         convergence_options = ["", "verytight", "tight", "loose"]
         assert self.convergence.lower() in convergence_options,"{} is not among the supported convergence options {}".format(self.convergence,convergence_options)
