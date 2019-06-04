@@ -132,7 +132,7 @@ class Job():
 
 #################################################################################
 
-    def submit_conformer(self, conformer):
+    def submit_conformer(self, conformer, restart=False):
         """
         A methods to submit a job based on the calculator and partition provided
         """
@@ -151,10 +151,17 @@ class Job():
         attempted = False
         if os.path.exists(file_path + ".log"):
             attempted = True
-            logging.info(
-                "It appears that this job has already been run, not running it a second time.")
+            if not restart:
+                logging.info(
+                    "It appears that this job has already been run, not running it a second time.")
 
-        if not attempted:
+        if restart or not attempted:
+            if restart:
+                logging.info(
+                    "Restarting calculations for {}.".format(conformer)
+                )
+            else:
+                logging.info("Starting calculations for {}".format(conformer))
             subprocess.call(
                 """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 12:00:00 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition), shell=True)
