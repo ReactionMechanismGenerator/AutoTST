@@ -172,7 +172,11 @@ class Job():
 
     def calculate_conformer(self, conformer):
         """
-
+        A method that optimizes a conformer and performs frequency analysis.
+        If the conformer does not convergenge with tight convergence criteria,
+        the convergence criteria is loosened to Gaussian's default criteria,
+        and the optimization is rerun using the geometry from the last step of the Tight convergence optimization.
+        Returns True if Gaussian log is complete and converged, and False if incomplete of unconverged.
         """
 
         self.calculator.conformer = conformer # this might be dangerous if running several of these at once?
@@ -295,7 +299,10 @@ class Job():
 
     def calculate_species(self, species):
         """
-        Call this first
+        Calculates the energy and harmonic frequencies of the lowest energy conformer of a species:
+        1) Systematically generates low energy conformers for a given species with an ASE calculator.
+        2) Optimizes each low energy conformer with provided Gaussian AutoTST calculator.
+        3) Saves the gaussian optimization and frequency analysis log file for the lowest energy conformer of the species.
         """
 
         logging.info("Calculating geometries for {}".format(species))
