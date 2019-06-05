@@ -308,7 +308,7 @@ class Job():
         logging.info("Calculating geometries for {}".format(species))
 
         if self.conformer_calculator:
-            species.generate_conformers(calculator=self.conformer_calculator)
+            species.generate_conformers(ase_calculator=self.conformer_calculator)
 
         currently_running = []
         processes = {}
