@@ -42,9 +42,14 @@ from ase import Atoms
 class TestReaction(unittest.TestCase):
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
+        self.reaction2 = Reaction(rmg_reaction=RMGReaction(
+            reactants = [RMGMolecule(SMILES="CC"), RMGMolecule(SMILES="[O]O")],
+            products = [RMGMolecule(SMILES="[CH2]C"), RMGMolecule(SMILES="OO")]
+        ))
 
     def test_label(self):
         self.assertEqual(self.reaction.label, "CC+[O]O_[CH2]C+OO")
+        self.assertEqual(self.reaction2.get_label(), "CC+[O]O_C[CH2]+OO")
 
     def test_rmg_reaction(self):
         test_reaction = RMGReaction(
@@ -57,10 +62,19 @@ class TestReaction(unittest.TestCase):
                 RMGMolecule(SMILES="OO")
             ]
         )
+
         self.assertTrue(test_reaction.isIsomorphic(self.reaction.get_rmg_reaction()))
+        self.assertTrue(test_reaction.isIsomorphic(self.reaction2.get_rmg_reaction()))
+
 
     def test_databases(self):
         rmg_database, ts_databases = self.reaction.load_databases()
+
+        self.assertIsInstance(rmg_database, RMGDatabase)
+        self.assertIsInstance(ts_databases, dict)
+        self.assertIsInstance(ts_databases["H_Abstraction"], TransitionStates)
+
+        rmg_database, ts_databases = self.reaction2.load_databases()
 
         self.assertIsInstance(rmg_database, RMGDatabase)
         self.assertIsInstance(ts_databases, dict)
@@ -78,8 +92,19 @@ class TestReaction(unittest.TestCase):
         self.assertAlmostEquals(d13, self.reaction.distance_data.distances["d13"], places=1)
         self.assertAlmostEquals(d23, self.reaction.distance_data.distances["d23"], places=1)
 
+        self.assertAlmostEquals(d12, self.reaction2.distance_data.distances["d12"], places=1)
+        self.assertAlmostEquals(d13, self.reaction2.distance_data.distances["d13"], places=1)
+        self.assertAlmostEquals(d23, self.reaction2.distance_data.distances["d23"], places=1)
+
     def test_generate_reactants_and_products(self):
         reactants, products = self.reaction.generate_reactants_and_products()
+
+        self.assertIsInstance(reactants, list)
+        self.assertIsInstance(products, list)
+        self.assertEquals(len(reactants), 2)
+        self.assertAlmostEquals(len(products), 2)
+
+        reactants, products = self.reaction2.generate_reactants_and_products()
 
         self.assertIsInstance(reactants, list)
         self.assertIsInstance(products, list)
@@ -112,6 +137,22 @@ class TestReaction(unittest.TestCase):
         self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
         self.assertTrue(merged.getLabeledAtom("*1").isOxygen)
 
+
+        labeled_reaction, reaction_family = self.reaction2.get_labeled_reaction()
+
+        self.assertEquals(reaction_family.lower(), "h_abstraction")
+        self.assertTrue(test_reaction.isIsomorphic(labeled_reaction))
+
+        merged = labeled_reaction.reactants[0].merge(labeled_reaction.reactants[1])
+        self.assertTrue(merged.getLabeledAtom("*1").isCarbon())
+        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
+        self.assertTrue(merged.getLabeledAtom("*3").isOxygen)
+
+        merged = labeled_reaction.products[0].merge(labeled_reaction.products[1])
+        self.assertTrue(merged.getLabeledAtom("*3").isCarbon())
+        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
+        self.assertTrue(merged.getLabeledAtom("*1").isOxygen)
+
     def test_rmg_complexes(self):
         self.reaction.get_labeled_reaction()
         self.reaction.get_rmg_complexes()
@@ -120,6 +161,14 @@ class TestReaction(unittest.TestCase):
         self.assertEquals(len(self.reaction.complexes["forward"].getLabeledAtoms()), 3)
         self.assertEquals(len(self.reaction.complexes["reverse"].getLabeledAtoms()), 3)
 
+
+        self.reaction2.get_labeled_reaction()
+        self.reaction2.get_rmg_complexes()
+
+        self.assertEquals(len(self.reaction2.complexes), 2)
+        self.assertEquals(len(self.reaction2.complexes["forward"].getLabeledAtoms()), 3)
+        self.assertEquals(len(self.reaction2.complexes["reverse"].getLabeledAtoms()), 3)
+
     def test_ts(self):
         self.assertEquals(len(self.reaction.ts), 2)
         self.assertEquals(len(self.reaction.ts["forward"]), 1)
@@ -127,22 +176,40 @@ class TestReaction(unittest.TestCase):
         self.assertIsInstance(self.reaction.ts["forward"][0], TS)
         self.assertIsInstance(self.reaction.ts["reverse"][0], TS)
 
+        self.assertEquals(len(self.reaction2.ts), 2)
+        self.assertEquals(len(self.reaction2.ts["forward"]), 1)
+        self.assertEquals(len(self.reaction2.ts["reverse"]), 1)
+        self.assertIsInstance(self.reaction2.ts["forward"][0], TS)
+        self.assertIsInstance(self.reaction2.ts["reverse"][0], TS)
 
 class TestTS(unittest.TestCase):
 
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
+        self.reaction2 = Reaction(rmg_reaction=RMGReaction(
+            reactants = [RMGMolecule(SMILES="CC"), RMGMolecule(SMILES="[O]O")],
+            products = [RMGMolecule(SMILES="[CH2]C"), RMGMolecule(SMILES="OO")]
+        ))
         self.ts = self.reaction.ts["forward"][0]
+        self.ts2 = self.reaction.ts["forward"][0]
         self.ts.get_molecules()
+        self.ts2.get_molecules()
         
     def test_reaction_label(self):
         self.assertEquals(self.ts.reaction_label, "CC+[O]O_[CH2]C+OO")
+        self.assertEquals(self.ts2.reaction_label, "CC+[O]O_[CH2]C+OO")
     
     def test_smiles(self):
         self.assertEquals(self.ts.smiles, "CC.[O]O")
+        self.assertEquals(self.ts2.smiles, "CC.[O]O")
     
     def test_rdkit_molecule(self):
         rdkit_molecule = self.ts.rdkit_molecule
+        self.assertIsInstance(rdkit_molecule, Mol)
+        self.assertEquals(len(rdkit_molecule.GetAtoms()), 11)
+        self.assertEquals(len(rdkit_molecule.GetBonds()), 9)
+
+        rdkit_molecule = self.ts2.rdkit_molecule
         self.assertIsInstance(rdkit_molecule, Mol)
         self.assertEquals(len(rdkit_molecule.GetAtoms()), 11)
         self.assertEquals(len(rdkit_molecule.GetBonds()), 9)
@@ -151,13 +218,21 @@ class TestTS(unittest.TestCase):
         self.assertIsInstance(self.ts._pseudo_geometry, RWMol)
         self.assertEquals(len(self.ts._pseudo_geometry.GetBonds()), 10)
 
+        self.assertIsInstance(self.ts2._pseudo_geometry, RWMol)
+        self.assertEquals(len(self.ts2._pseudo_geometry.GetBonds()), 10)
+
     def test_ase_molecule(self):
         ase_molecule = self.ts.ase_molecule
+        self.assertIsInstance(ase_molecule, Atoms)
+        self.assertEquals(len(ase_molecule.get_atomic_numbers()), 11)
+
+        ase_molecule = self.ts2.ase_molecule
         self.assertIsInstance(ase_molecule, Atoms)
         self.assertEquals(len(ase_molecule.get_atomic_numbers()), 11)
     
     def test_symmetry_number(self):
         self.assertEquals(self.ts.symmetry_number, 1)
+        self.assertEquals(self.ts2.symmetry_number, 1)
         os.remove("./CC.[O]O.symm")
 
     def test_bounds_matrix(self):
@@ -180,6 +255,26 @@ class TestTS(unittest.TestCase):
         self.assertAlmostEqual(d13, bm[low, high], delta=u13/2 )
         low, high = sorted([lbl2, lbl3])
         self.assertAlmostEqual(d23, bm[low, high], delta=u23/2 )
+
+
+        lbl1 = self.ts2.rmg_molecule.getLabeledAtom("*1").sortingLabel
+        lbl2 = self.ts2.rmg_molecule.getLabeledAtom("*2").sortingLabel
+        lbl3 = self.ts2.rmg_molecule.getLabeledAtom("*3").sortingLabel
+
+        d12 = self.ts2.distance_data.distances["d12"]
+        u12 = self.ts2.distance_data.uncertainties["d12"]
+        d13 = self.ts2.distance_data.distances["d13"]
+        u13 = self.ts2.distance_data.uncertainties["d13"]
+        d23 = self.ts2.distance_data.distances["d23"]
+        u23 = self.ts2.distance_data.uncertainties["d23"]
+
+        bm = self.ts2.bm
+        low, high = sorted([lbl1, lbl2])
+        self.assertAlmostEqual(d12, bm[low, high], delta=u12/2 )
+        low, high = sorted([lbl1, lbl3])
+        self.assertAlmostEqual(d13, bm[low, high], delta=u13/2 )
+        low, high = sorted([lbl2, lbl3])
+        self.assertAlmostEqual(d23, bm[low, high], delta=u23/2 )
         
     def test_get_bonds(self):
         self.assertEqual(len(self.ts.get_bonds()), 10)
@@ -188,11 +283,19 @@ class TestTS(unittest.TestCase):
             if bond.reaction_center: true_count += 1
         self.assertEqual(true_count, 2)
 
+        self.assertEqual(len(self.ts2.get_bonds()), 10)
+        true_count = 0
+        for bond in self.ts2.get_bonds():
+            if bond.reaction_center: true_count += 1
+        self.assertEqual(true_count, 2)
+
     def test_get_angles(self):
         self.assertEqual(len(self.ts.get_angles()), 15)
+        self.assertEqual(len(self.ts2.get_angles()), 15)
 
     def test_get_torsions(self):
         self.assertEqual(len(self.ts.get_torsions()), 4)
+        self.assertEqual(len(self.ts2.get_torsions()), 4)
 
 
 if __name__ == "__main__":
