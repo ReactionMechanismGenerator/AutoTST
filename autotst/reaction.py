@@ -343,6 +343,7 @@ class Reaction():
                     test_reaction.reactants = labeled_r[:]
                     test_reaction.products = labeled_p[:]
                     match = True
+                    final_family = family
                     final_name = name
                     break
 
@@ -431,6 +432,7 @@ class Reaction():
                             logging.info("{}".format(labeled_p))
                             match = True
                             final_family = family
+                            print final_family
                             final_name = name
                             
         assert match, "Could not idetify labeled reactants and products"
