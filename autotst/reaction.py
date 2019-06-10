@@ -687,9 +687,10 @@ class TS(Conformer):
             if not rd_copy.GetBondBetweenAtoms(lbl1, lbl2):
                 rd_copy.AddBond(lbl1, lbl2,
                                 order=rdkit.Chem.rdchem.BondType.SINGLE)
-            else:
+            elif not rd_copy.GetBondBetweenAtoms(lbl2, lbl3):
                 rd_copy.AddBond(lbl2, lbl3,
                                 order=rdkit.Chem.rdchem.BondType.SINGLE)
+            
 
             self._pseudo_geometry = rd_copy
 
