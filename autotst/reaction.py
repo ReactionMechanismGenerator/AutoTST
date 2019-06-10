@@ -329,9 +329,12 @@ class Reaction():
             for name, family in list(self.rmg_database.kinetics.families.items()):
                 if match:
                     break
-
-                labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
-                    test_reaction.reactants, test_reaction.products)
+                try:
+                    labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                        test_reaction.reactants, test_reaction.products)
+                except ValueError:
+                    continue
+                    
                 if not (labeled_r and labeled_p):
                     continue
 
@@ -404,6 +407,7 @@ class Reaction():
                             labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
                                 test_reaction.reactants, test_reaction.products)
                             if not (labeled_r and labeled_p):
+                                logging.info("Unable to determine a reaction for the forward direction. Trying the reverse direction.")
                                 raise ActionError
                         except (ValueError, ActionError, IndexError):
                             try: 

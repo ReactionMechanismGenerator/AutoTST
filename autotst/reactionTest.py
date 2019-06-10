@@ -182,6 +182,17 @@ class TestReaction(unittest.TestCase):
         self.assertIsInstance(self.reaction2.ts["forward"][0], TS)
         self.assertIsInstance(self.reaction2.ts["reverse"][0], TS)
 
+    def test_reaction_families(self):
+        # R_Addition_MultipleBond
+        reaction = Reaction("C#C+[OH]_[CH]=CO")
+        _, family = reaction.get_labeled_reaction()
+        self.assertEqual(family.lower(), "R_Addition_MultipleBond".lower())
+        
+        # intra_H_migration
+        reaction = Reaction("C[CH]O_CC[O]")
+        _, family = reaction.get_labeled_reaction()
+        self.assertEqual(family.lower(), "intra_H_migration".lower())
+
 class TestTS(unittest.TestCase):
 
     def setUp(self):
