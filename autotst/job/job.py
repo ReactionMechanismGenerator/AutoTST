@@ -156,7 +156,7 @@ class Job():
 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 12:00:00 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
+                """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 12:00:00 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition), shell=True)
 
         return label
@@ -329,7 +329,7 @@ class Job():
 
         if (not attempted) or restart:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB -t {2} $AUTOTST/autotst/job/submit.sh""".format(
+                """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB -t {2} $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition, time), shell=True)
 
         return label
@@ -539,7 +539,7 @@ class Job():
 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 8:00:00 --mem=100000 $AUTOTST/autotst/job/submit.sh""".format(
+                """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 8:00:00 --mem=100000 $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition), shell=True)
 
         return label
