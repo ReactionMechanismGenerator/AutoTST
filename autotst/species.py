@@ -217,11 +217,12 @@ class Conformer():
 
             elif rmg_molecule:
                 self.rmg_molecule = rmg_molecule
-                self.smiles = rmg_molecule.toSMILES()
+                self.smiles = rmg_molecule.toSMILES() 
 
             else:
                 self.smiles = smiles
                 self.rmg_molecule = RMGMolecule(SMILES=smiles)
+               
 
             self.rmg_molecule.updateMultiplicity()
             self.get_molecules()
@@ -311,6 +312,19 @@ class Conformer():
         self.ase_molecule = Atoms(ase_atoms)
 
         return self.ase_molecule
+
+    def get_xyz_block(self):
+        if not self.ase_molecule:
+            self.get_ase_mol()
+        ase_molecule = self.ase_molecule
+        symbols = ase_molecule.get_chemical_symbols()
+        natoms = len(symbols)
+        string = ""
+
+        for s, (x, y, z) in zip(symbols, ase_molecule.get_positions()):
+            string += '%-2s %22.15f %22.15f %22.15f\n' % (s, x, y, z)
+        self.xyzcoords = string
+        return string
 
     def get_molecules(self):
         if not self.rmg_molecule:
