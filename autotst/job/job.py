@@ -1,4 +1,5 @@
 from autotst.calculator.gaussian import Gaussian
+from autotst.calculator.orca import Orca
 from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
 from autotst.calculator.statmech import StatMech
 from autotst.reaction import Reaction, TS
@@ -323,7 +324,10 @@ class Job():
             else:
                 return check_isomorphic(conformer)
 
-    def calculate_species(self, species):
+        raise Exception("Shoudn't reach here")
+
+
+    def calculate_species(self, species, calculate_fod=False):
         """
         Calculates the energy and harmonic frequencies of the lowest energy conformer of a species:
         1) Systematically generates low energy conformers for a given species with an ASE calculator.
@@ -423,6 +427,27 @@ class Job():
 
         logging.info("The lowest energy file is {}! :)".format(
             lowest_energy_file))
+
+        parser = ccread(dest)
+        xyzpath = os.path.join(self.calculator.directory,"species",conformer.smiles,conformer.smiles+".xyz")
+        parser.writexyz(xyzpath)
+
+        logging.info("The lowest energy xyz file is {}! :)".format(
+            xyzpath))
+
+        if calculate_fod:
+            atoms = self.read_log(lowest_energy_file_path)
+            conformer.ase_molecule = atoms
+            conformer.update_coords_from("ase")
+
+            fod_dir = os.path.join(
+                self.calculator.directory, "species", conformer.smiles, FOD)
+            if not os.path.exists(fod_dir):
+                os.makedirs(fod_dir)
+    
+            orca_calc = Orca(conformer=conformer)
+            orca_calc.write_fod_input(fod_dir)
+                
 
         return True
 #################################################################################
