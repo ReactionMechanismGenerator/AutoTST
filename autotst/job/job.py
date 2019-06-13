@@ -344,8 +344,8 @@ class Job():
         """
 
         if self.species:
-            assert isinstance(species,Species),"species provided was not an AutoTST species object"
             species = self.species
+            assert isinstance(species,Species),"species provided was not an AutoTST species object"
         else:
             raise TypeError("Species cannot be None, please specify an AutoTST species to calculate")
 
