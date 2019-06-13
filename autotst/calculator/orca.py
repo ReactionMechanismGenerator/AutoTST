@@ -35,12 +35,13 @@ class Orca():
 
     def __init__(self,conformer=None):
         
+        self.command = 'orca'
         if conformer:
             assert isinstance(conformer,Conformer),'conformer must be an autotst conformer object'
             self.conformer = conformer
         else:
             self.conformer = None
-
+        
     def __repr__(self):
         return '<Orca Calculator>'
 
