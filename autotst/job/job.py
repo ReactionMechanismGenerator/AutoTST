@@ -489,7 +489,7 @@ class Job():
             
             # wait unitl the job is done
             while not self.check_complete(label):
-            time.sleep(15)
+                time.sleep(15)
             
             # If the log file exits, check to see if it terminated normally
             if os.path.exists(file_path + ".log"):
