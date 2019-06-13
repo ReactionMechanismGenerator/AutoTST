@@ -449,19 +449,58 @@ class Job():
         logging.info("The lowest energy xyz file is {}! :)".format(
             xyzpath))
 
-        if calculate_fod:
+        if calculate_fod:  # We will run an orca FOD job
+
+            # Update the lowest energy conformer with the lowest energy logfile
             atoms = self.read_log(lowest_energy_file_path)
             conformer.ase_molecule = atoms
             conformer.update_coords_from("ase")
-
+            
+            # specify a directory for FOD input and output
             fod_dir = os.path.join(
                 self.calculator.directory, "species", conformer.smiles, FOD)
             if not os.path.exists(fod_dir):
                 os.makedirs(fod_dir)
     
+            # Get orca calculator instance for lowest energy conformer
             orca_calc = Orca(conformer=conformer)
             orca_calc.write_fod_input(fod_dir)
-                
+
+            # Assign FOD label for calulation and filepath to save input and output
+            label = conformer.smiles + "_fod"
+            file_path = os.path.join(fod_dir, label)
+
+            # Assign environment variables with orca command and path
+            os.environ["COMMAND"] = orca_calc.command
+            os.environ["FILE_PATH"] = file_path
+
+            # Do not run orca if log file is already there
+            attempted = False
+            if os.path.exists(file_path + ".log"):
+                attempted = True
+                logging.info(
+                        "It appears that this job has already been run, not running it a second time.")
+            # In log file does not exist, run Orca
+            if not attempted:
+                logging.info("Starting FOD calculation for {}".format(conformer))
+                subprocess.call(
+                    """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 4 -t 01:00:00 --mem=1GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition), shell=True)
+            
+            # wait unitl the job is done
+            while not self.check_complete(label):
+            time.sleep(15)
+            
+            # If the log file exits, check to see if it terminated normally
+            if os.path.exists(file_path + ".log"):
+                if orca_calc.check_NormalTermination(file_path + ".log"):
+                    logging.info("The FOD calculation completed! The FOD log file is {}".format(file_path + ".log"))
+                    copyfile(
+                        file_path + ".log", os.path.join(self.calculator.directory, "species", conformer.smiles+'_fod.log'))
+                else:
+                    logging.info("It appears the FOD job did not terminate normally! The FOD log file is {}".format(file_path + ".log"))
+            else:
+                logging.info("It appears the FOD orca job never ran")
 
         return True
 #################################################################################
