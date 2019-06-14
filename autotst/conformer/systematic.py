@@ -104,7 +104,8 @@ def find_all_combos(
 def systematic_search(conformer,
                       delta=float(60),
                       cistrans=True,
-                      chiral_centers=True):
+                      chiral_centers=True,
+                      tmp="."):
     """
     Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
 
@@ -199,12 +200,7 @@ def systematic_search(conformer,
             type = 'species'
 
         if isinstance(calc, FileIOCalculator):
-            calculator.directory = os.path.join(
-                'conformer_logs',
-                type,
-                label,
-                "systematic",
-                 '{}_{}'.format(conformer.smiles,i))
+            calculator.directory(tmp, label, '{}_{}'.format(conformer.smiles, i))
             if not os.path.exists(calculator.directory):
                 try:
                     os.mkdirs(calculator.directory)
@@ -221,6 +217,7 @@ def systematic_search(conformer,
 
         opt = BFGS(conformer.ase_molecule, logfile=None)
         opt.run()
+
         conformer.update_coords_from("ase")
         energy = get_energy(conformer)
         return_dict[i] = (energy, conformer.ase_molecule.arrays,
