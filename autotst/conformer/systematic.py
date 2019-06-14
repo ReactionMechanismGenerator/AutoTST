@@ -105,7 +105,7 @@ def systematic_search(conformer,
                       delta=float(60),
                       cistrans=True,
                       chiral_centers=True,
-                      tmp="."):
+                      ):
     """
     Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
 
@@ -200,7 +200,11 @@ def systematic_search(conformer,
             type = 'species'
 
         if isinstance(calc, FileIOCalculator):
-            calculator.directory(tmp, label, '{}_{}'.format(conformer.smiles, i))
+            if not calculator.directory:
+                calculator.directory = os.path.join('conformer_logs', label, '{}_{}'.format(conformer.smiles, i))
+            else:
+                calculatory.directory = os.path.join(
+                    calculator.directory, label, '{}_{}'.format(conformer.smiles, i))
             if not os.path.exists(calculator.directory):
                 try:
                     os.mkdirs(calculator.directory)
