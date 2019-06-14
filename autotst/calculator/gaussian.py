@@ -88,13 +88,17 @@ class Gaussian():
         assert self.convergence.lower() in convergence_options,"{} is not among the supported convergence options {}".format(self.convergence,convergence_options)
         self.directory = directory
 
-        if scratch is not None:
-            self.scratch = os.environ['GAUSS_SCRDIR'] = scratch
-        else:
-            if os.environ['GAUSS_SCRDIR']:
+        try: 
+            env_scratch = os.environ['GAUSS_SCRDIR']
+            if scratch is None:
                 self.scratch = os.environ['GAUSS_SCRDIR']
             else:
+                self.scratch = os.environ['GAUSS_SCRDIR'] = scratch
+        except:
+            if scratch is None:
                 self.scratch = '.'
+            else:
+                self.scratch = os.environ['GAUSS_SCRDIR'] = scratch
 
     def __repr__(self):
         if isinstance(self.conformer, TS):
