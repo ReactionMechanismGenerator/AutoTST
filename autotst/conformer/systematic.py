@@ -210,8 +210,8 @@ def systematic_search(conformer,
             calculator.directory = os.path.join(directory, label,'{}_{}'.format(conformer.smiles, i))
             if not os.path.exists(calculator.directory):
                 try:
-                    os.mkdirs(calculator.directory)
-                except:
+                    os.makedirs(calculator.directory)
+                except OSError:
                     logging.info("An error occured when creating {}".format(calculator.directory))
 
             calculator.atoms = conformer.ase_molecule
