@@ -178,7 +178,7 @@ def systematic_search(conformer,
     logging.info(
         "There are {} unique conformers generated".format(len(conformers)))
 
-
+    directory = calculator.directory if calculator.directory else "conformer_logs"
     def opt_conf(conformer, calculator, i):
         """
         A helper function to optimize the geometry of a conformer.
@@ -200,11 +200,7 @@ def systematic_search(conformer,
             type = 'species'
 
         if isinstance(calc, FileIOCalculator):
-            if not calculator.directory:
-                calculator.directory = os.path.join('conformer_logs', label, '{}_{}'.format(conformer.smiles, i))
-            else:
-                calculatory.directory = os.path.join(
-                    calculator.directory, label, '{}_{}'.format(conformer.smiles, i))
+            calculator.directory = os.path.join(directory, label,'{}_{}'.format(conformer.smiles, i) )
             if not os.path.exists(calculator.directory):
                 try:
                     os.mkdirs(calculator.directory)
