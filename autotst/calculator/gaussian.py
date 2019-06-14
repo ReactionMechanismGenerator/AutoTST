@@ -58,7 +58,8 @@ class Gaussian():
                      "nprocshared": 20,
                  },
                  convergence="",
-                 directory=".",
+                 directory=".", #where you want input and log files to be written, default is current directory
+                 scratch=None  #where you want temporary files to be written
                  ):
 
         default_settings = {
@@ -86,6 +87,14 @@ class Gaussian():
         convergence_options = ["", "verytight", "tight", "loose"]
         assert self.convergence.lower() in convergence_options,"{} is not among the supported convergence options {}".format(self.convergence,convergence_options)
         self.directory = directory
+
+        if scratch is not None:
+            self.scratch = os.environ['GAUSS_SCRDIR'] = scratch
+        else:
+            if os.environ['GAUSS_SCRDIR']:
+                self.scratch = os.environ['GAUSS_SCRDIR']
+            else:
+                self.scratch = '.'
 
     def __repr__(self):
         if isinstance(self.conformer, TS):
