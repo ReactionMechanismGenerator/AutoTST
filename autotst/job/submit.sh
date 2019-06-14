@@ -1,8 +1,10 @@
 #!/bin/sh
 
-if [$COMMAND == "g16"]:
+if [$COMMAND = "g16"]; then
     $COMMAND "$FILE_PATH.com" > "$FILE_PATH.log"
-if [$COMMAND == 'orca']:
+fi
+
+if [$COMMAND = 'orca']; then
     module load orca/4.0.1
     module load gcc/7.2.0
     module unload openmpi/3.0.2
@@ -10,3 +12,4 @@ if [$COMMAND == 'orca']:
     module unload openmpi/3.1.2
     module load openmpi/2.0.4
     /shared/apps/orca/orca_4_0_1_linux_x86-64_openmpi202/orca "$FILE_PATH.inp" > "$FILE_PATH.log"
+fi
