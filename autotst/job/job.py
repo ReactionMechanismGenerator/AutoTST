@@ -61,22 +61,22 @@ class Job():
         self.calculator = calculator
         if self.calculator:
             if directory is None:
+                logging.info("Job directory not specified...setting Job directory to calculator directory")
                 self.directory = self.calculator.directory
             else:
+                logging.info("Setting calculator directory to Job directory")
                 self.directory = self.calculator.directory = directory
             if scratch is None:
+                logging.info("Job scratch directory not specified...setting Job scratch to calculator scratch")
                 self.scratch = self.calculator.scratch
             else:
+                logging.info("Setting calculator scratch to Job scratch")
                 self.scratch = self.calculator.scratch = scratch
-            
+        
         self.conformer_calculator = conformer_calculator
-
-        try:
+        if self.conformer_calculator:
             self.conformer_calculator.directory = self.scratch
-        except:
-            logging.info('A scratch directory could not be assigned to {}'.format(self.conformer_calculator))
-
-
+            
         self.partition = partition
 
         manager = multiprocessing.Manager()
@@ -310,9 +310,6 @@ class Job():
 
             else:
                 return check_isomorphic(conformer)
-
-        raise Exception("Shoudn't reach here")
-
 
     def calculate_species(self, species):
         """

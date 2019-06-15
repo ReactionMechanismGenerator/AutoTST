@@ -202,11 +202,8 @@ def systematic_search(conformer,
             if calculator.directory:
                 directory = calculator.directory 
             else: 
-                calculator.directory = 'conformer_logs'
-            try:
-                calculator.label = "{}_{}".format(conformer.smiles, i)
-            except:
-                pass
+                directory = 'conformer_logs'
+            calculator.label = "{}_{}".format(conformer.smiles, i)
             calculator.directory = os.path.join(directory, label,'{}_{}'.format(conformer.smiles, i))
             if not os.path.exists(calculator.directory):
                 try:

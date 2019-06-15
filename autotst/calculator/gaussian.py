@@ -89,7 +89,6 @@ class Gaussian():
         self.directory = directory
 
         try: 
-            env_scratch = os.environ['GAUSS_SCRDIR']
             if scratch is None:
                 self.scratch = os.environ['GAUSS_SCRDIR']
             else:
