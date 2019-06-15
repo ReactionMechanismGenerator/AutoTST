@@ -47,8 +47,9 @@ class JobTest(unittest.TestCase):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
         self.job = Job(
-            reaction = self.reaction,
+            reactions = self.reaction,
             calculator = self.calculator,
+            load_species_from_reactions=True,
             partition = "test"
         )
 
@@ -105,9 +106,8 @@ class JobTest(unittest.TestCase):
         if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
             shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         self.reaction.generate_reactants_and_products()
-
+        self.job.calculate_species()
         for species in self.reaction.reactants + self.reaction.products:
-            self.job.calculate_species(species)
             for smiles in species.conformers.keys():
                 self.assertTrue(os.path.exists(os.path.join(
                     os.path.expandvars("$AUTOTST/test/species/"),
