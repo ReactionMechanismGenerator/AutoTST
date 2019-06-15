@@ -50,6 +50,7 @@ from rmgpy.reaction import Reaction as RMGReaction
 from rmgpy.reaction import ReactionError
 from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
 from rmgpy.data.rmg import RMGDatabase
+from rmgpy.exceptions import ActionError
 
 import autotst
 from autotst.data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
@@ -251,7 +252,7 @@ class Reaction():
 
             self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"] / 2
 
-        logging.info("The distance data is as follows: \n{}".format(
+        logging.info("The distance data is as follows: {}".format(
             self._distance_data))
 
         return self._distance_data
@@ -328,9 +329,12 @@ class Reaction():
             for name, family in list(self.rmg_database.kinetics.families.items()):
                 if match:
                     break
-
-                labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
-                    test_reaction.reactants, test_reaction.products)
+                try:
+                    labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                        test_reaction.reactants, test_reaction.products)
+                except ValueError:
+                    continue
+                    
                 if not (labeled_r and labeled_p):
                     continue
 
@@ -342,6 +346,7 @@ class Reaction():
                     test_reaction.reactants = labeled_r[:]
                     test_reaction.products = labeled_p[:]
                     match = True
+                    final_family = family
                     final_name = name
                     break
 
@@ -359,11 +364,11 @@ class Reaction():
                     rmg_products.append(prod.molecule)
                 elif isinstance(prod, RMGMolecule):
                     rmg_products.append([prod])
-
             test_reactants = []
             test_products = []
             if len(rmg_reactants) == 1:
-                test_reactants = rmg_reactants
+                for l1 in rmg_reactants[0]:
+                    test_reactants.append([l1])
             elif len(rmg_reactants) == 2:
                 l1, l2 = rmg_reactants
                 for i in l1:
@@ -371,30 +376,55 @@ class Reaction():
                         test_reactants.append([i, j])
 
             if len(rmg_products) == 1:
-                test_reactants = rmg_products
+                for l1 in rmg_products[0]:
+                    test_products.append([l1])
             elif len(rmg_products) == 2:
                 l1, l2 = rmg_products
                 for i in l1:
                     for j in l2:
                         test_products.append([i, j])
+
+            reacts = test_reactants[:]
+            prods = test_products[:]
             for name, family in list(self.rmg_database.kinetics.families.items()):
+                logging.info("Trying to match {} to {}".format(self.rmg_reaction, family))
+
                 if match:
-                    break
+                    continue
+                
+                test_reactants = reacts[:]
+                test_products = prods[:]
                 for test_reactant in test_reactants:
-                    for test_products in test_products:
+                    for test_product in test_products:
 
                         if match:
                             continue
 
                         test_reaction = RMGReaction(
-                            reactants=test_reactant, products=test_products)
+                            reactants=test_reactant, products=test_product)
 
-                        labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
-                            test_reaction.reactants, test_reaction.products)
+                        try:
+                            labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                                test_reaction.reactants, test_reaction.products)
+                            if not (labeled_r and labeled_p):
+                                logging.info("Unable to determine a reaction for the forward direction. Trying the reverse direction.")
+                                raise ActionError
+                        except (ValueError, ActionError, IndexError):
+                            try: 
+                                # Trying the reverse reaction if the forward reaction doesn't work
+                                # This is useful for R_Addition reactions
+                                labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                                    test_reaction.products, test_reaction.reactants)
+                            except (ValueError, ActionError, IndexError):
+                               continue
+                            
+
                         if not (labeled_r and labeled_p):
+                            labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                                test_reaction.products, test_reaction.reactants)
                             continue
 
-                        if ((len(labeled_r) > 0) and (len(labeled_p) > 0)):
+                        if ((len(labeled_r) > 0) and (len(labeled_p) > 0)) and (self.rmg_reaction.isIsomorphic(test_reaction)):
                             logging.info(
                                 "Matched reaction to {} family".format(name))
 
@@ -402,15 +432,20 @@ class Reaction():
                             labeled_products = deepcopy(labeled_p)
                             test_reaction.reactants = labeled_r[:]
                             test_reaction.products = labeled_p[:]
-                            logging.info("\n{}".format(labeled_r))
-                            logging.info("\n{}".format(labeled_p))
+                            logging.info("{}".format(labeled_r))
+                            logging.info("{}".format(labeled_p))
                             match = True
+                            final_family = family
+                            print final_family
                             final_name = name
-                            break
+                            
         assert match, "Could not idetify labeled reactants and products"
-
-        reaction_list = self.rmg_database.kinetics.generate_reactions(
+        #try: 
+        reaction_list = final_family.generateReactions(
             test_reaction.reactants, test_reaction.products)
+        #except KeyError:
+        #    reaction_list = None
+        #    logging.info("For some reason, RMG is having trouble generating reactions for {}".format(test_reaction))
 
         assert reaction_list, "Could not match a reaction to a reaction family..."
 
@@ -420,7 +455,7 @@ class Reaction():
                 reaction.products = labeled_products
                 break
         self.rmg_reaction = reaction
-        self.reaction_family = name
+        self.reaction_family = final_name
         return self.rmg_reaction, self.reaction_family
 
     def get_label(self):
@@ -658,9 +693,10 @@ class TS(Conformer):
             if not rd_copy.GetBondBetweenAtoms(lbl1, lbl2):
                 rd_copy.AddBond(lbl1, lbl2,
                                 order=rdkit.Chem.rdchem.BondType.SINGLE)
-            else:
+            elif not rd_copy.GetBondBetweenAtoms(lbl2, lbl3):
                 rd_copy.AddBond(lbl2, lbl3,
                                 order=rdkit.Chem.rdchem.BondType.SINGLE)
+            
 
             self._pseudo_geometry = rd_copy
 
