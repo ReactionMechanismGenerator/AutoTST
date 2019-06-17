@@ -380,7 +380,7 @@ class Job():
         Uses Orca's the default functional, basis set, and smear temperature (TPSS, def2-TZVP, 5000 K).
         """
         # specify a directory for FOD input and output
-        fod_dir = os.path.join(self.calculator.directory, "species", conformer.smiles, FOD)
+        fod_dir = os.path.join(self.directory, "species", conformer.smiles, "FOD")
         if not os.path.exists(fod_dir):
             os.makedirs(fod_dir)
 
@@ -400,16 +400,28 @@ class Job():
 
         # Do not run orca if log file is already there
         attempted = False
+        complete = False
         if os.path.exists(file_path + ".log"):
             attempted = True
             logging.info(
-                "It appears that this job has already been run, not running it a second time.")
+                "It appears that this job has already been run")
+            if orca_calc.check_NormalTermination(file_path + ".log"):
+                complete = True
+                logging.info("The FOD calculation completed! The FOD log file is {}".format(
+                    file_path + ".log"))
+                copyfile(
+                    file_path + ".log", os.path.join(self.directory, "species", conformer.smiles,conformer.smiles+'_fod.log'))
+                return True
+            else:
+                logging.info("It appears the FOD job did not terminate normally! Trying FOD job again")
+                complete = False
+
         # In log file does not exist, run Orca
-        if not attempted:
+        if not attempted or not complete:
             logging.info(
                 "Starting FOD calculation for {}".format(conformer))
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 4 -t 01:00:00 --mem=1GB $AUTOTST/autotst/job/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.log" --error="{0}.slurm.log" -p {1} -N 1 -n 4 -t 01:00:00 --mem=1GB $AUTOTST/autotst/job/orca_submit.sh""".format(
                     label, self.partition), shell=True)
 
         # wait unitl the job is done
@@ -422,7 +434,7 @@ class Job():
                 logging.info("The FOD calculation completed! The FOD log file is {}".format(
                     file_path + ".log"))
                 copyfile(
-                    file_path + ".log", os.path.join(self.calculator.directory, "species", conformer.smiles+'_fod.log'))
+                    file_path + ".log", os.path.join(self.directory, "species", conformer.smiles,conformer.smiles+'_fod.log'))
                 return True
             else:
                 logging.info("It appears the FOD job did not terminate normally! The FOD log file is {}".format(
