@@ -62,8 +62,8 @@ class Orca():
             os.makedirs(path)
         outfile = os.path.join(path,smiles+'_fod.inp')
 
-        if '(' in smiles:
-            base = smiles.replace('(', '{').replace(')', '}')
+        if '(' in smiles or '#' in smiles:
+            base = smiles.replace('(', '{').replace(')', '}').replace('#','=-')
         else:
             base = smiles
 
