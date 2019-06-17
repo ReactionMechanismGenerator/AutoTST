@@ -72,6 +72,18 @@ class Job():
             else:
                 logging.info("Setting calculator scratch to Job scratch")
                 self.scratch = self.calculator.scratch = scratch
+        else:
+            logging.info("No calculator specified")
+            if directory is None:
+                logging.info("No directory specified...setting directory to .")
+                self.directory = '.'
+            else:
+                self.directory = directory
+            if scratch is None:
+                logging.info("No scratch directory specified...setting scratch to .")
+                self.scratch = '.'
+            else:
+                self.scratch = scratch
         
         self.conformer_calculator = conformer_calculator
         if self.conformer_calculator:
