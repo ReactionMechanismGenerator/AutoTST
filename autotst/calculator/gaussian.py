@@ -57,7 +57,9 @@ class Gaussian():
                      "mem": "5GB",
                      "nprocshared": 20,
                  },
-                 directory=".",
+                 convergence="",
+                 directory=".", #where you want input and log files to be written, default is current directory
+                 scratch=None  #where you want temporary files to be written
                  ):
 
         default_settings = {
@@ -69,7 +71,7 @@ class Gaussian():
 
         self.conformer = conformer
 
-        # setting the settings accordingly 
+        # setting the settings accordingly
         for setting, value in list(default_settings.items()):
             if setting in list(settings.keys()):
                 assert isinstance(settings[setting], type(
@@ -81,7 +83,21 @@ class Gaussian():
 
         self.command = "g16"
         self.settings = settings
+        self.convergence = convergence
+        convergence_options = ["", "verytight", "tight", "loose"]
+        assert self.convergence.lower() in convergence_options,"{} is not among the supported convergence options {}".format(self.convergence,convergence_options)
         self.directory = directory
+
+        try: 
+            if scratch is None:
+                self.scratch = os.environ['GAUSS_SCRDIR']
+            else:
+                self.scratch = os.environ['GAUSS_SCRDIR'] = scratch
+        except:
+            if scratch is None:
+                self.scratch = '.'
+            else:
+                self.scratch = os.environ['GAUSS_SCRDIR'] = scratch
 
     def __repr__(self):
         if isinstance(self.conformer, TS):
@@ -98,7 +114,7 @@ class Gaussian():
         """
         A method to create all of the calculators needed to perform hindered rotor calculations given a `Conformer` and a `Torsion`.
 
-        Parameters: 
+        Parameters:
         - conformer (Conformer): A `Conformer` object that you want to perform hindered rotor calculations on
         - torsion (Torsion): A `Torsion` object that you want to perform hindered rotor calculations about
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -171,15 +187,17 @@ class Gaussian():
         """
         A method that creates a calculator for a `Conformer` that will perform a geometry optimization
 
-        Parameters: 
+        Parameters:
         - conformer (Conformer): A `Conformer` object that you want to perform hindered rotor calculations on
         - torsion (Torsion): A `Torsion` object that you want to perform hindered rotor calculations about
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
         - scratch (str): a directory where you want log files to be written to
+        - convergence (str): ['verytight','tight','' (default)], specifies the convergence criteria of the geometry optimization
 
         Returns:
         - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
         """
+
 
         if isinstance(self.conformer, TS):
             logging.info(
@@ -212,7 +230,7 @@ class Gaussian():
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra="opt=(calcfc,maxcycles=900) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
+            extra="opt=(calcfc,maxcycles=900,{}) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)".format(self.convergence),
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
@@ -222,7 +240,7 @@ class Gaussian():
         """
         A method to create a calculator that optimizes the reaction shell of a `TS` object
 
-        Parameters: 
+        Parameters:
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -279,7 +297,7 @@ class Gaussian():
         """
         A method to create a calculator that optimizes the reaction center of a `TS` object
 
-        Parameters: 
+        Parameters:
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -339,7 +357,7 @@ class Gaussian():
         """
         A method to create a calculator that optimizes the overall geometry of a `TS` object
 
-        Parameters: 
+        Parameters:
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
@@ -385,7 +403,7 @@ class Gaussian():
         """
         A method to create a calculator that runs an IRC calculation the overall geometry of a `TS` object
 
-        Parameters: 
+        Parameters:
         - ts (TS): A `TS` object that you want to perform calculations on
         - direction (str): the forward or reverse direction of the `TS` object
         - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
