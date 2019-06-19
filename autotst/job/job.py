@@ -129,6 +129,10 @@ class Job():
         global global_results
         global_results = manager.dict()
 
+        if self.scratch and not os.path.exists(self.scratch):
+            os.makedirs(self.scratch)
+        elif self.directory and not os.path.exists(self.directory):
+            os.makedirs(self.directory)
 
     def __repr__(self):
         return "< Job '{}'>".format(self.label)
