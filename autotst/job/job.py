@@ -801,7 +801,7 @@ class Job():
                 transitionstate, opt_type="irc")
             while not self.check_complete(label):
                 time.sleep(15)
-            result = self.calculator.validate_irc(calc=irc_calc)
+            result = self.calculator.validate_irc()
             if result:
                 logging.info("Validated via IRC")
                 return True
