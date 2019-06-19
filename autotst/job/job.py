@@ -738,6 +738,7 @@ class Job():
             for label, result in global_results.items():
                 if not result:
                     logging.info("Calculations for {} FAILED".format(label))
+                    continue
                 f = "{}.log".format(label)
                 path = os.path.join(self.calculator.directory, "ts",
                         self.reaction.label, "conformers", f)
