@@ -82,12 +82,18 @@ class VibrationalAnalysis():
         Returns:
         - log_file (str): a path to the log file of interest
         """
-        self.log_file = os.path.join(
+
+        log_path = os.path.join(
             self.directory,
             "ts",
             self.ts.reaction_label,
             "conformers",
-            "{}_{}_{}.log".format(self.ts.reaction_label, self.ts.direction, self.ts.index))
+            "{}_{}_{}.log".format(self.ts.reaction_label,
+                                  self.ts.direction, self.ts.index))
+
+        assert os.path.exists(log_path),"Could not retrieve log file from path {}".format(path)
+
+        self.log_file = log_path
         return self.log_file
 
     def parse_vibrations(self):
@@ -109,7 +115,12 @@ class VibrationalAnalysis():
         assert os.path.exists(self.log_file), "Log file provided does not exist"
 
         log_file_info = ccread(self.log_file)
-        self.vibrations = list(zip(log_file_info.vibfreqs, log_file_info.vibdisps))
+
+        try:
+            self.vibrations = list(zip(log_file_info.vibfreqs, log_file_info.vibdisps))
+        except:
+            self.vibrations = None
+            logging.info("Could not parse vibrations from {}".format(self.log_file))
         
         return self.vibrations
 
@@ -128,6 +139,7 @@ class VibrationalAnalysis():
         """
 
         assert isinstance(self.ts, TS)
+        assert self.vibrations is not None,"Failed to get vibrations from {}".format(self.log_file)
 
         
         symbol_dict = {
