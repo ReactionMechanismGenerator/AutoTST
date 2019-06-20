@@ -384,7 +384,12 @@ class Job():
         Uses Orca's the default functional, basis set, and smear temperature (TPSS, def2-TZVP, 5000 K).
         """
         # specify a directory for FOD input and output
-        fod_dir = os.path.join(self.directory, "species", conformer.smiles, "FOD")
+        if isinstance(conformer,TS):
+            fod_dir = os.path.join(self.directory, "ts",
+                                   ts.reaction_label, "fod")
+        else:
+            fod_dir = os.path.join(self.directory, "species", conformer.smiles, "fod")
+        
         if not os.path.exists(fod_dir):
             os.makedirs(fod_dir)
 
@@ -743,7 +748,7 @@ class Job():
                 return False
                 logging.info("No TSs could be validated from irc for {}".format(reaction.label))
 
-    def calculate_reaction(self, recalculate=False,  vibrational_analysis=True):
+    def calculate_reaction(self, recalculate=False, vibrational_analysis=True, calculate_fod=False):
         """
         A method to run calculations for all tranitionstates for a reaction
         """
@@ -797,6 +802,13 @@ class Job():
                     logging.info("Existing TS has been validated from vibrational analysis from reaction {}".format(reaction.label))
                     logging.info("The TS log file is {} :)".format(log_path))
                     calculation_status[reaction] = True
+                    if calculate_fod:  # We will run an orca FOD job
+                        # Update the lowest energy conformer 
+                        # with the lowest energy logfile
+                        atoms = self.read_log(log_path)
+                        ts.ase_molecule = atoms
+                        ts.update_coords_from("ase")
+                        self.calculate_fod(conformer=ts)
                     continue
                 else:
                     logging.info("Could not validate existing TS for {} through Vibrational Analysis...checking for irc jobs".format(
@@ -805,6 +817,13 @@ class Job():
                     got_one = self.check_irc_folder(reaction)
                     if got_one:
                         calculation_status[reaction]=True
+                        if calculate_fod:  # We will run an orca FOD job
+                            # Update the lowest energy conformer 
+                            # with the lowest energy logfile
+                            atoms = self.read_log(log_path)
+                            ts.ase_molecule = atoms
+                            ts.update_coords_from("ase")
+                            self.calculate_fod(conformer=ts)
                         continue
                     else:
                         logging.info("Could not validate existing TS from Vibrational Analysis or irc...removing {}".format(log_path))
@@ -816,7 +835,15 @@ class Job():
                     "It appears irc jobs where run...trying to validate from existing ircs")
                 got_one = self.check_irc_folder(reaction)
                 if got_one:
-                    calculation_status[reaction] = True                                                                    
+                    calculation_status[reaction] = True
+                    ts = reaction.ts["forward"][0] # get ts instance of reaction
+                    if calculate_fod:  # We will run an orca FOD job
+                        # Update the lowest energy conformer 
+                        # with the lowest energy logfile
+                        atoms = self.read_log(log_path)
+                        ts.ase_molecule = atoms
+                        ts.update_coords_from("ase")
+                        self.calculate_fod(conformer=ts)                                                                    
                     continue
                 else:
                     pass
@@ -902,6 +929,18 @@ class Job():
                 lowest_energy_label + ".log"))
             calculation_status[self.reaction] = True
         
+            if calculate_fod:  # We will run an orca FOD job
+
+                # Update the lowest energy conformer
+                # with the lowest energy logfile
+                ts = reaction.ts["forward"][0] #get sample ts for reaction
+                lowest_energy_file_path = os.path.join(self.calculator.directory, "ts",
+                             self.reaction.label, self.reaction.label + ".log")
+                atoms = self.read_log(lowest_energy_file_path)
+                ts.ase_molecule = atoms
+                ts.update_coords_from("ase")
+                self.calculate_fod(conformer=ts)
+
         logging.info(calculation_status)
         if False in calculation_status.values() or len(calculation_status.values()) == 0:
             return False
@@ -1020,6 +1059,7 @@ class Job():
             first_is_lowest, min_energy, atomnos, atomcoords = self.check_rotor_lowest_conf(
                 parser=parser)
             symbol_dict = {
+                35: "Br"
                 17: "Cl",
                 9:  "F",
                 8:  "O",
