@@ -695,7 +695,55 @@ class Job():
             global_results[ts_identifier] = False
             return False
 
-    def calculate_reaction(self, vibrational_analysis=True):
+    def check_irc_folder(self, reaction):
+        """
+        A method to check irc jobs to try to find an irc validated transition state
+        Returns true if a validated ts is found, false otherwise
+        """
+        got_one = False
+        irc_folder = os.path.join(
+            self.directory, "ts", reaction.label, 'irc')
+        if not os.path.exists(irc_folder):
+            logging.info("It appears no irc jobs were run")
+            return False
+        else:
+            logging.info("It appears irc jobs where run...trying to validate from existing irc calcs")
+            irc_logs = [l for l in os.list.dir(irc_folder) if l.endswith('.log')]
+            for log in irc_logs:
+                if 'forward' in log:
+                    direction = 'forward'
+                else:
+                    direction = 'reverse'
+                ts = reaction.ts[direction][0]
+                ts.index = int(log.split('.log')[0].split('_')[-1])
+                label = ts.reaction_label + '_' + direction + '_' + str(ts.index)
+                self.calculator.conformer = ts
+                result = self.calculator.validate_irc()
+                if result:
+                    logging.info("{} Validated via irc".format(label))
+                    if os.path.exists(self.directory, "ts", reaction.label, "conformers",label+'.log'):
+                        got_one=True
+                        copyfile(os.path.join(self.directory, "ts", self.reaction.label,"conformers", label +'.log'),
+                                os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")
+                                )
+                        logging.info("TS log file validated through irc is {} :)".format(
+                        os.path.join(self.directory, "ts",self.reaction.label, self.reaction.label + ".log")))
+                        break
+                    else:
+                        logging.info("We have a TS validated from irc, but no completed log for {}".format(label))
+                        logging.info("Checking the other irc logs...")
+                        continue
+                else:
+                    logging.info(
+                        "Could not validate {}...".format(label))
+                    continue
+            if got_one:
+                return True
+            else:
+                return False
+                logging.info("No TSs could be validated from irc for {}".format(reaction.label))
+
+    def calculate_reaction(self, recalculate=False,  vibrational_analysis=True):
         """
         A method to run calculations for all tranitionstates for a reaction
         """
@@ -703,6 +751,78 @@ class Job():
         calculation_status = dict()
         for reaction in self.reactions:
             self.reaction = reaction
+
+        #####################################
+            # This block will search the directory for existing logs and irc calcs (if recalculate=False)
+            # If there is an existing log, we will try to validate it with vibrational analysis
+            # If vibrational analysis fails, we will check for irc logs to try to find and validate a ts
+            # If there is no existing log, we will look for irc logs
+            # If we cant find a validated TS, we will restart the calculation
+
+            log_path = os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")
+            irc_folder = os.path.join(self.directory, "ts", reaction.label, 'irc')
+            if os.path.exists(log_path) and recalculate is False:
+                logging.info("A log file already exists for reaction {}".format(reaction.label))
+                logging.info("Trying to validate TS with existing log file through Vibrational Analysis...")
+                lines = open(log_path).readlines()[0:10]
+                for line in lines:
+                    if 'Output=' in line:
+                        if 'reverse' in line:
+                            direction = 'reverse'
+                            break
+                        if 'forward' in line:
+                            direction = 'forward'
+                            break
+                        else:
+                            direction = None
+                            break
+                
+                validated = False
+                if direction:
+                    ts = reaction.ts[direction][0]
+                    vib = VibrationalAnalysis(
+                        transitionstate=ts, directory=self.directory)
+                    validated = vib.validate_ts()
+                else:
+                    directions = ['forward','reverse']
+                    for direction in directions:
+                        ts = reaction.ts[direction][0]
+                        vib = VibrationalAnalysis(
+                        transitionstate=ts, directory=self.directory)
+                        validated = vib.validate_ts()
+                        if validated:
+                            break
+                
+                if validated:
+                    logging.info("Existing TS has been validated from vibrational analysis from reaction {}".format(reaction.label))
+                    logging.info("The TS log file is {} :)".format(log_path))
+                    calculation_status[reaction] = True
+                    continue
+                else:
+                    logging.info("Could not validate existing TS for {} through Vibrational Analysis...checking for irc jobs".format(
+                        reaction.label))
+
+                    got_one = self.check_irc_folder(reaction)
+                    if got_one:
+                        calculation_status[reaction]=True
+                        continue
+                    else:
+                        logging.info("Could not validate existing TS from Vibrational Analysis or irc...removing {}".format(log_path))
+                        os.remove(log_path)
+                        pass
+
+            elif os.path.exists(irc_folder) and recalculate is False:
+                logging.info(
+                    "It appears irc jobs where run...trying to validate from existing ircs")
+                got_one = self.check_irc_folder(reaction)
+                if got_one:
+                    calculation_status[reaction] = True                                                                    
+                    continue
+                else:
+                    pass
+        
+        #####################################
+
             logging.info("Calculating geometries for {}".format(self.reaction))
 
             if self.conformer_calculator:
