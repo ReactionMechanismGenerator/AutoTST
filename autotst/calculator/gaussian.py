@@ -512,7 +512,7 @@ class Gaussian():
         else:
             pth1End = sum(steps[:pth1[-1]])
             # Compare the reactants and products
-            ircParse = ccread(irc_path)
+            ircParse = ccread(irc_path, loglevel=logging.ERROR)
 
 
             atomcoords = ircParse.atomcoords
