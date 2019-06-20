@@ -167,7 +167,7 @@ class Job():
         }
         atoms = []
 
-        parser = ccread(file_path)
+        parser = ccread(file_path, loglevel=logging.ERROR)
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
@@ -516,7 +516,7 @@ class Job():
                             "It seems that {} was never run...".format(f))
                         continue
                     try:
-                        parser = ccread(path)
+                        parser = ccread(path, loglevel=logging.ERROR)
                         if parser is None:
                             logging.info(
                                 "Something went wrong when reading in results for {} using cclib...".format(f))
@@ -559,7 +559,7 @@ class Job():
                 lowest_energy_file))
             calculation_status[species] = True
 
-            parser = ccread(dest)
+            parser = ccread(dest, loglevel=logging.ERROR)
             xyzpath = os.path.join(self.calculator.directory,"species",conformer.smiles,conformer.smiles+".xyz")
             parser.writexyz(xyzpath)
 
@@ -746,7 +746,7 @@ class Job():
                     logging.info("It appears that {} failed...".format(f))
                     continue
                 try:
-                    parser = ccread(path)
+                    parser = ccread(path, loglevel=logging.ERROR)
                     if parser is None:
                         logging.info(
                             "Something went wrong when reading in results for {}...".format(f))
@@ -896,7 +896,7 @@ class Job():
             else:
                 file_name = os.path.join(
                     self.directory, "species",conformer.smiles , "rotors", lowest_energy_label + ".log")
-            parser = ccread(file_name)
+            parser = ccread(file_name, loglevel=logging.ERROR)
             first_is_lowest, min_energy, atomnos, atomcoords = self.check_rotor_lowest_conf(
                 parser=parser)
             symbol_dict = {
@@ -957,7 +957,7 @@ class Job():
         elif isinstance(conformer, Conformer):
              file_name = os.path.join(
                 self.directory, "species", conformer.smiles, "rotors", label  + ".log")           
-        parser = cclib.io.ccread(file_name)
+        parser = cclib.io.ccread(file_name, loglevel=logging.ERROR)
 
         continuous = self.check_rotor_continuous(
             steps, step_size, parser=parser)
