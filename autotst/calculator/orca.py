@@ -29,6 +29,7 @@
 
 import os
 from autotst.species import Species, Conformer
+from autotst.reaction import Reaction, TS
 import logging
 
 class Orca():
@@ -39,8 +40,10 @@ class Orca():
         if conformer:
             assert isinstance(conformer,Conformer),'conformer must be an autotst conformer object'
             self.conformer = conformer
-        else:
-            self.conformer = None
+            if isinstance(conformer, TS):
+                self.label = self.conformer.reaction_label
+            else:
+                self.label = self.conformer.smiles
         
     def __repr__(self):
         return '<Orca Calculator>'
@@ -53,22 +56,22 @@ class Orca():
         Bauer, C. A., Hansen, A., & Grimme, S. (2017). The Fractional Occupation Number Weighted Density as a Versatile Analysis Tool for Molecules with a Complicated Electronic Structure. 
         Chemistry - A European Journal, 23(25), 6150–6164. https://doi.org/10.1002/chem.201604682
         """
-        smiles = self.conformer.smiles
+        label = self.label
         charge = self.conformer.rmg_molecule.getNetCharge()
         mult = self.conformer.rmg_molecule.multiplicity
         coords = self.conformer.get_xyz_block()
 
         if not os.path.exists(path):
             os.makedirs(path)
-        outfile = os.path.join(path,smiles+'_fod.inp')
+        outfile = os.path.join(path,label+'_fod.inp')
 
-        if '(' in smiles or '#' in smiles:
-            base = smiles.replace('(', '{').replace(')', '}').replace('#','=-')
+        if '(' in label or '#' in label:
+            base = label.replace('(', '{').replace(')', '}').replace('#','=-')
         else:
-            base = smiles
+            base = label
 
         with open(outfile, 'w') as f:
-            f.write('# FOD anaylsis for {} \n'.format(smiles))
+            f.write('# FOD anaylsis for {} \n'.format(label))
             f.write('! FOD \n')
             f.write('\n')
             f.write('%pal nprocs 4 end \n')
