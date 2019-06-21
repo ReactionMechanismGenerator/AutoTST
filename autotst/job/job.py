@@ -770,16 +770,14 @@ class Job():
                 logging.info("A log file already exists for reaction {}".format(reaction.label))
                 logging.info("Trying to validate TS with existing log file through Vibrational Analysis...")
                 lines = open(log_path).readlines()[0:10]
+                direction = None
                 for line in lines:
                     if 'Output=' in line:
                         if 'reverse' in line:
                             direction = 'reverse'
                             break
-                        if 'forward' in line:
+                        elif 'forward' in line:
                             direction = 'forward'
-                            break
-                        else:
-                            direction = None
                             break
                 
                 validated = False
