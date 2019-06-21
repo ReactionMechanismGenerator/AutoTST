@@ -66,7 +66,7 @@ class VibrationalAnalysis():
             if not os.path.exists(log_file):
                 logging.warning('log_file path does not exist')
         else:
-        self.log_file = None
+            self.log_file = None
 
     def __repr__(self):
         if self.ts is None:
