@@ -51,7 +51,7 @@ class VibrationalAnalysis():
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, transitionstate=None, directory="."):
+    def __init__(self, transitionstate=None, log_file=None, directory="."):
         """
         Variables:
         - ts (TS): A TS object that you want to run vibratinal analysis on
@@ -61,6 +61,11 @@ class VibrationalAnalysis():
         self.ts.get_geometries()
         self.directory = directory
 
+        if log_file:
+            self.log_file = log_file
+            if not os.path.exists(log_file):
+                logging.warning('log_file path does not exist')
+        else:
         self.log_file = None
 
     def __repr__(self):
@@ -160,6 +165,7 @@ class VibrationalAnalysis():
         
         self.ts.ase_molecule = Atoms(atoms)
         self.ts.update_coords_from("ase")
+        self.ts.get_geometries()
 
         self.pre_geometry = self.ts.ase_molecule.copy()
         self.post_geometry = self.ts.ase_molecule.copy()
@@ -219,7 +225,8 @@ class VibrationalAnalysis():
         - (bool): True if the TS can be validated via vibrational analysis and False if it cannot
         """
         try:
-            self.get_log_file()
+            if self.log_file is None:
+                self.get_log_file()
 
             self.parse_vibrations()
 
@@ -232,11 +239,15 @@ class VibrationalAnalysis():
                 self.percent_changes[self.percent_changes.center].percent_change.mean())
             shell_values = np.log(
                 self.percent_changes[self.percent_changes.center != True].percent_change.mean())
+            logging.info("center_values = {}".format(center_values))
+            logging.info("shell_values = {}".format(shell_values))
 
             if center_values > shell_values + 1:
+                logging.info("center_values ({0}) is greater than shell_values + 1 ({1})".format(center_values,shell_values+1))
                 logging.info("Vibrational analysis was successful")
                 return True
             else:
+                logging.info("center_values ({0}) is not greater than shell_values + 1 ({1})".format(center_values, shell_values+1))
                 logging.info(
                     "Cannot reasonably say that we have arrived at a TS through vibrational analysis.")
                 return False
