@@ -386,7 +386,7 @@ class Job():
         # specify a directory for FOD input and output
         if isinstance(conformer,TS):
             fod_dir = os.path.join(self.directory, "ts",
-                                   ts.reaction_label, "fod")
+                                   conformer.reaction_label, "fod")
         else:
             fod_dir = os.path.join(self.directory, "species", conformer.smiles, "fod")
         
