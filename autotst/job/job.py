@@ -717,7 +717,6 @@ class Job():
             logging.info("It appears no irc jobs were run")
             return False
         else:
-            logging.info("It appears irc jobs where run...trying to validate from existing irc calcs")
             irc_logs = [l for l in os.listdir(irc_folder) if l.endswith('.log')]
             for log in irc_logs:
                 if 'forward' in log:
@@ -730,13 +729,13 @@ class Job():
                 self.calculator.conformer = ts
                 result = self.calculator.validate_irc()
                 if result:
-                    logging.info("{} Validated via irc".format(label))
+                    logging.info("{} successfully validated via irc!".format(label))
                     if os.path.exists(self.directory, "ts", reaction.label, "conformers",label+'.log'):
                         got_one=True
                         copyfile(os.path.join(self.directory, "ts", self.reaction.label,"conformers", label +'.log'),
                                 os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")
                                 )
-                        logging.info("TS log file validated through irc is {} :)".format(
+                        logging.info("TS log file validated from irc is {} :)".format(
                         os.path.join(self.directory, "ts",self.reaction.label, self.reaction.label + ".log")))
                         break
                     else:
@@ -745,13 +744,15 @@ class Job():
                         continue
                 else:
                     logging.info(
-                        "Could not validate {}...".format(label))
+                        "Could not validate {} from irc".format(label))
                     continue
             if got_one:
                 return True
             else:
+                logging.info(
+                    "All of the ircs failed for {}".format(reaction.label))
                 return False
-                logging.info("No TSs could be validated from irc for {}".format(reaction.label))
+                
 
     def calculate_reaction(self, recalculate=False, vibrational_analysis=True, calculate_fod=False):
         """
@@ -829,13 +830,13 @@ class Job():
                             self.calculate_fod(conformer=ts)
                         continue
                     else:
-                        logging.info("Could not validate existing TS from Vibrational Analysis or irc...removing {}".format(log_path))
+                        logging.info("Could not validate existing TS from vibrational analysis or irc...removing {}".format(log_path))
                         os.remove(log_path)
                         pass
 
             elif os.path.exists(irc_folder) and recalculate is False:
                 logging.info(
-                    "It appears irc jobs where run...trying to validate from existing ircs")
+                    "It appears irc jobs were run...trying to validate from existing ircs")
                 got_one = self.check_irc_folder(reaction)
                 if got_one:
                     calculation_status[reaction] = True
@@ -849,7 +850,10 @@ class Job():
                         self.calculate_fod(conformer=ts)                                                                    
                     continue
                 else:
-                    pass
+                    calculation_status[reaction] = False
+                    logging.info(
+                        "We could not find an irc validated transition state :(")
+                    continue
         
         #####################################
 
