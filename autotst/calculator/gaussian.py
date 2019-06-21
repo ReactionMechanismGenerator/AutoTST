@@ -480,6 +480,8 @@ class Gaussian():
             self.conformer.reaction_label + "_irc_" + self.conformer.direction + "_" + str(self.conformer.index) + ".log"
         )
 
+        label = self.conformer.reaction_label + "_" + self.conformer.direction + "_" + str(self.conformer.index)
+
         complete, converged = self.verify_output_file(irc_path)
         if not complete:
             logging.info(
@@ -572,5 +574,5 @@ class Gaussian():
                     if targetReaction.isIsomorphic(testReaction):
                         logging.info("IRC calculation was successful!")
                         return True
-            logging.info("IRC calculation failed for {} :(".format(calc.label))
+            logging.info("IRC calculation failed for {} :(".format(label))
             return False
