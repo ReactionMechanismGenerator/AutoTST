@@ -713,7 +713,7 @@ class Job():
             return False
         else:
             logging.info("It appears irc jobs where run...trying to validate from existing irc calcs")
-            irc_logs = [l for l in os.list.dir(irc_folder) if l.endswith('.log')]
+            irc_logs = [l for l in os.listdir(irc_folder) if l.endswith('.log')]
             for log in irc_logs:
                 if 'forward' in log:
                     direction = 'forward'
