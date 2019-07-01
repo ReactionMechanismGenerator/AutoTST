@@ -572,5 +572,5 @@ class Gaussian():
                     if targetReaction.isIsomorphic(testReaction):
                         logging.info("IRC calculation was successful!")
                         return True
-            logging.info("IRC calculation failed for {} :(".format(calc.label))
+            logging.info("IRC calculation failed for {} :(".format(irc_path))
             return False
