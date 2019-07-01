@@ -201,6 +201,24 @@ class Job():
                 """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 12:00:00 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition), shell=True)
 
+            if self.exclude:
+                if isinstance(self.exclude, str):
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, self.exclude)
+                elif isinstance(self.exclude, list):
+                    exc = ""
+                    for e in self.exclude:
+                        exc += e
+                        exc += ","
+                    exc = exc[:-1]
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, exc)
+            else:
+                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition)
+
+            subprocess.call(command, shell=True)
+
         return label
 
     def calculate_conformer(self, conformer):
@@ -416,8 +434,8 @@ class Job():
         logging.info(
             "The lowest energy conformer is {}".format(lowest_energy_file))
 
-        lowest_energy_file_path = os.path.join(self.calculator.directory,"species",conformer.smiles,"conformers",lowest_energy_file)
-        dest = os.path.join(self.calculator.directory,"species",conformer.smiles,conformer.smiles+".log")
+        lowest_energy_file_path = os.path.join(self.calculator.directory, "species",conformer.smiles, "conformers", lowest_energy_file)
+        dest = os.path.join(self.calculator.directory, "species", conformer.smiles, conformer.smiles+".log")
 
         try:
             copyfile(lowest_energy_file_path,dest)
@@ -465,9 +483,22 @@ class Job():
             logging.info("It appears that {} has already been attempted...".format(label))
 
         if (not attempted) or restart:
-            subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB -t {2} $AUTOTST/autotst/job/submit.sh""".format(
-                    label, self.partition, time), shell=True)
+            if self.exclude:
+                if isinstance(self.exclude, str):
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t {3} --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, self.exclude, time)
+                elif isinstance(self.exclude, list):
+                    exc = ""
+                    for e in self.exclude:
+                        exc += e
+                        exc += ","
+                    exc = exc[:-1]
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t {3} --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, exc, time)
+            else:
+                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t {2} --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition, time)
+            subprocess.call(command, shell=True)
 
         return label
 
@@ -653,13 +684,14 @@ class Job():
 
 #################################################################################
 
-    def submit_rotor(self, conformer, torsion_index):
+    def submit_rotor(self, conformer, torsion_index, restart=False):
         """
-        A methods to submit a job based on the calculator and partition provided
+        A methods to submit a job based on the conformer and the index of the torsion
         """
         assert conformer, "Please provide a conformer to submit a job"
 
-        ase_calculator = self.calculator.get_rotor_calc(conformer, torsion_index)
+        self.calculator.conformer = conformer
+        ase_calculator = self.calculator.get_rotor_calc(torsion_index)
 
         self.write_input(conformer, ase_calculator)
 
@@ -674,10 +706,31 @@ class Job():
             logging.info(
                 "It appears that this job has already been run, not running it a second time.")
 
-        if not attempted:
-            subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 8:00:00 --mem=100000 $AUTOTST/autotst/job/submit.sh""".format(
-                    label, self.partition), shell=True)
+        if restart or not attempted:
+            if restart:
+                logging.info(
+                    "Restarting calculations for {}.".format(conformer)
+                )
+            else:
+                logging.info("Starting calculations for {}".format(conformer))
+
+            if self.exclude:
+                if isinstance(self.exclude, str):
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, self.exclude)
+                elif isinstance(self.exclude, list):
+                    exc = ""
+                    for e in self.exclude:
+                        exc += e
+                        exc += ","
+                    exc = exc[:-1]
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, exc)
+            else:
+                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition)
+
+            subprocess.call(command, shell=True)
 
         return label
 
