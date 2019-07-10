@@ -97,9 +97,6 @@ class JobTest(unittest.TestCase):
         conformer = Conformer(smiles='CC',index=0)
         result = self.job.calculate_conformer(conformer=conformer)
         self.assertTrue(result)
-        conformer = Conformer(smiles='CC(Cl)(Cl)Cl',index=0)
-        result = self.job.calculate_conformer(conformer=conformer)
-        self.assertFalse(result)
 
     def test_calculate_species(self):
         if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):

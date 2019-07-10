@@ -58,8 +58,9 @@ class Job():
         else:
             self.label = None
 
-        assert isinstance(exclude, (None, str, list)), "Please provide a string or list of string descriptions of the nodes you wish to exclude"
+        assert isinstance(exclude, (type(None), str, list)), "Please provide a string or list of string descriptions of the nodes you wish to exclude"
         self.exclude = exclude
+        self.calculator = calculator
 
         if self.calculator:
             if directory is None:
