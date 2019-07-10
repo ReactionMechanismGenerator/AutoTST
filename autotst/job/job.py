@@ -83,7 +83,7 @@ class Job():
         }
         atoms = []
 
-        parser = ccread(file_path)
+        parser = ccread(file_path, loglevel=logging.ERROR)
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
@@ -156,7 +156,7 @@ class Job():
 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 12:00:00 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t 12:00:00 --mem=60GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition), shell=True)
 
         return label
@@ -275,7 +275,7 @@ class Job():
 
             for f, result in list(smiles_results.items()):
                 if result:
-                    parser = ccread(os.path.join(scratch_dir, f))
+                    parser = ccread(os.path.join(scratch_dir, f), loglevel=logging.ERROR)
                     if parser.scfenergies[-1] < lowest_energy:
                         lowest_energy = parser.scfenergies[-1]
                         lowest_energy_f = f
@@ -329,7 +329,7 @@ class Job():
 
         if (not attempted) or restart:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 --mem=60GB -t {2} $AUTOTST/autotst/job/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 --mem=60GB -t {2} $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition, time), shell=True)
 
         return label
@@ -407,12 +407,19 @@ class Job():
             results[ts_identifier] = False
             return False
 
-    def calculate_reaction(self, vibrational_analysis=True):
+    def calculate_reaction(self, vibrational_analysis=True, restart=False):
         """
         A method to run calculations for all tranitionstates for a reaction
         """
 
         logging.info("Calculating geometries for {}".format(self.reaction))
+        if not restart: 
+            if os.path.exists(
+                os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")):
+                logging.info("This reaction has already been run and has a successful validated transition state! :)")
+                return True
+
+
 
         if self.conformer_calculator:
             self.reaction.generate_conformers(ase_calculator=self.conformer_calculator)
@@ -454,7 +461,7 @@ class Job():
                 logging.info("It appears that {} failed...".format(f))
                 continue
             try:
-                parser = ccread(path)
+                parser = ccread(path, loglevel=logging.ERROR)
                 if parser is None:
                     logging.info(
                         "Something went wrong when reading in results for {}...".format(f))
@@ -539,7 +546,7 @@ class Job():
 
         if not attempted:
             subprocess.call(
-                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 20 -t 8:00:00 --mem=100000 $AUTOTST/autotst/job/submit.sh""".format(
+                """sbatch --exclude=c5003,c3040 --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 24 -t 8:00:00 --mem=100000 $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition), shell=True)
 
         return label
@@ -597,7 +604,7 @@ class Job():
             else:
                 file_name = os.path.join(
                     self.directory, "species",conformer.smiles , "rotors", lowest_energy_label + ".log")
-            parser = ccread(file_name)
+            parser = ccread(file_name, loglevel=logging.ERROR)
             first_is_lowest, min_energy, atomnos, atomcoords = self.check_rotor_lowest_conf(
                 parser=parser)
             symbol_dict = {
@@ -658,7 +665,7 @@ class Job():
         elif isinstance(conformer, Conformer):
              file_name = os.path.join(
                 self.directory, "species", conformer.smiles, "rotors", label  + ".log")           
-        parser = cclib.io.ccread(file_name)
+        parser = cclib.io.ccread(file_name, loglevel=logging.ERROR)
 
         continuous = self.check_rotor_continuous(
             steps, step_size, parser=parser)

@@ -108,7 +108,7 @@ class VibrationalAnalysis():
 
         assert os.path.exists(self.log_file), "Log file provided does not exist"
 
-        log_file_info = ccread(self.log_file)
+        log_file_info = ccread(self.log_file, loglevel=logging.ERROR)
         self.vibrations = list(zip(log_file_info.vibfreqs, log_file_info.vibdisps))
         
         return self.vibrations
@@ -140,7 +140,7 @@ class VibrationalAnalysis():
         }
         atoms = []
 
-        parser = ccread(self.log_file)
+        parser = ccread(self.log_file, loglevel=logging.ERROR)
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
