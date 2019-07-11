@@ -243,8 +243,6 @@ class Reaction():
         assert self.rmg_reaction, "try calling get_rmg_reaction() first"
         self._distance_data = self.ts_databases[self.reaction_family].groups.estimateDistancesUsingGroupAdditivity(
             self.rmg_reaction)
-        print "BAAAAA"
-        print (self._distance_data.distances["d12"] + self._distance_data.distances["d23"] < self._distance_data.distances["d13"])
         if ((np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"],
                       self._distance_data.distances["d13"],
                       atol=0.05)) or (self._distance_data.distances["d12"] + self._distance_data.distances["d23"] < self._distance_data.distances["d13"])):
@@ -437,7 +435,6 @@ class Reaction():
                             logging.info("{}".format(labeled_p))
                             match = True
                             final_family = family
-                            print final_family
                             final_name = name
                             
         assert match, "Could not idetify labeled reactants and products"
