@@ -61,10 +61,10 @@ class Job():
             self.directory = self.calculator.directory
         self.conformer_calculator = conformer_calculator
         self.partition = partition
-
+        global results
         manager = multiprocessing.Manager()
         results = manager.dict()
-        global results
+        
 
     def __repr__(self):
         return "< Job '{}'>".format(self.label)
@@ -509,7 +509,7 @@ class Job():
                 transitionstate, opt_type="irc")
             while not self.check_complete(label):
                 time.sleep(15)
-            result = calculator.validate_irc(calc=irc_calc)
+            result = self.calculator.validate_irc()
             if result:
                 logging.info("Validated via IRC")
                 return True
@@ -528,11 +528,11 @@ class Job():
         A methods to submit a job based on the calculator and partition provided
         """
         assert conformer, "Please provide a conformer to submit a job"
-
-        ase_calculator = self.calculator.get_rotor_calc(conformer, torsion_index)
+        self.calculator.conformer = conformer
+        ase_calculator = self.calculator.get_rotor_calc(torsion_index)
 
         self.write_input(conformer, ase_calculator)
-
+        label = ase_calculator.label
         file_path = os.path.join(ase_calculator.scratch, ase_calculator.label)
 
         os.environ["COMMAND"] = "g16"  # only using gaussian for now
