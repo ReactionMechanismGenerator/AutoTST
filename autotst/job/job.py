@@ -96,8 +96,8 @@ class Job():
         self.partition = partition
 
         manager = multiprocessing.Manager()
-        global results
-        results = manager.dict()
+        global global_results
+        global_results = manager.dict()
 
 
     def __repr__(self):
