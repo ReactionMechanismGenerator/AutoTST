@@ -30,6 +30,7 @@
 import os, sys, subprocess, shutil
 import unittest
 from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
 from autotst.data.base import TransitionStates
 from autotst.job.job import Job
 from autotst.calculator.gaussian import Gaussian
@@ -89,6 +90,13 @@ class JobTest(unittest.TestCase):
         conformer = self.reaction.reactants[0].conformers.values()[0][0]
         label = self.job.submit_conformer(conformer)
         self.assertEquals(label, "{}_{}".format(conformer.smiles , conformer.index))
+
+    def test_calculate_conformer(self):
+        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
+            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
+        conformer = Conformer(smiles='CC',index=0)
+        result = self.job.calculate_conformer(conformer=conformer)
+        self.assertTrue(result)
 
     def test_calculate_species(self):
         if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):

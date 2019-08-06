@@ -104,7 +104,8 @@ def find_all_combos(
 def systematic_search(conformer,
                       delta=float(60),
                       cistrans=True,
-                      chiral_centers=True):
+                      chiral_centers=True,
+                      ):
     """
     Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
 
@@ -177,10 +178,9 @@ def systematic_search(conformer,
     logging.info(
         "There are {} unique conformers generated".format(len(conformers)))
 
-
     def opt_conf(conformer, calculator, i):
         """
-        A helper function to optimize the geometry of a conformer. 
+        A helper function to optimize the geometry of a conformer.
         Only for use within this parent function
         """
 
@@ -193,11 +193,24 @@ def systematic_search(conformer,
             ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
             ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
             labels.append([ind1, ind2])
+            type = 'ts'
         else:
             label = conformer.smiles
+            type = 'species'
 
         if isinstance(calc, FileIOCalculator):
-            calculator.directory = "systematic_{}".format(str(i))
+            if calculator.directory:
+                directory = calculator.directory 
+            else: 
+                directory = 'conformer_logs'
+            calculator.label = "{}_{}".format(conformer.smiles, i)
+            calculator.directory = os.path.join(directory, label,'{}_{}'.format(conformer.smiles, i))
+            if not os.path.exists(calculator.directory):
+                try:
+                    os.makedirs(calculator.directory)
+                except OSError:
+                    logging.info("An error occured when creating {}".format(calculator.directory))
+
             calculator.atoms = conformer.ase_molecule
 
         from ase.constraints import FixBondLengths
