@@ -227,7 +227,7 @@ class VibrationalAnalysis():
                 logging.info(
                     "Cannot reasonably say that we have arrived at a TS through vibrational analysis.")
                 return False
-        except:
+        except AssertionError:
             logging.info("Something went wrong when attempting vibrational analysis...")
             logging.info("Cannot verify via vibrational analysis")
             return False
