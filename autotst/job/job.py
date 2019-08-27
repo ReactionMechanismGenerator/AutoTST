@@ -182,6 +182,7 @@ class Job():
 
         os.environ["COMMAND"] = self.calculator.command  # only using gaussian for now
         os.environ["FILE_PATH"] = file_path
+
         
         attempted = False
         if os.path.exists(file_path + ".log"):
@@ -191,6 +192,17 @@ class Job():
                     "It appears that this job has already been run, not running it a second time.")
 
         if restart or not attempted:
+            copy_molecule = conformer.rmg_molecule.copy()
+            copy_molecule.deleteHydrogens()
+            number_of_atoms = len(copy_molecule.atoms)
+            if number_of_atoms >= 4:
+                nproc = 2
+            elif number_of_atoms >= 7:
+                nproc = 4
+            elif number_of_atoms >= 9:
+                nproc = 6
+            else:
+                nproc = 8
             if restart:
                 logging.info(
                     "Restarting calculations for {}.".format(conformer)
@@ -200,19 +212,19 @@ class Job():
 
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, self.exclude)
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t 24:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, self.exclude, nproc)
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, exc)
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t 24:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, exc, nproc)
             else:
-                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                    label, self.partition)
+                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {2} -t 24:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition, nproc)
 
             subprocess.call(command, shell=True)
 
@@ -454,16 +466,30 @@ class Job():
         self.calculator.conformer = transitionstate
         if opt_type.lower() == "shell":
             ase_calculator = self.calculator.get_shell_calc()
-            time = "12:00:00"
+            time = "24:00:00"
         elif opt_type.lower() == "center":
             ase_calculator = self.calculator.get_center_calc()
-            time = "12:00:00"
+            time = "24:00:00"
         elif opt_type.lower() == "overall":
             ase_calculator = self.calculator.get_overall_calc()
-            time = "12:00:00"
+            time = "24:00:00"
         elif opt_type.lower() == "irc":
             ase_calculator = self.calculator.get_irc_calc()
             time = "24:00:00"
+            nproc = "14"
+
+        if opt_type.lower() != "irc":
+            copy_molecule = transitionstate.rmg_molecule.copy()
+            copy_molecule.deleteHydrogens()
+            number_of_atoms = len(copy_molecule.atoms)
+            if number_of_atoms >= 4:
+                nproc = 2
+            elif number_of_atoms >= 7:
+                nproc = 4
+            elif number_of_atoms >= 9:
+                nproc = 6
+            else:
+                nproc = 8
 
         self.write_input(transitionstate, ase_calculator)
 
@@ -482,19 +508,19 @@ class Job():
         if (not attempted) or restart:
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t {3} --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, self.exclude, time)
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {4} -t {3} --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, self.exclude, time, nproc)
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t {3} --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, exc, time)
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {4} -t {3} --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, exc, time, nproc)
             else:
-                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t {2} --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                    label, self.partition, time)
+                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t {2} --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition, time, nproc)
             subprocess.call(command, shell=True)
 
         return label
@@ -696,6 +722,18 @@ class Job():
         self.calculator.conformer = conformer
         ase_calculator = self.calculator.get_rotor_calc(torsion_index)
 
+        copy_molecule = conformer.rmg_molecule.copy()
+        copy_molecule.deleteHydrogens()
+        number_of_atoms = len(copy_molecule.atoms)
+        if number_of_atoms >= 4:
+            nproc = 2
+        elif number_of_atoms >= 7:
+            nproc = 4
+        elif number_of_atoms >= 9:
+            nproc = 6
+        else:
+            nproc = 8
+
         self.write_input(conformer, ase_calculator)
         label = ase_calculator.label
         file_path = os.path.join(ase_calculator.scratch, ase_calculator.label)
@@ -719,19 +757,19 @@ class Job():
 
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, self.exclude)
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t 24:00:00 --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, self.exclude, nproc)
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, exc)
+                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t 24:00:00 --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
+                        label, self.partition, exc, nproc)
             else:
-                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 14 -t 12:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                    label, self.partition)
+                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {2} -t 24:00:00 --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
+                    label, self.partition, nproc)
 
             subprocess.call(command, shell=True)
 
