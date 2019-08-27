@@ -149,7 +149,7 @@ class InputOutput():
                 'reaction = {0!r}\n'.format(self.reaction.rmg_reaction))
         return True
 
-    def read_ts_file(self):
+    def read_ts_file(self, path=None):
         """
         Load the specified transition state data file and return the dictionary of its contents.
 
@@ -159,11 +159,9 @@ class InputOutput():
         Returns:
         - local_context (dict): the content of the .ts file. Will return None if there is an error
         """
-
-        ts_file = self.get_ts_file_path()
-        if os.path.exists(ts_file):
-            path = ts_file
-        else:
+        if not path:
+            path = self.get_ts_file_path()
+        if not os.path.exists(path):
             logging.info("We could not file a ts file for {}".format(self.reaction.label))
             return None
         try:
@@ -200,7 +198,7 @@ class InputOutput():
             return None
         return local_context
 
-    def read_kinetics_file(self):
+    def read_kinetics_file(self, path=None):
         """
         Load the specified kinetic data file and return the dictionary of its contents.
 
@@ -210,11 +208,9 @@ class InputOutput():
         Returns:
         - local_context (dict): the content of the .kinetics file. Will return None if there is an error
         """
-
-        ts_file = self.get_kinetics_file_path()
-        if os.path.exists(ts_file):
-            path = ts_file
-        else:
+        if not path:
+            path = self.get_kinetics_file_path()
+        if not os.path.exists(path):
             logging.info("We could not file a kinetics file for {}".format(self.reaction.label))
             return None
         try:
