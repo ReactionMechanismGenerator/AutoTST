@@ -217,8 +217,9 @@ class Reaction():
                 reaction_family)
             global_context = {'__builtins__': None}
             local_context = {'DistanceData': DistanceData}
-            family = rmg_database.kinetics.families[reaction_family]
-            ts_database.family = family
+            family = self.rmg_database.kinetics.families[reaction_family]
+            family_copy = deepcopy(family)
+            ts_database.family = family_copy
             ts_database.load(path, local_context, global_context)
 
             self.ts_databases[reaction_family] = ts_database
