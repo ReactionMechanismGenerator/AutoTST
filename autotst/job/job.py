@@ -51,7 +51,7 @@ class Job():
             exclude = None # nodes that you wish to exclude
             ):
 
-        #assert isinstance(reaction, (Reaction, None)), "Please provide an AutoTST Reaction object"
+        assert isinstance(reaction, (Reaction, None)), "Please provide an AutoTST Reaction object"
         self.reaction = reaction
         if self.reaction:
             self.label = self.reaction.label
@@ -787,7 +787,7 @@ class Job():
         for torsion in conformer.torsions:
             label = self.submit_rotor(
                 conformer, torsion.index)
-            logging.info("Submitting {}".format(label))
+            logging.info(label)
             complete[label] = False
             verified[label] = False
 
@@ -802,7 +802,7 @@ class Job():
                 if done:
                     continue
                 complete[label] = True
-                lowest_conf, continuous = self.verify_rotor(
+                lowest_conf, continuous = self.verify_rotor( ##################################
                     conformer, label)
                 if all([lowest_conf, continuous]):
                     verified[label] = True
@@ -850,16 +850,21 @@ class Job():
                     conformer.index = index
                     break
 
-            check_complete_label = self.submit_conformer(conformer)
+            label = self.submit_conformer(conformer)
 
-            while not self.check_complete(check_complete_label):
+            while not self.check_complete(label):
                 time.sleep(15)
 
             logging.info(
                 "Reoptimization complete... performing hindered rotors scans again")
 
+            if direction:
+                file_name = "{}_{}_{}.log".format(label, direction, conformer.index)
+            else:
+                file_name = "{}_{}.log".format(label, conformer.index)
+
             file_path = os.path.join(
-                self.directory, t, label, "conformers", check_complete_label + ".log"
+                self.directory, t, label, "conformers", file_name
             )
             complete, converged = self.calculator.verify_output_file(file_path)
             if not converged:
@@ -900,8 +905,7 @@ class Job():
 
     def verify_rotor(self, conformer, label, steps=36, step_size=10.0):
         """
-        A method that will validate the rotor scan started and stopped at the lowest energy conformer,
-        and that the scan was continuous. Both vital for use in Arkane.
+        A method that will 
         """
 
         if isinstance(conformer, TS):
@@ -909,24 +913,22 @@ class Job():
                 self.directory, "ts", conformer.reaction_label, "rotors", label  + ".log")
         elif isinstance(conformer, Conformer):
              file_name = os.path.join(
-                self.directory, "species", conformer.smiles, "rotors", label  + ".log") 
-        print "#" * 50, file_name          
-        
-        try:
-            parser = cclib.io.ccread(file_name, loglevel=logging.ERROR)
-            continuous = self.check_rotor_continuous(
-                steps, step_size, parser=parser)
-            [lowest_conf, energy, atomnos,
-                atomcoords] = self.check_rotor_lowest_conf(parser=parser)
-        except:
-            logging.info("Failed to parse {}... This rotor failed.".format(label + ".log"))
-            lowest_conf = True # Setting this to true to trigger a False in the results dictionary
-            continuous = False 
+                self.directory, "species", conformer.smiles, "rotors", label  + ".log")           
+        parser = cclib.io.ccread(file_name, loglevel=logging.ERROR)
 
-        return [lowest_conf, continuous]
+        continuous = self.check_rotor_continuous(
+            steps, step_size, parser=parser)
+        [lowest_conf, energy, atomnos,
+            atomcoords] = self.check_rotor_lowest_conf(parser=parser)
+        #opt_count_check = self.check_rotor_opts(steps, parser=parser)
+        #good_slope = self.check_rotor_slope(steps, step_size, parser=parser)
+
+        return [lowest_conf, continuous]#, good_slope, opt_count_check] ### Previously used, but the second two checks were deemed unecessary
 
     def check_rotor_opts(self, steps, parser):
 
+
+        #opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_indices = [i for i, status in enumerate(
             parser.optstatus) if status > 1]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
@@ -936,6 +938,7 @@ class Job():
         return n_opts_check
 
     def check_rotor_slope(self, steps, step_size, parser, tol=0.1):
+
 
         opt_indices = [i for i, status in enumerate(
             parser.optstatus) if status in [2, 4]]

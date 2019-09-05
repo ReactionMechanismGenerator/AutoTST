@@ -103,7 +103,7 @@ class VibrationalAnalysisTest(unittest.TestCase):
         }
         atoms = []
 
-        parser = ccread(self.vibrational_analysis.log_file)
+        parser = ccread(self.vibrational_analysis.log_file, loglevel=logging.ERROR)
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))

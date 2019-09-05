@@ -114,7 +114,7 @@ class QMData():
     def get_qmdata(self, file_path=None):
         "A helper function to fill in the qmdata using CCLib"
 
-        parser = ccread(file_path)
+        parser = ccread(file_path, loglevel=logging.ERROR)
 
         self.groundStateDegeneracy = parser.mult
         self.atomNumbers = parser.atomnos
