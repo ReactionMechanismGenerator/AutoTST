@@ -167,7 +167,7 @@ class Job():
 
         self.qm_calculator.conformer = conformer
         ase_calculator = self.qm_calculator.get_conformer_calc()
-        self.write_input(conformer, ase_calculator)
+        self.write(conformer, ase_calculator)
 
         label = conformer.smiles + "_{}".format(conformer.index)
         file_path = os.path.join(ase_calculator.scratch, label)
@@ -268,7 +268,7 @@ class Job():
             starting_molecule = RMGMolecule(SMILES=conformer.smiles)
             starting_molecule = starting_molecule.toSingleBonds()
 
-            atoms = self.read_log(
+            atoms = self.read(
                 os.path.join(scratch_dir, f)
             )
 
@@ -311,7 +311,7 @@ class Job():
             logging.info("{} did not converge, trying it as a looser convergence criteria".format(calc.label))
 
             logging.info("Resubmitting {} with default convergence criteria".format(conformer))
-            atoms = self.read_log(os.path.join(scratch_dir, f))
+            atoms = self.read(os.path.join(scratch_dir, f))
             conformer.ase_molecule = atoms
             conformer.update_coords_from("ase")
             self.qm_calculator.conformer = conformer # again, be careful setting this in multiple processes?
@@ -483,7 +483,7 @@ class Job():
             else:
                 nproc = 8
 
-        self.write_input(transitionstate, ase_calculator)
+        self.write(transitionstate, ase_calculator)
 
         label = ase_calculator.label
         scratch = ase_calculator.scratch
@@ -575,7 +575,7 @@ class Job():
                 return False
             logging.info(
                 "{} successfully completed the {} optimization!".format(ts_identifier, opt_type.upper()))
-            transitionstate.ase_molecule = self.read_log(file_path)
+            transitionstate.ase_molecule = self.read(file_path)
             transitionstate.update_coords_from("ase")
 
         logging.info(
@@ -726,7 +726,7 @@ class Job():
         else:
             nproc = 8
 
-        self.write_input(conformer, ase_calculator)
+        self.write(conformer, ase_calculator)
         label = ase_calculator.label
         file_path = os.path.join(ase_calculator.scratch, ase_calculator.label)
 
@@ -831,7 +831,7 @@ class Job():
       
 
 
-            atoms = self.read_log(file_name)
+            atoms = self.read(file_name)
             conformer.ase_molecule = atoms
             conformer.update_coords_from("ase")
             for index in ["X", "Y", "Z"]: 
@@ -869,7 +869,7 @@ class Job():
                 file_path,
                 os.path.join(self.directory, t, label, "{}.log".format(label))
             )
-            conformer.ase_molecule = self.read_log(file_path)
+            conformer.ase_molecule = self.read(file_path)
             conformer.update_coords_from("ase")
 
             return self.calculate_rotors(conformer, steps, step_size)
