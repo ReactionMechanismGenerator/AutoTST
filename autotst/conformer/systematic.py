@@ -182,11 +182,10 @@ def systematic_search(conformer,
         Only for use within this parent function
         """
 
-        labels = []
-        for bond in conformer.bonds:
-            labels.append(bond.atom_indices)
-
         if isinstance(conformer, TS):
+        labels = []
+            for bond in conformer.get_bonds():
+            labels.append(bond.atom_indices)
             label = conformer.reaction_label
             ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
             ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
@@ -211,9 +210,24 @@ def systematic_search(conformer,
 
             calculator.atoms = conformer.ase_molecule
 
-        from ase.constraints import FixBondLengths
+        conformer.ase_molecule.set_calculator(calculator)
+        opt = BFGS(conformer.ase_molecule, logfile=None)
+
+        if type == 'species':
+            try:
+                opt.run(steps=1000)
+            except RuntimeError:
+                logging.info("Optimization failed...we will use the unconverged geometry")
+                pass
+        
+        if type == 'ts':
         c = FixBondLengths(labels)
         conformer.ase_molecule.set_constraint(c)
+            try:
+                opt.run(fmax=0.20, steps=1e6)
+            except RuntimeError:
+                logging.info("Optimization failed...we will use the unconverged geometry")
+                pass
 
         conformer.ase_molecule.set_calculator(calculator)
 
