@@ -358,5 +358,12 @@ class KineticsJob(Job):
             logging.info("Validated via Vibrational Analysis")
             return True
 
+    def optimize(self):
+        """
+        A function that will optimize all geometries needed to determine kinetics
+        """
+        return None
+
+        
     def get_kinetics(self):
         return None

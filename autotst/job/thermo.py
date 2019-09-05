@@ -107,3 +107,8 @@ class ThermoJob(Job):
 
     def __repr__(self):
         return "< ThermoJob '{}'>".format(self.label)
+
+    def optimize(self):
+        """
+        A method that will optimize all geometries needed for thermo calculation
+        """
