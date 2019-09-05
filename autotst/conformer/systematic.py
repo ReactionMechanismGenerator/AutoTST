@@ -40,11 +40,15 @@ from ase import Atoms
 from ase import calculators
 from ase.calculators.calculator import FileIOCalculator
 from ase.optimize import BFGS
+from ase import units
+from ase.constraints import FixBondLengths
 
 import autotst
 from autotst.species import Conformer
 from autotst.reaction import TS
 from autotst.conformer.utilities import get_energy, find_terminal_torsions
+
+from rdkit.Chem import rdMolAlign
 
 
 def find_all_combos(
@@ -103,6 +107,11 @@ def find_all_combos(
 
 def systematic_search(conformer,
                       delta = float(120),
+                      energy_cutoff = 10.0, #kcal/mol
+                      rmsd_cutoff = 1.2, #angstroms
+                      cistrans= True,
+                      chiral_centers= True,
+                      multiplicity = True
                       ):
     """
     Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
@@ -176,7 +185,7 @@ def systematic_search(conformer,
     logging.info(
         "There are {} unique conformers generated".format(len(conformers)))
 
-    def opt_conf(conformer, calculator, i):
+    def opt_conf(conformer, calculator, i, rmsd_cutoff):
         """
         A helper function to optimize the geometry of a conformer.
         Only for use within this parent function
@@ -235,15 +244,20 @@ def systematic_search(conformer,
         opt.run(fmax=0.1)
         conformer.update_coords_from("ase")
         energy = get_energy(conformer)
-        return_dict[i] = (energy, conformer.ase_molecule.arrays,
-                          conformer.ase_molecule.get_all_distances())
+        conformer.energy = energy
+        if len(return_dict)>0:
+            for index,conf in return_dict.items():
+                rmsd = rdMolAlign.GetBestRMS(conformer.rdkit_molecule,conf.rdkit_molecule)
+                if rmsd <= rmsd_cutoff:
+                    return
+        return_dict[i] = conformer
 
     manager = Manager()
     return_dict = manager.dict()
 
     processes = []
     for i, conf in list(conformers.items()):
-        p = Process(target=opt_conf, args=(conf, calc, i))
+        p = Process(target=opt_conf, args=(conf, calc, i, rmsd_cutoff))
         processes.append(p)
 
     active_processes = []
@@ -269,29 +283,24 @@ def systematic_search(conformer,
             if not p.is_alive():
                 complete[i] = True
 
-    from ase import units
-    results = []
-    for _, values in list(return_dict.items()):
-        results.append(values)
+    energies = []
+    for conf in list(return_dict.values()):
+        energies.append((conf,conf.energy))
 
-    df = pd.DataFrame(results, columns=["energy", "arrays", 'distances'])
-    df = df[df.energy < df.energy.min() + units.kcal / units.mol /
-            units.eV].sort_values("energy")
+    df = pd.DataFrame(energies,columns=["conformer","energy"])
+    df = df[df.energy < df.energy.min() + (energy_cutoff * units.kcal / units.mol /
+            units.eV)].sort_values("energy").reset_index(drop=True)
 
-    tolerance = 0.1
-    scratch_index = []
-    unique_index = []
-    for index in df.index:
-        if index in scratch_index:
-            continue
-        unique_index.append(index)
-        scratch_index.append(index)
-        distances = df.distances[index]
-        for other_index in df.index:
-            if other_index in scratch_index:
-                continue
+    redundant = []
+    for i,j in itertools.combinations(range(len(df.conformer)),2):
+        rmsd = rdMolAlign.GetBestRMS(df.conformer[i].rdkit_molecule,df.conformer[j].rdkit_molecule)
+        if rmsd <= rmsd_cutoff:
+            redundant.append(j)
 
-            other_distances = df.distances[other_index]
+    redundant = list(set(redundant))
+    df.drop(df.index[redundant], inplace=True)
+    logging.info("We have identified {} unique conformers for {}".format(
+        len(df.conformer), conformer))
 
             if tolerance > np.sqrt((distances - other_distances)**2).mean():
                 scratch_index.append(other_index)
