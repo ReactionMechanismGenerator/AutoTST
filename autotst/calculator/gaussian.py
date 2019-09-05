@@ -55,7 +55,7 @@ class Gaussian():
                      "method": "m062x",
                      "basis": "cc-pVTZ",
                      "mem": "5GB",
-                     "nprocshared": 20,
+                     "nprocshared": 24,
                  },
                  convergence="",
                  directory=".", #where you want input and log files to be written, default is current directory
@@ -66,7 +66,7 @@ class Gaussian():
             "method": "m062x",
             "basis": "cc-pVTZ",
             "mem": "5GB",
-            "nprocshared": 20,
+            "nprocshared": 24,
         }
 
         self.conformer = conformer
@@ -572,5 +572,5 @@ class Gaussian():
                     if targetReaction.isIsomorphic(testReaction):
                         logging.info("IRC calculation was successful!")
                         return True
-            logging.info("IRC calculation failed for {} :(".format(calc.label))
+            logging.info("IRC calculation failed for {} :(".format(irc_path))
             return False
