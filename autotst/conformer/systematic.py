@@ -84,8 +84,6 @@ def find_all_combos(
         cistrans_combos = list(itertools.product(
             cistrans_options, repeat=len(cistranss)))
 
-
-
     else:
         cistrans_combos = [()]
 
@@ -179,7 +177,7 @@ def systematic_search(conformer,
             conformer.set_chirality(center.index, s_r)
 
         conformer.update_coords_from("ase")
-
+  
         conformers[index] = conformer.copy()
 
     logging.info(
@@ -192,9 +190,9 @@ def systematic_search(conformer,
         """
 
         if isinstance(conformer, TS):
-        labels = []
+            labels = []
             for bond in conformer.get_bonds():
-            labels.append(bond.atom_indices)
+                labels.append(bond.atom_indices)
             label = conformer.reaction_label
             ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
             ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
@@ -230,18 +228,14 @@ def systematic_search(conformer,
                 pass
         
         if type == 'ts':
-        c = FixBondLengths(labels)
-        conformer.ase_molecule.set_constraint(c)
+            c = FixBondLengths(labels)
+            conformer.ase_molecule.set_constraint(c)
             try:
                 opt.run(fmax=0.20, steps=1e6)
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
                 pass
-
-        conformer.ase_molecule.set_calculator(calculator)
-
-        opt = BFGS(conformer.ase_molecule, logfile=None)
-        opt.run(fmax=0.1)
+            
         conformer.update_coords_from("ase")
         energy = get_energy(conformer)
         conformer.energy = energy
@@ -251,6 +245,7 @@ def systematic_search(conformer,
                 if rmsd <= rmsd_cutoff:
                     return
         return_dict[i] = conformer
+        
 
     manager = Manager()
     return_dict = manager.dict()
@@ -277,6 +272,7 @@ def systematic_search(conformer,
 
             process.start()
             active_processes[i] = process
+
     complete = np.zeros_like(active_processes, dtype=bool)
     while not np.all(complete):
         for i, p in enumerate(active_processes):
@@ -302,23 +298,33 @@ def systematic_search(conformer,
     logging.info("We have identified {} unique conformers for {}".format(
         len(df.conformer), conformer))
 
-            if tolerance > np.sqrt((distances - other_distances)**2).mean():
-                scratch_index.append(other_index)
+    if (multiplicity) and (conformer.rmg_molecule.multiplicity > 2):
+        mulitplicities = []
+        rads_unpaired = [atom.radicalElectrons for atom in conformer.rmg_molecule.getRadicalAtoms()]
+        rads_paired = [r % 2 for r in rads_unpaired]
+        radical_combos = [r for r in itertools.product(range(2),repeat=len(rads_unpaired))]
+        for combo in radical_combos:
+            mult = 1
+            for x in zip(rads_unpaired,rads_paired,combo):
+                mult += x[x[-1]]
+            mulitplicities.append(mult)
+        mulitplicities = list(set(mulitplicities))
+    else:
+        mulitplicities = [conformer.rmg_molecule.multiplicity]
 
-    logging.info("We have identified {} unique conformers for {}".format(
-        len(unique_index), conformer))
     confs = []
     i = 0
-    for info in df[["energy", "arrays"]].loc[unique_index].values:
-        copy_conf = conformer.copy()
-
-        energy, array = info
-        copy_conf.energy = energy
-        copy_conf.ase_molecule.set_positions(array["positions"])
-        copy_conf.update_coords_from("ase")
-        c = copy_conf.copy()
-        c.index = i
-        confs.append(c)
-        i += 1
-
+    for conf in df.conformer:
+        if multiplicity:
+            for mult in mulitplicities:
+                conf_copy = conf.copy()
+                conf_copy.index = i
+                conf_copy.rmg_molecule.multiplicity = mult
+                confs.append(conf_copy)
+                i += 1
+        else:
+            conf.index = i
+            confs.append(conf)
+            i += 1
+    
     return confs
