@@ -1,10 +1,6 @@
 import unittest
 
 from autotst.species import Species, Conformer
-import rdkit
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem.rdchem import Mol
 import autotst
 import ase
 import os
@@ -13,6 +9,11 @@ import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.species import Species as RMGSpecies
 from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
+
+import rdkit
+from rdkit import Chem
+from rdkit.Chem import AllChem
+from rdkit.Chem.rdchem import Mol
 
 class TestConformer(unittest.TestCase):
     def setUp(self):

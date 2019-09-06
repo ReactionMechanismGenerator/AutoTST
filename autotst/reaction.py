@@ -32,15 +32,6 @@ import logging
 import numpy as np
 from copy import deepcopy
 
-import rdkit
-from rdkit import DistanceGeometry
-from rdkit.Chem import rdDistGeom
-
-
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem.Pharm3D import EmbedLib
-
 import ase 
 
 import rmgpy
@@ -56,6 +47,13 @@ import autotst
 from autotst.data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
 from autotst.species import Species, Conformer
 from autotst.geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
+
+import rdkit
+from rdkit import DistanceGeometry
+from rdkit.Chem import rdDistGeom
+from rdkit import Chem
+from rdkit.Chem import AllChem
+from rdkit.Chem.Pharm3D import EmbedLib
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)

@@ -32,16 +32,17 @@ import numpy as np
 import os
 import logging
 
-import rdkit
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem.rdchem import Mol
 import autotst
 import ase
 from ase import Atom, Atoms
 import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.species import Species as RMGSpecies
+
+import rdkit
+from rdkit import Chem
+from rdkit.Chem import AllChem
+from rdkit.Chem.rdchem import Mol
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
