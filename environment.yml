@@ -1,6 +1,7 @@
 name: tst_env
 channels:
   - defaults
+  - krsna
   - rmg
   - rdkit
   - cantera
