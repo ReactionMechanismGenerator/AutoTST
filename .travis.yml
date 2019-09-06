@@ -20,6 +20,8 @@ install:
   - export PYTHONPATH=$PYTHONPATH:$AUTOTST
   - conda env create -f environment.yml
   - source activate tst_env
+  - yes | conda uninstall --force openbabel
+  - conda install -c krsna openbabel
   - conda list
 
 script:

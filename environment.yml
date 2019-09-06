@@ -1,9 +1,8 @@
 name: tst_env
 channels:
   - defaults
-  - krsna
-  - rmg
   - rdkit
+  - rmg
   - cantera
   - anaconda
   - conda-forge
