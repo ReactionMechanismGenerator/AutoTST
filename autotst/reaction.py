@@ -156,6 +156,8 @@ class Reaction():
 
         Variables:
         - force_reload (bool):if set to True then forces a reload, even if already loaded.
+        - rmg_database_path (str): path to rmg database directory. If None, database will be 
+          loaded from rmgpy.settings['database.directory']
 
         Returns:
         - None
@@ -167,8 +169,8 @@ class Reaction():
 
         if rmg_database_path is None:
 	        database_path = rmgpy.settings['database.directory']
-	    else:
-	        database_path = rmg_database_path
+        else:
+            database_path = rmg_database_path
 
         logging.info("Loading RMG database from '{}'".format(database_path))
 
@@ -927,20 +929,32 @@ class TS(Conformer):
     def get_bonds(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
+        try:
+            test_conf.rdkit_molecule = self._pseudo_geometry
+        except:
+            self.get_rdkit_mol()
+            test_conf.rdkit_molecule = self._pseudo_geometry
         test_conf.ase_molecule = self.ase_molecule
         return test_conf.get_bonds()
 
     def get_torsions(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
+        try:
+	        test_conf.rdkit_molecule = self._pseudo_geometry
+        except:
+            self.get_rdkit_mol()
+            test_conf.rdkit_molecule = self._pseudo_geometry
         test_conf.ase_molecule = self.ase_molecule
         return test_conf.get_torsions()
 
     def get_angles(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
+        try:
+	        test_conf.rdkit_molecule = self._pseudo_geometry
+        except:
+            self.get_rdkit_mol()
+            test_conf.rdkit_molecule = self._pseudo_geometry
         test_conf.ase_molecule = self.ase_molecule
         return test_conf.get_angles()
