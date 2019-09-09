@@ -222,7 +222,7 @@ def systematic_search(conformer,
 
         if type == 'species':
             try:
-                opt.run(steps=1000)
+                opt.run(steps=1e6)
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
                 pass
