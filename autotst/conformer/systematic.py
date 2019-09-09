@@ -298,25 +298,20 @@ def systematic_search(conformer,
     logging.info("We have identified {} unique conformers for {}".format(
         len(df.conformer), conformer))
 
-    if (multiplicity) and (conformer.rmg_molecule.multiplicity > 2):
-        mulitplicities = []
-        rads_unpaired = [atom.radicalElectrons for atom in conformer.rmg_molecule.getRadicalAtoms()]
-        rads_paired = [r % 2 for r in rads_unpaired]
-        radical_combos = [r for r in itertools.product(range(2),repeat=len(rads_unpaired))]
-        for combo in radical_combos:
-            mult = 1
-            for x in zip(rads_unpaired,rads_paired,combo):
-                mult += x[x[-1]]
-            mulitplicities.append(mult)
-        mulitplicities = list(set(mulitplicities))
+    if conformer.rmg_molecule.multiplicity > 2:
+        rads = conformer.rdkit_molecule.getRadicalCount()
+        if rads % 2 == 0:
+            multiplicities = range(1,rads+2,2)
+        else:
+            multiplicities = range(2,rads+2,2)
     else:
-        mulitplicities = [conformer.rmg_molecule.multiplicity]
+        multiplicities = [conformer.rmg_molecule.multiplicity]
 
     confs = []
     i = 0
     for conf in df.conformer:
         if multiplicity:
-            for mult in mulitplicities:
+            for mult in multiplicities:
                 conf_copy = conf.copy()
                 conf_copy.index = i
                 conf_copy.rmg_molecule.multiplicity = mult
