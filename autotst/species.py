@@ -231,8 +231,8 @@ class Conformer():
         else:
             self.smiles = None
             self.rmg_molecule = None
-            self.rdkit_molecule = None
-            self.ase_molecule = None
+            self._rdkit_molecule = None
+            self._ase_molecule = None
             self.bonds = []
             self.angles = []
             self.torsions = []
@@ -247,8 +247,8 @@ class Conformer():
         copy_conf = Conformer()
         copy_conf.smiles = self.smiles
         copy_conf.rmg_molecule = self.rmg_molecule.copy()
-        copy_conf.rdkit_molecule = self.rdkit_molecule.__copy__()
-        copy_conf.ase_molecule = self.ase_molecule.copy()
+        copy_conf._rdkit_molecule = self.rdkit_molecule.__copy__()
+        copy_conf._ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
         copy_conf.energy = self.energy
         return copy_conf
@@ -259,6 +259,18 @@ class Conformer():
             self._symmetry_number = self.calculate_symmetry_number()
         return self._symmetry_number
 
+    @property
+    def rdkit_molecule(self):
+        if (self._rdkit_molecule is None) and self.distance_data:
+            self._rdkit_molecule = self.get_rdkit_mol()
+        return self._rdkit_molecule
+
+    @property
+    def ase_molecule(self):
+        if (self._ase_molecule is None):
+            self._ase_molecule = self.get_ase_mol()
+        return self._ase_molecule
+
     def get_rdkit_mol(self):
         """
         A method for creating an rdkit geometry from an rmg mol
@@ -268,7 +280,7 @@ class Conformer():
 
         RDMol = self.rmg_molecule.toRDKitMol(removeHs=False)
         rdkit.Chem.AllChem.EmbedMolecule(RDMol)
-        self.rdkit_molecule = RDMol
+        self._rdkit_molecule = RDMol
 
         mol_list = AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
         for i, atom in enumerate(self.rmg_molecule.atoms):
@@ -278,7 +290,7 @@ class Conformer():
                 coords[k] = float(coord)
             atom.coords = np.array(coords)
 
-        return self.rdkit_molecule
+        return self._rdkit_molecule
 
     def get_ase_mol(self):
         """
@@ -308,15 +320,15 @@ class Conformer():
                     except BaseException:
                         continue
 
-        self.ase_molecule = Atoms(ase_atoms)
+        self._ase_molecule = Atoms(ase_atoms)
 
         return self.ase_molecule
 
     def get_molecules(self):
         if not self.rmg_molecule:
             self.rmg_molecule = RMGMolecule(SMILES=self.smiles)
-        self.rdkit_molecule = self.get_rdkit_mol()
-        self.ase_molecule = self.get_ase_mol()
+        self._rdkit_molecule = self.get_rdkit_mol()
+        self._ase_molecule = self.get_ase_mol()
         self.get_geometries()
 
         return self.rdkit_molecule, self.ase_molecule
@@ -813,7 +825,7 @@ class Conformer():
 
                 ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
 
-            self.ase_molecule = Atoms(ase_atoms)
+            self._ase_molecule = Atoms(ase_atoms)
             # self.calculate_symmetry_number()
 
         elif mol_type.lower() == "ase":
@@ -1008,7 +1020,7 @@ class Conformer():
 
         old_torsions = self.torsions[:] + self.cistrans[:]
 
-        self.rdkit_molecule = rdmol
+        self._rdkit_molecule = rdmol
         self.update_coords_from(mol_type="rdkit")
 
         # Now resetting dihedral angles in case if they changed.

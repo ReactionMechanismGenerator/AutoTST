@@ -45,7 +45,7 @@ from rmgpy.quantity import Quantity, constants
 from rmgpy.reaction import Reaction, ReactionError
 from rmgpy.molecule import Bond, GroupBond, Group, Molecule as RMGMolecule, Atom, getElement
 
-from rmgpy.data.kinetics.common import KineticsError  # , saveEntry
+from rmgpy.data.kinetics.groups import KineticsError  # , saveEntry
 
 from rmgpy.species import Species as RMGSpecies, TransitionState
 from rmgpy.reaction import Reaction

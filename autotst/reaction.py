@@ -625,9 +625,9 @@ class TS(Conformer):
         else:
             self.smiles = None
             self.rmg_molecule = None
-            self.rdkit_molecule = None
+            self._rdkit_molecule = None
             self._pseudo_geometry = None
-            self.ase_molecule = None
+            self._ase_molecule = None
             self.bonds = []
             self.angles = []
             self.torsions = []
@@ -644,9 +644,9 @@ class TS(Conformer):
             reaction_family=self.reaction_family)
         copy_conf.smiles = self.smiles
         copy_conf.rmg_molecule = self.rmg_molecule.copy()
-        copy_conf.rdkit_molecule = self.rdkit_molecule.__copy__()
+        copy_conf._rdkit_molecule = self.rdkit_molecule.__copy__()
         copy_conf._pseudo_geometry = self._pseudo_geometry.__copy__()
-        copy_conf.ase_molecule = self.ase_molecule.copy()
+        copy_conf._ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
         copy_conf.energy = self.energy
         copy_conf._symmetry_number = self._symmetry_number
@@ -676,7 +676,7 @@ class TS(Conformer):
         A method to create an rdkit geometry... slightly different than that of the conformer method
         returns both the rdkit_molecule and the bm
         """
-        self.rdkit_molecule = Conformer(rmg_molecule=self.rmg_molecule).get_rdkit_mol()
+        self._rdkit_molecule = Conformer(rmg_molecule=self.rmg_molecule).get_rdkit_mol()
 
         self.get_labels()
         for i, atom in enumerate(self.rmg_molecule.atoms):
@@ -865,12 +865,12 @@ class TS(Conformer):
 
         for conf in self.rdkit_molecule.GetConformers():
             if (self.bm is None) or (self.atom_match is None):
-                AllChem.UFFOptimizeMolecule(self.rdkit_molecule, confId=conf.GetId())
+                AllChem.UFFOptimizeMolecule(self._rdkit_molecule, confId=conf.GetId())
                 energy = AllChem.UFFGetMoleculeForceField(
-                    self.rdkit_molecule, confId=conf.GetId()).CalcEnergy()
+                    self._rdkit_molecule, confId=conf.GetId()).CalcEnergy()
             else:
                 _, energy = EmbedLib.OptimizeMol(
-                    self.rdkit_molecule, self.bm, atomMatches=self.atom_match, forceConstant=100000.0)
+                    self._rdkit_molecule, self.bm, atomMatches=self.atom_match, forceConstant=100000.0)
 
             if energy < lowestE:
                 minEid = conf.GetId()
@@ -886,18 +886,18 @@ class TS(Conformer):
         """
         numConfAttempts = 10000
         if (self.bm is None) or (self.atom_match is None):
-            AllChem.EmbedMultipleConfs(self.rdkit_molecule, numConfAttempts, randomSeed=1)
+            AllChem.EmbedMultipleConfs(self._rdkit_molecule, numConfAttempts, randomSeed=1)
 
-            self.rdkit_molecule, minEid = self.optimize_rdkit_molecule()
+            self._rdkit_molecule, minEid = self.optimize_rdkit_molecule()
         else:
             """
             Embed the molecule according to the bounds matrix. Built to handle possible failures
             of some of the embedding attempts.
             """
-            self.rdkit_molecule.RemoveAllConformers()
+            self._rdkit_molecule.RemoveAllConformers()
             for i in range(0, numConfAttempts):
                 try:
-                    EmbedLib.EmbedMol(self.rdkit_molecule, self.bm, atomMatch=self.atom_match)
+                    EmbedLib.EmbedMol(self._rdkit_molecule, self.bm, atomMatch=self.atom_match)
                     break
                 except ValueError:
                     logging.info(
@@ -916,27 +916,27 @@ class TS(Conformer):
             for i in range(len(self.rdkit_molecule.GetConformers())):
                 self.rdkit_molecule.GetConformers()[i].SetId(i)
 
-            self.rdkit_molecule, minEid = self.optimize_rdkit_molecule()
+            self._rdkit_molecule, minEid = self.optimize_rdkit_molecule()
 
-        return self.rdkit_molecule, minEid
+        return self._rdkit_molecule, minEid
 
     def get_bonds(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+        test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_bonds()
 
     def get_torsions(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+        test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_torsions()
 
     def get_angles(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+        test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_angles()
