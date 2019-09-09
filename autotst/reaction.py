@@ -149,7 +149,7 @@ class Reaction():
         return self._distance_data
 
     @classmethod
-    def load_databases(self, force_reload=False):
+    def load_databases(self, rmg_database_path=None, force_reload=False):
         """
         Load the RMG and AutoTST databases, if they have not already been loaded,
         into the class level variables where they are stored.
@@ -164,10 +164,13 @@ class Reaction():
             return self.rmg_database, self.ts_databases
 
         rmg_database = RMGDatabase()
-        database_path = rmgpy.settings['database.directory']
+
+        if rmg_database_path is None:
+	        database_path = rmgpy.settings['database.directory']
+	    else:
+	        database_path = rmg_database_path
 
         logging.info("Loading RMG database from '{}'".format(database_path))
-
 
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
             "R_Addition_MultipleBond",
