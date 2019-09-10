@@ -72,7 +72,7 @@ class TestSpecies(unittest.TestCase):
         self.species = Species(smiles=["CC"])
     def test_generate_structures(self):
         self.assertIsInstance(self.species.generate_structures(),dict)
-        self.assertIsInstance(self.species.generate_structures().values()[0][0],Conformer)
+        self.assertIsInstance(list(self.species.generate_structures().values())[0][0],Conformer)
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))

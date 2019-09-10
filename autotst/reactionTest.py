@@ -128,14 +128,14 @@ class TestReaction(unittest.TestCase):
         self.assertTrue(test_reaction.isIsomorphic(labeled_reaction))
 
         merged = labeled_reaction.reactants[0].merge(labeled_reaction.reactants[1])
-        self.assertTrue(merged.getLabeledAtom("*1").isCarbon())
-        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
-        self.assertTrue(merged.getLabeledAtom("*3").isOxygen)
+        self.assertTrue(merged.getLabeledAtom("*1")[0].isCarbon())
+        self.assertTrue(merged.getLabeledAtom("*2")[0].isHydrogen())
+        self.assertTrue(merged.getLabeledAtom("*3")[0].isOxygen)
 
         merged = labeled_reaction.products[0].merge(labeled_reaction.products[1])
-        self.assertTrue(merged.getLabeledAtom("*3").isCarbon())
-        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
-        self.assertTrue(merged.getLabeledAtom("*1").isOxygen)
+        self.assertTrue(merged.getLabeledAtom("*3")[0].isCarbon())
+        self.assertTrue(merged.getLabeledAtom("*2")[0].isHydrogen())
+        self.assertTrue(merged.getLabeledAtom("*1")[0].isOxygen)
 
 
         labeled_reaction, reaction_family = self.reaction2.get_labeled_reaction()
@@ -144,14 +144,14 @@ class TestReaction(unittest.TestCase):
         self.assertTrue(test_reaction.isIsomorphic(labeled_reaction))
 
         merged = labeled_reaction.reactants[0].merge(labeled_reaction.reactants[1])
-        self.assertTrue(merged.getLabeledAtom("*1").isCarbon())
-        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
-        self.assertTrue(merged.getLabeledAtom("*3").isOxygen)
+        self.assertTrue(merged.getLabeledAtom("*1")[0].isCarbon())
+        self.assertTrue(merged.getLabeledAtom("*2")[0].isHydrogen())
+        self.assertTrue(merged.getLabeledAtom("*3")[0].isOxygen)
 
         merged = labeled_reaction.products[0].merge(labeled_reaction.products[1])
-        self.assertTrue(merged.getLabeledAtom("*3").isCarbon())
-        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
-        self.assertTrue(merged.getLabeledAtom("*1").isOxygen)
+        self.assertTrue(merged.getLabeledAtom("*3")[0].isCarbon())
+        self.assertTrue(merged.getLabeledAtom("*2")[0].isHydrogen())
+        self.assertTrue(merged.getLabeledAtom("*1")[0].isOxygen)
 
     def test_rmg_complexes(self):
         self.reaction.get_labeled_reaction()
@@ -248,9 +248,9 @@ class TestTS(unittest.TestCase):
 
     def test_bounds_matrix(self):
 
-        lbl1 = self.ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
-        lbl2 = self.ts.rmg_molecule.getLabeledAtom("*2").sortingLabel
-        lbl3 = self.ts.rmg_molecule.getLabeledAtom("*3").sortingLabel
+        lbl1 = self.ts.rmg_molecule.getLabeledAtom("*1")[0].sortingLabel
+        lbl2 = self.ts.rmg_molecule.getLabeledAtom("*2")[0].sortingLabel
+        lbl3 = self.ts.rmg_molecule.getLabeledAtom("*3")[0].sortingLabel
 
         d12 = self.ts.distance_data.distances["d12"]
         u12 = self.ts.distance_data.uncertainties["d12"]
@@ -268,9 +268,9 @@ class TestTS(unittest.TestCase):
         self.assertAlmostEqual(d23, bm[low, high], delta=u23/2 )
 
 
-        lbl1 = self.ts2.rmg_molecule.getLabeledAtom("*1").sortingLabel
-        lbl2 = self.ts2.rmg_molecule.getLabeledAtom("*2").sortingLabel
-        lbl3 = self.ts2.rmg_molecule.getLabeledAtom("*3").sortingLabel
+        lbl1 = self.ts2.rmg_molecule.getLabeledAtom("*1")[0].sortingLabel
+        lbl2 = self.ts2.rmg_molecule.getLabeledAtom("*2")[0].sortingLabel
+        lbl3 = self.ts2.rmg_molecule.getLabeledAtom("*3")[0].sortingLabel
 
         d12 = self.ts2.distance_data.distances["d12"]
         u12 = self.ts2.distance_data.uncertainties["d12"]
