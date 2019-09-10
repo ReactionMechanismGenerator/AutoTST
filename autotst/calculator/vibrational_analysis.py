@@ -145,7 +145,7 @@ class VibrationalAnalysis():
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
         
-        self.ts.ase_molecule = Atoms(atoms)
+        self.ts._ase_molecule = Atoms(atoms)
         self.ts.update_coords_from("ase")
 
         self.pre_geometry = self.ts.ase_molecule.copy()
