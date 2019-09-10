@@ -176,7 +176,7 @@ class InputOutput():
                     'array': np.array,
                     'int32': np.int32,
                 }
-                exec resultFile in global_context, local_context
+                exec(resultFile.read(), global_context, local_context)
         except IOError as e:
             logging.info("Couldn't read ts file {0}".format(path))
             return None
@@ -235,7 +235,7 @@ class InputOutput():
                     'int32': np.int32,
                     'Molecule': RMGMolecule
                 }
-                exec resultFile in global_context, local_context
+                exec(resultFile.read(), global_context, local_context)
         except IOError as e:
             logging.error("Couldn't read kinetics file {0}".format(path))
             return None
