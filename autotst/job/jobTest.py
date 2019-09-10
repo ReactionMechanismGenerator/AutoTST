@@ -44,6 +44,7 @@ from ase import Atoms
 class JobTest(unittest.TestCase):
 
     def setUp(self):
+        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
         self.job = Job(
@@ -52,8 +53,6 @@ class JobTest(unittest.TestCase):
             partition = "test"
         )
 
-        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
-        
     def test_read_log(self):
 
         path = os.path.expandvars("$AUTOTST/test/bin/log-files/CC_0.log")
@@ -74,7 +73,7 @@ class JobTest(unittest.TestCase):
         self.assertEqual(carbon_count, 2)
 
     def test_write_input(self):
-        self.assert_(True)
+        self.assertTrue(True)
 
     def test_check_complete(self):
         ### I don't know how to create alaises in a python script
@@ -87,9 +86,9 @@ class JobTest(unittest.TestCase):
         if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
             shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         self.reaction.generate_reactants_and_products()
-        conformer = self.reaction.reactants[0].conformers.values()[0][0]
+        conformer = list(self.reaction.reactants[0].conformers.values())[0][0]
         label = self.job.submit_conformer(conformer)
-        self.assertEquals(label, "{}_{}".format(conformer.smiles , conformer.index))
+        self.assertEqual(label, "{}_{}".format(conformer.smiles , conformer.index))
 
     def test_calculate_conformer(self):
         if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):

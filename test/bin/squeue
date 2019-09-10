@@ -2,7 +2,10 @@
 
 import sys
 
-print("             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)")
-
-if sys.argv[2] == "test1":
-    print("              TEST   general     TEST     USER  R    0:00:00      0 TEST")
+try:
+    if sys.argv[2] == "test1":
+        print("              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)\n             TEST   general     TEST     USER  R    0:00:00      0 TEST")
+    else:
+        print("             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)")
+except:
+    print("             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)")

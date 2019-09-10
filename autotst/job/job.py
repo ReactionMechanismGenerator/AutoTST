@@ -159,8 +159,7 @@ class Job():
             command,
             shell=True,
             stdout=subprocess.PIPE).communicate()[0]
-        
-        if len(output.split("\n")) <= 2:
+        if len(output.decode("utf-8").splitlines()) <= 1:
             return True
         else:
             return False
@@ -320,7 +319,7 @@ class Job():
 
             logging.info("Resubmitting {} with default convergence criteria".format(conformer))
             atoms = self.read_log(os.path.join(scratch_dir, f))
-            conformer.ase_molecule = atoms
+            conformer._ase_molecule = atoms
             conformer.update_coords_from("ase")
             self.calculator.conformer = conformer # again, be careful setting this in multiple processes?
             self.calculator.convergence = ""
@@ -583,7 +582,7 @@ class Job():
                 return False
             logging.info(
                 "{} successfully completed the {} optimization!".format(ts_identifier, opt_type.upper()))
-            transitionstate.ase_molecule = self.read_log(file_path)
+            transitionstate._ase_molecule = self.read_log(file_path)
             transitionstate.update_coords_from("ase")
 
         logging.info(
@@ -840,7 +839,7 @@ class Job():
 
 
             atoms = self.read_log(file_name)
-            conformer.ase_molecule = atoms
+            conformer._ase_molecule = atoms
             conformer.update_coords_from("ase")
             for index in ["X", "Y", "Z"]: 
                 # we do this because we now have a new conformer
@@ -877,7 +876,7 @@ class Job():
                 file_path,
                 os.path.join(self.directory, t, label, "{}.log".format(label))
             )
-            conformer.ase_molecule = self.read_log(file_path)
+            conformer._ase_molecule = self.read_log(file_path)
             conformer.update_coords_from("ase")
 
             return self.calculate_rotors(conformer, steps, step_size)
