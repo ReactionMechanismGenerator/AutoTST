@@ -218,7 +218,7 @@ class StatMech():
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        conformer.ase_molecule = Atoms(atoms)
+        conformer._ase_molecule = Atoms(atoms)
         conformer.update_coords_from("ase")
         mol = conformer.rmg_molecule
         output = ['#!/usr/bin/env python',
@@ -369,7 +369,7 @@ class StatMech():
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        transitionstate.ase_molecule = Atoms(atoms)
+        transitionstate._ase_molecule = Atoms(atoms)
         transitionstate.update_coords_from("ase")
 
         output = ['#!/usr/bin/env python',

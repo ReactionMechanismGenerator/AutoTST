@@ -94,7 +94,7 @@ class TestStatMech(unittest.TestCase):
 
     def test_write_conformer_file(self):
         species = self.reaction.reactants[0]
-        conformer = species.conformers.values()[0][0]
+        conformer = list(species.conformers.values())[0][0]
         self.assertTrue(self.statmech.write_conformer_file(conformer))
 
         self.assertTrue(
@@ -146,7 +146,7 @@ class TestStatMech(unittest.TestCase):
 
         self.statmech.write_files()
         for mol in self.reaction.reactants + self.reaction.products:
-            for confs in mol.conformers.values():
+            for confs in list(mol.conformers.values()):
                 conf = confs[0]
                 self.assertTrue(os.path.exists(os.path.join(
                     self.statmech.directory,
