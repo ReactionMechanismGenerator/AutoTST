@@ -24,6 +24,7 @@ from ase.calculators.gaussian import Gaussian as ASEGaussian
 
 class TestGaussian(unittest.TestCase):
     def setUp(self):
+        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
         rxn = Reaction(label='C+[O]O_[CH3]+OO')
         ts = rxn.ts["forward"][0]
         ts.get_molecules()

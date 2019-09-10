@@ -267,10 +267,12 @@ class Gaussian():
             os.makedirs(new_scratch)
         except OSError:
             pass
-
-        ind1 = self.conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
-        ind2 = self.conformer.rmg_molecule.getLabeledAtom("*2").sortingLabel
-        ind3 = self.conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
+        
+        #if self.conformer.reaction_family != "Some reaction family with 4 labeled atoms..."
+        assert len(self.conformer.rmg_molecule.getLabeledAtoms()) == 3
+        ind1 = self.conformer.rmg_molecule.getLabeledAtom("*1")[0].sortingLabel
+        ind2 = self.conformer.rmg_molecule.getLabeledAtom("*2")[0].sortingLabel
+        ind3 = self.conformer.rmg_molecule.getLabeledAtom("*3")[0].sortingLabel
 
         combos = ""
         combos += "{0} {1} F\n".format(ind1+1, ind2+1)
