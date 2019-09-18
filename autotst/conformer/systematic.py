@@ -52,6 +52,8 @@ from rmgpy.molecule import Molecule
 
 from rdkit.Chem import rdMolAlign
 
+from rmgpy.exceptions import AtomTypeError
+
 
 def find_all_combos(
         conformer,
@@ -126,9 +128,10 @@ def systematic_search(conformer,
     - confs (list): a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
     """
     # Takes each of the molecule objects
-
-    reference_mol = conformer.rmg_molecule.copy(deep=True)
-    reference_mol = reference_mol.toSingleBonds()
+    
+    if not isinstance(conformer, TS):
+        reference_mol = conformer.rmg_molecule.copy(deep=True)
+        reference_mol = reference_mol.toSingleBonds()
     manager = Manager()
     return_dict = manager.dict()
 
@@ -179,6 +182,20 @@ def systematic_search(conformer,
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
                 pass
+            if str(i) == 'ref':
+                conformer.update_coords_from("ase")
+                try:
+                    rmg_mol = Molecule()
+                    rmg_mol.fromXYZ(
+                        conformer.ase_molecule.arrays["numbers"],
+                        conformer.ase_molecule.arrays["positions"]
+                    )
+                    if not rmg_mol.isIsomorphic(reference_mol):
+                        logging.info("{}_{} is not isomorphic with reference mol".format(conformer,str(i)))
+                        return False
+                except AtomTypeError:
+                    logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
+                    return False
         
         if type == 'ts':
             c = FixBondLengths(labels)
@@ -188,18 +205,8 @@ def systematic_search(conformer,
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
                 pass
-            
-        conformer.update_coords_from("ase")
-        rmg_mol = Molecule()
-        rmg_mol.fromXYZ(
-            conformer.ase_molecule.arrays["numbers"],
-            conformer.ase_molecule.arrays["positions"]
-        )
 
-        if not rmg_mol.isIsomorphic(reference_mol):
-            logging.info("{}_{} is not isomorphic with reference mol".format(conformer,str(i)))
-            return False
-
+        conformer.update_coords_from("ase")  
         energy = get_energy(conformer)
         conformer.energy = energy
         if len(return_dict)>0:
