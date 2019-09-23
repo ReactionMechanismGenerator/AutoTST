@@ -108,7 +108,7 @@ def find_all_combos(
 def systematic_search(conformer,
                       delta=float(120),
                       energy_cutoff = 10.0, #kcal/mol
-                      rmsd_cutoff = 1.0, #angstroms
+                      rmsd_cutoff = 0.5, #angstroms
                       cistrans = True,
                       chiral_centers = True,
                       multiplicity = False,
@@ -125,7 +125,28 @@ def systematic_search(conformer,
     Returns:
     - confs (list): a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
     """
-    # Takes each of the molecule objects
+    
+    rmsd_cutoff_options = {
+        'loose' : 1.0,
+        'default': 0.5,
+        'tight': 0.1
+    }
+
+    energy_cutoff_options = {
+        'high' : 50.0,
+        'default' : 10.0,
+        'low' : 5.0
+    }
+
+    if isinstance(rmsd_cutoff,str):
+        rmsd_cutoff = rmsd_cutoff.lower()
+        assert rmsd_cutoff in rmsd_cutoff_options.keys(), 'rmsd_cutoff options are loose, default, and tight'
+        rmsd_cutoff = rmsd_cutoff_options[rmsd_cutoff]
+
+    if isinstance(energy_cutoff,str):
+        energy_cutoff = energy_cutoff.lower()
+        assert energy_cutoff in energy_cutoff_options.keys(), 'energy_cutoff options are low, default, and high'
+        energy_cutoff = energy_cutoff_options[energy_cutoff]
     
     if not isinstance(conformer, TS):
         reference_mol = conformer.rmg_molecule.copy(deep=True)
