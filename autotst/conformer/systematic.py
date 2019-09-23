@@ -111,7 +111,7 @@ def systematic_search(conformer,
                       rmsd_cutoff = 1.0, #angstroms
                       cistrans = True,
                       chiral_centers = True,
-                      multiplicity = True
+                      multiplicity = False,
                       ):
     """
     Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
@@ -328,7 +328,7 @@ def systematic_search(conformer,
     redundant = list(set(redundant))
     df.drop(df.index[redundant], inplace=True)
 
-    if conformer.rmg_molecule.multiplicity > 2:
+    if multiplicity and conformer.rmg_molecule.multiplicity > 2:
         rads = conformer.rmg_molecule.getRadicalCount()
         if rads % 2 == 0:
             multiplicities = range(1,rads+2,2)
