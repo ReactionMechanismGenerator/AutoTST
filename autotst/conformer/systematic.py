@@ -43,17 +43,15 @@ from ase.optimize import BFGS
 from ase import units
 from ase.constraints import FixBondLengths
 
+from rdkit.Chem import rdMolAlign
+
+from rmgpy.exceptions import AtomTypeError
+from rmgpy.molecule import Molecule
+
 import autotst
 from autotst.species import Conformer
 from autotst.reaction import TS
 from autotst.conformer.utilities import get_energy, find_terminal_torsions
-
-from rmgpy.molecule import Molecule
-
-from rdkit.Chem import rdMolAlign
-
-from rmgpy.exceptions import AtomTypeError
-
 
 def find_all_combos(
         conformer,
