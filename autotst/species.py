@@ -324,6 +324,26 @@ class Conformer():
 
         return self.ase_molecule
 
+    def get_xyz_block(self):
+        """
+        A method for retrieving an XYZ coodinate block from an ase mol
+        
+        Returns:
+            str: XYZ coordinates
+        """
+        
+        if not self.ase_molecule:
+            self.get_ase_mol()
+        ase_molecule = self.ase_molecule
+        symbols = ase_molecule.get_chemical_symbols()
+        natoms = len(symbols)
+        string = ""
+
+        for s, (x, y, z) in zip(symbols, ase_molecule.get_positions()):
+            string += '%-2s %22.15f %22.15f %22.15f\n' % (s, x, y, z)
+        self.xyzcoords = string
+        return string
+
     def get_molecules(self):
         if not self.rmg_molecule:
             self.rmg_molecule = RMGMolecule(SMILES=self.smiles)

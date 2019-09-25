@@ -737,7 +737,8 @@ class TSGroups(Database):
         Determine the appropriate transition state distances for a reaction
         with the given `template` using group additivity.
         """
-        template = reaction.template
+
+        template = self.getReactionTemplate(reaction)
         referenceDistances = self.top[0].data  # or something like that
 
         # Start with the generic distances of the top-level nodes
@@ -745,9 +746,7 @@ class TSGroups(Database):
         tsDistances = deepcopy(referenceDistances)
 
         # Now add in more specific corrections if possible
-        for node in template:
-            #print node
-            entry = self.entries[node]
+        for entry in template:
             comment_line = "Matched node "
             while not entry.data.distances and entry not in self.top:
                 # Keep climbing tree until you find a (non-top) node with
