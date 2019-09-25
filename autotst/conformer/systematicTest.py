@@ -36,8 +36,9 @@ from ase.calculators.emt import EMT
 class TestSystematic(unittest.TestCase):
 
     def setUp(self):
-        self.conformer = Conformer("NC(O)C=CC")
-        self.conformer.get_molecules()
+        self.conformer = Conformer("CC(C)C=CC")
+        self.conformer_3rad = Conformer("[C]=[CH]")
+        self.conformer_4rad = Conformer("[C]=[C]")
 
     def test_find_all_combos(self):
          combos = find_all_combos(self.conformer, delta=120, cistrans=True, chiral_centers=True)
@@ -46,9 +47,22 @@ class TestSystematic(unittest.TestCase):
         
     def test_systematic_search(self):
         self.conformer.ase_molecule.set_calculator(EMT())
-        confs = systematic_search(self.conformer, delta=180 )
+        confs = systematic_search(self.conformer, delta=180.0)
         self.assertTrue(0 < len(confs) <= 3)
 
+    def test_systematic_search_multiplicity(self):
+        self.conformer_3rad.ase_molecule.set_calculator(EMT())
+        self.conformer_4rad.ase_molecule.set_calculator(EMT())
+        confs_3rad = systematic_search(self.conformer_3rad, delta=180.0, energy_cutoff = "default",
+                                      rmsd_cutoff = "default", multiplicity = True)
+        confs_4rad = systematic_search(self.conformer_4rad, delta=180.0, energy_cutoff = "high",
+                                      rmsd_cutoff = "loose", multiplicity = True)
+        self.assertTrue(confs_3rad[0].rmg_molecule.multiplicity == 2)
+        self.assertTrue(confs_3rad[1].rmg_molecule.multiplicity == 4)
+        self.assertTrue(confs_4rad[0].rmg_molecule.multiplicity == 1)
+        self.assertTrue(confs_4rad[1].rmg_molecule.multiplicity == 3)
+        self.assertTrue(confs_4rad[2].rmg_molecule.multiplicity == 5)
+        
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
