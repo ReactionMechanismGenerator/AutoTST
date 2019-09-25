@@ -238,7 +238,7 @@ class TransitionStates(Database):
         # additive estimate:
         return self.groups.estimate_distances_using_group_additivity(reaction)
 
-    def saveTransitionStateGroups(self, path, entryName='entry'):
+    def save_transition_state_groups(self, path, entry_name='entry'):
         """
         Save the current database to the file at location `path` on disk. The
         optional `entryName` parameter specifies the identifier used for each
@@ -278,7 +278,7 @@ class TransitionStates(Database):
         """
         from arkane.output import prettify
 
-        def sortEfficiencies(efficiencies0):
+        def sort_efficiencies(efficiencies0):
             efficiencies = {}
             for mol, eff in efficiencies0.items():
                 if isinstance(mol, str):
@@ -392,7 +392,7 @@ class TransitionStateDepository(Database):
 
     def __init__(self, label='', name='', short_desc='', long_desc=''):
         Database.__init__(self, label=label, name=name,
-                          short_desc=shortDesc, long_desc=longDesc)
+                          short_desc=short_desc, long_desc=long_desc)
 
     def __repr__(self):
         return '<TransitionStateDepository "{0}">'.format(self.label)
@@ -423,29 +423,29 @@ class TransitionStateDepository(Database):
             assert reversible == rxn.reversible
             for reactant in reactants.split('+'):
                 reactant = reactant.strip()
-                if reactant not in speciesDict:
+                if reactant not in species_dict:
                     raise DatabaseError(
                         'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(
                             reactant, self.label))
                 # For some reason we need molecule objects in the depository
                 # rather than species objects
-                rxn.reactants.append(speciesDict[reactant])
+                rxn.reactants.append(species_dict[reactant])
             for product in products.split('+'):
                 product = product.strip()
-                if product not in speciesDict:
+                if product not in species_dict:
                     raise DatabaseError(
                         'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(
                             product, self.label))
                 # For some reason we need molecule objects in the depository
                 # rather than species objects
-                rxn.products.append(speciesDict[product])
+                rxn.products.append(species_dict[product])
 
             if not rxn.is_balanced():
                 raise DatabaseError(
                     'Reaction {0} in kinetics depository {1} was not balanced! Please reformulate.'.format(
                         rxn, self.label))
 
-    def loadEntry(self,
+    def load_entry(self,
                   index,
                   reactant1=None,
                   reactant2=None,
@@ -474,9 +474,9 @@ class TransitionStateDepository(Database):
             item=reaction,
             data=distances,
             reference=reference,
-            reference_type=referenceType,
-            short_desc=shortDesc,
-            long_desc=longDesc.strip(),
+            reference_type=reference_type,
+            short_desc=short_desc,
+            long_desc=long_desc.strip(),
             rank=rank,
         )
         self.entries['{0:d}:{1}'.format(index, label)] = entry
@@ -489,7 +489,7 @@ class TransitionStateDepository(Database):
         """
         from arkane.output import prettify
 
-        def sortEfficiencies(efficiencies0):
+        def sort_efficiencies(efficiencies0):
             efficiencies = {}
             for mol, eff in efficiencies0.items():
                 if isinstance(mol, str):
@@ -612,13 +612,13 @@ class TSGroups(Database):
                  reverse_recipe=None,
                  forbidden=None
                  ):
-        Database.__init__(self, entries, top, label, name, shortDesc, longDesc)
-        self.numReactants = 0
+        Database.__init__(self, entries, top, label, name, short_desc, long_desc)
+        self.num_reactants = 0
 
     def __repr__(self):
         return '<TSGroups "{0}">'.format(self.label)
 
-    def loadEntry(
+    def load_entry(
             self,
             index,
             label,
@@ -639,12 +639,12 @@ class TSGroups(Database):
             item=item,
             data=distances,
             reference=reference,
-            reference_type=referenceType,
-            short_desc=shortDesc,
-            long_desc=longDesc.strip(),
+            reference_type=reference_type,
+            short_desc=short_desc,
+            long_desc=long_desc.strip(),
         )
 
-    def getReactionTemplate(self, reaction):
+    def get_reaction_template(self, reaction):
         """
         For a given `reaction` with properly-labeled :class:`Molecule` objects
         as the reactants, determine the most specific nodes in the tree that
@@ -655,21 +655,21 @@ class TSGroups(Database):
         # Get forward reaction template and remove any duplicates
         forward_template = self.top[:]
         temporary = []
-        symmetricTree = False
-        for entry in forwardTemplate:
+        symmetric_tree = False
+        for entry in forward_template:
             if entry not in temporary:
                 temporary.append(entry)
             else:
                 # duplicate node found at top of tree
                 # eg. R_recombination: ['Y_rad', 'Y_rad']
                 assert len(
-                    forwardTemplate) == 2, 'Can currently only do symmetric trees with nothing else in them'
-                symmetricTree = True
+                    forward_template) == 2, 'Can currently only do symmetric trees with nothing else in them'
+                symmetric_tree = True
         forward_template = temporary
 
         # Descend reactant trees as far as possible
         template = []
-        for entry in forwardTemplate:
+        for entry in forward_template:
             # entry is a top-level node that should be matched
             group = entry.item
 
@@ -689,7 +689,7 @@ class TSGroups(Database):
                 # Match labeled atoms
                 # Check this reactant has each of the atom labels in this group
                 if not all([reactant.contains_labeled_atom(label)
-                            for label in atomList]):
+                            for label in atom_list]):
                     continue  # don't try to match this structure - the atoms aren't there!
                 # Match structures
                 atoms = reactant.get_all_labeled_atoms()
@@ -704,19 +704,19 @@ class TSGroups(Database):
         # Get fresh templates (with duplicate nodes back in)
         forward_template = self.top[:]
         if self.label.lower().startswith('r_recombination'):
-            forwardTemplate.append(forwardTemplate[0])
+            forward_template.append(forward_template[0])
 
         # Check that we were able to match the template.
         # template is a list of the actual matched nodes
         # forwardTemplate is a list of the top level nodes that should be
         # matched
-        if len(template) != len(forwardTemplate):
+        if len(template) != len(forward_template):
             logging.warning(
                 'Unable to find matching template for reaction {0} in reaction family {1}'.format(
                     str(reaction), str(self)))
-            logging.warning(" Trying to match " + str(forwardTemplate))
+            logging.warning(" Trying to match " + str(forward_template))
             logging.warning(" Matched " + str(template))
-            print(str(self), template, forwardTemplate)
+            print(str(self), template, forward_template)
             for n, reactant in enumerate(reaction.reactants):
                 print("Reactant", n)
                 print(reactant.to_adjacency_list() + '\n')
