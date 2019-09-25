@@ -149,13 +149,15 @@ class Reaction():
         return self._distance_data
 
     @classmethod
-    def load_databases(self, force_reload=False):
+    def load_databases(self, rmg_database_path=None, force_reload=False):
         """
         Load the RMG and AutoTST databases, if they have not already been loaded,
         into the class level variables where they are stored.
 
         Variables:
         - force_reload (bool):if set to True then forces a reload, even if already loaded.
+        - rmg_database_path (str): path to rmg database directory. If None, database will be 
+          loaded from rmgpy.settings['database.directory']
 
         Returns:
         - None
@@ -164,10 +166,13 @@ class Reaction():
             return self.rmg_database, self.ts_databases
 
         rmg_database = RMGDatabase()
-        database_path = rmgpy.settings['database.directory']
+
+        if rmg_database_path is None:
+	        database_path = rmgpy.settings['database.directory']
+        else:
+            database_path = rmg_database_path
 
         logging.info("Loading RMG database from '{}'".format(database_path))
-
 
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
             "R_Addition_MultipleBond",
@@ -217,8 +222,9 @@ class Reaction():
                 reaction_family)
             global_context = {'__builtins__': None}
             local_context = {'DistanceData': DistanceData}
-            family = rmg_database.kinetics.families[reaction_family]
-            ts_database.family = family
+            family = self.rmg_database.kinetics.families[reaction_family]
+            family_copy = deepcopy(family)
+            ts_database.family = family_copy
             ts_database.load(path, local_context, global_context)
 
             self.ts_databases[reaction_family] = ts_database
@@ -923,20 +929,32 @@ class TS(Conformer):
     def get_bonds(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
+        try:
+            test_conf.rdkit_molecule = self._pseudo_geometry
+        except:
+            self.get_rdkit_mol()
+            test_conf.rdkit_molecule = self._pseudo_geometry
         test_conf.ase_molecule = self.ase_molecule
         return test_conf.get_bonds()
 
     def get_torsions(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
+        try:
+	        test_conf.rdkit_molecule = self._pseudo_geometry
+        except:
+            self.get_rdkit_mol()
+            test_conf.rdkit_molecule = self._pseudo_geometry
         test_conf.ase_molecule = self.ase_molecule
         return test_conf.get_torsions()
 
     def get_angles(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
-        test_conf.rdkit_molecule = self._pseudo_geometry
+        try:
+	        test_conf.rdkit_molecule = self._pseudo_geometry
+        except:
+            self.get_rdkit_mol()
+            test_conf.rdkit_molecule = self._pseudo_geometry
         test_conf.ase_molecule = self.ase_molecule
         return test_conf.get_angles()

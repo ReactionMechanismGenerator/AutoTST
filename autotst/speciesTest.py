@@ -13,6 +13,7 @@ import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.species import Species as RMGSpecies
 from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
+import numpy as np
 
 class TestConformer(unittest.TestCase):
     def setUp(self):
@@ -66,6 +67,11 @@ class TestConformer(unittest.TestCase):
     def test_calculate_symmetry_number(self):
         self.assertEquals(self.conformer.calculate_symmetry_number(),1)
         os.remove("./CC.symm")
+    def test_get_xyz_block(self):
+        xyz_block = self.conformer.get_xyz_block()
+        positions = self.conformer.ase_molecule.arrays["positions"]
+        for n in range(len(positions)):
+            self.assertTrue((np.array([float(x) for x in xyz_block.split('\n')[n].split()[1:]]) == positions[n]).all())
 
 class TestSpecies(unittest.TestCase):
     def setUp(self):
