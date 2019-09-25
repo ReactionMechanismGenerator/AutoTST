@@ -7,10 +7,10 @@ channels:
   - anaconda
   - conda-forge
 dependencies:
-  - rmg
+  - rmg == 2.4.0
   - ase
   - cclib == 1.5.3
   - py3dmol
-  - rdkit
+  - rdkit == 2018.09.3.0
   - nose
   - codecov
