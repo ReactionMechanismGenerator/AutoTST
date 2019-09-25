@@ -61,27 +61,27 @@ class QMData():
     """
 
     def __init__(self,
-                 groundStateDegeneracy=0,
-                 numberOfAtoms=0,
-                 stericEnergy=None,
-                 molecularMass=(0, "amu"),
+                 ground_state_degen=0,
+                 number_of_atoms=0,
+                 steric_energy=None,
+                 molecular_mass=(0, "amu"),
                  energy=(0, 'eV/molecule'),
-                 atomicNumbers=np.array([]),
-                 rotationalConstants=([], "cm^-1"),
-                 atomCoords=([[]], "angstrom"),
+                 atomic_numbers=np.array([]),
+                 rotational_constants=([], "cm^-1"),
+                 atom_coords=([[]], "angstrom"),
                  frequencies=([], "cm^-1"),
                  source=None,
                  method=None,
                  label=""):
 
-        self.groundStateDegeneracy = groundStateDegeneracy
-        self.numberOfAtoms = numberOfAtoms
-        self.stericEnergy = stericEnergy
-        self.molecularMass = molecularMass
+        self.ground_state_degeneracy = ground_state_degeneracy
+        self.number_of_atoms = number_of_atoms
+        self.steric_energy = steric_energy
+        self.molecular_mass = molecular_mass
         self.energy = energy
-        self.atomicNumbers = atomicNumbers
-        self.rotationalConstants = rotationalConstants
-        self.atomCoords = atomCoords
+        self.atomic_numbers = atomic_numbers
+        self.rotational_constants = rotational_constants
+        self.atom_coords = atom_coords
         self.frequencies = frequencies
         self.source = source
         self.method = method
@@ -93,18 +93,18 @@ class QMData():
         object.
         """
         string = 'QMData('
-        string += "groundStateDegeneracy={0!r}, ".format(
-            self.groundStateDegeneracy)
-        string += "numberOfAtoms={0!r}, ".format(self.numberOfAtoms)
-        string += "stericEnergy={0!r}, ".format(self.stericEnergy)
-        string += "molecularMass={0!r}, ".format(self.molecularMass)
+        string += "ground_state_degeneracy={0!r}, ".format(
+            self.ground_state_degeneracy)
+        string += "number_of_atoms={0!r}, ".format(self.number_of_atoms)
+        string += "steric_energy={0!r}, ".format(self.steric_energy)
+        string += "molecular_mass={0!r}, ".format(self.molecular_mass)
         string += "energy={0!r}, ".format(self.energy)
-        string += "atomicNumbers={0}, ".format(
-            "{0!r}".format(self.atomicNumbers).replace(" ", ""))
-        string += "rotationalConstants={0}, ".format("{0}".format(
-            self.rotationalConstants).replace("\n", "").replace(" ", ""))
-        string += "atomCoords={0}, ".format("{0}".format(
-            self.atomCoords).replace("\n", "").replace(" ", ""))
+        string += "atomic_numbers={0}, ".format(
+            "{0!r}".format(self.atomic_numbers).replace(" ", ""))
+        string += "rotational_constants={0}, ".format("{0}".format(
+            self.rotational_constants).replace("\n", "").replace(" ", ""))
+        string += "atom_coords={0}, ".format("{0}".format(
+            self.atom_coords).replace("\n", "").replace(" ", ""))
         string += "frequencies={0}, ".format("{0}".format(
             self.frequencies).replace("\n", "").replace(" ", ""))
         string += "source={0!r}, ".format(self.source)
@@ -116,15 +116,15 @@ class QMData():
 
         parser = ccread(file_path, loglevel=logging.ERROR)
 
-        self.groundStateDegeneracy = parser.mult
-        self.atomNumbers = parser.atomnos
-        self.numberOfAtoms = len(parser.atomnos)
-        self.atomCoords = (parser.atomcoords[-1], "angstrom")
-        self.stericEnergy = None  # Need to fix this
-        self.molecularMass = (parser.atommasses.sum(), "amu")
+        self.ground_state_degeneracy = parser.mult
+        self.atom_numbers = parser.atomnos
+        self.number_of_atoms = len(parser.atomnos)
+        self.atom_coords = (parser.atomcoords[-1], "angstrom")
+        self.steric_energy = None  # Need to fix this
+        self.molecular_mass = (parser.atommasses.sum(), "amu")
         self.energy = (parser.scfenergies[-1], "eV/molecule")
-        self.atomicNumbers = parser.atomnos
-        self.rotationalConstants = ([], "cm^-1")  # Need to fix this
+        self.atomic_numbers = parser.atomnos
+        self.rotational_constants = ([], "cm^-1")  # Need to fix this
         self.frequencies = (parser.vibfreqs, "cm^-1")
         self.source = "AutoTST"
         self.method = parser.metadata["functional"]
@@ -227,16 +227,16 @@ class TransitionStates(Database):
         # self.family.forward_template.products = [groups.entries[entry.label] for entry in self.family.forward_template.products]
         self.family.entries = groups.entries
         self.family.groups = groups
-        groups.numReactants = len(self.family.forward_template.reactants)
+        groups.num_reactants = len(self.family.forward_template.reactants)
         self.groups = groups
 
-    def estimateDistances(self, reaction):
+    def estimate_distances(self, reaction):
         """
         Return estimated DistanceData for the given reaction
         """
         # Should check depository first, but for now just go straight to group
         # additive estimate:
-        return self.groups.estimateDistancesUsingGroupAdditivity(reaction)
+        return self.groups.estimate_distances_using_group_additivity(reaction)
 
     def saveTransitionStateGroups(self, path, entryName='entry'):
         """
@@ -732,18 +732,18 @@ class TSGroups(Database):
 
         return template
 
-    def estimateDistancesUsingGroupAdditivity(self, reaction):
+    def estimate_distances_using_group_additivity(self, reaction):
         """
         Determine the appropriate transition state distances for a reaction
         with the given `template` using group additivity.
         """
 
         template = self.get_reaction_template(reaction)
-        referenceDistances = self.top[0].data  # or something like that
+        reference_distances = self.top[0].data  # or something like that
 
         # Start with the generic distances of the top-level nodes
         # Make a copy so we don't modify the original
-        tsDistances = deepcopy(referenceDistances)
+        ts_distances = deepcopy(reference_distances)
 
         # Now add in more specific corrections if possible
         for entry in template:
@@ -754,18 +754,18 @@ class TSGroups(Database):
                 comment_line += "{0} >> ".format(entry.label)
                 entry = entry.parent
             if entry.data.distances and entry not in self.top:
-                tsDistances.add(entry.data)
+                ts_distances.add(entry.data)
                 comment_line += "{0} ({1})".format(entry.label,
                                                    entry.long_desc.split('\n')[0])
             elif entry in self.top:
                 comment_line += "{0} (Top node)".format(entry.label)
-            tsDistances.comment += comment_line + '\n'
+            ts_distances.comment += comment_line + '\n'
 
-        return tsDistances
+        return ts_distances
 
-    def generateGroupAdditivityValues(self, trainingSet):
+    def generate_group_additivity_values(self, training_set):
         """
-        Generate the group additivity values using the given `trainingSet`,
+        Generate the group additivity values using the given `training_set`,
         a list of 2-tuples of the form ``(template, kinetics)``. You must also
         specify the `kunits` for the family and the `method` to use when
         generating the group values. Returns ``True`` if the group values have
@@ -780,46 +780,46 @@ class TSGroups(Database):
 
         # Determine a complete list of the entries in the database, sorted as
         # in the tree
-        groupEntries = self.top[:]
+        group_entries = self.top[:]
 
         for entry in self.top:
             # Entries in the TS_group.py tree
-            groupEntries.extend(self.descendants(entry))
+            group_entries.extend(self.descendants(entry))
 
         # Determine a unique list of the groups we will be able to fit
         # parameters for
-        groupList = []
-        for template, distances in trainingSet:
+        group_list = []
+        for template, distances in training_set:
             for group in template:
                 if isinstance(group, str):
                     group = self.entries[group]
                 if group not in self.top:
-                    groupList.append(group)
-                    groupList.extend(self.ancestors(group)[:-1])
-        groupList = list(set(groupList))
-        groupList.sort(key=lambda x: x.index)
+                    group_list.append(group)
+                    group_list.extend(self.ancestors(group)[:-1])
+        group_list = list(set(group_list))
+        group_list.sort(key=lambda x: x.index)
 
         if True:  # should remove this IF block, as we only have one method.
             # Initialize dictionaries of fitted group values and uncertainties
-            groupValues = {}
-            groupUncertainties = {}
-            groupCounts = {}
-            groupComments = {}
-            for entry in groupEntries:
-                groupValues[entry] = []
-                groupUncertainties[entry] = []
-                groupCounts[entry] = []
-                groupComments[entry] = set()
+            group_values = {}
+            group_uncertainties = {}
+            group_counts = {}
+            group_comments = {}
+            for entry in group_entries:
+                group_values[entry] = []
+                group_uncertainties[entry] = []
+                group_counts[entry] = []
+                group_comments[entry] = set()
 
             # Generate least-squares matrix and vector
             A = []
             b = []
 
             # ['d12', 'd13', 'd23']
-            distance_keys = sorted(trainingSet[0][1].distances.keys())
+            distance_keys = sorted(training_set[0][1].distances.keys())
             distance_data = []
-            for template, distanceData in trainingSet:
-                d = [distanceData.distances[key] for key in distance_keys]
+            for template, distance_data in training_set:
+                d = [distance_data.distances[key] for key in distance_keys]
                 distance_data.append(d)
 
                 # Create every combination of each group and its ancestors with
@@ -833,7 +833,7 @@ class TSGroups(Database):
                 combinations = get_all_combinations(combinations)
                 # Add a row to the matrix for each combination
                 for groups in combinations:
-                    Arow = [1 if group in groups else 0 for group in groupList]
+                    Arow = [1 if group in groups else 0 for group in group_list]
                     Arow.append(1)
                     brow = d
                     A.append(Arow)
@@ -842,7 +842,7 @@ class TSGroups(Database):
                     for group in groups:
                         if isinstance(group, str):
                             group = self.entries[group]
-                        groupComments[group].add("{0!s}".format(template))
+                        group_comments[group].add("{0!s}".format(template))
 
             if len(A) == 0:
                 logging.warning(
@@ -858,21 +858,21 @@ class TSGroups(Database):
             for t, distance_key in enumerate(distance_keys):
 
                 # Determine error in each group
-                stdev = np.zeros(len(groupList) + 1, np.float64)
-                count = np.zeros(len(groupList) + 1, np.int)
+                stdev = np.zeros(len(group_list) + 1, np.float64)
+                count = np.zeros(len(group_list) + 1, np.int)
 
-                for index in range(len(trainingSet)):
-                    template, distances = trainingSet[index]
+                for index in range(len(training_set)):
+                    template, distances = training_set[index]
                     d = np.float64(distance_data[index, t])
-                    dm = x[-1, t] + sum([x[groupList.index(group), t]
-                                         for group in template if group in groupList])
+                    dm = x[-1, t] + sum([x[group_list.index(group), t]
+                                         for group in template if group in group_list])
                     variance = (dm - d)**2
                     for group in template:
                         groups = [group]
                         groups.extend(self.ancestors(group))
                         for g in groups:
                             if g.label not in [top.label for top in self.top]:
-                                ind = groupList.index(g)
+                                ind = group_list.index(g)
                                 stdev[ind] += variance
                                 count[ind] += 1
                     stdev[-1] += variance
@@ -889,50 +889,50 @@ class TSGroups(Database):
                         stdev[i] = None
                         ci[i] = None
                 # Update dictionaries of fitted group values and uncertainties
-                for entry in groupEntries:
+                for entry in group_entries:
                     if entry == self.top[0]:
-                        groupValues[entry].append(x[-1, t])
-                        groupUncertainties[entry].append(ci[-1])
-                        groupCounts[entry].append(count[-1])
-                    elif entry.label in [group.label for group in groupList]:
-                        index = [group.label for group in groupList].index(
+                        group_values[entry].append(x[-1, t])
+                        group_uncertainties[entry].append(ci[-1])
+                        group_counts[entry].append(count[-1])
+                    elif entry.label in [group.label for group in group_list]:
+                        index = [group.label for group in group_list].index(
                             entry.label)
-                        groupValues[entry].append(x[index, t])
-                        groupUncertainties[entry].append(ci[index])
-                        groupCounts[entry].append(count[index])
+                        group_values[entry].append(x[index, t])
+                        group_uncertainties[entry].append(ci[index])
+                        group_counts[entry].append(count[index])
                     else:
-                        groupValues[entry] = None
-                        groupUncertainties[entry] = None
-                        groupCounts[entry] = None
+                        group_values[entry] = None
+                        group_uncertainties[entry] = None
+                        group_counts[entry] = None
 
             # Store the fitted group values and uncertainties on the associated
             # entries
-            for entry in groupEntries:
-                if groupValues[entry] is not None:
+            for entry in group_entries:
+                if group_values[entry] is not None:
                     if not any(
                         np.isnan(
                             np.array(
-                                groupUncertainties[entry]))):
+                                group_uncertainties[entry]))):
                         # should be entry.data.* (e.g.
                         # entry.data.uncertainties)
-                        uncertainties = np.array(groupUncertainties[entry])
+                        uncertainties = np.array(group_uncertainties[entry])
                         uncertainty_type = '+|-'
                     else:
                         uncertainties = {}
                     # should be entry.*
                     short_desc = "Fitted to {0} distances.\n".format(
-                        groupCounts[entry][0])
-                    long_desc = "\n".join(groupComments[entry.label])
+                        group_counts[entry][0])
+                    long_desc = "\n".join(group_comments[entry.label])
                     distances_dict = {key: distance for key, distance in zip(
-                        distance_keys, groupValues[entry])}
+                        distance_keys, group_values[entry])}
                     uncertainties_dict = {
                         key: distance for key, distance in zip(
                             distance_keys, uncertainties)}
                     entry.data = DistanceData(
                         distances=distances_dict,
                         uncertainties=uncertainties_dict)
-                    entry.short_desc = shortDesc
-                    entry.long_desc = longDesc
+                    entry.short_desc = short_desc
+                    entry.long_desc = long_desc
                 else:
                     entry.data = DistanceData()
 

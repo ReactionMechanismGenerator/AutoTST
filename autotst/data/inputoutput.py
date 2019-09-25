@@ -46,17 +46,17 @@ from rmgpy.statmech import Conformer as RMGConformer, IdealGasTranslation, Nonli
 
 def get_possible_names(reactants, products):
 
-    joinedReactOrders = ['+'.join(order)
+    joined_react_orders = ['+'.join(order)
                          for order in itertools.permutations(reactants)]
-    joinedProdOrders = ['+'.join(order)
+    joined_prod_orders = ['+'.join(order)
                         for order in itertools.permutations(products)]
-    fileNames = [
+    file_names = [
         '_'.join(
-            (rJO, pJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders] + [
+            (r_jo, p_jo)) for r_jo in joined_react_orders for p_jo in joined_prod_orders] + [
         '_'.join(
-                (pJO, rJO)) for rJO in joinedReactOrders for pJO in joinedProdOrders]
+                (p_jo, r_jo)) for r_jo in joined_react_orders for p_jo in joined_prod_orders]
 
-    return fileNames
+    return file_names
 
 
 class InputOutput():
@@ -122,10 +122,10 @@ class InputOutput():
             return False
         file_path = self.get_ts_file_path()
         logging.info("Saving TS result file {}".format(file_path))
-        with open(file_path, 'w') as resultFile:
-            resultFile.write('rxnLabel = "{0!s}"\n'.format(self.reaction.label))
-            resultFile.write('method = "{0!s}"\n'.format(self.method))
-            resultFile.write("qm_data = {0!r}\n".format(self.qmdata))
+        with open(file_path, 'w') as results_file:
+            results_file.write('rxn_label = "{0!s}"\n'.format(self.reaction.label))
+            results_file.write('method = "{0!s}"\n'.format(self.method))
+            results_file.write("qm_data = {0!r}\n".format(self.qmdata))
         return True
 
     def save_kinetics(self):
@@ -139,13 +139,13 @@ class InputOutput():
         if not self.reaction.rmg_reaction.kinetics:
             logging.info("The reaction you're trying to save info for doesn't have any kinetic information... aborting.")
             return False
-        filePath = self.get_kinetics_file_path()
-        logging.info("Saving kinetics data file {}".format(filePath))
-        with open(filePath, 'w') as resultFile:
+        file_path = self.get_kinetics_file_path()
+        logging.info("Saving kinetics data file {}".format(file_path))
+        with open(file_path, 'w') as result_file:
 
             assert self.reaction.rmg_reaction.kinetics, "No kinetics calclated for this reaction..."
-            resultFile.write('method = "{0!s}"\n'.format(self.method))
-            resultFile.write(
+            result_file.write('method = "{0!s}"\n'.format(self.method))
+            result_file.write(
                 'reaction = {0!r}\n'.format(self.reaction.rmg_reaction))
         return True
 
@@ -165,7 +165,7 @@ class InputOutput():
             logging.info("We could not file a ts file for {}".format(self.reaction.label))
             return None
         try:
-            with open(path) as resultFile:
+            with open(path) as result_file:
                 logging.info('Reading existing ts file {0}'.format(path))
                 global_context = {'__builtins__': None}
                 local_context = {
@@ -176,7 +176,7 @@ class InputOutput():
                     'array': np.array,
                     'int32': np.int32,
                 }
-                exec(resultFile.read(), global_context, local_context)
+                exec(result_file.read(), global_context, local_context)
         except IOError as e:
             logging.info("Couldn't read ts file {0}".format(path))
             return None
@@ -184,17 +184,17 @@ class InputOutput():
             logging.error('The ts file "{0}" was invalid:'.format(path))
             logging.exception(e)
             return None
-        if 'rxnLabel' not in local_context:
+        if 'rxn_label' not in local_context:
             logging.error(
-                'The ts file "{0}" did not contain a rxnLabel.'.format(path))
+                'The ts file "{0}" did not contain a rxn_label.'.format(path))
             return None
         if 'method' not in local_context:
             logging.error(
                 'The ts file "{0}" did not contain a method.'.format(path))
             return None
-        if 'qmData' not in local_context:
+        if 'qm_data' not in local_context:
             logging.error(
-                'The ts file "{0}" did not contain thermoData.'.format(path))
+                'The ts file "{0}" did not contain thermo_data.'.format(path))
             return None
         return local_context
 
@@ -214,7 +214,7 @@ class InputOutput():
             logging.info("We could not file a kinetics file for {}".format(self.reaction.label))
             return None
         try:
-            with open(path) as resultFile:
+            with open(path) as result_file:
                 logging.info('Reading existing kinetics file {0}'.format(path))
                 global_context = {'__builtins__': None}
                 local_context = {
@@ -235,7 +235,7 @@ class InputOutput():
                     'int32': np.int32,
                     'Molecule': RMGMolecule
                 }
-                exec(resultFile.read(), global_context, local_context)
+                exec(result_file.read(), global_context, local_context)
         except IOError as e:
             logging.error("Couldn't read kinetics file {0}".format(path))
             return None

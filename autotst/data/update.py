@@ -34,7 +34,7 @@ def update_all(reactions, family, method='', short_desc=''):
     family    :: family of reaction
     """
 
-    update_databases(reactions, method=method, short_desc=shortDesc,
+    update_databases(reactions, method=method, short_desc=short_desc,
                      reaction_family=family, overwrite=True)
 
     TS_Database_Update([family], path=None, auto_save=True)
@@ -311,7 +311,7 @@ def update_known_reactions(
                        reversible=True,
                        reference=None,
                        reference_type='',
-                       short_desc=shortDesc,
+                       short_desc=short_desc,
                        long_desc='',
                        rank=None,
                        )
@@ -333,7 +333,7 @@ def update_known_reactions(
                            reversible=True,
                            reference=None,
                            reference_type='',
-                           short_desc=shortDesc,
+                           short_desc=short_desc,
                            long_desc='',
                            rank=None,
                            )
@@ -354,7 +354,7 @@ def update_known_reactions(
 def update_databases(reactions, method='', short_desc='', reaction_family='', overwrite=False):
     """
     Expects list of auto-TST reaction objects to add to the current dictionary,
-        method, shortDesc, and reaction family of those Reactions
+        method, short_desc, and reaction family of those Reactions
 
     Saves the new reactions and new species found in those reactions
     """
@@ -416,7 +416,7 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
                                                   reactions,
                                                   updated_known_species,
                                                   method=method,
-                                                  short_desc=shortDesc
+                                                  short_desc=short_desc
                                                   )
 
     # TODO add check for duplicates method
@@ -676,15 +676,15 @@ class DatabaseUpdater:
         """
         Attributes of each entry, initializing to size of all_entries
         """
-        self.groupComments = {}
-        self.groupCounts = {}
-        self.groupUncertainties = {}
-        self.groupValues = {}
+        self.group_comments = {}
+        self.group_counts = {}
+        self.group_uncertainties = {}
+        self.group_values = {}
         for entry in self.all_entries:
-            self.groupComments[entry] = set()
-            self.groupCounts[entry] = []
-            self.groupUncertainties[entry] = []
-            self.groupValues[entry] = []
+            self.group_comments[entry] = set()
+            self.group_counts[entry] = []
+            self.group_uncertainties[entry] = []
+            self.group_values[entry] = []
         return
 
     def adjust_distances(self):
@@ -692,20 +692,20 @@ class DatabaseUpdater:
         Creating A and b of Ax=b, where b is distance data and x are groups involved
         A is optimized group contributions (found next in self.set_entry_data)
         """
-        def get_all_combinations(nodeLists):
+        def get_all_combinations(node_lists):
             """
             From base.py:
             Generate a list of all possible combinations of items in the list of
-            lists `nodeLists`. Each combination takes one item from each list
-            contained within `nodeLists`. The order of items in the returned lists
-            reflects the order of lists in `nodeLists`. For example, if `nodeLists` was
+            lists `node_lists`. Each combination takes one item from each list
+            contained within `node_lists`. The order of items in the returned lists
+            reflects the order of lists in `node_lists`. For example, if `node_lists` was
             [[A, B, C], [N], [X, Y]], the returned combinations would be
             [[A, N, X], [A, N, Y], [B, N, X], [B, N, Y], [C, N, X], [C, N, Y]].
             """
 
             items = [[]]
-            for nodeList in nodeLists:
-                items = [item + [node] for node in nodeList for item in items]
+            for node_list in node_lists:
+                items = [item + [node] for node in node_list for item in items]
 
             return items
         ###################
@@ -734,7 +734,7 @@ class DatabaseUpdater:
                 Arow = [
                     1 if group in combination else 0 for group in self.nodes_to_update]
                 Arow.append(1)  # For use in finding the family component
-                # Arow is a binary vector of len(groupList)+1 representing
+                # Arow is a binary vector of len(group_list)+1 representing
                 # contributing groups to this reaction's distance data
                 A.append(Arow)
                 b.append(distances_list)
@@ -742,7 +742,7 @@ class DatabaseUpdater:
                     if isinstance(group, str):
                         assert False, "Discrepancy between versions of RMG_Database and this one"
 
-                    self.groupComments[group].add('{0!s}'.format(template))
+                    self.group_cmments[group].add('{0!s}'.format(template))
 
         self.A = np.array(A)
         self.b = np.array(b)
@@ -805,39 +805,39 @@ class DatabaseUpdater:
             # Update dictionaries of fitted group values and uncertainties
             for entry in self.all_entries:
                 if entry == self.top_nodes[0]:
-                    self.groupValues[entry].append(x[-1, i])
-                    self.groupUncertainties[entry].append(ci[-1])
-                    self.groupCounts[entry].append(counts[-1])
+                    self.group_values[entry].append(x[-1, i])
+                    self.group_uncertainties[entry].append(ci[-1])
+                    self.group_counts[entry].append(counts[-1])
                 elif entry.label in [group.label for group in self.nodes_to_update]:
                     index = self.nodes_to_update.index(entry)
 
-                    self.groupValues[entry].append(x[index, i])
-                    self.groupUncertainties[entry].append(ci[index])
-                    self.groupCounts[entry].append(counts[index])
+                    self.group_values[entry].append(x[index, i])
+                    self.group_uncertainties[entry].append(ci[index])
+                    self.group_counts[entry].append(counts[index])
                 else:
-                    self.groupValues[entry] = None
-                    self.groupUncertainties[entry] = None
-                    self.groupCounts[entry] = None
+                    self.group_values[entry] = None
+                    self.group_uncertainties[entry] = None
+                    self.group_counts[entry] = None
 
             for entry in self.all_entries:
-                if self.groupValues[entry] is not None:
+                if self.group_values[entry] is not None:
                     if not any(
                         np.isnan(
                             np.array(
-                                self.groupUncertainties[entry]))):
+                                self.group_uncertainties[entry]))):
                         # should be entry.data.* (e.g.
                         # entry.data.uncertainties)
                         uncertainties = np.array(
-                            self.groupUncertainties[entry])
+                            self.group_uncertainties[entry])
                         uncertainty_type = '+|-'
                     else:
                         uncertainties = {}
                     # should be entry.*
                     short_desc = "Fitted to {0} distances.\n".format(
-                        self.groupCounts[entry][0])
-                    long_desc = "\n".join(self.groupComments[entry])
+                        self.group_counts[entry][0])
+                    long_desc = "\n".join(self.group_comments[entry])
                     distances_dict = {key: distance for key, distance in zip(
-                        distance_keys, self.groupValues[entry])}
+                        distance_keys, self.group_values[entry])}
                     uncertainties_dict = {
                         key: distance for key, distance in zip(
                             distance_keys, uncertainties)}
@@ -845,8 +845,8 @@ class DatabaseUpdater:
                     entry.data = DistanceData(
                         distances=distances_dict,
                         uncertainties=uncertainties_dict)
-                    entry.short_desc = shortDesc
-                    entry.long_desc = longDesc
+                    entry.short_desc = short_desc
+                    entry.long_desc = long_desc
                 else:
                     entry.data = DistanceData()
                     entry.long_desc = ''

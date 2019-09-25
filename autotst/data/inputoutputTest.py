@@ -98,12 +98,12 @@ class TestInputOutput(unittest.TestCase):
     def test_get_qmdata(self):
 
         self.qmdata = self.io.get_qmdata()
-        self.assertEqual(self.qmdata.groundStateDegeneracy, 2)
-        self.assertAlmostEqual(self.qmdata.molecularMass[0], 126.1, places=1)
+        self.assertEqual(self.qmdata.ground_state_degeneracy, 2)
+        self.assertAlmostEqual(self.qmdata.molecular_mass[0], 126.1, places=1)
         self.assertAlmostEqual(self.qmdata.energy[0], -6277.0, places=1)
-        self.assertEqual(len(self.qmdata.atomNumbers), 11)
-        self.assertEqual(self.qmdata.numberOfAtoms, 11)
-        self.assertEqual(len(self.qmdata.atomCoords[0]), 11)
+        self.assertEqual(len(self.qmdata.atom_numbers), 11)
+        self.assertEqual(self.qmdata.number_of_atoms, 11)
+        self.assertEqual(len(self.qmdata.atom_coords[0]), 11)
         self.assertEqual(len(self.qmdata.frequencies[0]), 27)
         self.assertEqual(self.qmdata.method.lower(), "m062x")
         self.assertEqual(self.qmdata.source, "AutoTST")
