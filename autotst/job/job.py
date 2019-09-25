@@ -51,7 +51,7 @@ class Job():
             exclude = None # nodes that you wish to exclude
             ):
 
-        assert isinstance(reaction, (Reaction, None)), "Please provide an AutoTST Reaction object"
+        #assert isinstance(reaction, (Reaction, None)), "Please provide an AutoTST Reaction object"
         self.reaction = reaction
         if self.reaction:
             self.label = self.reaction.label
