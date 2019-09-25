@@ -493,20 +493,20 @@ class Gaussian():
 
         pth1 = list()
         steps = list()
-        with open(irc_path) as outputFile:
-            for line in outputFile:
+        with open(irc_path) as output_file:
+            for line in output_file:
                 line = line.strip()
 
                 if line.startswith('Point Number:'):
                     if int(line.split()[2]) > 0:
                         if int(line.split()[-1]) == 1:
-                            ptNum = int(line.split()[2])
-                            pth1.append(ptNum)
+                            pt_num = int(line.split()[2])
+                            pth1.append(pt_num)
                         else:
                             pass
                 elif line.startswith('# OF STEPS ='):
-                    numStp = int(line.split()[-1])
-                    steps.append(numStp)
+                    num_step = int(line.split()[-1])
+                    steps.append(num_step)
         # This indexes the coordinate to be used from the parsing
         if steps == []:
             logging.error('No steps taken in the IRC calculation!')
@@ -514,18 +514,18 @@ class Gaussian():
         else:
             pth1End = sum(steps[:pth1[-1]])
             # Compare the reactants and products
-            ircParse = ccread(irc_path)
+            irc_parse = ccread(irc_path)
 
 
-            atomcoords = ircParse.atomcoords
-            atomnos = ircParse.atomnos
+            atomcoords = irc_parse.atomcoords
+            atomnos = irc_parse.atomnos
 
             mol1 = RMGMolecule()
             mol1.from_xyz(atomnos, atomcoords[pth1End])
             mol2 = RMGMolecule()
             mol2.from_xyz(atomnos, atomcoords[-1])
 
-            testReaction = RMGReaction(
+            test_reaction = RMGReaction(
                 reactants=mol1.split(),
                 products=mol2.split(),
             )
@@ -566,12 +566,12 @@ class Gaussian():
                     for prod in possible_product:
                         product_list.append(prod.to_single_bonds())
 
-                    targetReaction = RMGReaction(
+                    target_reaction = RMGReaction(
                         reactants=list(reactant_list),
                         products=list(product_list)
                     )
 
-                    if targetReaction.is_isomorphic(testReaction):
+                    if target_reaction.is_isomorphic(test_reaction):
                         logging.info("IRC calculation was successful!")
                         return True
             logging.info("IRC calculation failed for {} :(".format(irc_path))

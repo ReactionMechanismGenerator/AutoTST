@@ -31,10 +31,10 @@ class TestOrca(unittest.TestCase):
         self.orca.write_fod_input()
         self.assertTrue(os.path.exists(os.path.join(self.orca.directory,'C_fod.inp')))
 
-    def test_check_NormalTermination(self):
+    def test_check_normal_termination(self):
         path = os.path.expandvars(
             "$AUTOTST/test/bin/log-files/C_fod.log")
-        self.assertTrue(self.orca.check_NormalTermination(path))
+        self.assertTrue(self.orca.check_normal_termination(path))
 
     def test_read_fod_log(self):
         path = os.path.expandvars(

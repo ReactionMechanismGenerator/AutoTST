@@ -168,7 +168,7 @@ class Orca():
             f.write(self.coords)
             f.write('*\n')
 
-    def check_NormalTermination(self,path):
+    def check_normal_termination(self,path):
         """
         checks if an Orca job terminated normally.
         Returns True is normal termination and False if something went wrong.
@@ -190,7 +190,7 @@ class Orca():
         """
         assert os.path.exists(path),'It seems {} is not a valid path'.format(path)
 
-        if self.check_NormalTermination(path):
+        if self.check_normal_termination(path):
             N_FOD = None
             for line in open(path,'r').readlines():
                 if 'N_FOD =' in line:

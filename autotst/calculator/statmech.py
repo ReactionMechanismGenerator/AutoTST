@@ -99,65 +99,65 @@ class StatMech():
         - conformer (Conformer): a conformer object that you want bond info from
 
         Returns:
-        - bondDict (dict): a dictionary containing counts of different bond types
+        - bond_dict (dict): a dictionary containing counts of different bond types
         """
 
         bonds = conformer.rmg_molecule.get_all_edges()
-        bondDict = {}
+        bond_dict = {}
         for bond in bonds:
-            if bond.isSingle():
+            if bond.is_single():
                 if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bondType = 'C-C'
+                    bond_type = 'C-C'
                 elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'H'):
-                    bondType = 'H-H'
+                    bond_type = 'H-H'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'H') or (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'C'):
-                    bondType = 'C-H'
+                    bond_type = 'C-H'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'O'):
-                    bondType = 'O-O'
+                    bond_type = 'O-O'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'C'):
-                    bondType = 'C-O'
+                    bond_type = 'C-O'
                 elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'H'):
-                    bondType = 'O-H'
+                    bond_type = 'O-H'
                 elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bondType = 'N-N'
+                    bond_type = 'N-N'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bondType = 'N-C'
+                    bond_type = 'N-C'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'O'):
-                    bondType = 'N-O'
+                    bond_type = 'N-O'
                 elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'H'):
-                    bondType = 'N-H'
+                    bond_type = 'N-H'
                 elif bond.atom1.symbol == 'S' and bond.atom2.symbol == 'S':
-                    bondType = 'S-S'
+                    bond_type = 'S-S'
                 elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'S') or (bond.atom1.symbol == 'S' and bond.atom2.symbol == 'H'):
-                    bondType = 'S-H'
-            elif bond.isDouble:
+                    bond_type = 'S-H'
+            elif bond.is_double():
                 if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bondType = 'C=C'
+                    bond_type = 'C=C'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'O'):
-                    bondType = 'O=O'
+                    bond_type = 'O=O'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'C'):
-                    bondType = 'C=O'
+                    bond_type = 'C=O'
                 elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bondType = 'N=N'
+                    bond_type = 'N=N'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bondType = 'N=C'
+                    bond_type = 'N=C'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'O'):
-                    bondType = 'N=O'
+                    bond_type = 'N=O'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'S') or (bond.atom1.symbol == 'S' and bond.atom2.symbol == 'O'):
-                    bondType = 'S=O'
-            elif bond.isTriple:
+                    bond_type = 'S=O'
+            elif bond.is_triple():
                 if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bondType = 'C#C'
+                    bond_type = 'C#C'
                 elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bondType = 'N#N'
+                    bond_type = 'N#N'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bondType = 'N#C'
+                    bond_type = 'N#C'
             try:
-                bondDict[bondType] += 1
+                bond_dict[bond_type] += 1
             except KeyError:
-                bondDict[bondType] = 1
+                bond_dict[bond_type] = 1
 
-        return bondDict
+        return bond_dict
 
     def write_species_files(self, species):
         """
@@ -246,7 +246,7 @@ class StatMech():
                    "",
                    "externalSymmetry = {}".format(external_symmetry),
                    "",
-                   "spin_multiplicity = {}".format(conformer.rmg_molecule.multiplicity),
+                   "spinMultiplicity = {}".format(conformer.rmg_molecule.multiplicity),
                    "",
                    "optical_isomers = 1",
                    ""]
@@ -399,7 +399,7 @@ class StatMech():
                    "",
                    "externalSymmetry = {}".format(external_symmetry),
                    "",
-                   "spin_multiplicity = {}".format(
+                   "spinMultiplicity = {}".format(
                        transitionstate.rmg_molecule.multiplicity),
                    "",
                    "optical_isomers = 1",
