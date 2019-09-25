@@ -317,10 +317,10 @@ class Reaction():
             rmg_products = []
             r, p = self.label.split("_")
             for react in r.split("+"):
-                s = RMGMolecule(SMILES=react)
+                s = RMGMolecule(smiles=react)
                 rmg_reactants.append(s)
             for prod in p.split("+"):
-                s = RMGMolecule(SMILES=prod)
+                s = RMGMolecule(smiles=prod)
                 rmg_products.append(s)
 
             test_reaction = RMGReaction(
@@ -501,9 +501,9 @@ class Reaction():
         reactants = []
         products = []
         for react in r.split("+"):
-            reactants.append(RMGMolecule(SMILES=react))
+            reactants.append(RMGMolecule(smiles=react))
         for prod in p.split("+"):
-            products.append(RMGMolecule(SMILES=prod))
+            products.append(RMGMolecule(smiles=prod))
 
         self.rmg_reaction = RMGReaction(reactants=reactants, products=products)
         return self.rmg_reaction
@@ -613,7 +613,7 @@ class TS(Conformer):
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
                 assert rmg_molecule.is_isomorphic(RMGMolecule(
-                    SMILES=smiles)), "SMILES string did not match RMG Molecule object"
+                    smiles=smiles)), "smiles string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
 
@@ -623,7 +623,7 @@ class TS(Conformer):
 
             else:
                 self.smiles = smiles
-                self.rmg_molecule = RMGMolecule(SMILES=smiles)
+                self.rmg_molecule = RMGMolecule(smiles=smiles)
 
             self.rmg_molecule.update_multiplicity()
             self._symmetry_number = None

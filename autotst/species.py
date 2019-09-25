@@ -139,7 +139,7 @@ class Species():
 
             species_list = []
             for smile in smiles:
-                molecule = RMGMolecule(SMILES=smile)
+                molecule = RMGMolecule(smiles=smile)
                 species_list.append(molecule.generate_resonance_structures())
 
             if len(smiles) != 1:
@@ -150,7 +150,7 @@ class Species():
                             for m2 in s2:
                                 if m1.is_isomorphic(m2):
                                     got_one = True
-                assert got_one, "SMILESs provided describe different species"
+                assert got_one, "smiless provided describe different species"
 
             smiles_list = []
             for mol in species_list[0]:
@@ -211,7 +211,7 @@ class Conformer():
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
                 assert rmg_molecule.is_isomorphic(RMGMolecule(
-                    SMILES=smiles)), "SMILES string did not match RMG Molecule object"
+                    smiles=smiles)), "smiles string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
 
@@ -221,7 +221,7 @@ class Conformer():
 
             else:
                 self.smiles = smiles
-                self.rmg_molecule = RMGMolecule(SMILES=smiles)
+                self.rmg_molecule = RMGMolecule(smiles=smiles)
 
             self.rmg_molecule.update_multiplicity()
             self.get_molecules()
@@ -346,7 +346,7 @@ class Conformer():
 
     def get_molecules(self):
         if not self.rmg_molecule:
-            self.rmg_molecule = RMGMolecule(SMILES=self.smiles)
+            self.rmg_molecule = RMGMolecule(smiles=self.smiles)
         self._rdkit_molecule = self.get_rdkit_mol()
         self._ase_molecule = self.get_ase_mol()
         self.get_geometries()
