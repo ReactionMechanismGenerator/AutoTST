@@ -247,7 +247,7 @@ class Reaction():
             self.rmg_database, self.ts_databases = self.load_databases()
         self.get_labeled_reaction()
         assert self.rmg_reaction, "try calling get_rmg_reaction() first"
-        self._distance_data = self.ts_databases[self.reaction_family].groups.estimateDistancesUsingGroupAdditivity(
+        self._distance_data = self.ts_databases[self.reaction_family].groups.estimate_distances_using_group_additivity(
             self.rmg_reaction)
         if ((np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"],
                       self._distance_data.distances["d13"],
@@ -773,14 +773,14 @@ class TS(Conformer):
                 for k in range(len(self.bm)):
                     if k == i or k == j or i == j:
                         continue
-                    Uik = self.bm[i, k] if k > i else self.bm[k, i]
-                    Ukj = self.bm[j, k] if k > j else self.bm[k, j]
+                    u_ik = self.bm[i, k] if k > i else self.bm[k, i]
+                    u_kj = self.bm[j, k] if k > j else self.bm[k, j]
 
-                    maxLij = Uik + Ukj - 0.1
-                    if self.bm[i, j] > maxLij:
+                    max_lij = u_ik + _ukj - 0.1
+                    if self.bm[i, j] > max_lij:
                         logging.info(
-                            "Changing lower limit {0} to {1}".format(self.bm[i, j], maxLij))
-                        self.bm[i, j] = maxLij
+                            "Changing lower limit {0} to {1}".format(self.bm[i, j], max_lij))
+                        self.bm[i, j] = max_lij
 
         return self.bm
 
@@ -795,7 +795,7 @@ class TS(Conformer):
 
         if len(self.rmg_molecule.get_all_labeled_atoms()) == 0:
             labels = []
-            atomMatch = ()
+            atom_match = ()
 
         if self.reaction_family.lower() in [
             'h_abstraction',
@@ -806,18 +806,18 @@ class TS(Conformer):
             lbl2 = self.rmg_molecule.get_all_labeled_atoms()["*2"].sorting_label
             lbl3 = self.rmg_molecule.get_all_labeled_atoms()["*3"].sorting_label
             labels = [lbl1, lbl2, lbl3]
-            atomMatch = ((lbl1,), (lbl2,), (lbl3,))
+            atom_match = ((lbl1,), (lbl2,), (lbl3,))
         elif self.reaction_family.lower() in ['disproportionation']:
             lbl1 = self.rmg_molecule.get_all_labeled_atoms()["*2"].sorting_label
             lbl2 = self.rmg_molecule.get_all_labeled_atoms()["*4"].sorting_label
             lbl3 = self.rmg_molecule.get_all_labeled_atoms()["*1"].sorting_label
 
             labels = [lbl1, lbl2, lbl3]
-            atomMatch = ((lbl1,), (lbl2,), (lbl3,))
+            atom_match = ((lbl1,), (lbl2,), (lbl3,))
 
         #logging.info("The labled atoms are {}.".format(labels))
         self.labels = labels
-        self.atom_match = atomMatch
+        self.atom_match = atom_match
         return self.labels, self.atom_match
 
     def edit_matrix(self):
@@ -866,8 +866,8 @@ class TS(Conformer):
         """
 
         energy = 0.0
-        minEid = 0
-        lowestE = 9.999999e99  # start with a very high number, which would never be reached
+        min_eid = 0
+        lowest_e = 9.999999e99  # start with a very high number, which would never be reached
 
         for conf in self.rdkit_molecule.GetConformers():
             if (self.bm is None) or (self.atom_match is None):
@@ -878,11 +878,11 @@ class TS(Conformer):
                 _, energy = EmbedLib.OptimizeMol(
                     self._rdkit_molecule, self.bm, atomMatches=self.atom_match, forceConstant=100000.0)
 
-            if energy < lowestE:
-                minEid = conf.GetId()
-                lowestE = energy
+            if energy < lowest_e:
+                min_eid = conf.GetId()
+                lowest_e = energy
 
-        return self.rdkit_molecule, minEid
+        return self.rdkit_molecule, min_eid
 
     def rd_embed(self):
         """
@@ -890,9 +890,9 @@ class TS(Conformer):
 
         Embed the RDKit molecule and create the crude molecule file.
         """
-        numConfAttempts = 10000
+        num_conf_attempts = 10000
         if (self.bm is None) or (self.atom_match is None):
-            AllChem.EmbedMultipleConfs(self._rdkit_molecule, numConfAttempts, randomSeed=1)
+            AllChem.EmbedMultipleConfs(self._rdkit_molecule, num_conf_attempts, randomSeed=1)
 
             self._rdkit_molecule, minEid = self.optimize_rdkit_molecule()
         else:
@@ -901,14 +901,14 @@ class TS(Conformer):
             of some of the embedding attempts.
             """
             self._rdkit_molecule.RemoveAllConformers()
-            for i in range(0, numConfAttempts):
+            for i in range(0, num_conf_attempts):
                 try:
                     EmbedLib.EmbedMol(self._rdkit_molecule, self.bm, atomMatch=self.atom_match)
                     break
                 except ValueError:
                     logging.info(
                         "RDKit failed to embed on attempt {0} of {1}".format(
-                            i + 1, numConfAttempts))
+                            i + 1, num_conf_attempts))
                 except RuntimeError:
                     logging.info("RDKit failed to embed.")
             else:
@@ -922,9 +922,9 @@ class TS(Conformer):
             for i in range(len(self.rdkit_molecule.GetConformers())):
                 self.rdkit_molecule.GetConformers()[i].SetId(i)
 
-            self._rdkit_molecule, minEid = self.optimize_rdkit_molecule()
+            self._rdkit_molecule, min_eid = self.optimize_rdkit_molecule()
 
-        return self._rdkit_molecule, minEid
+        return self._rdkit_molecule, min_eid
 
     def get_bonds(self):
         test_conf = Conformer()
