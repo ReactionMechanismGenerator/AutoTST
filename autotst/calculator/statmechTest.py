@@ -177,12 +177,12 @@ class TestStatMech(unittest.TestCase):
         self.test_run()
         self.statmech.set_results()
         self.assertTrue(
-            self.reaction.rmg_reaction.isIsomorphic(
+            self.reaction.rmg_reaction.is_isomorphic(
                 self.statmech.kinetics_job.reaction
             )
         )
         self.assertTrue(
-            self.statmech.reaction.rmg_reaction.isIsomorphic(
+            self.statmech.reaction.rmg_reaction.is_isomorphic(
                 self.statmech.kinetics_job.reaction
             )
         )

@@ -118,7 +118,7 @@ class Reaction():
             for direction, complex in self.get_rmg_complexes().items():
                 ts = TS(
                     reaction_label=self.label,
-                    #smiles=complex.toSMILES()
+                    #smiles=complex.to_smiles()
                     direction=direction,
                     rmg_molecule=complex,
                     reaction_family=self.reaction_family,
@@ -182,11 +182,11 @@ class Reaction():
         try:
             rmg_database.load(
                 database_path,
-                kineticsFamilies=self.possible_families,
-                transportLibraries=[],
-                reactionLibraries=[],
-                seedMechanisms=[],
-                thermoLibraries=[
+                kinetics_families=self.possible_families,
+                transport_libraries=[],
+                reaction_libraries=[],
+                seed_mechanisms=[],
+                thermo_libraries=[
                     'primaryThermoLibrary',
                     'thermo_DFT_CCSDTF12_BAC',
                     'CBS_QB3_1dHR'],
@@ -201,11 +201,11 @@ class Reaction():
                 "Loading RMG database instead from '{}'".format(database_path))
             rmg_database.load(
                 database_path,
-                kineticsFamilies=self.possible_families,
-                transportLibraries=[],
-                reactionLibraries=[],
-                seedMechanisms=[],
-                thermoLibraries=[
+                kinetics_families=self.possible_families,
+                transport_libraries=[],
+                reaction_libraries=[],
+                seed_mechanisms=[],
+                thermo_libraries=[
                     'primaryThermoLibrary',
                     'thermo_DFT_CCSDTF12_BAC',
                     'CBS_QB3_1dHR'],
@@ -328,14 +328,14 @@ class Reaction():
                 products=rmg_products)
 
             if self.rmg_reaction:
-                assert self.rmg_reaction.isIsomorphic(
+                assert self.rmg_reaction.is_isomorphic(
                     test_reaction), "The reaction label provided does not match the RMGReaction provided..."
 
             for name, family in list(self.rmg_database.kinetics.families.items()):
                 if match:
                     break
                 try:
-                    labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                    labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                         test_reaction.reactants, test_reaction.products)
                 except ValueError:
                     continue
@@ -409,7 +409,7 @@ class Reaction():
                             reactants=test_reactant, products=test_product)
 
                         try:
-                            labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                            labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                                 test_reaction.reactants, test_reaction.products)
                             if not (labeled_r and labeled_p):
                                 logging.info("Unable to determine a reaction for the forward direction. Trying the reverse direction.")
@@ -418,18 +418,18 @@ class Reaction():
                             try: 
                                 # Trying the reverse reaction if the forward reaction doesn't work
                                 # This is useful for R_Addition reactions
-                                labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                                labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                                     test_reaction.products, test_reaction.reactants)
                             except (ValueError, ActionError, IndexError):
                                continue
                             
 
                         if not (labeled_r and labeled_p):
-                            labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                            labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                                 test_reaction.products, test_reaction.reactants)
                             continue
 
-                        if ((len(labeled_r) > 0) and (len(labeled_p) > 0)) and (self.rmg_reaction.isIsomorphic(test_reaction)):
+                        if ((len(labeled_r) > 0) and (len(labeled_p) > 0)) and (self.rmg_reaction.is_isomorphic(test_reaction)):
                             logging.info(
                                 "Matched reaction to {} family".format(name))
 
@@ -445,7 +445,7 @@ class Reaction():
                             
         assert match, "Could not idetify labeled reactants and products"
         #try: 
-        reaction_list = final_family.generateReactions(
+        reaction_list = final_family.generate_reactions(
             test_reaction.reactants, test_reaction.products)
         #except KeyError:
         #    reaction_list = None
@@ -454,7 +454,7 @@ class Reaction():
         assert reaction_list, "Could not match a reaction to a reaction family..."
 
         for reaction in reaction_list:
-            if test_reaction.isIsomorphic(reaction):
+            if test_reaction.is_isomorphic(reaction):
                 reaction.reactants = labeled_reactants
                 reaction.products = labeled_products
                 break
@@ -478,16 +478,16 @@ class Reaction():
         string = ""
         for react in self.rmg_reaction.reactants:
             if isinstance(react, RMGSpecies):
-                string += "{}+".format(react.molecule[0].toSMILES())
+                string += "{}+".format(react.molecule[0].to_smiles())
             elif isinstance(react, RMGMolecule):
-                string += "{}+".format(react.toSMILES())
+                string += "{}+".format(react.to_smiles())
         string = string[:-1]
         string += "_"
         for prod in self.rmg_reaction.products:
             if isinstance(prod, RMGSpecies):
-                string += "{}+".format(prod.molecule[0].toSMILES())
+                string += "{}+".format(prod.molecule[0].to_smiles())
             elif isinstance(prod, RMGMolecule):
-                string += "{}+".format(prod.toSMILES())
+                string += "{}+".format(prod.to_smiles())
         self.label = string[:-1]
         return self.label
 
@@ -528,7 +528,7 @@ class Reaction():
                 reactant_complex = reactant_complex.merge(react)
             elif isinstance(react, RMGSpecies):
                 for mol in react.molecule:
-                    if len(mol.getLabeledAtoms()) > 0:
+                    if len(mol.get_all_labeled_atoms()) > 0:
                         reactant_complex = reactant_complex.merge(mol)
 
         product_complex = RMGMolecule()
@@ -537,13 +537,13 @@ class Reaction():
                 product_complex = product_complex.merge(prod)
             elif isinstance(prod, RMGSpecies):
                 for mol in prod.molecule:
-                    if len(mol.getLabeledAtoms()) > 0:
+                    if len(mol.get_all_labeled_atoms()) > 0:
                         product_complex = product_complex.merge(mol)
 
-        reactant_complex.updateMultiplicity()
-        product_complex.updateMultiplicity()
+        reactant_complex.update_multiplicity()
+        product_complex.update_multiplicity()
 
-        if len(reactant_complex.getLabeledAtoms()) == 0 or len(product_complex.getLabeledAtoms()) == 0:
+        if len(reactant_complex.get_all_labeled_atoms()) == 0 or len(product_complex.get_all_labeled_atoms()) == 0:
             logging.warning("REACTING ATOMS LABELES NOT PROVIDED. Please call `Reaction.get_labeled_reaction` to generate labeled complexes")
 
         self.complexes = {
@@ -612,20 +612,20 @@ class TS(Conformer):
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
-                assert rmg_molecule.isIsomorphic(RMGMolecule(
+                assert rmg_molecule.is_isomorphic(RMGMolecule(
                     SMILES=smiles)), "SMILES string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
 
             elif rmg_molecule:
                 self.rmg_molecule = rmg_molecule
-                self.smiles = rmg_molecule.toSMILES()
+                self.smiles = rmg_molecule.to_smiles()
 
             else:
                 self.smiles = smiles
                 self.rmg_molecule = RMGMolecule(SMILES=smiles)
 
-            self.rmg_molecule.updateMultiplicity()
+            self.rmg_molecule.update_multiplicity()
             self._symmetry_number = None
 
         else:
@@ -793,7 +793,7 @@ class TS(Conformer):
         :return atomMatch: a tuple of tuples the atoms labels corresponding to the reaction center
         """
 
-        if len(self.rmg_molecule.getLabeledAtoms()) == 0:
+        if len(self.rmg_molecule.get_all_labeled_atoms()) == 0:
             labels = []
             atomMatch = ()
 
@@ -802,15 +802,15 @@ class TS(Conformer):
             'r_addition_multiplebond',
             'intra_h_migration']:
             # for i, atom in enumerate(reactants.atoms):
-            lbl1 = self.rmg_molecule.getLabeledAtoms()["*1"].sortingLabel
-            lbl2 = self.rmg_molecule.getLabeledAtoms()["*2"].sortingLabel
-            lbl3 = self.rmg_molecule.getLabeledAtoms()["*3"].sortingLabel
+            lbl1 = self.rmg_molecule.get_all_labeled_atoms()["*1"].sorting_label
+            lbl2 = self.rmg_molecule.get_all_labeled_atoms()["*2"].sorting_label
+            lbl3 = self.rmg_molecule.get_all_labeled_atoms()["*3"].sorting_label
             labels = [lbl1, lbl2, lbl3]
             atomMatch = ((lbl1,), (lbl2,), (lbl3,))
         elif self.reaction_family.lower() in ['disproportionation']:
-            lbl1 = self.rmg_molecule.getLabeledAtoms()["*2"].sortingLabel
-            lbl2 = self.rmg_molecule.getLabeledAtoms()["*4"].sortingLabel
-            lbl3 = self.rmg_molecule.getLabeledAtoms()["*1"].sortingLabel
+            lbl1 = self.rmg_molecule.get_all_labeled_atoms()["*2"].sorting_label
+            lbl2 = self.rmg_molecule.get_all_labeled_atoms()["*4"].sorting_label
+            lbl3 = self.rmg_molecule.get_all_labeled_atoms()["*1"].sorting_label
 
             labels = [lbl1, lbl2, lbl3]
             atomMatch = ((lbl1,), (lbl2,), (lbl3,))
@@ -830,7 +830,7 @@ class TS(Conformer):
         sect = []
 
         for atom in self.rmg_molecule.split()[0].atoms:
-            sect.append(atom.sortingLabel)
+            sect.append(atom.sorting_label)
 
         uncertainties = {'d12': 0.02, 'd13': 0.02, 'd23': 0.02}
         self.bm = self.set_limits(

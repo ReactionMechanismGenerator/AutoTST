@@ -158,7 +158,7 @@ class Gaussian():
                 a, b, c, d = locked_torsion.atom_indices
                 addsec += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)
 
-        self.conformer.rmg_molecule.updateMultiplicity()
+        self.conformer.rmg_molecule.update_multiplicity()
         mult = self.conformer.rmg_molecule.multiplicity
 
         new_scratch = os.path.join(
@@ -207,7 +207,7 @@ class Gaussian():
         assert isinstance(
             self.conformer, Conformer), "A Conformer object was not provided..."
 
-        self.conformer.rmg_molecule.updateMultiplicity()
+        self.conformer.rmg_molecule.update_multiplicity()
 
         label = "{}_{}".format(self.conformer.smiles, self.conformer.index)
 
@@ -252,7 +252,7 @@ class Gaussian():
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
         assert self.conformer.direction.lower() in ["forward", "reverse"]
 
-        self.conformer.rmg_molecule.updateMultiplicity()
+        self.conformer.rmg_molecule.update_multiplicity()
 
         label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_shell_" + str(self.conformer.index)
 
@@ -269,10 +269,10 @@ class Gaussian():
             pass
         
         #if self.conformer.reaction_family != "Some reaction family with 4 labeled atoms..."
-        assert len(self.conformer.rmg_molecule.getLabeledAtoms()) == 3
-        ind1 = self.conformer.rmg_molecule.getLabeledAtom("*1")[0].sortingLabel
-        ind2 = self.conformer.rmg_molecule.getLabeledAtom("*2")[0].sortingLabel
-        ind3 = self.conformer.rmg_molecule.getLabeledAtom("*3")[0].sortingLabel
+        assert len(self.conformer.rmg_molecule.get_all_labeled_atoms()) == 3
+        ind1 = self.conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
+        ind2 = self.conformer.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
+        ind3 = self.conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
 
         combos = ""
         combos += "{0} {1} F\n".format(ind1+1, ind2+1)
@@ -323,7 +323,7 @@ class Gaussian():
             a, b = combo
             addsec += "{0} {1} F\n".format(a + 1, b + 1)
 
-        self.conformer.rmg_molecule.updateMultiplicity()
+        self.conformer.rmg_molecule.update_multiplicity()
 
         label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_center_" + str(self.conformer.index)
 
@@ -371,7 +371,7 @@ class Gaussian():
 
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
-        self.conformer.rmg_molecule.updateMultiplicity()
+        self.conformer.rmg_molecule.update_multiplicity()
 
         label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_" + str(self.conformer.index)
 
@@ -417,7 +417,7 @@ class Gaussian():
 
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
-        self.conformer.rmg_molecule.updateMultiplicity()
+        self.conformer.rmg_molecule.update_multiplicity()
         label = self.conformer.reaction_label + "_irc_" + self.conformer.direction + "_" + str(self.conformer.index)
 
         new_scratch = os.path.join(
@@ -521,9 +521,9 @@ class Gaussian():
             atomnos = ircParse.atomnos
 
             mol1 = RMGMolecule()
-            mol1.fromXYZ(atomnos, atomcoords[pth1End])
+            mol1.from_xyz(atomnos, atomcoords[pth1End])
             mol2 = RMGMolecule()
-            mol2.fromXYZ(atomnos, atomcoords[-1])
+            mol2.from_xyz(atomnos, atomcoords[-1])
 
             testReaction = RMGReaction(
                 reactants=mol1.split(),
@@ -559,19 +559,19 @@ class Gaussian():
             for possible_reactant in possible_reactants:
                 reactant_list = []
                 for react in possible_reactant:
-                    reactant_list.append(react.toSingleBonds())
+                    reactant_list.append(react.to_single_bonds())
 
                 for possible_product in possible_products:
                     product_list = []
                     for prod in possible_product:
-                        product_list.append(prod.toSingleBonds())
+                        product_list.append(prod.to_single_bonds())
 
                     targetReaction = RMGReaction(
                         reactants=list(reactant_list),
                         products=list(product_list)
                     )
 
-                    if targetReaction.isIsomorphic(testReaction):
+                    if targetReaction.is_isomorphic(testReaction):
                         logging.info("IRC calculation was successful!")
                         return True
             logging.info("IRC calculation failed for {} :(".format(irc_path))

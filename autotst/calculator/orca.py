@@ -124,7 +124,7 @@ class Orca():
         else:
             self.base = self.label
   
-        self.charge = self.conformer.rmg_molecule.getNetCharge()
+        self.charge = self.conformer.rmg_molecule.get_net_charge()
         self.mult = self.conformer.rmg_molecule.multiplicity
 
         try:

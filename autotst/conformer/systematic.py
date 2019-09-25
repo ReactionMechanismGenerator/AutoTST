@@ -190,8 +190,8 @@ def systematic_search(conformer,
 
         if isinstance(conformer, TS):
             label = conformer.reaction_label
-            ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
-            ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
+            ind1 = conformer.rmg_molecule.get_labeled_atoms("*1").sorting_label
+            ind2 = conformer.rmg_molecule.get_labeled_atoms("*3").sorting_label
             labels.append([ind1, ind2])
             type = 'ts'
         else:

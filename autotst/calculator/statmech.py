@@ -77,11 +77,11 @@ class StatMech():
         """
         atom_dict = {}
         for atom in conformer.rmg_molecule.atoms:
-            if atom.isCarbon():
+            if atom.is_carbon():
                 atom_type = "C"
-            if atom.isHydrogen():
+            if atom.is_hydrogen():
                 atom_type = "H"
-            if atom.isOxygen():
+            if atom.is_oxygen():
                 atom_type = "O"
 
             try:
@@ -102,7 +102,7 @@ class StatMech():
         - bondDict (dict): a dictionary containing counts of different bond types
         """
 
-        bonds = conformer.rmg_molecule.getAllEdges()
+        bonds = conformer.rmg_molecule.get_all_edges()
         bondDict = {}
         for bond in bonds:
             if bond.isSingle():
@@ -242,13 +242,13 @@ class StatMech():
         external_symmetry = conformer.calculate_symmetry_number()
 
         output += ["",
-                   "linear = {}".format(conformer.rmg_molecule.isLinear()),
+                   "linear = {}".format(conformer.rmg_molecule.is_linear()),
                    "",
                    "externalSymmetry = {}".format(external_symmetry),
                    "",
-                   "spinMultiplicity = {}".format(conformer.rmg_molecule.multiplicity),
+                   "spin_multiplicity = {}".format(conformer.rmg_molecule.multiplicity),
                    "",
-                   "opticalIsomers = 1",
+                   "optical_isomers = 1",
                    ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
@@ -390,7 +390,7 @@ class StatMech():
             output.append("}")
         else:
             output.append('bonds = {}')
-        transitionstate.rmg_molecule.updateMultiplicity()
+        transitionstate.rmg_molecule.update_multiplicity()
 
         external_symmetry = transitionstate.calculate_symmetry_number()
 
@@ -399,10 +399,10 @@ class StatMech():
                    "",
                    "externalSymmetry = {}".format(external_symmetry),
                    "",
-                   "spinMultiplicity = {}".format(
+                   "spin_multiplicity = {}".format(
                        transitionstate.rmg_molecule.multiplicity),
                    "",
-                   "opticalIsomers = 1",
+                   "optical_isomers = 1",
                    ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
@@ -645,14 +645,14 @@ class StatMech():
         - None
         """
 
-        self.kinetics_job.inputFile = os.path.join(
+        self.kinetics_job.input_file = os.path.join(
             self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
         self.kinetics_job.plot = False
-        self.kinetics_job.outputDirectory = os.path.join(self.directory, "ts", self.reaction.label)
+        self.kinetics_job.output_directory = os.path.join(self.directory, "ts", self.reaction.label)
 
         self.kinetics_job.execute()
 
-        for job in self.kinetics_job.jobList:
+        for job in self.kinetics_job.job_list:
             if isinstance(job, KineticsJob):
                 self.kinetics_job = job
             elif isinstance(job, ThermoJob):
@@ -671,12 +671,12 @@ class StatMech():
 
         for reactant in self.reaction.rmg_reaction.reactants:
             for r in self.kinetics_job.reaction.reactants:
-                if reactant.toSMILES() == r.label:
+                if reactant.to_smiles() == r.label:
                     r.molecule = [reactant]
 
         for product in self.reaction.rmg_reaction.products:
             for p in self.kinetics_job.reaction.products:
-                if product.toSMILES() == p.label:
+                if product.to_smiles() == p.label:
                     p.molecule = [product]
 
         self.reaction.rmg_reaction = self.kinetics_job.reaction

@@ -192,7 +192,7 @@ class Job():
 
         if restart or not attempted:
             copy_molecule = conformer.rmg_molecule.copy()
-            copy_molecule.deleteHydrogens()
+            copy_molecule.delete_hydrogens()
             number_of_atoms = len(copy_molecule.atoms)
             if number_of_atoms >= 4:
                 nproc = 2
@@ -273,18 +273,18 @@ class Job():
             to the SMILES of the passed in 'conformer'
             """
             starting_molecule = RMGMolecule(SMILES=conformer.smiles)
-            starting_molecule = starting_molecule.toSingleBonds()
+            starting_molecule = starting_molecule.to_single_bonds()
 
             atoms = self.read_log(
                 os.path.join(scratch_dir, f)
             )
 
             test_molecule = RMGMolecule()
-            test_molecule.fromXYZ(
+            test_molecule.from_xyz(
                 atoms.arrays["numbers"],
                 atoms.arrays["positions"]
             )
-            if not starting_molecule.isIsomorphic(test_molecule):
+            if not starting_molecule.is_isomorphic(test_molecule):
                 logging.info(
                     "Output geometry of {} is not isomorphic with input geometry".format(calc.label))
                 return False
@@ -479,7 +479,7 @@ class Job():
 
         if opt_type.lower() != "irc":
             copy_molecule = transitionstate.rmg_molecule.copy()
-            copy_molecule.deleteHydrogens()
+            copy_molecule.delete_hydrogens()
             number_of_atoms = len(copy_molecule.atoms)
             if number_of_atoms >= 4:
                 nproc = 2
@@ -722,7 +722,7 @@ class Job():
         ase_calculator = self.calculator.get_rotor_calc(torsion_index)
 
         copy_molecule = conformer.rmg_molecule.copy()
-        copy_molecule.deleteHydrogens()
+        copy_molecule.delete_hydrogens()
         number_of_atoms = len(copy_molecule.atoms)
         if number_of_atoms >= 4:
             nproc = 2

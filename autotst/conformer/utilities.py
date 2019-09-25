@@ -83,19 +83,19 @@ def find_terminal_torsions(conformer):
 
         terminal = False
 
-        if (atom_j.isCarbon()) and (len(atom_j.bonds) == 4):
+        if (atom_j.is_carbon()) and (len(atom_j.bonds) == 4):
             num_hydrogens = 0
             for atom_other in list(atom_j.bonds.keys()):
-                if atom_other.isHydrogen():
+                if atom_other.is_hydrogen():
                     num_hydrogens += 1
 
             if num_hydrogens == 3:
                 terminal = True
 
-        if (atom_k.isCarbon()) and (len(atom_k.bonds) == 4):
+        if (atom_k.is_carbon()) and (len(atom_k.bonds) == 4):
             num_hydrogens = 0
             for atom_other in list(atom_k.bonds.keys()):
-                if atom_other.isHydrogen():
+                if atom_other.is_hydrogen():
                     num_hydrogens += 1
 
             if num_hydrogens == 3:

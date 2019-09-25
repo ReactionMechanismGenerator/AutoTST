@@ -92,15 +92,15 @@ class TestTransitionStates(unittest.TestCase):
         rmg_database = RMGDatabase()
         rmg_database.load(
             rmgpy.settings['database.directory'],
-            kineticsFamilies=[
+            kinetics_families=[
             "R_Addition_MultipleBond",
             "H_Abstraction",
             "intra_H_migration"
         ],
-            transportLibraries=[],
-            reactionLibraries=[],
-            seedMechanisms=[],
-            thermoLibraries=[
+            transport_libraries=[],
+            reaction_libraries=[],
+            seed_mechanisms=[],
+            thermo_libraries=[
                 'primaryThermoLibrary',
                 'thermo_DFT_CCSDTF12_BAC',
                 'CBS_QB3_1dHR'],

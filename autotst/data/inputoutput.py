@@ -37,7 +37,7 @@ from autotst.calculator.vibrational_analysis import VibrationalAnalysis
 from autotst.data.base import QMData
 import rmgpy
 from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.molecule import Atom, getElement
+from rmgpy.molecule import Atom, get_element
 from rmgpy.species import Species as RMGSpecies, TransitionState
 from rmgpy.reaction import Reaction as RMGReaction
 from rmgpy.kinetics import Arrhenius, Eckart
@@ -125,7 +125,7 @@ class InputOutput():
         with open(file_path, 'w') as resultFile:
             resultFile.write('rxnLabel = "{0!s}"\n'.format(self.reaction.label))
             resultFile.write('method = "{0!s}"\n'.format(self.method))
-            resultFile.write("qmData = {0!r}\n".format(self.qmdata))
+            resultFile.write("qm_data = {0!r}\n".format(self.qmdata))
         return True
 
     def save_kinetics(self):

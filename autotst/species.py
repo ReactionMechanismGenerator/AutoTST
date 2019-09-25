@@ -90,7 +90,7 @@ class Species():
 
             smiles_list = []
             for rmg_mol in rmg_species.molecule:
-                smiles_list.append(rmg_mol.toSMILES())
+                smiles_list.append(rmg_mol.to_smiles())
 
             for s in smiles_list:
                 if s in smiles:
@@ -129,7 +129,7 @@ class Species():
 
             smiles = []
             for rmg_mol in rmg_species.molecule:
-                smiles.append(rmg_mol.toSMILES())
+                smiles.append(rmg_mol.to_smiles())
 
             self.smiles = smiles
             self.rmg_species = rmg_species
@@ -148,13 +148,13 @@ class Species():
                     for s2 in species_list:
                         for m1 in s1:
                             for m2 in s2:
-                                if m1.isIsomorphic(m2):
+                                if m1.is_isomorphic(m2):
                                     got_one = True
                 assert got_one, "SMILESs provided describe different species"
 
             smiles_list = []
             for mol in species_list[0]:
-                smiles_list.append(mol.toSMILES())
+                smiles_list.append(mol.to_smiles())
 
             self.smiles = smiles_list
             self.rmg_species = species_list[0]
@@ -210,20 +210,20 @@ class Conformer():
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
-                assert rmg_molecule.isIsomorphic(RMGMolecule(
+                assert rmg_molecule.is_isomorphic(RMGMolecule(
                     SMILES=smiles)), "SMILES string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
 
             elif rmg_molecule:
                 self.rmg_molecule = rmg_molecule
-                self.smiles = rmg_molecule.toSMILES()
+                self.smiles = rmg_molecule.to_smiles()
 
             else:
                 self.smiles = smiles
                 self.rmg_molecule = RMGMolecule(SMILES=smiles)
 
-            self.rmg_molecule.updateMultiplicity()
+            self.rmg_molecule.update_multiplicity()
             self.get_molecules()
             self.get_geometries()
             self._symmetry_number = None
@@ -278,7 +278,7 @@ class Conformer():
 
         assert self.rmg_molecule, "Cannot create an RDKit geometry without an RMG molecule object"
 
-        RDMol = self.rmg_molecule.toRDKitMol(removeHs=False)
+        RDMol = self.rmg_molecule.to_rdkit_mol(remove_h=False)
         rdkit.Chem.AllChem.EmbedMolecule(RDMol)
         self._rdkit_molecule = RDMol
 
@@ -1082,7 +1082,7 @@ class Conformer():
         #os.remove("{}.symm".format(self.smiles))
 
         if pg is not None:
-            symmetry_number = pg.symmetryNumber
+            symmetry_number = pg.symmetry_number
         else:
             symmetry_number = 1
 
