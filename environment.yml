@@ -7,7 +7,7 @@ channels:
   - anaconda
   - conda-forge
 dependencies:
-  - rmg
+  - rmg == 2.4.0
   - ase
   - cclib == 1.5.3
   - py3dmol
