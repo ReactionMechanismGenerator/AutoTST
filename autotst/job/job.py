@@ -272,7 +272,7 @@ class Job():
             Compares whatever is in the log file 'f' 
             to the SMILES of the passed in 'conformer'
             """
-            starting_molecule = RMGMolecule(SMILES=conformer.smiles)
+            starting_molecule = RMGMolecule(smiles=conformer.smiles)
             starting_molecule = starting_molecule.to_single_bonds()
 
             atoms = self.read_log(

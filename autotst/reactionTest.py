@@ -43,8 +43,8 @@ class TestReaction(unittest.TestCase):
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.reaction2 = Reaction(rmg_reaction=RMGReaction(
-            reactants = [RMGMolecule(SMILES="CC"), RMGMolecule(SMILES="[O]O")],
-            products = [RMGMolecule(SMILES="[CH2]C"), RMGMolecule(SMILES="OO")]
+            reactants = [RMGMolecule(smiles="CC"), RMGMolecule(smiles="[O]O")],
+            products = [RMGMolecule(smiles="[CH2]C"), RMGMolecule(smiles="OO")]
         ))
 
     def test_label(self):
@@ -54,12 +54,12 @@ class TestReaction(unittest.TestCase):
     def test_rmg_reaction(self):
         test_reaction = RMGReaction(
             reactants=[
-                RMGMolecule(SMILES="CC"),
-                RMGMolecule(SMILES="[O]O")
+                RMGMolecule(smiles="CC"),
+                RMGMolecule(smiles="[O]O")
             ],
             products = [
-                RMGMolecule(SMILES="[CH2]C"),
-                RMGMolecule(SMILES="OO")
+                RMGMolecule(smiles="[CH2]C"),
+                RMGMolecule(smiles="OO")
             ]
         )
 
@@ -114,12 +114,12 @@ class TestReaction(unittest.TestCase):
     def test_labeled_reaction(self):
         test_reaction = RMGReaction(
             reactants=[
-                RMGMolecule(SMILES="CC"),
-                RMGMolecule(SMILES="[O]O")
+                RMGMolecule(smiles="CC"),
+                RMGMolecule(smiles="[O]O")
             ],
             products = [
-                RMGMolecule(SMILES="[CH2]C"),
-                RMGMolecule(SMILES="OO")
+                RMGMolecule(smiles="[CH2]C"),
+                RMGMolecule(smiles="OO")
             ]
         )
         labeled_reaction, reaction_family = self.reaction.get_labeled_reaction()
@@ -198,8 +198,8 @@ class TestTS(unittest.TestCase):
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.reaction2 = Reaction(rmg_reaction=RMGReaction(
-            reactants = [RMGMolecule(SMILES="CC"), RMGMolecule(SMILES="[O]O")],
-            products = [RMGMolecule(SMILES="[CH2]C"), RMGMolecule(SMILES="OO")]
+            reactants = [RMGMolecule(smiles="CC"), RMGMolecule(smiles="[O]O")],
+            products = [RMGMolecule(smiles="[CH2]C"), RMGMolecule(smiles="OO")]
         ))
         self.ts = self.reaction.ts["forward"][0]
         self.ts2 = self.reaction.ts["forward"][0]
