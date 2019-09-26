@@ -12,6 +12,6 @@ dependencies:
   - ase
   - cclib
   - py3dmol
-  - rdkit
+  - rdkit == 2018.09.3.0
   - nose
   - codecov
