@@ -930,31 +930,31 @@ class TS(Conformer):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
-            test_conf.rdkit_molecule = self._pseudo_geometry
+            test_conf._rdkit_molecule = self._pseudo_geometry
         except:
             self.get_rdkit_mol()
-            test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+            test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_bonds()
 
     def get_torsions(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
-	        test_conf.rdkit_molecule = self._pseudo_geometry
+	        test_conf._rdkit_molecule = self._pseudo_geometry
         except:
             self.get_rdkit_mol()
-            test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+            test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_torsions()
 
     def get_angles(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
-	        test_conf.rdkit_molecule = self._pseudo_geometry
+	        test_conf._rdkit_molecule = self._pseudo_geometry
         except:
             self.get_rdkit_mol()
-            test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+            test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_angles()
