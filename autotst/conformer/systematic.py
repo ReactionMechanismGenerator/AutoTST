@@ -150,7 +150,7 @@ def systematic_search(conformer,
     
     if not isinstance(conformer, TS):
         reference_mol = conformer.rmg_molecule.copy(deep=True)
-        reference_mol = reference_mol.toSingleBonds()
+        reference_mol = reference_mol.to_single_bonds()
     manager = Manager()
     return_dict = manager.dict()
 
@@ -166,8 +166,8 @@ def systematic_search(conformer,
     
         if isinstance(conformer, TS):
             label = conformer.reaction_label
-            ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
-            ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
+            ind1 = conformer.rmg_molecule.get_labeled_atom("*1")[0].sorting_label
+            ind2 = conformer.rmg_molecule.get_labeled_atom("*3")[0].sorting_label
             labels.append([ind1, ind2])
             type = 'ts'
         else:
@@ -205,11 +205,11 @@ def systematic_search(conformer,
                 conformer.update_coords_from("ase")
                 try:
                     rmg_mol = Molecule()
-                    rmg_mol.fromXYZ(
+                    rmg_mol.from_xyz(
                         conformer.ase_molecule.arrays["numbers"],
                         conformer.ase_molecule.arrays["positions"]
                     )
-                    if not rmg_mol.isIsomorphic(reference_mol):
+                    if not rmg_mol.is_isomorphic(reference_mol):
                         logging.info("{}_{} is not isomorphic with reference mol".format(conformer,str(i)))
                         return False
                 except AtomTypeError:
@@ -300,62 +300,6 @@ def systematic_search(conformer,
   
         conformers[index] = conformer.copy()
 
-<<<<<<< HEAD
-    logging.info(
-        "There are {} unique conformers generated".format(len(conformers)))
-
-    def opt_conf(conformer, calculator, i):
-        """
-        A helper function to optimize the geometry of a conformer.
-        Only for use within this parent function
-        """
-
-        labels = []
-        for bond in conformer.bonds:
-            labels.append(bond.atom_indices)
-
-        if isinstance(conformer, TS):
-            label = conformer.reaction_label
-            ind1 = conformer.rmg_molecule.get_labeled_atoms("*1").sorting_label
-            ind2 = conformer.rmg_molecule.get_labeled_atoms("*3").sorting_label
-            labels.append([ind1, ind2])
-            type = 'ts'
-        else:
-            label = conformer.smiles
-            type = 'species'
-
-        if isinstance(calc, FileIOCalculator):
-            if calculator.directory:
-                directory = calculator.directory 
-            else: 
-                directory = 'conformer_logs'
-            calculator.label = "{}_{}".format(conformer.smiles, i)
-            calculator.directory = os.path.join(directory, label,'{}_{}'.format(conformer.smiles, i))
-            if not os.path.exists(calculator.directory):
-                try:
-                    os.makedirs(calculator.directory)
-                except OSError:
-                    logging.info("An error occured when creating {}".format(calculator.directory))
-
-            calculator.atoms = conformer.ase_molecule
-
-        from ase.constraints import FixBondLengths
-        c = FixBondLengths(labels)
-        conformer.ase_molecule.set_constraint(c)
-
-        conformer.ase_molecule.set_calculator(calculator)
-
-        opt = BFGS(conformer.ase_molecule, logfile=None)
-        opt.run(fmax=0.1)
-        conformer.update_coords_from("ase")
-        energy = get_energy(conformer)
-        return_dict[i] = (energy, conformer.ase_molecule.arrays,
-                          conformer.ase_molecule.get_all_distances())
-
-    manager = Manager()
-    return_dict = manager.dict()
-=======
->>>>>>> master
 
     processes = []
     for i, conf in list(conformers.items()):
@@ -406,7 +350,7 @@ def systematic_search(conformer,
     df.drop(df.index[redundant], inplace=True)
 
     if multiplicity and conformer.rmg_molecule.multiplicity > 2:
-        rads = conformer.rmg_molecule.getRadicalCount()
+        rads = conformer.rmg_molecule.get_radical_count()
         if rads % 2 == 0:
             multiplicities = range(1,rads+2,2)
         else:
