@@ -134,7 +134,7 @@ class TestTransitionStates(unittest.TestCase):
         reaction = Reaction("CC+[O]O_[CH2]C+OO")
         labeled_reaction, _ = reaction.get_labeled_reaction()
 
-        distance_data = self.ts_database.estimateDistances(labeled_reaction)
+        distance_data = self.ts_database.estimate_distances(labeled_reaction)
 
         d12 = 1.38
         d13 = 2.53

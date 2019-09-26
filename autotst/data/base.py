@@ -61,7 +61,7 @@ class QMData():
     """
 
     def __init__(self,
-                 ground_state_degen=0,
+                 ground_state_degeneracy=0,
                  number_of_atoms=0,
                  steric_energy=None,
                  molecular_mass=(0, "amu"),

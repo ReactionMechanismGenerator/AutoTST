@@ -776,7 +776,7 @@ class TS(Conformer):
                     u_ik = self.bm[i, k] if k > i else self.bm[k, i]
                     u_kj = self.bm[j, k] if k > j else self.bm[k, j]
 
-                    max_lij = u_ik + _ukj - 0.1
+                    max_lij = u_ik + u_kj - 0.1
                     if self.bm[i, j] > max_lij:
                         logging.info(
                             "Changing lower limit {0} to {1}".format(self.bm[i, j], max_lij))

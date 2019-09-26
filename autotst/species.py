@@ -1069,14 +1069,14 @@ class Conformer():
         coordinates = self.ase_molecule.get_positions()
 
         qmdata = QMData(
-            ground_state_degeneracy=1,  # Only needed to check if valid QMData
-            number_of_atoms=len(atom_numbers),
-            atomic_numbers=atom_numbers,
-            atom_coords=(coordinates, str('angstrom')),
+            groundStateDegeneracy=1,  # Only needed to check if valid QMData
+            numberOfAtoms=len(atom_numbers),
+            atomicNumbers=atom_numbers,
+            atomCoords=(coordinates, str('angstrom')),
             energy=(0.0, str('kcal/mol'))  # Only needed to avoid error
         )
-        settings = type(str(''), (), dict(symmetry_path=str(
-            'symmetry'), scratch_directory="."))()  # Creates anonymous class
+        settings = type(str(''), (), dict(symmetryPath=str(
+            'symmetry'), scratchDirectory="."))()  # Creates anonymous class
         pgc = PointGroupCalculator(settings, self.smiles, qmdata)
         pg = pgc.calculate()
         #os.remove("{}.symm".format(self.smiles))
