@@ -259,13 +259,13 @@ class StatMech():
         output += [
             "frequencies = Log('{0}.log')".format(label), ""]
 
-        """
-        TODO: add rotor information @carl
+        
+        
         output += ["rotors = ["]
-        for torsion in conf.torsions:
-            output += [self.get_rotor_info(conf, torsion)]
+        for torsion in conformer.torsions:
+            output += [self.get_rotor_info(conformer, torsion.index)]
         output += ["]"]
-        """
+        
         input_string = ""
 
         for t in output:
@@ -300,18 +300,18 @@ class StatMech():
 
         if isinstance(conformer, TS):
             tor_log = os.path.join(
-                scratch,
+                self.directory,
                 "ts",
                 conformer.reaction_label,
-                "torsions",
+                "rotors",
                 comformer.reaction_label + "_36by10_{0}_{1}.log".format(j, k)
             )
         else:
             tor_log = os.path.join(
-                scratch,
+                self.directory,
                 "species",
                 conformer.smiles,
-                "torsions",
+                "rotors",
                 conformer.smiles + '_36by10_{0}_{1}.log'.format(j, k)
             )
 
@@ -444,7 +444,7 @@ class StatMech():
                 self.model_chemistry),  # fix this
             "frequencyScaleFactor = {0}".format(
                 self.freq_scale_factor),  # fix this
-            "useHinderedRotors = False",  # fix this @carl
+            "useHinderedRotors = True",  # fix this @carl
             "useBondCorrections = False",
             ""]
 
