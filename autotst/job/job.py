@@ -912,7 +912,12 @@ class Job():
                 self.directory, "ts", conformer.reaction_label, "rotors", label  + ".log")
         elif isinstance(conformer, Conformer):
              file_name = os.path.join(
-                self.directory, "species", conformer.smiles, "rotors", label  + ".log")           
+                self.directory, "species", conformer.smiles, "rotors", label  + ".log")   
+
+        if not self.calculator.verify_output_file(file_name):
+            logging.warning("ERROR: {} has not converged... do not use this log file when determining kinetics".format(label))
+            return [False, False]
+
         parser = cclib.io.ccread(file_name, loglevel=logging.ERROR)
 
         continuous = self.check_rotor_continuous(
