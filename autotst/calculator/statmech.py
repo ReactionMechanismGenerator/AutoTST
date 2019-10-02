@@ -328,7 +328,7 @@ class StatMech():
         # Adjusted to start from 1 instead of 0
         top_IDs_adj = [ID+1 for ID in top_IDs]
 
-        info = "     HinderedRotor(scanLog=Log('{0}'), pivots={1}, top={2}, fit='fourier'),".format(
+        info = "     HinderedRotor(scanLog=Log('{0}'), pivots={1}, top={2}, fit='best'),".format(
             tor_log, tor_center_adj, top_IDs_adj)
 
         return info
