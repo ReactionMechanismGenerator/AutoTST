@@ -924,10 +924,10 @@ class Job():
             steps, step_size, parser=parser)
         [lowest_conf, energy, atomnos,
             atomcoords] = self.check_rotor_lowest_conf(parser=parser)
-        #opt_count_check = self.check_rotor_opts(steps, parser=parser)
-        #good_slope = self.check_rotor_slope(steps, step_size, parser=parser)
+        opt_count_check = self.check_rotor_opts(steps, parser=parser)
+        good_slope = self.check_rotor_slope(steps, step_size, parser=parser)
 
-        return [lowest_conf, continuous]#, good_slope, opt_count_check] ### Previously used, but the second two checks were deemed unecessary
+        return [lowest_conf, continuous, good_slope, opt_count_check] ### Previously used, but the second two checks were deemed unecessary
 
     def check_rotor_opts(self, steps, parser):
 

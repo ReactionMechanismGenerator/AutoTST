@@ -589,7 +589,7 @@ class StatMech():
                 model_chemistry),  # fix this
             "frequencyScaleFactor = {0}".format(
                 freq_scale_factor),  # fix this
-            "useHinderedRotors = False",  # fix this @carl
+            "useHinderedRotors = True",  # fix this @carl
             "useBondCorrections = False",
             ""]
 
