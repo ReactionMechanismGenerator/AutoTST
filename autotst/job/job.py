@@ -925,14 +925,16 @@ class Job():
         [lowest_conf, energy, atomnos,
             atomcoords] = self.check_rotor_lowest_conf(parser=parser)
         opt_count_check = self.check_rotor_opts(steps, parser=parser)
-        good_slope = self.check_rotor_slope(steps, step_size, parser=parser)
 
-        return [lowest_conf, continuous, good_slope, opt_count_check] ### Previously used, but the second two checks were deemed unecessary
+        return [lowest_conf, continuous, opt_count_check] 
 
     def check_rotor_opts(self, steps, parser):
+        """
+        A method to check how many optization steps were made though the scan.
+        This should return true if the number of steps requested equal 
+        the number of steps in the log file.
+        """
 
-
-        #opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
         opt_indices = [i for i, status in enumerate(
             parser.optstatus) if status > 1]
         opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
@@ -940,27 +942,6 @@ class Job():
         n_opts_check = (steps + 1) == len(opt_SCFEnergies)
 
         return n_opts_check
-
-    def check_rotor_slope(self, steps, step_size, parser, tol=0.1):
-
-
-        opt_indices = [i for i, status in enumerate(
-            parser.optstatus) if status in [2, 4]]
-        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
-
-        max_energy = max(opt_SCFEnergies)
-        min_energy = min(opt_SCFEnergies)
-
-        max_slope = (max_energy - min_energy) / step_size
-        slope_tol = tol*max_slope
-
-        for i, energy in enumerate(opt_SCFEnergies):
-            prev_energy = opt_SCFEnergies[i-1]
-            slope = np.absolute((energy-prev_energy)/float(step_size))
-            if slope > slope_tol:
-                return False
-
-        return True
 
     def check_rotor_continuous(self, steps, step_size, parser, tol=0.1):
         """
