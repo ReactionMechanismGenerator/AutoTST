@@ -60,15 +60,18 @@ class VibrationalAnalysisTest(unittest.TestCase):
             transitionstate = self.ts,
             directory = self.directory
         )
-    def tearDown(self):
-        directory = os.path.expandvars("$AUTOTST/test")
-        if os.path.exists(os.path.join(directory, "ts")):
-            shutil.rmtree(os.path.join(directory, "ts"))
+    """def tearDown(self):
+        try:
+            directory = os.path.expandvars("$AUTOTST/test")
+            if os.path.exists(os.path.join(directory, "ts")):
+                shutil.rmtree(os.path.join(directory, "ts"))
 
-        for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
-            for fi in files:
-                if fi.endswith(".symm"):
-                    os.remove(os.path.join(head, fi))
+            for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+                for fi in files:
+                    if fi.endswith(".symm"):
+                        os.remove(os.path.join(head, fi))
+        except:
+            None"""
 
     def test_get_log_file(self):
         log_file = self.vibrational_analysis.get_log_file()

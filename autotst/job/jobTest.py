@@ -112,11 +112,8 @@ class JobTest(unittest.TestCase):
                 )))
     
     def test_submit_transitionstate(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
         ts = self.reaction.ts["forward"][0]
         ts.get_molecules()
-
         for opt_type in ["shell", "center", "overall"]:
             label = self.job.submit_transitionstate(ts, opt_type=opt_type)
             if opt_type == "overall":
@@ -125,8 +122,6 @@ class JobTest(unittest.TestCase):
                 self.assertEqual(label, "{}_{}_{}_{}".format(ts.reaction_label,ts.direction, opt_type, ts.index))
 
     def test_calculate_transitionstate(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
         ts = self.reaction.ts["forward"][0]
         ts.get_molecules()
         result = self.job.calculate_transitionstate(ts)
@@ -139,10 +134,13 @@ class JobTest(unittest.TestCase):
         self.assertTrue(result)
     
     def tearDown(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
+        try:
+            if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
+                shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
+            if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
+                shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
+        except:
+            None
     
 
 if __name__ == "__main__":

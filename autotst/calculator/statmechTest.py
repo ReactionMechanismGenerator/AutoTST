@@ -64,16 +64,19 @@ class TestStatMech(unittest.TestCase):
         )
 
     def tearDown(self):
-        directory = os.path.expandvars("$AUTOTST/test")
-        if os.path.exists(os.path.join(directory, "ts")):
-            shutil.rmtree(os.path.join(directory, "ts"))
-        if os.path.exists(os.path.join(directory, "species")):
-            shutil.rmtree(os.path.join(directory, "species"))
+        try:
+            directory = os.path.expandvars("$AUTOTST/test")
+            if os.path.exists(os.path.join(directory, "ts")):
+                shutil.rmtree(os.path.join(directory, "ts"))
+            if os.path.exists(os.path.join(directory, "species")):
+                shutil.rmtree(os.path.join(directory, "species"))
 
-        for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
-            for fi in files:
-                if fi.endswith(".symm"):
-                    os.remove(os.path.join(head, fi))
+            for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+                for fi in files:
+                    if fi.endswith(".symm"):
+                        os.remove(os.path.join(head, fi))
+        except:
+            None
 
     def test_get_atoms(self):
 
