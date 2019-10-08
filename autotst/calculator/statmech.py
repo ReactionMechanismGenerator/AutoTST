@@ -248,7 +248,7 @@ class StatMech():
                    "",
                    "spinMultiplicity = {}".format(conformer.rmg_molecule.multiplicity),
                    "",
-                   "optical_isomers = 1",
+                   "opticalIsomers = 1",
                    ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
@@ -402,7 +402,7 @@ class StatMech():
                    "spinMultiplicity = {}".format(
                        transitionstate.rmg_molecule.multiplicity),
                    "",
-                   "optical_isomers = 1",
+                   "opticalIsomers = 1",
                    ""]
 
         output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
