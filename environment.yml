@@ -8,11 +8,11 @@ channels:
   - anaconda
   - conda-forge
 dependencies:
-  - python >= 3.7
+  - python
   - rmg == 3.0.0b
   - ase
   - cclib
   - py3dmol
-  - rdkit == 2018.09.3.0
+  - rdkit
   - nose
   - codecov
