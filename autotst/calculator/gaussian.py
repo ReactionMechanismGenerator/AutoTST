@@ -269,10 +269,13 @@ class Gaussian():
             pass
         
         #if self.conformer.reaction_family != "Some reaction family with 4 labeled atoms..."
-        assert len(self.conformer.rmg_molecule.get_all_labeled_atoms()) == 3
-        ind1 = self.conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
-        ind2 = self.conformer.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
-        ind3 = self.conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
+        if self.conformer.reaction_family.lower() in ["h_abstraction", "intra_h_migration", "r_addition_multiplebond"]:
+            ind1 = self.conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
+            ind2 = self.conformer.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
+            ind3 = self.conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
+        else:
+            logging.error("Reaction family {} is not supported...".format(self.conformer.reaction_family))
+            raise AssertionError
 
         combos = ""
         combos += "{0} {1} F\n".format(ind1+1, ind2+1)

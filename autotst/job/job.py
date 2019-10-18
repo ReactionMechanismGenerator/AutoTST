@@ -628,7 +628,7 @@ class Job():
         for name, process in list(processes.items()):
             while len(currently_running) >= 50:
                 for running in currently_running:
-                    if not running.is_alive():
+                    if not processes[running].is_alive():
                         currently_running.remove(name)
             process.start()
             currently_running.append(name)

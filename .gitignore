@@ -30,6 +30,7 @@
 *.idea/
 
 # Gaussian scratch files and ase related io files
+*.symm
 *.ase
 *.com
 *.log
