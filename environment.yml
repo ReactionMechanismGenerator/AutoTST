@@ -2,6 +2,7 @@ name: tst_env
 channels:
   - defaults
   - rdkit
+  - krsna
   - rmg
   - cantera
   - pytorch

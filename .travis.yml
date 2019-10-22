@@ -21,7 +21,7 @@ install:
   - conda env create -f environment.yml
   - source activate tst_env
   - conda list
-  - yes | conda uninstall --force openbabel
+  #- yes | conda uninstall --force openbabel
 
 script:
   - make unittests
