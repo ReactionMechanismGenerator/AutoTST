@@ -60,15 +60,6 @@ class VibrationalAnalysisTest(unittest.TestCase):
             transitionstate = self.ts,
             directory = self.directory
         )
-    def tearDown(self):
-        directory = os.path.expandvars("$AUTOTST/test")
-        if os.path.exists(os.path.join(directory, "ts")):
-            shutil.rmtree(os.path.join(directory, "ts"))
-
-        for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
-            for fi in files:
-                if fi.endswith(".symm"):
-                    os.remove(os.path.join(head, fi))
 
     def test_get_log_file(self):
         log_file = self.vibrational_analysis.get_log_file()
@@ -84,7 +75,8 @@ class VibrationalAnalysisTest(unittest.TestCase):
         self.assertEqual(log_file, actual_path)
 
     def test_parse_vibrations(self):
-
+        print(self.directory)
+        print(self.vibrational_analysis.directory)
         vibrations = self.vibrational_analysis.parse_vibrations()
         self.assertIsInstance(vibrations, list)
         self.assertEqual(len(vibrations), 27)
@@ -129,4 +121,15 @@ class VibrationalAnalysisTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
+    try:
+        directory = os.path.expandvars("$AUTOTST/test")
+        if os.path.exists(os.path.join(directory, "ts")):
+            shutil.rmtree(os.path.join(directory, "ts"))
+
+        for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+            for fi in files:
+                if fi.endswith(".symm"):
+                    os.remove(os.path.join(head, fi))
+    except:
+        None
 

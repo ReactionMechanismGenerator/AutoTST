@@ -1,8 +1,35 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+##########################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+##########################################################################
+
 from autotst.species import Species, Conformer
 from autotst.reaction import Reaction, TS
+from autotst.data.base import *
 import itertools
 import pandas as pd
 import numpy as np
@@ -12,7 +39,6 @@ from rmgpy.species import Species as RMGSpecies
 from rmgpy.kinetics import Arrhenius, ArrheniusEP, KineticsData
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.quantity import constants
-from autotst.data.base import *
 import rmgpy
 import re
 import os
@@ -26,7 +52,7 @@ import scipy.stats
 
 
 
-def update_all(reactions, family, method='', shortDesc=''):
+def update_all(reactions, family, method='', short_desc=''):
     """
     Given reactions of designated family, updates corresponding reactions.py, dictionary.txt and TS_Groups.py
 
@@ -34,7 +60,7 @@ def update_all(reactions, family, method='', shortDesc=''):
     family    :: family of reaction
     """
 
-    update_databases(reactions, method=method, shortDesc=shortDesc,
+    update_databases(reactions, method=method, short_desc=short_desc,
                      reaction_family=family, overwrite=True)
 
     TS_Database_Update([family], path=None, auto_save=True)
@@ -62,12 +88,12 @@ def get_unknown_species(reactions, known_species):
         for rel_species in relavent_species:
             for label in known_species:
                 known_spec = known_species[label]
-                if known_spec.isIsomorphic(rel_species):
+                if known_spec.is_isomorphic(rel_species):
                     found_species[rel_species] = label
                     relavent_labels[rel_species] = label
 
             if rel_species not in list(found_species.keys()):
-                need_to_add.append(rel_species.toSMILES())
+                need_to_add.append(rel_species.to_smiles())
 
     need_to_add = list(set(need_to_add))
 
@@ -86,7 +112,7 @@ def update_dictionary_entries(old_entries, need_to_add):
     for j, species in enumerate(need_to_add):
 
         molecule = RMGMolecule(SMILES=species)
-        adjlist = molecule.toAdjacencyList()
+        adjlist = molecule.to_adjacency_list()
 
         multiplicity = None
         if re.search('(?<=multiplicity ).*', adjlist):
@@ -96,7 +122,7 @@ def update_dictionary_entries(old_entries, need_to_add):
                              'multiplicity [{}]'.format(multiplicity), adjlist)
 
         group = rmgpy.molecule.group.Group()
-        group.fromAdjacencyList(adjlist)
+        group.from_adjacency_list(adjlist)
 
         atom_counts = {}
         rel_label = ''
@@ -120,7 +146,7 @@ def update_dictionary_entries(old_entries, need_to_add):
         for old_label in old_entries:
             old_entry = old_entries[old_label]
 
-            if group.isIsomorphic(old_entry.item):
+            if group.is_isomorphic(old_entry.item):
                 duplicate = True
                 print('{} found to be duplicate'.format(old_entry))
                 continue
@@ -166,12 +192,12 @@ def check_dictionary_entries(dict_entries):
     entry_adjlists = []
     entry_labels = []
     for entry in list(dict_entries.values()):
-        adjlist = entry.item.toAdjacencyList()
+        adjlist = entry.item.to_adjacency_list()
 
         assert adjlist not in entry_adjlists, 'Non-unique adjacencies for dictionary'
         assert entry.label not in entry_labels, 'Non-unique labels for dictionary'
 
-        entry_adjlists.append(entry.item.toAdjacencyList())
+        entry_adjlists.append(entry.item.to_adjacency_list())
         entry_labels.append(entry.label)
 
     return True
@@ -197,7 +223,7 @@ def rote_load_dict(path):
                 multiplicity) + adjlist.split('\n', 1)[1]
 
         group = rmgpy.molecule.group.Group()
-        group.fromAdjacencyList(adjlist)
+        group.from_adjacency_list(adjlist)
 
         entry = Entry()
         entry.item = group
@@ -217,7 +243,7 @@ def rote_save_dictionary(path, entries):
 
     for entry in list(entries.values()):
         multiplicity = entry.item.multiplicity
-        adjlist = entry.item.toAdjacencyList()
+        adjlist = entry.item.to_adjacency_list()
 
         if multiplicity is not None:
             adjlist = re.sub(r'\[', '', adjlist)
@@ -237,7 +263,7 @@ def update_known_reactions(
         reactions,
         known_species,
         method='',
-        shortDesc=''):
+        short_desc=''):
     """
     Expects path of current reactions database, new reactions to add as list of auto-TST reaction objects,
         an updated known_species dict (includes species in new reactions),
@@ -280,11 +306,11 @@ def update_known_reactions(
         for rel_species in relavent_species:
             for label in known_species:
                 known_spec = known_species[label]
-                if known_spec.isIsomorphic(rel_species):
+                if known_spec.is_isomorphic(rel_species):
                     found_species[rel_species] = label
 
             if rel_species not in list(found_species.keys()):
-                need_to_add.append(rel_species.toSMILES())
+                need_to_add.append(rel_species.to_smiles())
                 logging.warning(
                     '{} not found in species dictionary'.format(rel_species))
 
@@ -297,7 +323,7 @@ def update_known_reactions(
         #print Label
 
         # adding new entries to r_db, r_db will contain old and new reactions
-        r_db.loadEntry(Index + i,
+        r_db.load_entry(Index + i,
                        reactant1=None,
                        reactant2=None,
                        reactant3=None,
@@ -310,16 +336,16 @@ def update_known_reactions(
                        duplicate=False,
                        reversible=True,
                        reference=None,
-                       referenceType='',
-                       shortDesc=shortDesc,
-                       longDesc='',
+                       reference_type='',
+                       short_desc=short_desc,
+                       long_desc='',
                        rank=None,
                        )
 
         r_db.entries['{0:d}:{1}'.format(Index + i, Label)].item = rmg_reaction
 
         # Adding new reactions to the new_r_db as well
-        new_r_db.loadEntry(Index + i,
+        new_r_db.load_entry(Index + i,
                            reactant1=None,
                            reactant2=None,
                            reactant3=None,
@@ -332,9 +358,9 @@ def update_known_reactions(
                            duplicate=False,
                            reversible=True,
                            reference=None,
-                           referenceType='',
-                           shortDesc=shortDesc,
-                           longDesc='',
+                           reference_type='',
+                           short_desc=short_desc,
+                           long_desc='',
                            rank=None,
                            )
 
@@ -351,10 +377,10 @@ def update_known_reactions(
     return r_db, old_r_db, new_r_db
 
 
-def update_databases(reactions, method='', shortDesc='', reaction_family='', overwrite=False):
+def update_databases(reactions, method='', short_desc='', reaction_family='', overwrite=False):
     """
     Expects list of auto-TST reaction objects to add to the current dictionary,
-        method, shortDesc, and reaction family of those Reactions
+        method, short_desc, and reaction family of those Reactions
 
     Saves the new reactions and new species found in those reactions
     """
@@ -387,7 +413,7 @@ def update_databases(reactions, method='', shortDesc='', reaction_family='', ove
         new_dict_path = os.path.join(general_path, 'updated_dictionary.txt')
         new_reactions_path = os.path.join(general_path, 'updated_reactions.py')
 
-    known_species = rmgpy.data.base.Database().getSpecies(dict_path)
+    known_species = rmgpy.data.base.Database().get_species(dict_path)
     unknown_species = get_unknown_species(reactions, known_species)
 
     updated_known_species = []
@@ -405,7 +431,7 @@ def update_databases(reactions, method='', shortDesc='', reaction_family='', ove
         if check_dictionary_entries(all_dict_entries):
             rote_save_dictionary(new_dict_path, all_dict_entries)
 
-        updated_known_species = rmgpy.data.base.Database().getSpecies(new_dict_path)
+        updated_known_species = rmgpy.data.base.Database().get_species(new_dict_path)
         unk_spec = get_unknown_species(reactions, updated_known_species)
         assert len(unk_spec) == 0, '{} unknown species found after updating'.format(
             len(unk_spec))
@@ -416,7 +442,7 @@ def update_databases(reactions, method='', shortDesc='', reaction_family='', ove
                                                   reactions,
                                                   updated_known_species,
                                                   method=method,
-                                                  shortDesc=shortDesc
+                                                  short_desc=short_desc
                                                   )
 
     # TODO add check for duplicates method
@@ -467,12 +493,12 @@ def TS_Database_Update(families, path=None, auto_save=False):
 
     try:
         rmg_database.load(database_path,
-                          # kineticsFamilies=['H_Abstraction'],
-                          kineticsFamilies=families,
-                          transportLibraries=[],
-                          reactionLibraries=[],
-                          seedMechanisms=[],
-                          thermoLibraries=[
+                          # kinetics_families=['H_Abstraction'],
+                          kinetics_families=families,
+                          transport_libraries=[],
+                          reaction_libraries=[],
+                          seed_mechanisms=[],
+                          thermo_libraries=[
                               'primaryThermoLibrary', 'thermo_DFT_CCSDTF12_BAC', 'CBS_QB3_1dHR'],
                           solvation=False,
                           )
@@ -625,11 +651,11 @@ class DatabaseUpdater:
                     if isinstance(reactant, rmgpy.species.Species):
                         reactant = reactant.molecule[0]
 
-                    atoms = list(reactant.getLabeledAtoms().values())
+                    atoms = list(reactant.get_all_labeled_atoms().values())
                     assert atoms is not None
 
-                    #temp_group = self.database.groups.descendTree(reactant, atoms, root=top_node)
-                    temp_group = self.database.groups.descendTree(
+                    #temp_group = self.database.groups.descend_tree(reactant, atoms, root=top_node)
+                    temp_group = self.database.groups.descend_tree(
                         reactant, atoms, root=top_node)
                     if temp_group is not None:  # Temp_group will only be found using one of the two top_nodes
                         reactant_group = temp_group
@@ -676,15 +702,15 @@ class DatabaseUpdater:
         """
         Attributes of each entry, initializing to size of all_entries
         """
-        self.groupComments = {}
-        self.groupCounts = {}
-        self.groupUncertainties = {}
-        self.groupValues = {}
+        self.group_comments = {}
+        self.group_counts = {}
+        self.group_uncertainties = {}
+        self.group_values = {}
         for entry in self.all_entries:
-            self.groupComments[entry] = set()
-            self.groupCounts[entry] = []
-            self.groupUncertainties[entry] = []
-            self.groupValues[entry] = []
+            self.group_comments[entry] = set()
+            self.group_counts[entry] = []
+            self.group_uncertainties[entry] = []
+            self.group_values[entry] = []
         return
 
     def adjust_distances(self):
@@ -692,20 +718,20 @@ class DatabaseUpdater:
         Creating A and b of Ax=b, where b is distance data and x are groups involved
         A is optimized group contributions (found next in self.set_entry_data)
         """
-        def getAllCombinations(nodeLists):
+        def get_all_combinations(node_lists):
             """
             From base.py:
             Generate a list of all possible combinations of items in the list of
-            lists `nodeLists`. Each combination takes one item from each list
-            contained within `nodeLists`. The order of items in the returned lists
-            reflects the order of lists in `nodeLists`. For example, if `nodeLists` was
+            lists `node_lists`. Each combination takes one item from each list
+            contained within `node_lists`. The order of items in the returned lists
+            reflects the order of lists in `node_lists`. For example, if `node_lists` was
             [[A, B, C], [N], [X, Y]], the returned combinations would be
             [[A, N, X], [A, N, Y], [B, N, X], [B, N, Y], [C, N, X], [C, N, Y]].
             """
 
             items = [[]]
-            for nodeList in nodeLists:
-                items = [item + [node] for node in nodeList for item in items]
+            for node_list in node_lists:
+                items = [item + [node] for node in node_list for item in items]
 
             return items
         ###################
@@ -726,7 +752,7 @@ class DatabaseUpdater:
             # will throw if reaction does not have 2 reactants
             assert len(relavent_combinations) == 2
 
-            relavent_combinations = getAllCombinations(relavent_combinations)
+            relavent_combinations = get_all_combinations(relavent_combinations)
             # rel_comb is just all combinations of reactant1 and its ancestors
             # with reactant2 and its ancestors
 
@@ -734,7 +760,7 @@ class DatabaseUpdater:
                 Arow = [
                     1 if group in combination else 0 for group in self.nodes_to_update]
                 Arow.append(1)  # For use in finding the family component
-                # Arow is a binary vector of len(groupList)+1 representing
+                # Arow is a binary vector of len(group_list)+1 representing
                 # contributing groups to this reaction's distance data
                 A.append(Arow)
                 b.append(distances_list)
@@ -742,7 +768,7 @@ class DatabaseUpdater:
                     if isinstance(group, str):
                         assert False, "Discrepancy between versions of RMG_Database and this one"
 
-                    self.groupComments[group].add('{0!s}'.format(template))
+                    self.group_cmments[group].add('{0!s}'.format(template))
 
         self.A = np.array(A)
         self.b = np.array(b)
@@ -805,39 +831,39 @@ class DatabaseUpdater:
             # Update dictionaries of fitted group values and uncertainties
             for entry in self.all_entries:
                 if entry == self.top_nodes[0]:
-                    self.groupValues[entry].append(x[-1, i])
-                    self.groupUncertainties[entry].append(ci[-1])
-                    self.groupCounts[entry].append(counts[-1])
+                    self.group_values[entry].append(x[-1, i])
+                    self.group_uncertainties[entry].append(ci[-1])
+                    self.group_counts[entry].append(counts[-1])
                 elif entry.label in [group.label for group in self.nodes_to_update]:
                     index = self.nodes_to_update.index(entry)
 
-                    self.groupValues[entry].append(x[index, i])
-                    self.groupUncertainties[entry].append(ci[index])
-                    self.groupCounts[entry].append(counts[index])
+                    self.group_values[entry].append(x[index, i])
+                    self.group_uncertainties[entry].append(ci[index])
+                    self.group_counts[entry].append(counts[index])
                 else:
-                    self.groupValues[entry] = None
-                    self.groupUncertainties[entry] = None
-                    self.groupCounts[entry] = None
+                    self.group_values[entry] = None
+                    self.group_uncertainties[entry] = None
+                    self.group_counts[entry] = None
 
             for entry in self.all_entries:
-                if self.groupValues[entry] is not None:
+                if self.group_values[entry] is not None:
                     if not any(
                         np.isnan(
                             np.array(
-                                self.groupUncertainties[entry]))):
+                                self.group_uncertainties[entry]))):
                         # should be entry.data.* (e.g.
                         # entry.data.uncertainties)
                         uncertainties = np.array(
-                            self.groupUncertainties[entry])
-                        uncertaintyType = '+|-'
+                            self.group_uncertainties[entry])
+                        uncertainty_type = '+|-'
                     else:
                         uncertainties = {}
                     # should be entry.*
-                    shortDesc = "Fitted to {0} distances.\n".format(
-                        self.groupCounts[entry][0])
-                    longDesc = "\n".join(self.groupComments[entry])
+                    short_desc = "Fitted to {0} distances.\n".format(
+                        self.group_counts[entry][0])
+                    long_desc = "\n".join(self.group_comments[entry])
                     distances_dict = {key: distance for key, distance in zip(
-                        distance_keys, self.groupValues[entry])}
+                        distance_keys, self.group_values[entry])}
                     uncertainties_dict = {
                         key: distance for key, distance in zip(
                             distance_keys, uncertainties)}
@@ -845,11 +871,11 @@ class DatabaseUpdater:
                     entry.data = DistanceData(
                         distances=distances_dict,
                         uncertainties=uncertainties_dict)
-                    entry.shortDesc = shortDesc
-                    entry.longDesc = longDesc
+                    entry.short_desc = short_desc
+                    entry.long_desc = long_desc
                 else:
                     entry.data = DistanceData()
-                    entry.longDesc = ''
+                    entry.long_desc = ''
         logging.info("Finished Updating Entries for {}\n".format(self.family))
         return
 

@@ -29,22 +29,23 @@
 
 import os, sys
 import unittest
+from rdkit.Chem.rdchem import Mol, RWMol
+from ase import Atoms
 from autotst.reaction import Reaction, TS
 from autotst.data.base import TransitionStates
 from rmgpy.reaction import Reaction as RMGReaction
 from rmgpy.species import Species as RMGSpecies
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.data.rmg import RMGDatabase
-from rdkit.Chem.rdchem import Mol, RWMol
-from ase import Atoms
+
 
 
 class TestReaction(unittest.TestCase):
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.reaction2 = Reaction(rmg_reaction=RMGReaction(
-            reactants = [RMGMolecule(SMILES="CC"), RMGMolecule(SMILES="[O]O")],
-            products = [RMGMolecule(SMILES="[CH2]C"), RMGMolecule(SMILES="OO")]
+            reactants = [RMGMolecule(smiles="CC"), RMGMolecule(smiles="[O]O")],
+            products = [RMGMolecule(smiles="[CH2]C"), RMGMolecule(smiles="OO")]
         ))
 
     def test_label(self):
@@ -54,17 +55,17 @@ class TestReaction(unittest.TestCase):
     def test_rmg_reaction(self):
         test_reaction = RMGReaction(
             reactants=[
-                RMGMolecule(SMILES="CC"),
-                RMGMolecule(SMILES="[O]O")
+                RMGMolecule(smiles="CC"),
+                RMGMolecule(smiles="[O]O")
             ],
             products = [
-                RMGMolecule(SMILES="[CH2]C"),
-                RMGMolecule(SMILES="OO")
+                RMGMolecule(smiles="[CH2]C"),
+                RMGMolecule(smiles="OO")
             ]
         )
 
-        self.assertTrue(test_reaction.isIsomorphic(self.reaction.get_rmg_reaction()))
-        self.assertTrue(test_reaction.isIsomorphic(self.reaction2.get_rmg_reaction()))
+        self.assertTrue(test_reaction.is_isomorphic(self.reaction.get_rmg_reaction()))
+        self.assertTrue(test_reaction.is_isomorphic(self.reaction2.get_rmg_reaction()))
 
 
     def test_databases(self):
@@ -114,60 +115,60 @@ class TestReaction(unittest.TestCase):
     def test_labeled_reaction(self):
         test_reaction = RMGReaction(
             reactants=[
-                RMGMolecule(SMILES="CC"),
-                RMGMolecule(SMILES="[O]O")
+                RMGMolecule(smiles="CC"),
+                RMGMolecule(smiles="[O]O")
             ],
             products = [
-                RMGMolecule(SMILES="[CH2]C"),
-                RMGMolecule(SMILES="OO")
+                RMGMolecule(smiles="[CH2]C"),
+                RMGMolecule(smiles="OO")
             ]
         )
         labeled_reaction, reaction_family = self.reaction.get_labeled_reaction()
 
         self.assertEquals(reaction_family.lower(), "h_abstraction")
-        self.assertTrue(test_reaction.isIsomorphic(labeled_reaction))
+        self.assertTrue(test_reaction.is_isomorphic(labeled_reaction))
 
         merged = labeled_reaction.reactants[0].merge(labeled_reaction.reactants[1])
-        self.assertTrue(merged.getLabeledAtom("*1").isCarbon())
-        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
-        self.assertTrue(merged.getLabeledAtom("*3").isOxygen)
+        self.assertTrue(merged.get_labeled_atoms("*1")[0].is_carbon())
+        self.assertTrue(merged.get_labeled_atoms("*2")[0].is_hydrogen())
+        self.assertTrue(merged.get_labeled_atoms("*3")[0].is_oxygen)
 
         merged = labeled_reaction.products[0].merge(labeled_reaction.products[1])
-        self.assertTrue(merged.getLabeledAtom("*3").isCarbon())
-        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
-        self.assertTrue(merged.getLabeledAtom("*1").isOxygen)
+        self.assertTrue(merged.get_labeled_atoms("*3")[0].is_carbon())
+        self.assertTrue(merged.get_labeled_atoms("*2")[0].is_hydrogen())
+        self.assertTrue(merged.get_labeled_atoms("*1")[0].is_oxygen)
 
 
         labeled_reaction, reaction_family = self.reaction2.get_labeled_reaction()
 
         self.assertEquals(reaction_family.lower(), "h_abstraction")
-        self.assertTrue(test_reaction.isIsomorphic(labeled_reaction))
+        self.assertTrue(test_reaction.is_isomorphic(labeled_reaction))
 
         merged = labeled_reaction.reactants[0].merge(labeled_reaction.reactants[1])
-        self.assertTrue(merged.getLabeledAtom("*1").isCarbon())
-        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
-        self.assertTrue(merged.getLabeledAtom("*3").isOxygen)
+        self.assertTrue(merged.get_labeled_atoms("*1")[0].is_carbon())
+        self.assertTrue(merged.get_labeled_atoms("*2")[0].is_hydrogen())
+        self.assertTrue(merged.get_labeled_atoms("*3")[0].is_oxygen)
 
         merged = labeled_reaction.products[0].merge(labeled_reaction.products[1])
-        self.assertTrue(merged.getLabeledAtom("*3").isCarbon())
-        self.assertTrue(merged.getLabeledAtom("*2").isHydrogen())
-        self.assertTrue(merged.getLabeledAtom("*1").isOxygen)
+        self.assertTrue(merged.get_labeled_atoms("*3")[0].is_carbon())
+        self.assertTrue(merged.get_labeled_atoms("*2")[0].is_hydrogen())
+        self.assertTrue(merged.get_labeled_atoms("*1")[0].is_oxygen)
 
     def test_rmg_complexes(self):
         self.reaction.get_labeled_reaction()
         self.reaction.get_rmg_complexes()
 
         self.assertEquals(len(self.reaction.complexes), 2)
-        self.assertEquals(len(self.reaction.complexes["forward"].getLabeledAtoms()), 3)
-        self.assertEquals(len(self.reaction.complexes["reverse"].getLabeledAtoms()), 3)
+        self.assertEquals(len(self.reaction.complexes["forward"].get_all_labeled_atoms()), 3)
+        self.assertEquals(len(self.reaction.complexes["reverse"].get_all_labeled_atoms()), 3)
 
 
         self.reaction2.get_labeled_reaction()
         self.reaction2.get_rmg_complexes()
 
         self.assertEquals(len(self.reaction2.complexes), 2)
-        self.assertEquals(len(self.reaction2.complexes["forward"].getLabeledAtoms()), 3)
-        self.assertEquals(len(self.reaction2.complexes["reverse"].getLabeledAtoms()), 3)
+        self.assertEquals(len(self.reaction2.complexes["forward"].get_all_labeled_atoms()), 3)
+        self.assertEquals(len(self.reaction2.complexes["reverse"].get_all_labeled_atoms()), 3)
 
     def test_ts(self):
         self.assertEquals(len(self.reaction.ts), 2)
@@ -198,8 +199,8 @@ class TestTS(unittest.TestCase):
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.reaction2 = Reaction(rmg_reaction=RMGReaction(
-            reactants = [RMGMolecule(SMILES="CC"), RMGMolecule(SMILES="[O]O")],
-            products = [RMGMolecule(SMILES="[CH2]C"), RMGMolecule(SMILES="OO")]
+            reactants = [RMGMolecule(smiles="CC"), RMGMolecule(smiles="[O]O")],
+            products = [RMGMolecule(smiles="[CH2]C"), RMGMolecule(smiles="OO")]
         ))
         self.ts = self.reaction.ts["forward"][0]
         self.ts2 = self.reaction.ts["forward"][0]
@@ -248,9 +249,9 @@ class TestTS(unittest.TestCase):
 
     def test_bounds_matrix(self):
 
-        lbl1 = self.ts.rmg_molecule.getLabeledAtom("*1").sortingLabel
-        lbl2 = self.ts.rmg_molecule.getLabeledAtom("*2").sortingLabel
-        lbl3 = self.ts.rmg_molecule.getLabeledAtom("*3").sortingLabel
+        lbl1 = self.ts.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
+        lbl2 = self.ts.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
+        lbl3 = self.ts.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
 
         d12 = self.ts.distance_data.distances["d12"]
         u12 = self.ts.distance_data.uncertainties["d12"]
@@ -268,9 +269,9 @@ class TestTS(unittest.TestCase):
         self.assertAlmostEqual(d23, bm[low, high], delta=u23/2 )
 
 
-        lbl1 = self.ts2.rmg_molecule.getLabeledAtom("*1").sortingLabel
-        lbl2 = self.ts2.rmg_molecule.getLabeledAtom("*2").sortingLabel
-        lbl3 = self.ts2.rmg_molecule.getLabeledAtom("*3").sortingLabel
+        lbl1 = self.ts2.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
+        lbl2 = self.ts2.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
+        lbl3 = self.ts2.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
 
         d12 = self.ts2.distance_data.distances["d12"]
         u12 = self.ts2.distance_data.uncertainties["d12"]

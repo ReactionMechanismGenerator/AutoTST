@@ -48,7 +48,7 @@ class TestSystematic(unittest.TestCase):
     def test_systematic_search(self):
         self.conformer.ase_molecule.set_calculator(EMT())
         confs = systematic_search(self.conformer, delta=180.0)
-        self.assertTrue(0 < len(confs) <= 3)
+        self.assertTrue(1 < len(confs) <= 3)
 
     def test_systematic_search_multiplicity(self):
         self.conformer_3rad.ase_molecule.set_calculator(EMT())

@@ -29,13 +29,14 @@
 
 import os
 import logging
-import rmgpy
-from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob, ThermoJob
 from ase import Atom, Atoms
 from cclib.io import ccread
 
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
+
+import rmgpy
+from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob, ThermoJob
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -77,11 +78,11 @@ class StatMech():
         """
         atom_dict = {}
         for atom in conformer.rmg_molecule.atoms:
-            if atom.isCarbon():
+            if atom.is_carbon():
                 atom_type = "C"
-            if atom.isHydrogen():
+            if atom.is_hydrogen():
                 atom_type = "H"
-            if atom.isOxygen():
+            if atom.is_oxygen():
                 atom_type = "O"
 
             try:
@@ -99,65 +100,65 @@ class StatMech():
         - conformer (Conformer): a conformer object that you want bond info from
 
         Returns:
-        - bondDict (dict): a dictionary containing counts of different bond types
+        - bond_dict (dict): a dictionary containing counts of different bond types
         """
 
-        bonds = conformer.rmg_molecule.getAllEdges()
-        bondDict = {}
+        bonds = conformer.rmg_molecule.get_all_edges()
+        bond_dict = {}
         for bond in bonds:
-            if bond.isSingle():
+            if bond.is_single():
                 if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bondType = 'C-C'
+                    bond_type = 'C-C'
                 elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'H'):
-                    bondType = 'H-H'
+                    bond_type = 'H-H'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'H') or (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'C'):
-                    bondType = 'C-H'
+                    bond_type = 'C-H'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'O'):
-                    bondType = 'O-O'
+                    bond_type = 'O-O'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'C'):
-                    bondType = 'C-O'
+                    bond_type = 'C-O'
                 elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'H'):
-                    bondType = 'O-H'
+                    bond_type = 'O-H'
                 elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bondType = 'N-N'
+                    bond_type = 'N-N'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bondType = 'N-C'
+                    bond_type = 'N-C'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'O'):
-                    bondType = 'N-O'
+                    bond_type = 'N-O'
                 elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'H'):
-                    bondType = 'N-H'
+                    bond_type = 'N-H'
                 elif bond.atom1.symbol == 'S' and bond.atom2.symbol == 'S':
-                    bondType = 'S-S'
+                    bond_type = 'S-S'
                 elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'S') or (bond.atom1.symbol == 'S' and bond.atom2.symbol == 'H'):
-                    bondType = 'S-H'
-            elif bond.isDouble:
+                    bond_type = 'S-H'
+            elif bond.is_double():
                 if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bondType = 'C=C'
+                    bond_type = 'C=C'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'O'):
-                    bondType = 'O=O'
+                    bond_type = 'O=O'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'C'):
-                    bondType = 'C=O'
+                    bond_type = 'C=O'
                 elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bondType = 'N=N'
+                    bond_type = 'N=N'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bondType = 'N=C'
+                    bond_type = 'N=C'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'O'):
-                    bondType = 'N=O'
+                    bond_type = 'N=O'
                 elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'S') or (bond.atom1.symbol == 'S' and bond.atom2.symbol == 'O'):
-                    bondType = 'S=O'
-            elif bond.isTriple:
+                    bond_type = 'S=O'
+            elif bond.is_triple():
                 if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bondType = 'C#C'
+                    bond_type = 'C#C'
                 elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bondType = 'N#N'
+                    bond_type = 'N#N'
                 elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bondType = 'N#C'
+                    bond_type = 'N#C'
             try:
-                bondDict[bondType] += 1
+                bond_dict[bond_type] += 1
             except KeyError:
-                bondDict[bondType] = 1
+                bond_dict[bond_type] = 1
 
-        return bondDict
+        return bond_dict
 
     def write_species_files(self, species):
         """
@@ -218,7 +219,7 @@ class StatMech():
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        conformer.ase_molecule = Atoms(atoms)
+        conformer._ase_molecule = Atoms(atoms)
         conformer.update_coords_from("ase")
         mol = conformer.rmg_molecule
         output = ['#!/usr/bin/env python',
@@ -242,7 +243,7 @@ class StatMech():
         external_symmetry = conformer.calculate_symmetry_number()
 
         output += ["",
-                   "linear = {}".format(conformer.rmg_molecule.isLinear()),
+                   "linear = {}".format(conformer.rmg_molecule.is_linear()),
                    "",
                    "externalSymmetry = {}".format(external_symmetry),
                    "",
@@ -369,7 +370,7 @@ class StatMech():
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
             atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        transitionstate.ase_molecule = Atoms(atoms)
+        transitionstate._ase_molecule = Atoms(atoms)
         transitionstate.update_coords_from("ase")
 
         output = ['#!/usr/bin/env python',
@@ -390,7 +391,7 @@ class StatMech():
             output.append("}")
         else:
             output.append('bonds = {}')
-        transitionstate.rmg_molecule.updateMultiplicity()
+        transitionstate.rmg_molecule.update_multiplicity()
 
         external_symmetry = transitionstate.calculate_symmetry_number()
 
@@ -645,14 +646,14 @@ class StatMech():
         - None
         """
 
-        self.kinetics_job.inputFile = os.path.join(
+        self.kinetics_job.input_file = os.path.join(
             self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
         self.kinetics_job.plot = False
-        self.kinetics_job.outputDirectory = os.path.join(self.directory, "ts", self.reaction.label)
+        self.kinetics_job.output_directory = os.path.join(self.directory, "ts", self.reaction.label)
 
         self.kinetics_job.execute()
 
-        for job in self.kinetics_job.jobList:
+        for job in self.kinetics_job.job_list:
             if isinstance(job, KineticsJob):
                 self.kinetics_job = job
             elif isinstance(job, ThermoJob):
@@ -671,12 +672,12 @@ class StatMech():
 
         for reactant in self.reaction.rmg_reaction.reactants:
             for r in self.kinetics_job.reaction.reactants:
-                if reactant.toSMILES() == r.label:
+                if reactant.to_smiles() == r.label:
                     r.molecule = [reactant]
 
         for product in self.reaction.rmg_reaction.products:
             for p in self.kinetics_job.reaction.products:
-                if product.toSMILES() == p.label:
+                if product.to_smiles() == p.label:
                     p.molecule = [product]
 
         self.reaction.rmg_reaction = self.kinetics_job.reaction

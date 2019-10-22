@@ -39,14 +39,13 @@ import codecs
 import numpy as np
 from cclib.io import ccread
 from copy import deepcopy
-from rmgpy.data.base import Database, Entry, makeLogicNode, LogicNode, DatabaseError
+import rdkit
 
+from rmgpy.data.base import Database, Entry, make_logic_node, LogicNode, DatabaseError
 from rmgpy.quantity import Quantity, constants
 from rmgpy.reaction import Reaction, ReactionError
-from rmgpy.molecule import Bond, GroupBond, Group, Molecule as RMGMolecule, Atom, getElement
-
-from rmgpy.data.kinetics.common import KineticsError  # , saveEntry
-
+from rmgpy.molecule import Bond, GroupBond, Group, Molecule as RMGMolecule, Atom, get_element
+from rmgpy.data.kinetics.groups import KineticsError  # , save_entry
 from rmgpy.species import Species as RMGSpecies, TransitionState
 from rmgpy.reaction import Reaction
 from rmgpy.kinetics import Arrhenius, Eckart
@@ -61,27 +60,27 @@ class QMData():
     """
 
     def __init__(self,
-                 groundStateDegeneracy=0,
-                 numberOfAtoms=0,
-                 stericEnergy=None,
-                 molecularMass=(0, "amu"),
+                 ground_state_degeneracy=0,
+                 number_of_atoms=0,
+                 steric_energy=None,
+                 molecular_mass=(0, "amu"),
                  energy=(0, 'eV/molecule'),
-                 atomicNumbers=np.array([]),
-                 rotationalConstants=([], "cm^-1"),
-                 atomCoords=([[]], "angstrom"),
+                 atomic_numbers=np.array([]),
+                 rotational_constants=([], "cm^-1"),
+                 atom_coords=([[]], "angstrom"),
                  frequencies=([], "cm^-1"),
                  source=None,
                  method=None,
                  label=""):
 
-        self.groundStateDegeneracy = groundStateDegeneracy
-        self.numberOfAtoms = numberOfAtoms
-        self.stericEnergy = stericEnergy
-        self.molecularMass = molecularMass
+        self.ground_state_degeneracy = ground_state_degeneracy
+        self.number_of_atoms = number_of_atoms
+        self.steric_energy = steric_energy
+        self.molecular_mass = molecular_mass
         self.energy = energy
-        self.atomicNumbers = atomicNumbers
-        self.rotationalConstants = rotationalConstants
-        self.atomCoords = atomCoords
+        self.atomic_numbers = atomic_numbers
+        self.rotational_constants = rotational_constants
+        self.atom_coords = atom_coords
         self.frequencies = frequencies
         self.source = source
         self.method = method
@@ -93,18 +92,18 @@ class QMData():
         object.
         """
         string = 'QMData('
-        string += "groundStateDegeneracy={0!r}, ".format(
-            self.groundStateDegeneracy)
-        string += "numberOfAtoms={0!r}, ".format(self.numberOfAtoms)
-        string += "stericEnergy={0!r}, ".format(self.stericEnergy)
-        string += "molecularMass={0!r}, ".format(self.molecularMass)
+        string += "ground_state_degeneracy={0!r}, ".format(
+            self.ground_state_degeneracy)
+        string += "number_of_atoms={0!r}, ".format(self.number_of_atoms)
+        string += "steric_energy={0!r}, ".format(self.steric_energy)
+        string += "molecular_mass={0!r}, ".format(self.molecular_mass)
         string += "energy={0!r}, ".format(self.energy)
-        string += "atomicNumbers={0}, ".format(
-            "{0!r}".format(self.atomicNumbers).replace(" ", ""))
-        string += "rotationalConstants={0}, ".format("{0}".format(
-            self.rotationalConstants).replace("\n", "").replace(" ", ""))
-        string += "atomCoords={0}, ".format("{0}".format(
-            self.atomCoords).replace("\n", "").replace(" ", ""))
+        string += "atomic_numbers={0}, ".format(
+            "{0!r}".format(self.atomic_numbers).replace(" ", ""))
+        string += "rotational_constants={0}, ".format("{0}".format(
+            self.rotational_constants).replace("\n", "").replace(" ", ""))
+        string += "atom_coords={0}, ".format("{0}".format(
+            self.atom_coords).replace("\n", "").replace(" ", ""))
         string += "frequencies={0}, ".format("{0}".format(
             self.frequencies).replace("\n", "").replace(" ", ""))
         string += "source={0!r}, ".format(self.source)
@@ -116,15 +115,15 @@ class QMData():
 
         parser = ccread(file_path, loglevel=logging.ERROR)
 
-        self.groundStateDegeneracy = parser.mult
-        self.atomNumbers = parser.atomnos
-        self.numberOfAtoms = len(parser.atomnos)
-        self.atomCoords = (parser.atomcoords[-1], "angstrom")
-        self.stericEnergy = None  # Need to fix this
-        self.molecularMass = (parser.atommasses.sum(), "amu")
+        self.ground_state_degeneracy = parser.mult
+        self.atom_numbers = parser.atomnos
+        self.number_of_atoms = len(parser.atomnos)
+        self.atom_coords = (parser.atomcoords[-1], "angstrom")
+        self.steric_energy = None  # Need to fix this
+        self.molecular_mass = (parser.atommasses.sum(), "amu")
         self.energy = (parser.scfenergies[-1], "eV/molecule")
-        self.atomicNumbers = parser.atomnos
-        self.rotationalConstants = ([], "cm^-1")  # Need to fix this
+        self.atomic_numbers = parser.atomnos
+        self.rotational_constants = ([], "cm^-1")  # Need to fix this
         self.frequencies = (parser.vibfreqs, "cm^-1")
         self.source = "AutoTST"
         self.method = parser.metadata["functional"]
@@ -222,70 +221,70 @@ class TransitionStates(Database):
         groups = TSGroups(label='{0}/TS_groups'.format(path.split('/')[-1]))
         groups.load(fpath, local_context, global_context)
 
-        self.family.forwardTemplate.reactants = [
-            groups.entries[entry.label] for entry in self.family.forwardTemplate.reactants]
-        # self.family.forwardTemplate.products = [groups.entries[entry.label] for entry in self.family.forwardTemplate.products]
+        self.family.forward_template.reactants = [
+            groups.entries[entry.label] for entry in self.family.forward_template.reactants]
+        # self.family.forward_template.products = [groups.entries[entry.label] for entry in self.family.forward_template.products]
         self.family.entries = groups.entries
         self.family.groups = groups
-        groups.numReactants = len(self.family.forwardTemplate.reactants)
+        groups.num_reactants = len(self.family.forward_template.reactants)
         self.groups = groups
 
-    def estimateDistances(self, reaction):
+    def estimate_distances(self, reaction):
         """
         Return estimated DistanceData for the given reaction
         """
         # Should check depository first, but for now just go straight to group
         # additive estimate:
-        return self.groups.estimateDistancesUsingGroupAdditivity(reaction)
+        return self.groups.estimate_distances_using_group_additivity(reaction)
 
-    def saveTransitionStateGroups(self, path, entryName='entry'):
+    def save_transition_state_groups(self, path, entry_name='entry'):
         """
         Save the current database to the file at location `path` on disk. The
         optional `entryName` parameter specifies the identifier used for each
         data entry.
         """
-        entries = self.groups.getEntriesToSave()
+        entries = self.groups.get_entries_to_save()
 
         # Write the header
         f = codecs.open(path, 'w', 'utf-8')
         f.write('#!/usr/bin/env python\n')
         f.write('# encoding: utf-8\n\n')
         f.write('name = "{0}"\n'.format(self.groups.name))
-        f.write('shortDesc = u"{0}"\n'.format(self.groups.shortDesc))
-        f.write('longDesc = u"""\n')
-        f.write(self.groups.longDesc)
+        f.write('short_desc = u"{0}"\n'.format(self.groups.short_desc))
+        f.write('long_desc = u"""\n')
+        f.write(self.groups.long_desc)
         f.write('\n"""\n\n')
 
         # Save the entries
         for entry in entries:
-            self.saveEntry(f, entry)
+            self.save_entry(f, entry)
 
         # Write the tree
         if len(self.groups.top) > 0:
             f.write('tree(\n')
             f.write('"""\n')
-            f.write(self.generateOldTree(self.groups.top, 1))
+            f.write(self.generate_old_tree(self.groups.top, 1))
             f.write('"""\n')
             f.write(')\n\n')
 
         f.close()
         return
 
-    def saveEntry(self, f, entry):
+    def save_entry(self, f, entry):
         """
         Save an `entry` in the kinetics database by writing a string to
         the given file object `f`.
         """
         from arkane.output import prettify
 
-        def sortEfficiencies(efficiencies0):
+        def sort_efficiencies(efficiencies0):
             efficiencies = {}
             for mol, eff in efficiencies0.items():
                 if isinstance(mol, str):
                     # already in SMILES string format
                     smiles = mol
                 else:
-                    smiles = mol.toSMILES()
+                    smiles = mol.to_smiles()
 
                 efficiencies[smiles] = eff
             keys = list(efficiencies.keys())
@@ -325,7 +324,7 @@ class TransitionStates(Database):
         elif isinstance(entry.item, Group):
             f.write('    group = \n')
             f.write('"""\n')
-            f.write(entry.item.toAdjacencyList())
+            f.write(entry.item.to_adjacency_list())
             f.write('""",\n')
         elif isinstance(entry.item, LogicNode):
             f.write('    group = "{0}",\n'.format(entry.item))
@@ -343,34 +342,34 @@ class TransitionStates(Database):
 
         # Write reference
         if entry.reference is not None:
-            reference = entry.reference.toPrettyRepr()
+            reference = entry.reference.to_pretty_repr()
             lines = reference.splitlines()
             f.write('    reference = {0}\n'.format(lines[0]))
             for line in lines[1:-1]:
                 f.write('    {0}\n'.format(line))
             f.write('    ),\n'.format(lines[0]))
 
-        if entry.referenceType != "":
-            f.write('    referenceType = "{0}",\n'.format(entry.referenceType))
+        if entry.reference_type != "":
+            f.write('    reference_type = "{0}",\n'.format(entry.reference_type))
         if entry.rank is not None:
             f.write('    rank = {0},\n'.format(entry.rank))
 
-        if entry.shortDesc.strip() != '':
-            f.write('    shortDesc = u"""')
+        if entry.short_desc.strip() != '':
+            f.write('    short_desc = u"""')
             try:
-                f.write(entry.shortDesc.encode('utf-8'))
+                f.write(entry.short_desc.encode('utf-8'))
             except:
-                f.write(entry.shortDesc.strip().encode(
+                f.write(entry.short_desc.strip().encode(
                     'ascii', 'ignore') + "\n")
             f.write('""",\n')
 
-        if entry.longDesc.strip() != '':
-            f.write('    longDesc = \n')
+        if entry.long_desc.strip() != '':
+            f.write('    long_desc = \n')
             f.write('u"""\n')
             try:
-                f.write(entry.longDesc.strip().encode('utf-8') + "\n")
+                f.write(entry.long_desc.strip().encode('utf-8') + "\n")
             except:
-                f.write(entry.longDesc.strip().encode(
+                f.write(entry.long_desc.strip().encode(
                     'ascii', 'ignore') + "\n")
             f.write('""",\n')
 
@@ -390,9 +389,9 @@ class TransitionStateDepository(Database):
     real reactant and product species.
     """
 
-    def __init__(self, label='', name='', shortDesc='', longDesc=''):
+    def __init__(self, label='', name='', short_desc='', long_desc=''):
         Database.__init__(self, label=label, name=name,
-                          shortDesc=shortDesc, longDesc=longDesc)
+                          short_desc=short_desc, long_desc=long_desc)
 
     def __repr__(self):
         return '<TransitionStateDepository "{0}">'.format(self.label)
@@ -402,7 +401,7 @@ class TransitionStateDepository(Database):
         Database.load(self, path, local_context, global_context)
 
         # Load the species in the kinetics library
-        speciesDict = self.getSpecies(os.path.join(
+        species_dict = self.get_species(os.path.join(
             os.path.dirname(path), 'dictionary.txt'))
         # Make sure all of the reactions draw from only this set
         entries = list(self.entries.values())
@@ -423,29 +422,29 @@ class TransitionStateDepository(Database):
             assert reversible == rxn.reversible
             for reactant in reactants.split('+'):
                 reactant = reactant.strip()
-                if reactant not in speciesDict:
+                if reactant not in species_dict:
                     raise DatabaseError(
                         'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(
                             reactant, self.label))
                 # For some reason we need molecule objects in the depository
                 # rather than species objects
-                rxn.reactants.append(speciesDict[reactant])
+                rxn.reactants.append(species_dict[reactant])
             for product in products.split('+'):
                 product = product.strip()
-                if product not in speciesDict:
+                if product not in species_dict:
                     raise DatabaseError(
                         'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(
                             product, self.label))
                 # For some reason we need molecule objects in the depository
                 # rather than species objects
-                rxn.products.append(speciesDict[product])
+                rxn.products.append(species_dict[product])
 
-            if not rxn.isBalanced():
+            if not rxn.is_balanced():
                 raise DatabaseError(
                     'Reaction {0} in kinetics depository {1} was not balanced! Please reformulate.'.format(
                         rxn, self.label))
 
-    def loadEntry(self,
+    def load_entry(self,
                   index,
                   reactant1=None,
                   reactant2=None,
@@ -459,9 +458,9 @@ class TransitionStateDepository(Database):
                   duplicate=False,
                   reversible=True,
                   reference=None,
-                  referenceType='',
-                  shortDesc='',
-                  longDesc='',
+                  reference_type='',
+                  short_desc='',
+                  long_desc='',
                   rank=None,
                   ):
 
@@ -474,29 +473,29 @@ class TransitionStateDepository(Database):
             item=reaction,
             data=distances,
             reference=reference,
-            referenceType=referenceType,
-            shortDesc=shortDesc,
-            longDesc=longDesc.strip(),
+            reference_type=reference_type,
+            short_desc=short_desc,
+            long_desc=long_desc.strip(),
             rank=rank,
         )
         self.entries['{0:d}:{1}'.format(index, label)] = entry
         return entry
 
-    def saveEntry(self, f, entry):
+    def save_entry(self, f, entry):
         """
         Save an `entry` in the kinetics database by writing a string to
         the given file object `f`.
         """
         from arkane.output import prettify
 
-        def sortEfficiencies(efficiencies0):
+        def sort_efficiencies(efficiencies0):
             efficiencies = {}
             for mol, eff in efficiencies0.items():
                 if isinstance(mol, str):
                     # already in SMILES string format
                     smiles = mol
                 else:
-                    smiles = mol.toSMILES()
+                    smiles = mol.to_smiles()
 
                 efficiencies[smiles] = eff
             keys = list(efficiencies.keys())
@@ -536,7 +535,7 @@ class TransitionStateDepository(Database):
         elif isinstance(entry.item, Group):
             f.write('    group = \n')
             f.write('"""\n')
-            f.write(entry.item.toAdjacencyList())
+            f.write(entry.item.to_adjacency_list())
             f.write('""",\n')
         elif isinstance(entry.item, LogicNode):
             f.write('    group = "{0}",\n'.format(entry.item))
@@ -556,34 +555,34 @@ class TransitionStateDepository(Database):
 
         # Write reference
         if entry.reference is not None:
-            reference = entry.reference.toPrettyRepr()
+            reference = entry.reference.to_pretty_repr()
             lines = reference.splitlines()
             f.write('    reference = {0}\n'.format(lines[0]))
             for line in lines[1:-1]:
                 f.write('    {0}\n'.format(line))
             f.write('    ),\n'.format(lines[0]))
 
-        if entry.referenceType != "":
-            f.write('    referenceType = "{0}",\n'.format(entry.referenceType))
+        if entry.reference_type != "":
+            f.write('    reference_type = "{0}",\n'.format(entry.reference_type))
         if entry.rank is not None:
             f.write('    rank = {0},\n'.format(entry.rank))
 
-        if entry.shortDesc.strip() != '':
-            f.write('    shortDesc = u"""')
+        if entry.short_desc.strip() != '':
+            f.write('    short_desc = u"""')
             try:
-                f.write(entry.shortDesc.encode('utf-8'))
+                f.write(entry.short_desc.encode('utf-8'))
             except:
-                f.write(entry.shortDesc.strip().encode(
+                f.write(entry.short_desc.strip().encode(
                     'ascii', 'ignore') + "\n")
             f.write('""",\n')
 
-        if entry.longDesc.strip() != '':
-            f.write('    longDesc = \n')
+        if entry.long_desc.strip() != '':
+            f.write('    long_desc = \n')
             f.write('u"""\n')
             try:
-                f.write(entry.longDesc.strip().encode('utf-8') + "\n")
+                f.write(entry.long_desc.strip().encode('utf-8') + "\n")
             except:
-                f.write(entry.longDesc.strip().encode(
+                f.write(entry.long_desc.strip().encode(
                     'ascii', 'ignore') + "\n")
             f.write('""",\n')
 
@@ -604,47 +603,47 @@ class TSGroups(Database):
                  top=None,
                  label='',
                  name='',
-                 shortDesc='',
-                 longDesc='',
-                 forwardTemplate=None,
-                 forwardRecipe=None,
-                 reverseTemplate=None,
-                 reverseRecipe=None,
+                 short_desc='',
+                 long_desc='',
+                 forward_template=None,
+                 forward_recipe=None,
+                 reverse_template=None,
+                 reverse_recipe=None,
                  forbidden=None
                  ):
-        Database.__init__(self, entries, top, label, name, shortDesc, longDesc)
-        self.numReactants = 0
+        Database.__init__(self, entries, top, label, name, short_desc, long_desc)
+        self.num_reactants = 0
 
     def __repr__(self):
         return '<TSGroups "{0}">'.format(self.label)
 
-    def loadEntry(
+    def load_entry(
             self,
             index,
             label,
             group,
             distances,
             reference=None,
-            referenceType='',
-            shortDesc='',
-            longDesc=''):
+            reference_type='',
+            short_desc='',
+            long_desc=''):
         if group[0:3].upper() == 'OR{' or group[0:4].upper(
         ) == 'AND{' or group[0:7].upper() == 'NOT OR{' or group[0:8].upper() == 'NOT AND{':
-            item = makeLogicNode(group)
+            item = make_logic_node(group)
         else:
-            item = Group().fromAdjacencyList(group)
+            item = Group().from_adjacency_list(group)
         self.entries[label] = Entry(
             index=index,
             label=label,
             item=item,
             data=distances,
             reference=reference,
-            referenceType=referenceType,
-            shortDesc=shortDesc,
-            longDesc=longDesc.strip(),
+            reference_type=reference_type,
+            short_desc=short_desc,
+            long_desc=long_desc.strip(),
         )
 
-    def getReactionTemplate(self, reaction):
+    def get_reaction_template(self, reaction):
         """
         For a given `reaction` with properly-labeled :class:`Molecule` objects
         as the reactants, determine the most specific nodes in the tree that
@@ -653,23 +652,23 @@ class TSGroups(Database):
         # from .family import TemplateReaction
         #assert isinstance(reaction, TemplateReaction), "Can only match TemplateReactions"
         # Get forward reaction template and remove any duplicates
-        forwardTemplate = self.top[:]
+        forward_template = self.top[:]
         temporary = []
-        symmetricTree = False
-        for entry in forwardTemplate:
+        symmetric_tree = False
+        for entry in forward_template:
             if entry not in temporary:
                 temporary.append(entry)
             else:
                 # duplicate node found at top of tree
                 # eg. R_recombination: ['Y_rad', 'Y_rad']
                 assert len(
-                    forwardTemplate) == 2, 'Can currently only do symmetric trees with nothing else in them'
-                symmetricTree = True
-        forwardTemplate = temporary
+                    forward_template) == 2, 'Can currently only do symmetric trees with nothing else in them'
+                symmetric_tree = True
+        forward_template = temporary
 
         # Descend reactant trees as far as possible
         template = []
-        for entry in forwardTemplate:
+        for entry in forward_template:
             # entry is a top-level node that should be matched
             group = entry.item
 
@@ -678,72 +677,72 @@ class TSGroups(Database):
             # eg. an R3 ring node will not match an R4 ring structure.
             # (but at least the first such child will contain fewest labels - we hope)
             if isinstance(entry.item, LogicNode):
-                group = entry.item.getPossibleStructures(self.entries)[0]
+                group = entry.item.get_possible_structures(self.entries)[0]
 
             # list of atom labels in highest non-union node
-            atomList = group.getLabeledAtoms()
+            atom_list = group.get_all_labeled_atoms()
 
             for reactant in reaction.reactants:
                 if isinstance(reactant, RMGSpecies):
                     reactant = reactant.molecule[0]
                 # Match labeled atoms
                 # Check this reactant has each of the atom labels in this group
-                if not all([reactant.containsLabeledAtom(label)
-                            for label in atomList]):
+                if not all([reactant.contains_labeled_atom(label)
+                            for label in atom_list]):
                     continue  # don't try to match this structure - the atoms aren't there!
                 # Match structures
-                atoms = reactant.getLabeledAtoms()
+                atoms = reactant.get_all_labeled_atoms()
 
-                matched_node = self.descendTree(reactant, atoms, root=entry)
+                matched_node = self.descend_tree(reactant, atoms, root=entry)
                 if matched_node is not None:
                     template.append(matched_node)
                 # else:
                 #    logging.warning("Couldn't find match for {0} in {1}".format(entry,atomList))
-                #    logging.warning(reactant.toAdjacencyList())
+                #    logging.warning(reactant.to_adjacency_list())
 
         # Get fresh templates (with duplicate nodes back in)
-        forwardTemplate = self.top[:]
+        forward_template = self.top[:]
         if self.label.lower().startswith('r_recombination'):
-            forwardTemplate.append(forwardTemplate[0])
+            forward_template.append(forward_template[0])
 
         # Check that we were able to match the template.
         # template is a list of the actual matched nodes
         # forwardTemplate is a list of the top level nodes that should be
         # matched
-        if len(template) != len(forwardTemplate):
+        if len(template) != len(forward_template):
             logging.warning(
                 'Unable to find matching template for reaction {0} in reaction family {1}'.format(
                     str(reaction), str(self)))
-            logging.warning(" Trying to match " + str(forwardTemplate))
+            logging.warning(" Trying to match " + str(forward_template))
             logging.warning(" Matched " + str(template))
-            print(str(self), template, forwardTemplate)
+            print(str(self), template, forward_template)
             for n, reactant in enumerate(reaction.reactants):
                 print("Reactant", n)
-                print(reactant.toAdjacencyList() + '\n')
+                print(reactant.to_adjacency_list() + '\n')
             for n, product in enumerate(reaction.products):
                 print("Product", n)
-                print(product.toAdjacencyList() + '\n')
+                print(product.to_adjacency_list() + '\n')
             raise KineticsError(reaction)
 
         for reactant in reaction.reactants:
             if isinstance(reactant, RMGSpecies):
                 reactant = reactant.molecule[0]
-            # reactant.clearLabeledAtoms()
+            # reactant.clear_labeled_atoms()
 
         return template
 
-    def estimateDistancesUsingGroupAdditivity(self, reaction):
+    def estimate_distances_using_group_additivity(self, reaction):
         """
         Determine the appropriate transition state distances for a reaction
         with the given `template` using group additivity.
         """
 
-        template = self.getReactionTemplate(reaction)
-        referenceDistances = self.top[0].data  # or something like that
+        template = self.get_reaction_template(reaction)
+        reference_distances = self.top[0].data  # or something like that
 
         # Start with the generic distances of the top-level nodes
         # Make a copy so we don't modify the original
-        tsDistances = deepcopy(referenceDistances)
+        ts_distances = deepcopy(reference_distances)
 
         # Now add in more specific corrections if possible
         for entry in template:
@@ -754,18 +753,18 @@ class TSGroups(Database):
                 comment_line += "{0} >> ".format(entry.label)
                 entry = entry.parent
             if entry.data.distances and entry not in self.top:
-                tsDistances.add(entry.data)
+                ts_distances.add(entry.data)
                 comment_line += "{0} ({1})".format(entry.label,
-                                                   entry.longDesc.split('\n')[0])
+                                                   entry.long_desc.split('\n')[0])
             elif entry in self.top:
                 comment_line += "{0} (Top node)".format(entry.label)
-            tsDistances.comment += comment_line + '\n'
+            ts_distances.comment += comment_line + '\n'
 
-        return tsDistances
+        return ts_distances
 
-    def generateGroupAdditivityValues(self, trainingSet):
+    def generate_group_additivity_values(self, training_set):
         """
-        Generate the group additivity values using the given `trainingSet`,
+        Generate the group additivity values using the given `training_set`,
         a list of 2-tuples of the form ``(template, kinetics)``. You must also
         specify the `kunits` for the family and the `method` to use when
         generating the group values. Returns ``True`` if the group values have
@@ -780,46 +779,46 @@ class TSGroups(Database):
 
         # Determine a complete list of the entries in the database, sorted as
         # in the tree
-        groupEntries = self.top[:]
+        group_entries = self.top[:]
 
         for entry in self.top:
             # Entries in the TS_group.py tree
-            groupEntries.extend(self.descendants(entry))
+            group_entries.extend(self.descendants(entry))
 
         # Determine a unique list of the groups we will be able to fit
         # parameters for
-        groupList = []
-        for template, distances in trainingSet:
+        group_list = []
+        for template, distances in training_set:
             for group in template:
                 if isinstance(group, str):
                     group = self.entries[group]
                 if group not in self.top:
-                    groupList.append(group)
-                    groupList.extend(self.ancestors(group)[:-1])
-        groupList = list(set(groupList))
-        groupList.sort(key=lambda x: x.index)
+                    group_list.append(group)
+                    group_list.extend(self.ancestors(group)[:-1])
+        group_list = list(set(group_list))
+        group_list.sort(key=lambda x: x.index)
 
         if True:  # should remove this IF block, as we only have one method.
             # Initialize dictionaries of fitted group values and uncertainties
-            groupValues = {}
-            groupUncertainties = {}
-            groupCounts = {}
-            groupComments = {}
-            for entry in groupEntries:
-                groupValues[entry] = []
-                groupUncertainties[entry] = []
-                groupCounts[entry] = []
-                groupComments[entry] = set()
+            group_values = {}
+            group_uncertainties = {}
+            group_counts = {}
+            group_comments = {}
+            for entry in group_entries:
+                group_values[entry] = []
+                group_uncertainties[entry] = []
+                group_counts[entry] = []
+                group_comments[entry] = set()
 
             # Generate least-squares matrix and vector
             A = []
             b = []
 
             # ['d12', 'd13', 'd23']
-            distance_keys = sorted(trainingSet[0][1].distances.keys())
+            distance_keys = sorted(training_set[0][1].distances.keys())
             distance_data = []
-            for template, distanceData in trainingSet:
-                d = [distanceData.distances[key] for key in distance_keys]
+            for template, distance_data in training_set:
+                d = [distance_data.distances[key] for key in distance_keys]
                 distance_data.append(d)
 
                 # Create every combination of each group and its ancestors with
@@ -830,10 +829,10 @@ class TSGroups(Database):
                     # Groups from the group.py tree
                     groups.extend(self.ancestors(group))
                     combinations.append(groups)
-                combinations = getAllCombinations(combinations)
+                combinations = get_all_combinations(combinations)
                 # Add a row to the matrix for each combination
                 for groups in combinations:
-                    Arow = [1 if group in groups else 0 for group in groupList]
+                    Arow = [1 if group in groups else 0 for group in group_list]
                     Arow.append(1)
                     brow = d
                     A.append(Arow)
@@ -842,7 +841,7 @@ class TSGroups(Database):
                     for group in groups:
                         if isinstance(group, str):
                             group = self.entries[group]
-                        groupComments[group].add("{0!s}".format(template))
+                        group_comments[group].add("{0!s}".format(template))
 
             if len(A) == 0:
                 logging.warning(
@@ -858,21 +857,21 @@ class TSGroups(Database):
             for t, distance_key in enumerate(distance_keys):
 
                 # Determine error in each group
-                stdev = np.zeros(len(groupList) + 1, np.float64)
-                count = np.zeros(len(groupList) + 1, np.int)
+                stdev = np.zeros(len(group_list) + 1, np.float64)
+                count = np.zeros(len(group_list) + 1, np.int)
 
-                for index in range(len(trainingSet)):
-                    template, distances = trainingSet[index]
+                for index in range(len(training_set)):
+                    template, distances = training_set[index]
                     d = np.float64(distance_data[index, t])
-                    dm = x[-1, t] + sum([x[groupList.index(group), t]
-                                         for group in template if group in groupList])
+                    dm = x[-1, t] + sum([x[group_list.index(group), t]
+                                         for group in template if group in group_list])
                     variance = (dm - d)**2
                     for group in template:
                         groups = [group]
                         groups.extend(self.ancestors(group))
                         for g in groups:
                             if g.label not in [top.label for top in self.top]:
-                                ind = groupList.index(g)
+                                ind = group_list.index(g)
                                 stdev[ind] += variance
                                 count[ind] += 1
                     stdev[-1] += variance
@@ -889,50 +888,50 @@ class TSGroups(Database):
                         stdev[i] = None
                         ci[i] = None
                 # Update dictionaries of fitted group values and uncertainties
-                for entry in groupEntries:
+                for entry in group_entries:
                     if entry == self.top[0]:
-                        groupValues[entry].append(x[-1, t])
-                        groupUncertainties[entry].append(ci[-1])
-                        groupCounts[entry].append(count[-1])
-                    elif entry.label in [group.label for group in groupList]:
-                        index = [group.label for group in groupList].index(
+                        group_values[entry].append(x[-1, t])
+                        group_uncertainties[entry].append(ci[-1])
+                        group_counts[entry].append(count[-1])
+                    elif entry.label in [group.label for group in group_list]:
+                        index = [group.label for group in group_list].index(
                             entry.label)
-                        groupValues[entry].append(x[index, t])
-                        groupUncertainties[entry].append(ci[index])
-                        groupCounts[entry].append(count[index])
+                        group_values[entry].append(x[index, t])
+                        group_uncertainties[entry].append(ci[index])
+                        group_counts[entry].append(count[index])
                     else:
-                        groupValues[entry] = None
-                        groupUncertainties[entry] = None
-                        groupCounts[entry] = None
+                        group_values[entry] = None
+                        group_uncertainties[entry] = None
+                        group_counts[entry] = None
 
             # Store the fitted group values and uncertainties on the associated
             # entries
-            for entry in groupEntries:
-                if groupValues[entry] is not None:
+            for entry in group_entries:
+                if group_values[entry] is not None:
                     if not any(
                         np.isnan(
                             np.array(
-                                groupUncertainties[entry]))):
+                                group_uncertainties[entry]))):
                         # should be entry.data.* (e.g.
                         # entry.data.uncertainties)
-                        uncertainties = np.array(groupUncertainties[entry])
-                        uncertaintyType = '+|-'
+                        uncertainties = np.array(group_uncertainties[entry])
+                        uncertainty_type = '+|-'
                     else:
                         uncertainties = {}
                     # should be entry.*
-                    shortDesc = "Fitted to {0} distances.\n".format(
-                        groupCounts[entry][0])
-                    longDesc = "\n".join(groupComments[entry.label])
+                    short_desc = "Fitted to {0} distances.\n".format(
+                        group_counts[entry][0])
+                    long_desc = "\n".join(group_comments[entry.label])
                     distances_dict = {key: distance for key, distance in zip(
-                        distance_keys, groupValues[entry])}
+                        distance_keys, group_values[entry])}
                     uncertainties_dict = {
                         key: distance for key, distance in zip(
                             distance_keys, uncertainties)}
                     entry.data = DistanceData(
                         distances=distances_dict,
                         uncertainties=uncertainties_dict)
-                    entry.shortDesc = shortDesc
-                    entry.longDesc = longDesc
+                    entry.short_desc = short_desc
+                    entry.long_desc = long_desc
                 else:
                     entry.data = DistanceData()
 

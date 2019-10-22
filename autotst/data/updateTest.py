@@ -40,7 +40,7 @@ class TestUpdateMethods(unittest.TestCase):
         self.short_description = "test case"
     """
     def test_update(self):
-        UpdateMethods.update_al(self.reaction, self.family, method=self.method, shortDesc=self.short_description)
+        UpdateMethods.update_al(self.reaction, self.family, method=self.method, short_desc=self.short_description)
         self.assertTrue(True)"""
 
         

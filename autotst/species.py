@@ -90,7 +90,7 @@ class Species():
 
             smiles_list = []
             for rmg_mol in rmg_species.molecule:
-                smiles_list.append(rmg_mol.toSMILES())
+                smiles_list.append(rmg_mol.to_smiles())
 
             for s in smiles_list:
                 if s in smiles:
@@ -129,7 +129,7 @@ class Species():
 
             smiles = []
             for rmg_mol in rmg_species.molecule:
-                smiles.append(rmg_mol.toSMILES())
+                smiles.append(rmg_mol.to_smiles())
 
             self.smiles = smiles
             self.rmg_species = rmg_species
@@ -139,7 +139,7 @@ class Species():
 
             species_list = []
             for smile in smiles:
-                molecule = RMGMolecule(SMILES=smile)
+                molecule = RMGMolecule(smiles=smile)
                 species_list.append(molecule.generate_resonance_structures())
 
             if len(smiles) != 1:
@@ -148,13 +148,13 @@ class Species():
                     for s2 in species_list:
                         for m1 in s1:
                             for m2 in s2:
-                                if m1.isIsomorphic(m2):
+                                if m1.is_isomorphic(m2):
                                     got_one = True
-                assert got_one, "SMILESs provided describe different species"
+                assert got_one, "smiless provided describe different species"
 
             smiles_list = []
             for mol in species_list[0]:
-                smiles_list.append(mol.toSMILES())
+                smiles_list.append(mol.to_smiles())
 
             self.smiles = smiles_list
             self.rmg_species = species_list[0]
@@ -210,20 +210,20 @@ class Conformer():
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
-                assert rmg_molecule.isIsomorphic(RMGMolecule(
-                    SMILES=smiles)), "SMILES string did not match RMG Molecule object"
+                assert rmg_molecule.is_isomorphic(RMGMolecule(
+                    smiles=smiles)), "smiles string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
 
             elif rmg_molecule:
                 self.rmg_molecule = rmg_molecule
-                self.smiles = rmg_molecule.toSMILES()
+                self.smiles = rmg_molecule.to_smiles()
 
             else:
                 self.smiles = smiles
-                self.rmg_molecule = RMGMolecule(SMILES=smiles)
+                self.rmg_molecule = RMGMolecule(smiles=smiles)
 
-            self.rmg_molecule.updateMultiplicity()
+            self.rmg_molecule.update_multiplicity()
             self.get_molecules()
             self.get_geometries()
             self._symmetry_number = None
@@ -231,8 +231,8 @@ class Conformer():
         else:
             self.smiles = None
             self.rmg_molecule = None
-            self.rdkit_molecule = None
-            self.ase_molecule = None
+            self._rdkit_molecule = None
+            self._ase_molecule = None
             self.bonds = []
             self.angles = []
             self.torsions = []
@@ -247,8 +247,8 @@ class Conformer():
         copy_conf = Conformer()
         copy_conf.smiles = self.smiles
         copy_conf.rmg_molecule = self.rmg_molecule.copy()
-        copy_conf.rdkit_molecule = self.rdkit_molecule.__copy__()
-        copy_conf.ase_molecule = self.ase_molecule.copy()
+        copy_conf._rdkit_molecule = self.rdkit_molecule.__copy__()
+        copy_conf._ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
         copy_conf.energy = self.energy
         return copy_conf
@@ -259,6 +259,18 @@ class Conformer():
             self._symmetry_number = self.calculate_symmetry_number()
         return self._symmetry_number
 
+    @property
+    def rdkit_molecule(self):
+        if (self._rdkit_molecule is None) and self.distance_data:
+            self._rdkit_molecule = self.get_rdkit_mol()
+        return self._rdkit_molecule
+
+    @property
+    def ase_molecule(self):
+        if (self._ase_molecule is None):
+            self._ase_molecule = self.get_ase_mol()
+        return self._ase_molecule
+
     def get_rdkit_mol(self):
         """
         A method for creating an rdkit geometry from an rmg mol
@@ -266,9 +278,9 @@ class Conformer():
 
         assert self.rmg_molecule, "Cannot create an RDKit geometry without an RMG molecule object"
 
-        RDMol = self.rmg_molecule.toRDKitMol(removeHs=False)
+        RDMol = self.rmg_molecule.to_rdkit_mol(remove_h=False)
         rdkit.Chem.AllChem.EmbedMolecule(RDMol)
-        self.rdkit_molecule = RDMol
+        self._rdkit_molecule = RDMol
 
         mol_list = AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
         for i, atom in enumerate(self.rmg_molecule.atoms):
@@ -278,7 +290,7 @@ class Conformer():
                 coords[k] = float(coord)
             atom.coords = np.array(coords)
 
-        return self.rdkit_molecule
+        return self._rdkit_molecule
 
     def get_ase_mol(self):
         """
@@ -308,7 +320,7 @@ class Conformer():
                     except BaseException:
                         continue
 
-        self.ase_molecule = Atoms(ase_atoms)
+        self._ase_molecule = Atoms(ase_atoms)
 
         return self.ase_molecule
 
@@ -334,9 +346,9 @@ class Conformer():
 
     def get_molecules(self):
         if not self.rmg_molecule:
-            self.rmg_molecule = RMGMolecule(SMILES=self.smiles)
-        self.rdkit_molecule = self.get_rdkit_mol()
-        self.ase_molecule = self.get_ase_mol()
+            self.rmg_molecule = RMGMolecule(smiles=self.smiles)
+        self._rdkit_molecule = self.get_rdkit_mol()
+        self._ase_molecule = self.get_ase_mol()
         self.get_geometries()
 
         return self.rdkit_molecule, self.ase_molecule
@@ -833,7 +845,7 @@ class Conformer():
 
                 ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
 
-            self.ase_molecule = Atoms(ase_atoms)
+            self._ase_molecule = Atoms(ase_atoms)
             # self.calculate_symmetry_number()
 
         elif mol_type.lower() == "ase":
@@ -1028,7 +1040,7 @@ class Conformer():
 
         old_torsions = self.torsions[:] + self.cistrans[:]
 
-        self.rdkit_molecule = rdmol
+        self._rdkit_molecule = rdmol
         self.update_coords_from(mol_type="rdkit")
 
         # Now resetting dihedral angles in case if they changed.
@@ -1070,7 +1082,7 @@ class Conformer():
         #os.remove("{}.symm".format(self.smiles))
 
         if pg is not None:
-            symmetry_number = pg.symmetryNumber
+            symmetry_number = pg.symmetry_number
         else:
             symmetry_number = 1
 

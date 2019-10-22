@@ -64,16 +64,19 @@ class TestStatMech(unittest.TestCase):
         )
 
     def tearDown(self):
-        directory = os.path.expandvars("$AUTOTST/test")
-        if os.path.exists(os.path.join(directory, "ts")):
-            shutil.rmtree(os.path.join(directory, "ts"))
-        if os.path.exists(os.path.join(directory, "species")):
-            shutil.rmtree(os.path.join(directory, "species"))
+        try:
+            directory = os.path.expandvars("$AUTOTST/test")
+            if os.path.exists(os.path.join(directory, "ts")):
+                shutil.rmtree(os.path.join(directory, "ts"))
+            if os.path.exists(os.path.join(directory, "species")):
+                shutil.rmtree(os.path.join(directory, "species"))
 
-        for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
-            for fi in files:
-                if fi.endswith(".symm"):
-                    os.remove(os.path.join(head, fi))
+            for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+                for fi in files:
+                    if fi.endswith(".symm"):
+                        os.remove(os.path.join(head, fi))
+        except:
+            None
 
     def test_get_atoms(self):
 
@@ -94,7 +97,7 @@ class TestStatMech(unittest.TestCase):
 
     def test_write_conformer_file(self):
         species = self.reaction.reactants[0]
-        conformer = species.conformers.values()[0][0]
+        conformer = list(species.conformers.values())[0][0]
         self.assertTrue(self.statmech.write_conformer_file(conformer))
 
         self.assertTrue(
@@ -146,7 +149,7 @@ class TestStatMech(unittest.TestCase):
 
         self.statmech.write_files()
         for mol in self.reaction.reactants + self.reaction.products:
-            for confs in mol.conformers.values():
+            for confs in list(mol.conformers.values()):
                 conf = confs[0]
                 self.assertTrue(os.path.exists(os.path.join(
                     self.statmech.directory,
@@ -177,12 +180,12 @@ class TestStatMech(unittest.TestCase):
         self.test_run()
         self.statmech.set_results()
         self.assertTrue(
-            self.reaction.rmg_reaction.isIsomorphic(
+            self.reaction.rmg_reaction.is_isomorphic(
                 self.statmech.kinetics_job.reaction
             )
         )
         self.assertTrue(
-            self.statmech.reaction.rmg_reaction.isIsomorphic(
+            self.statmech.reaction.rmg_reaction.is_isomorphic(
                 self.statmech.kinetics_job.reaction
             )
         )

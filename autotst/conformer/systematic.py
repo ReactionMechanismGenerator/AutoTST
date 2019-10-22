@@ -45,13 +45,13 @@ from ase.constraints import FixBondLengths
 
 from rdkit.Chem import rdMolAlign
 
-from rmgpy.exceptions import AtomTypeError
-from rmgpy.molecule import Molecule
-
 import autotst
 from autotst.species import Conformer
 from autotst.reaction import TS
 from autotst.conformer.utilities import get_energy, find_terminal_torsions
+
+from rmgpy.exceptions import AtomTypeError
+from rmgpy.molecule import Molecule
 
 def find_all_combos(
         conformer,
@@ -150,15 +150,19 @@ def systematic_search(conformer,
     
     if not isinstance(conformer, TS):
         reference_mol = conformer.rmg_molecule.copy(deep=True)
-        reference_mol = reference_mol.toSingleBonds()
+        reference_mol = reference_mol.to_single_bonds()
     manager = Manager()
     return_dict = manager.dict()
+    pool = multiprocessing.Pool()
 
-    def opt_conf(conformer, calculator, i, rmsd_cutoff):
+    def opt_conf(i, rmsd_cutoff):
         """
         A helper function to optimize the geometry of a conformer.
         Only for use within this parent function
         """
+        conformer = conformers[i]
+
+        calculator = conformer.ase_molecule.get_calculator()
 
         labels = []
         for bond in conformer.get_bonds():
@@ -166,8 +170,8 @@ def systematic_search(conformer,
     
         if isinstance(conformer, TS):
             label = conformer.reaction_label
-            ind1 = conformer.rmg_molecule.getLabeledAtom("*1").sortingLabel
-            ind2 = conformer.rmg_molecule.getLabeledAtom("*3").sortingLabel
+            ind1 = conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
+            ind2 = conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
             labels.append([ind1, ind2])
             type = 'ts'
         else:
@@ -205,11 +209,11 @@ def systematic_search(conformer,
                 conformer.update_coords_from("ase")
                 try:
                     rmg_mol = Molecule()
-                    rmg_mol.fromXYZ(
+                    rmg_mol.from_xyz(
                         conformer.ase_molecule.arrays["numbers"],
                         conformer.ase_molecule.arrays["positions"]
                     )
-                    if not rmg_mol.isIsomorphic(reference_mol):
+                    if not rmg_mol.is_isomorphic(reference_mol):
                         logging.info("{}_{} is not isomorphic with reference mol".format(conformer,str(i)))
                         return False
                 except AtomTypeError:
@@ -230,20 +234,22 @@ def systematic_search(conformer,
         conformer.energy = energy
         if len(return_dict)>0:
             conformer_copy = conformer.copy()
-            for index,conf in return_dict.items():
-                conf_copy = conf.copy()
+            for index,post in return_dict.items():
+                conf_copy = conformer.copy()
+                conf_copy.ase_molecule.positions = post
+                conf_copy.update_coords_from("ase")
                 rmsd = rdMolAlign.GetBestRMS(conformer_copy.rdkit_molecule,conf_copy.rdkit_molecule)
                 if rmsd <= rmsd_cutoff:
                     return True
         if str(i) != 'ref':
-            return_dict[i] = conformer
+            return_dict[i] = conformer.ase_molecule.get_positions()
         return True
 
-    if not isinstance(conformer,TS):
-        calc = conformer.ase_molecule.get_calculator()
-        reference_conformer = conformer.copy()
-        if opt_conf(reference_conformer, calc, 'ref', rmsd_cutoff):
-            conformer = reference_conformer
+    #if not isinstance(conformer,TS):
+    #    calc = conformer.ase_molecule.get_calculator()
+    #    reference_conformer = conformer.copy()
+    #    if opt_conf(reference_conformer, calc, 'ref', rmsd_cutoff):
+    #        conformer = reference_conformer
 
     combos = find_all_combos(
         conformer,
@@ -264,21 +270,24 @@ def systematic_search(conformer,
         logging.info("The calculator generates input and output files.")
 
     results = []
+    global conformers
     conformers = {}
     combinations = {}
+    logging.info("There are {} possible conformers to investigate...".format(len(combos)))
     for index, combo in enumerate(combos):
 
         combinations[index] = combo
 
         torsions, cistrans, chiral_centers = combo
+        copy_conf = conformer.copy()
 
         for i, torsion in enumerate(torsions):
 
-            tor = conformer.torsions[i]
+            tor = copy_conf.torsions[i]
             i, j, k, l = tor.atom_indices
             mask = tor.mask
 
-            conformer.ase_molecule.set_dihedral(
+            copy_conf.ase_molecule.set_dihedral(
                 a1=i,
                 a2=j,
                 a3=k,
@@ -286,24 +295,25 @@ def systematic_search(conformer,
                 angle=torsion,
                 mask=mask
             )
-            conformer.update_coords()
+            copy_conf.update_coords()
 
         for i, e_z in enumerate(cistrans):
-            ct = conformer.cistrans[i]
-            conformer.set_cistrans(ct.index, e_z)
+            ct = copy_conf.cistrans[i]
+            copy_conf.set_cistrans(ct.index, e_z)
 
         for i, s_r in enumerate(chiral_centers):
-            center = conformer.chiral_centers[i]
-            conformer.set_chirality(center.index, s_r)
+            center = copy_conf.chiral_centers[i]
+            copy_conf.set_chirality(center.index, s_r)
 
-        conformer.update_coords_from("ase")
+        copy_conf.update_coords_from("ase")
+        copy_conf.ase_molecule.set_calculator(calc)
   
-        conformers[index] = conformer.copy()
+        conformers[index] = copy_conf
 
 
     processes = []
     for i, conf in list(conformers.items()):
-        p = Process(target=opt_conf, args=(conf, calc, i, rmsd_cutoff))
+        p = Process(target=opt_conf, args=(i, rmsd_cutoff))
         processes.append(p)
 
     active_processes = []
@@ -330,8 +340,13 @@ def systematic_search(conformer,
                 complete[i] = True
 
     energies = []
-    for conf in list(return_dict.values()):
-        energies.append((conf,conf.energy))
+    for positions in list(return_dict.values()):
+        conf = conformer.copy()
+        conf.ase_molecule.positions = positions
+        conf.ase_molecule.set_calculator(calc)
+        energy = conf.ase_molecule.get_potential_energy()
+        conf.update_coords_from("ase")
+        energies.append((conf,energy))
 
     df = pd.DataFrame(energies,columns=["conformer","energy"])
     df = df[df.energy < df.energy.min() + (energy_cutoff * units.kcal / units.mol /
@@ -350,7 +365,7 @@ def systematic_search(conformer,
     df.drop(df.index[redundant], inplace=True)
 
     if multiplicity and conformer.rmg_molecule.multiplicity > 2:
-        rads = conformer.rmg_molecule.getRadicalCount()
+        rads = conformer.rmg_molecule.get_radical_count()
         if rads % 2 == 0:
             multiplicities = range(1,rads+2,2)
         else:

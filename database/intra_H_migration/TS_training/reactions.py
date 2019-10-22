@@ -7,7 +7,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -19,7 +19,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -31,7 +31,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -43,7 +43,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -55,7 +55,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -67,7 +67,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -79,7 +79,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -91,7 +91,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -103,7 +103,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -115,7 +115,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -127,7 +127,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -139,7 +139,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Manual calculation, validated by IRC""",
+    short_desc = u"""Manual calculation, validated by IRC""",
 )
 
 entry(
@@ -151,7 +151,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Manual calculation, validated by IRC""",
+    short_desc = u"""Manual calculation, validated by IRC""",
 )
 
 entry(
@@ -163,7 +163,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Manual calculation, validated by IRC""",
+    short_desc = u"""Manual calculation, validated by IRC""",
 )
 
 entry(
@@ -175,7 +175,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Manual calculation, validated by IRC""",
+    short_desc = u"""Manual calculation, validated by IRC""",
 )
 
 entry(
@@ -186,7 +186,7 @@ entry(
         distances = {'d12': 2.30819, 'd13': 1.29273, 'd23': 1.25199},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -197,7 +197,7 @@ entry(
         distances = {'d12': 1.48985, 'd13': 1.32333, 'd23': 1.26536},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -208,7 +208,7 @@ entry(
         distances = {'d12': 2.60249, 'd13': 1.3624, 'd23': 1.33406},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -219,7 +219,7 @@ entry(
         distances = {'d12': 2.4359, 'd13': 1.21737, 'd23': 1.32872},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -230,7 +230,7 @@ entry(
         distances = {'d12': 2.58028, 'd13': 1.33582, 'd23': 1.3315},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -241,7 +241,7 @@ entry(
         distances = {'d12': 2.30977, 'd13': 1.1285, 'd23': 1.26366},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -252,7 +252,7 @@ entry(
         distances = {'d12': 2.37305, 'd13': 1.26663, 'd23': 1.32062},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -263,7 +263,7 @@ entry(
         distances = {'d12': 2.45956, 'd13': 1.1749, 'd23': 1.36395},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -274,7 +274,7 @@ entry(
         distances = {'d12': 2.06785, 'd13': 1.3767, 'd23': 1.44845},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -285,7 +285,7 @@ entry(
         distances = {'d12': 2.35033, 'd13': 1.23081, 'd23': 1.33692},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -296,7 +296,7 @@ entry(
         distances = {'d12': 2.36347, 'd13': 1.26141, 'd23': 1.31847},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -307,7 +307,7 @@ entry(
         distances = {'d12': 2.48088, 'd13': 1.18252, 'd23': 1.33949},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -318,7 +318,7 @@ entry(
         distances = {'d12': 2.45773, 'd13': 1.1745, 'd23': 1.36185},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -329,7 +329,7 @@ entry(
         distances = {'d12': 2.45818, 'd13': 1.17818, 'd23': 1.35961},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -340,7 +340,7 @@ entry(
         distances = {'d12': 2.46425, 'd13': 1.19893, 'd23': 1.33769},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -351,7 +351,7 @@ entry(
         distances = {'d12': 2.43855, 'd13': 1.2669, 'd23': 1.29592},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -362,7 +362,7 @@ entry(
         distances = {'d12': 2.4572, 'd13': 1.17428, 'd23': 1.36102},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -373,7 +373,7 @@ entry(
         distances = {'d12': 2.45575, 'd13': 1.17985, 'd23': 1.35911},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -384,7 +384,7 @@ entry(
         distances = {'d12': 2.46177, 'd13': 1.21332, 'd23': 1.32667},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -395,7 +395,7 @@ entry(
         distances = {'d12': 2.45403, 'd13': 1.18245, 'd23': 1.35703},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -406,7 +406,7 @@ entry(
         distances = {'d12': 2.45869, 'd13': 1.16782, 'd23': 1.36471},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -417,7 +417,7 @@ entry(
         distances = {'d12': 2.35632, 'd13': 1.31943, 'd23': 1.30949},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -428,7 +428,7 @@ entry(
         distances = {'d12': 2.45897, 'd13': 1.18851, 'd23': 1.35147},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -439,7 +439,7 @@ entry(
         distances = {'d12': 2.50055, 'd13': 1.23645, 'd23': 1.3005},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -450,7 +450,7 @@ entry(
         distances = {'d12': 2.35996, 'd13': 1.28372, 'd23': 1.31173},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -461,7 +461,7 @@ entry(
         distances = {'d12': 2.49378, 'd13': 1.16841, 'd23': 1.35625},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -472,7 +472,7 @@ entry(
         distances = {'d12': 1.4154, 'd13': 1.333, 'd23': 1.28669},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -483,7 +483,7 @@ entry(
         distances = {'d12': 2.34661, 'd13': 1.22465, 'd23': 1.34209},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -494,7 +494,7 @@ entry(
         distances = {'d12': 2.43216, 'd13': 1.22038, 'd23': 1.33786},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -505,7 +505,7 @@ entry(
         distances = {'d12': 2.37775, 'd13': 1.2933, 'd23': 1.30747},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -516,7 +516,7 @@ entry(
         distances = {'d12': 2.30725, 'd13': 1.42319, 'd23': 1.216},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -527,7 +527,7 @@ entry(
         distances = {'d12': 2.37986, 'd13': 1.29445, 'd23': 1.30968},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -538,7 +538,7 @@ entry(
         distances = {'d12': 2.00564, 'd13': 1.28603, 'd23': 1.31417},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -549,7 +549,7 @@ entry(
         distances = {'d12': 2.41628, 'd13': 1.17853, 'd23': 1.35614},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -560,7 +560,7 @@ entry(
         distances = {'d12': 2.49345, 'd13': 1.16011, 'd23': 1.36174},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -571,7 +571,7 @@ entry(
         distances = {'d12': 2.35769, 'd13': 1.26209, 'd23': 1.30921},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -582,7 +582,7 @@ entry(
         distances = {'d12': 2.45531, 'd13': 1.17093, 'd23': 1.36079},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -593,7 +593,7 @@ entry(
         distances = {'d12': 2.35264, 'd13': 1.31472, 'd23': 1.31525},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -604,7 +604,7 @@ entry(
         distances = {'d12': 2.32933, 'd13': 1.28506, 'd23': 1.26939},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -615,7 +615,7 @@ entry(
         distances = {'d12': 2.45207, 'd13': 1.30232, 'd23': 1.2747},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -626,7 +626,7 @@ entry(
         distances = {'d12': 2.42396, 'd13': 1.25174, 'd23': 1.30911},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -637,7 +637,7 @@ entry(
         distances = {'d12': 1.48549, 'd13': 1.29835, 'd23': 1.29237},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -648,7 +648,7 @@ entry(
         distances = {'d12': 2.45768, 'd13': 1.17142, 'd23': 1.36148},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -659,7 +659,7 @@ entry(
         distances = {'d12': 2.32904, 'd13': 1.28021, 'd23': 1.27383},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -670,7 +670,7 @@ entry(
         distances = {'d12': 2.45951, 'd13': 1.20518, 'd23': 1.33607},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -681,7 +681,7 @@ entry(
         distances = {'d12': 2.46044, 'd13': 1.17152, 'd23': 1.36565},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -692,7 +692,7 @@ entry(
         distances = {'d12': 2.45207, 'd13': 1.17756, 'd23': 1.35629},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -703,7 +703,7 @@ entry(
         distances = {'d12': 2.37258, 'd13': 1.29125, 'd23': 1.31259},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -714,7 +714,7 @@ entry(
         distances = {'d12': 2.33408, 'd13': 1.29432, 'd23': 1.26842},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -725,7 +725,7 @@ entry(
         distances = {'d12': 2.4533, 'd13': 1.27353, 'd23': 1.25422},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -736,7 +736,7 @@ entry(
         distances = {'d12': 2.34677, 'd13': 1.23919, 'd23': 1.32538},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -747,7 +747,7 @@ entry(
         distances = {'d12': 2.34481, 'd13': 1.23841, 'd23': 1.33192},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -758,7 +758,7 @@ entry(
         distances = {'d12': 2.34517, 'd13': 1.31208, 'd23': 1.25392},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -769,7 +769,7 @@ entry(
         distances = {'d12': 2.36681, 'd13': 1.25141, 'd23': 1.33169},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -780,7 +780,7 @@ entry(
         distances = {'d12': 2.51625, 'd13': 1.42373, 'd23': 1.34016},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
+    short_desc = u"""M06-2X/6-311+G(2df,2p) calculation via group additive TS generator.""",
 )
 
 entry(
@@ -792,7 +792,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 1""",
+    short_desc = u"""Reverse reaction for reaction index 1""",
 )
 
 entry(
@@ -804,7 +804,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 2""",
+    short_desc = u"""Reverse reaction for reaction index 2""",
 )
 
 entry(
@@ -816,7 +816,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 3""",
+    short_desc = u"""Reverse reaction for reaction index 3""",
 )
 
 entry(
@@ -828,7 +828,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 4""",
+    short_desc = u"""Reverse reaction for reaction index 4""",
 )
 
 entry(
@@ -840,7 +840,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 5""",
+    short_desc = u"""Reverse reaction for reaction index 5""",
 )
 
 entry(
@@ -852,7 +852,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 6""",
+    short_desc = u"""Reverse reaction for reaction index 6""",
 )
 
 entry(
@@ -864,7 +864,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 7""",
+    short_desc = u"""Reverse reaction for reaction index 7""",
 )
 
 entry(
@@ -876,7 +876,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 8""",
+    short_desc = u"""Reverse reaction for reaction index 8""",
 )
 
 entry(
@@ -888,7 +888,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 9""",
+    short_desc = u"""Reverse reaction for reaction index 9""",
 )
 
 entry(
@@ -900,7 +900,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 10""",
+    short_desc = u"""Reverse reaction for reaction index 10""",
 )
 
 entry(
@@ -912,7 +912,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 11""",
+    short_desc = u"""Reverse reaction for reaction index 11""",
 )
 
 entry(
@@ -924,7 +924,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 12""",
+    short_desc = u"""Reverse reaction for reaction index 12""",
 )
 
 entry(
@@ -936,7 +936,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 13""",
+    short_desc = u"""Reverse reaction for reaction index 13""",
 )
 
 entry(
@@ -948,7 +948,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 14""",
+    short_desc = u"""Reverse reaction for reaction index 14""",
 )
 
 entry(
@@ -960,7 +960,7 @@ entry(
         method = 'm062x/6-311+G(2df,2p)',
     ),
     rank = 3,
-    shortDesc = u"""Reverse reaction for reaction index 15""",
+    short_desc = u"""Reverse reaction for reaction index 15""",
 )
 
 entry(
@@ -971,7 +971,7 @@ entry(
         distances = {'d12': 2.30819, 'd13': 1.25199, 'd23': 1.29273},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 16""",
+    short_desc = u"""Reverse reaction for reaction index 16""",
 )
 
 entry(
@@ -982,7 +982,7 @@ entry(
         distances = {'d12': 1.48985, 'd13': 1.26536, 'd23': 1.32333},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 17""",
+    short_desc = u"""Reverse reaction for reaction index 17""",
 )
 
 entry(
@@ -993,7 +993,7 @@ entry(
         distances = {'d12': 2.60249, 'd13': 1.33406, 'd23': 1.3624},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 18""",
+    short_desc = u"""Reverse reaction for reaction index 18""",
 )
 
 entry(
@@ -1004,7 +1004,7 @@ entry(
         distances = {'d12': 2.4359, 'd13': 1.32872, 'd23': 1.21737},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 19""",
+    short_desc = u"""Reverse reaction for reaction index 19""",
 )
 
 entry(
@@ -1015,7 +1015,7 @@ entry(
         distances = {'d12': 2.58028, 'd13': 1.3315, 'd23': 1.33582},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 20""",
+    short_desc = u"""Reverse reaction for reaction index 20""",
 )
 
 entry(
@@ -1026,7 +1026,7 @@ entry(
         distances = {'d12': 2.30977, 'd13': 1.26366, 'd23': 1.1285},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 21""",
+    short_desc = u"""Reverse reaction for reaction index 21""",
 )
 
 entry(
@@ -1037,7 +1037,7 @@ entry(
         distances = {'d12': 2.37305, 'd13': 1.32062, 'd23': 1.26663},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 22""",
+    short_desc = u"""Reverse reaction for reaction index 22""",
 )
 
 entry(
@@ -1048,7 +1048,7 @@ entry(
         distances = {'d12': 2.45956, 'd13': 1.36395, 'd23': 1.1749},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 23""",
+    short_desc = u"""Reverse reaction for reaction index 23""",
 )
 
 entry(
@@ -1059,7 +1059,7 @@ entry(
         distances = {'d12': 2.06785, 'd13': 1.44845, 'd23': 1.3767},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 24""",
+    short_desc = u"""Reverse reaction for reaction index 24""",
 )
 
 entry(
@@ -1070,7 +1070,7 @@ entry(
         distances = {'d12': 2.35033, 'd13': 1.33692, 'd23': 1.23081},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 25""",
+    short_desc = u"""Reverse reaction for reaction index 25""",
 )
 
 entry(
@@ -1081,7 +1081,7 @@ entry(
         distances = {'d12': 2.36347, 'd13': 1.31847, 'd23': 1.26141},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 26""",
+    short_desc = u"""Reverse reaction for reaction index 26""",
 )
 
 entry(
@@ -1092,7 +1092,7 @@ entry(
         distances = {'d12': 2.48088, 'd13': 1.33949, 'd23': 1.18252},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 27""",
+    short_desc = u"""Reverse reaction for reaction index 27""",
 )
 
 entry(
@@ -1103,7 +1103,7 @@ entry(
         distances = {'d12': 2.45773, 'd13': 1.36185, 'd23': 1.1745},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 28""",
+    short_desc = u"""Reverse reaction for reaction index 28""",
 )
 
 entry(
@@ -1114,7 +1114,7 @@ entry(
         distances = {'d12': 2.45818, 'd13': 1.35961, 'd23': 1.17818},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 29""",
+    short_desc = u"""Reverse reaction for reaction index 29""",
 )
 
 entry(
@@ -1125,7 +1125,7 @@ entry(
         distances = {'d12': 2.46425, 'd13': 1.33769, 'd23': 1.19893},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 30""",
+    short_desc = u"""Reverse reaction for reaction index 30""",
 )
 
 entry(
@@ -1136,7 +1136,7 @@ entry(
         distances = {'d12': 2.43855, 'd13': 1.29592, 'd23': 1.2669},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 31""",
+    short_desc = u"""Reverse reaction for reaction index 31""",
 )
 
 entry(
@@ -1147,7 +1147,7 @@ entry(
         distances = {'d12': 2.4572, 'd13': 1.36102, 'd23': 1.17428},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 32""",
+    short_desc = u"""Reverse reaction for reaction index 32""",
 )
 
 entry(
@@ -1158,7 +1158,7 @@ entry(
         distances = {'d12': 2.45575, 'd13': 1.35911, 'd23': 1.17985},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 33""",
+    short_desc = u"""Reverse reaction for reaction index 33""",
 )
 
 entry(
@@ -1169,7 +1169,7 @@ entry(
         distances = {'d12': 2.46177, 'd13': 1.32667, 'd23': 1.21332},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 34""",
+    short_desc = u"""Reverse reaction for reaction index 34""",
 )
 
 entry(
@@ -1180,7 +1180,7 @@ entry(
         distances = {'d12': 2.45403, 'd13': 1.35703, 'd23': 1.18245},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 35""",
+    short_desc = u"""Reverse reaction for reaction index 35""",
 )
 
 entry(
@@ -1191,7 +1191,7 @@ entry(
         distances = {'d12': 2.45869, 'd13': 1.36471, 'd23': 1.16782},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 36""",
+    short_desc = u"""Reverse reaction for reaction index 36""",
 )
 
 entry(
@@ -1202,7 +1202,7 @@ entry(
         distances = {'d12': 2.35632, 'd13': 1.30949, 'd23': 1.31943},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 37""",
+    short_desc = u"""Reverse reaction for reaction index 37""",
 )
 
 entry(
@@ -1213,7 +1213,7 @@ entry(
         distances = {'d12': 2.45897, 'd13': 1.35147, 'd23': 1.18851},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 38""",
+    short_desc = u"""Reverse reaction for reaction index 38""",
 )
 
 entry(
@@ -1224,7 +1224,7 @@ entry(
         distances = {'d12': 2.50055, 'd13': 1.3005, 'd23': 1.23645},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 39""",
+    short_desc = u"""Reverse reaction for reaction index 39""",
 )
 
 entry(
@@ -1235,7 +1235,7 @@ entry(
         distances = {'d12': 2.35996, 'd13': 1.31173, 'd23': 1.28372},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 40""",
+    short_desc = u"""Reverse reaction for reaction index 40""",
 )
 
 entry(
@@ -1246,7 +1246,7 @@ entry(
         distances = {'d12': 2.49378, 'd13': 1.35625, 'd23': 1.16841},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 41""",
+    short_desc = u"""Reverse reaction for reaction index 41""",
 )
 
 entry(
@@ -1257,7 +1257,7 @@ entry(
         distances = {'d12': 1.4154, 'd13': 1.28669, 'd23': 1.333},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 42""",
+    short_desc = u"""Reverse reaction for reaction index 42""",
 )
 
 entry(
@@ -1268,7 +1268,7 @@ entry(
         distances = {'d12': 2.34661, 'd13': 1.34209, 'd23': 1.22465},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 43""",
+    short_desc = u"""Reverse reaction for reaction index 43""",
 )
 
 entry(
@@ -1279,7 +1279,7 @@ entry(
         distances = {'d12': 2.43216, 'd13': 1.33786, 'd23': 1.22038},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 44""",
+    short_desc = u"""Reverse reaction for reaction index 44""",
 )
 
 entry(
@@ -1290,7 +1290,7 @@ entry(
         distances = {'d12': 2.37775, 'd13': 1.30747, 'd23': 1.2933},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 45""",
+    short_desc = u"""Reverse reaction for reaction index 45""",
 )
 
 entry(
@@ -1301,7 +1301,7 @@ entry(
         distances = {'d12': 2.30725, 'd13': 1.216, 'd23': 1.42319},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 46""",
+    short_desc = u"""Reverse reaction for reaction index 46""",
 )
 
 entry(
@@ -1312,7 +1312,7 @@ entry(
         distances = {'d12': 2.37986, 'd13': 1.30968, 'd23': 1.29445},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 47""",
+    short_desc = u"""Reverse reaction for reaction index 47""",
 )
 
 entry(
@@ -1323,7 +1323,7 @@ entry(
         distances = {'d12': 2.00564, 'd13': 1.31417, 'd23': 1.28603},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 48""",
+    short_desc = u"""Reverse reaction for reaction index 48""",
 )
 
 entry(
@@ -1334,7 +1334,7 @@ entry(
         distances = {'d12': 2.41628, 'd13': 1.35614, 'd23': 1.17853},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 49""",
+    short_desc = u"""Reverse reaction for reaction index 49""",
 )
 
 entry(
@@ -1345,7 +1345,7 @@ entry(
         distances = {'d12': 2.49345, 'd13': 1.36174, 'd23': 1.16011},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 50""",
+    short_desc = u"""Reverse reaction for reaction index 50""",
 )
 
 entry(
@@ -1356,7 +1356,7 @@ entry(
         distances = {'d12': 2.35769, 'd13': 1.30921, 'd23': 1.26209},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 51""",
+    short_desc = u"""Reverse reaction for reaction index 51""",
 )
 
 entry(
@@ -1367,7 +1367,7 @@ entry(
         distances = {'d12': 2.45531, 'd13': 1.36079, 'd23': 1.17093},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 52""",
+    short_desc = u"""Reverse reaction for reaction index 52""",
 )
 
 entry(
@@ -1378,7 +1378,7 @@ entry(
         distances = {'d12': 2.35264, 'd13': 1.31525, 'd23': 1.31472},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 53""",
+    short_desc = u"""Reverse reaction for reaction index 53""",
 )
 
 entry(
@@ -1389,7 +1389,7 @@ entry(
         distances = {'d12': 2.32933, 'd13': 1.26939, 'd23': 1.28506},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 54""",
+    short_desc = u"""Reverse reaction for reaction index 54""",
 )
 
 entry(
@@ -1400,7 +1400,7 @@ entry(
         distances = {'d12': 2.45207, 'd13': 1.2747, 'd23': 1.30232},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 55""",
+    short_desc = u"""Reverse reaction for reaction index 55""",
 )
 
 entry(
@@ -1411,7 +1411,7 @@ entry(
         distances = {'d12': 2.42396, 'd13': 1.30911, 'd23': 1.25174},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 56""",
+    short_desc = u"""Reverse reaction for reaction index 56""",
 )
 
 entry(
@@ -1422,7 +1422,7 @@ entry(
         distances = {'d12': 1.48549, 'd13': 1.29237, 'd23': 1.29835},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 57""",
+    short_desc = u"""Reverse reaction for reaction index 57""",
 )
 
 entry(
@@ -1433,7 +1433,7 @@ entry(
         distances = {'d12': 2.45768, 'd13': 1.36148, 'd23': 1.17142},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 58""",
+    short_desc = u"""Reverse reaction for reaction index 58""",
 )
 
 entry(
@@ -1444,7 +1444,7 @@ entry(
         distances = {'d12': 2.32904, 'd13': 1.27383, 'd23': 1.28021},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 59""",
+    short_desc = u"""Reverse reaction for reaction index 59""",
 )
 
 entry(
@@ -1455,7 +1455,7 @@ entry(
         distances = {'d12': 2.45951, 'd13': 1.33607, 'd23': 1.20518},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 60""",
+    short_desc = u"""Reverse reaction for reaction index 60""",
 )
 
 entry(
@@ -1466,7 +1466,7 @@ entry(
         distances = {'d12': 2.46044, 'd13': 1.36565, 'd23': 1.17152},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 61""",
+    short_desc = u"""Reverse reaction for reaction index 61""",
 )
 
 entry(
@@ -1477,7 +1477,7 @@ entry(
         distances = {'d12': 2.45207, 'd13': 1.35629, 'd23': 1.17756},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 62""",
+    short_desc = u"""Reverse reaction for reaction index 62""",
 )
 
 entry(
@@ -1488,7 +1488,7 @@ entry(
         distances = {'d12': 2.37258, 'd13': 1.31259, 'd23': 1.29125},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 63""",
+    short_desc = u"""Reverse reaction for reaction index 63""",
 )
 
 entry(
@@ -1499,7 +1499,7 @@ entry(
         distances = {'d12': 2.33408, 'd13': 1.26842, 'd23': 1.29432},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 64""",
+    short_desc = u"""Reverse reaction for reaction index 64""",
 )
 
 entry(
@@ -1510,7 +1510,7 @@ entry(
         distances = {'d12': 2.4533, 'd13': 1.25422, 'd23': 1.27353},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 65""",
+    short_desc = u"""Reverse reaction for reaction index 65""",
 )
 
 entry(
@@ -1521,7 +1521,7 @@ entry(
         distances = {'d12': 2.34677, 'd13': 1.32538, 'd23': 1.23919},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 66""",
+    short_desc = u"""Reverse reaction for reaction index 66""",
 )
 
 entry(
@@ -1532,7 +1532,7 @@ entry(
         distances = {'d12': 2.34481, 'd13': 1.33192, 'd23': 1.23841},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 67""",
+    short_desc = u"""Reverse reaction for reaction index 67""",
 )
 
 entry(
@@ -1543,7 +1543,7 @@ entry(
         distances = {'d12': 2.34517, 'd13': 1.25392, 'd23': 1.31208},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 68""",
+    short_desc = u"""Reverse reaction for reaction index 68""",
 )
 
 entry(
@@ -1554,7 +1554,7 @@ entry(
         distances = {'d12': 2.36681, 'd13': 1.33169, 'd23': 1.25141},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 69""",
+    short_desc = u"""Reverse reaction for reaction index 69""",
 )
 
 entry(
@@ -1565,6 +1565,6 @@ entry(
         distances = {'d12': 2.51625, 'd13': 1.34016, 'd23': 1.42373},
         method = 'm062x/6-311+g(2df,2p)',
     ),
-    shortDesc = u"""Reverse reaction for reaction index 70""",
+    short_desc = u"""Reverse reaction for reaction index 70""",
 )
 

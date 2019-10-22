@@ -31,15 +31,15 @@
 import unittest
 import os
 import logging
-import numpy as np
-import rmgpy
-from rmgpy.kinetics import Arrhenius
 import shutil
-from rmgpy.data.rmg import RMGDatabase
+import numpy as np
 import autotst
 from autotst.reaction import Reaction
 from autotst.data.base import QMData, DistanceData
 from autotst.data.inputoutput import InputOutput, get_possible_names
+from rmgpy.kinetics import Arrhenius
+from rmgpy.data.rmg import RMGDatabase
+
 
 
 class TestInputOutput(unittest.TestCase):
@@ -56,20 +56,23 @@ class TestInputOutput(unittest.TestCase):
                 "ts",
                 self.reaction.label
             ))
-            shutil.copy(
-                os.path.join(
-                    os.path.expandvars("$AUTOTST/test/bin/log-files"), 
-                    self.reaction.label + "_forward_0.log"
-                    ),
-                os.path.join(
-                    os.path.expandvars("$AUTOTST/test/"),
-                    "ts",
-                    self.reaction.label,
-                    self.reaction.label + ".log"
-                )
-            )
         except OSError:
-            pass
+            try:
+                shutil.copy(
+                    os.path.join(
+                        os.path.expandvars("$AUTOTST/test/bin/log-files"), 
+                        self.reaction.label + "_forward_0.log"
+                        ),
+                    os.path.join(
+                        os.path.expandvars("$AUTOTST/test/"),
+                        "ts",
+                        self.reaction.label,
+                        self.reaction.label + ".log"
+                    )
+                )
+            except:
+                pass
+            
 
     def test_ts_file_path(self):
         path = self.io.get_ts_file_path()
@@ -98,12 +101,12 @@ class TestInputOutput(unittest.TestCase):
     def test_get_qmdata(self):
 
         self.qmdata = self.io.get_qmdata()
-        self.assertEqual(self.qmdata.groundStateDegeneracy, 2)
-        self.assertAlmostEqual(self.qmdata.molecularMass[0], 126.1, places=1)
+        self.assertEqual(self.qmdata.ground_state_degeneracy, 2)
+        self.assertAlmostEqual(self.qmdata.molecular_mass[0], 126.1, places=1)
         self.assertAlmostEqual(self.qmdata.energy[0], -6277.0, places=1)
-        self.assertEqual(len(self.qmdata.atomNumbers), 11)
-        self.assertEqual(self.qmdata.numberOfAtoms, 11)
-        self.assertEqual(len(self.qmdata.atomCoords[0]), 11)
+        self.assertEqual(len(self.qmdata.atom_numbers), 11)
+        self.assertEqual(self.qmdata.number_of_atoms, 11)
+        self.assertEqual(len(self.qmdata.atom_coords[0]), 11)
         self.assertEqual(len(self.qmdata.frequencies[0]), 27)
         self.assertEqual(self.qmdata.method.lower(), "m062x")
         self.assertEqual(self.qmdata.source, "AutoTST")
@@ -119,15 +122,6 @@ class TestInputOutput(unittest.TestCase):
 
         self.assertTrue(self.io.save_kinetics())
         self.assertIsInstance(self.io.read_kinetics_file(), dict)
-
-    def tearDown(self):
-        try:
-            shutil.rmtree(os.path.join(
-                os.path.expandvars("$AUTOTST/test/"),
-                "ts"
-            ))
-        except:
-            pass
 
 
 if __name__ == "__main__":

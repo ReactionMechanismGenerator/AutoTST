@@ -32,24 +32,24 @@ import unittest
 import os
 import logging
 import numpy as np
-import rmgpy
-from rmgpy.data.rmg import RMGDatabase
 import autotst
 from autotst.reaction import Reaction
 from autotst.data.base import QMData, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
+import rmgpy
+from rmgpy.data.rmg import RMGDatabase
 
 class TestQMData(unittest.TestCase):
     def setUp(self):
         self.qmdata = QMData()
     def test_init(self):
-        self.assertEqual(self.qmdata.groundStateDegeneracy, 0)
-        self.assertEqual(self.qmdata.numberOfAtoms, 0)
-        self.assertEqual(self.qmdata.stericEnergy, None)
-        self.assertEqual(self.qmdata.molecularMass[0], 0)
+        self.assertEqual(self.qmdata.ground_state_degeneracy, 0)
+        self.assertEqual(self.qmdata.number_of_atoms, 0)
+        self.assertEqual(self.qmdata.steric_energy, None)
+        self.assertEqual(self.qmdata.molecular_mass[0], 0)
         self.assertEqual(self.qmdata.energy[0], 0)
-        self.assertEqual(len(self.qmdata.atomicNumbers), 0)
-        self.assertEqual(len(self.qmdata.rotationalConstants[0]), 0)
-        self.assertEqual(len(self.qmdata.atomCoords[0]), 1)
+        self.assertEqual(len(self.qmdata.atomic_numbers), 0)
+        self.assertEqual(len(self.qmdata.rotational_constants[0]), 0)
+        self.assertEqual(len(self.qmdata.atom_coords[0]), 1)
         self.assertEqual(len(self.qmdata.frequencies[0]), 0)
         self.assertEqual(self.qmdata.source, None)
         self.assertEqual(self.qmdata.method, None)
@@ -62,12 +62,12 @@ class TestQMData(unittest.TestCase):
         """
         self.qmdata.get_qmdata(os.path.expandvars("$AUTOTST/test/bin/log-files/CC+[O]O_[CH2]C+OO_forward_0.log"))
 
-        self.assertEqual(self.qmdata.groundStateDegeneracy, 2)
-        self.assertAlmostEqual(self.qmdata.molecularMass[0], 126.1, places=1)
+        self.assertEqual(self.qmdata.ground_state_degeneracy, 2)
+        self.assertAlmostEqual(self.qmdata.molecular_mass[0], 126.1, places=1)
         self.assertAlmostEqual(self.qmdata.energy[0], -6277.0, places=1)
-        self.assertEqual(len(self.qmdata.atomNumbers), 11)
-        self.assertEqual(self.qmdata.numberOfAtoms, 11)
-        self.assertEqual(len(self.qmdata.atomCoords[0]), 11)
+        self.assertEqual(len(self.qmdata.atom_numbers), 11)
+        self.assertEqual(self.qmdata.number_of_atoms, 11)
+        self.assertEqual(len(self.qmdata.atom_coords[0]), 11)
         self.assertEqual(len(self.qmdata.frequencies[0]), 27)
         self.assertEqual(self.qmdata.method.lower(), "m062x")
         self.assertEqual(self.qmdata.source, "AutoTST")
@@ -92,15 +92,15 @@ class TestTransitionStates(unittest.TestCase):
         rmg_database = RMGDatabase()
         rmg_database.load(
             rmgpy.settings['database.directory'],
-            kineticsFamilies=[
+            kinetics_families=[
             "R_Addition_MultipleBond",
             "H_Abstraction",
             "intra_H_migration"
         ],
-            transportLibraries=[],
-            reactionLibraries=[],
-            seedMechanisms=[],
-            thermoLibraries=[
+            transport_libraries=[],
+            reaction_libraries=[],
+            seed_mechanisms=[],
+            thermo_libraries=[
                 'primaryThermoLibrary',
                 'thermo_DFT_CCSDTF12_BAC',
                 'CBS_QB3_1dHR'],
@@ -134,7 +134,7 @@ class TestTransitionStates(unittest.TestCase):
         reaction = Reaction("CC+[O]O_[CH2]C+OO")
         labeled_reaction, _ = reaction.get_labeled_reaction()
 
-        distance_data = self.ts_database.estimateDistances(labeled_reaction)
+        distance_data = self.ts_database.estimate_distances(labeled_reaction)
 
         d12 = 1.38
         d13 = 2.53
@@ -196,7 +196,7 @@ class TestTSGroups(unittest.TestCase):
         reaction = Reaction("CC+[O]O_[CH2]C+OO")
         labeled_reaction, _ = reaction.get_labeled_reaction()
 
-        distance_data = self.ts_groups.estimateDistancesUsingGroupAdditivity(labeled_reaction)
+        distance_data = self.ts_groups.estimate_distances_using_group_additivity(labeled_reaction)
 
         d12 = 1.38
         d13 = 2.53

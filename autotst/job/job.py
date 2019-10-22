@@ -1,26 +1,32 @@
-from autotst.calculator.gaussian import Gaussian
-from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
-from autotst.calculator.statmech import StatMech
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
-from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
-from cclib.io import ccread
-import cclib
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.species import Species as RMGSpecies
-from rmgpy.reaction import Reaction as RMGReaction, ReactionError
-from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
-from rmgpy.data.rmg import RMGDatabase
-import rmgpy
-from ase.calculators.gaussian import Gaussian as ASEGaussian
-from ase.atoms import Atom, Atoms
-import ase
-import rdkit.Chem.rdDistGeom
-import rdkit.DistanceGeometry
-from rdkit.Chem.Pharm3D import EmbedLib
-from rdkit.Chem import AllChem
-from rdkit import Chem
-import rdkit
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+##########################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+##########################################################################
+
 import os
 import time
 import yaml
@@ -33,6 +39,30 @@ from multiprocessing import Process, Manager
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
+
+from autotst.calculator.gaussian import Gaussian
+from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
+from autotst.calculator.statmech import StatMech
+from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
+from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
+from cclib.io import ccread
+import cclib
+from ase.calculators.gaussian import Gaussian as ASEGaussian
+from ase.atoms import Atom, Atoms
+import ase
+import rdkit.Chem.rdDistGeom
+import rdkit.DistanceGeometry
+from rdkit.Chem.Pharm3D import EmbedLib
+from rdkit.Chem import AllChem
+from rdkit import Chem
+import rdkit
+from rmgpy.molecule import Molecule as RMGMolecule
+from rmgpy.species import Species as RMGSpecies
+from rmgpy.reaction import Reaction as RMGReaction, ReactionError
+from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
+from rmgpy.data.rmg import RMGDatabase
+import rmgpy
 
 
 class Job():
@@ -51,7 +81,7 @@ class Job():
             exclude = None # nodes that you wish to exclude
             ):
 
-        assert isinstance(reaction, (Reaction, None)), "Please provide an AutoTST Reaction object"
+        #assert isinstance(reaction, (Reaction, None)), "Please provide an AutoTST Reaction object"
         self.reaction = reaction
         if self.reaction:
             self.label = self.reaction.label
@@ -159,8 +189,7 @@ class Job():
             command,
             shell=True,
             stdout=subprocess.PIPE).communicate()[0]
-        
-        if len(output.split("\n")) <= 2:
+        if len(output.decode("utf-8").splitlines()) <= 1:
             return True
         else:
             return False
@@ -193,7 +222,7 @@ class Job():
 
         if restart or not attempted:
             copy_molecule = conformer.rmg_molecule.copy()
-            copy_molecule.deleteHydrogens()
+            copy_molecule.delete_hydrogens()
             number_of_atoms = len(copy_molecule.atoms)
             if number_of_atoms >= 4:
                 nproc = 2
@@ -273,19 +302,19 @@ class Job():
             Compares whatever is in the log file 'f' 
             to the SMILES of the passed in 'conformer'
             """
-            starting_molecule = RMGMolecule(SMILES=conformer.smiles)
-            starting_molecule = starting_molecule.toSingleBonds()
+            starting_molecule = RMGMolecule(smiles=conformer.smiles)
+            starting_molecule = starting_molecule.to_single_bonds()
 
             atoms = self.read_log(
                 os.path.join(scratch_dir, f)
             )
 
             test_molecule = RMGMolecule()
-            test_molecule.fromXYZ(
+            test_molecule.from_xyz(
                 atoms.arrays["numbers"],
                 atoms.arrays["positions"]
             )
-            if not starting_molecule.isIsomorphic(test_molecule):
+            if not starting_molecule.is_isomorphic(test_molecule):
                 logging.info(
                     "Output geometry of {} is not isomorphic with input geometry".format(calc.label))
                 return False
@@ -320,7 +349,7 @@ class Job():
 
             logging.info("Resubmitting {} with default convergence criteria".format(conformer))
             atoms = self.read_log(os.path.join(scratch_dir, f))
-            conformer.ase_molecule = atoms
+            conformer._ase_molecule = atoms
             conformer.update_coords_from("ase")
             self.calculator.conformer = conformer # again, be careful setting this in multiple processes?
             self.calculator.convergence = ""
@@ -480,7 +509,7 @@ class Job():
 
         if opt_type.lower() != "irc":
             copy_molecule = transitionstate.rmg_molecule.copy()
-            copy_molecule.deleteHydrogens()
+            copy_molecule.delete_hydrogens()
             number_of_atoms = len(copy_molecule.atoms)
             if number_of_atoms >= 4:
                 nproc = 2
@@ -583,7 +612,7 @@ class Job():
                 return False
             logging.info(
                 "{} successfully completed the {} optimization!".format(ts_identifier, opt_type.upper()))
-            transitionstate.ase_molecule = self.read_log(file_path)
+            transitionstate._ase_molecule = self.read_log(file_path)
             transitionstate.update_coords_from("ase")
 
         logging.info(
@@ -629,7 +658,7 @@ class Job():
         for name, process in list(processes.items()):
             while len(currently_running) >= 50:
                 for running in currently_running:
-                    if not running.is_alive():
+                    if not processes[running].is_alive():
                         currently_running.remove(name)
             process.start()
             currently_running.append(name)
@@ -645,6 +674,7 @@ class Job():
         for label, result in global_results.items():
             if not result:
                 logging.info("Calculations for {} FAILED".format(label))
+                continue
             f = "{}.log".format(label)
             path = os.path.join(self.calculator.directory, "ts",
                     self.reaction.label, "conformers", f)
@@ -723,7 +753,7 @@ class Job():
         ase_calculator = self.calculator.get_rotor_calc(torsion_index)
 
         copy_molecule = conformer.rmg_molecule.copy()
-        copy_molecule.deleteHydrogens()
+        copy_molecule.delete_hydrogens()
         number_of_atoms = len(copy_molecule.atoms)
         if number_of_atoms >= 4:
             nproc = 2
@@ -840,7 +870,7 @@ class Job():
 
 
             atoms = self.read_log(file_name)
-            conformer.ase_molecule = atoms
+            conformer._ase_molecule = atoms
             conformer.update_coords_from("ase")
             for index in ["X", "Y", "Z"]: 
                 # we do this because we now have a new conformer
@@ -877,7 +907,7 @@ class Job():
                 file_path,
                 os.path.join(self.directory, t, label, "{}.log".format(label))
             )
-            conformer.ase_molecule = self.read_log(file_path)
+            conformer._ase_molecule = self.read_log(file_path)
             conformer.update_coords_from("ase")
 
             return self.calculate_rotors(conformer, steps, step_size)

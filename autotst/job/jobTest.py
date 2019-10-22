@@ -34,16 +34,17 @@ from autotst.species import Species, Conformer
 from autotst.data.base import TransitionStates
 from autotst.job.job import Job
 from autotst.calculator.gaussian import Gaussian
+from rdkit.Chem.rdchem import Mol, RWMol
 from rmgpy.reaction import Reaction as RMGReaction
 from rmgpy.species import Species as RMGSpecies
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.data.rmg import RMGDatabase
-from rdkit.Chem.rdchem import Mol, RWMol
 from ase import Atoms
 
 class JobTest(unittest.TestCase):
 
     def setUp(self):
+        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
         self.job = Job(
@@ -52,8 +53,6 @@ class JobTest(unittest.TestCase):
             partition = "test"
         )
 
-        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
-        
     def test_read_log(self):
 
         path = os.path.expandvars("$AUTOTST/test/bin/log-files/CC_0.log")
@@ -74,7 +73,7 @@ class JobTest(unittest.TestCase):
         self.assertEqual(carbon_count, 2)
 
     def test_write_input(self):
-        self.assert_(True)
+        self.assertTrue(True)
 
     def test_check_complete(self):
         ### I don't know how to create alaises in a python script
@@ -84,23 +83,17 @@ class JobTest(unittest.TestCase):
 
     ### For conformers
     def test_submit_conformer(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         self.reaction.generate_reactants_and_products()
-        conformer = self.reaction.reactants[0].conformers.values()[0][0]
+        conformer = list(self.reaction.reactants[0].conformers.values())[0][0]
         label = self.job.submit_conformer(conformer)
-        self.assertEquals(label, "{}_{}".format(conformer.smiles , conformer.index))
+        self.assertEqual(label, "{}_{}".format(conformer.smiles , conformer.index))
 
     def test_calculate_conformer(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         conformer = Conformer(smiles='CC',index=0)
         result = self.job.calculate_conformer(conformer=conformer)
         self.assertTrue(result)
 
     def test_calculate_species(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         self.reaction.generate_reactants_and_products()
 
         for species in self.reaction.reactants + self.reaction.products:
@@ -113,11 +106,8 @@ class JobTest(unittest.TestCase):
                 )))
     
     def test_submit_transitionstate(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
         ts = self.reaction.ts["forward"][0]
         ts.get_molecules()
-
         for opt_type in ["shell", "center", "overall"]:
             label = self.job.submit_transitionstate(ts, opt_type=opt_type)
             if opt_type == "overall":
@@ -126,8 +116,6 @@ class JobTest(unittest.TestCase):
                 self.assertEqual(label, "{}_{}_{}_{}".format(ts.reaction_label,ts.direction, opt_type, ts.index))
 
     def test_calculate_transitionstate(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
         ts = self.reaction.ts["forward"][0]
         ts.get_molecules()
         result = self.job.calculate_transitionstate(ts)
@@ -139,13 +127,6 @@ class JobTest(unittest.TestCase):
         result = self.job.calculate_reaction()
         self.assertTrue(result)
     
-    def tearDown(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
-    
-
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
 

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import rdkit
 
 __file_path = os.path.dirname(os.path.abspath(__file__))
 

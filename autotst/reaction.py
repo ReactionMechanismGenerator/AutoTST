@@ -118,7 +118,7 @@ class Reaction():
             for direction, complex in self.get_rmg_complexes().items():
                 ts = TS(
                     reaction_label=self.label,
-                    #smiles=complex.toSMILES()
+                    #smiles=complex.to_smiles()
                     direction=direction,
                     rmg_molecule=complex,
                     reaction_family=self.reaction_family,
@@ -182,11 +182,11 @@ class Reaction():
         try:
             rmg_database.load(
                 database_path,
-                kineticsFamilies=self.possible_families,
-                transportLibraries=[],
-                reactionLibraries=[],
-                seedMechanisms=[],
-                thermoLibraries=[
+                kinetics_families=self.possible_families,
+                transport_libraries=[],
+                reaction_libraries=[],
+                seed_mechanisms=[],
+                thermo_libraries=[
                     'primaryThermoLibrary',
                     'thermo_DFT_CCSDTF12_BAC',
                     'CBS_QB3_1dHR'],
@@ -201,11 +201,11 @@ class Reaction():
                 "Loading RMG database instead from '{}'".format(database_path))
             rmg_database.load(
                 database_path,
-                kineticsFamilies=self.possible_families,
-                transportLibraries=[],
-                reactionLibraries=[],
-                seedMechanisms=[],
-                thermoLibraries=[
+                kinetics_families=self.possible_families,
+                transport_libraries=[],
+                reaction_libraries=[],
+                seed_mechanisms=[],
+                thermo_libraries=[
                     'primaryThermoLibrary',
                     'thermo_DFT_CCSDTF12_BAC',
                     'CBS_QB3_1dHR'],
@@ -247,7 +247,7 @@ class Reaction():
             self.rmg_database, self.ts_databases = self.load_databases()
         self.get_labeled_reaction()
         assert self.rmg_reaction, "try calling get_rmg_reaction() first"
-        self._distance_data = self.ts_databases[self.reaction_family].groups.estimateDistancesUsingGroupAdditivity(
+        self._distance_data = self.ts_databases[self.reaction_family].groups.estimate_distances_using_group_additivity(
             self.rmg_reaction)
         if ((np.isclose(self._distance_data.distances["d12"] + self._distance_data.distances["d23"],
                       self._distance_data.distances["d13"],
@@ -317,10 +317,10 @@ class Reaction():
             rmg_products = []
             r, p = self.label.split("_")
             for react in r.split("+"):
-                s = RMGMolecule(SMILES=react)
+                s = RMGMolecule(smiles=react)
                 rmg_reactants.append(s)
             for prod in p.split("+"):
-                s = RMGMolecule(SMILES=prod)
+                s = RMGMolecule(smiles=prod)
                 rmg_products.append(s)
 
             test_reaction = RMGReaction(
@@ -328,14 +328,14 @@ class Reaction():
                 products=rmg_products)
 
             if self.rmg_reaction:
-                assert self.rmg_reaction.isIsomorphic(
+                assert self.rmg_reaction.is_isomorphic(
                     test_reaction), "The reaction label provided does not match the RMGReaction provided..."
 
             for name, family in list(self.rmg_database.kinetics.families.items()):
                 if match:
                     break
                 try:
-                    labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                    labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                         test_reaction.reactants, test_reaction.products)
                 except ValueError:
                     continue
@@ -409,7 +409,7 @@ class Reaction():
                             reactants=test_reactant, products=test_product)
 
                         try:
-                            labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                            labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                                 test_reaction.reactants, test_reaction.products)
                             if not (labeled_r and labeled_p):
                                 logging.info("Unable to determine a reaction for the forward direction. Trying the reverse direction.")
@@ -418,18 +418,18 @@ class Reaction():
                             try: 
                                 # Trying the reverse reaction if the forward reaction doesn't work
                                 # This is useful for R_Addition reactions
-                                labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                                labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                                     test_reaction.products, test_reaction.reactants)
                             except (ValueError, ActionError, IndexError):
                                continue
                             
 
                         if not (labeled_r and labeled_p):
-                            labeled_r, labeled_p = family.getLabeledReactantsAndProducts(
+                            labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                                 test_reaction.products, test_reaction.reactants)
                             continue
 
-                        if ((len(labeled_r) > 0) and (len(labeled_p) > 0)) and (self.rmg_reaction.isIsomorphic(test_reaction)):
+                        if ((len(labeled_r) > 0) and (len(labeled_p) > 0)) and (self.rmg_reaction.is_isomorphic(test_reaction)):
                             logging.info(
                                 "Matched reaction to {} family".format(name))
 
@@ -445,7 +445,7 @@ class Reaction():
                             
         assert match, "Could not idetify labeled reactants and products"
         #try: 
-        reaction_list = final_family.generateReactions(
+        reaction_list = final_family.generate_reactions(
             test_reaction.reactants, test_reaction.products)
         #except KeyError:
         #    reaction_list = None
@@ -454,7 +454,7 @@ class Reaction():
         assert reaction_list, "Could not match a reaction to a reaction family..."
 
         for reaction in reaction_list:
-            if test_reaction.isIsomorphic(reaction):
+            if test_reaction.is_isomorphic(reaction):
                 reaction.reactants = labeled_reactants
                 reaction.products = labeled_products
                 break
@@ -478,16 +478,16 @@ class Reaction():
         string = ""
         for react in self.rmg_reaction.reactants:
             if isinstance(react, RMGSpecies):
-                string += "{}+".format(react.molecule[0].toSMILES())
+                string += "{}+".format(react.molecule[0].to_smiles())
             elif isinstance(react, RMGMolecule):
-                string += "{}+".format(react.toSMILES())
+                string += "{}+".format(react.to_smiles())
         string = string[:-1]
         string += "_"
         for prod in self.rmg_reaction.products:
             if isinstance(prod, RMGSpecies):
-                string += "{}+".format(prod.molecule[0].toSMILES())
+                string += "{}+".format(prod.molecule[0].to_smiles())
             elif isinstance(prod, RMGMolecule):
-                string += "{}+".format(prod.toSMILES())
+                string += "{}+".format(prod.to_smiles())
         self.label = string[:-1]
         return self.label
 
@@ -501,9 +501,9 @@ class Reaction():
         reactants = []
         products = []
         for react in r.split("+"):
-            reactants.append(RMGMolecule(SMILES=react))
+            reactants.append(RMGMolecule(smiles=react))
         for prod in p.split("+"):
-            products.append(RMGMolecule(SMILES=prod))
+            products.append(RMGMolecule(smiles=prod))
 
         self.rmg_reaction = RMGReaction(reactants=reactants, products=products)
         return self.rmg_reaction
@@ -528,7 +528,7 @@ class Reaction():
                 reactant_complex = reactant_complex.merge(react)
             elif isinstance(react, RMGSpecies):
                 for mol in react.molecule:
-                    if len(mol.getLabeledAtoms()) > 0:
+                    if len(mol.get_all_labeled_atoms()) > 0:
                         reactant_complex = reactant_complex.merge(mol)
 
         product_complex = RMGMolecule()
@@ -537,13 +537,13 @@ class Reaction():
                 product_complex = product_complex.merge(prod)
             elif isinstance(prod, RMGSpecies):
                 for mol in prod.molecule:
-                    if len(mol.getLabeledAtoms()) > 0:
+                    if len(mol.get_all_labeled_atoms()) > 0:
                         product_complex = product_complex.merge(mol)
 
-        reactant_complex.updateMultiplicity()
-        product_complex.updateMultiplicity()
+        reactant_complex.update_multiplicity()
+        product_complex.update_multiplicity()
 
-        if len(reactant_complex.getLabeledAtoms()) == 0 or len(product_complex.getLabeledAtoms()) == 0:
+        if len(reactant_complex.get_all_labeled_atoms()) == 0 or len(product_complex.get_all_labeled_atoms()) == 0:
             logging.warning("REACTING ATOMS LABELES NOT PROVIDED. Please call `Reaction.get_labeled_reaction` to generate labeled complexes")
 
         self.complexes = {
@@ -612,28 +612,28 @@ class TS(Conformer):
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
-                assert rmg_molecule.isIsomorphic(RMGMolecule(
-                    SMILES=smiles)), "SMILES string did not match RMG Molecule object"
+                assert rmg_molecule.is_isomorphic(RMGMolecule(
+                    smiles=smiles)), "smiles string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
 
             elif rmg_molecule:
                 self.rmg_molecule = rmg_molecule
-                self.smiles = rmg_molecule.toSMILES()
+                self.smiles = rmg_molecule.to_smiles()
 
             else:
                 self.smiles = smiles
-                self.rmg_molecule = RMGMolecule(SMILES=smiles)
+                self.rmg_molecule = RMGMolecule(smiles=smiles)
 
-            self.rmg_molecule.updateMultiplicity()
+            self.rmg_molecule.update_multiplicity()
             self._symmetry_number = None
 
         else:
             self.smiles = None
             self.rmg_molecule = None
-            self.rdkit_molecule = None
+            self._rdkit_molecule = None
             self._pseudo_geometry = None
-            self.ase_molecule = None
+            self._ase_molecule = None
             self.bonds = []
             self.angles = []
             self.torsions = []
@@ -650,9 +650,9 @@ class TS(Conformer):
             reaction_family=self.reaction_family)
         copy_conf.smiles = self.smiles
         copy_conf.rmg_molecule = self.rmg_molecule.copy()
-        copy_conf.rdkit_molecule = self.rdkit_molecule.__copy__()
+        copy_conf._rdkit_molecule = self.rdkit_molecule.__copy__()
         copy_conf._pseudo_geometry = self._pseudo_geometry.__copy__()
-        copy_conf.ase_molecule = self.ase_molecule.copy()
+        copy_conf._ase_molecule = self.ase_molecule.copy()
         copy_conf.get_geometries()
         copy_conf.energy = self.energy
         copy_conf._symmetry_number = self._symmetry_number
@@ -682,7 +682,7 @@ class TS(Conformer):
         A method to create an rdkit geometry... slightly different than that of the conformer method
         returns both the rdkit_molecule and the bm
         """
-        self.rdkit_molecule = Conformer(rmg_molecule=self.rmg_molecule).get_rdkit_mol()
+        self._rdkit_molecule = Conformer(rmg_molecule=self.rmg_molecule).get_rdkit_mol()
 
         self.get_labels()
         for i, atom in enumerate(self.rmg_molecule.atoms):
@@ -773,14 +773,14 @@ class TS(Conformer):
                 for k in range(len(self.bm)):
                     if k == i or k == j or i == j:
                         continue
-                    Uik = self.bm[i, k] if k > i else self.bm[k, i]
-                    Ukj = self.bm[j, k] if k > j else self.bm[k, j]
+                    u_ik = self.bm[i, k] if k > i else self.bm[k, i]
+                    u_kj = self.bm[j, k] if k > j else self.bm[k, j]
 
-                    maxLij = Uik + Ukj - 0.1
-                    if self.bm[i, j] > maxLij:
+                    max_lij = u_ik + u_kj - 0.1
+                    if self.bm[i, j] > max_lij:
                         logging.info(
-                            "Changing lower limit {0} to {1}".format(self.bm[i, j], maxLij))
-                        self.bm[i, j] = maxLij
+                            "Changing lower limit {0} to {1}".format(self.bm[i, j], max_lij))
+                        self.bm[i, j] = max_lij
 
         return self.bm
 
@@ -793,31 +793,31 @@ class TS(Conformer):
         :return atomMatch: a tuple of tuples the atoms labels corresponding to the reaction center
         """
 
-        if len(self.rmg_molecule.getLabeledAtoms()) == 0:
+        if len(self.rmg_molecule.get_all_labeled_atoms()) == 0:
             labels = []
-            atomMatch = ()
+            atom_match = ()
 
         if self.reaction_family.lower() in [
             'h_abstraction',
             'r_addition_multiplebond',
             'intra_h_migration']:
             # for i, atom in enumerate(reactants.atoms):
-            lbl1 = self.rmg_molecule.getLabeledAtoms()["*1"].sortingLabel
-            lbl2 = self.rmg_molecule.getLabeledAtoms()["*2"].sortingLabel
-            lbl3 = self.rmg_molecule.getLabeledAtoms()["*3"].sortingLabel
+            lbl1 = self.rmg_molecule.get_all_labeled_atoms()["*1"].sorting_label
+            lbl2 = self.rmg_molecule.get_all_labeled_atoms()["*2"].sorting_label
+            lbl3 = self.rmg_molecule.get_all_labeled_atoms()["*3"].sorting_label
             labels = [lbl1, lbl2, lbl3]
-            atomMatch = ((lbl1,), (lbl2,), (lbl3,))
+            atom_match = ((lbl1,), (lbl2,), (lbl3,))
         elif self.reaction_family.lower() in ['disproportionation']:
-            lbl1 = self.rmg_molecule.getLabeledAtoms()["*2"].sortingLabel
-            lbl2 = self.rmg_molecule.getLabeledAtoms()["*4"].sortingLabel
-            lbl3 = self.rmg_molecule.getLabeledAtoms()["*1"].sortingLabel
+            lbl1 = self.rmg_molecule.get_all_labeled_atoms()["*2"].sorting_label
+            lbl2 = self.rmg_molecule.get_all_labeled_atoms()["*4"].sorting_label
+            lbl3 = self.rmg_molecule.get_all_labeled_atoms()["*1"].sorting_label
 
             labels = [lbl1, lbl2, lbl3]
-            atomMatch = ((lbl1,), (lbl2,), (lbl3,))
+            atom_match = ((lbl1,), (lbl2,), (lbl3,))
 
         #logging.info("The labled atoms are {}.".format(labels))
         self.labels = labels
-        self.atom_match = atomMatch
+        self.atom_match = atom_match
         return self.labels, self.atom_match
 
     def edit_matrix(self):
@@ -830,7 +830,7 @@ class TS(Conformer):
         sect = []
 
         for atom in self.rmg_molecule.split()[0].atoms:
-            sect.append(atom.sortingLabel)
+            sect.append(atom.sorting_label)
 
         uncertainties = {'d12': 0.02, 'd13': 0.02, 'd23': 0.02}
         self.bm = self.set_limits(
@@ -866,23 +866,23 @@ class TS(Conformer):
         """
 
         energy = 0.0
-        minEid = 0
-        lowestE = 9.999999e99  # start with a very high number, which would never be reached
+        min_eid = 0
+        lowest_e = 9.999999e99  # start with a very high number, which would never be reached
 
         for conf in self.rdkit_molecule.GetConformers():
             if (self.bm is None) or (self.atom_match is None):
-                AllChem.UFFOptimizeMolecule(self.rdkit_molecule, confId=conf.GetId())
+                AllChem.UFFOptimizeMolecule(self._rdkit_molecule, confId=conf.GetId())
                 energy = AllChem.UFFGetMoleculeForceField(
-                    self.rdkit_molecule, confId=conf.GetId()).CalcEnergy()
+                    self._rdkit_molecule, confId=conf.GetId()).CalcEnergy()
             else:
                 _, energy = EmbedLib.OptimizeMol(
-                    self.rdkit_molecule, self.bm, atomMatches=self.atom_match, forceConstant=100000.0)
+                    self._rdkit_molecule, self.bm, atomMatches=self.atom_match, forceConstant=100000.0)
 
-            if energy < lowestE:
-                minEid = conf.GetId()
-                lowestE = energy
+            if energy < lowest_e:
+                min_eid = conf.GetId()
+                lowest_e = energy
 
-        return self.rdkit_molecule, minEid
+        return self.rdkit_molecule, min_eid
 
     def rd_embed(self):
         """
@@ -890,25 +890,25 @@ class TS(Conformer):
 
         Embed the RDKit molecule and create the crude molecule file.
         """
-        numConfAttempts = 10000
+        num_conf_attempts = 10000
         if (self.bm is None) or (self.atom_match is None):
-            AllChem.EmbedMultipleConfs(self.rdkit_molecule, numConfAttempts, randomSeed=1)
+            AllChem.EmbedMultipleConfs(self._rdkit_molecule, num_conf_attempts, randomSeed=1)
 
-            self.rdkit_molecule, minEid = self.optimize_rdkit_molecule()
+            self._rdkit_molecule, minEid = self.optimize_rdkit_molecule()
         else:
             """
             Embed the molecule according to the bounds matrix. Built to handle possible failures
             of some of the embedding attempts.
             """
-            self.rdkit_molecule.RemoveAllConformers()
-            for i in range(0, numConfAttempts):
+            self._rdkit_molecule.RemoveAllConformers()
+            for i in range(0, num_conf_attempts):
                 try:
-                    EmbedLib.EmbedMol(self.rdkit_molecule, self.bm, atomMatch=self.atom_match)
+                    EmbedLib.EmbedMol(self._rdkit_molecule, self.bm, atomMatch=self.atom_match)
                     break
                 except ValueError:
                     logging.info(
                         "RDKit failed to embed on attempt {0} of {1}".format(
-                            i + 1, numConfAttempts))
+                            i + 1, num_conf_attempts))
                 except RuntimeError:
                     logging.info("RDKit failed to embed.")
             else:
@@ -922,39 +922,39 @@ class TS(Conformer):
             for i in range(len(self.rdkit_molecule.GetConformers())):
                 self.rdkit_molecule.GetConformers()[i].SetId(i)
 
-            self.rdkit_molecule, minEid = self.optimize_rdkit_molecule()
+            self._rdkit_molecule, min_eid = self.optimize_rdkit_molecule()
 
-        return self.rdkit_molecule, minEid
+        return self._rdkit_molecule, min_eid
 
     def get_bonds(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
-            test_conf.rdkit_molecule = self._pseudo_geometry
+            test_conf._rdkit_molecule = self._pseudo_geometry
         except:
             self.get_rdkit_mol()
-            test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+            test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_bonds()
 
     def get_torsions(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
-	        test_conf.rdkit_molecule = self._pseudo_geometry
+	        test_conf._rdkit_molecule = self._pseudo_geometry
         except:
             self.get_rdkit_mol()
-            test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+            test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_torsions()
 
     def get_angles(self):
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
-	        test_conf.rdkit_molecule = self._pseudo_geometry
+	        test_conf._rdkit_molecule = self._pseudo_geometry
         except:
             self.get_rdkit_mol()
-            test_conf.rdkit_molecule = self._pseudo_geometry
-        test_conf.ase_molecule = self.ase_molecule
+            test_conf._rdkit_molecule = self._pseudo_geometry
+        test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_angles()
