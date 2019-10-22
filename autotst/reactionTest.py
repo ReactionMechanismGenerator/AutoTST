@@ -29,14 +29,15 @@
 
 import os, sys
 import unittest
+from rdkit.Chem.rdchem import Mol, RWMol
+from ase import Atoms
 from autotst.reaction import Reaction, TS
 from autotst.data.base import TransitionStates
 from rmgpy.reaction import Reaction as RMGReaction
 from rmgpy.species import Species as RMGSpecies
 from rmgpy.molecule import Molecule as RMGMolecule
 from rmgpy.data.rmg import RMGDatabase
-from rdkit.Chem.rdchem import Mol, RWMol
-from ase import Atoms
+
 
 
 class TestReaction(unittest.TestCase):

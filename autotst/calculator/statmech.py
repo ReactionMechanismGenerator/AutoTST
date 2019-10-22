@@ -29,13 +29,14 @@
 
 import os
 import logging
-import rmgpy
-from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob, ThermoJob
 from ase import Atom, Atoms
 from cclib.io import ccread
 
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
+
+import rmgpy
+from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob, ThermoJob
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)

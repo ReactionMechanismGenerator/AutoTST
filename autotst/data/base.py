@@ -39,14 +39,13 @@ import codecs
 import numpy as np
 from cclib.io import ccread
 from copy import deepcopy
-from rmgpy.data.base import Database, Entry, make_logic_node, LogicNode, DatabaseError
+import rdkit
 
+from rmgpy.data.base import Database, Entry, make_logic_node, LogicNode, DatabaseError
 from rmgpy.quantity import Quantity, constants
 from rmgpy.reaction import Reaction, ReactionError
 from rmgpy.molecule import Bond, GroupBond, Group, Molecule as RMGMolecule, Atom, get_element
-
 from rmgpy.data.kinetics.groups import KineticsError  # , save_entry
-
 from rmgpy.species import Species as RMGSpecies, TransitionState
 from rmgpy.reaction import Reaction
 from rmgpy.kinetics import Arrhenius, Eckart

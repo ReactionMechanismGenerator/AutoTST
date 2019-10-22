@@ -33,10 +33,6 @@ import logging
 import numpy as np
 from cclib.io import ccread
 
-import rmgpy
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.reaction import Reaction as RMGReaction
-
 import autotst
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
@@ -45,6 +41,10 @@ from autotst.geometry import Torsion
 from ase import Atom, Atoms
 from ase.io.gaussian import read_gaussian, read_gaussian_out
 from ase.calculators.gaussian import Gaussian as ASEGaussian
+
+import rmgpy
+from rmgpy.molecule import Molecule as RMGMolecule
+from rmgpy.reaction import Reaction as RMGReaction
 
 
 class Gaussian():

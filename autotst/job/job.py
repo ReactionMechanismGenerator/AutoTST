@@ -1,26 +1,32 @@
-from autotst.calculator.gaussian import Gaussian
-from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
-from autotst.calculator.statmech import StatMech
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
-from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
-from cclib.io import ccread
-import cclib
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.species import Species as RMGSpecies
-from rmgpy.reaction import Reaction as RMGReaction, ReactionError
-from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
-from rmgpy.data.rmg import RMGDatabase
-import rmgpy
-from ase.calculators.gaussian import Gaussian as ASEGaussian
-from ase.atoms import Atom, Atoms
-import ase
-import rdkit.Chem.rdDistGeom
-import rdkit.DistanceGeometry
-from rdkit.Chem.Pharm3D import EmbedLib
-from rdkit.Chem import AllChem
-from rdkit import Chem
-import rdkit
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+##########################################################################
+#
+#   AutoTST - Automated Transition State Theory
+#
+#   Copyright (c) 2015-2018 Prof. Richard H. West (r.west@northeastern.edu)
+#
+#   Permission is hereby granted, free of charge, to any person obtaining a
+#   copy of this software and associated documentation files (the 'Software'),
+#   to deal in the Software without restriction, including without limitation
+#   the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell copies of the Software, and to permit persons to whom the
+#   Software is furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#
+##########################################################################
+
 import os
 import time
 import yaml
@@ -33,6 +39,30 @@ from multiprocessing import Process, Manager
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
+
+from autotst.calculator.gaussian import Gaussian
+from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
+from autotst.calculator.statmech import StatMech
+from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
+from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
+from cclib.io import ccread
+import cclib
+from ase.calculators.gaussian import Gaussian as ASEGaussian
+from ase.atoms import Atom, Atoms
+import ase
+import rdkit.Chem.rdDistGeom
+import rdkit.DistanceGeometry
+from rdkit.Chem.Pharm3D import EmbedLib
+from rdkit.Chem import AllChem
+from rdkit import Chem
+import rdkit
+from rmgpy.molecule import Molecule as RMGMolecule
+from rmgpy.species import Species as RMGSpecies
+from rmgpy.reaction import Reaction as RMGReaction, ReactionError
+from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
+from rmgpy.data.rmg import RMGDatabase
+import rmgpy
 
 
 class Job():

@@ -31,15 +31,15 @@
 import unittest
 import os
 import logging
-import numpy as np
-import rmgpy
-from rmgpy.kinetics import Arrhenius
 import shutil
-from rmgpy.data.rmg import RMGDatabase
+import numpy as np
 import autotst
 from autotst.reaction import Reaction
 from autotst.data.base import QMData, DistanceData
 from autotst.data.inputoutput import InputOutput, get_possible_names
+from rmgpy.kinetics import Arrhenius
+from rmgpy.data.rmg import RMGDatabase
+
 
 
 class TestInputOutput(unittest.TestCase):

@@ -32,11 +32,11 @@ import unittest
 import os
 import logging
 import numpy as np
-import rmgpy
-from rmgpy.data.rmg import RMGDatabase
 import autotst
 from autotst.reaction import Reaction
 from autotst.data.base import QMData, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
+import rmgpy
+from rmgpy.data.rmg import RMGDatabase
 
 class TestQMData(unittest.TestCase):
     def setUp(self):
