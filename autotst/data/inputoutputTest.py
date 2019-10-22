@@ -120,15 +120,6 @@ class TestInputOutput(unittest.TestCase):
         self.assertTrue(self.io.save_kinetics())
         self.assertIsInstance(self.io.read_kinetics_file(), dict)
 
-    def tearDown(self):
-        try:
-            shutil.rmtree(os.path.join(
-                os.path.expandvars("$AUTOTST/test/"),
-                "ts"
-            ))
-        except:
-            pass
-
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
