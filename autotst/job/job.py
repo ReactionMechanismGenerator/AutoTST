@@ -30,6 +30,7 @@
 import os
 import time
 import yaml
+import pickle
 from shutil import move, copyfile
 import numpy as np
 import pandas as pd
@@ -195,6 +196,62 @@ class Job():
             return False
 
 #################################################################################
+
+    def submit_conformer_analysis(self, autotst_object):
+        """
+        A method that will generate a dictionary of conformers for autotst optimiations
+        """
+        if isinstance(autotst_object, Reaction):
+            smiles = autotst_object.label
+            job_label = smiles
+        else:
+            smiles = ""
+            for smile in autotst_object.smiles:
+                smiles += smile
+                smiles += " / "
+
+            smiles = smiles[:-3]
+            job_label = smiles.replace(" / ", "_") + "_conformer_analysis"
+
+        if self.exclude:
+            if isinstance(self.exclude, str):
+                command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.py "{3}" "{4}" """.format(
+                    self.exclude, job_label, self.partition, smiles, self.directory)
+            elif isinstance(self.exclude, list):
+                exc = ""
+                for e in self.exclude:
+                    exc += e
+                    exc += ","
+                exc = exc[:-1]
+                command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.py "{3}" "{4}" """.format(
+                    exc, job_label, self.partition, smiles, self.directory)
+        else:
+            command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.py "{2}" "{3}" """.format(
+                job_label, self.partition, smiles, self.directory)
+        
+        subprocess.call(command, shell=True)
+
+        while not self.check_complete(job_label):
+            time.sleep(15)
+
+        f = open(os.path.join(self.directory, "{}_conformers.pkl".format(smiles.replace(" / ", "_"))), "rb")
+        load_dict = pickle.load(f)
+        return_dict = {}
+        for key, confs in load_dict.items():
+            if isinstance(autotst_object, Reaction):
+                conformer = autotst_object.ts[key]
+            else:
+                conformer = autotst_object.conformers[key]
+            key_confs = []
+            for index, arrays in confs.items():
+                copy_conf = conformer.copy()
+                copy_conf.ase_molecule.arrays = arrays
+                copy_conf.update_coords_from("ase")
+                copy_conf.index = index
+                key_confs.append(copy_conf)
+            return_dict[key] = key_confs[:]
+                    
+    return return_dict
 
     def submit_conformer(self, conformer, restart=False):
         """
