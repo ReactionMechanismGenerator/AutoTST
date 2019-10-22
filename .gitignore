@@ -34,3 +34,5 @@
 *.ase
 *.com
 *.log
+*.ts
+*.kinetics
