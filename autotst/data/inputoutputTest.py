@@ -56,20 +56,23 @@ class TestInputOutput(unittest.TestCase):
                 "ts",
                 self.reaction.label
             ))
-            shutil.copy(
-                os.path.join(
-                    os.path.expandvars("$AUTOTST/test/bin/log-files"), 
-                    self.reaction.label + "_forward_0.log"
-                    ),
-                os.path.join(
-                    os.path.expandvars("$AUTOTST/test/"),
-                    "ts",
-                    self.reaction.label,
-                    self.reaction.label + ".log"
-                )
-            )
         except OSError:
-            pass
+            try:
+                shutil.copy(
+                    os.path.join(
+                        os.path.expandvars("$AUTOTST/test/bin/log-files"), 
+                        self.reaction.label + "_forward_0.log"
+                        ),
+                    os.path.join(
+                        os.path.expandvars("$AUTOTST/test/"),
+                        "ts",
+                        self.reaction.label,
+                        self.reaction.label + ".log"
+                    )
+                )
+            except:
+                pass
+            
 
     def test_ts_file_path(self):
         path = self.io.get_ts_file_path()

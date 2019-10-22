@@ -83,23 +83,17 @@ class JobTest(unittest.TestCase):
 
     ### For conformers
     def test_submit_conformer(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         self.reaction.generate_reactants_and_products()
         conformer = list(self.reaction.reactants[0].conformers.values())[0][0]
         label = self.job.submit_conformer(conformer)
         self.assertEqual(label, "{}_{}".format(conformer.smiles , conformer.index))
 
     def test_calculate_conformer(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         conformer = Conformer(smiles='CC',index=0)
         result = self.job.calculate_conformer(conformer=conformer)
         self.assertTrue(result)
 
     def test_calculate_species(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
         self.reaction.generate_reactants_and_products()
 
         for species in self.reaction.reactants + self.reaction.products:
@@ -133,16 +127,6 @@ class JobTest(unittest.TestCase):
         result = self.job.calculate_reaction()
         self.assertTrue(result)
     
-    def tearDown(self):
-        try:
-            if os.path.exists(os.path.expandvars("$AUTOTST/test/species")):
-                shutil.rmtree(os.path.expandvars("$AUTOTST/test/species"))
-            if os.path.exists(os.path.expandvars("$AUTOTST/test/ts")):
-                shutil.rmtree(os.path.expandvars("$AUTOTST/test/ts"))
-        except:
-            None
-    
-
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
 
