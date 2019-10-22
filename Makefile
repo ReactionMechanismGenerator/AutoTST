@@ -4,4 +4,3 @@ unittest unittests test-unittest test-unittests:
 	rm -r ts
 	rm -r test/species
 	rm -r test/ts
-	rm *.symm
