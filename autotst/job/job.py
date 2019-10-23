@@ -251,7 +251,7 @@ class Job():
                 key_confs.append(copy_conf)
             return_dict[key] = key_confs[:]
                     
-    return return_dict
+        return return_dict
 
     def submit_conformer(self, conformer, restart=False):
         """
