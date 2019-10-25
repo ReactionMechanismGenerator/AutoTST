@@ -213,21 +213,24 @@ class Job():
             smiles = smiles[:-3]
             job_label = smiles.replace(" / ", "_") + "_conformer_analysis"
 
+        os.environ["ENV"] = os.environ["CONDA_DEFAULT_ENV"]
+        os.environ["SMILES"] = smiles
+        os.environ["DIRECTORY"] = self.directory
         if self.exclude:
             if isinstance(self.exclude, str):
-                command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.py "{3}" "{4}" """.format(
-                    self.exclude, job_label, self.partition, smiles, self.directory)
+                command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
+                    self.exclude, job_label, self.partition)
             elif isinstance(self.exclude, list):
                 exc = ""
                 for e in self.exclude:
                     exc += e
                     exc += ","
                 exc = exc[:-1]
-                command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.py "{3}" "{4}" """.format(
-                    exc, job_label, self.partition, smiles, self.directory)
+                command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
+                    exc, job_label, self.partition)
         else:
-            command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.py "{2}" "{3}" """.format(
-                job_label, self.partition, smiles, self.directory)
+            command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
+                job_label, self.partition)
         
         subprocess.call(command, shell=True)
 

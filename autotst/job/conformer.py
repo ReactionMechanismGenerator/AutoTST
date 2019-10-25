@@ -1,3 +1,5 @@
+#!/bin/python
+
 import sys, os
 from autotst.species import Species, Conformer
 from autotst.reaction import Reaction, TS
