@@ -203,7 +203,7 @@ class Job():
         """
         if isinstance(autotst_object, Reaction):
             smiles = autotst_object.label
-            job_label = smiles
+            job_label = smiles + "_conformer_analysis"
         else:
             smiles = ""
             for smile in autotst_object.smiles:
@@ -216,37 +216,46 @@ class Job():
         os.environ["ENV"] = os.environ["CONDA_DEFAULT_ENV"]
         os.environ["SMILES"] = smiles
         os.environ["DIRECTORY"] = self.directory
-        if self.exclude:
-            if isinstance(self.exclude, str):
-                command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
-                    self.exclude, job_label, self.partition)
-            elif isinstance(self.exclude, list):
-                exc = ""
-                for e in self.exclude:
-                    exc += e
-                    exc += ","
-                exc = exc[:-1]
-                command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
-                    exc, job_label, self.partition)
-        else:
-            command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
-                job_label, self.partition)
-        
-        subprocess.call(command, shell=True)
+        if not os.path.exists(os.path.join(self.directory, "{}_conformers.pkl".format(smiles.replace(" / ", "_")))):
+            # Conformer analysis not run
+            if self.exclude:
+                if isinstance(self.exclude, str):
+                    command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
+                        self.exclude, job_label, self.partition)
+                elif isinstance(self.exclude, list):
+                    exc = ""
+                    for e in self.exclude:
+                        exc += e
+                        exc += ","
+                    exc = exc[:-1]
+                    command = """sbatch --exclude={0} --job-name="{1}" --output="{1}.slurm.log" --error="{1}.slurm.log" -p {2} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
+                        exc, job_label, self.partition)
+            else:
+                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n 12 -t 24:00:00 --mem=60GB $AUTOTST/autotst/job/conformer.sh""".format(
+                    job_label, self.partition)
+            
+            subprocess.call(command, shell=True)
 
-        while not self.check_complete(job_label):
-            time.sleep(15)
+            while not self.check_complete(job_label):
+                time.sleep(15)
+        else:
+            logging.info("Conformer analysis has alsready been run, reading in pickle file")
+        logging.info("Completed conformer analysis")
 
         f = open(os.path.join(self.directory, "{}_conformers.pkl".format(smiles.replace(" / ", "_"))), "rb")
         load_dict = pickle.load(f)
+        logging.info("Loading conformers pickle file")
         return_dict = {}
         for key, confs in load_dict.items():
             if isinstance(autotst_object, Reaction):
-                conformer = autotst_object.ts[key]
+                conformer = autotst_object.ts[key][0]
             else:
-                conformer = autotst_object.conformers[key]
+                conformer = autotst_object.conformers[key][0]
             key_confs = []
+            print("{}".format(key))
             for index, arrays in confs.items():
+                print("index: {}".format(index))
+                print("arrays = {}".format(arrays))
                 copy_conf = conformer.copy()
                 copy_conf.ase_molecule.arrays = arrays
                 copy_conf.update_coords_from("ase")
@@ -453,8 +462,8 @@ class Job():
 
         logging.info("Calculating geometries for {}".format(species))
 
-        if self.conformer_calculator:
-            species.generate_conformers(ase_calculator=self.conformer_calculator)
+        if self.conformer_analysis:
+            species._conformers = self.submit_conformer_analysis(species)
 
         currently_running = []
         processes = {}
@@ -699,10 +708,8 @@ class Job():
                 logging.info("This reaction has already been run and has a successful validated transition state! :)")
                 return True
 
-
-
-        if self.conformer_calculator:
-            self.reaction.generate_conformers(ase_calculator=self.conformer_calculator)
+        if self.conformer_analysis:
+            self.reaction._ts = self.submit_conformer_analysis(self.reaction)
 
         currently_running = []
         processes = {}
