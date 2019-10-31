@@ -562,6 +562,20 @@ class Job():
         """
         assert transitionstate, "Please provide a transitionstate to submit a job"
         self.calculator.conformer = transitionstate
+        if opt_type.lower() != "irc":
+            copy_molecule = transitionstate.rmg_molecule.copy()
+            copy_molecule.delete_hydrogens()
+            number_of_atoms = len(copy_molecule.atoms)
+            if number_of_atoms >= 4:
+                nproc = 2
+            elif number_of_atoms >= 7:
+                nproc = 4
+            elif number_of_atoms >= 9:
+                nproc = 6
+            else:
+                nproc = 8
+                
+        self.calculator.settings["nprocshared"] = nproc
         if opt_type.lower() == "shell":
             ase_calculator = self.calculator.get_shell_calc()
             time = "24:00:00"
@@ -576,20 +590,6 @@ class Job():
             time = "24:00:00"
             nproc = "14"
 
-        if opt_type.lower() != "irc":
-            copy_molecule = transitionstate.rmg_molecule.copy()
-            copy_molecule.delete_hydrogens()
-            number_of_atoms = len(copy_molecule.atoms)
-            if number_of_atoms >= 4:
-                nproc = 2
-            elif number_of_atoms >= 7:
-                nproc = 4
-            elif number_of_atoms >= 9:
-                nproc = 6
-            else:
-                nproc = 8
-
-        self.calculator.settings["nprocshared"] = nproc
         self.write_input(transitionstate, ase_calculator)
 
         label = ase_calculator.label
