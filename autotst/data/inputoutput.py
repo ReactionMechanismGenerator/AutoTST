@@ -161,7 +161,7 @@ class InputOutput():
         if not path:
             path = self.get_ts_file_path()
         if not os.path.exists(path):
-            logging.info("We could not file a ts file for {}".format(self.reaction.label))
+            logging.info("We could not file a ts file for {}".format(self.reaction))
             return None
         try:
             with open(path) as result_file:
