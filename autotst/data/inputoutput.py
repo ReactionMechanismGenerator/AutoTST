@@ -41,7 +41,7 @@ from rmgpy.species import Species as RMGSpecies, TransitionState
 from rmgpy.reaction import Reaction as RMGReaction
 from rmgpy.kinetics import Arrhenius, Eckart
 from rmgpy.statmech import Conformer as RMGConformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
-
+from rmgpy.data.kinetics.family import TemplateReaction
 
 def get_possible_names(reactants, products):
 
@@ -71,7 +71,10 @@ class InputOutput():
         """
         self.method = method
         self.reaction = reaction
-        self.label = self.reaction.label
+        if self.reaction:
+            self.label = self.reaction.label
+        else:
+            self.label = None
         self.directory = directory
 
     def copy(self):
@@ -221,6 +224,7 @@ class InputOutput():
                     'True': True,
                     'False': False,
                     'Reaction': RMGReaction,
+                    'TemplateReaction' : TemplateReaction,
                     'Species': RMGSpecies,
                     'TransitionState': TransitionState,
                     'Arrhenius': Arrhenius,
