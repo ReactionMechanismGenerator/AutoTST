@@ -184,6 +184,7 @@ class VibrationalAnalysis():
             i, j = bond.atom_indices
             before = self.pre_geometry.get_distance(i, j)
             after = self.post_geometry.get_distance(i, j)
+            percent_change = percent_change(before, after)
             results.append([bond.index, bond.atom_indices,
                             bond.reaction_center, percent_change(before, after)])
 
@@ -219,7 +220,10 @@ class VibrationalAnalysis():
                 self.percent_changes[self.percent_changes.center].percent_change.mean())
             shell_values = np.log(
                 self.percent_changes[self.percent_changes.center != True].percent_change.mean())
-
+            for bond in self.ts.get_bonds():
+                if bond.length > 1.6:
+                    logging.info("One or many of the bonds are too distant")
+                    return False
             if center_values > shell_values + 1:
                 logging.info("Vibrational analysis was successful")
                 return True
