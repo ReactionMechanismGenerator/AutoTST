@@ -28,6 +28,7 @@
 ##########################################################################
 
 import os
+import itertools
 import logging
 import numpy as np
 from copy import deepcopy
@@ -311,49 +312,64 @@ class Reaction():
         assert (
             self.label or self.rmg_reaction), "You must provide a reaction or a reaction label"
 
-        match = False
-        if self.label:
-            rmg_reactants = []
-            rmg_products = []
-            r, p = self.label.split("_")
-            for react in r.split("+"):
-                s = RMGMolecule(smiles=react)
-                rmg_reactants.append(s)
-            for prod in p.split("+"):
-                s = RMGMolecule(smiles=prod)
-                rmg_products.append(s)
+        match = False # We have not found a labeled reaction that matches the one provided.
+        if self.label: # A reaction label was provided
+            
+            # Generating lists of lists. Main list is the reactans or products
+            # Secondary list is composed of the resonance structures for that species
+            r, p = self.label.split("_") 
+            rmg_reactants = [RMGMolecule(smiles=smile).generate_resonance_structures() for smile in r.split("+")]
+            rmg_products = [RMGMolecule(smiles=smile).generate_resonance_structures() for smile in p.split("+")]
 
-            test_reaction = RMGReaction(
-                reactants=rmg_reactants, 
-                products=rmg_products)
+            combos_to_try = itertools.product(
+                itertools.product(*rmg_reactants),
+                itertools.product(*rmg_products)
+            )
 
-            if self.rmg_reaction:
-                assert self.rmg_reaction.is_isomorphic(
-                    test_reaction), "The reaction label provided does not match the RMGReaction provided..."
-
+            # looping though each reaction family and each combination of reactants and products
             for name, family in list(self.rmg_database.kinetics.families.items()):
-                if match:
-                    break
-                try:
-                    labeled_r, labeled_p = family.get_labeled_reactants_and_products(
-                        test_reaction.reactants, test_reaction.products)
-                except ValueError:
-                    continue
-                    
-                if not (labeled_r and labeled_p):
-                    continue
+                logging.info("Trying to match reacction to {}".format(family))
+                for rmg_reactants, rmg_products in combos_to_try:
+                    # Making a test reaction
+                    test_reaction = RMGReaction(
+                        reactants=list(rmg_reactants), 
+                        products=list(rmg_products))
 
-                if ((len(labeled_r) > 0) and (len(labeled_p) > 0)):
-                    logging.info("Matched reaction to {} family".format(name))
+                    try: # Trying to label the reaction
+                        labeled_r, labeled_p = family.get_labeled_reactants_and_products(
+                            test_reaction.reactants, test_reaction.products)
+                    except: # Failed to match a reaction to the family
+                        logging.error("Couldn't match {} to {}, trying different combination...".format(test_reaction, name))
+                        continue
+                        
+                    if not (labeled_r and labeled_p):
+                        # Catching an error where it matched the reaction but the reactants and products we not return...
+                        # A weird bug in RMG that I can explain
+                        continue
 
-                    labeled_reactants = deepcopy(labeled_r)
-                    labeled_products = deepcopy(labeled_p)
-                    test_reaction.reactants = labeled_r[:]
-                    test_reaction.products = labeled_p[:]
-                    match = True
-                    final_family = family
-                    final_name = name
-                    break
+                    if ((len(labeled_r) > 0) and (len(labeled_p) > 0)): # We found a match.
+                        if match: 
+                            # We found a match already, but we were able to label the reaction again... 
+                            # This would happen if different combinations of resonance structures match up 
+                            logging.warning("This reaction has been already labeled... \
+                                it seems that resonance structures \for reactants and products exist.")
+                            logging.warning("Skipping this duplicate for now")
+                            continue
+
+                        logging.info("Matched reaction to {} family".format(name))
+                        
+                        # Copying labed reactions and saving them for later
+                        labeled_reactants = deepcopy(labeled_r)
+                        labeled_products = deepcopy(labeled_p)
+                        match_reaction = RMGReaction(
+                            reactants=deepcopy(labeled_r), 
+                            products=deepcopy(labeled_p))
+                        # Setting it true that we matche the reaction and remembering the
+                        # RMG reaction family and family name 
+                        match = True
+                        final_family = family
+                        final_name = name
+                        
 
         elif self.rmg_reaction: #RMGReaction but no label
             rmg_reactants = []
@@ -362,99 +378,80 @@ class Reaction():
                 if isinstance(react, RMGSpecies):
                     rmg_reactants.append(react.molecule)
                 elif isinstance(react, RMGMolecule):
-                    rmg_reactants.append([react])
+                    rmg_reactants.append(react.generate_resonance_structures())
 
             for prod in self.rmg_reaction.products:
                 if isinstance(prod, RMGSpecies):
                     rmg_products.append(prod.molecule)
                 elif isinstance(prod, RMGMolecule):
-                    rmg_products.append([prod])
-            test_reactants = []
-            test_products = []
-            if len(rmg_reactants) == 1:
-                for l1 in rmg_reactants[0]:
-                    test_reactants.append([l1])
-            elif len(rmg_reactants) == 2:
-                l1, l2 = rmg_reactants
-                for i in l1:
-                    for j in l2:
-                        test_reactants.append([i, j])
+                    rmg_products.append(prod.generate_resonance_structures())
 
-            if len(rmg_products) == 1:
-                for l1 in rmg_products[0]:
-                    test_products.append([l1])
-            elif len(rmg_products) == 2:
-                l1, l2 = rmg_products
-                for i in l1:
-                    for j in l2:
-                        test_products.append([i, j])
+            combos_to_try = itertools.product(
+                itertools.product(*rmg_reactants),
+                itertools.product(*rmg_products)
+            )
 
-            reacts = test_reactants[:]
-            prods = test_products[:]
             for name, family in list(self.rmg_database.kinetics.families.items()):
-                logging.info("Trying to match {} to {}".format(self.rmg_reaction, family))
-
-                if match:
-                    continue
-                
-                test_reactants = reacts[:]
-                test_products = prods[:]
-                for test_reactant in test_reactants:
-                    for test_product in test_products:
-
-                        if match:
-                            continue
-
-                        test_reaction = RMGReaction(
-                            reactants=test_reactant, products=test_product)
-
-                        try:
-                            labeled_r, labeled_p = family.get_labeled_reactants_and_products(
-                                test_reaction.reactants, test_reaction.products)
-                            if not (labeled_r and labeled_p):
-                                logging.info("Unable to determine a reaction for the forward direction. Trying the reverse direction.")
-                                raise ActionError
-                        except (ValueError, ActionError, IndexError):
-                            try: 
-                                # Trying the reverse reaction if the forward reaction doesn't work
-                                # This is useful for R_Addition reactions
-                                labeled_r, labeled_p = family.get_labeled_reactants_and_products(
-                                    test_reaction.products, test_reaction.reactants)
-                            except (ValueError, ActionError, IndexError):
-                               continue
-                            
-
+                logging.info("Trying to match reaction to {}".format(name))
+                for rmg_reactants, rmg_products in combos_to_try:
+                    # Making a test reaction
+                    test_reaction = RMGReaction(
+                        reactants=list(rmg_reactants), 
+                        products=list(rmg_products))
+                    
+                    try: # Trying to label the reaction
+                        labeled_r, labeled_p = family.get_labeled_reactants_and_products(
+                            test_reaction.reactants, test_reaction.products)
                         if not (labeled_r and labeled_p):
+                            logging.error("Unable to determine a reaction for the forward direction. Trying the reverse direction.")
+                            raise ActionError
+                    except:
+                        try: 
+                            # Trying the reverse reaction if the forward reaction doesn't work
+                            # This is useful for R_Addition reactions
                             labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                                 test_reaction.products, test_reaction.reactants)
+                        except:
+                            logging.error("Couldn't match {} to {}, trying different combination...".format(test_reaction, name))
+                            continue
+                        
+                    if not (labeled_r and labeled_p):
+                        # Catching an error where it matched the reaction but the reactants and products we not return...
+                        # A weird bug in RMG that I can explain
+                        continue
+
+                    if ((len(labeled_r) > 0) and (len(labeled_p) > 0)): # We found a match.
+                        if match: 
+                            # We found a match already, but we were able to label the reaction again... 
+                            # This would happen if different combinations of resonance structures match up 
+                            logging.warning("This reaction has been already labeled... \
+                                it seems that resonance structures \for reactants and products exist.")
+                            logging.warning("Skipping this duplicate for now")
                             continue
 
-                        if ((len(labeled_r) > 0) and (len(labeled_p) > 0)) and (self.rmg_reaction.is_isomorphic(test_reaction)):
-                            logging.info(
-                                "Matched reaction to {} family".format(name))
-
-                            labeled_reactants = deepcopy(labeled_r)
-                            labeled_products = deepcopy(labeled_p)
-                            test_reaction.reactants = labeled_r[:]
-                            test_reaction.products = labeled_p[:]
-                            logging.info("{}".format(labeled_r))
-                            logging.info("{}".format(labeled_p))
-                            match = True
-                            final_family = family
-                            final_name = name
+                        logging.info("Matched reaction to {} family".format(name))
+                        
+                        # Copying labed reactions and saving them for later
+                        labeled_reactants = deepcopy(labeled_r)
+                        labeled_products = deepcopy(labeled_p)
+                        match_reaction = RMGReaction(
+                            reactants=deepcopy(labeled_r), 
+                            products=deepcopy(labeled_p))
+                        # Setting it true that we matche the reaction and remembering the
+                        # RMG reaction family and family name 
+                        match = True
+                        final_family = family
+                        final_name = name
                             
         assert match, "Could not idetify labeled reactants and products"
-        #try: 
+
         reaction_list = final_family.generate_reactions(
-            test_reaction.reactants, test_reaction.products)
-        #except KeyError:
-        #    reaction_list = None
-        #    logging.info("For some reason, RMG is having trouble generating reactions for {}".format(test_reaction))
+            match_reaction.reactants, match_reaction.products)
 
         assert reaction_list, "Could not match a reaction to a reaction family..."
 
         for reaction in reaction_list:
-            if test_reaction.is_isomorphic(reaction):
+            if match_reaction.is_isomorphic(reaction):
                 reaction.reactants = labeled_reactants
                 reaction.products = labeled_products
                 break
