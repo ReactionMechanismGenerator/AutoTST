@@ -321,10 +321,10 @@ class Reaction():
             rmg_reactants = [RMGMolecule(smiles=smile).generate_resonance_structures() for smile in r.split("+")]
             rmg_products = [RMGMolecule(smiles=smile).generate_resonance_structures() for smile in p.split("+")]
 
-            combos_to_try = itertools.product(
+            combos_to_try = list(itertools.product(
                 itertools.product(*rmg_reactants),
                 itertools.product(*rmg_products)
-            )
+            ))
 
             # looping though each reaction family and each combination of reactants and products
             for name, family in list(self.rmg_database.kinetics.families.items()):
@@ -386,10 +386,10 @@ class Reaction():
                 elif isinstance(prod, RMGMolecule):
                     rmg_products.append(prod.generate_resonance_structures())
 
-            combos_to_try = itertools.product(
+            combos_to_try = list(itertools.product(
                 itertools.product(*rmg_reactants),
                 itertools.product(*rmg_products)
-            )
+            ))
 
             for name, family in list(self.rmg_database.kinetics.families.items()):
                 logging.info("Trying to match reaction to {}".format(name))
