@@ -245,7 +245,6 @@ class TestTS(unittest.TestCase):
     def test_symmetry_number(self):
         self.assertEquals(self.ts.symmetry_number, 1)
         self.assertEquals(self.ts2.symmetry_number, 1)
-        os.remove("./CC.[O]O.symm")
 
     def test_bounds_matrix(self):
 

@@ -1064,6 +1064,6 @@ class Conformer():
     def calculate_symmetry_number(self):
 
         species = RMGSpecies().from_smiles(self.smiles)
-        self.symmetry_number = species.get_symmetry_number()
+        self._symmetry_number = species.get_symmetry_number()
 
-        return self.symmetry_number
+        return self._symmetry_number
