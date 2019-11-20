@@ -246,6 +246,11 @@ class TestTS(unittest.TestCase):
         self.assertEquals(self.ts.symmetry_number, 1)
         self.assertEquals(self.ts2.symmetry_number, 1)
 
+        rxn = Reaction("[CH3]+[OH]_C+[O]") #Expected symmetry number of 3  
+        rxn.get_labeled_reaction() 
+        ts = rxn.ts["forward"][0]
+        self.assertEquals(ts.symmetry_number, 3) 
+
     def test_bounds_matrix(self):
 
         lbl1 = self.ts.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
