@@ -1064,10 +1064,10 @@ class Conformer():
         numbers = self.ase_molecule.numbers
         positions = self.ase_molecule.positions
 
-        mol = RMGMolecule()
+        mol = rmgpy.molecule.Molecule()
         mol.from_xyz(numbers, positions)
         try:
-            species = RMGSpecies(molecule=[mol])
+            species = rmgpy.species.Species(molecule=[mol])
             self._symmetry_number = species.get_symmetry_number()
         except ValueError:
             self._symmetry_number = mol.get_symmetry_number() 
