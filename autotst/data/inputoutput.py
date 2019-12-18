@@ -31,16 +31,15 @@ import os
 import itertools
 import logging
 import numpy as np
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
-from autotst.calculator.vibrational_analysis import VibrationalAnalysis
-from autotst.data.base import QMData
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.molecule import Atom, get_element
-from rmgpy.species import Species as RMGSpecies, TransitionState
-from rmgpy.reaction import Reaction as RMGReaction
-from rmgpy.kinetics import Arrhenius, Eckart
-from rmgpy.statmech import Conformer as RMGConformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
+from ..reaction import Reaction, TS
+from ..species import Species, Conformer
+from ..calculator.vibrational_analysis import VibrationalAnalysis
+from .base import QMData
+import rmgpy.molecule
+import rmgpy.species
+import rmgpy.reaction
+import rmgpy.kinetics
+import rmgpy.statmech 
 
 
 def get_possible_names(reactants, products):
@@ -220,19 +219,19 @@ class InputOutput():
                     '__builtins__': None,
                     'True': True,
                     'False': False,
-                    'Reaction': RMGReaction,
-                    'Species': RMGSpecies,
-                    'TransitionState': TransitionState,
-                    'Arrhenius': Arrhenius,
-                    'Eckart': Eckart,
-                    'Conformer': RMGConformer,
-                    'IdealGasTranslation': IdealGasTranslation,
-                    'NonlinearRotor': NonlinearRotor,
-                    'HarmonicOscillator': HarmonicOscillator,
-                    'LinearRotor': LinearRotor,
+                    'Reaction': rmgpy.reaction.Reaction,
+                    'Species': rmgpy.species.Species,
+                    'TransitionState': rmgpy.species.TransitionState,
+                    'Arrhenius': rmgpy.kinetics.Arrhenius,
+                    'Eckart': rmgpy.kinetics.Eckart,
+                    'Conformer': rmgpy.statmech.Conformer,
+                    'IdealGasTranslation': rmgpy.statmech.IdealGasTranslation,
+                    'NonlinearRotor': rmgpy.statmech.NonlinearRotor,
+                    'HarmonicOscillator': rmgpy.statmech.HarmonicOscillator,
+                    'LinearRotor': rmgpy.statmech.LinearRotor,
                     'array': np.array,
                     'int32': np.int32,
-                    'Molecule': RMGMolecule
+                    'Molecule': rmgpy.molecule.Molecule
                 }
                 exec(result_file.read(), global_context, local_context)
         except IOError as e:

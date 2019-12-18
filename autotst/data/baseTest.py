@@ -33,10 +33,10 @@ import os
 import logging
 import numpy as np
 import autotst
-from autotst.reaction import Reaction
-from autotst.data.base import QMData, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
+from ..reaction import Reaction
+from .base import QMData, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
 import rmgpy
-from rmgpy.data.rmg import RMGDatabase
+import rmgpy.data.rmg
 
 class TestQMData(unittest.TestCase):
     def setUp(self):
@@ -89,7 +89,7 @@ class TestDistanceData(unittest.TestCase):
 
 class TestTransitionStates(unittest.TestCase):
     def setUp(self):
-        rmg_database = RMGDatabase()
+        rmg_database = rmgpy.data.rmg.RMGDatabase()
         rmg_database.load(
             rmgpy.settings['database.directory'],
             kinetics_families=[

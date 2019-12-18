@@ -27,30 +27,17 @@
 #
 ##########################################################################
 
-from autotst.species import Species, Conformer
-from autotst.reaction import Reaction, TS
-from autotst.data.base import *
-import itertools
+import itertools, os, re, logging
+import pylab
+import scipy.stats
 import pandas as pd
 import numpy as np
 from collections import defaultdict, OrderedDict
-from rmgpy.data.rmg import RMGDatabase
-from rmgpy.species import Species as RMGSpecies
-from rmgpy.kinetics import Arrhenius, ArrheniusEP, KineticsData
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.quantity import constants
+from ..species import Species, Conformer
+from ..reaction import Reaction, TS
+from .base import *
 import rmgpy
-import re
-import os
-import os.path
-import logging
-#FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
-#logging.basicConfig(format=FORMAT, level=logging.iNFO)
-
-import pylab
-import scipy.stats
-
-
+import rmgpy.molecule
 
 def update_all(reactions, family, method='', short_desc=''):
     """
@@ -111,7 +98,7 @@ def update_dictionary_entries(old_entries, need_to_add):
     list(set(need_to_add))
     for j, species in enumerate(need_to_add):
 
-        molecule = RMGMolecule(SMILES=species)
+        molecule = rmgpy.molecule.Molecle(smiles=species)
         adjlist = molecule.to_adjacency_list()
 
         multiplicity = None
@@ -578,7 +565,7 @@ class DatabaseUpdater:
         """
         Loads Database, sets it as class attribute, sets training_set from database
         """
-        from autotst.data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
+        from .base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
         ts_database = TransitionStates()
 
         #path = os.path.join(os.path.expandvars("$RMGpy"), "..", "AutoTST", "database", self.family)
