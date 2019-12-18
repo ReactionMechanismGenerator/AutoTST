@@ -27,38 +27,34 @@
 #
 ##########################################################################
 
-import unittest
+import unittest, os
+import numpy as np
 
 import rdkit
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem.rdchem import Mol
-import autotst
+import rdkit.Chem.rdchem 
 import ase
-import os
-from ase import Atom, Atoms
 import rmgpy
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.species import Species as RMGSpecies
-from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
-from autotst.species import Species, Conformer
-import numpy as np
+import rmgpy.molecule
+
+import autotst
+from .geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
+from .species import Species, Conformer
 
 class TestConformer(unittest.TestCase):
     def setUp(self):
         self.conformer = Conformer(smiles='CC')
     def test_rmg_molecules(self):
-        self.assertIsInstance(self.conformer.rmg_molecule,RMGMolecule)
+        self.assertIsInstance(self.conformer.rmg_molecule,rmgpy.molecule.Molecule)
     def test_rdkit_mol(self):
         autotst_rdkit = self.conformer.get_rdkit_mol()
-        self.assertIsInstance(autotst_rdkit,Mol)
+        self.assertIsInstance(autotst_rdkit,rdkit.Chem.rdchem.Mol)
     def test_ase_mol(self):
         autotst_ase_mol = self.conformer.get_ase_mol()
-        self.assertIsInstance(autotst_ase_mol,Atoms)
+        self.assertIsInstance(autotst_ase_mol,ase.Atoms)
     def test_get_molecules(self):
         autotst_rdkit, autotst_ase_mol = self.conformer.get_molecules()
-        self.assertIsInstance(autotst_rdkit,Mol)
-        self.assertIsInstance(autotst_ase_mol,Atoms)
+        self.assertIsInstance(autotst_rdkit,rdkit.Chem.rdchem.Mol)
+        self.assertIsInstance(autotst_ase_mol,ase.Atoms)
     def test_get_bonds(self):
         bonds = self.conformer.get_bonds()
         self.assertIsInstance(bonds,list)

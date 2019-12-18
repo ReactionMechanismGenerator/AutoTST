@@ -27,8 +27,8 @@
 #
 ##########################################################################
 
-from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
 import unittest
+from .geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
 
 class TestBond(unittest.TestCase):
     def setUp(self):

@@ -27,36 +27,29 @@
 #
 ##########################################################################
 
-import os
-import itertools
-import logging
+import os, itertools, logging
 import numpy as np
 from copy import deepcopy
 
 import rdkit
-from rdkit import DistanceGeometry
-from rdkit.Chem import rdDistGeom
-
-
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem.Pharm3D import EmbedLib
+import rdkit.Chem 
+import rdkit.Chem.AllChem
+import rdkit.Chem.Pharm3D.EmbedLib
+import rdkit.DistanceGeometry
 
 import ase 
 
 import rmgpy
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.species import Species as RMGSpecies
-from rmgpy.reaction import Reaction as RMGReaction
-from rmgpy.reaction import ReactionError
-from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
+import rmgpy.molecule
+import rmgpy.species 
+import rmgpy.reaction 
 from rmgpy.data.rmg import RMGDatabase
-from rmgpy.exceptions import ActionError
+import rmgpy.exceptions 
 
 import autotst
-from autotst.data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
-from autotst.species import Species, Conformer
-from autotst.geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
+from .data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
+from .species import Species, Conformer
+from .geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -65,10 +58,6 @@ try:
     import py3Dmol
 except ImportError:
     logging.info("Error importing py3Dmol")
-
-
-# Currently this is set up to only work with H_Abstraction
-# TODO: Edit this so it works with other reaction families
 
 class Reaction():
 
@@ -318,8 +307,8 @@ class Reaction():
             # Generating lists of lists. Main list is the reactans or products
             # Secondary list is composed of the resonance structures for that species
             r, p = self.label.split("_") 
-            rmg_reactants = [RMGMolecule(smiles=smile).generate_resonance_structures() for smile in r.split("+")]
-            rmg_products = [RMGMolecule(smiles=smile).generate_resonance_structures() for smile in p.split("+")]
+            rmg_reactants = [rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures() for smile in r.split("+")]
+            rmg_products = [rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures() for smile in p.split("+")]
 
             combos_to_try = list(itertools.product(
                 list(itertools.product(*rmg_reactants)),
@@ -331,7 +320,7 @@ class Reaction():
                 logging.info("Trying to match reacction to {}".format(family))
                 for rmg_reactants, rmg_products in combos_to_try:
                     # Making a test reaction
-                    test_reaction = RMGReaction(
+                    test_reaction = rmgpy.reaction.Reaction(
                         reactants=list(rmg_reactants), 
                         products=list(rmg_products))
 
@@ -361,7 +350,7 @@ class Reaction():
                         # Copying labed reactions and saving them for later
                         labeled_reactants = deepcopy(labeled_r)
                         labeled_products = deepcopy(labeled_p)
-                        match_reaction = RMGReaction(
+                        match_reaction = rmgpy.reaction.Reaction(
                             reactants=deepcopy(labeled_r), 
                             products=deepcopy(labeled_p))
                         # Setting it true that we matche the reaction and remembering the
@@ -375,15 +364,15 @@ class Reaction():
             rmg_reactants = []
             rmg_products = []
             for react in self.rmg_reaction.reactants:
-                if isinstance(react, RMGSpecies):
+                if isinstance(react, rmgpy.species.Species):
                     rmg_reactants.append(react.molecule)
-                elif isinstance(react, RMGMolecule):
+                elif isinstance(react, rmgpy.molecule.Molecule):
                     rmg_reactants.append(react.generate_resonance_structures())
 
             for prod in self.rmg_reaction.products:
-                if isinstance(prod, RMGSpecies):
+                if isinstance(prod, rmgpy.species.Species):
                     rmg_products.append(prod.molecule)
-                elif isinstance(prod, RMGMolecule):
+                elif isinstance(prod, rmgpy.molecule.Molecule):
                     rmg_products.append(prod.generate_resonance_structures())
 
             combos_to_try = list(itertools.product(
@@ -395,7 +384,7 @@ class Reaction():
                 logging.info("Trying to match reaction to {}".format(name))
                 for rmg_reactants, rmg_products in combos_to_try:
                     # Making a test reaction
-                    test_reaction = RMGReaction(
+                    test_reaction = rmgpy.reaction.Reaction(
                         reactants=list(rmg_reactants), 
                         products=list(rmg_products))
                     
@@ -404,7 +393,7 @@ class Reaction():
                             test_reaction.reactants, test_reaction.products)
                         if not (labeled_r and labeled_p):
                             logging.error("Unable to determine a reaction for the forward direction. Trying the reverse direction.")
-                            raise ActionError
+                            raise rmgpy.exceptions.ActionError
                     except:
                         try: 
                             # Trying the reverse reaction if the forward reaction doesn't work
@@ -434,7 +423,7 @@ class Reaction():
                         # Copying labed reactions and saving them for later
                         labeled_reactants = deepcopy(labeled_r)
                         labeled_products = deepcopy(labeled_p)
-                        match_reaction = RMGReaction(
+                        match_reaction = rmgpy.reaction.Reaction(
                             reactants=deepcopy(labeled_r), 
                             products=deepcopy(labeled_p))
                         # Setting it true that we matche the reaction and remembering the
@@ -474,16 +463,16 @@ class Reaction():
         
         string = ""
         for react in self.rmg_reaction.reactants:
-            if isinstance(react, RMGSpecies):
+            if isinstance(react, rmgpy.species.Species):
                 string += "{}+".format(react.molecule[0].to_smiles())
-            elif isinstance(react, RMGMolecule):
+            elif isinstance(react, rmgpy.molecule.Molecule):
                 string += "{}+".format(react.to_smiles())
         string = string[:-1]
         string += "_"
         for prod in self.rmg_reaction.products:
-            if isinstance(prod, RMGSpecies):
+            if isinstance(prod, rmgpy.species.Species):
                 string += "{}+".format(prod.molecule[0].to_smiles())
-            elif isinstance(prod, RMGMolecule):
+            elif isinstance(prod, rmgpy.molecule.Molecule):
                 string += "{}+".format(prod.to_smiles())
         self.label = string[:-1]
         return self.label
@@ -498,11 +487,11 @@ class Reaction():
         reactants = []
         products = []
         for react in r.split("+"):
-            reactants.append(RMGMolecule(smiles=react))
+            reactants.append(rmgpy.molecule.Molecule(smiles=react))
         for prod in p.split("+"):
-            products.append(RMGMolecule(smiles=prod))
+            products.append(rmgpy.molecule.Molecule(smiles=prod))
 
-        self.rmg_reaction = RMGReaction(reactants=reactants, products=products)
+        self.rmg_reaction = rmgpy.reaction.Reaction(reactants=reactants, products=products)
         return self.rmg_reaction
 
     def get_rmg_complexes(self):
@@ -513,26 +502,26 @@ class Reaction():
         - rmg_reaction (RMGReaction): The RMGReaction of interest
 
         Returns:
-        - complexes (dict): a dictionary containing RMGMolecules of the forward and reverse reaction complexes
+        - complexes (dict): a dictionary containing rmgpy.molecule.Molecules of the forward and reverse reaction complexes
         """
 
         if self.rmg_reaction is None:
             self.get_labeled_reaction()
 
-        reactant_complex = RMGMolecule()
+        reactant_complex = rmgpy.molecule.Molecule()
         for react in self.rmg_reaction.reactants:
-            if isinstance(react, RMGMolecule):
+            if isinstance(react, rmgpy.molecule.Molecule):
                 reactant_complex = reactant_complex.merge(react)
-            elif isinstance(react, RMGSpecies):
+            elif isinstance(react, rmgpy.species.Species):
                 for mol in react.molecule:
                     if len(mol.get_all_labeled_atoms()) > 0:
                         reactant_complex = reactant_complex.merge(mol)
 
-        product_complex = RMGMolecule()
+        product_complex = rmgpy.molecule.Molecule()
         for prod in self.rmg_reaction.products:
-            if isinstance(prod, RMGMolecule):
+            if isinstance(prod, rmgpy.molecule.Molecule):
                 product_complex = product_complex.merge(prod)
-            elif isinstance(prod, RMGSpecies):
+            elif isinstance(prod, rmgpy.species.Species):
                 for mol in prod.molecule:
                     if len(mol.get_all_labeled_atoms()) > 0:
                         product_complex = product_complex.merge(mol)
@@ -609,7 +598,7 @@ class TS(Conformer):
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
-                assert rmg_molecule.is_isomorphic(RMGMolecule(
+                assert rmg_molecule.is_isomorphic(rmgpy.molecule.Molecule(
                     smiles=smiles)), "smiles string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
@@ -620,7 +609,7 @@ class TS(Conformer):
 
             else:
                 self.smiles = smiles
-                self.rmg_molecule = RMGMolecule(smiles=smiles)
+                self.rmg_molecule = rmgpy.molecule.Molecule(smiles=smiles)
 
             self.rmg_molecule.update_multiplicity()
             self._symmetry_number = None
@@ -687,7 +676,7 @@ class TS(Conformer):
 
         if len(self.labels) == 3:
 
-            rd_copy = Chem.RWMol(self.rdkit_molecule.__copy__())
+            rd_copy = rdkit.Chem.RWMol(self.rdkit_molecule.__copy__())
 
             lbl1, lbl2, lbl3 = self.labels
 
@@ -714,7 +703,7 @@ class TS(Conformer):
                 self.bm = self.edit_matrix()
 
             logging.info("Performing triangle smoothing on bounds matrix.")
-            DistanceGeometry.DoTriangleSmoothing(self.bm)
+            rdkit.DistanceGeometry.DoTriangleSmoothing(self.bm)
 
             logging.info("Now attempting to embed using edited bounds matrix.")
 
@@ -725,7 +714,7 @@ class TS(Conformer):
         """
         A method to obtain the bounds matrix
         """
-        self.bm = rdDistGeom.GetMoleculeBoundsMatrix(self.rdkit_molecule)
+        self.bm = rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(self.rdkit_molecule)
         return self.bm
 
     def set_limits(self, lbl1, lbl2, value, uncertainty):
@@ -868,11 +857,11 @@ class TS(Conformer):
 
         for conf in self.rdkit_molecule.GetConformers():
             if (self.bm is None) or (self.atom_match is None):
-                AllChem.UFFOptimizeMolecule(self._rdkit_molecule, confId=conf.GetId())
-                energy = AllChem.UFFGetMoleculeForceField(
+                rdkit.Chem.AllChem.UFFOptimizeMolecule(self._rdkit_molecule, confId=conf.GetId())
+                energy = rdkit.Chem.AllChem.UFFGetMoleculeForceField(
                     self._rdkit_molecule, confId=conf.GetId()).CalcEnergy()
             else:
-                _, energy = EmbedLib.OptimizeMol(
+                _, energy = rdkit.Chem.Pharm3D.EmbedLib.OptimizeMol(
                     self._rdkit_molecule, self.bm, atomMatches=self.atom_match, forceConstant=100000.0)
 
             if energy < lowest_e:
@@ -889,7 +878,7 @@ class TS(Conformer):
         """
         num_conf_attempts = 10000
         if (self.bm is None) or (self.atom_match is None):
-            AllChem.EmbedMultipleConfs(self._rdkit_molecule, num_conf_attempts, randomSeed=1)
+            rdkit.Chem.AllChem.EmbedMultipleConfs(self._rdkit_molecule, num_conf_attempts, randomSeed=1)
 
             self._rdkit_molecule, minEid = self.optimize_rdkit_molecule()
         else:
@@ -900,7 +889,7 @@ class TS(Conformer):
             self._rdkit_molecule.RemoveAllConformers()
             for i in range(0, num_conf_attempts):
                 try:
-                    EmbedLib.EmbedMol(self._rdkit_molecule, self.bm, atomMatch=self.atom_match)
+                    rdkit.Chem.Pharm3D.EmbedLib.EmbedMol(self._rdkit_molecule, self.bm, atomMatch=self.atom_match)
                     break
                 except ValueError:
                     logging.info(

@@ -29,23 +29,20 @@
 
 import os, sys
 import unittest
-from rdkit.Chem.rdchem import Mol, RWMol
-from ase import Atoms
-from autotst.reaction import Reaction, TS
-from autotst.data.base import TransitionStates
-from rmgpy.reaction import Reaction as RMGReaction
-from rmgpy.species import Species as RMGSpecies
-from rmgpy.molecule import Molecule as RMGMolecule
+import ase
+import rdkit.Chem.rdchem
+import rmgpy.reaction
+import rmgpy.molecule
 from rmgpy.data.rmg import RMGDatabase
-
-
+from .reaction import Reaction, TS
+from .data.base import TransitionStates
 
 class TestReaction(unittest.TestCase):
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
-        self.reaction2 = Reaction(rmg_reaction=RMGReaction(
-            reactants = [RMGMolecule(smiles="CC"), RMGMolecule(smiles="[O]O")],
-            products = [RMGMolecule(smiles="[CH2]C"), RMGMolecule(smiles="OO")]
+        self.reaction2 = Reaction(rmg_reaction=rmgpy.reaction.Reaction(
+            reactants = [rmgpy.molecule.Molecule(smiles="CC"), rmgpy.molecule.Molecule(smiles="[O]O")],
+            products = [rmgpy.molecule.Molecule(smiles="[CH2]C"), rmgpy.molecule.Molecule(smiles="OO")]
         ))
 
     def test_label(self):
@@ -53,14 +50,14 @@ class TestReaction(unittest.TestCase):
         self.assertEqual(self.reaction2.get_label(), "CC+[O]O_C[CH2]+OO")
 
     def test_rmg_reaction(self):
-        test_reaction = RMGReaction(
+        test_reaction = rmgpy.reaction.Reaction(
             reactants=[
-                RMGMolecule(smiles="CC"),
-                RMGMolecule(smiles="[O]O")
+                rmgpy.molecule.Molecule(smiles="CC"),
+                rmgpy.molecule.Molecule(smiles="[O]O")
             ],
             products = [
-                RMGMolecule(smiles="[CH2]C"),
-                RMGMolecule(smiles="OO")
+                rmgpy.molecule.Molecule(smiles="[CH2]C"),
+                rmgpy.molecule.Molecule(smiles="OO")
             ]
         )
 
@@ -113,14 +110,14 @@ class TestReaction(unittest.TestCase):
         self.assertAlmostEquals(len(products), 2)
 
     def test_labeled_reaction(self):
-        test_reaction = RMGReaction(
+        test_reaction = rmgpy.reaction.Reaction(
             reactants=[
-                RMGMolecule(smiles="CC"),
-                RMGMolecule(smiles="[O]O")
+                rmgpy.molecule.Molecule(smiles="CC"),
+                rmgpy.molecule.Molecule(smiles="[O]O")
             ],
             products = [
-                RMGMolecule(smiles="[CH2]C"),
-                RMGMolecule(smiles="OO")
+                rmgpy.molecule.Molecule(smiles="[CH2]C"),
+                rmgpy.molecule.Molecule(smiles="OO")
             ]
         )
         labeled_reaction, reaction_family = self.reaction.get_labeled_reaction()
@@ -198,9 +195,9 @@ class TestTS(unittest.TestCase):
 
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
-        self.reaction2 = Reaction(rmg_reaction=RMGReaction(
-            reactants = [RMGMolecule(smiles="CC"), RMGMolecule(smiles="[O]O")],
-            products = [RMGMolecule(smiles="[CH2]C"), RMGMolecule(smiles="OO")]
+        self.reaction2 = Reaction(rmg_reaction=rmgpy.reaction.Reaction(
+            reactants = [rmgpy.molecule.Molecule(smiles="CC"), rmgpy.molecule.Molecule(smiles="[O]O")],
+            products = [rmgpy.molecule.Molecule(smiles="[CH2]C"), rmgpy.molecule.Molecule(smiles="OO")]
         ))
         self.ts = self.reaction.ts["forward"][0]
         self.ts2 = self.reaction.ts["forward"][0]
@@ -217,29 +214,29 @@ class TestTS(unittest.TestCase):
     
     def test_rdkit_molecule(self):
         rdkit_molecule = self.ts.rdkit_molecule
-        self.assertIsInstance(rdkit_molecule, Mol)
+        self.assertIsInstance(rdkit_molecule, rdkit.Chem.rdchem.Mol)
         self.assertEquals(len(rdkit_molecule.GetAtoms()), 11)
         self.assertEquals(len(rdkit_molecule.GetBonds()), 9)
 
         rdkit_molecule = self.ts2.rdkit_molecule
-        self.assertIsInstance(rdkit_molecule, Mol)
+        self.assertIsInstance(rdkit_molecule, rdkit.Chem.rdchem.Mol)
         self.assertEquals(len(rdkit_molecule.GetAtoms()), 11)
         self.assertEquals(len(rdkit_molecule.GetBonds()), 9)
     
     def test_pseudo_geometry(self):
-        self.assertIsInstance(self.ts._pseudo_geometry, RWMol)
+        self.assertIsInstance(self.ts._pseudo_geometry, rdkit.Chem.rdchem.RWMol)
         self.assertEquals(len(self.ts._pseudo_geometry.GetBonds()), 10)
 
-        self.assertIsInstance(self.ts2._pseudo_geometry, RWMol)
+        self.assertIsInstance(self.ts2._pseudo_geometry, rdkit.Chem.rdchem.RWMol)
         self.assertEquals(len(self.ts2._pseudo_geometry.GetBonds()), 10)
 
     def test_ase_molecule(self):
         ase_molecule = self.ts.ase_molecule
-        self.assertIsInstance(ase_molecule, Atoms)
+        self.assertIsInstance(ase_molecule, ase.Atoms)
         self.assertEquals(len(ase_molecule.get_atomic_numbers()), 11)
 
         ase_molecule = self.ts2.ase_molecule
-        self.assertIsInstance(ase_molecule, Atoms)
+        self.assertIsInstance(ase_molecule, ase.Atoms)
         self.assertEquals(len(ase_molecule.get_atomic_numbers()), 11)
     
     def test_symmetry_number(self):
