@@ -28,9 +28,9 @@
 ##########################################################################
 
 import unittest, os, sys, shutil
-from autotst.species import Conformer
-from autotst.conformer.utilities import get_energy, find_terminal_torsions
-from ase.calculators.emt import EMT
+from ..species import Conformer
+from .utilities import get_energy, find_terminal_torsions
+import ase.calculators.emt
 
 class TestUtilities(unittest.TestCase):
 
@@ -40,7 +40,7 @@ class TestUtilities(unittest.TestCase):
 
     def test_get_potential_energy(self):
 
-        self.conformer.ase_molecule.set_calculator(EMT())
+        self.conformer.ase_molecule.set_calculator(ase.calculators.emt.EMT())
         test_energy = get_energy(self.conformer)
         energy = self.conformer.ase_molecule.get_potential_energy()
         self.assertAlmostEqual(test_energy, energy, places=2)
