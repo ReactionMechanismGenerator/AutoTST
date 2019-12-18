@@ -6,15 +6,14 @@ channels:
   - rmg
   - cantera
   - pytorch
-  - ampayne
   - anaconda
   - conda-forge
 dependencies:
   - python
-  - rmg == 3.0.0b
+  - rmg == 3.0.0
   - ase
   - cclib == 1.6.2 
   - py3dmol
-  - rdkit
+  - rdkit == 2019.03.4
   - nose
   - codecov
