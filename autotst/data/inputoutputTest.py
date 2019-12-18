@@ -34,13 +34,10 @@ import logging
 import shutil
 import numpy as np
 import autotst
-from autotst.reaction import Reaction
-from autotst.data.base import QMData, DistanceData
-from autotst.data.inputoutput import InputOutput, get_possible_names
-from rmgpy.kinetics import Arrhenius
-from rmgpy.data.rmg import RMGDatabase
-
-
+from ..reaction import Reaction
+from .base import QMData, DistanceData
+from .inputoutput import InputOutput
+import rmgpy.kinetics
 
 class TestInputOutput(unittest.TestCase):
 
@@ -118,7 +115,7 @@ class TestInputOutput(unittest.TestCase):
     def test_kinetics_io(self):
 
         self.io.reaction.get_rmg_reaction()
-        self.io.reaction.rmg_reaction.kinetics = Arrhenius()
+        self.io.reaction.rmg_reaction.kinetics = rmgpy.kinetics.Arrhenius()
 
         self.assertTrue(self.io.save_kinetics())
         self.assertIsInstance(self.io.read_kinetics_file(), dict)

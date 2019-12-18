@@ -28,8 +28,8 @@
 ##########################################################################
 
 import unittest, os, sys, shutil
-from autotst.reaction import Reaction
-#import autotst.update as UpdateMethods
+from ..reaction import Reaction
+#import .update as UpdateMethods
 
 class TestUpdateMethods(unittest.TestCase):
 

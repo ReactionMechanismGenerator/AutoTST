@@ -33,23 +33,18 @@ groups, including support for using group additivity to estimate TS geometries.
 """
 
 import os
-import os.path
 import logging
 import codecs
 import numpy as np
-from cclib.io import ccread
+import cclib.io
 from copy import deepcopy
 import rdkit
-
-from rmgpy.data.base import Database, Entry, make_logic_node, LogicNode, DatabaseError
-from rmgpy.quantity import Quantity, constants
-from rmgpy.reaction import Reaction, ReactionError
-from rmgpy.molecule import Bond, GroupBond, Group, Molecule as RMGMolecule, Atom, get_element
-from rmgpy.data.kinetics.groups import KineticsError  # , save_entry
-from rmgpy.species import Species as RMGSpecies, TransitionState
-from rmgpy.reaction import Reaction
-from rmgpy.kinetics import Arrhenius, Eckart
-from rmgpy.statmech import Conformer, IdealGasTranslation, NonlinearRotor, HarmonicOscillator, LinearRotor
+import rmgpy.data.base
+import rmgpy.reaction
+import rmgpy.molecule
+import rmgpy.data.kinetics.groups 
+import rmgpy.species
+import rmgpy.reaction 
 
 ##########################################################################
 
@@ -113,7 +108,7 @@ class QMData():
     def get_qmdata(self, file_path=None):
         "A helper function to fill in the qmdata using CCLib"
 
-        parser = ccread(file_path, loglevel=logging.ERROR)
+        parser = cclib.io.ccread(file_path, loglevel=logging.ERROR)
 
         self.ground_state_degeneracy = parser.mult
         self.atom_numbers = parser.atomnos
@@ -186,7 +181,7 @@ class DistanceData():
             method=self.method)
 
 
-class TransitionStates(Database):
+class TransitionStates(rmgpy.data.base.Database):
     """
     loads, and contains, both Depository and Groups
     """
@@ -297,11 +292,11 @@ class TransitionStates(Database):
             f.write('    label = "{0}",\n'.format(entry.label))
 
         # Entries for kinetic rules, libraries, training reactions
-        # and depositories will have a Reaction object for its item
-        if isinstance(entry.item, Reaction):
+        # and depositories will have a rmgpy.reaction.Reaction object for its item
+        if isinstance(entry.item, rmgpy.reaction.Reaction):
             # Write out additional data if depository or library
             # kinetic rules would have a Group object for its reactants instead of Species
-            if isinstance(entry.item.reactants[0], RMGSpecies):
+            if isinstance(entry.item.reactants[0], rmgpy.species.Species):
                 # Add degeneracy if the reaction is coming from a depository or kinetics library
                 f.write('    degeneracy = {0:.1f},\n'.format(
                     entry.item.degeneracy))
@@ -321,15 +316,15 @@ class TransitionStates(Database):
                     f.write('    allow_max_rate_violation = {0!r},\n'.format(
                         entry.item.allow_max_rate_violation))
             # Entries for groups with have a group or logicNode for its item
-        elif isinstance(entry.item, Group):
+        elif isinstance(entry.item, rmgpy.molecule.Group):
             f.write('    group = \n')
             f.write('"""\n')
             f.write(entry.item.to_adjacency_list())
             f.write('""",\n')
-        elif isinstance(entry.item, LogicNode):
+        elif isinstance(entry.item, rmgpy.data.base.LogicNode):
             f.write('    group = "{0}",\n'.format(entry.item))
         else:
-            raise DatabaseError(
+            raise rmgpy.data.base.DatabaseError(
                 "Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
 
         # Write distances
@@ -381,7 +376,7 @@ class TransitionStates(Database):
 ##########################################################################
 
 
-class TransitionStateDepository(Database):
+class TransitionStateDepository(rmgpy.data.base.Database):
     """
     A class for working with an RMG transition state depository. Each depository
     corresponds to a reaction family (a :class:`KineticsFamily` object). Each
@@ -390,7 +385,7 @@ class TransitionStateDepository(Database):
     """
 
     def __init__(self, label='', name='', short_desc='', long_desc=''):
-        Database.__init__(self, label=label, name=name,
+        rmgpy.data.base.Database.__init__(self, label=label, name=name,
                           short_desc=short_desc, long_desc=long_desc)
 
     def __repr__(self):
@@ -398,7 +393,7 @@ class TransitionStateDepository(Database):
 
     def load(self, path, local_context=None, global_context=None):
 
-        Database.load(self, path, local_context, global_context)
+        rmgpy.data.base.Database.load(self, path, local_context, global_context)
 
         # Load the species in the kinetics library
         species_dict = self.get_species(os.path.join(
@@ -423,7 +418,7 @@ class TransitionStateDepository(Database):
             for reactant in reactants.split('+'):
                 reactant = reactant.strip()
                 if reactant not in species_dict:
-                    raise DatabaseError(
+                    raise rmgpy.data.base.DatabaseError(
                         'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(
                             reactant, self.label))
                 # For some reason we need molecule objects in the depository
@@ -432,7 +427,7 @@ class TransitionStateDepository(Database):
             for product in products.split('+'):
                 product = product.strip()
                 if product not in species_dict:
-                    raise DatabaseError(
+                    raise rmgpy.data.base.DatabaseError(
                         'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(
                             product, self.label))
                 # For some reason we need molecule objects in the depository
@@ -440,7 +435,7 @@ class TransitionStateDepository(Database):
                 rxn.products.append(species_dict[product])
 
             if not rxn.is_balanced():
-                raise DatabaseError(
+                raise rmgpy.data.base.DatabaseError(
                     'Reaction {0} in kinetics depository {1} was not balanced! Please reformulate.'.format(
                         rxn, self.label))
 
@@ -464,10 +459,10 @@ class TransitionStateDepository(Database):
                   rank=None,
                   ):
 
-        reaction = Reaction(reactants=[], products=[
+        reaction = rmgpy.reaction.Reaction(reactants=[], products=[
         ], degeneracy=degeneracy, duplicate=duplicate, reversible=reversible)
 
-        entry = Entry(
+        entry = rmgpy.data.base.Entry(
             index=index,
             label=label,
             item=reaction,
@@ -509,10 +504,10 @@ class TransitionStateDepository(Database):
 
         # Entries for kinetic rules, libraries, training reactions
         # and depositories will have a Reaction object for its item
-        if isinstance(entry.item, Reaction):
+        if isinstance(entry.item, rmgpy.reaction.Reaction):
             # Write out additional data if depository or library
             # kinetic rules would have a Group object for its reactants instead of Species
-            if isinstance(entry.item.reactants[0], RMGSpecies):
+            if isinstance(entry.item.reactants[0], rmgpy.species.Species):
                 # Add degeneracy if the reaction is coming from a depository or kinetics library
                 f.write('    degeneracy = {0:.1f},\n'.format(
                     entry.item.degeneracy))
@@ -532,15 +527,15 @@ class TransitionStateDepository(Database):
                     f.write('    allow_max_rate_violation = {0!r},\n'.format(
                         entry.item.allow_max_rate_violation))
             # Entries for groups with have a group or logicNode for its item
-        elif isinstance(entry.item, Group):
+        elif isinstance(entry.item, rmgpy.molecule.Group):
             f.write('    group = \n')
             f.write('"""\n')
             f.write(entry.item.to_adjacency_list())
             f.write('""",\n')
-        elif isinstance(entry.item, LogicNode):
+        elif isinstance(entry.item, rmgpy.data.base.LogicNode):
             f.write('    group = "{0}",\n'.format(entry.item))
         else:
-            raise DatabaseError(
+            raise rmgpy.data.base.DatabaseError(
                 "Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
 
         # Write distances
@@ -593,7 +588,7 @@ class TransitionStateDepository(Database):
 
 ##########################################################################
 
-class TSGroups(Database):
+class TSGroups(rmgpy.data.base.Database):
     """
     A class for working with group additivity values for transition state distances.
     """
@@ -611,7 +606,7 @@ class TSGroups(Database):
                  reverse_recipe=None,
                  forbidden=None
                  ):
-        Database.__init__(self, entries, top, label, name, short_desc, long_desc)
+        rmgpy.data.base.Database.__init__(self, entries, top, label, name, short_desc, long_desc)
         self.num_reactants = 0
 
     def __repr__(self):
@@ -629,10 +624,10 @@ class TSGroups(Database):
             long_desc=''):
         if group[0:3].upper() == 'OR{' or group[0:4].upper(
         ) == 'AND{' or group[0:7].upper() == 'NOT OR{' or group[0:8].upper() == 'NOT AND{':
-            item = make_logic_node(group)
+            item = rmgpy.data.base.make_logic_node(group)
         else:
-            item = Group().from_adjacency_list(group)
-        self.entries[label] = Entry(
+            item = rmgpy.molecule.Group().from_adjacency_list(group)
+        self.entries[label] = rmgpy.data.base.Entry(
             index=index,
             label=label,
             item=item,
@@ -676,14 +671,14 @@ class TSGroups(Database):
             # ...but this child may not match the structure.
             # eg. an R3 ring node will not match an R4 ring structure.
             # (but at least the first such child will contain fewest labels - we hope)
-            if isinstance(entry.item, LogicNode):
+            if isinstance(entry.item, rmgpy.data.base.LogicNode):
                 group = entry.item.get_possible_structures(self.entries)[0]
 
             # list of atom labels in highest non-union node
             atom_list = group.get_all_labeled_atoms()
 
             for reactant in reaction.reactants:
-                if isinstance(reactant, RMGSpecies):
+                if isinstance(reactant, rmgpy.species.Species):
                     reactant = reactant.molecule[0]
                 # Match labeled atoms
                 # Check this reactant has each of the atom labels in this group
@@ -722,10 +717,10 @@ class TSGroups(Database):
             for n, product in enumerate(reaction.products):
                 print("Product", n)
                 print(product.to_adjacency_list() + '\n')
-            raise KineticsError(reaction)
+            raise rmgpy.data.kinetics.groups.KineticsError(reaction)
 
         for reactant in reaction.reactants:
-            if isinstance(reactant, RMGSpecies):
+            if isinstance(reactant, rmgpy.species.Species):
                 reactant = reactant.molecule[0]
             # reactant.clear_labeled_atoms()
 
