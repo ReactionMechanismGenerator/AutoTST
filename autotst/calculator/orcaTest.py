@@ -28,13 +28,10 @@
 ##########################################################################
 
 import unittest
+import os, shutil
 
-import os
-import shutil
-
-from autotst.calculator.orca import Orca
-from autotst.species import Conformer
-
+from .orca import Orca
+from ..species import Conformer
 
 class TestOrca(unittest.TestCase):
 

@@ -28,10 +28,10 @@
 ##########################################################################
 
 import unittest, os, sys, shutil
-from autotst.reaction import Reaction
-from autotst.calculator.statmech import StatMech
-from rmgpy.reaction import Reaction as RMGReaction
-from rmgpy.kinetics import Arrhenius
+from ..reaction import Reaction
+from .statmech import StatMech
+import rmgpy.reaction
+import rmgpy.kinetics
 
 class TestStatMech(unittest.TestCase):
     def setUp(self):
@@ -173,8 +173,8 @@ class TestStatMech(unittest.TestCase):
     def test_run(self):
         self.statmech.write_files()
         self.statmech.run()
-        self.assertIsInstance(self.statmech.kinetics_job.reaction, RMGReaction)
-        self.assertIsInstance(self.statmech.kinetics_job.reaction.kinetics, Arrhenius)
+        self.assertIsInstance(self.statmech.kinetics_job.reaction, rmgpy.reaction.Reaction)
+        self.assertIsInstance(self.statmech.kinetics_job.reaction.kinetics, rmgpy.kinetics.Arrhenius)
 
     def test_set_results(self):
         self.test_run()

@@ -28,12 +28,11 @@
 ##########################################################################
 
 import unittest
-import os, shutil
-import logging
+import os, shutil, logging
 import pandas as pd
 import numpy as np
-from ase import Atom, Atoms
-from cclib.io import ccread
+import ase
+import cclib.io
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
 from autotst.calculator.vibrational_analysis import percent_change, VibrationalAnalysis
@@ -95,12 +94,12 @@ class VibrationalAnalysisTest(unittest.TestCase):
         }
         atoms = []
 
-        parser = ccread(self.vibrational_analysis.log_file, loglevel=logging.ERROR)
+        parser = cclib.io.ccread(self.vibrational_analysis.log_file, loglevel=logging.ERROR)
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
-            atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+            atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        test_pre_geometry = Atoms(atoms)
+        test_pre_geometry = ase.Atoms(atoms)
         test_post_geometry = test_pre_geometry.copy()
 
         for vib, displacement in vibrations:
