@@ -29,14 +29,14 @@
 
 import os
 import logging
-from ase import Atom, Atoms
-from cclib.io import ccread
+import ase
+import cclib.io
 
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
+from ..reaction import Reaction, TS
+from ..species import Species, Conformer
 
 import rmgpy
-from arkane.main import Arkane as RMGArkane, KineticsJob, StatMechJob, ThermoJob
+import arkane.main
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -61,8 +61,8 @@ class StatMech():
         self.reaction = reaction
         self.directory = directory
 
-        self.kinetics_job = RMGArkane()
-        self.thermo_job = RMGArkane()
+        self.kinetics_job = arkane.main.Arkane()
+        self.thermo_job = arkane.main.Arkane()
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
 
@@ -202,7 +202,7 @@ class StatMech():
             logging.info("Species input file already written... Not doing anything")
             return True
 
-        parser = ccread(os.path.join(
+        parser = cclib.io.ccread(os.path.join(
             self.directory, "species", label, label + ".log"), loglevel=logging.ERROR)
         symbol_dict = {
             35: "Br",
@@ -217,9 +217,9 @@ class StatMech():
         atoms = []
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
-            atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+            atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        conformer._ase_molecule = Atoms(atoms)
+        conformer._ase_molecule = ase.Atoms(atoms)
         conformer.update_coords_from("ase")
         mol = conformer.rmg_molecule
         output = ['#!/usr/bin/env python',
@@ -356,7 +356,7 @@ class StatMech():
             logging.info("There is no lowest energy conformer file...")
             return False
 
-        parser = ccread(os.path.join(self.directory, "ts", label, label + ".log"), loglevel=logging.ERROR)
+        parser = cclib.io.ccread(os.path.join(self.directory, "ts", label, label + ".log"), loglevel=logging.ERROR)
         symbol_dict = {
             17: "Cl",
             9:  "F",
@@ -368,9 +368,9 @@ class StatMech():
 
         atoms = []
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
-            atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+            atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        transitionstate._ase_molecule = Atoms(atoms)
+        transitionstate._ase_molecule = ase.Atoms(atoms)
         transitionstate.update_coords_from("ase")
 
         output = ['#!/usr/bin/env python',
@@ -465,7 +465,7 @@ class StatMech():
                             "It looks like {} doesn't have any optimized geometries".format(smiles))
                         continue
 
-                    parser = ccread(path, loglevel=logging.ERROR)
+                    parser = cclib.io.ccread(path, loglevel=logging.ERROR)
                     energy = parser.scfenergies[-1]
                     if energy < lowest_energy:
                         lowest_energy = energy
@@ -480,7 +480,7 @@ class StatMech():
                         "It looks like {} doesn't have any optimized geometries".format(smiles))
                     continue
 
-                parser = ccread(path, loglevel=logging.ERROR)
+                parser = cclib.io.ccread(path, loglevel=logging.ERROR)
                 lowest_energy = parser.scfenergies[-1]
                 lowest_energy_conf = list(react.conformers.values())[0][0]
 
@@ -509,7 +509,7 @@ class StatMech():
                             "It looks like {} doesn't have any optimized geometries".format(smiles))
                         continue
 
-                    parser = ccread(path, loglevel=logging.ERROR)
+                    parser = cclib.io.ccread(path, loglevel=logging.ERROR)
                     energy = parser.scfenergies[-1]
                     if energy < lowest_energy:
                         lowest_energy = energy
@@ -524,7 +524,7 @@ class StatMech():
                         "It looks like {} doesn't have any optimized geometries".format(smiles))
                     continue
 
-                parser = ccread(path, loglevel=logging.ERROR)
+                parser = cclib.io.ccread(path, loglevel=logging.ERROR)
                 lowest_energy = parser.scfenergies[-1]
                 lowest_energy_conf = list(prod.conformers.values())[0][0]
 
@@ -654,9 +654,9 @@ class StatMech():
         self.kinetics_job.execute()
 
         for job in self.kinetics_job.job_list:
-            if isinstance(job, KineticsJob):
+            if isinstance(job, arkane.main.KineticsJob):
                 self.kinetics_job = job
-            elif isinstance(job, ThermoJob):
+            elif isinstance(job, arkane.main.ThermoJob):
                 self.thermo_job = job
 
     def set_results(self):

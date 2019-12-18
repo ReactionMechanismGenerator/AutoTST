@@ -31,10 +31,10 @@ import os
 import logging
 import pandas as pd
 import numpy as np
-from ase import Atom, Atoms
-from cclib.io import ccread
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
+import ase
+import cclib.io 
+from ..reaction import Reaction, TS
+from ..species import Species, Conformer
 
 
 def percent_change(original, new):
@@ -108,7 +108,7 @@ class VibrationalAnalysis():
 
         assert os.path.exists(self.log_file), "Log file provided does not exist"
 
-        log_file_info = ccread(self.log_file, loglevel=logging.ERROR)
+        log_file_info = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
         self.vibrations = list(zip(log_file_info.vibfreqs, log_file_info.vibdisps))
         
         return self.vibrations
@@ -123,8 +123,8 @@ class VibrationalAnalysis():
         - vibrations (list): a list of the vibrations and their corresponding displacements in XYZ coords. Often from `parse_vibrations`
 
         Returns:
-        - pre_geometry (ASEAtoms): an ASEAtoms object containing the geometry before applying the vibrations
-        - post_geometry (ASEAtoms): an ASEAtoms object containing the geometry after applying the vibrations
+        - pre_geometry (ase.Atoms): an ase.Atoms object containing the geometry before applying the vibrations
+        - post_geometry (ase.Atoms): an ase.Atoms object containing the geometry after applying the vibrations
         """
 
         assert isinstance(self.ts, TS)
@@ -140,12 +140,12 @@ class VibrationalAnalysis():
         }
         atoms = []
 
-        parser = ccread(self.log_file, loglevel=logging.ERROR)
+        parser = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
-            atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+            atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
         
-        self.ts._ase_molecule = Atoms(atoms)
+        self.ts._ase_molecule = ase.Atoms(atoms)
         self.ts.update_coords_from("ase")
 
         self.pre_geometry = self.ts.ase_molecule.copy()
@@ -169,8 +169,8 @@ class VibrationalAnalysis():
 
         Variables:
         - ts (TS): the transition state of interest
-        - berfore_geometry (ASEAtoms): the ASEAtoms object describing the geometry before applying the vibrations
-        - post_geometry (ASEAtoms): the ASEAtoms object describing the geometry after applying the vibrations
+        - berfore_geometry (ase.Atoms): the ase.Atoms object describing the geometry before applying the vibrations
+        - post_geometry (ase.Atoms): the ase.Atoms object describing the geometry after applying the vibrations
 
         Returns:
         - results (DataFrame): a pandas dataframe containing the bond index, atom indicies of those bonds,
