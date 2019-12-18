@@ -1062,28 +1062,16 @@ class Conformer():
         return self
 
     def calculate_symmetry_number(self):
-        from rmgpy.qm.symmetry import PointGroupCalculator
-        from rmgpy.qm.qmdata import QMData
 
-        atom_numbers = self.ase_molecule.get_atomic_numbers()
-        coordinates = self.ase_molecule.get_positions()
+        numbers = self.ase_molecule.numbers
+        positions = self.ase_molecule.positions
 
-        qmdata = QMData(
-            groundStateDegeneracy=1,  # Only needed to check if valid QMData
-            numberOfAtoms=len(atom_numbers),
-            atomicNumbers=atom_numbers,
-            atomCoords=(coordinates, str('angstrom')),
-            energy=(0.0, str('kcal/mol'))  # Only needed to avoid error
-        )
-        settings = type(str(''), (), dict(symmetryPath=str(
-            'symmetry'), scratchDirectory="."))()  # Creates anonymous class
-        pgc = PointGroupCalculator(settings, self.smiles, qmdata)
-        pg = pgc.calculate()
-        #os.remove("{}.symm".format(self.smiles))
+        mol = RMGMolecule()
+        mol.from_xyz(numbers, positions)
+        try:
+            species = RMGSpecies(molecule=[mol])
+            self._symmetry_number = species.get_symmetry_number()
+        except ValueError:
+            self._symmetry_number = mol.get_symmetry_number() 
 
-        if pg is not None:
-            symmetry_number = pg.symmetry_number
-        else:
-            symmetry_number = 1
-
-        return symmetry_number
+        return self._symmetry_number
