@@ -246,10 +246,15 @@ class TestTS(unittest.TestCase):
         self.assertEquals(self.ts.symmetry_number, 1)
         self.assertEquals(self.ts2.symmetry_number, 1)
 
-        rxn = Reaction("[CH3]+[OH]_C+[O]") #Expected symmetry number of 3  
-        rxn.get_labeled_reaction() 
-        ts = rxn.ts["forward"][0]
-        self.assertEquals(ts.symmetry_number, 3) 
+        reactions_to_test = {
+            "[CH3]+[OH]_C+[O]" : 3,
+            # TODO add other reactions here
+        }
+        for reaction_string, expected_symmetry in reactions_to_test.items():
+            rxn = Reaction(reaction_string)
+            rxn.get_labeled_reaction() 
+            ts = rxn.ts["forward"][0]
+            self.assertEquals(ts.symmetry_number, expected_symmetry) 
 
     def test_bounds_matrix(self):
 
