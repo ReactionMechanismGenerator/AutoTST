@@ -90,8 +90,11 @@ class TestConformer(unittest.TestCase):
         self.assertIsInstance(geometries[3],list)
         self.assertIsInstance(geometries[4],list)
     def test_calculate_symmetry_number(self):
-        self.assertTrue(self.conformer.calculate_symmetry_number() in [1,2])
-        os.remove("./CC.symm")
+        species_to_test = {
+            "CC" : 18.0,
+            
+        }
+        self.assertEquals(self.conformer.calculate_symmetry_number(), 18.0)
     def test_get_xyz_block(self):
         xyz_block = self.conformer.get_xyz_block()
         positions = self.conformer.ase_molecule.arrays["positions"]
