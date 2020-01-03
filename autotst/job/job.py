@@ -756,13 +756,13 @@ class Job():
         copy_molecule.delete_hydrogens()
         number_of_atoms = len(copy_molecule.atoms)
         if number_of_atoms >= 4:
-            nproc = 2
+            nproc = 10
         elif number_of_atoms >= 7:
-            nproc = 4
+            nproc = 12
         elif number_of_atoms >= 9:
-            nproc = 6
+            nproc = 14
         else:
-            nproc = 8
+            nproc = 16
 
         self.write_input(conformer, ase_calculator)
         label = ase_calculator.label
