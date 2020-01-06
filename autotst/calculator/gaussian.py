@@ -539,11 +539,11 @@ class Gaussian():
             products = []
 
             for react in r.split("+"):
-                react = RMGMolecule(SMILES=react)
+                react = RMGMolecule(smiles=react)
                 reactants.append(react)
 
             for prod in p.split("+"):
-                prod = RMGMolecule(SMILES=prod)
+                prod = RMGMolecule(smiles=prod)
                 products.append(prod)
 
             possible_reactants = []
