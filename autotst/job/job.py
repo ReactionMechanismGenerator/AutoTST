@@ -27,42 +27,26 @@
 #
 ##########################################################################
 
-import os
-import time
-import yaml
-from shutil import move, copyfile
+import os, time, shutil
 import numpy as np
 import pandas as pd
 import subprocess
 import multiprocessing
-from multiprocessing import Process, Manager
 import logging
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
-from autotst.calculator.gaussian import Gaussian
-from autotst.calculator.vibrational_analysis import VibrationalAnalysis, percent_change
-from autotst.calculator.statmech import StatMech
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
-from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
-from cclib.io import ccread
-import cclib
-from ase.calculators.gaussian import Gaussian as ASEGaussian
-from ase.atoms import Atom, Atoms
+from ..calculator.gaussian import Gaussian
+from ..calculator.vibrational_analysis import VibrationalAnalysis, percent_change
+from ..calculator.statmech import StatMech
+from ..reaction import Reaction, TS
+from ..species import Species, Conformer
+from ..geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
+import cclib.io 
 import ase
-import rdkit.Chem.rdDistGeom
-import rdkit.DistanceGeometry
-from rdkit.Chem.Pharm3D import EmbedLib
-from rdkit.Chem import AllChem
-from rdkit import Chem
-import rdkit
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.species import Species as RMGSpecies
-from rmgpy.reaction import Reaction as RMGReaction, ReactionError
-from rmgpy.kinetics import PDepArrhenius, PDepKineticsModel
-from rmgpy.data.rmg import RMGDatabase
 import rmgpy
+import rmgpy.molecule
+
 
 
 class Job():
@@ -148,12 +132,12 @@ class Job():
         }
         atoms = []
 
-        parser = ccread(file_path, loglevel=logging.ERROR)
+        parser = cclib.io.ccread(file_path, loglevel=logging.ERROR)
 
         for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
-            atoms.append(Atom(symbol=symbol_dict[atom_num], position=coords))
+            atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        return Atoms(atoms)
+        return ase.Atoms(atoms)
 
     def write_input(self, conformer, ase_calculator):
         """
@@ -166,14 +150,14 @@ class Job():
         except OSError:
             pass
 
-        move(
+        shutil.move(
             ase_calculator.label + ".com",
             os.path.join(
                 ase_calculator.scratch,
                 ase_calculator.label + ".com"
             ))
 
-        move(
+        shutil.move(
             ase_calculator.label + ".ase",
             os.path.join(
                 ase_calculator.scratch,
@@ -302,14 +286,14 @@ class Job():
             Compares whatever is in the log file 'f' 
             to the SMILES of the passed in 'conformer'
             """
-            starting_molecule = RMGMolecule(smiles=conformer.smiles)
+            starting_molecule = rmgpy.molecule.Molecule(smiles=conformer.smiles)
             starting_molecule = starting_molecule.to_single_bonds()
 
             atoms = self.read_log(
                 os.path.join(scratch_dir, f)
             )
 
-            test_molecule = RMGMolecule()
+            test_molecule = rmgpy.molecule.Molecule()
             test_molecule.from_xyz(
                 atoms.arrays["numbers"],
                 atoms.arrays["positions"]
@@ -402,7 +386,7 @@ class Job():
 
             for conformer in conformers:
 
-                process = Process(target=self.calculate_conformer, args=(
+                process = multiprocessing.Process(target=self.calculate_conformer, args=(
                     conformer,))
                 processes[process.name] = process
 
@@ -443,7 +427,7 @@ class Job():
                         "It seems that {} was never run...".format(f))
                     continue
                 try:
-                    parser = ccread(path)
+                    parser = cclib.io.ccread(path)
                     if parser is None:
                         logging.info(
                             "Something went wrong when reading in results for {} using cclib...".format(f))
@@ -476,10 +460,10 @@ class Job():
         dest = os.path.join(self.calculator.directory, "species", conformer.smiles, conformer.smiles+".log")
 
         try:
-            copyfile(lowest_energy_file_path,dest)
+            shutil.copyfile(lowest_energy_file_path,dest)
         except IOError:
             os.makedirs(os.path.dirname(dest))
-            copyfile(lowest_energy_file_path,dest)
+            shutil.copyfile(lowest_energy_file_path,dest)
 
         logging.info("The lowest energy file is {}! :)".format(
             lowest_energy_file))
@@ -651,7 +635,7 @@ class Job():
 
             for transitionstate in transitionstates:
 
-                process = Process(target=self.calculate_transitionstate, args=(
+                process = multiprocessing.Process(target=self.calculate_transitionstate, args=(
                     transitionstate,))
                 processes[process.name] = process
 
@@ -682,7 +666,7 @@ class Job():
                 logging.info("It appears that {} failed...".format(f))
                 continue
             try:
-                parser = ccread(path, loglevel=logging.ERROR)
+                parser = cclib.io.ccread(path, loglevel=logging.ERROR)
                 if parser is None:
                     logging.info(
                         "Something went wrong when reading in results for {}...".format(f))
@@ -707,7 +691,7 @@ class Job():
         lowest_energy_label = energies.iloc[0].file
         logging.info("The lowest energy transition state is {}".format(lowest_energy_label))
 
-        copyfile(
+        shutil.copyfile(
             os.path.join(self.calculator.directory, "ts", self.reaction.label,
                          "conformers", lowest_energy_label),
             os.path.join(self.calculator.directory, "ts",
@@ -903,7 +887,7 @@ class Job():
                     verified[key] = False
                 return verified
             logging.info("The new geometry was able to successfully converge. Reattempting hindered rotor calculations")
-            copyfile(
+            shutil.copyfile(
                 file_path,
                 os.path.join(self.directory, t, label, "{}.log".format(label))
             )
@@ -926,7 +910,7 @@ class Job():
                         os.mkdirs(os.path.join(file_path, failures))
                     except:
                         pass
-                    move(
+                    shutil.move(
                         os.path.join(file_path, label + ".log"),
                         os.path.join(file_path, "failures",
                                      label + ".log")

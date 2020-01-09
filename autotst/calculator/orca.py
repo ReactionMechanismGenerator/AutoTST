@@ -27,10 +27,9 @@
 #
 ##########################################################################
 
-import os
-from autotst.species import Species, Conformer
-from autotst.reaction import Reaction, TS
-import logging
+import os, logging
+from ..species import Species, Conformer
+from ..reaction import Reaction, TS
 
 class Orca():
     """

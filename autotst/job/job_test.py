@@ -29,17 +29,11 @@
 
 import os, sys, subprocess, shutil
 import unittest
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
-from autotst.data.base import TransitionStates
-from autotst.job.job import Job
-from autotst.calculator.gaussian import Gaussian
-from rdkit.Chem.rdchem import Mol, RWMol
-from rmgpy.reaction import Reaction as RMGReaction
-from rmgpy.species import Species as RMGSpecies
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.data.rmg import RMGDatabase
-from ase import Atoms
+from ..reaction import Reaction, TS
+from ..species import Species, Conformer
+from ..data.base import TransitionStates
+from .job import Job
+from ..calculator.gaussian import Gaussian
 
 class JobTest(unittest.TestCase):
 

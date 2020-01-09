@@ -31,21 +31,19 @@ import os
 import itertools
 import logging
 import numpy as np
-from cclib.io import ccread
+import cclib.io
 
 import autotst
-from autotst.reaction import Reaction, TS
-from autotst.species import Species, Conformer
-from autotst.geometry import Torsion
+from ..reaction import Reaction, TS
+from ..species import Species, Conformer
+from ..geometry import Torsion
 
-from ase import Atom, Atoms
-from ase.io.gaussian import read_gaussian, read_gaussian_out
-from ase.calculators.gaussian import Gaussian as ASEGaussian
+import ase
+import ase.calculators.gaussian
 
 import rmgpy
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.reaction import Reaction as RMGReaction
-
+import rmgpy.molecule
+import rmgpy.reaction 
 
 class Gaussian():
 
@@ -123,7 +121,7 @@ class Gaussian():
         - step_size (float): the size, in degrees, of the step you to scan along
 
         Returns:
-        - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
+        - calc (ase.calculators.gaussian.Gaussian): an ase.calculators.gaussian.Gaussian calculator with all of the proper setting specified
         """
         torsion = self.conformer.torsions[torsion_index]
 
@@ -168,7 +166,7 @@ class Gaussian():
             "rotors"
         )
 
-        ase_gaussian = ASEGaussian(
+        ase_gaussian = ase.calculators.gaussian.Gaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
             label=label,
@@ -195,7 +193,7 @@ class Gaussian():
         - convergence (str): ['verytight','tight','' (default)], specifies the convergence criteria of the geometry optimization
 
         Returns:
-        - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
+        - calc (ase.calculators.gaussian.Gaussian): an ase.calculators.gaussian.Gaussian calculator with all of the proper setting specified
         """
 
 
@@ -223,7 +221,7 @@ class Gaussian():
         except OSError:
             pass
 
-        ase_gaussian = ASEGaussian(
+        ase_gaussian = ase.calculators.gaussian.Gaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
             label=label,
@@ -247,7 +245,7 @@ class Gaussian():
         - directory (str): a directory where you want log files to be written to
 
         Returns:
-        - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
+        - calc (ase.calculators.gaussian.Gaussian): an ase.calculators.gaussian.Gaussian calculator with all of the proper setting specified
         """
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
         assert self.conformer.direction.lower() in ["forward", "reverse"]
@@ -282,7 +280,7 @@ class Gaussian():
         combos += "{0} {1} F\n".format(ind2+1, ind3+1)
         combos += "{0} {1} {2} F".format(ind1+1, ind2+1, ind3+1)
 
-        ase_gaussian = ASEGaussian(
+        ase_gaussian = ase.calculators.gaussian.Gaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
             label=label,
@@ -309,7 +307,7 @@ class Gaussian():
         - scratch (str): a directory where you want log files to be written to
 
         Returns:
-        - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
+        - calc (ase.calculators.gaussian.Gaussian): an ase.calculators.gaussian.Gaussian calculator with all of the proper setting specified
         """
 
         assert self.conformer.direction.lower() in ["forward", "reverse"]
@@ -342,7 +340,7 @@ class Gaussian():
         except OSError:
             pass
 
-        ase_gaussian = ASEGaussian(
+        ase_gaussian = ase.calculators.gaussian.Gaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
             label=label,
@@ -369,7 +367,7 @@ class Gaussian():
         - scratch (str): a directory where you want log files to be written to
 
         Returns:
-        - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
+        - calc (ase.calculators.gaussian.Gaussian): an ase.calculators.gaussian.Gaussian calculator with all of the proper setting specified
         """
 
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
@@ -390,7 +388,7 @@ class Gaussian():
         except OSError:
             pass
 
-        ase_gaussian = ASEGaussian(
+        ase_gaussian = ase.calculators.gaussian.Gaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
             label=label,
@@ -415,7 +413,7 @@ class Gaussian():
         - scratch (str): a directory where you want log files to be written to
 
         Returns:
-        - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
+        - calc (ase.calculators.gaussian.Gaussian): an ase.calculators.gaussian.Gaussian calculator with all of the proper setting specified
         """
 
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
@@ -434,7 +432,7 @@ class Gaussian():
         except OSError:
             pass
 
-        ase_gaussian = ASEGaussian(
+        ase_gaussian = ase.calculators.gaussian.Gaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
             label=label,
@@ -517,18 +515,18 @@ class Gaussian():
         else:
             pth1End = sum(steps[:pth1[-1]])
             # Compare the reactants and products
-            irc_parse = ccread(irc_path)
+            irc_parse = cclib.io.ccread(irc_path)
 
 
             atomcoords = irc_parse.atomcoords
             atomnos = irc_parse.atomnos
 
-            mol1 = RMGMolecule()
+            mol1 = rmgpy.molecule.Molecule()
             mol1.from_xyz(atomnos, atomcoords[pth1End])
-            mol2 = RMGMolecule()
+            mol2 = rmgpy.molecule.Molecule()
             mol2.from_xyz(atomnos, atomcoords[-1])
 
-            test_reaction = RMGReaction(
+            test_reaction = rmgpy.reaction.Reaction(
                 reactants=mol1.split(),
                 products=mol2.split(),
             )
@@ -539,11 +537,11 @@ class Gaussian():
             products = []
 
             for react in r.split("+"):
-                react = RMGMolecule(smiles=react)
+                react = rmgpy.molecule.Molecule(smiles=react)
                 reactants.append(react)
 
             for prod in p.split("+"):
-                prod = RMGMolecule(smiles=prod)
+                prod = rmgpy.molecule.Molecule(smiles=prod)
                 products.append(prod)
 
             possible_reactants = []
@@ -569,7 +567,7 @@ class Gaussian():
                     for prod in possible_product:
                         product_list.append(prod.to_single_bonds())
 
-                    target_reaction = RMGReaction(
+                    target_reaction = rmgpy.reaction.Reaction(
                         reactants=list(reactant_list),
                         products=list(product_list)
                     )

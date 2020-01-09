@@ -26,32 +26,27 @@
 #   DEALINGS IN THE SOFTWARE.
 #
 ##########################################################################
-import itertools
-import logging
+
+import itertools, logging, os, time
 import pandas as pd
 import numpy as np
-import os
 import multiprocessing
-from multiprocessing import Process, Manager
-import time
 
 import ase
-from ase import Atoms
-from ase import calculators
-from ase.calculators.calculator import FileIOCalculator
-from ase.optimize import BFGS
-from ase import units
-from ase.constraints import FixBondLengths
+import ase.units
+import ase.calculators.calculator 
+import ase.optimize
+import ase.constraints
 
-from rdkit.Chem import rdMolAlign
+import rdkit.Chem
+
+import rmgpy.exceptions
+import rmgpy.molecule
 
 import autotst
-from autotst.species import Conformer
-from autotst.reaction import TS
-from autotst.conformer.utilities import get_energy, find_terminal_torsions
-
-from rmgpy.exceptions import AtomTypeError
-from rmgpy.molecule import Molecule
+from ..species import Conformer
+from ..reaction import TS
+from .utilities import get_energy, find_terminal_torsions
 
 def find_all_combos(
         conformer,
@@ -151,7 +146,7 @@ def systematic_search(conformer,
     if not isinstance(conformer, TS):
         reference_mol = conformer.rmg_molecule.copy(deep=True)
         reference_mol = reference_mol.to_single_bonds()
-    manager = Manager()
+    manager = multiprocessing.Manager()
     return_dict = manager.dict()
     pool = multiprocessing.Pool()
 
@@ -178,7 +173,7 @@ def systematic_search(conformer,
             label = conformer.smiles
             type = 'species'
 
-        if isinstance(calc, FileIOCalculator):
+        if isinstance(calc, ase.calculators.calculator.FileIOCalculator):
             if calculator.directory:
                 directory = calculator.directory 
             else: 
@@ -194,11 +189,11 @@ def systematic_search(conformer,
             calculator.atoms = conformer.ase_molecule
 
         conformer.ase_molecule.set_calculator(calculator)
-        opt = BFGS(conformer.ase_molecule, logfile=None)
+        opt = ase.optimize.BFGS(conformer.ase_molecule, logfile=None)
 
         if type == 'species':
             if isinstance(i,int):
-                c = FixBondLengths(labels)
+                c = ase.constraints.FixBondLengths(labels)
                 conformer.ase_molecule.set_constraint(c)
             try:
                 opt.run(steps=1e6)
@@ -208,7 +203,7 @@ def systematic_search(conformer,
             if str(i) == 'ref':
                 conformer.update_coords_from("ase")
                 try:
-                    rmg_mol = Molecule()
+                    rmg_mol = rmgpy.molecule.Molecule()
                     rmg_mol.from_xyz(
                         conformer.ase_molecule.arrays["numbers"],
                         conformer.ase_molecule.arrays["positions"]
@@ -216,12 +211,12 @@ def systematic_search(conformer,
                     if not rmg_mol.is_isomorphic(reference_mol):
                         logging.info("{}_{} is not isomorphic with reference mol".format(conformer,str(i)))
                         return False
-                except AtomTypeError:
+                except rmgpy.exceptions.AtomTypeError:
                     logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
                     return False
         
         if type == 'ts':
-            c = FixBondLengths(labels)
+            c = ase.constraints.FixBondLengths(labels)
             conformer.ase_molecule.set_constraint(c)
             try:
                 opt.run(fmax=0.20, steps=1e6)
@@ -238,7 +233,7 @@ def systematic_search(conformer,
                 conf_copy = conformer.copy()
                 conf_copy.ase_molecule.positions = post
                 conf_copy.update_coords_from("ase")
-                rmsd = rdMolAlign.GetBestRMS(conformer_copy.rdkit_molecule,conf_copy.rdkit_molecule)
+                rmsd = rdkit.Chem.rdMolAlign.GetBestRMS(conformer_copy.rdkit_molecule,conf_copy.rdkit_molecule)
                 if rmsd <= rmsd_cutoff:
                     return True
         if str(i) != 'ref':
@@ -266,7 +261,7 @@ def systematic_search(conformer,
     _, torsions = find_terminal_torsions(conformer)
 
     calc = conformer.ase_molecule.get_calculator()
-    if isinstance(calc, FileIOCalculator):
+    if isinstance(calc, ase.calculators.calculator.FileIOCalculator):
         logging.info("The calculator generates input and output files.")
 
     results = []
@@ -313,7 +308,7 @@ def systematic_search(conformer,
 
     processes = []
     for i, conf in list(conformers.items()):
-        p = Process(target=opt_conf, args=(i, rmsd_cutoff))
+        p = multiprocessing.Process(target=opt_conf, args=(i, rmsd_cutoff))
         processes.append(p)
 
     active_processes = []
@@ -349,15 +344,15 @@ def systematic_search(conformer,
         energies.append((conf,energy))
 
     df = pd.DataFrame(energies,columns=["conformer","energy"])
-    df = df[df.energy < df.energy.min() + (energy_cutoff * units.kcal / units.mol /
-            units.eV)].sort_values("energy").reset_index(drop=True)
+    df = df[df.energy < df.energy.min() + (energy_cutoff * ase.units.kcal / ase.units.mol /
+            ase.units.eV)].sort_values("energy").reset_index(drop=True)
 
     redundant = []
     conformer_copies = [conf.copy() for conf in df.conformer]
     for i,j in itertools.combinations(range(len(df.conformer)),2):
         copy_1 = conformer_copies[i].rdkit_molecule
         copy_2 = conformer_copies[j].rdkit_molecule
-        rmsd = rdMolAlign.GetBestRMS(copy_1,copy_2)
+        rmsd = rdkit.Chem.rdMolAlign.GetBestRMS(copy_1,copy_2)
         if rmsd <= rmsd_cutoff:
             redundant.append(j)
 

@@ -27,21 +27,19 @@
 #
 ##########################################################################
 
-from autotst.geometry import CisTrans, Torsion, Angle, Bond, ChiralCenter
+from .geometry import CisTrans, Torsion, Angle, Bond, ChiralCenter
 import numpy as np
-import os
-import logging
+import os, logging
 
 import rdkit
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem.rdchem import Mol
+import rdkit.Chem
+import rdkit.Chem.AllChem
+import rdkit.Chem.rdchem
 import autotst
 import ase
-from ase import Atom, Atoms
 import rmgpy
-from rmgpy.molecule import Molecule as RMGMolecule
-from rmgpy.species import Species as RMGSpecies
+import rmgpy.molecule
+import rmgpy.species 
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -74,7 +72,7 @@ class Species():
                  rmgpy.species.Species))
 
             if isinstance(rmg_species, rmgpy.molecule.Molecule):
-                rmg_species = RMGSpecies(molecule=[rmg_species])
+                rmg_species = rmgpy.species.Species(molecule=[rmg_species])
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
@@ -113,7 +111,7 @@ class Species():
                  rmgpy.species.Species))
 
             if isinstance(rmg_species, rmgpy.molecule.Molecule):
-                rmg_species = RMGSpecies(molecule=[rmg_species])
+                rmg_species = rmgpy.species.Species(molecule=[rmg_species])
                 try:
                     rmg_species.generate_resonance_structures()
                 except:
@@ -139,7 +137,7 @@ class Species():
 
             species_list = []
             for smile in smiles:
-                molecule = RMGMolecule(smiles=smile)
+                molecule = rmgpy.molecule.Molecule(smiles=smile)
                 species_list.append(molecule.generate_resonance_structures())
 
             if len(smiles) != 1:
@@ -187,7 +185,7 @@ class Species():
 
     def generate_conformers(self, ase_calculator):
 
-        from autotst.conformer.systematic import systematic_search, find_all_combos
+        from .conformer.systematic import systematic_search, find_all_combos
 
         for smiles, conformers in self.conformers.items():
             conformer = conformers[0]
@@ -210,7 +208,7 @@ class Conformer():
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
-                assert rmg_molecule.is_isomorphic(RMGMolecule(
+                assert rmg_molecule.is_isomorphic(rmgpy.molecule.Molecule(
                     smiles=smiles)), "smiles string did not match RMG Molecule object"
                 self.smiles = smiles
                 self.rmg_molecule = rmg_molecule
@@ -221,7 +219,7 @@ class Conformer():
 
             else:
                 self.smiles = smiles
-                self.rmg_molecule = RMGMolecule(smiles=smiles)
+                self.rmg_molecule = rmgpy.molecule.Molecule(smiles=smiles)
 
             self.rmg_molecule.update_multiplicity()
             self.get_molecules()
@@ -282,7 +280,7 @@ class Conformer():
         rdkit.Chem.AllChem.EmbedMolecule(RDMol)
         self._rdkit_molecule = RDMol
 
-        mol_list = AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
+        mol_list = rdkit.Chem.AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
         for i, atom in enumerate(self.rmg_molecule.atoms):
             j = i + 4
             coords = mol_list[j].split()[:3]
@@ -300,7 +298,7 @@ class Conformer():
         if not self.rdkit_molecule:
             self.get_rdkit_mol()
 
-        mol_list = AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
+        mol_list = rdkit.Chem.AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
         ase_atoms = []
         for i, line in enumerate(mol_list):
             if i > 3:
@@ -316,11 +314,11 @@ class Conformer():
                         y = float(y)
                         z = float(z)
                         ase_atoms.append(
-                            Atom(symbol=symbol, position=(x, y, z)))
+                            ase.Atom(symbol=symbol, position=(x, y, z)))
                     except BaseException:
                         continue
 
-        self._ase_molecule = Atoms(ase_atoms)
+        self._ase_molecule = ase.Atoms(ase_atoms)
 
         return self.ase_molecule
 
@@ -346,7 +344,7 @@ class Conformer():
 
     def get_molecules(self):
         if not self.rmg_molecule:
-            self.rmg_molecule = RMGMolecule(smiles=self.smiles)
+            self.rmg_molecule = rmgpy.molecule.Molecule(smiles=self.smiles)
         self._rdkit_molecule = self.get_rdkit_mol()
         self._ase_molecule = self.get_ase_mol()
         self.get_geometries()
@@ -357,7 +355,7 @@ class Conformer():
         """
         A method designed to create a 3D figure of the AutoTST_Molecule with py3Dmol from the rdkit_molecule
         """
-        mb = Chem.MolToMolBlock(self.rdkit_molecule)
+        mb = rdkit.Chem.MolToMolBlock(self.rdkit_molecule)
         p = py3Dmol.view(width=600, height=600)
         p.addModel(mb, "sdf")
         p.setStyle({'stick': {}})
@@ -627,10 +625,10 @@ class Conformer():
             b1 = self.rdkit_molecule.GetBondBetweenAtoms(j, k)
             b2 = self.rdkit_molecule.GetBondBetweenAtoms(k, l)
 
-            b0.SetBondDir(Chem.BondDir.ENDUPRIGHT)
-            b2.SetBondDir(Chem.BondDir.ENDDOWNRIGHT)
+            b0.SetBondDir(rdkit.Chem.BondDir.ENDUPRIGHT)
+            b2.SetBondDir(rdkit.Chem.BondDir.ENDDOWNRIGHT)
 
-            Chem.AssignStereochemistry(self.rdkit_molecule, force=True)
+            rdkit.Chem.AssignStereochemistry(self.rdkit_molecule, force=True)
 
             if "STEREOZ" in str(b1.GetStereo()):
                 if round(self.ase_molecule.get_dihedral(i, j, k, l), -1) == 0:
@@ -843,9 +841,9 @@ class Conformer():
 
                 conf.SetAtomPosition(i, [x, y, z])
 
-                ase_atoms.append(Atom(symbol=symbol, position=(x, y, z)))
+                ase_atoms.append(ase.Atom(symbol=symbol, position=(x, y, z)))
 
-            self._ase_molecule = Atoms(ase_atoms)
+            self._ase_molecule = ase.Atoms(ase_atoms)
             # self.calculate_symmetry_number()
 
         elif mol_type.lower() == "ase":
@@ -858,7 +856,7 @@ class Conformer():
 
         elif mol_type.lower() == "rdkit":
 
-            mol_list = AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
+            mol_list = rdkit.Chem.AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
             for i, atom in enumerate(self.rmg_molecule.atoms):
                 j = i + 4
                 coords = mol_list[j].split()[:3]
@@ -1014,8 +1012,8 @@ class Conformer():
         assert stero.upper() in ["R", "S"], "Specify a valid stero orientation"
 
         centers_dict = {
-            'R': Chem.rdchem.ChiralType.CHI_TETRAHEDRAL_CW,
-            'S': Chem.rdchem.ChiralType.CHI_TETRAHEDRAL_CCW
+            'R': rdkit.Chem.rdchem.ChiralType.CHI_TETRAHEDRAL_CW,
+            'S': rdkit.Chem.rdchem.ChiralType.CHI_TETRAHEDRAL_CCW
         }
 
         assert isinstance(chiral_center_index,
@@ -1066,10 +1064,10 @@ class Conformer():
         numbers = self.ase_molecule.numbers
         positions = self.ase_molecule.positions
 
-        mol = RMGMolecule()
+        mol = rmgpy.molecule.Molecule()
         mol.from_xyz(numbers, positions)
         try:
-            species = RMGSpecies(molecule=[mol])
+            species = rmgpy.species.Species(molecule=[mol])
             self._symmetry_number = species.get_symmetry_number()
         except ValueError:
             self._symmetry_number = mol.get_symmetry_number() 
