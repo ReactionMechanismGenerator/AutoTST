@@ -266,7 +266,7 @@ class Job():
             "Submitting conformer calculation for {}".format(calc.label))
         label = self.submit_conformer(conformer)
         while not self.check_complete(label):
-            time.sleep(15)
+            time.sleep(90)
 
         complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
 
@@ -275,7 +275,7 @@ class Job():
                 "It seems that the file never completed for {} completed, running it again".format(calc.label))
             label = self.submit_conformer(conformer, restart=True)
             while not self.check_complete(label):
-                time.sleep(15)
+                time.sleep(90)
 
             complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
 
@@ -317,7 +317,7 @@ class Job():
                 "It appears that {} was killed prematurely".format(calc.label))
             label = self.submit_conformer(conformer, restart=True)
             while not self.check_complete(label):
-                time.sleep(15)
+                time.sleep(90)
 
             complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
             if (complete and converged):
@@ -344,7 +344,7 @@ class Job():
 
             label = self.submit_conformer(conformer)
             while not self.check_complete(label):
-                time.sleep(15)
+                time.sleep(90)
 
             if not os.path.exists(os.path.join(scratch_dir, f)):
                 logging.info(
@@ -397,7 +397,7 @@ class Job():
                 for running in currently_running:
                     if not running.is_alive():
                         currently_running.remove(name)
-                time.sleep(15)
+                time.sleep(90)
             process.start()
             currently_running.append(name)
 
@@ -409,7 +409,7 @@ class Job():
                     continue
                 if not process.is_alive():
                     currently_running.remove(name)
-            time.sleep(15)
+            time.sleep(90)
 
         results = []
         for smiles, conformers in list(species.conformers.items()):
@@ -571,7 +571,7 @@ class Job():
                 label = self.submit_transitionstate(
                     transitionstate, opt_type=opt_type.lower())
                 while not self.check_complete(label):
-                    time.sleep(15)
+                    time.sleep(90)
 
             else:
                 logging.info(
@@ -585,7 +585,7 @@ class Job():
                     label = self.submit_transitionstate(
                         transitionstate, opt_type=opt_type.lower(), restart=True)
                     while not self.check_complete(label):
-                        time.sleep(15)
+                        time.sleep(90)
 
             complete, converged = self.calculator.verify_output_file(file_path)
 
@@ -713,7 +713,7 @@ class Job():
             label = self.submit_transitionstate(
                 transitionstate, opt_type="irc")
             while not self.check_complete(label):
-                time.sleep(15)
+                time.sleep(90)
             result = self.calculator.validate_irc()
             if result:
                 logging.info("Validated via IRC")
@@ -867,7 +867,7 @@ class Job():
             label = self.submit_conformer(conformer)
 
             while not self.check_complete(label):
-                time.sleep(15)
+                time.sleep(90)
 
             logging.info(
                 "Reoptimization complete... performing hindered rotors scans again")
