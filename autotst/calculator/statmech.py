@@ -34,6 +34,7 @@ import cclib.io
 
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
+from ..data.inputoutput import get_possible_names
 
 import rmgpy
 import arkane.main
@@ -198,9 +199,9 @@ class StatMech():
             logging.info("There is no lowest energy conformer file...")
             return False
 
-        if os.path.exists(os.path.join(self.directory, "species", label, label + '.py')):
-            logging.info("Species input file already written... Not doing anything")
-            return True
+        #if os.path.exists(os.path.join(self.directory, "species", label, label + '.py')):
+        #    logging.info("Species input file already written... Not doing anything")
+        #    return True
 
         parser = cclib.io.ccread(os.path.join(
             self.directory, "species", label, label + ".log"), loglevel=logging.ERROR)
@@ -346,11 +347,27 @@ class StatMech():
         - None
         """
 
-        label = transitionstate.reaction_label
+        r, p = transitionstate.reaction_label.split("_")
+        reactants = r.split("+")
+        products = p.split("+")
 
-        if os.path.exists(os.path.join(self.directory, "ts", label, label + '.py')):
-            logging.info("TS input file already written... Not doing anything")
-            return True
+        possible_names = get_possible_names(reactants, products)
+        got_one = False
+        for name in possible_names:
+            if os.path.exists(os.path.join(self.directory, "ts", name)):
+                label = name
+                got_one = True
+                logging.info("Found a directory!")
+                logging.info("Log files found in {}".format(os.path.join(self.directory, "ts", name)))
+                break
+
+        if not got_one: # We didn't find the directory
+            logging.error("TS directory doesn't exist... this job needs to be run")
+            return False
+
+        #if os.path.exists(os.path.join(self.directory, "ts", label, label + '.py')):
+        #    logging.info("TS input file already written... Not doing anything")
+        #    return True
 
         if not os.path.exists(os.path.join(self.directory, "ts", label, label + ".log")):
             logging.info("There is no lowest energy conformer file...")
@@ -649,6 +666,7 @@ class StatMech():
         self.kinetics_job.input_file = os.path.join(
             self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
         self.kinetics_job.plot = False
+        print(os.path.join(self.directory, "ts", self.reaction.label))
         self.kinetics_job.output_directory = os.path.join(self.directory, "ts", self.reaction.label)
 
         self.kinetics_job.execute()
