@@ -761,7 +761,7 @@ class DatabaseUpdater:
                     if isinstance(group, str):
                         assert False, "Discrepancy between versions of RMG_Database and this one"
 
-                    self.group_cmments[group].add('{0!s}'.format(template))
+                    self.group_comments[group].add('{0!s}'.format(template))
 
         self.A = np.array(A)
         self.b = np.array(b)
@@ -883,6 +883,6 @@ class DatabaseUpdater:
         elif path is None:
             path = os.path.join(self.path, 'TS_groups.py')
 
-        self.database.saveTransitionStateGroups(path)
+        self.database.save_transition_state_groups(path)
         logging.info('Saved {} Database to: {}'.format(self.family, path))
         return

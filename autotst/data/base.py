@@ -353,7 +353,7 @@ class TransitionStates(rmgpy.data.base.Database):
         if entry.short_desc.strip() != '':
             f.write('    short_desc = u"""')
             try:
-                f.write(entry.short_desc.encode('utf-8'))
+                f.write(entry.short_desc)
             except:
                 f.write(entry.short_desc.strip().encode(
                     'ascii', 'ignore') + "\n")
@@ -363,7 +363,7 @@ class TransitionStates(rmgpy.data.base.Database):
             f.write('    long_desc = \n')
             f.write('u"""\n')
             try:
-                f.write(entry.long_desc.strip().encode('utf-8') + "\n")
+                f.write(entry.long_desc.strip() + "\n")
             except:
                 f.write(entry.long_desc.strip().encode(
                     'ascii', 'ignore') + "\n")
@@ -566,7 +566,7 @@ class TransitionStateDepository(rmgpy.data.base.Database):
         if entry.short_desc.strip() != '':
             f.write('    short_desc = u"""')
             try:
-                f.write(entry.short_desc.encode('utf-8'))
+                f.write(entry.short_desc)
             except:
                 f.write(entry.short_desc.strip().encode(
                     'ascii', 'ignore') + "\n")
@@ -576,7 +576,7 @@ class TransitionStateDepository(rmgpy.data.base.Database):
             f.write('    long_desc = \n')
             f.write('u"""\n')
             try:
-                f.write(entry.long_desc.strip().encode('utf-8') + "\n")
+                f.write(entry.long_desc.strip() + "\n")
             except:
                 f.write(entry.long_desc.strip().encode(
                     'ascii', 'ignore') + "\n")
