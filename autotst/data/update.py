@@ -67,10 +67,8 @@ def get_unknown_species(reactions, known_species):
 
     for i, reaction in enumerate(reactions):
         rmg_reaction = reaction.rmg_reaction
-        r1, r2 = rmg_reaction.reactants
-        p1, p2 = rmg_reaction.products
 
-        relavent_species = [r1, r2, p1, p2]
+        relavent_species = rmg_reaction.reactants + rmg_reaction.products
         relavent_labels = {}
 
         for rel_species in relavent_species:
@@ -285,10 +283,8 @@ def update_known_reactions(
         distance_data = DistanceData(distances=Distances, method=method)
 
         rmg_reaction = reaction.rmg_reaction
-        r1, r2 = rmg_reaction.reactants
-        p1, p2 = rmg_reaction.products
 
-        relavent_species = [r1, r2, p1, p2]
+        relavent_species = rmg_reaction.reactants + rmg_reaction.products
         relavent_labels = {}
 
         for rel_species in relavent_species:
@@ -302,12 +298,19 @@ def update_known_reactions(
                 logging.warning(
                     '{} not found in species dictionary'.format(rel_species))
 
-        lr1 = found_species[r1]
-        lr2 = found_species[r2]
-        lp1 = found_species[p1]
-        lp2 = found_species[p2]
 
-        Label = '{} + {} <=> {} + {}'.format(lr1, lr2, lp1, lp2)
+        labeled_reactants = [found_species[reactant] for reactant in rmg_reaction.reactants]
+        labeled_products = [found_species[product] for product in rmg_reaction.products]
+        if len(labeled_reactants) == 2:
+            left_string = "{} + {}".format(labeled_reactants[0], labeled_reactants[1])
+        else:
+            left_string = "{}".format(labeled_reactants[0])
+        if len(labeled_products) == 2:
+            right_string = "{} + {}".format(labeled_products[0], labeled_products[1])
+        else:
+            right_string = "{}".format(labeled_products[0])
+
+        Label = '{} <=> {}'.format(left_string, right_string)
         #print Label
 
         # adding new entries to r_db, r_db will contain old and new reactions
@@ -383,10 +386,11 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
         reactions, list), 'Provide auto-TST reaction object[s]'
     assert len(reactions) > 0
 
-    if reaction_family == '':
-        reaction_family = 'H_Abstraction'
-        logging.warning(
-            'Defaulting to reaction family of {}'.format(reaction_family))
+    # Not a good assumption, @nateharms' opinion
+    #if reaction_family == '':
+    #    reaction_family = 'H_Abstraction'
+    #    logging.warning(
+    #        'Defaulting to reaction family of {}'.format(reaction_family))
 
     general_path = os.path.join(os.path.expandvars(
         '$AUTOTST'), 'database', reaction_family, 'TS_training')
