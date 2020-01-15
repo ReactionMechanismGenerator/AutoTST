@@ -479,9 +479,10 @@ def TS_Database_Update(families, path=None, auto_save=False):
             families.remove(family)
 
     logging.info("Loading RMG Database...")
-    rmg_database = RMGDatabase()
-    database_path = os.path.join(os.path.expandvars(
-        '$RMGpy'), "..", 'RMG-database', 'input')
+    import rmgpy
+    import rmgpy.data.rmg
+    rmg_database = rmgpy.data.rmg.RMGDatabase()
+    database_path = rmgpy.settings['database.directory']
 
     try:
         rmg_database.load(database_path,
