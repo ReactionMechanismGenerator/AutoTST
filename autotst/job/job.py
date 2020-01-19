@@ -485,6 +485,7 @@ class Job():
                         currently_running.remove(name)
             time.sleep(60)
             process.start()
+            process.join()
             currently_running.append(name)
 
         # This loop will block until everything in currently_running
@@ -736,6 +737,7 @@ class Job():
                         currently_running.remove(name)
             time.sleep(60)
             process.start()
+            process.join()
             currently_running.append(name)
 
         while len(currently_running) > 0:
