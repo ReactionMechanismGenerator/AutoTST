@@ -171,10 +171,20 @@ class Job():
         A method to determine if a job is still running
         """
         command = """squeue -n "{}" """.format(label)
-        output = subprocess.Popen(
-            command,
-            shell=True,
-            stdout=subprocess.PIPE).communicate()[0]
+        squeue_error = "Socket timed out on send/recv operation"
+        squeued = False
+
+        while not squeued:
+            output = subprocess.Popen(
+                command,
+                shell=True,
+                stdout=subprocess.PIPE).communicate()[0]
+            if squeue_error in output.decode("utf-8"):
+                # squeue is running slowly, waiting a bit and checking again.
+                time.sleep(90)
+            else:
+                squeued = True
+        
         if len(output.decode("utf-8").splitlines()) <= 1:
             return True
         else:
