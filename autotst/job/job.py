@@ -190,6 +190,67 @@ class Job():
         else:
             return False
 
+    def submit(self, command):
+
+        """
+        A method to run a slurm sbatch and make sure it isn't stopped by:
+        - QOS errors
+        - having too many jobs submitted 
+        """
+        sbatch_success = "Submitted batch job"
+        squeue_error = "Socket timed out on send/recv operation"
+        sbatch_error = "Batch job submission failed: Job violates accounting/QOS policy"
+        overall_queue = False # is the overall queue able to accept another job
+        user_queue = False # is the user's queue able to accept another job
+        submitted = False # has the job been submitted yet?
+
+        # to check the number of jobs in the whole queue
+        while not overall_queue:
+            squeue_output = subprocess.Popen(
+                "squeue",
+                shell=True,
+                stdout=subprocess.PIPE).communicate()[0]
+            if squeue_error in squeue_output.decode("utf-8"):
+                # squeue is having a slow response time, waiting and trying again
+                time.sleep(90)
+            elif len(squeue_output.decode("utf-8").splitlines()) > 10000: 
+                #greater than 10k jobs, the limit for discovery, waiting and trying again
+                time.sleep(90)
+            else:
+                overall_queue = True
+                
+
+        # to check the number of jobs that the user has in the queue
+        while not user_queue:
+            squeue_output = subprocess.Popen(
+                "squeue -u {}".format(self.username),
+                shell=True,
+                stdout=subprocess.PIPE).communicate()[0]
+            if squeue_error in squeue_output.decode("utf-8"):
+                # squeue is having a slow response time, waiting and trying again
+                time.sleep(90)
+            elif len(squeue_output.decode("utf-8").splitlines()) > 500: 
+                # user has greater than than 500 jobs, the limit for discovery is 1.5k, waiting and trying again
+                time.sleep(90)
+            else:
+                user_queue = True
+
+        del squeue_output # we don't need this anymore
+
+        while not submitted:
+            sbatch_output = subprocess.Popen(
+                command,
+                shell=True,
+                stdout=subprocess.PIPE).communicate()[0]
+
+            if sbatch_error in sbatch_output.decode("utf-8"):
+                # we ran into a QOS / accounting error, this occured because jobs were submitted between now and when we last checked the queue.
+                # gonna wait and try again
+                time.sleep(90)
+            else:
+                submitted = True
+
+
 #################################################################################
 
     def submit_conformer(self, conformer, restart=False):
