@@ -321,8 +321,12 @@ class Job():
                 command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {2} -t 24:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition, nproc)
 
-            subprocess.call(command, shell=True)
-
+            if self.check_complete(label): #checking to see if the job is already in the queue
+                # if it's not, then we're gona submit it
+                self.submit(command)
+            else:
+                # it's currently in the queue, so not actually submitting it
+                return label
         return label
 
     def calculate_conformer(self, conformer):
@@ -616,8 +620,12 @@ class Job():
             else:
                 command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t {2} --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition, time, nproc)
-            subprocess.call(command, shell=True)
-
+            if self.check_complete(label): #checking to see if the job is already in the queue
+                # if it's not, then we're gona submit it
+                self.submit(command)
+            else:
+                # it's currently in the queue, so not actually submitting it
+                return label
         return label
 
     def calculate_transitionstate(self, transitionstate, vibrational_analysis=True):
@@ -867,9 +875,12 @@ class Job():
                 command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {2} -t 24:00:00 --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition, nproc)
 
-            subprocess.call(command, shell=True)
-
-        return label
+            if self.check_complete(label): #checking to see if the job is already in the queue
+                # if it's not, then we're gona submit it
+                self.submit(command)
+            else:
+                # it's currently in the queue, so not actually submitting it
+                return label
 
     def calculate_rotors(self, conformer, steps=36, step_size=10.0):
 
