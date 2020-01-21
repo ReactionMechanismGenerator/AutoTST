@@ -29,22 +29,27 @@
 
 import os, sys, subprocess, shutil
 import unittest
-from ..reaction import Reaction, TS
-from ..species import Species, Conformer
-from ..data.base import TransitionStates
-from .job import Job
-from ..calculator.gaussian import Gaussian
+from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
+from autotst.data.base import TransitionStates
+from autotst.job.job import Job
+from autotst.calculator.gaussian import Gaussian
+import multiprocessing
+import subprocess
+import time
 
 class JobTest(unittest.TestCase):
 
     def setUp(self):
         os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
+        os.environ["TEST_STATUS"] = "None"
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
         self.job = Job(
             reaction = self.reaction,
             calculator = self.calculator,
-            partition = "test"
+            partition = "test",
+            username="test"
         )
 
     def test_read_log(self):
@@ -71,9 +76,14 @@ class JobTest(unittest.TestCase):
 
     def test_check_complete(self):
         ### I don't know how to create alaises in a python script
+        os.environ["TEST_STATUS"] = "None"
         self.assertFalse(self.job.check_complete("test1"))
         self.assertTrue(self.job.check_complete("test2"))
 
+    def test_submit(self):
+
+        result = self.job.submit("echo testing")
+        self.assertTrue(result)
 
     ### For conformers
     def test_submit_conformer(self):

@@ -225,6 +225,12 @@ class Job():
             else:
                 overall_queue = True
                 
+        try:
+            os.environ["TEST_STATUS"]
+            time.wait(90)
+            # Adding this for testing
+        except:
+            pass
 
         # to check the number of jobs that the user has in the queue
         while not user_queue:
