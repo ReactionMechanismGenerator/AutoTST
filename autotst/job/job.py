@@ -214,10 +214,12 @@ class Job():
                 stdout=subprocess.PIPE).communicate()[0]
             if squeue_error in squeue_output.decode("utf-8"):
                 # squeue is having a slow response time, waiting and trying again
+                logging.error("There is a slow response time for squeue, waiting and trying again")
                 time.sleep(90)
                 attempts += 1
             elif len(squeue_output.decode("utf-8").splitlines()) > 10000: 
                 #greater than 10k jobs, the limit for discovery, waiting and trying again
+                logging.error("There are too many jobs in the queue at the moment, trying to submit in a bit")
                 time.sleep(90)
                 attempts += 1
             else:
@@ -232,10 +234,12 @@ class Job():
                 stdout=subprocess.PIPE).communicate()[0]
             if squeue_error in squeue_output.decode("utf-8"):
                 # squeue is having a slow response time, waiting and trying again
+                logging.error("There is a slow response time for squeue, waiting and trying again")
                 time.sleep(90)
                 attempts += 1
             elif len(squeue_output.decode("utf-8").splitlines()) > 500: 
                 # user has greater than than 500 jobs, the limit for discovery is 1.5k, waiting and trying again
+                logging.error("The user has too many jobs in the queue at the moment, trying to submit in a bit")
                 time.sleep(90)
                 attempts += 1
             else:
@@ -249,10 +253,10 @@ class Job():
                 command,
                 shell=True,
                 stdout=subprocess.PIPE).communicate()[0]
-
             if sbatch_error in sbatch_output.decode("utf-8"):
                 # we ran into a QOS / accounting error, this occured because jobs were submitted between now and when we last checked the queue.
                 # gonna wait and try again
+                logging.error("Ran into an issue when trying to submit a job, waiting a bit and trying it in a bit")
                 time.sleep(90)
                 attempts += 1
             else:
@@ -320,7 +324,6 @@ class Job():
             else:
                 command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {2} -t 24:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
                     label, self.partition, nproc)
-
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
                 self.submit(command)
@@ -792,7 +795,7 @@ class Job():
                          self.reaction.label, self.reaction.label + ".log")
         )
         logging.info("The lowest energy file is {}! :)".format(
-            lowest_energy_label + ".log"))
+            lowest_energy_label))
         return True
 
     def validate_transitionstate(self, transitionstate, vibrational_analysis=True):
