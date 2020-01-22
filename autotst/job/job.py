@@ -205,7 +205,9 @@ class Job():
         submitted = False # has the job been submitted yet?
 
         # to check the number of jobs in the whole queue
-        while not overall_queue:
+        attempts = 0
+        while (not overall_queue) or (attempts < 10):
+            # while the overall queue is big and there are fewer than 10 attempts to squeue
             squeue_output = subprocess.Popen(
                 "squeue",
                 shell=True,
@@ -213,9 +215,11 @@ class Job():
             if squeue_error in squeue_output.decode("utf-8"):
                 # squeue is having a slow response time, waiting and trying again
                 time.sleep(90)
+                attempts += 1
             elif len(squeue_output.decode("utf-8").splitlines()) > 10000: 
                 #greater than 10k jobs, the limit for discovery, waiting and trying again
                 time.sleep(90)
+                attempts += 1
             else:
                 overall_queue = True
                 
@@ -229,15 +233,18 @@ class Job():
             if squeue_error in squeue_output.decode("utf-8"):
                 # squeue is having a slow response time, waiting and trying again
                 time.sleep(90)
+                attempts += 1
             elif len(squeue_output.decode("utf-8").splitlines()) > 500: 
                 # user has greater than than 500 jobs, the limit for discovery is 1.5k, waiting and trying again
                 time.sleep(90)
+                attempts += 1
             else:
                 user_queue = True
 
         del squeue_output # we don't need this anymore
-
-        while not submitted:
+        attempts = 0
+        while (not submitted) or (attempts < 10): 
+            # It's not submitted or there are fewer than 10 attempts to sbatch
             sbatch_output = subprocess.Popen(
                 command,
                 shell=True,
@@ -247,8 +254,10 @@ class Job():
                 # we ran into a QOS / accounting error, this occured because jobs were submitted between now and when we last checked the queue.
                 # gonna wait and try again
                 time.sleep(90)
+                attempts += 1
             else:
                 submitted = True
+        return submitted
 
 
 #################################################################################
