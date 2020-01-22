@@ -205,8 +205,7 @@ class Job():
         submitted = False # has the job been submitted yet?
 
         # to check the number of jobs in the whole queue
-        attempts = 0
-        while (not overall_queue) or (attempts < 10):
+        while not overall_queue:
             # while the overall queue is big and there are fewer than 10 attempts to squeue
             squeue_output = subprocess.Popen(
                 "squeue",
@@ -216,12 +215,10 @@ class Job():
                 # squeue is having a slow response time, waiting and trying again
                 logging.error("There is a slow response time for squeue, waiting and trying again")
                 time.sleep(90)
-                attempts += 1
             elif len(squeue_output.decode("utf-8").splitlines()) > 10000: 
                 #greater than 10k jobs, the limit for discovery, waiting and trying again
                 logging.error("There are too many jobs in the queue at the moment, trying to submit in a bit")
                 time.sleep(90)
-                attempts += 1
             else:
                 logging.info("The overall queue is okay to submit a job.")
                 overall_queue = True
@@ -243,19 +240,16 @@ class Job():
                 # squeue is having a slow response time, waiting and trying again
                 logging.error("There is a slow response time for squeue, waiting and trying again")
                 time.sleep(90)
-                attempts += 1
             elif len(squeue_output.decode("utf-8").splitlines()) > 500: 
                 # user has greater than than 500 jobs, the limit for discovery is 1.5k, waiting and trying again
                 logging.error("The user has too many jobs in the queue at the moment, trying to submit in a bit")
                 time.sleep(90)
-                attempts += 1
             else:
                 logging.info("The user's queue is okay to submit a job.")
                 user_queue = True
 
         del squeue_output # we don't need this anymore
-        attempts = 0
-        while (not submitted) or (attempts < 10): 
+        while not submitted: 
             # It's not submitted or there are fewer than 10 attempts to sbatch
             sbatch_output = subprocess.Popen(
                 command,
@@ -266,7 +260,6 @@ class Job():
                 # gonna wait and try again
                 logging.error("Ran into an issue when trying to submit a job, waiting a bit and trying it in a bit")
                 time.sleep(90)
-                attempts += 1
             else:
                 logging.info("Job submitted via sbatch.")
                 submitted = True
