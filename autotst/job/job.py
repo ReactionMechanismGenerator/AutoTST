@@ -223,6 +223,7 @@ class Job():
                 time.sleep(90)
                 attempts += 1
             else:
+                logging.info("The overall queue is okay to submit a job.")
                 overall_queue = True
                 
         try:
@@ -249,6 +250,7 @@ class Job():
                 time.sleep(90)
                 attempts += 1
             else:
+                logging.info("The user's queue is okay to submit a job.")
                 user_queue = True
 
         del squeue_output # we don't need this anymore
@@ -266,6 +268,7 @@ class Job():
                 time.sleep(90)
                 attempts += 1
             else:
+                logging.info("Job submitted via sbatch.")
                 submitted = True
         return submitted
 
