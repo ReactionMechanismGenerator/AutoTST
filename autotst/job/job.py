@@ -488,6 +488,7 @@ class Job():
                 for running in currently_running:
                     if not running.is_alive():
                         currently_running.remove(name)
+                time.sleep(60)
             time.sleep(60)
             process.start()
             process.join()
@@ -740,6 +741,7 @@ class Job():
                 for running in currently_running:
                     if not processes[running].is_alive():
                         currently_running.remove(name)
+                time.sleep(60)
             time.sleep(60)
             process.start()
             process.join()
