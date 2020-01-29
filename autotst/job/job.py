@@ -175,10 +175,8 @@ class Job():
         squeued = False
 
         while not squeued:
-            output = subprocess.Popen(
-                command,
-                shell=True,
-                stdout=subprocess.PIPE).communicate()[0]
+            with subprocess.Popen(command, shell=True, stdout=subprocess.PIPE) as popen:
+                output = popen.communicate()[0]
             if squeue_error in output.decode("utf-8"):
                 # squeue is running slowly, waiting a bit and checking again.
                 time.sleep(90)
@@ -207,10 +205,8 @@ class Job():
         # to check the number of jobs in the whole queue
         while not overall_queue:
             # while the overall queue is big and there are fewer than 10 attempts to squeue
-            squeue_output = subprocess.Popen(
-                "squeue",
-                shell=True,
-                stdout=subprocess.PIPE).communicate()[0]
+            with subprocess.Popen("squeue", shell=True, stdout=subprocess.PIPE) as popen:
+                squeue_output = popen.communicate()[0]
             if squeue_error in squeue_output.decode("utf-8"):
                 # squeue is having a slow response time, waiting and trying again
                 logging.error("There is a slow response time for squeue, waiting and trying again")
@@ -232,10 +228,8 @@ class Job():
 
         # to check the number of jobs that the user has in the queue
         while not user_queue:
-            squeue_output = subprocess.Popen(
-                "squeue -u {}".format(self.username),
-                shell=True,
-                stdout=subprocess.PIPE).communicate()[0]
+            with subprocess.Popen("squeue -u {}".format(self.username), shell=True, stdout=subprocess.PIPE) as popen:
+                squeue_output = popen.communicate()[0]
             if squeue_error in squeue_output.decode("utf-8"):
                 # squeue is having a slow response time, waiting and trying again
                 logging.error("There is a slow response time for squeue, waiting and trying again")
@@ -251,10 +245,8 @@ class Job():
         del squeue_output # we don't need this anymore
         while not submitted: 
             # It's not submitted or there are fewer than 10 attempts to sbatch
-            sbatch_output = subprocess.Popen(
-                command,
-                shell=True,
-                stdout=subprocess.PIPE).communicate()[0]
+            with subprocess.Popen(command, shell=True, stdout=subprocess.PIPE) as popen:
+                sbatch_output = popen.communicate()[0]
             if sbatch_error in sbatch_output.decode("utf-8"):
                 # we ran into a QOS / accounting error, this occured because jobs were submitted between now and when we last checked the queue.
                 # gonna wait and try again
