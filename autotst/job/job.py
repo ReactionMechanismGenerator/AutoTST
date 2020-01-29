@@ -480,8 +480,8 @@ class Job():
                 for running in currently_running:
                     if not running.is_alive():
                         currently_running.remove(name)
-                time.sleep(60)
-            time.sleep(60)
+                time.sleep(90)
+            time.sleep(90)
             process.start()
             process.join()
             currently_running.append(name)
@@ -494,7 +494,7 @@ class Job():
                     continue
                 if not process.is_alive():
                     currently_running.remove(name)
-            time.sleep(60)
+            time.sleep(90)
 
         results = []
         for smiles, conformers in list(species.conformers.items()):
@@ -733,8 +733,8 @@ class Job():
                 for running in currently_running:
                     if not processes[running].is_alive():
                         currently_running.remove(name)
-                time.sleep(60)
-            time.sleep(60)
+                time.sleep(90)
+            time.sleep(90)
             process.start()
             process.join()
             currently_running.append(name)
@@ -745,7 +745,7 @@ class Job():
                     continue
                 if not process.is_alive():
                     currently_running.remove(name)
-            time.sleep(60) 
+            time.sleep(90) 
 
         energies = []
         for label, result in global_results.items():
