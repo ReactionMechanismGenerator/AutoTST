@@ -250,9 +250,32 @@ class Gaussian():
         assert isinstance(
             self.conformer, Conformer), "A Conformer object was not provided..."
 
-        self.conformer.rmg_molecule.update_multiplicity()
+        label = "{}_{}_opt".format(self.conformer.smiles, self.conformer.index)
 
-        label = "{}_{}".format(self.conformer.smiles, self.conformer.index)
+        if self.settings["dispersion"]:
+            dispersion = 'EmpiricalDispersion={}'.format(self.settings["dispersion"].upper())
+        else: 
+            dispersion = ''
+
+        convergence = self.settings["convergence"].upper()
+
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms() - self.conformer.rmg_molecule.get_num_atoms('H')
+        
+        if num_atoms <= 4:
+            self.settings["mem"] = '10GB'
+            self.settings["nprocshared"] = 1
+        elif num_atoms <= 8:
+            self.settings["mem"] = '15GB'
+            self.settings["nprocshared"] = 3
+        elif num_atoms <= 15:
+            self.settings["mem"] = '20GB'
+            self.settings["nprocshared"] = 6
+        elif num_atoms <= 20:
+            self.settings["mem"] = '30GB'
+            self.settings["nprocshared"] = 8
+        else:
+            self.settings["mem"] = '40GB'
+            self.settings["nprocshared"] = 12
 
         new_scratch = os.path.join(
             self.directory,
@@ -266,6 +289,8 @@ class Gaussian():
         except OSError:
             pass
 
+        extra = "opt=(calcfc,maxcycles=900,{}) {} IOP(7/33=1) scf=(maxcycle=900)".format(convergence,dispersion)
+
         ase_gaussian = ase.calculators.gaussian.Gaussian(
             mem=self.settings["mem"],
             nprocshared=self.settings["nprocshared"],
@@ -273,7 +298,13 @@ class Gaussian():
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra="opt=(calcfc,maxcycles=900,{}) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)".format(self.convergence),
+            extra=extra,
+            multiplicity=self.conformer.rmg_molecule.multiplicity)
+
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        ase_gaussian.directory = new_scratch
+        del ase_gaussian.parameters['force']
+        return ase_gaussian
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
