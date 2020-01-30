@@ -134,6 +134,40 @@ class Gaussian():
         Returns:
         - calc (ase.calculators.gaussian.Gaussian): an ase.calculators.gaussian.Gaussian calculator with all of the proper setting specified
         """
+        
+        if self.settings["sp"] == 'G4':
+            # Change method and basis to B3LYP/6-31G(2df,p) which is optimation method for G4 method
+            method = "B3LYP"
+            basis = "6-31G(2df,p)"
+            dispersion = None
+        else:
+            # Use calc settings
+            method = self.settings["method"]
+            basis = self.settings["basis"]
+            dispersion = self.settings["dispersion"] 
+        
+        
+        convergence = self.settings["convergence"].upper()
+
+        self.settings["mem"] = '10GB'
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms() - self.conformer.rmg_molecule.get_num_atoms('H')
+
+        if num_atoms <= 4:
+            self.settings["mem"] = '10GB'
+            self.settings["nprocshared"] = 2
+        elif num_atoms <= 8:
+            self.settings["mem"] = '15GB'
+            self.settings["nprocshared"] = 4
+        elif num_atoms <= 15:
+            self.settings["mem"] = '20GB'
+            self.settings["nprocshared"] = 6
+        elif num_atoms <= 20:
+            self.settings["mem"] = '30GB'
+            self.settings["nprocshared"] = 8
+        else:
+            self.settings["mem"] = '40GB'
+            self.settings["nprocshared"] = 12
+        
         torsion = self.conformer.torsions[torsion_index]
 
         assert (torsion and (isinstance(torsion, Torsion))
@@ -167,7 +201,6 @@ class Gaussian():
                 a, b, c, d = locked_torsion.atom_indices
                 addsec += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)
 
-        self.conformer.rmg_molecule.update_multiplicity()
         mult = self.conformer.rmg_molecule.multiplicity
 
         new_scratch = os.path.join(
@@ -182,13 +215,14 @@ class Gaussian():
             nprocshared=self.settings["nprocshared"],
             label=label,
             scratch=new_scratch,
-            method=self.settings["method"],
-            basis=self.settings["basis"],
+            method=method,
+            basis=basis,
             extra=extra,
             multiplicity=mult,
             addsec=[addsec[:-1]])
 
         ase_gaussian.atoms = self.conformer.ase_molecule
+        ase_gaussian.directory = new_scratch
         del ase_gaussian.parameters['force']
         return ase_gaussian
 
