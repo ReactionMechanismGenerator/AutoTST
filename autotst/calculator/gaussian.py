@@ -51,8 +51,11 @@ class Gaussian():
                  conformer=None, # Either a transition state or a conformer
                  settings={
                      "method": "m062x",
+                     "dispersion": None,
                      "basis": "cc-pVTZ",
+                     "sp": None,
                      "mem": "5GB",
+                     "convergence": "",
                      "nprocshared": 24,
                  },
                  convergence="",
@@ -62,12 +65,16 @@ class Gaussian():
 
         default_settings = {
             "method": "m062x",
+            "dispersion": None,
             "basis": "cc-pVTZ",
+            "sp": None,
             "mem": "5GB",
+            "convergence": "Tight",
             "nprocshared": 24,
         }
 
         self.conformer = conformer
+        self.conformer.rmg_molecule.update_multiplicity()
 
         # setting the settings accordingly
         for setting, value in list(default_settings.items()):
@@ -78,6 +85,10 @@ class Gaussian():
                 logging.info("{} not specified, setting it to the default value of {}".format(
                     setting, value))
                 settings[setting] = value
+        
+        if settings["dispersion"]:
+            dispersion = settings["dispersion"].upper()
+            assert dispersion in ['GD3','GD3BJ','GD2'],'Acceptable keywords for dispersion are GD3, GD3BJ, or GD2'
 
         self.command = "g16"
         self.settings = settings
