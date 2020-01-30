@@ -2,5 +2,4 @@
 
 import os, sys, subprocess
 
-
 subprocess.call([os.environ["COMMAND"], os.environ["FILE_PATH"]])
