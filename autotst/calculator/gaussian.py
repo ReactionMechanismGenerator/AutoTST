@@ -384,8 +384,50 @@ class Gaussian():
         del ase_gaussian.parameters['force']
         return ase_gaussian
 
+    def get_nbo_calc(self):
+        """
+        A method that creates a calculator for a `Conformer` that will perform a Natural Bond Orbital (NBO) population calculation
+
+        Returns:
+        - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
+        """
+
+        self.settings["mem"] = '10GB'
+
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms() - self.conformer.rmg_molecule.get_num_atoms('H')
+
+        if num_atoms <= 4:
+            self.settings["nprocshared"] = 1
+        elif num_atoms <= 10:
+            self.settings["nprocshared"] = 2
+        else:
+            self.settings["nprocshared"] = 4
+
+        label = "{}_nbo".format(self.conformer.smiles)
+
+        new_scratch = os.path.join(
+            self.directory,
+            "species",
+            self.conformer.smiles,
+            "nbo"
+        )
+
+        try:
+            os.makedirs(new_scratch)
+        except OSError:
+            pass
+
+        ase_gaussian = ASEGaussian(
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
+            label=label,
+            scratch=new_scratch,
+            method=self.settings["method"],
+            basis=self.settings["basis"],
+            extra="pop=nbo",
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
+        ase_gaussian.directory = new_scratch
         del ase_gaussian.parameters['force']
         return ase_gaussian
 
