@@ -831,3 +831,153 @@ class Gaussian():
                         return True
             logging.info("IRC calculation failed for {} :(".format(irc_path))
             return False
+
+##############################################################################################
+
+def get_spin_partial_charges(log_path):
+    """
+    returns 2 lists:
+    list1 = arrays of Mulliken charges
+    list2 = arrays of spin densities
+    """
+    charges = []
+    spin_densities = []
+    n_atoms = None
+    info = open(log_path, 'r').readlines()
+    for i, line in enumerate(info):
+        if not n_atoms and 'NAtoms=' in line:
+            n_atoms = int(line.split()[1])
+        elif 'Mulliken charges and spin densities:' in line:
+            charge = [float(l.split()[-2]) for l in info[i+2:i+2+n_atoms]]
+            spin_density = [float(l.split()[-1])
+                            for l in info[i+2:i+2+n_atoms]]
+            charges.append(np.array(charge))
+            spin_densities.append(np.array(spin_density))
+        elif 'Mulliken charges:' in line:
+            charge = [float(l.split()[-1]) for l in info[i+2:i+2+n_atoms]]
+            charges.append(np.array(charge))
+
+    return charges, spin_densities
+
+
+def read_nbo_log(path,yml_dir):
+    """
+    Method to determine the representative Lewis structure from a Gaussian NBO calculation.
+    Writes a yml file with results from nbo calculation.
+    
+    Args:
+        - path (str): path to gaussian nbo log file
+        - yml_dir (str): directory to save yml file with data from nbo calc
+    
+    Returns:
+        - RMG Molecule (rmgpy.molecule.molecule.Molecule)
+    """
+    
+    data = ccread(path)
+
+    atoms = []
+    bonds = {}
+
+    for i, atom_number in enumerate(data.atomnos):
+        atoms.append(RMGAtom(id=i+1, element=atomic_number_symbol_dict[atom_number],
+                        coords=data.atomcoords[-1][i]))
+
+    lines = open(path, 'r').readlines()
+    _ = False
+
+    for line in lines:
+        if 'Natural Bond Orbitals (Summary):' in line:
+            _ = True
+        if _ is True:
+            if 'BD' in line:
+                atom1 = atoms[int(line.split('-')[0].split()[-1])-1]
+                atom2 = atoms[int(line.split('-')[1].split()[1])-1]
+                occupancy = float(line.split('-')[1].split()[2])
+                if (atom1.id, atom2.id) not in list(bonds.keys()):
+                    bond = Bond(atom1, atom2)
+                    bond.order = occupancy/2
+                    if '*' in line:
+                        bond.order = -bond.order
+                    atom1.bonds[atom2] = bond
+                    atom2.bonds[atom1] = bond
+                    bonds[(atom1.id, atom2.id)] = bond
+                else:
+                    bond = bonds[(atom1.id, atom2.id)]
+                    if '*' in line:
+                        bond.order -= occupancy/2
+                    else:
+                        bond.order += occupancy/2
+            if 'LP' in line and '*' not in line:
+                atom = atoms[int(line.split(')')[1].split()[1])-1]
+                orbital = int(line.split(')')[0].split()[-1])
+                occupancy = float(line.split(')')[1].split()[2])
+                orbital = "LP_{}".format(orbital)
+                if orbital not in list(atom.props.keys()):
+                    atom.props[orbital] = occupancy
+                else:
+                    # if '*' in line:
+                    #     atom.props[orbital] -= occupancy
+                    # else:
+                    atom.props[orbital] += occupancy
+        if 'Charge unit' in line:
+            _ = False
+
+    for atom in atoms:
+        if len(atom.props.keys()) > 0:
+            for orbital, occupancy in atom.props.items():
+                if atom.lone_pairs == -100:
+                    atom.lone_pairs = 0
+                if round(occupancy) == 2:
+                    atom.increment_lone_pairs()
+                elif 0 < occupancy <= 1.5:
+                    atom.increment_radical()
+            atom.update_charge()
+
+    charges, spins = get_spin_partial_charges(path)
+    mol = RMGMolecule(atoms=atoms)
+    mol.update_lone_pairs()
+    mol.update_multiplicity()
+    mol.update_connectivity_values()
+
+    if data.mult > 1:
+        radical_electrons = data.mult - 1
+        radical_atom_ids_spin_density = sorted(spins[-1].argsort()[-radical_electrons:][::-1].tolist())
+        radical_atom_ids_mol = sorted([atom.id -1 for atom in mol.atoms if atom.radical_electrons > 0])
+        if radical_atom_ids_spin_density == radical_atom_ids_mol:
+            logging.info("The Lewis struture is consistent with spin density")
+        else:
+            logging.warning(
+                "The Lewis struture is inconsistent with spin density")
+        
+    mol_copy = mol.copy(deep=True)
+    for bond in mol_copy.get_all_edges():
+        bond.order = round(bond.order)
+    
+    mol_copy.update_multiplicity()
+    mol_copy.update_connectivity_values()
+
+    assert mol_copy.get_net_charge() == data.charge
+    assert mol_copy.multiplicity == data.mult
+
+    info = {
+        'info': data.metadata,
+        'best_smiles': mol_copy.to_smiles(),
+        'resonance_smiles': [m.smiles for m in mol_copy.generate_resonance_structures()],
+        'adj_list': mol.to_adjacency_list(),
+        'mult': data.mult,
+        'inchi': mol_copy.to_inchi(),
+        'inchi_key': mol_copy.to_inchi_key(),
+        'atom_numbers': data.atomnos.tolist(),
+        'coords': data.atomcoords.tolist(),
+        'natural_charges': data.atomcharges['natural'].tolist()
+    }
+
+    try:
+        outpath = os.path.join(
+            yml_dir, '{}_nbo.yml'.format(mol_copy.to_smiles()))
+        with open(outpath, 'w') as f:
+            yaml.safe_dump(info, f)
+    except:
+        pass
+
+    return mol_copy
