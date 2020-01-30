@@ -431,6 +431,63 @@ class Gaussian():
         del ase_gaussian.parameters['force']
         return ase_gaussian
 
+    def get_sp_calc(self):
+
+        method = self.settings["sp"].upper()
+        convergence = self.settings["convergence"].upper()
+
+        gaussian_methods = [
+            "G1","G2","G3","G4","G2MP2","G3MP2","G3B3","G3MP2B3","G4","G4MP2",
+            "W1","W1U","W1BD","W1RO",
+            "CBS-4M","CBS-QB3","CBS-APNO",
+        ]
+        assert method in gaussian_methods
+
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms() - self.conformer.rmg_molecule.get_num_atoms('H')
+        
+        if num_atoms <= 18:
+            self.settings["mem"] = '80GB'
+            self.settings["nprocshared"] = 8
+        else:
+            self.settings["mem"] = '100GB'
+            self.settings["nprocshared"] = 16
+            
+        if isinstance(self.conformer, TS):
+            logging.info(
+                "TS object provided, cannot obtain a species calculator for a TS")
+            return None
+
+        assert isinstance(
+            self.conformer, Conformer), "A Conformer object was not provided..."
+
+        label = "{}_{}".format(self.conformer.smiles, method)
+
+        new_scratch = os.path.join(
+            self.directory,
+            "species",
+            self.conformer.smiles,
+            "sp"
+        )
+
+        try:
+            os.makedirs(new_scratch)
+        except OSError:
+            pass
+
+        ase_gaussian = ASEGaussian(
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
+            label=label,
+            scratch=new_scratch,
+            method= self.settings["sp"],
+            basis = '',
+            extra="opt=(calcfc,maxcycles=900,{}) IOP(7/33=1) scf=(maxcycle=900)".format(convergence),
+            multiplicity=self.conformer.rmg_molecule.multiplicity)
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        ase_gaussian.directory = new_scratch
+        del ase_gaussian.parameters['force']
+        return ase_gaussian
+
     def get_shell_calc(self):
         """
         A method to create a calculator that optimizes the reaction shell of a `TS` object
