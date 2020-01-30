@@ -305,6 +305,85 @@ class Gaussian():
         ase_gaussian.directory = new_scratch
         del ase_gaussian.parameters['force']
         return ase_gaussian
+
+    def get_freq_calc(self):
+        """
+        A method that creates a calculator for a `Conformer` that will perform a frequency calculation
+
+        Parameters:
+        - conformer (Conformer): A `Conformer` object that you want to perform hindered rotor calculations on
+        - torsion (Torsion): A `Torsion` object that you want to perform hindered rotor calculations about
+        - settings (dict): a dictionary of settings containing method, basis, mem, nprocshared
+        - scratch (str): a directory where you want log files to be written to
+        - convergence (str): ['verytight','tight','' (default)], specifies the convergence criteria of the geometry optimization
+
+        Returns:
+        - calc (ASEGaussian): an ASEGaussian calculator with all of the proper setting specified
+        """
+
+        if self.settings["dispersion"]:
+            dispersion = 'EmpiricalDispersion={}'.format(self.settings["dispersion"].upper())
+        else: 
+            dispersion = ''
+
+        self.settings["mem"] = '10GB'
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms() - self.conformer.rmg_molecule.get_num_atoms("H")
+        
+        if num_atoms <= 4:
+            self.settings["mem"] = '10GB'
+            self.settings["nprocshared"] = 1
+        elif num_atoms <= 8:
+            self.settings["mem"] = '15GB'
+            self.settings["nprocshared"] = 2
+        elif num_atoms <= 15:
+            self.settings["mem"] = '20GB'
+            self.settings["nprocshared"] = 4
+        elif num_atoms <= 20:
+            self.settings["mem"] = '30GB'
+            self.settings["nprocshared"] = 4
+        else:
+            self.settings["mem"] = '40GB'
+            self.settings["nprocshared"] = 6
+
+        if isinstance(self.conformer, TS):
+            logging.info(
+                "TS object provided, cannot obtain a species calculator for a TS")
+            return None
+
+        assert isinstance(
+            self.conformer, Conformer), "A Conformer object was not provided..."
+
+        label = "{}_{}_freq".format(self.conformer.smiles,self.conformer.index)
+
+        new_scratch = os.path.join(
+            self.directory,
+            "species",
+            self.conformer.smiles,
+            "conformers"
+        )
+
+        try:
+            os.makedirs(new_scratch)
+        except OSError:
+            pass
+
+        ase_gaussian = ASEGaussian(
+            mem=self.settings["mem"],
+            nprocshared=self.settings["nprocshared"],
+            label=label,
+            scratch=new_scratch,
+            method=self.settings["method"],
+            basis=self.settings["basis"],
+            extra="{} freq IOP(7/33=1) scf=(maxcycle=900)".format(dispersion),
+            multiplicity=self.conformer.rmg_molecule.multiplicity)
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        ase_gaussian.directory = new_scratch
+        ase_gaussian.label = label
+        ase_gaussian.parameters["partition"] = self.settings["partition"]
+        ase_gaussian.parameters["time"] = self.settings["time"]
+        del ase_gaussian.parameters['force']
+        return ase_gaussian
+
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
