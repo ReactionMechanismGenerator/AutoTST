@@ -9,7 +9,7 @@ RUN yum install centos-release-scl -y
 RUN yum install devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran -y 
 RUN scl enable devtoolset-8 -- bash
 RUN gcc --version
-RUN whereis gcc 
+RUN whereis gcc  
 RUN yum install lapack -y
 RUN yum install wget -y
 #install for rdkit and cclib 
@@ -45,5 +45,3 @@ RUN cat $HOME/.bashrc
 
 RUN . /anaconda3/etc/profile.d/conda.sh && \
     conda activate tst_env && conda info --envs && conda list rdkit
-RUN cd AutoTST && make
-
