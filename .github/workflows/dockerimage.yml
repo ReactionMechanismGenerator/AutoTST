@@ -13,15 +13,15 @@ jobs:
             with:
               ref: containers
           - name: Login to DockerHub Registry
-            run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+            run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u skrsna --password-stdin
           - name: Get the version
             id: vars
-            run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+            run: echo ::set-output name=tag::$(echo ${GITHUB_SHA})
           - name: Build the tagged Docker image
-            run: docker build . --file Dockerfile --tag 'skrsna'/autotst:${{steps.vars.outputs.tag}}
+            run: docker build . --file Dockerfile --tag skrsna/autotst:${{steps.vars.outputs.tag}}
           - name: Push the tagged Docker image
-            run: docker push 'skrsna'/autotst:${{steps.vars.outputs.tag}}
+            run: docker push skrsna/autotst:${{steps.vars.outputs.tag}}
           - name: Build the latest Docker image
-            run: docker build . --file Dockerfile --tag 'skrsna'/autotst:latest
+            run: docker build . --file Dockerfile --tag skrsna/autotst:latest
           - name: Push the latest Docker image
-            run: docker push 'skrsna'/autotst:latest
+            run: docker push skrsna/autotst:latest
