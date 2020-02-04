@@ -16,10 +16,10 @@ jobs:
             id: vars
             run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
           - name: Build the tagged Docker image
-            run: docker build . --file Dockerfile --tag skrsna/autotst:${{steps.vars.outputs.tag}}
+            run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}autotst:${{steps.vars.outputs.tag}}
           - name: Push the tagged Docker image
-            run: docker push skrsna/autotst:${{steps.vars.outputs.tag}}
+            run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/autotst:${{steps.vars.outputs.tag}}
           - name: Build the latest Docker image
-            run: docker build . --file Dockerfile --tag skrsna/autotst:latest
+            run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/autotst:latest
           - name: Push the latest Docker image
-            run: docker push skrsna/autotst:latest
+            run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/autotst:latest
