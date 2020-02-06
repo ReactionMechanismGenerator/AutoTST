@@ -152,6 +152,25 @@ class TestReaction(unittest.TestCase):
         self.assertTrue(merged.get_labeled_atoms("*2")[0].is_hydrogen())
         self.assertTrue(merged.get_labeled_atoms("*1")[0].is_oxygen)
 
+    def test_labeled_reaction2(self):
+        """
+        Testing a reaction with the finicky [CH...] radical
+        """
+
+        reaction = Reaction("[CH2]+[H]_[H][H]+[CH]")
+        labeled_reaction, reaction_family = reaction.get_labeled_reaction()
+        self.assertEquals(reaction_family.lower(), "h_abstraction")
+
+        merged = labeled_reaction.reactants[0].merge(labeled_reaction.reactants[1])
+        self.assertTrue(merged.get_labeled_atoms("*1")[0].is_carbon())
+        self.assertTrue(merged.get_labeled_atoms("*2")[0].is_hydrogen())
+        self.assertTrue(merged.get_labeled_atoms("*3")[0].is_hydrogen())
+
+        merged = labeled_reaction.products[0].merge(labeled_reaction.products[1])
+        self.assertTrue(merged.get_labeled_atoms("*1")[0].is_hydrogen())
+        self.assertTrue(merged.get_labeled_atoms("*2")[0].is_hydrogen())
+        self.assertTrue(merged.get_labeled_atoms("*3")[0].is_carbon())
+
     def test_rmg_complexes(self):
         self.reaction.get_labeled_reaction()
         self.reaction.get_rmg_complexes()
