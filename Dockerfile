@@ -66,6 +66,6 @@ RUN export DFTB_PREFIX=$HOME/dftbplus-19.1.x86_64-linux/halorg-0-1
 RUN export DFTB_COMMAND=$HOME/dftbplus-19.1.x86_64-linux/bin/dftb+
 
 # Make the default user `user` instead of `root`. Necessary when working with Shifter.
-RUN chown -R user:group $HOME
-USER user
-RUN chmod 755 /home/user
+#RUN chown -R user:group $HOME
+#USER user
+RUN chmod 777 /home/user
