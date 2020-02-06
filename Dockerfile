@@ -15,7 +15,7 @@ RUN yum install wget -y
 #install for rdkit and cclib 
 RUN yum install libXrender libXext fontconfig -y 
 # Set up a non-root user, `user`, with a group, `group`
-ENV HOME=/home/user
+ENV HOME=/apps
 RUN mkdir -p $HOME
 RUN groupadd -r group && \
     useradd -r -g group -d $HOME -s /sbin/nologin -c "Default user" user
@@ -68,4 +68,3 @@ RUN export DFTB_COMMAND=$HOME/dftbplus-19.1.x86_64-linux/bin/dftb+
 # Make the default user `user` instead of `root`. Necessary when working with Shifter.
 #RUN chown -R user:group $HOME
 #USER user
-RUN chmod 777 /home/user
