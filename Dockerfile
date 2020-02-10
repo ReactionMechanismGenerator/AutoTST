@@ -54,19 +54,24 @@ RUN tar -xvf dftbplus-19.1.x86_64-linux.tar.xz
 RUN rm -rf dftbplus-19.1.x86_64-linux.tar.xz
 #put path
 ENV PATH $HOME/dftbplus-19.1.x86_64-linux/bin:$PATH
+#download some examples and run dftb+
 RUN wget https://dftbplus-recipes.readthedocs.io/en/stable/_downloads/b22f70990f75772e54ee0f8f771a3325/recipes.tar.bz2
 RUN tar -xvf recipes.tar.bz2
 RUN rm -rf recipes.tar.bz2
 WORKDIR $HOME/recipes
 RUN ./scripts/get_slakos
 WORKDIR $HOME/recipes/basics/firstcalc/
+#example run 
 RUN  dftb+ | tee output
 WORKDIR $HOME/dftbplus-19.1.x86_64-linux
 RUN wget https://www.dftb.org/fileadmin/DFTB/public/slako/halorg/halorg-0-1.tar.xz
 RUN tar -xvf halorg-0-1.tar.xz
 RUN rm -rf halorg-0-1.tar.xz
-RUN export DFTB_PREFIX=$HOME/dftbplus-19.1.x86_64-linux/halorg-0-1
-RUN export DFTB_COMMAND=$HOME/dftbplus-19.1.x86_64-linux/bin/dftb+
+#add param files for dftb
+ENV DFTB_PREFIX=$HOME/dftbplus-19.1.x86_64-linux/halorg-0-1
+ENV DFTB_COMMAND=$HOME/dftbplus-19.1.x86_64-linux/bin/dftb+
+#put autotst in the path for `job.py`
 ENV AutoTST=$HOME/AutoTST
+#chmod 777 everything for singularity
 RUN chmod -R 777 $HOME
 WORKDIR $AutoTST
