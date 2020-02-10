@@ -36,6 +36,7 @@ ADD  https://raw.githubusercontent.com/ReactionMechanismGenerator/AutoTST/master
 RUN echo "unset SUDO_UID SUDO_GID SUDO_USER" >> $HOME/.bashrc
 RUN echo ". /anaconda3/etc/profile.d/conda.sh" >> $HOME/.bashrc && \
     echo "conda activate tst_env" >> $HOME/.bashrc
+
 RUN cat /tmp/environment.yml
 RUN conda env create -f /tmp/environment.yml
 # Clone repo
@@ -45,11 +46,13 @@ RUN cat $HOME/.bashrc
 
 RUN . /anaconda3/etc/profile.d/conda.sh && \
     conda activate tst_env && conda info --envs && conda list rdkit
-#dftb+
-WORKDIR $HOME
+#change into workdir dftb+
+WORKDIR $HOME 
+#download dftb+ 
 RUN wget http://www.dftbplus.org/fileadmin/DFTBPLUS/public/dftbplus/19.1/dftbplus-19.1.x86_64-linux.tar.xz
 RUN tar -xvf dftbplus-19.1.x86_64-linux.tar.xz
 RUN rm -rf dftbplus-19.1.x86_64-linux.tar.xz
+#put path
 ENV PATH $HOME/dftbplus-19.1.x86_64-linux/bin:$PATH
 RUN wget https://dftbplus-recipes.readthedocs.io/en/stable/_downloads/b22f70990f75772e54ee0f8f771a3325/recipes.tar.bz2
 RUN tar -xvf recipes.tar.bz2
@@ -64,7 +67,6 @@ RUN tar -xvf halorg-0-1.tar.xz
 RUN rm -rf halorg-0-1.tar.xz
 RUN export DFTB_PREFIX=$HOME/dftbplus-19.1.x86_64-linux/halorg-0-1
 RUN export DFTB_COMMAND=$HOME/dftbplus-19.1.x86_64-linux/bin/dftb+
-
-# Make the default user `user` instead of `root`. Necessary when working with Shifter.
-#RUN chown -R user:group $HOME
-#USER user
+ENV AutoTST=$HOME/AutoTST
+RUN chmod -R 777 $HOME
+WORKDIR $AutoTST
