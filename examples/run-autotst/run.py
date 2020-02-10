@@ -6,6 +6,7 @@ import multiprocessing
 from multiprocessing import Process
 import logging
 import subprocess
+import argparse
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 from autotst.job.job import *
@@ -19,10 +20,10 @@ from rmgpy.reaction import Reaction as RMGReaction
 parser = argparse.ArgumentParser(description='Command Line options for running autotst')
 
 parser.add_argument('--calculation-type', default='thermo', help='thermo or kinetics calculation')
-parser.add_argument('--scracth-dir',default=os.getenv('PWD'), help='scracth directory to store your files')
+parser.add_argument('--scracth-dir',default=os.getenv('AUTOTST_SCR_DIR'), help='scracth directory to store your files')
 parser.add_argument('--reaction-family', default='H_Abstraction', help='Reaction family for autotst')
 parser.add_argument('--partition', default='short', help="partition to run your calculations")
-parser.add_argument('--autost-label', default='[O]O', help='Smiles string for thermo or reaction string for kinetics' )
+parser.add_argument('--autotst-label', default='[O]O', help='Smiles string for thermo or reaction string for kinetics' )
 
 def main():
     args = parser.parse_args()
@@ -39,7 +40,7 @@ def main():
     logging.info("Running on a node with {} processors".format(multiprocessing.cpu_count()))
     
     if args.calculation_type == 'thermo':
-        autotst_species = Species(smiles=args.autotst_label)
+        autotst_species = Species(smiles=[args.autotst_label])
         job = Job(
         calculator=Gaussian(
             settings={

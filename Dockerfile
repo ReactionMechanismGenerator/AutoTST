@@ -71,7 +71,9 @@ RUN rm -rf halorg-0-1.tar.xz
 ENV DFTB_PREFIX=$HOME/dftbplus-19.1.x86_64-linux/halorg-0-1
 ENV DFTB_COMMAND=$HOME/dftbplus-19.1.x86_64-linux/bin/dftb+
 #put autotst in the path for `job.py`
-ENV AutoTST=$HOME/AutoTST
+ENV AUTOTST=$HOME/AutoTST
+WORKDIR $AUTOTST/examples
+RUN wget https://raw.githubusercontent.com/skrsna/AutoTST/containers/examples/run-autotst/run.py 
 #chmod 777 everything for singularity
 RUN chmod -R 777 $HOME
-WORKDIR $AutoTST
+WORKDIR  $AUTOTST
