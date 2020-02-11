@@ -3,6 +3,7 @@
 [![codecov](https://codecov.io/gh/reactionmechanismgenerator/autotst/branch/master/graph/badge.svg)](https://codecov.io/gh/reactionmechanismgenerator/autotst)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 ![Release](https://img.shields.io/badge/version-0.1.0-brightgreen.svg)
+![Docker Image CI](https://github.com/skrsna/AutoTST/workflows/Docker%20Image%20CI/badge.svg?branch=containers)
 
 ## Descritpion
 

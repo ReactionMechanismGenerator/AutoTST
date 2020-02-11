@@ -59,7 +59,7 @@ def main():
         logging.info("Submitting low energy conformers for thermo calculation")
         result = job.calculate_species(species=autotst_species)
     elif args.calculation_type == 'kinetics':
-        autotst_reaction= Species(smiles=args.autotst_label)
+        #autotst_reaction= Reaction(label=args.autotst_label,reaction_family=args.reaction_family)
         reaction = Reaction(label=args.autotst_label, reaction_family=args.reaction_family)
         job = Job(
         reaction=reaction,
