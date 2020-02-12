@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: skrsna/autotst:latest
+
+%post
+    chmod -R 777 /apps
