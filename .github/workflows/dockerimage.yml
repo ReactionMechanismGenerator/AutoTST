@@ -31,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+        with: 
+          ref: containers
       - name: Get singularity from docker
         run: docker run quay.io/singularity/singularity:v3.5.1 version
       - name: Echo Folder
