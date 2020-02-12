@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Get singularity from docker
         run: docker run quay.io/singularity/singularity:v3.5.1 version
-      -name: Echo Folder
+      - name: Echo Folder
         run: echo $PWD
       - name: Build singularity
         run: docker run --privileged -t -v  $PWD:/tmp quay.io/singularity/singularity:v3.5.1   build /tmp/autotst.sif /tmp/Singularity.def 
