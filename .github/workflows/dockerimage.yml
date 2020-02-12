@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image and Singularity CI
 
 on: [push]
 
@@ -25,8 +25,13 @@ jobs:
             run: docker build . --file Dockerfile --tag skrsna/autotst:latest
           - name: Push the latest Docker image
             run: docker push skrsna/autotst:latest
+
   singularity:
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Pull Singulairty from quay.io
-        run: docker run -it quay.io/singularity/singularity:v3.4.2 version
+      - name: Get singularity from docker
+        run: docker run quay.io/singularity/singularity:v3.4.2 version
+      - name: Build singularity
+        run: docker run quay.io/singularity/singularity:v3.4.2 build --help
