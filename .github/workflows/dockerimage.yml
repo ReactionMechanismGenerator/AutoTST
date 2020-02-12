@@ -1,10 +1,10 @@
-name: Docker Image and Singularity CI
+name: Docker Image CI
 
 on: [push]
 
 jobs:
 
-  build:
+  docker:
 
     runs-on: ubuntu-latest
 
@@ -25,9 +25,11 @@ jobs:
             run: docker build . --file Dockerfile --tag skrsna/autotst:latest
           - name: Push the latest Docker image
             run: docker push skrsna/autotst:latest
+          - name: Free up space
+            run: yes | docker system prune -a
 
   singularity:
-
+    needs: docker
     runs-on: ubuntu-latest
 
     steps:
@@ -42,4 +44,3 @@ jobs:
         run: ls -altr
       - name: Build singularity
         run: docker run --privileged -t -v  $PWD:/tmp quay.io/singularity/singularity:v3.5.1   build /tmp/autotst.sif /tmp/Singularity.def 
-
