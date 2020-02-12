@@ -28,6 +28,5 @@ jobs:
   singularity:
     runs-on: ubuntu-latest
     steps:
-      - uses: docker://quay.io/singularity/singularity:v3.4.2
-      - name: Check singularity version 
-        run: singularity version
+      - name: Pull Singulairty from quay.io
+        run: docker run -it quay.io/singularity/singularity:v3.4.2 version
