@@ -25,6 +25,7 @@ parser.add_argument('--reaction-family', default='H_Abstraction', help='Reaction
 parser.add_argument('--partition', default='short', help="partition to run your calculations")
 parser.add_argument('--autotst-label', default='[O]O', help='Smiles string for thermo or reaction string for kinetics' )
 
+@profile
 def main():
     args = parser.parse_args()
 

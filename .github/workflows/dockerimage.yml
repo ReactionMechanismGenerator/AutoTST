@@ -42,5 +42,4 @@ jobs:
         run: echo $PWD
       - name: List all files
         run: ls -altr
-      - name: Build singularity
-        run: docker run --privileged -t -v  $PWD:/tmp quay.io/singularity/singularity:v3.5.1   build /tmp/autotst.sif /tmp/Singularity.def 
+      

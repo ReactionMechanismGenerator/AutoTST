@@ -17,3 +17,4 @@ dependencies:
   - rdkit >= 2019.03.4
   - nose
   - codecov
+  - memory_profiler
