@@ -174,7 +174,7 @@ def systematic_search(conformer,
             label = conformer.smiles
             type = 'species'
 
-        if isinstance(calc, ase.calculators.calculator.FileIOCalculator):
+        if isinstance(calculator, ase.calculators.calculator.FileIOCalculator):
             if calculator.directory:
                 directory = calculator.directory 
             else: 
