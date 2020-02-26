@@ -101,6 +101,89 @@ def find_all_combos(
     return all_combos
 
 
+def opt_conf(conformer):
+        """
+        A helper function to optimize the geometry of a conformer.
+        Only for use within this parent function
+        """
+        #conformer = conformers[i]
+        print(conformer)
+        if not isinstance(conformer, TS):
+            reference_mol = conformer.rmg_molecule.copy(deep=True)
+            reference_mol = reference_mol.to_single_bonds()
+
+        calculator = conformer.ase_molecule.get_calculator()
+
+        labels = []
+        for bond in conformer.get_bonds():
+            labels.append(bond.atom_indices)
+    
+        if isinstance(conformer, TS):
+            label = conformer.reaction_label
+            ind1 = conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
+            ind2 = conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
+            labels.append([ind1, ind2])
+            type = 'ts'
+        else:
+            label = conformer.smiles
+            type = 'species'
+
+        if isinstance(calculator, ase.calculators.calculator.FileIOCalculator):
+            if calculator.directory:
+                directory = calculator.directory 
+            else: 
+                directory = 'conformer_logs'
+            calculator.label = "{}_{}".format(conformer.smiles, conformer.index)
+            calculator.directory = os.path.join(directory, label,'{}_{}'.format(conformer.smiles, conformer.index))
+            if not os.path.exists(calculator.directory):
+                try:
+                    os.makedirs(calculator.directory)
+                except OSError:
+                    logging.info("An error occured when creating {}".format(calculator.directory))
+
+            calculator.atoms = conformer.ase_molecule
+
+        conformer.ase_molecule.set_calculator(calculator)
+        opt = ase.optimize.BFGS(conformer.ase_molecule, logfile=None)
+
+        if type == 'species':
+            if isinstance(conformer.index,int):
+                c = ase.constraints.FixBondLengths(labels)
+                conformer.ase_molecule.set_constraint(c)
+            try:
+                opt.run(steps=1e6)
+            except RuntimeError:
+                logging.info("Optimization failed...we will use the unconverged geometry")
+                pass
+            if str(conformer.index) == 'ref':
+                conformer.update_coords_from("ase")
+                try:
+                    rmg_mol = rmgpy.molecule.Molecule()
+                    rmg_mol.from_xyz(
+                        conformer.ase_molecule.arrays["numbers"],
+                        conformer.ase_molecule.arrays["positions"]
+                    )
+                    if not rmg_mol.is_isomorphic(reference_mol):
+                        logging.info("{}_{} is not isomorphic with reference mol".format(conformer,str(conformer.index)))
+                        return False
+                except rmgpy.exceptions.AtomTypeError:
+                    logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
+                    return False
+        
+        if type == 'ts':
+            c = ase.constraints.FixBondLengths(labels)
+            conformer.ase_molecule.set_constraint(c)
+            try:
+                opt.run(fmax=0.20, steps=1e6)
+            except RuntimeError:
+                logging.info("Optimization failed...we will use the unconverged geometry")
+                pass
+        conf_copy = conformer.copy()
+        conformer.update_coords_from("ase")  
+        energy = conformer.ase_molecule.get_potential_energy()
+        conformer.energy = energy
+        
+        return conformer
 def systematic_search(conformer,
                       delta=float(120),
                       energy_cutoff = 10.0, #kcal/mol
@@ -147,100 +230,7 @@ def systematic_search(conformer,
     if not isinstance(conformer, TS):
         reference_mol = conformer.rmg_molecule.copy(deep=True)
         reference_mol = reference_mol.to_single_bonds()
-    manager = multiprocessing.Manager()
-    return_dict = manager.dict()
-    pool = multiprocessing.Pool()
-
-    def opt_conf(i, rmsd_cutoff):
-        """
-        A helper function to optimize the geometry of a conformer.
-        Only for use within this parent function
-        """
-        conformer = conformers[i]
-
-        calculator = conformer.ase_molecule.get_calculator()
-
-        labels = []
-        for bond in conformer.get_bonds():
-            labels.append(bond.atom_indices)
-    
-        if isinstance(conformer, TS):
-            label = conformer.reaction_label
-            ind1 = conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
-            ind2 = conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
-            labels.append([ind1, ind2])
-            type = 'ts'
-        else:
-            label = conformer.smiles
-            type = 'species'
-
-        if isinstance(calc, ase.calculators.calculator.FileIOCalculator):
-            if calculator.directory:
-                directory = calculator.directory 
-            else: 
-                directory = 'conformer_logs'
-            calculator.label = "{}_{}".format(conformer.smiles, i)
-            calculator.directory = os.path.join(directory, label,'{}_{}'.format(conformer.smiles, i))
-            if not os.path.exists(calculator.directory):
-                try:
-                    os.makedirs(calculator.directory)
-                except OSError:
-                    logging.info("An error occured when creating {}".format(calculator.directory))
-
-            calculator.atoms = conformer.ase_molecule
-
-        conformer.ase_molecule.set_calculator(calculator)
-        opt = ase.optimize.BFGS(conformer.ase_molecule, logfile=None)
-
-        if type == 'species':
-            if isinstance(i,int):
-                c = ase.constraints.FixBondLengths(labels)
-                conformer.ase_molecule.set_constraint(c)
-            try:
-                opt.run(steps=1e6)
-            except RuntimeError:
-                logging.info("Optimization failed...we will use the unconverged geometry")
-                pass
-            if str(i) == 'ref':
-                conformer.update_coords_from("ase")
-                try:
-                    rmg_mol = rmgpy.molecule.Molecule()
-                    rmg_mol.from_xyz(
-                        conformer.ase_molecule.arrays["numbers"],
-                        conformer.ase_molecule.arrays["positions"]
-                    )
-                    if not rmg_mol.is_isomorphic(reference_mol):
-                        logging.info("{}_{} is not isomorphic with reference mol".format(conformer,str(i)))
-                        return False
-                except rmgpy.exceptions.AtomTypeError:
-                    logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
-                    return False
-        
-        if type == 'ts':
-            c = ase.constraints.FixBondLengths(labels)
-            conformer.ase_molecule.set_constraint(c)
-            try:
-                opt.run(fmax=0.20, steps=1e6)
-            except RuntimeError:
-                logging.info("Optimization failed...we will use the unconverged geometry")
-                pass
-
-        conformer.update_coords_from("ase")  
-        energy = get_energy(conformer)
-        conformer.energy = energy
-        if len(return_dict)>0:
-            conformer_copy = conformer.copy()
-            for index,post in return_dict.items():
-                conf_copy = conformer.copy()
-                conf_copy.ase_molecule.positions = post
-                conf_copy.update_coords_from("ase")
-                rmsd = rdkit.Chem.rdMolAlign.GetBestRMS(conformer_copy.rdkit_molecule,conf_copy.rdkit_molecule)
-                if rmsd <= rmsd_cutoff:
-                    return True
-        if str(i) != 'ref':
-            return_dict[i] = conformer.ase_molecule.get_positions()
-        return True
-
+   
     #if not isinstance(conformer,TS):
     #    calc = conformer.ase_molecule.get_calculator()
     #    reference_conformer = conformer.copy()
@@ -306,43 +296,19 @@ def systematic_search(conformer,
   
         conformers[index] = copy_conf
 
-
-    processes = []
-    for i, conf in list(conformers.items()):
-        p = multiprocessing.Process(target=opt_conf, args=(i, rmsd_cutoff))
-        processes.append(p)
-
-    active_processes = []
-    for process in processes:
-        if len(active_processes) < multiprocessing.cpu_count():
-            process.start()
-            active_processes.append(process)
-            continue
-
-        else:
-            one_done = False
-            while not one_done:
-                for i, p in enumerate(active_processes):
-                    if not p.is_alive():
-                        one_done = True
-                        break
-
-            process.start()
-            active_processes[i] = process
-    complete = np.zeros_like(active_processes, dtype=bool)
-    while not np.all(complete):
-        for i, p in enumerate(active_processes):
-            if not p.is_alive():
-                complete[i] = True
+    num_threads = multiprocessing.cpu_count() - 1 or 1
+    pool = multiprocessing.Pool(processes=num_threads)
+    to_calculate_list = []
+    for i, conformer in list(conformers.items()):
+        to_calculate_list.append(conformer)
+    print(to_calculate_list)
+    results = pool.map(opt_conf,tuple(to_calculate_list))
+    pool.close()
+    pool.join()
 
     energies = []
-    for positions in list(return_dict.values()):
-        conf = conformer.copy()
-        conf.ase_molecule.positions = positions
-        conf.ase_molecule.set_calculator(calc)
-        energy = conf.ase_molecule.get_potential_energy()
-        conf.update_coords_from("ase")
-        energies.append((conf,energy))
+    for conformer in results:
+        energies.append((conformer,conformer.ase_molecule.get_potential_energy()))
 
     df = pd.DataFrame(energies,columns=["conformer","energy"])
     df = df[df.energy < df.energy.min() + (energy_cutoff * ase.units.kcal / ase.units.mol /
