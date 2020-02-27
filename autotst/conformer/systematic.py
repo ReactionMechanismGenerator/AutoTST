@@ -105,9 +105,7 @@ def opt_conf(conformer):
         """
         A helper function to optimize the geometry of a conformer.
         Only for use within this parent function
-        """
-        #conformer = conformers[i]
-        print(conformer)
+        """   
         if not isinstance(conformer, TS):
             reference_mol = conformer.rmg_molecule.copy(deep=True)
             reference_mol = reference_mol.to_single_bonds()
@@ -198,11 +196,13 @@ def systematic_search(conformer,
     Variables:
     - conformer (`Conformer` or `TS`): a `Conformer` or `TS` object of interest
     - delta (int or float): a number between 0 and 180 or how many conformers to generate per dihedral
+    - energy_cutoff (str of float): energy in kcal/mol 
+    - rmsd_cutoff (str or float): root mean square deviation of inter atomic positions 
     - cistrans (bool): indication of if one wants to consider cistrans bonds
     - chiral_centers (bool): indication of if one wants to consider chiral centers bonds
 
     Returns:
-    - confs (list): a list of unique `Conformer` objects within 1 kcal/mol of the lowest energy conformer determined
+    - confs (list): a list of unique `Conformer` objects within 10 kcal/mol of the lowest energy conformer determined
     """
     
     rmsd_cutoff_options = {
@@ -301,14 +301,13 @@ def systematic_search(conformer,
     to_calculate_list = []
     for i, conformer in list(conformers.items()):
         to_calculate_list.append(conformer)
-    print(to_calculate_list)
     results = pool.map(opt_conf,tuple(to_calculate_list))
     pool.close()
     pool.join()
 
     energies = []
     for conformer in results:
-        energies.append((conformer,conformer.ase_molecule.get_potential_energy()))
+        energies.append((conformer,conformer.energy))
 
     df = pd.DataFrame(energies,columns=["conformer","energy"])
     df = df[df.energy < df.energy.min() + (energy_cutoff * ase.units.kcal / ase.units.mol /
