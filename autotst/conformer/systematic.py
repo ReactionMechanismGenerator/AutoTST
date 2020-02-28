@@ -101,11 +101,12 @@ def find_all_combos(
     return all_combos
 
 
-def opt_conf(conformer):
+def opt_conf(i):
         """
         A helper function to optimize the geometry of a conformer.
-        Only for use within this parent function
+        param i: index of the conformer
         """   
+        conformer = conformers[i] #use the global object
         if not isinstance(conformer, TS):
             reference_mol = conformer.rmg_molecule.copy(deep=True)
             reference_mol = reference_mol.to_single_bonds()
@@ -176,12 +177,11 @@ def opt_conf(conformer):
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
                 pass
-        conf_copy = conformer.copy()
+       
         conformer.update_coords_from("ase")  
         energy = conformer.ase_molecule.get_potential_energy()
-        conformer.energy = energy
-        
-        return conformer
+        conformers[i] = conformer #update the conformer from old object
+        return energy #return energy
 def systematic_search(conformer,
                       delta=float(120),
                       energy_cutoff = 10.0, #kcal/mol
@@ -196,7 +196,7 @@ def systematic_search(conformer,
     Variables:
     - conformer (`Conformer` or `TS`): a `Conformer` or `TS` object of interest
     - delta (int or float): a number between 0 and 180 or how many conformers to generate per dihedral
-    - energy_cutoff (str of float): energy in kcal/mol 
+    - energy_cutoff (str or float): energy in kcal/mol 
     - rmsd_cutoff (str or float): root mean square deviation of inter atomic positions 
     - cistrans (bool): indication of if one wants to consider cistrans bonds
     - chiral_centers (bool): indication of if one wants to consider chiral centers bonds
@@ -298,16 +298,18 @@ def systematic_search(conformer,
 
     num_threads = multiprocessing.cpu_count() - 1 or 1
     pool = multiprocessing.Pool(processes=num_threads)
+    """
     to_calculate_list = []
     for i, conformer in list(conformers.items()):
         to_calculate_list.append(conformer)
-    results = pool.map(opt_conf,tuple(to_calculate_list))
+    """
+    results = pool.map(opt_conf,range(len(conformers)))
     pool.close()
     pool.join()
 
     energies = []
-    for conformer in results:
-        energies.append((conformer,conformer.energy))
+    for i,energy in enumerate(results):
+        energies.append((conformers[i],energy))
 
     df = pd.DataFrame(energies,columns=["conformer","energy"])
     df = df[df.energy < df.energy.min() + (energy_cutoff * ase.units.kcal / ase.units.mol /
