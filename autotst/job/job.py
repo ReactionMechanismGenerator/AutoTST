@@ -276,10 +276,6 @@ class Job():
         label = conformer.smiles + "_{}".format(conformer.index)
         file_path = os.path.join(ase_calculator.scratch, label)
 
-        os.environ["COMMAND"] = self.calculator.command  # only using gaussian for now
-        os.environ["FILE_PATH"] = file_path
-
-        
         attempted = False
         if os.path.exists(file_path + ".log"):
             attempted = True
@@ -288,6 +284,7 @@ class Job():
                     "It appears that this job has already been run, not running it a second time.")
 
         if restart or not attempted:
+            # Getting the number of processors needed for a child job
             copy_molecule = conformer.rmg_molecule.copy()
             copy_molecule.delete_hydrogens()
             number_of_atoms = len(copy_molecule.atoms)
@@ -306,21 +303,34 @@ class Job():
             else:
                 logging.info("Starting calculations for {}".format(conformer))
 
+            command = [
+                "sbatch", 
+                '--job-name="{}"'.format(label), 
+                '--output="{}.slurm.log"'.format(label), 
+                '--error="{}.slurm.log"'.format(label),
+                '-N 1',
+                '-n {}'.format(nproc),
+                '-t 24:00:00',
+                '--mem {}'.format(ase_calculator.settings["mem"])
+            ]
+            # Building on the remaining commands
+            if self.partition:
+                command.append('-p {}'.format(self.partition))
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t 24:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, self.exclude, nproc)
+                    command.append('--exclude={}'.format(self.exclude))
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t 24:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, exc, nproc)
-            else:
-                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {2} -t 24:00:00 --mem=120GB $AUTOTST/autotst/job/submit.sh""".format(
-                    label, self.partition, nproc)
+                    command.append('--exclude={}'.format(exc))
+            if self.account:
+                command.append('-A {}'.format(self.account))
+            
+            command.append('{0} "{1}.com" > "{1}.log"'.format(self.calculator.command, file_path))
+            
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
                 self.submit(command)
