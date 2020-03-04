@@ -47,11 +47,19 @@ class JobTest(unittest.TestCase):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
         self.job = Job(
-            reaction = self.reaction,
-            calculator = self.calculator,
-            partition = "test",
-            username="test"
+            reaction=self.reaction,
+            calculator=self.calculator,
+            partition="test",
+            username="test",
+            exclude="test",
+            account="test"
         )
+
+    def test_setup(self):
+        self.assertEqual(self.job.username, "test")
+        self.assertEqual(self.job.exclude, "test")
+        self.assertEqual(self.job.partition, "test")
+        self.assertEqual(self.job.account, "test")
 
     def test_read_log(self):
 
