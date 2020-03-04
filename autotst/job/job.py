@@ -575,6 +575,32 @@ class Job():
         """
         assert transitionstate, "Please provide a transitionstate to submit a job"
         self.calculator.conformer = transitionstate
+        # setting the optimization type
+        if opt_type.lower() == "shell":
+            ase_calculator = self.calculator.get_shell_calc()
+        elif opt_type.lower() == "center":
+            ase_calculator = self.calculator.get_center_calc()
+        elif opt_type.lower() == "overall":
+            ase_calculator = self.calculator.get_overall_calc()
+        elif opt_type.lower() == "irc":
+            ase_calculator = self.calculator.get_irc_calc()
+
+        if opt_type.lower() != "irc":
+            copy_molecule = transitionstate.rmg_molecule.copy()
+            copy_molecule.delete_hydrogens()
+            number_of_atoms = len(copy_molecule.atoms)
+            if number_of_atoms >= 4:
+                nproc = 2
+            elif number_of_atoms >= 7:
+                nproc = 4
+            elif number_of_atoms >= 9:
+                nproc = 6
+            else:
+                nproc = 8
+        else:
+            # This is an IRC 
+            nproc = "14"
+        time = "24:00:00"
         if opt_type.lower() == "shell":
             ase_calculator = self.calculator.get_shell_calc()
             time = "24:00:00"
