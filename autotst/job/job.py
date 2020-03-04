@@ -273,6 +273,8 @@ class Job():
         ase_calculator = self.calculator.get_conformer_calc()
         label = conformer.smiles + "_{}".format(conformer.index)
         file_path = os.path.join(ase_calculator.scratch, label)
+        # for testing
+        os.environ["FILE_PATH"] = file_path
 
         attempted = False
         if os.path.exists(file_path + ".log"):
@@ -311,7 +313,7 @@ class Job():
                 '-N 1',
                 '-n {}'.format(nproc),
                 '-t 24:00:00',
-                '--mem {}'.format(ase_calculator.settings["mem"])
+                '--mem {}'.format(self.calculator.settings["mem"])
             ]
             # Building on the remaining commands
             if self.partition:
@@ -608,6 +610,8 @@ class Job():
         label = ase_calculator.label
         scratch = ase_calculator.scratch
         file_path = os.path.join(scratch, label)
+        # for testing
+        os.environ["FILE_PATH"] = file_path
 
         attempted = False
         if os.path.exists(file_path + ".log"):
@@ -623,7 +627,7 @@ class Job():
                 '-N 1',
                 '-n {}'.format(nproc),
                 '-t 24:00:00',
-                '--mem {}'.format(ase_calculator.settings["mem"])
+                '--mem {}'.format(self.calculator.settings["mem"])
             ]
             # Building on the remaining commands
             if self.partition:
