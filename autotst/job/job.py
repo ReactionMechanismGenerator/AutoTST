@@ -600,42 +600,12 @@ class Job():
         else:
             # This is an IRC 
             nproc = "14"
-        time = "24:00:00"
-        if opt_type.lower() == "shell":
-            ase_calculator = self.calculator.get_shell_calc()
-            time = "24:00:00"
-        elif opt_type.lower() == "center":
-            ase_calculator = self.calculator.get_center_calc()
-            time = "24:00:00"
-        elif opt_type.lower() == "overall":
-            ase_calculator = self.calculator.get_overall_calc()
-            time = "24:00:00"
-        elif opt_type.lower() == "irc":
-            ase_calculator = self.calculator.get_irc_calc()
-            time = "24:00:00"
-            nproc = "14"
-
-        if opt_type.lower() != "irc":
-            copy_molecule = transitionstate.rmg_molecule.copy()
-            copy_molecule.delete_hydrogens()
-            number_of_atoms = len(copy_molecule.atoms)
-            if number_of_atoms >= 4:
-                nproc = 2
-            elif number_of_atoms >= 7:
-                nproc = 4
-            elif number_of_atoms >= 9:
-                nproc = 6
-            else:
-                nproc = 8
-
+            
         self.write_input(transitionstate, ase_calculator)
 
         label = ase_calculator.label
         scratch = ase_calculator.scratch
         file_path = os.path.join(scratch, label)
-
-        os.environ["COMMAND"] = "g16"  # only using gaussian for now
-        os.environ["FILE_PATH"] = file_path
 
         attempted = False
         if os.path.exists(file_path + ".log"):
@@ -643,21 +613,34 @@ class Job():
             logging.info("It appears that {} has already been attempted...".format(label))
 
         if (not attempted) or restart:
+            command = [
+                "sbatch", 
+                '--job-name="{}"'.format(label), 
+                '--output="{}.slurm.log"'.format(label), 
+                '--error="{}.slurm.log"'.format(label),
+                '-N 1',
+                '-n {}'.format(nproc),
+                '-t 24:00:00',
+                '--mem {}'.format(ase_calculator.settings["mem"])
+            ]
+            # Building on the remaining commands
+            if self.partition:
+                command.append('-p {}'.format(self.partition))
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {4} -t {3} --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, self.exclude, time, nproc)
+                    command.append('--exclude={}'.format(self.exclude))
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command = """sbatch --exclude={2} --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {4} -t {3} --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
-                        label, self.partition, exc, time, nproc)
-            else:
-                command = """sbatch --job-name="{0}" --output="{0}.slurm.log" --error="{0}.slurm.log" -p {1} -N 1 -n {3} -t {2} --mem=15GB $AUTOTST/autotst/job/submit.sh""".format(
-                    label, self.partition, time, nproc)
+                    command.append('--exclude={}'.format(exc))
+            if self.account:
+                command.append('-A {}'.format(self.account))
+            
+            command.append('{0} "{1}.com" > "{1}.log"'.format(self.calculator.command, file_path))
+            
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
                 self.submit(command)
