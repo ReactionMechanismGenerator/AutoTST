@@ -271,8 +271,6 @@ class Job():
 
         self.calculator.conformer = conformer
         ase_calculator = self.calculator.get_conformer_calc()
-        self.write_input(conformer, ase_calculator)
-
         label = conformer.smiles + "_{}".format(conformer.index)
         file_path = os.path.join(ase_calculator.scratch, label)
 
@@ -296,6 +294,8 @@ class Job():
                 nproc = 6
             else:
                 nproc = 8
+            ase_calculator.nprocshared = nproc
+            self.write_input(conformer, ase_calculator)
             if restart:
                 logging.info(
                     "Restarting calculations for {}.".format(conformer)
@@ -600,7 +600,9 @@ class Job():
         else:
             # This is an IRC 
             nproc = "14"
-            
+
+        ase_calculator.nprocshared = nproc
+
         self.write_input(transitionstate, ase_calculator)
 
         label = ase_calculator.label
