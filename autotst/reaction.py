@@ -308,8 +308,16 @@ class Reaction():
             # Generating lists of lists. Main list is the reactans or products
             # Secondary list is composed of the resonance structures for that species
             r, p = self.label.split("_") 
-            rmg_reactants = [rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures() for smile in r.split("+")]
-            rmg_products = [rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures() for smile in p.split("+")]
+
+            smiles_conversions = {
+                "[CH]":"[CH...]"
+            }
+            def get_rmg_mol(smile):
+                if smile.upper() in list(smiles_conversions.keys()):
+                    smile = smiles_conversions[smile.upper()]
+                return rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures()
+            rmg_reactants = [get_rmg_mol(smile) for smile in r.split("+")]
+            rmg_products = [get_rmg_mol(smile) for smile in p.split("+")]
 
             combos_to_try = list(itertools.product(
                 list(itertools.product(*rmg_reactants)),
