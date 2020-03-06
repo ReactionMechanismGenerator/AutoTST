@@ -306,32 +306,32 @@ class Job():
                 logging.info("Starting calculations for {}".format(conformer))
 
             command = [
-                "sbatch", 
-                '--job-name="{}"'.format(label), 
-                '--output="{}.slurm.log"'.format(label), 
-                '--error="{}.slurm.log"'.format(label),
-                '-N 1',
-                '-n {}'.format(nproc),
-                '-t 24:00:00',
-                '--mem {}'.format(self.calculator.settings["mem"])
+                """sbatch""", 
+                """--job-name="{}" """.format(label), 
+                """--output="{}.slurm.log" """.format(label), 
+                """--error="{}.slurm.log" """.format(label),
+                """-N 1""",
+                """-n {}""".format(nproc),
+                """-t 24:00:00""",
+                """--mem {}""".format(self.calculator.settings["mem"])
             ]
             # Building on the remaining commands
             if self.partition:
-                command.append('-p {}'.format(self.partition))
+                command.append("""-p {}""".format(self.partition))
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command.append('--exclude={}'.format(self.exclude))
+                    command.append("""--exclude={}""".format(self.exclude))
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command.append('--exclude={}'.format(exc))
+                    command.append("""--exclude={}""".format(exc))
             if self.account:
-                command.append('-A {}'.format(self.account))
+                command.append("""-A {}""".format(self.account))
             
-            command.append('{0} "{1}.com" > "{1}.log"'.format(self.calculator.command, file_path))
+            command.append("""--wrap="{0} '{1}.com' > '{1}.log'" """.format(self.calculator.command, file_path))
             
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
@@ -620,32 +620,32 @@ class Job():
 
         if (not attempted) or restart:
             command = [
-                "sbatch", 
-                '--job-name="{}"'.format(label), 
-                '--output="{}.slurm.log"'.format(label), 
-                '--error="{}.slurm.log"'.format(label),
-                '-N 1',
-                '-n {}'.format(nproc),
-                '-t 24:00:00',
-                '--mem {}'.format(self.calculator.settings["mem"])
+                """sbatch""", 
+                """--job-name="{}" """.format(label), 
+                """--output="{}.slurm.log" """.format(label), 
+                """--error="{}.slurm.log" """.format(label),
+                """-N 1""",
+                """-n {}""".format(nproc),
+                """-t 24:00:00""",
+                """--mem {}""".format(self.calculator.settings["mem"])
             ]
             # Building on the remaining commands
             if self.partition:
-                command.append('-p {}'.format(self.partition))
+                command.append("""-p {}""".format(self.partition))
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command.append('--exclude={}'.format(self.exclude))
+                    command.append("""--exclude={}""".format(self.exclude))
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command.append('--exclude={}'.format(exc))
+                    command.append("""--exclude={}""".format(exc))
             if self.account:
-                command.append('-A {}'.format(self.account))
+                command.append("""-A {}""".format(self.account))
             
-            command.append('{0} "{1}.com" > "{1}.log"'.format(self.calculator.command, file_path))
+            command.append("""--wrap="{0} '{1}.com' > '{1}.log'" """.format(self.calculator.command, file_path))
             
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
@@ -889,32 +889,32 @@ class Job():
                 logging.info("Starting calculations for {}".format(conformer))
 
             command = [
-                "sbatch", 
-                '--job-name="{}"'.format(label), 
-                '--output="{}.slurm.log"'.format(label), 
-                '--error="{}.slurm.log"'.format(label),
-                '-N 1',
-                '-n {}'.format(nproc),
-                '-t 24:00:00',
-                '--mem {}'.format(self.calculator.settings["mem"])
+                """sbatch""", 
+                """--job-name="{}" """.format(label), 
+                """--output="{}.slurm.log" """.format(label), 
+                """--error="{}.slurm.log" """.format(label),
+                """-N 1""",
+                """-n {}""".format(nproc),
+                """-t 24:00:00""",
+                """--mem {}""".format(self.calculator.settings["mem"])
             ]
             # Building on the remaining commands
             if self.partition:
-                command.append('-p {}'.format(self.partition))
+                command.append("""-p {}""".format(self.partition))
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command.append('--exclude={}'.format(self.exclude))
+                    command.append("""--exclude={}""".format(self.exclude))
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command.append('--exclude={}'.format(exc))
+                    command.append("""--exclude={}""".format(exc))
             if self.account:
-                command.append('-A {}'.format(self.account))
+                command.append("""-A {}""".format(self.account))
             
-            command.append('{0} "{1}.com" > "{1}.log"'.format(self.calculator.command, file_path))
+            command.append("""--wrap="{0} '{1}.com' > '{1}.log'" """.format(self.calculator.command, file_path))
             
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
