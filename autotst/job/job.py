@@ -648,7 +648,9 @@ class Job():
         at a final geometry. Returns True if we arrived at a final geometry, returns false
         if there is an error along the way.
         """
-
+        if isinstance(transitionstate, int):
+            transitionstate = conformer_list[transitionstate]
+            
         ts_identifier = "{}_{}_{}".format(
             transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
 
@@ -725,12 +727,20 @@ class Job():
                 logging.info("This reaction has already been run and has a successful validated transition state! :)")
                 return True
 
-
-
         if self.conformer_calculator:
             self.reaction.generate_conformers(ase_calculator=self.conformer_calculator)
 
-        currently_running = []
+        global conformer_list
+        conformer_list = []
+        for direction, conformers in self.reaction.ts.items():
+            conformer_list += conformers
+
+        num_threads = multiprocessing.cpu_count() - 1 or 1
+        pool = multiprocessing.Pool(processes=num_threads)
+        global_results = pool.map(self.calculate_transitionstate,range(len(conformer_list)))
+        pool.close()
+        pool.join()
+        """currently_running = []
         processes = {}
 
         for direction, transitionstates in list(self.reaction.ts.items()):
@@ -758,10 +768,11 @@ class Job():
                     continue
                 if not process.is_alive():
                     currently_running.remove(name)
-            time.sleep(90) 
+            time.sleep(90) """
 
         energies = []
-        for label, result in global_results.items():
+        for ts, result in zip(conformer_list, global_results):
+            label = ts.label
             if not result:
                 logging.info("Calculations for {} FAILED".format(label))
                 continue
