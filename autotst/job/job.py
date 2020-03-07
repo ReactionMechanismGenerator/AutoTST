@@ -332,10 +332,12 @@ class Job():
                 command.append("""-A {}""".format(self.account))
             
             command.append("""--wrap="{0} '{1}.com' > '{1}.log'" """.format(self.calculator.command, file_path))
-            
+            exe = ""
+            for c in command:
+                exe += c + " " #combining the command into a single string, this makes submit go faster.
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
-                self.submit(command)
+                self.submit(exe)
             else:
                 # it's currently in the queue, so not actually submitting it
                 return label
@@ -646,10 +648,12 @@ class Job():
                 command.append("""-A {}""".format(self.account))
             
             command.append("""--wrap="{0} '{1}.com' > '{1}.log'" """.format(self.calculator.command, file_path))
-            
+            exe = ""
+            for c in command:
+                exe += c + " " #combining the command into a single string, this makes submit go faster.
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
-                self.submit(command)
+                self.submit(exe)
             else:
                 # it's currently in the queue, so not actually submitting it
                 return label
@@ -915,10 +919,12 @@ class Job():
                 command.append("""-A {}""".format(self.account))
             
             command.append("""--wrap="{0} '{1}.com' > '{1}.log'" """.format(self.calculator.command, file_path))
-            
+            exe = ""
+            for c in command:
+                exe += c + " " #combining the command into a single string, this makes submit go faster.
             if self.check_complete(label): #checking to see if the job is already in the queue
                 # if it's not, then we're gona submit it
-                self.submit(command)
+                self.submit(exe)
             else:
                 # it's currently in the queue, so not actually submitting it
                 return label
