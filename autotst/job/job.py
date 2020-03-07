@@ -331,6 +331,10 @@ class Job():
         and the optimization is rerun using the geometry from the last step of the Tight convergence optimization.
         Returns True if Gaussian log is complete and converged, and False if incomplete of unconverged.
         """
+        if isinstance(conformer, int):
+            conformer = conformer_list[conformer]
+
+        assert isinstance(conformer, Conformer), "A conformer object was not provided..."
 
         self.calculator.conformer = conformer # this might be dangerous if running several of these at once?
         self.calculator.convergence = "Tight"
@@ -460,6 +464,18 @@ class Job():
         if self.conformer_calculator:
             species.generate_conformers(ase_calculator=self.conformer_calculator)
 
+        global conformer_list 
+        conformer_list = []
+        for smiles, conformers in species.conformers.items():
+            conformer_list += conformers
+
+        num_threads = multiprocessing.cpu_count() - 1 or 1
+        pool = multiprocessing.Pool(processes=num_threads)
+        r = pool.map(self.calculate_conformer,range(len(conformer_list)))
+        pool.close()
+        pool.join()
+        """
+
         currently_running = []
         processes = {}
         for smiles, conformers in list(species.conformers.items()):
@@ -492,35 +508,37 @@ class Job():
                 if not process.is_alive():
                     currently_running.remove(name)
             time.sleep(90)
+        """
 
         results = []
-        for smiles, conformers in list(species.conformers.items()):
-            for conformer in conformers:
-                scratch_dir = os.path.join(
-                    self.calculator.directory,
-                    "species",
-                    conformer.smiles,
-                    "conformers"
-                )
-                f = "{}_{}.log".format(conformer.smiles, conformer.index)
-                path = os.path.join(scratch_dir, f)
-                if not os.path.exists(path):
+        for result, conformer in zip(r, conformer_list):
+            if not result:
+                logging.info(f"{conformer.smiles} {conformer.index} didn't successfully optimize")
+            scratch_dir = os.path.join(
+                self.calculator.directory,
+                "species",
+                conformer.smiles,
+                "conformers"
+            )
+            f = "{}_{}.log".format(conformer.smiles, conformer.index)
+            path = os.path.join(scratch_dir, f)
+            if not os.path.exists(path):
+                logging.info(
+                    "It seems that {} was never run...".format(f))
+                continue
+            try:
+                parser = cclib.io.ccread(path)
+                if parser is None:
                     logging.info(
-                        "It seems that {} was never run...".format(f))
+                        "Something went wrong when reading in results for {} using cclib...".format(f))
                     continue
-                try:
-                    parser = cclib.io.ccread(path)
-                    if parser is None:
-                        logging.info(
-                            "Something went wrong when reading in results for {} using cclib...".format(f))
-                        continue
-                    energy = parser.scfenergies[-1]
-                except:
-                    logging.info(
-                        "The parser does not have an scf energies attribute, we are not considering {}".format(f))
-                    energy = 1e5
+                energy = parser.scfenergies[-1]
+            except:
+                logging.info(
+                    "The parser does not have an scf energies attribute, we are not considering {}".format(f))
+                energy = 1e5
 
-                results.append([energy, conformer, f])
+            results.append([energy, conformer, f])
 
         results = pd.DataFrame(
             results, columns=["energy", "conformer", "file"]).sort_values("energy").reset_index()
