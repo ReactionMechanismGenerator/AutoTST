@@ -47,11 +47,33 @@ class JobTest(unittest.TestCase):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
         self.job = Job(
-            reaction = self.reaction,
-            calculator = self.calculator,
-            partition = "test",
-            username="test"
+            reaction=self.reaction,
+            calculator=self.calculator,
+            partition="test",
+            username="test",
+            exclude="test",
+            account="test"
         )
+        self.job2 = Job(
+            reaction=self.reaction,
+            calculator=self.calculator,
+            partition="test",
+            username="test",
+            exclude="test",
+            account=["test"]
+        )
+
+    def test_setup(self):
+        self.assertEqual(self.job.username, "test")
+        self.assertEqual(self.job.exclude, "test")
+        self.assertEqual(self.job.partition, "test")
+        self.assertEqual(self.job.account, "test")
+        self.assertEqual(self.job.label, self.reaction.label)
+
+    def test_setup2(self):
+        job = Job(directory=".")
+        self.assertEqual(job.directory, ".")
+        self.assertEqual(job.scratch, ".")
 
     def test_read_log(self):
 
@@ -93,6 +115,12 @@ class JobTest(unittest.TestCase):
         label = self.job.submit_conformer(conformer)
         self.assertEqual(label, "{}_{}".format(conformer.smiles , conformer.index))
 
+    def test_submit_conformer2(self):
+        self.reaction.generate_reactants_and_products()
+        conformer = list(self.reaction.reactants[0].conformers.values())[0][0]
+        label = self.job2.submit_conformer(conformer)
+        self.assertEqual(label, "{}_{}".format(conformer.smiles , conformer.index))
+
     def test_calculate_conformer(self):
         conformer = Conformer(smiles='CC',index=0)
         result = self.job.calculate_conformer(conformer=conformer)
@@ -115,6 +143,16 @@ class JobTest(unittest.TestCase):
         ts.get_molecules()
         for opt_type in ["shell", "center", "overall"]:
             label = self.job.submit_transitionstate(ts, opt_type=opt_type)
+            if opt_type == "overall":
+                self.assertEqual(label, "{}_{}_{}".format(ts.reaction_label,ts.direction, ts.index))
+            else:
+                self.assertEqual(label, "{}_{}_{}_{}".format(ts.reaction_label,ts.direction, opt_type, ts.index))
+
+    def test_submit_transitionstate2(self):
+        ts = self.reaction.ts["forward"][0]
+        ts.get_molecules()
+        for opt_type in ["shell", "center", "overall"]:
+            label = self.job2.submit_transitionstate(ts, opt_type=opt_type)
             if opt_type == "overall":
                 self.assertEqual(label, "{}_{}_{}".format(ts.reaction_label,ts.direction, ts.index))
             else:
