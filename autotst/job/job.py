@@ -112,10 +112,6 @@ class Job():
         self.partition = partition
         self.username = username
 
-        manager = multiprocessing.Manager()
-        global global_results
-        global_results = manager.dict()
-
 
     def __repr__(self):
         return "< Job '{}'>".format(self.label)
@@ -695,10 +691,8 @@ class Job():
         got_one = self.validate_transitionstate(
                 transitionstate=transitionstate, vibrational_analysis=vibrational_analysis)
         if got_one:
-            global_results[ts_identifier] = True
             return True
         else:
-            global_results[ts_identifier] = False
             return False
 
     def calculate_reaction(self, vibrational_analysis=True, restart=False):
