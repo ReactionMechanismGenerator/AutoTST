@@ -39,6 +39,7 @@ from ..reaction import Reaction, TS
 from .base import *
 import rmgpy
 import rmgpy.molecule
+import rmgpy.data.base
 
 def update_all(reactions, family, method='', short_desc=''):
     """
@@ -67,10 +68,8 @@ def get_unknown_species(reactions, known_species):
 
     for i, reaction in enumerate(reactions):
         rmg_reaction = reaction.rmg_reaction
-        r1, r2 = rmg_reaction.reactants
-        p1, p2 = rmg_reaction.products
 
-        relavent_species = [r1, r2, p1, p2]
+        relavent_species = rmg_reaction.reactants + rmg_reaction.products
         relavent_labels = {}
 
         for rel_species in relavent_species:
@@ -99,7 +98,7 @@ def update_dictionary_entries(old_entries, need_to_add):
     list(set(need_to_add))
     for j, species in enumerate(need_to_add):
 
-        molecule = rmgpy.molecule.Molecle(smiles=species)
+        molecule = rmgpy.molecule.Molecule(smiles=species)
         adjlist = molecule.to_adjacency_list()
 
         multiplicity = None
@@ -160,7 +159,7 @@ def update_dictionary_entries(old_entries, need_to_add):
             rel_label = rel_label + '-' + str(new_ID)
 
         if not duplicate:
-            entry = Entry()
+            entry = rmgpy.data.base.Entry()
             entry.label = rel_label
             entry.item = group
             assert rel_label not in list(old_entries.keys())
@@ -202,21 +201,25 @@ def rote_load_dict(path):
 
     entries = {}
     for entry_str in entries_str:
-        label, adjlist = entry_str.split('\n', 1)
+        try:
+            label, adjlist = entry_str.split('\n', 1)
 
-        if re.search('(?<=multiplicity ).*', adjlist):
-            multiplicity = int(
-                re.search('(?<=multiplicity ).*', adjlist).group(0))
-            adjlist = 'multiplicity [{}]\n'.format(
-                multiplicity) + adjlist.split('\n', 1)[1]
+            if re.search('(?<=multiplicity ).*', adjlist):
+                multiplicity = int(
+                    re.search('(?<=multiplicity ).*', adjlist).group(0))
+                adjlist = 'multiplicity [{}]\n'.format(
+                    multiplicity) + adjlist.split('\n', 1)[1]
 
-        group = rmgpy.molecule.group.Group()
-        group.from_adjacency_list(adjlist)
+            group = rmgpy.molecule.group.Group()
+            group.from_adjacency_list(adjlist)
 
-        entry = Entry()
-        entry.item = group
-        entry.label = label
-        entries[label] = entry
+            entry = rmgpy.data.base.Entry()
+            entry.item = group
+            entry.label = label
+            entries[label] = entry
+        except ValueError: # This actally isn't an entry. This error happens sometimes
+            continue
+
 
     return entries
 
@@ -285,10 +288,8 @@ def update_known_reactions(
         distance_data = DistanceData(distances=Distances, method=method)
 
         rmg_reaction = reaction.rmg_reaction
-        r1, r2 = rmg_reaction.reactants
-        p1, p2 = rmg_reaction.products
 
-        relavent_species = [r1, r2, p1, p2]
+        relavent_species = rmg_reaction.reactants + rmg_reaction.products
         relavent_labels = {}
 
         for rel_species in relavent_species:
@@ -302,12 +303,19 @@ def update_known_reactions(
                 logging.warning(
                     '{} not found in species dictionary'.format(rel_species))
 
-        lr1 = found_species[r1]
-        lr2 = found_species[r2]
-        lp1 = found_species[p1]
-        lp2 = found_species[p2]
 
-        Label = '{} + {} <=> {} + {}'.format(lr1, lr2, lp1, lp2)
+        labeled_reactants = [found_species[reactant] for reactant in rmg_reaction.reactants]
+        labeled_products = [found_species[product] for product in rmg_reaction.products]
+        if len(labeled_reactants) == 2:
+            left_string = "{} + {}".format(labeled_reactants[0], labeled_reactants[1])
+        else:
+            left_string = "{}".format(labeled_reactants[0])
+        if len(labeled_products) == 2:
+            right_string = "{} + {}".format(labeled_products[0], labeled_products[1])
+        else:
+            right_string = "{}".format(labeled_products[0])
+
+        Label = '{} <=> {}'.format(left_string, right_string)
         #print Label
 
         # adding new entries to r_db, r_db will contain old and new reactions
@@ -383,10 +391,11 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
         reactions, list), 'Provide auto-TST reaction object[s]'
     assert len(reactions) > 0
 
-    if reaction_family == '':
-        reaction_family = 'H_Abstraction'
-        logging.warning(
-            'Defaulting to reaction family of {}'.format(reaction_family))
+    # Not a good assumption, @nateharms' opinion
+    #if reaction_family == '':
+    #    reaction_family = 'H_Abstraction'
+    #    logging.warning(
+    #        'Defaulting to reaction family of {}'.format(reaction_family))
 
     general_path = os.path.join(os.path.expandvars(
         '$AUTOTST'), 'database', reaction_family, 'TS_training')
@@ -475,9 +484,10 @@ def TS_Database_Update(families, path=None, auto_save=False):
             families.remove(family)
 
     logging.info("Loading RMG Database...")
-    rmg_database = RMGDatabase()
-    database_path = os.path.join(os.path.expandvars(
-        '$RMGpy'), "..", 'RMG-database', 'input')
+    import rmgpy
+    import rmgpy.data.rmg
+    rmg_database = rmgpy.data.rmg.RMGDatabase()
+    database_path = rmgpy.settings['database.directory']
 
     try:
         rmg_database.load(database_path,
@@ -601,8 +611,6 @@ class DatabaseUpdater:
         """
         all_entries = []
         self.top_nodes = self.database.groups.top
-        assert len(self.top_nodes) == 2, 'Only set to work for trees with two top nodes. It has: {}'.format(
-            len(self.top_nodes))
 
         for top_node in self.top_nodes:
             descendants = [top_node] + \
@@ -738,7 +746,7 @@ class DatabaseUpdater:
                 relavent_combinations.append(
                     self.group_ancestors[reactant_group])
             # will throw if reaction does not have 2 reactants
-            assert len(relavent_combinations) == 2
+            #assert len(relavent_combinations) == 2, We don't need this
 
             relavent_combinations = get_all_combinations(relavent_combinations)
             # rel_comb is just all combinations of reactant1 and its ancestors
@@ -756,7 +764,7 @@ class DatabaseUpdater:
                     if isinstance(group, str):
                         assert False, "Discrepancy between versions of RMG_Database and this one"
 
-                    self.group_cmments[group].add('{0!s}'.format(template))
+                    self.group_comments[group].add('{0!s}'.format(template))
 
         self.A = np.array(A)
         self.b = np.array(b)
@@ -878,6 +886,6 @@ class DatabaseUpdater:
         elif path is None:
             path = os.path.join(self.path, 'TS_groups.py')
 
-        self.database.saveTransitionStateGroups(path)
+        self.database.save_transition_state_groups(path)
         logging.info('Saved {} Database to: {}'.format(self.family, path))
         return
