@@ -285,9 +285,7 @@ class Job():
 
         if restart or not attempted:
             # Getting the number of processors needed for a child job
-            copy_molecule = conformer.rmg_molecule.copy()
-            copy_molecule.delete_hydrogens()
-            number_of_atoms = len(copy_molecule.atoms)
+            number_of_atoms = conformer.rmg_molecule.get_num_atoms() - conformer.rmg_molecule.get_num_atoms('H')
             if number_of_atoms >= 4:
                 nproc = 2
             elif number_of_atoms >= 7:
@@ -590,9 +588,7 @@ class Job():
             ase_calculator = self.calculator.get_irc_calc()
 
         if opt_type.lower() != "irc":
-            copy_molecule = transitionstate.rmg_molecule.copy()
-            copy_molecule.delete_hydrogens()
-            number_of_atoms = len(copy_molecule.atoms)
+            number_of_atoms = transitionstate.rmg_molecule.get_num_atoms() - transitionstate.rmg_molecule.get_num_atoms('H')
             if number_of_atoms >= 4:
                 nproc = 2
             elif number_of_atoms >= 7:
@@ -872,9 +868,7 @@ class Job():
                 "It appears that this job has already been run, not running it a second time.")
         if restart or not attempted:
             # Getting the number of processors needed for a child job
-            copy_molecule = conformer.rmg_molecule.copy()
-            copy_molecule.delete_hydrogens()
-            number_of_atoms = len(copy_molecule.atoms)
+            number_of_atoms = conformer.rmg_molecule.get_num_atoms() - conformer.rmg_molecule.get_num_atoms('H')
             if number_of_atoms >= 4:
                 nproc = 2
             elif number_of_atoms >= 7:
