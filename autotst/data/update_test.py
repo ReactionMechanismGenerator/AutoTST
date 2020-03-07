@@ -30,12 +30,14 @@
 
 import unittest, os, sys, shutil
 from ..reaction import Reaction
-#import .update as UpdateMethods
+from .update import get_unknown_species
+
 
 class TestUpdateMethods(unittest.TestCase):
 
     def setUp(self):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
+        self.reaction.get_labeled_reaction()
         self.family = "H_Abstraction"
         self.method = "m062x/cc-pVTZ"
         self.short_description = "test case"
@@ -43,6 +45,11 @@ class TestUpdateMethods(unittest.TestCase):
     def test_update(self):
         UpdateMethods.update_al(self.reaction, self.family, method=self.method, short_desc=self.short_description)
         self.assertTrue(True)"""
+
+    def test_get_unknown_species(self):
+        "A test designed to count the number of unknown species"
+        unknowns = get_unknown_species([self.reaction], [])
+        self.assertEqual(len(unknowns), 4)
 
         
 if __name__ == "__main__":
