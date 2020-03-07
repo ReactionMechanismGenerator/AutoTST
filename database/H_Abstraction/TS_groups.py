@@ -631,7 +631,7 @@ u"""
 entry(
     index = 2,
     label = "Y_rad_birad_trirad_quadrad",
-    group = "OR{Hrad, Orad, Crad}",
+    group = "OR{Hrad, Orad, Crad, F_rad, Cl_rad, Br_rad}",
     distances = DistanceData(distances={}),
 )
 
@@ -6254,6 +6254,64 @@ u"""
 )
 
 entry(
+    index = 700,
+    label = "F_rad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 F u1
+""",
+    distances = DistanceData(
+        distances = {'d12': -0.029813, 'd13': -0.121207, 'd23': -0.088644},
+        uncertainties = {'d12': 0.145455, 'd13': 0.140222, 'd23': 0.16189},
+    ),
+    shortDesc = u"""Copied from Orad, but added diff between F and O covalent radii to d13 and d23 (-0.02),
+                    Added 0.04 to d13 and d23 uncertainties
+""",
+    longDesc = u"""
+    """,
+)
+
+
+entry(
+    index = 701,
+    label = "Cl_rad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 Cl u1
+""",
+    distances = DistanceData(
+        distances = {'d12': -0.029813, 'd13': 0.158793, 'd23': 0.191356},
+        uncertainties = {'d12': 0.145455, 'd13': 0.200222, 'd23': 0.24189},
+    ),
+    shortDesc = u"""Copied from Orad, but added diff between Cl and O covalent radii to d13 and d23 (+0.26),
+                    Added 0.1 to d13 and d23 uncertainties
+""",
+    longDesc = u"""
+    """,
+)
+
+entry(
+    index = 702,
+    label = "Br_rad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 Br u1
+""",
+    distances = DistanceData(
+        distances = {'d12': -0.029813, 'd13': 0.308793, 'd23': 0.341356},
+        uncertainties = {'d12': 0.145455, 'd13': 0.300222, 'd23': 0.34189},
+    ),
+    shortDesc = u"""Copied from Orad, but added diff between Br and O covalent radii to d13 and d23 (+0.41),
+                    Added 0.2 to d13 and d23 uncertainties
+""",
+    longDesc = u"""
+    """,
+)
+
+entry(
     index = 15,
     label = "OjR",
     group = 
@@ -11803,6 +11861,9 @@ L1: X_H_or_Xrad_H_Xbirad_H_Xtrirad_H
             L4: OOH
 L1: Y_rad_birad_trirad_quadrad
     L2: Hrad
+    L2: F_rad
+    L2: Cl_rad
+    L2: Br_rad
     L2: Orad
         L3: OjR
             L4: OjH
