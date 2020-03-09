@@ -132,12 +132,8 @@ class StatMech():
         output = ['#!/usr/bin/env python',
                   '# -*- coding: utf-8 -*-', ]
 
-        external_symmetry = conformer.calculate_symmetry_number()
-
         output += ["",
                    f"linear = {conformer.rmg_molecule.is_linear()}",
-                   "",
-                   f"externalSymmetry = {external_symmetry}",
                    "",
                    f"spinMultiplicity = {conformer.rmg_molecule.multiplicity}",
                    "",
@@ -268,12 +264,8 @@ class StatMech():
 
         transitionstate.rmg_molecule.update_multiplicity()
 
-        external_symmetry = transitionstate.calculate_symmetry_number()
-
         output += ["",
                    "linear = False",
-                   "",
-                   f"externalSymmetry = {external_symmetry}",
                    "",
                    f"spinMultiplicity = {transitionstate.rmg_molecule.multiplicity}",
                    "",
