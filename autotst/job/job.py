@@ -38,6 +38,7 @@ FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 from ..calculator.gaussian import Gaussian
+from ..calculator.orca import Orca
 from ..calculator.vibrational_analysis import VibrationalAnalysis, percent_change
 from ..calculator.statmech import StatMech
 from ..reaction import Reaction, TS
@@ -57,7 +58,6 @@ class Job():
 
     def __init__(
             self,
-            reaction = None,
             calculator = None, # An AutoTST Gaussian calculator with proper directory settings
             conformer_calculator = None, # an ASE Calculator object to perform the conformer analysis with
             username = None, # the username of the
@@ -69,11 +69,7 @@ class Job():
             ):
 
         #assert isinstance(reaction, (Reaction, None)), "Please provide an AutoTST Reaction object"
-        self.reaction = reaction
-        if self.reaction:
-            self.label = self.reaction.label
-        else:
-            self.label = None
+        self.label = "<AutoTST Job>"
 
         assert isinstance(exclude, (type(None), str, list)), "Please provide a string or list of string descriptions of the nodes you wish to exclude"
         self.exclude = exclude
@@ -111,16 +107,79 @@ class Job():
         if self.conformer_calculator:
             self.conformer_calculator.directory = self.scratch
             
-        self.partition = partition
-        self.username = username
+        partitions = {}
+        if isinstance(partition,str):
+            partition = [partition]
 
-        manager = multiprocessing.Manager()
-        global global_results
-        global_results = manager.dict()
+        for p in list(partition):
+            time = self.get_partition_time(p)
+            partitions[p] = time
+        self.partition = partitions
+
+        self.username = username
 
 
     def __repr__(self):
-        return f"< Job '{self.label}'>"
+        return self.label
+
+    def get_partition_time(self,partition):
+        command = f"sinfo -p {partition}"
+        try:
+            with subprocess.Popen(command, shell=True, stdout=subprocess.PIPE) as popen:
+                output = popen.communicate()[0]
+            time = output.decode().split("\n")[1].split()[2]
+        except:
+            logging.warning(f"Unable to determine time limit for {partition} partition")
+            logging.warning(f"Setting time limit to 24 hr for {partition} partition")
+            time = '24:00:00'
+        return time #could be infinite
+
+    def build_command(self, autotst_object, ase_calculator):
+
+        nproc = ase_calculator.nprocshared
+        self.write_input(autotst_object, ase_calculator)
+
+        label = ase_calculator.label
+        scratch = ase_calculator.scratch
+        file_path = os.path.join(scratch, label)
+        # for testing
+        os.environ["FILE_PATH"] = file_path
+
+        command = [
+            """sbatch""",
+            f"""--job-name="{label}" """,
+            f"""--output="{label}.slurm.log" """,
+            f"""--error="{label}.slurm.log" """,
+            """-N 1""",
+            f"""-n {nproc}""",
+            f"""-t {self.partition[partition]}""", 
+            f"""--mem {ase_calculator.parameters["mem"]}"""
+        ]
+        # Building on the remaining commands
+        if self.partition:
+            command.append(f"""-p {self.partition}""")
+        if self.exclude:
+            if isinstance(self.exclude, str):
+                command.append(f"""--exclude={self.exclude}""")
+            elif isinstance(self.exclude, list):
+                exc = ""
+                for e in self.exclude:
+                    exc += e
+                    exc += ","
+                exc = exc[:-1]
+                command.append(f"""--exclude={exc}""")
+        if self.account:
+            command.append(f"""-A {self.account}""")
+
+        command.append(
+            f"""--wrap="{self.calculator.command} '{label}.com' > '{label}.log'" """)
+        exe = ""
+        for c in command:
+            # combining the command into a single string, this makes submit go faster.
+            exe += c + " "
+
+        return command, label
+
 
     def read_log(self, file_path=None):
         """
@@ -144,36 +203,42 @@ class Job():
 
         return ase.Atoms(atoms)
 
-    def write_input(self, conformer, ase_calculator):
+    def write_input(self, conformer, calculator):
         """
         A helper method that will write an input file and move it to the correct scratch directory
         """
 
-        ase_calculator.write_input(conformer.ase_molecule)
-        try:
-            os.makedirs(ase_calculator.scratch)
-        except OSError:
-            pass
+        if isinstance(calculator, Orca):
+            label = calculator.write_sp_input()
+        if isinstance(calculator, ase.calculators.calculator.FileIOCalculator):
+            label = calculator.label
+            calculator.write_input(conformer.ase_molecule)
+            try:
+                os.makedirs(calculator.scratch)
+            except OSError:
+                pass
 
-        shutil.move(
-            ase_calculator.label + ".com",
-            os.path.join(
-                ase_calculator.scratch,
-                ase_calculator.label + ".com"
-            ))
+            shutil.move(
+                calculator.label + ".com",
+                os.path.join(
+                    calculator.scratch,
+                    acalculator.label + ".com"
+                ))
 
-        shutil.move(
-            ase_calculator.label + ".ase",
-            os.path.join(
-                ase_calculator.scratch,
-                ase_calculator.label + ".ase"
-            ))
+            shutil.move(
+                calculator.label + ".ase",
+                os.path.join(
+                    calculator.scratch,
+                    calculator.label + ".ase"
+                ))
+        
+        return label
 
     def check_complete(self, label):
         """
         A method to determine if a job is still running
         """
-        command = f"""squeue -n "{label}" """
+        command = f"""squeue -n "{label}" -u "{self.username}" """
         squeue_error = "Socket timed out on send/recv operation"
         squeued = False
 
@@ -191,988 +256,114 @@ class Job():
         else:
             return False
 
-    def submit(self, command):
-
+    def submit(self, autotst_object, ase_calculator, restart=False):
         """
         A method to run a slurm sbatch and make sure it isn't stopped by:
         - QOS errors
         - having too many jobs submitted 
+
+        This method,
+        - writes an input file
+        - builds the command to submit to slurm
+        - submits the job to slurm
+
+        Returns ase_calculator.label
         """
-        sbatch_success = "Submitted batch job"
-        squeue_error = "Socket timed out on send/recv operation"
-        sbatch_error = "Batch job submission failed: Job violates accounting/QOS policy"
-        overall_queue = False # is the overall queue able to accept another job
-        user_queue = False # is the user's queue able to accept another job
-        submitted = False # has the job been submitted yet?
 
-        # to check the number of jobs in the whole queue
-        while not overall_queue:
-            # while the overall queue is big and there are fewer than 10 attempts to squeue
-            with subprocess.Popen("squeue", shell=True, stdout=subprocess.PIPE) as popen:
-                squeue_output = popen.communicate()[0]
-            if squeue_error in squeue_output.decode("utf-8"):
-                # squeue is having a slow response time, waiting and trying again
-                logging.error("There is a slow response time for squeue, waiting and trying again")
-                time.sleep(90)
-            elif len(squeue_output.decode("utf-8").splitlines()) > 10000: 
-                #greater than 10k jobs, the limit for discovery, waiting and trying again
-                logging.error("There are too many jobs in the queue at the moment, trying to submit in a bit")
-                time.sleep(90)
-            else:
-                logging.info("The overall queue is okay to submit a job.")
-                overall_queue = True
-                
-        try:
-            os.environ["TEST_STATUS"]
-            time.wait(90)
-            # Adding this for testing
-        except:
-            pass
+        # Write the input file
+        self.write_input(autotst_object, ase_calculator)
 
-        # to check the number of jobs that the user has in the queue
-        while not user_queue:
-            with subprocess.Popen(f"squeue -u {self.username}", shell=True, stdout=subprocess.PIPE) as popen:
-                squeue_output = popen.communicate()[0]
-            if squeue_error in squeue_output.decode("utf-8"):
-                # squeue is having a slow response time, waiting and trying again
-                logging.error("There is a slow response time for squeue, waiting and trying again")
-                time.sleep(90)
-            elif len(squeue_output.decode("utf-8").splitlines()) > 500: 
-                # user has greater than than 500 jobs, the limit for discovery is 1.5k, waiting and trying again
-                logging.error("The user has too many jobs in the queue at the moment, trying to submit in a bit")
-                time.sleep(90)
-            else:
-                logging.info("The user's queue is okay to submit a job.")
-                user_queue = True
+        # Build the command
+        command, label = self.build_command(autotst_object, ase_calculator)
 
-        del squeue_output # we don't need this anymore
-        while not submitted: 
-            # It's not submitted or there are fewer than 10 attempts to sbatch
-            with subprocess.Popen(command, shell=True, stdout=subprocess.PIPE) as popen:
-                sbatch_output = popen.communicate()[0]
-            if sbatch_error in sbatch_output.decode("utf-8"):
-                # we ran into a QOS / accounting error, this occured because jobs were submitted between now and when we last checked the queue.
-                # gonna wait and try again
-                logging.error("Ran into an issue when trying to submit a job, waiting a bit and trying it in a bit")
-                time.sleep(90)
-            else:
-                logging.info("Job submitted via sbatch.")
-                submitted = True
-        return submitted
-
-
-#################################################################################
-
-    def submit_conformer(self, conformer, restart=False):
-        """
-        A methods to submit a job based on the calculator and partition provided
-        """
-        assert conformer, "Please provide a conformer to submit a job"
-
-        self.calculator.conformer = conformer
-        ase_calculator = self.calculator.get_conformer_calc()
-        label = conformer.smiles + f"_{conformer.index}"
-        file_path = os.path.join(ase_calculator.scratch, label)
-        # for testing
-        os.environ["FILE_PATH"] = file_path
-
+        log_path = os.path.join(ase_calculator.scratch, label + '.log')
         attempted = False
-        if os.path.exists(file_path + ".log"):
+
+        # Check to see if log file already exists
+        if os.path.exists(log_path):
             attempted = True
             if not restart:
                 logging.info(
                     "It appears that this job has already been run, not running it a second time.")
 
+        # Check to see if the job is in the queue
+        if not self.check_complete(label):
+            logging.info(
+                f"It appears that {label} is already in the queue...not submitting")
+            return label
+
+        # Submit the job
         if restart or not attempted:
-            # Getting the number of processors needed for a child job
-            number_of_atoms = conformer.rmg_molecule.get_num_atoms() - conformer.rmg_molecule.get_num_atoms('H')
-            if number_of_atoms >= 4:
-                nproc = 2
-            elif number_of_atoms >= 7:
-                nproc = 4
-            elif number_of_atoms >= 9:
-                nproc = 6
-            else:
-                nproc = 8
-            ase_calculator.nprocshared = nproc
-            self.write_input(conformer, ase_calculator)
             if restart:
                 logging.info(
                     f"Restarting calculations for {conformer}."
                 )
-            else:
-                logging.info(f"Starting calculations for {conformer}")
+            sbatch_success = "Submitted batch job"
+            squeue_error = "Socket timed out on send/recv operation"
+            sbatch_error = "Batch job submission failed: Job violates accounting/QOS policy"
+            overall_queue = False # is the overall queue able to accept another job
+            user_queue = False # is the user's queue able to accept another job
+            submitted = False # has the job been submitted yet?
 
-            command = [
-                """sbatch""", 
-                f"""--job-name="{label}" """, 
-                f"""--output="{label}.slurm.log" """, 
-                f"""--error="{label}.slurm.log" """,
-                """-N 1""",
-                f"""-n {nproc}""",
-                """-t 24:00:00""",
-                f"--mem {self.calculator.settings['mem']}"
-            ]
-            # Building on the remaining commands
-            if self.partition:
-                command.append(f"""-p {self.partition}""")
-            if self.exclude:
-                if isinstance(self.exclude, str):
-                    command.append(f"""--exclude={self.exclude}""")
-                elif isinstance(self.exclude, list):
-                    exc = ""
-                    for e in self.exclude:
-                        exc += e
-                        exc += ","
-                    exc = exc[:-1]
-                    command.append(f"""--exclude={exc}""")
-            if self.account:
-                command.append(f"""-A {self.account}""")
-            
-            command.append(f"""--wrap="{self.calculator.command} '{file_path}.com' > '{file_path}.log'" """)
-            exe = ""
-            for c in command:
-                exe += c + " " #combining the command into a single string, this makes submit go faster.
-            if self.check_complete(label): #checking to see if the job is already in the queue
-                # if it's not, then we're gona submit it
-                self.submit(exe)
-            else:
-                # it's currently in the queue, so not actually submitting it
-                return label
-        return label
-
-    def calculate_conformer(self, conformer):
-        """
-        A method that optimizes a conformer and performs frequency analysis.
-        If the conformer does not convergenge with tight convergence criteria,
-        the convergence criteria is loosened to Gaussian's default criteria,
-        and the optimization is rerun using the geometry from the last step of the Tight convergence optimization.
-        Returns True if Gaussian log is complete and converged, and False if incomplete of unconverged.
-        """
-
-        self.calculator.conformer = conformer # this might be dangerous if running several of these at once?
-        self.calculator.convergence = "Tight"
-        calc = self.calculator.get_conformer_calc()
-        scratch_dir = os.path.join(
-            self.calculator.directory,
-            "species",
-            conformer.smiles,
-            "conformers")
-        f = calc.label + ".log"
-
-        logging.info(
-            f"Submitting conformer calculation for {calc.label}")
-        label = self.submit_conformer(conformer)
-        while not self.check_complete(label):
-            time.sleep(90)
-
-        complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
-
-        if not complete:
-            logging.info(
-                f"It seems that the file never completed for {calc.label} completed, running it again")
-            label = self.submit_conformer(conformer, restart=True)
-            while not self.check_complete(label):
-                time.sleep(90)
-
-            complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
-
-        #####
-
-        def check_isomorphic(conformer):
-            """
-            Compares whatever is in the log file 'f' 
-            to the SMILES of the passed in 'conformer'
-            """
-            starting_molecule = rmgpy.molecule.Molecule(smiles=conformer.smiles)
-            starting_molecule = starting_molecule.to_single_bonds()
-
-            atoms = self.read_log(
-                os.path.join(scratch_dir, f)
-            )
-
-            test_molecule = rmgpy.molecule.Molecule()
-            test_molecule.from_xyz(
-                atoms.arrays["numbers"],
-                atoms.arrays["positions"]
-            )
-            if not starting_molecule.is_isomorphic(test_molecule):
-                logging.info(
-                    f"Output geometry of {calc.label} is not isomorphic with input geometry")
-                return False
-            else:
-                logging.info(
-                f"{calc.label} was successful and was validated!")
-                return True
-
-        #####
-
-        if (complete and converged):
-            return check_isomorphic(conformer)
-
-        if not complete: # try again
-            logging.info(
-                f"It appears that {calc.label} was killed prematurely")
-            label = self.submit_conformer(conformer, restart=True)
-            while not self.check_complete(label):
-                time.sleep(90)
-
-            complete, converged = self.calculator.verify_output_file(os.path.join(scratch_dir, f))
-            if (complete and converged):
-                return check_isomorphic(conformer)
-            elif not complete:
-                logging.info(
-                    f"It appears that {calc.label} was killed prematurely or never completed :(")
-                return False
-            # else complete but not converged
-
-        if not converged:
-            logging.info(f"{calc.label} did not converge, trying it as a looser convergence criteria")
-
-            logging.info(f"Resubmitting {conformer} with default convergence criteria")
-            atoms = self.read_log(os.path.join(scratch_dir, f))
-            conformer._ase_molecule = atoms
-            conformer.update_coords_from("ase")
-            self.calculator.conformer = conformer # again, be careful setting this in multiple processes?
-            self.calculator.convergence = ""
-            calc = self.calculator.get_conformer_calc()
-
-            logging.info("Removing the old log file that didn't converge, restarting from last geometry")
-            os.remove(os.path.join(scratch_dir, f))
-
-            label = self.submit_conformer(conformer)
-            while not self.check_complete(label):
-                time.sleep(90)
-
-            if not os.path.exists(os.path.join(scratch_dir, f)):
-                logging.info(
-                f"It seems that {calc.label}'s loose optimization was never run...")
-                return False
-
-            complete, converged = self.calculator.verify_output_file(
-                os.path.join(scratch_dir, f)
-            )
-
-            if not complete:
-                logging.info(
-                f"It appears that {calc.label} was killed prematurely or never completed :(")
-                return False
-
-            elif not converged:
-                logging.info(f"{calc.label} failed second QM optimization :(")
-                return False
-
-            else:
-                return check_isomorphic(conformer)
-
-    def calculate_species(self, species):
-        """
-        Calculates the energy and harmonic frequencies of the lowest energy conformer of a species:
-        1) Systematically generates low energy conformers for a given species with an ASE calculator.
-        2) Optimizes each low energy conformer with provided Gaussian AutoTST calculator.
-        3) Saves the gaussian optimization and frequency analysis log file for the lowest energy conformer of the species.
-        """
-
-        logging.info(f"Calculating geometries for {species}")
-
-        if self.conformer_calculator:
-            species.generate_conformers(ase_calculator=self.conformer_calculator)
-
-        currently_running = []
-        processes = {}
-        for smiles, conformers in list(species.conformers.items()):
-
-            for conformer in conformers:
-
-                process = multiprocessing.Process(target=self.calculate_conformer, args=(
-                    conformer,))
-                processes[process.name] = process
-
-        # This loop will block until everything in processes 
-        # has been started, and added to currently_running
-        for name, process in list(processes.items()):
-            while len(currently_running) >= 50:
-                for running in currently_running:
-                    if not running.is_alive():
-                        currently_running.remove(name)
-                time.sleep(90)
-            time.sleep(90)
-            process.start()
-            process.join()
-            currently_running.append(name)
-
-        # This loop will block until everything in currently_running
-        # has finished.
-        while len(currently_running) > 0:
-            for name, process in list(processes.items()):
-                if not (name in currently_running):
-                    continue
-                if not process.is_alive():
-                    currently_running.remove(name)
-            time.sleep(90)
-
-        results = []
-        for smiles, conformers in list(species.conformers.items()):
-            for conformer in conformers:
-                scratch_dir = os.path.join(
-                    self.calculator.directory,
-                    "species",
-                    conformer.smiles,
-                    "conformers"
-                )
-                f = f"{conformer.smiles}_{conformer.index}.log"
-                path = os.path.join(scratch_dir, f)
-                if not os.path.exists(path):
-                    logging.info(
-                        f"It seems that {f} was never run...")
-                    continue
-                try:
-                    parser = cclib.io.ccread(path)
-                    if parser is None:
-                        logging.info(
-                            f"Something went wrong when reading in results for {f} using cclib...")
-                        continue
-                    energy = parser.scfenergies[-1]
-                except:
-                    logging.info(
-                        f"The parser does not have an scf energies attribute, we are not considering {f}")
-                    energy = 1e5
-
-                results.append([energy, conformer, f])
-
-        results = pd.DataFrame(
-            results, columns=["energy", "conformer", "file"]).sort_values("energy").reset_index()
-
-        if results.shape[0] == 0:
-            logging.info(
-                f"No conformer for {species} was successfully calculated... :(")
-            return False
-
-        for index in range(results.shape[0]):
-            conformer = results.conformer[index]
-            lowest_energy_file = results.file[index]
-            break
-
-        logging.info(
-            f"The lowest energy conformer is {lowest_energy_file}")
-
-        lowest_energy_file_path = os.path.join(self.calculator.directory, "species",conformer.smiles, "conformers", lowest_energy_file)
-        dest = os.path.join(self.calculator.directory, "species", conformer.smiles, conformer.smiles+".log")
-
-        try:
-            shutil.copyfile(lowest_energy_file_path,dest)
-        except IOError:
-            os.makedirs(os.path.dirname(dest))
-            shutil.copyfile(lowest_energy_file_path,dest)
-
-        logging.info(f"The lowest energy file is {lowest_energy_file}! :)")
-
-        return True
-#################################################################################
-
-    def submit_transitionstate(self, transitionstate, opt_type, restart=False):
-        """
-        A methods to submit a job for a TS object based on a single calculator
-        """
-        assert transitionstate, "Please provide a transitionstate to submit a job"
-        self.calculator.conformer = transitionstate
-        # setting the optimization type
-        if opt_type.lower() == "shell":
-            ase_calculator = self.calculator.get_shell_calc()
-        elif opt_type.lower() == "center":
-            ase_calculator = self.calculator.get_center_calc()
-        elif opt_type.lower() == "overall":
-            ase_calculator = self.calculator.get_overall_calc()
-        elif opt_type.lower() == "irc":
-            ase_calculator = self.calculator.get_irc_calc()
-
-        if opt_type.lower() != "irc":
-            number_of_atoms = transitionstate.rmg_molecule.get_num_atoms() - transitionstate.rmg_molecule.get_num_atoms('H')
-            if number_of_atoms >= 4:
-                nproc = 2
-            elif number_of_atoms >= 7:
-                nproc = 4
-            elif number_of_atoms >= 9:
-                nproc = 6
-            else:
-                nproc = 8
-        else:
-            # This is an IRC 
-            nproc = "14"
-
-        ase_calculator.nprocshared = nproc
-
-        self.write_input(transitionstate, ase_calculator)
-
-        label = ase_calculator.label
-        scratch = ase_calculator.scratch
-        file_path = os.path.join(scratch, label)
-        # for testing
-        os.environ["FILE_PATH"] = file_path
-
-        attempted = False
-        if os.path.exists(file_path + ".log"):
-            attempted = True
-            logging.info(f"It appears that {label} has already been attempted...")
-
-        if (not attempted) or restart:
-            command = [
-                """sbatch""", 
-                f"""--job-name="{label}" """, 
-                f"""--output="{label}.slurm.log" """, 
-                f"""--error="{label}.slurm.log" """,
-                """-N 1""",
-                f"""-n {nproc}""",
-                """-t 24:00:00""",
-                f"--mem {self.calculator.settings['mem']}"
-            ]
-            # Building on the remaining commands
-            if self.partition:
-                command.append(f"""-p {self.partition}""")
-            if self.exclude:
-                if isinstance(self.exclude, str):
-                    command.append(f"""--exclude={self.exclude}""")
-                elif isinstance(self.exclude, list):
-                    exc = ""
-                    for e in self.exclude:
-                        exc += e
-                        exc += ","
-                    exc = exc[:-1]
-                    command.append(f"""--exclude={exc}""")
-            if self.account:
-                command.append(f"""-A {self.account}""")
-            
-            command.append(f"""--wrap="{self.calculator.command} '{file_path}.com' > '{file_path}.log'" """)
-            exe = ""
-            for c in command:
-                exe += c + " " #combining the command into a single string, this makes submit go faster.
-            if self.check_complete(label): #checking to see if the job is already in the queue
-                # if it's not, then we're gona submit it
-                self.submit(exe)
-            else:
-                # it's currently in the queue, so not actually submitting it
-                return label
-        return label
-
-    def calculate_transitionstate(self, transitionstate, vibrational_analysis=True):
-        """
-        A method to perform the partial optimizations for a transitionstate and arrive
-        at a final geometry. Returns True if we arrived at a final geometry, returns false
-        if there is an error along the way.
-        """
-
-        ts_identifier = f"{transitionstate.reaction_label}_{transitionstate.direction}_{transitionstate.index}"
-
-        for opt_type in ["shell", "overall"]:
-            self.calculator.conformer = transitionstate
-
-            if opt_type == "overall":
-                 file_path = f"{transitionstate.reaction_label}_{transitionstate.direction}_{transitionstate.index}.log"
-            else:
-                 file_path = f"{transitionstate.reaction_label}_{transitionstate.direction}_{opt_type}_{transitionstate.index}.log"
-
-            file_path = os.path.join(
-                self.directory, 
-                "ts", 
-                transitionstate.reaction_label, 
-                "conformers", 
-                file_path
-            )
-
-
-            if not os.path.exists(file_path):
-                logging.info(
-                    f"Submitting {opt_type.upper()} calculations for {ts_identifier}")
-                label = self.submit_transitionstate(
-                    transitionstate, opt_type=opt_type.lower())
-                while not self.check_complete(label):
+            # to check the number of jobs in the whole queue
+            while not overall_queue:
+                # while the overall queue is big and there are fewer than 10 attempts to squeue
+                with subprocess.Popen("squeue", shell=True, stdout=subprocess.PIPE) as popen:
+                    squeue_output = popen.communicate()[0]
+                if squeue_error in squeue_output.decode("utf-8"):
+                    # squeue is having a slow response time, waiting and trying again
+                    logging.error("There is a slow response time for squeue, waiting and trying again")
                     time.sleep(90)
-
-            else:
-                logging.info(
-                    f"It appears that we already have a complete {opt_type.upper()} log file for {ts_identifier}")
-
-                complete, converged = self.calculator.verify_output_file(file_path)
-                
-                if not complete:
-                    logging.info(
-                        f"It seems that the {opt_type.upper()} file never completed for {ts_identifier} never completed, running it again")
-                    label = self.submit_transitionstate(
-                        transitionstate, opt_type=opt_type.lower(), restart=True)
-                    while not self.check_complete(label):
-                        time.sleep(90)
-
-            complete, converged = self.calculator.verify_output_file(file_path)
-
-            if not (complete and converged):
-                logging.info(
-                    f"{ts_identifier} failed the {opt_type.upper()} optimization")
-                global_results[ts_identifier] = False
-                return False
-            logging.info(
-                f"{ts_identifier} successfully completed the {opt_type.upper()} optimization!")
-            transitionstate._ase_molecule = self.read_log(file_path)
-            transitionstate.update_coords_from("ase")
-
-        logging.info(
-            f"Calculations for {ts_identifier} are complete and resulted in a normal termination!")
-
-        got_one = self.validate_transitionstate(
-                transitionstate=transitionstate, vibrational_analysis=vibrational_analysis)
-        if got_one:
-            global_results[ts_identifier] = True
-            return True
-        else:
-            global_results[ts_identifier] = False
-            return False
-
-    def calculate_reaction(self, vibrational_analysis=True, restart=False):
-        """
-        A method to run calculations for all tranitionstates for a reaction
-        """
-
-        logging.info(f"Calculating geometries for {self.reaction}")
-        if not restart: 
-            if os.path.exists(
-                os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")):
-                logging.info("This reaction has already been run and has a successful validated transition state! :)")
-                return True
-
-
-
-        if self.conformer_calculator:
-            self.reaction.generate_conformers(ase_calculator=self.conformer_calculator)
-
-        currently_running = []
-        processes = {}
-
-        for direction, transitionstates in list(self.reaction.ts.items()):
-
-            for transitionstate in transitionstates:
-
-                process = multiprocessing.Process(target=self.calculate_transitionstate, args=(
-                    transitionstate,))
-                processes[process.name] = process
-
-        for name, process in list(processes.items()):
-            while len(currently_running) >= 50:
-                for running in currently_running:
-                    if not processes[running].is_alive():
-                        currently_running.remove(name)
-                time.sleep(90)
-            time.sleep(90)
-            process.start()
-            process.join()
-            currently_running.append(name)
-
-        while len(currently_running) > 0:
-            for name, process in list(processes.items()):
-                if not (name in currently_running):
-                    continue
-                if not process.is_alive():
-                    currently_running.remove(name)
-            time.sleep(90) 
-
-        energies = []
-        for label, result in global_results.items():
-            if not result:
-                logging.info(f"Calculations for {label} FAILED")
-                continue
-            f = f"{label}.log"
-            path = os.path.join(self.calculator.directory, "ts",
-                    self.reaction.label, "conformers", f)
-            if not os.path.exists(path):
-                logging.info(f"It appears that {f} failed...")
-                continue
-            try:
-                parser = cclib.io.ccread(path, loglevel=logging.ERROR)
-                if parser is None:
-                    logging.info(
-                        f"Something went wrong when reading in results for {f}...")
-                    continue
-                energy = parser.scfenergies[-1]
-            except:
-                logging.info(
-                    f"The parser does not have an scf energies attribute, we are not considering {f}")
-                energy = 1e5
-
-            energies.append([energy, transitionstate, f])
-
-        energies = pd.DataFrame(
-            energies, columns=["energy", "transitionstate", "file"]).sort_values("energy").reset_index()
-
-        if energies.shape[0] == 0:
-            logging.info(
-                f"No transition state for {self.reaction} was successfully calculated... :(")
-            return False
-
-        energies.reset_index(inplace=True)
-        lowest_energy_label = energies.iloc[0].file
-        logging.info(f"The lowest energy transition state is {lowest_energy_label}")
-
-        shutil.copyfile(
-            os.path.join(self.calculator.directory, "ts", self.reaction.label,
-                         "conformers", lowest_energy_label),
-            os.path.join(self.calculator.directory, "ts",
-                         self.reaction.label, self.reaction.label + ".log")
-        )
-        logging.info(f"The lowest energy file is {lowest_energy_label}! :)")
-        return True
-
-    def validate_transitionstate(self, transitionstate, vibrational_analysis=True):
-
-        validated = False
-        if vibrational_analysis:
-            vib = VibrationalAnalysis(
-                transitionstate=transitionstate, directory=self.directory)
-            validated = vib.validate_ts()
-        if not validated:
-            logging.info("Could not validate with Vibrational Analysis... Running an IRC to validate instead...")
-            label = self.submit_transitionstate(
-                transitionstate, opt_type="irc")
-            while not self.check_complete(label):
-                time.sleep(90)
-            result = self.calculator.validate_irc()
-            if result:
-                logging.info("Validated via IRC")
-                return True
-            else:
-                logging.info(
-                    "Could not validate this conformer... trying the next lowest energy conformer")
-                return False
-        else:
-            logging.info("Validated via Vibrational Analysis")
-            return True
-
-#################################################################################
-
-    def submit_rotor(self, conformer, torsion_index, restart=False):
-        """
-        A methods to submit a job based on the conformer and the index of the torsion
-        """
-        assert conformer, "Please provide a conformer to submit a job"
-        self.calculator.conformer = conformer
-        ase_calculator = self.calculator.get_rotor_calc(torsion_index)
-        label = ase_calculator.label
-        file_path = os.path.join(ase_calculator.scratch, ase_calculator.label)
-
-        os.environ["FILE_PATH"] = file_path
-
-        attempted = False
-        if os.path.exists(file_path + ".log"):
-            attempted = True
-            logging.info(
-                "It appears that this job has already been run, not running it a second time.")
-        if restart or not attempted:
-            # Getting the number of processors needed for a child job
-            number_of_atoms = conformer.rmg_molecule.get_num_atoms() - conformer.rmg_molecule.get_num_atoms('H')
-            if number_of_atoms >= 4:
-                nproc = 2
-            elif number_of_atoms >= 7:
-                nproc = 4
-            elif number_of_atoms >= 9:
-                nproc = 6
-            else:
-                nproc = 8
-            ase_calculator.nprocshared = nproc
-            self.write_input(conformer, ase_calculator)
-            if restart:
-                logging.info(
-                    f"Restarting calculations for {conformer}."
-                )
-            else:
-                logging.info(f"Starting calculations for {conformer}")
-
-            command = [
-                """sbatch""", 
-                f"""--job-name="{label}" """, 
-                f"""--output="{label}.slurm.log" """, 
-                f"""--error="{label}.slurm.log" """,
-                """-N 1""",
-                f"""-n {nproc}""",
-                """-t 24:00:00""",
-                f"--mem {self.calculator.settings['mem']}"
-            ]
-            # Building on the remaining commands
-            if self.partition:
-                command.append(f"""-p {self.partition}""")
-            if self.exclude:
-                if isinstance(self.exclude, str):
-                    command.append(f"""--exclude={self.exclude}""")
-                elif isinstance(self.exclude, list):
-                    exc = ""
-                    for e in self.exclude:
-                        exc += e
-                        exc += ","
-                    exc = exc[:-1]
-                    command.append(f"""--exclude={exc}""")
-            if self.account:
-                command.append(f"""-A {self.account}""")
-            
-            command.append(f"""--wrap="{self.calculator.command} '{file_path}.com' > '{file_path}.log'" """)
-            exe = ""
-            for c in command:
-                exe += c + " " #combining the command into a single string, this makes submit go faster.
-            if self.check_complete(label): #checking to see if the job is already in the queue
-                # if it's not, then we're gona submit it
-                self.submit(exe)
-            else:
-                # it's currently in the queue, so not actually submitting it
-                return label
-        return label
-
-
-    def calculate_rotors(self, conformer, steps=36, step_size=10.0):
-
-        complete = {}
-        calculators = {}
-        verified = {}
-        if len(conformer.torsions) == 0:
-            logging.info("No torsions to run scans on.")
-            return {}
-
-        for torsion in conformer.torsions:
-            label = self.submit_rotor(
-                conformer, torsion.index)
-            logging.info(label)
-            complete[label] = False
-            verified[label] = False
-
-        done = False
-        lowest_energy_label = None
-        conformer_error = False
-
-        while not done:
-            for label in list(complete.keys()):
-                if not self.check_complete(label):
-                    continue
-                if done:
-                    continue
-                complete[label] = True
-                lowest_conf, continuous = self.verify_rotor( ##################################
-                    conformer, label)
-                if all([lowest_conf, continuous]):
-                    verified[label] = True
+                elif len(squeue_output.decode("utf-8").splitlines()) > 10000: 
+                    #greater than 10k jobs, the limit for discovery, waiting and trying again
+                    logging.error("There are too many jobs in the queue at the moment, trying to submit in a bit")
+                    time.sleep(90)
                 else:
-                    verified[label] = False
+                    logging.info("The overall queue is okay to submit a job.")
+                    overall_queue = True
+                    
+            try:
+                os.environ["TEST_STATUS"]
+                time.wait(90)
+                # Adding this for testing
+            except:
+                pass
 
-                if not lowest_conf:
-                    done = True
-                    lowest_energy_label = label
-                    conformer_error = True
-                    continue
-                elif all(complete.values()):
-                    done = True
+            # to check the number of jobs that the user has in the queue
+            while not user_queue:
+                with subprocess.Popen(f"squeue -u {self.username}", shell=True, stdout=subprocess.PIPE) as popen:
+                    squeue_output = popen.communicate()[0]
+                if squeue_error in squeue_output.decode("utf-8"):
+                    # squeue is having a slow response time, waiting and trying again
+                    logging.error("There is a slow response time for squeue, waiting and trying again")
+                    time.sleep(90)
+                elif len(squeue_output.decode("utf-8").splitlines()) > 500: 
+                    # user has greater than than 500 jobs, the limit for discovery is 1.5k, waiting and trying again
+                    logging.error("The user has too many jobs in the queue at the moment, trying to submit in a bit")
+                    time.sleep(90)
+                else:
+                    logging.info("The user's queue is okay to submit a job.")
+                    user_queue = True
 
-        if conformer_error:
-            logging.info(
-                "A lower energy conformer was found... Going to optimize this insted")
-            for label in list(complete.keys()):
-                subprocess.call(f"""scancel -n '{label}'""", shell=True)
-            if isinstance(conformer, TS):
-                t = "ts"
-                label = conformer.reaction_label
-                file_name = os.path.join(
-                    self.directory, t, label, "rotors", lowest_energy_label + ".log")
-                t = "ts"
-                direction =  conformer.direction
-            else:
-                t = "species"
-                label = conformer.smiles
-                file_name = os.path.join(
-                    self.directory, t , label, "rotors", lowest_energy_label + ".log")
+            del squeue_output # we don't need this anymore
+            while not submitted: 
+                # It's not submitted or there are fewer than 10 attempts to sbatch
+                with subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, cwd=ase_calculator.scratch) as popen:
+                    sbatch_output = popen.communicate()[0]
+                time.sleep(10)
+                if not self.check_complete(label):
+                    logging.info(
+                        f"Job {label} submitted via sbatch.")
+                    submitted = True
+                    return label
 
-                direction = None
-      
-
-
-            atoms = self.read_log(file_name)
-            conformer._ase_molecule = atoms
-            conformer.update_coords_from("ase")
-            for index in ["X", "Y", "Z"]: 
-                # we do this because we now have a new conformer
-                # the index starts at X and if another lower energy conformer arrises, we go to Y and so on
-                if index != conformer.index:
-                    logging.info(f"Setting index of {conformer} to {index}...")
-                    conformer.index = index
-                    break
-
-            label = self.submit_conformer(conformer)
-
-            while not self.check_complete(label):
-                time.sleep(90)
-
-            logging.info(
-                "Reoptimization complete... performing hindered rotors scans again")
-
-            if direction:
-                file_name = f"{label}_{direction}_{conformer.index}.log"
-            else:
-                file_name = f"{label}_{conformer.index}.log"
-
-            file_path = os.path.join(
-                self.directory, t, label, "conformers", file_name
-            )
-            complete, converged = self.calculator.verify_output_file(file_path)
-            if not converged:
-                logging.info("The new geometry was unable to converge... Hindered rotor calculations failed... :(")
-                for key in verified.keys():
-                    verified[key] = False
-                return verified
-            logging.info("The new geometry was able to successfully converge. Reattempting hindered rotor calculations")
-            shutil.copyfile(
-                file_path,
-                os.path.join(self.directory, t, label, f"{label}.log")
-            )
-            conformer._ase_molecule = self.read_log(file_path)
-            conformer.update_coords_from("ase")
-
-            return self.calculate_rotors(conformer, steps, step_size)
-
-        else:
-            for label, boolean in list(verified.items()):
-                if not boolean:
-                    try:
-                        if isinstance(conformer, TS):
-                            file_path = os.path.join(
-                                self.directory, "ts", conformer.reaction_label, "rotors")
-                        else:
-                            file_path = os.path.join(
-                                self.directory, "species",conformer.smiles , "rotors")
-
-                        os.mkdirs(os.path.join(file_path, failures))
-                    except:
-                        pass
-                    shutil.move(
-                        os.path.join(file_path, label + ".log"),
-                        os.path.join(file_path, "failures",
-                                     label + ".log")
-                    )
-            return verified
-
-    def verify_rotor(self, conformer, label, steps=36, step_size=10.0):
-        """
-        A method that will 
-        """
-
-        if isinstance(conformer, TS):
-            file_name = os.path.join(
-                self.directory, "ts", conformer.reaction_label, "rotors", label  + ".log")
-        elif isinstance(conformer, Conformer):
-             file_name = os.path.join(
-                self.directory, "species", conformer.smiles, "rotors", label  + ".log")           
-        parser = cclib.io.ccread(file_name, loglevel=logging.ERROR)
-
-        continuous = self.check_rotor_continuous(
-            steps, step_size, parser=parser)
-        [lowest_conf, energy, atomnos,
-            atomcoords] = self.check_rotor_lowest_conf(parser=parser)
-        #opt_count_check = self.check_rotor_opts(steps, parser=parser)
-        #good_slope = self.check_rotor_slope(steps, step_size, parser=parser)
-
-        return [lowest_conf, continuous]#, good_slope, opt_count_check] ### Previously used, but the second two checks were deemed unecessary
-
-    def check_rotor_opts(self, steps, parser):
-
-
-        #opt_indices = [i for i, status in enumerate(parser.optstatus) if status==2]
-        opt_indices = [i for i, status in enumerate(
-            parser.optstatus) if status > 1]
-        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
-
-        n_opts_check = (steps + 1) == len(opt_SCFEnergies)
-
-        return n_opts_check
-
-    def check_rotor_slope(self, steps, step_size, parser, tol=0.1):
-
-
-        opt_indices = [i for i, status in enumerate(
-            parser.optstatus) if status in [2, 4]]
-        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
-
-        max_energy = max(opt_SCFEnergies)
-        min_energy = min(opt_SCFEnergies)
-
-        max_slope = (max_energy - min_energy) / step_size
-        slope_tol = tol*max_slope
-
-        for i, energy in enumerate(opt_SCFEnergies):
-            prev_energy = opt_SCFEnergies[i-1]
-            slope = np.absolute((energy-prev_energy)/float(step_size))
-            if slope > slope_tol:
-                return False
-
-        return True
-
-    def check_rotor_continuous(self, steps, step_size, parser, tol=0.1):
-        """
-        A function that will check if a hindered rotor scan is continuous given the following:
-        - steps (int): the number of steps performed in the scan (often 36)
-        - step_size (float): the number of degress between each of the steps (often 10.0)
-        - parser (cclib.parser.data.ccData_optdone_bool): the cclib parser that contains all of the info from the hindered rotor scan
-        """
-
-        assert isinstance(step_size, float)
-
-        opt_indices = [i for i, status in enumerate(
-            parser.optstatus) if status in [2, 4]]
-        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
-
-        max_energy = max(opt_SCFEnergies)
-        min_energy = min(opt_SCFEnergies)
-        energy_tol = np.absolute(tol*(max_energy - min_energy))
-
-        checked = [None for angle in range(0, 360)]
-
-        continuous = True
-
-        for step, energy in enumerate(opt_SCFEnergies):
-            abs_theta = int(step*step_size)
-            theta = abs_theta % 360
-
-            mismatch = False
-
-            if checked[theta] is None:
-                checked[theta] = energy
-
-            else:
-                checked_energy = checked[theta]
-
-                abs_diff = np.absolute(energy - checked_energy)
-
-                if abs_diff > energy_tol:
-                    mismatch = True
-                    continuous = False
-                    return False
-
-        return continuous
-
-    def check_rotor_lowest_conf(self, parser, tol=0.1):
-
-        opt_indices = [i for i, status in enumerate(
-            parser.optstatus) if status in [2, 4]]
-        opt_SCFEnergies = [parser.scfenergies[index] for index in opt_indices]
-
-        max_energy = max(opt_SCFEnergies)
-        min_energy = min(opt_SCFEnergies)
-        energy_tol = tol*(max_energy - min_energy)
-
-        first_is_lowest = True  # Therefore...
-        min_idx = 0
-        min_energy = opt_SCFEnergies[min_idx]
-
-        for i, energy in enumerate(opt_SCFEnergies):
-            if min_energy - energy > energy_tol:
-                min_energy = energy
-                min_idx = i
-
-        if min_idx != 0:
-            first_is_lowest = False
-
-        min_opt_idx = opt_indices[min_idx]
-
-        atomnos = parser.atomnos
-        atomcoords = parser.atomcoords[min_opt_idx]
-
-        return [first_is_lowest, min_energy, atomnos, atomcoords]
+                if sbatch_error in sbatch_output.decode("utf-8"):
+                    # we ran into a QOS / accounting error, this occured because jobs were submitted between now and when we last checked the queue.
+                    # gonna wait and try again
+                    logging.error("Ran into an issue when trying to submit a job, waiting a bit and trying it in a bit")
+                    time.sleep(90)
+                else:
+                    logging.info("Job submitted via sbatch.")
+                    submitted = True
+        
+        return label
