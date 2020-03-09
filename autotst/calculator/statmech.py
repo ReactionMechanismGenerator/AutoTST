@@ -130,22 +130,7 @@ class StatMech():
         conformer.update_coords_from("ase")
         mol = conformer.rmg_molecule
         output = ['#!/usr/bin/env python',
-                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
-
-        atom_dict = self.get_atoms(conformer=conformer)  # Fix this
-
-        for atom, count in atom_dict.items():
-            output.append(f"    '{atom}': {count},")
-        output = output + ['}', '']
-
-        bond_dict = self.get_bonds(conformer=conformer) 
-        if bond_dict != {}:
-            output.append('bonds = {')
-            for bond_type, num in bond_dict.items():
-                output.append(f"    '{bond_type}': {num},")
-            output.append("}")
-        else:
-            output.append('bonds = {}')
+                  '# -*- coding: utf-8 -*-', ]
 
         external_symmetry = conformer.calculate_symmetry_number()
 
@@ -279,23 +264,8 @@ class StatMech():
         transitionstate.update_coords_from("ase")
 
         output = ['#!/usr/bin/env python',
-                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
+                  '# -*- coding: utf-8 -*-']
 
-        atom_dict = self.get_atoms(conformer=transitionstate)  # need to fix
-
-        for atom, count in atom_dict.items():
-            output.append(f"    '{atom}': {count},")
-        output = output + ['}', '']
-
-        bond_dict = self.get_bonds(conformer=transitionstate)  # need to fix
-        if bond_dict != {}:
-            output.append('bonds = {')
-            for bond_type, num in bond_dict.items():
-                output.append(f"    '{bond_type}': {num},")
-
-            output.append("}")
-        else:
-            output.append('bonds = {}')
         transitionstate.rmg_molecule.update_multiplicity()
 
         external_symmetry = transitionstate.calculate_symmetry_number()
