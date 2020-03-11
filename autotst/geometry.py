@@ -50,7 +50,7 @@ class Bond:
         self.mask = mask
 
     def __repr__(self):
-        return '<Bond "{}">'.format(self.atom_indices)
+        return f'<Bond "{self.atom_indices}">'
 
 
 class Angle():
@@ -80,7 +80,7 @@ class Angle():
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<Angle "{0}">'.format(self.atom_indices)
+        return f'<Angle "{self.atom_indices}">'
 
 
 class Torsion():
@@ -110,7 +110,7 @@ class Torsion():
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<Torsion "{0}">'.format(self.atom_indices)
+        return f'<Torsion "{self.atom_indices}">'
 
 
 class CisTrans():
@@ -143,7 +143,7 @@ class CisTrans():
         self.reaction_center = reaction_center
 
     def __repr__(self):
-        return '<CisTrans "{0} - {1}">'.format(self.atom_indices, self.stero)
+        return f'<CisTrans "{self.atom_indices} - {self.stero}">'
 
 
 class ChiralCenter():
