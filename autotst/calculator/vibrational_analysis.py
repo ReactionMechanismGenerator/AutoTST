@@ -69,8 +69,7 @@ class VibrationalAnalysis():
             label = None
         else:
             label = self.ts.reaction_label
-        return '<Vibrational Analysis "{0}">'.format(
-            label)
+        return f'<Vibrational Analysis "{label}">'
 
     def get_log_file(self):
         """
@@ -88,7 +87,7 @@ class VibrationalAnalysis():
             "ts",
             self.ts.reaction_label,
             "conformers",
-            "{}_{}_{}.log".format(self.ts.reaction_label, self.ts.direction, self.ts.index))
+            f"{self.ts.reaction_label}_{self.ts.direction}_{self.ts.index}.log")
         return self.log_file
 
     def parse_vibrations(self):
