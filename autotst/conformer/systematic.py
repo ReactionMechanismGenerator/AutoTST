@@ -132,13 +132,13 @@ def opt_conf(i):
                 directory = calculator.directory 
             else: 
                 directory = 'conformer_logs'
-            calculator.label = "{}_{}".format(conformer.smiles, conformer.index)
-            calculator.directory = os.path.join(directory, label,'{}_{}'.format(conformer.smiles, conformer.index))
+            calculator.label = f"{conformer.smiles}_{conformer.index}"
+            calculator.directory = os.path.join(directory, label,f'{conformer.smiles}_{conformer.index}')
             if not os.path.exists(calculator.directory):
                 try:
                     os.makedirs(calculator.directory)
                 except OSError:
-                    logging.info("An error occured when creating {}".format(calculator.directory))
+                    logging.info(f"An error occured when creating {calculator.directory}")
 
             calculator.atoms = conformer.ase_molecule
 
@@ -163,7 +163,7 @@ def opt_conf(i):
                         conformer.ase_molecule.arrays["positions"]
                     )
                     if not rmg_mol.is_isomorphic(reference_mol):
-                        logging.info("{}_{} is not isomorphic with reference mol".format(conformer,str(conformer.index)))
+                        logging.info(f"{conformer}_{str(conformer.index)} is not isomorphic with reference mol")
                         return False
                 except rmgpy.exceptions.AtomTypeError:
                     logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
@@ -259,7 +259,7 @@ def systematic_search(conformer,
     global conformers
     conformers = {}
     combinations = {}
-    logging.info("There are {} possible conformers to investigate...".format(len(combos)))
+    logging.info(f"There are {len(combos)} possible conformers to investigate...")
     for index, combo in enumerate(combos):
 
         combinations[index] = combo
@@ -351,7 +351,6 @@ def systematic_search(conformer,
             confs.append(conf)
             i += 1
 
-    logging.info("We have identified {} unique, low-energy conformers for {}".format(
-        len(confs), conformer))
+    logging.info(f"We have identified {len(confs)} unique, low-energy conformers for {conformer}")
     
     return confs
