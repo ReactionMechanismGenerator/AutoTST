@@ -106,7 +106,7 @@ def update_dictionary_entries(old_entries, need_to_add):
             multiplicity = int(
                 re.search('(?<=multiplicity ).*', adjlist).group(0))
             adjlist = re.sub(r'multiplicity .*',
-                             'multiplicity [{}]'.format(multiplicity), adjlist)
+                             f'multiplicity [{multiplicity}]', adjlist)
 
         group = rmgpy.molecule.group.Group()
         group.from_adjacency_list(adjlist)
@@ -135,7 +135,7 @@ def update_dictionary_entries(old_entries, need_to_add):
 
             if group.is_isomorphic(old_entry.item):
                 duplicate = True
-                print('{} found to be duplicate'.format(old_entry))
+                print(f'{old_entry} found to be duplicate')
                 continue
 
             if rel_label not in old_label:
@@ -207,8 +207,7 @@ def rote_load_dict(path):
             if re.search('(?<=multiplicity ).*', adjlist):
                 multiplicity = int(
                     re.search('(?<=multiplicity ).*', adjlist).group(0))
-                adjlist = 'multiplicity [{}]\n'.format(
-                    multiplicity) + adjlist.split('\n', 1)[1]
+                adjlist = f'multiplicity [{multiplicity}]\n' + adjlist.split('\n', 1)[1]
 
             group = rmgpy.molecule.group.Group()
             group.from_adjacency_list(adjlist)
@@ -301,21 +300,21 @@ def update_known_reactions(
             if rel_species not in list(found_species.keys()):
                 need_to_add.append(rel_species.to_smiles())
                 logging.warning(
-                    '{} not found in species dictionary'.format(rel_species))
+                    f'{rel_species} not found in species dictionary')
 
 
         labeled_reactants = [found_species[reactant] for reactant in rmg_reaction.reactants]
         labeled_products = [found_species[product] for product in rmg_reaction.products]
         if len(labeled_reactants) == 2:
-            left_string = "{} + {}".format(labeled_reactants[0], labeled_reactants[1])
+            left_string = f"{labeled_reactants[0]} + {labeled_reactants[1]}"
         else:
-            left_string = "{}".format(labeled_reactants[0])
+            left_string = f"{labeled_reactants[0]}"
         if len(labeled_products) == 2:
-            right_string = "{} + {}".format(labeled_products[0], labeled_products[1])
+            right_string = f"{labeled_products[0]} + {labeled_products[1]}"
         else:
-            right_string = "{}".format(labeled_products[0])
+            right_string = f"{labeled_products[0]}"
 
-        Label = '{} <=> {}'.format(left_string, right_string)
+        Label = f'{left_string} <=> {right_string}'
         #print Label
 
         # adding new entries to r_db, r_db will contain old and new reactions
@@ -338,7 +337,7 @@ def update_known_reactions(
                        rank=None,
                        )
 
-        r_db.entries['{0:d}:{1}'.format(Index + i, Label)].item = rmg_reaction
+        r_db.entries[f'{(Index + i):d}:{Label}'].item = rmg_reaction
 
         # Adding new reactions to the new_r_db as well
         new_r_db.load_entry(Index + i,
@@ -360,8 +359,7 @@ def update_known_reactions(
                            rank=None,
                            )
 
-        new_r_db.entries['{0:d}:{1}'.format(
-            Index + i, Label)].item = rmg_reaction
+        new_r_db.entries[f'{(Index + i):d}:{Label}'].item = rmg_reaction
 
     need_to_add = list(set(need_to_add))
 
@@ -430,8 +428,7 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
 
         updated_known_species = rmgpy.data.base.Database().get_species(new_dict_path)
         unk_spec = get_unknown_species(reactions, updated_known_species)
-        assert len(unk_spec) == 0, '{} unknown species found after updating'.format(
-            len(unk_spec))
+        assert len(unk_spec) == 0, f'{len(unk_spec)} unknown species found after updating'
     else:
         updated_known_species = known_species
 
@@ -450,11 +447,10 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
         if len(reactions) < 5:
             for reaction in reactions:
                 logging.info(
-                    '{} saved and species dictionary updated'.format(reaction))
+                    f'{reaction} saved and species dictionary updated')
         else:
             logging.info(
-                'Reactions and their species saved to...\n{}\n...and...\n{}\n...respectively'.format(
-                    new_reactions_path, new_dict_path))
+                f'Reactions and their species saved to...\n{new_reactions_path}\n...and...\n{new_dict_path}\n...respectively')
     return
 
 ##########################################################################
@@ -480,7 +476,7 @@ def TS_Database_Update(families, path=None, auto_save=False):
         if family.upper() not in (family.upper()
                                   for family in acceptable_families):
             logging.warning(
-                '"{}" is not a known Kinetics Family'.format(family))
+                f'"{family}" is not a known Kinetics Family')
             families.remove(family)
 
     logging.info("Loading RMG Database...")
@@ -502,7 +498,7 @@ def TS_Database_Update(families, path=None, auto_save=False):
                           )
     except BaseException:
         logging.error(
-            "Failed to Load RMG Database at {}".format(database_path))
+            f"Failed to Load RMG Database at {database_path}")
 
     Databases = {family: DatabaseUpdater(
         family, rmg_database, path=path) for family in families}
@@ -586,21 +582,20 @@ class DatabaseUpdater:
         local_context = {'DistanceData': DistanceData}
 
         assert self.family in list(rmg_database.kinetics.families.keys(
-        )), "{} not found in kinetics families. Could not Load".format(family)
+        )), f"{family} not found in kinetics families. Could not Load"
         family = rmg_database.kinetics.families[self.family]
         ts_database.family = family
         ts_database.load(path, local_context, global_context)
         self.database = ts_database
         # Reaction must be a template reaction... found above
 
-        logging.info("Getting Training Data for {}".format(family))
+        logging.info(f"Getting Training Data for {family}")
         training_data = [
             (entry.item, entry.data.distances) for entry in list(
                 ts_database.depository.entries.values())]
 
         self.training_set = training_data
-        logging.info("Total Distances Count: {}".format(
-            len(self.training_set)))
+        logging.info(f"Total Distances Count: {len(self.training_set)}")
 
         return
 
@@ -624,7 +619,7 @@ class DatabaseUpdater:
 
         self.all_entries = all_entries
         logging.info("Updating Indices based off of Tree...")
-        logging.info("Tree size: {}".format(len(all_entries)))
+        logging.info(f"Tree size: {len(all_entries)}")
         return
 
     def set_group_info(self):
@@ -689,9 +684,8 @@ class DatabaseUpdater:
         self.group_ancestors = all_ancestors
         self.reaction_templates = all_reactant_groups
 
-        logging.info('Nodes to Update: {}'.format(len(self.nodes_to_update)))
-        logging.info("Reaction Templates: {}".format(
-            len(self.reaction_templates)))
+        logging.info(f'Nodes to Update: {len(self.nodes_to_update)}')
+        logging.info(f"Reaction Templates: {len(self.reaction_templates)}")
         return
 
     def initialize_entry_attributes(self):
@@ -764,7 +758,7 @@ class DatabaseUpdater:
                     if isinstance(group, str):
                         assert False, "Discrepancy between versions of RMG_Database and this one"
 
-                    self.group_comments[group].add('{0!s}'.format(template))
+                    self.group_comments[group].add(f'{template!s}')
 
         self.A = np.array(A)
         self.b = np.array(b)
@@ -855,8 +849,7 @@ class DatabaseUpdater:
                     else:
                         uncertainties = {}
                     # should be entry.*
-                    short_desc = "Fitted to {0} distances.\n".format(
-                        self.group_counts[entry][0])
+                    short_desc = f"Fitted to {self.group_counts[entry][0]} distances.\n"
                     long_desc = "\n".join(self.group_comments[entry])
                     distances_dict = {key: distance for key, distance in zip(
                         distance_keys, self.group_values[entry])}
@@ -872,7 +865,7 @@ class DatabaseUpdater:
                 else:
                     entry.data = DistanceData()
                     entry.long_desc = ''
-        logging.info("Finished Updating Entries for {}\n".format(self.family))
+        logging.info(f"Finished Updating Entries for {self.family}\n")
         return
 
     def save_database(self, path=None):
@@ -887,5 +880,5 @@ class DatabaseUpdater:
             path = os.path.join(self.path, 'TS_groups.py')
 
         self.database.save_transition_state_groups(path)
-        logging.info('Saved {} Database to: {}'.format(self.family, path))
+        logging.info(f'Saved {self.family} Database to: {path}')
         return
