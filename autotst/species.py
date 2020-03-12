@@ -168,7 +168,7 @@ class Species():
         for s in self.smiles:
             string += s + " / "
 
-        return '<Species "{}">'.format(string[:-3])
+        return f'<Species "{string[:-3]}">'
 
     @property
     def conformers(self):
@@ -240,7 +240,7 @@ class Conformer():
             self._symmetry_number = None
 
     def __repr__(self):
-        return '<Conformer "{}">'.format(self.smiles)
+        return f'<Conformer "{self.smiles}">'
 
     def copy(self):
         copy_conf = Conformer()
@@ -830,8 +830,7 @@ class Conformer():
 
         possible_mol_types = ["ase", "rmg", "rdkit"]
 
-        assert (mol_type.lower() in possible_mol_types), "Please specifiy a valid mol type. Valid types are {}".format(
-            possible_mol_types)
+        assert (mol_type.lower() in possible_mol_types), f"Please specifiy a valid mol type. Valid types are {possible_mol_types}"
 
         if mol_type.lower() == "rmg":
             conf = self.rdkit_molecule.GetConformers()[0]

@@ -162,5 +162,4 @@ class ChiralCenter():
         self.chirality = chirality
 
     def __repr__(self):
-        return '<ChiralCenter "{0} - {1}">'.format(
-            self.atom_index, self.chirality)
+        return f'<ChiralCenter "{self.atom_index} - {self.chirality}">'
