@@ -84,7 +84,7 @@ class Gaussian():
         self.settings = settings
         self.convergence = convergence
         convergence_options = ["", "verytight", "tight", "loose"]
-        assert self.convergence.lower() in convergence_options,"{} is not among the supported convergence options {}".format(self.convergence,convergence_options)
+        assert self.convergence.lower() in convergence_options,f"{self.convergence} is not among the supported convergence options {convergence_options}"
         self.directory = directory
 
         try: 
@@ -100,9 +100,9 @@ class Gaussian():
 
     def __repr__(self):
         if isinstance(self.conformer, TS):
-            return '<Gaussian Calculator {}>'.format(self.conformer.reaction_label)
+            return f'<Gaussian Calculator {self.conformer.reaction_label}>'
         elif isinstance(self.conformer, Conformer):
-            return '<Gaussian Calculator {}>'.format(self.conformer.smiles)
+            return f'<Gaussian Calculator {self.conformer.smiles}>'
         else:
             return '<Gaussian Calculator>'
 
@@ -135,7 +135,7 @@ class Gaussian():
         addsec = ""
         for bond in self.conformer.bonds:
             i, j = bond.atom_indices
-            addsec += "B {} {}\n".format(i + 1, j + 1)
+            addsec += f"B {(i + 1)} {(j + 1)}\n"
 
         i, j, k, l = torsion.atom_indices
         addsec += "D {} {} {} {} S {} {}\n".format(
@@ -144,18 +144,18 @@ class Gaussian():
         if isinstance(self.conformer, TS):
             extra = "Opt=(ts,CalcFC,ModRedun)"
             label = conformer_dir = self.conformer.reaction_label
-            label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
+            label += f"_{steps}by{int(step_size)}_{j}_{k}"
             conformer_type = "ts"
         elif isinstance(self.conformer, Conformer):
             label = conformer_dir = self.conformer.smiles
-            label += "_{}by{}_{}_{}".format(steps, int(step_size), j, k)
+            label += f"_{steps}by{int(step_size)}_{j}_{k}"
             conformer_type = "species"
             extra = "Opt=(CalcFC,ModRedun)"
 
         for locked_torsion in self.conformer.torsions:  # TODO: maybe doesn't work;
             if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
                 a, b, c, d = locked_torsion.atom_indices
-                addsec += 'D {0} {1} {2} {3} F\n'.format(a+1, b+1, c+1, d+1)
+                addsec += f'D {(a + 1)} {(b + 1)} {(c + 1)} {(d + 1)} F\n'
 
         self.conformer.rmg_molecule.update_multiplicity()
         mult = self.conformer.rmg_molecule.multiplicity
@@ -208,7 +208,7 @@ class Gaussian():
 
         self.conformer.rmg_molecule.update_multiplicity()
 
-        label = "{}_{}".format(self.conformer.smiles, self.conformer.index)
+        label = f"{self.conformer.smiles}_{self.conformer.index}"
 
         new_scratch = os.path.join(
             self.directory,
@@ -229,7 +229,7 @@ class Gaussian():
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra="opt=(calcfc,maxcycles=900,{}) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)".format(self.convergence),
+            extra=f"opt=(calcfc,maxcycles=900,{self.convergence}) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
@@ -273,13 +273,13 @@ class Gaussian():
             ind2 = self.conformer.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
             ind3 = self.conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
         else:
-            logging.error("Reaction family {} is not supported...".format(self.conformer.reaction_family))
+            logging.error(f"Reaction family {self.conformer.reaction_family} is not supported...")
             raise AssertionError
 
         combos = ""
-        combos += "{0} {1} F\n".format(ind1+1, ind2+1)
-        combos += "{0} {1} F\n".format(ind2+1, ind3+1)
-        combos += "{0} {1} {2} F".format(ind1+1, ind2+1, ind3+1)
+        combos += f"{(ind1 + 1)} {(ind2 + 1)} F\n"
+        combos += f"{(ind2 + 1)} {(ind3 + 1)} F\n"
+        combos += f"{(ind1 + 1)} {(ind2 + 1)} {(ind3 + 1)} F"
 
         ase_gaussian = ase.calculators.gaussian.Gaussian(
             mem=self.settings["mem"],
@@ -323,7 +323,7 @@ class Gaussian():
         addsec = ""
         for combo in list(itertools.combinations(indicies, 2)):
             a, b = combo
-            addsec += "{0} {1} F\n".format(a + 1, b + 1)
+            addsec += f"{(a + 1)} {(b + 1)} F\n"
 
         self.conformer.rmg_molecule.update_multiplicity()
 
@@ -576,5 +576,5 @@ class Gaussian():
                     if target_reaction.is_isomorphic(test_reaction):
                         logging.info("IRC calculation was successful!")
                         return True
-            logging.info("IRC calculation failed for {} :(".format(irc_path))
+            logging.info(f"IRC calculation failed for {irc_path} :(")
             return False
