@@ -113,13 +113,13 @@ class JobTest(unittest.TestCase):
         self.reaction.generate_reactants_and_products()
         conformer = list(self.reaction.reactants[0].conformers.values())[0][0]
         label = self.job.submit_conformer(conformer)
-        self.assertEqual(label, "{}_{}".format(conformer.smiles , conformer.index))
+        self.assertEqual(label, f"{conformer.smiles}_{conformer.index}")
 
     def test_submit_conformer2(self):
         self.reaction.generate_reactants_and_products()
         conformer = list(self.reaction.reactants[0].conformers.values())[0][0]
         label = self.job2.submit_conformer(conformer)
-        self.assertEqual(label, "{}_{}".format(conformer.smiles , conformer.index))
+        self.assertEqual(label, f"{conformer.smiles}_{conformer.index}")
 
     def test_calculate_conformer(self):
         conformer = Conformer(smiles='CC',index=0)
@@ -144,9 +144,9 @@ class JobTest(unittest.TestCase):
         for opt_type in ["shell", "center", "overall"]:
             label = self.job.submit_transitionstate(ts, opt_type=opt_type)
             if opt_type == "overall":
-                self.assertEqual(label, "{}_{}_{}".format(ts.reaction_label,ts.direction, ts.index))
+                self.assertEqual(label, f"{ts.reaction_label}_{ts.direction}_{ts.index}")
             else:
-                self.assertEqual(label, "{}_{}_{}_{}".format(ts.reaction_label,ts.direction, opt_type, ts.index))
+                self.assertEqual(label, f"{ts.reaction_label}_{ts.direction}_{opt_type}_{ts.index}")
 
     def test_submit_transitionstate2(self):
         ts = self.reaction.ts["forward"][0]
@@ -154,9 +154,9 @@ class JobTest(unittest.TestCase):
         for opt_type in ["shell", "center", "overall"]:
             label = self.job2.submit_transitionstate(ts, opt_type=opt_type)
             if opt_type == "overall":
-                self.assertEqual(label, "{}_{}_{}".format(ts.reaction_label,ts.direction, ts.index))
+                self.assertEqual(label, f"{ts.reaction_label}_{ts.direction}_{ts.index}")
             else:
-                self.assertEqual(label, "{}_{}_{}_{}".format(ts.reaction_label,ts.direction, opt_type, ts.index))
+                self.assertEqual(label, f"{ts.reaction_label}_{ts.direction}_{opt_type}_{ts.index}")
 
     def test_calculate_transitionstate(self):
         ts = self.reaction.ts["forward"][0]
