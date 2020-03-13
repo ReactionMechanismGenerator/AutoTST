@@ -91,7 +91,7 @@ class InputOutput():
 
         file_path = os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")
         if not os.path.exists(file_path):
-            logging.info("Sorry, we cannot find a valid file path for {}...".format(self.reaction))
+            logging.info(f"Sorry, we cannot find a valid file path for {self.reaction}...")
             self.qmdata = None
             return self.qmdata
         self.qmdata = QMData()
@@ -117,14 +117,14 @@ class InputOutput():
         """
         self.get_qmdata()
         if not self.qmdata:
-            logging.info("No QMData for {}...".format(self.reaction))
+            logging.info(f"No QMData for {self.reaction}...")
             return False
         file_path = self.get_ts_file_path()
-        logging.info("Saving TS result file {}".format(file_path))
+        logging.info(f"Saving TS result file {file_path}")
         with open(file_path, 'w') as results_file:
-            results_file.write('rxn_label = "{0!s}"\n'.format(self.reaction.label))
-            results_file.write('method = "{0!s}"\n'.format(self.method))
-            results_file.write("qm_data = {0!r}\n".format(self.qmdata))
+            results_file.write(f'rxn_label = "{self.reaction.label!s}\"\n')
+            results_file.write(f'method = "{self.method!s}\"\n')
+            results_file.write(f"qm_data = {self.qmdata!r}\n")
         return True
 
     def save_kinetics(self):
@@ -139,13 +139,13 @@ class InputOutput():
             logging.info("The reaction you're trying to save info for doesn't have any kinetic information... aborting.")
             return False
         file_path = self.get_kinetics_file_path()
-        logging.info("Saving kinetics data file {}".format(file_path))
+        logging.info(f"Saving kinetics data file {file_path}")
         with open(file_path, 'w') as result_file:
 
             assert self.reaction.rmg_reaction.kinetics, "No kinetics calclated for this reaction..."
-            result_file.write('method = "{0!s}"\n'.format(self.method))
+            result_file.write(f'method = "{self.method!s}\"\n')
             result_file.write(
-                'reaction = {0!r}\n'.format(self.reaction.rmg_reaction))
+                f'reaction = {self.reaction.rmg_reaction!r}\n')
         return True
 
     def read_ts_file(self, path=None):
@@ -161,11 +161,11 @@ class InputOutput():
         if not path:
             path = self.get_ts_file_path()
         if not os.path.exists(path):
-            logging.info("We could not file a ts file for {}".format(self.reaction.label))
+            logging.info(f"We could not file a ts file for {self.reaction.label}")
             return None
         try:
             with open(path) as result_file:
-                logging.info('Reading existing ts file {0}'.format(path))
+                logging.info(f'Reading existing ts file {path}')
                 global_context = {'__builtins__': None}
                 local_context = {
                     '__builtins__': None,
@@ -177,23 +177,23 @@ class InputOutput():
                 }
                 exec(result_file.read(), global_context, local_context)
         except IOError as e:
-            logging.info("Couldn't read ts file {0}".format(path))
+            logging.info(f"Couldn't read ts file {path}")
             return None
         except (NameError, TypeError, SyntaxError) as e:
-            logging.error('The ts file "{0}" was invalid:'.format(path))
+            logging.error(f'The ts file "{path}" was invalid:')
             logging.exception(e)
             return None
         if 'rxn_label' not in local_context:
             logging.error(
-                'The ts file "{0}" did not contain a rxn_label.'.format(path))
+                f'The ts file "{path}" did not contain a rxn_label.')
             return None
         if 'method' not in local_context:
             logging.error(
-                'The ts file "{0}" did not contain a method.'.format(path))
+                f'The ts file "{path}" did not contain a method.')
             return None
         if 'qm_data' not in local_context:
             logging.error(
-                'The ts file "{0}" did not contain thermo_data.'.format(path))
+                f'The ts file "{path}" did not contain thermo_data.')
             return None
         return local_context
 
@@ -210,11 +210,11 @@ class InputOutput():
         if not path:
             path = self.get_kinetics_file_path()
         if not os.path.exists(path):
-            logging.info("We could not file a kinetics file for {}".format(self.reaction.label))
+            logging.info(f"We could not file a kinetics file for {self.reaction.label}")
             return None
         try:
             with open(path) as result_file:
-                logging.info('Reading existing kinetics file {0}'.format(path))
+                logging.info(f'Reading existing kinetics file {path}')
                 global_context = {'__builtins__': None}
                 local_context = {
                     '__builtins__': None,
@@ -236,18 +236,18 @@ class InputOutput():
                 }
                 exec(result_file.read(), global_context, local_context)
         except IOError as e:
-            logging.error("Couldn't read kinetics file {0}".format(path))
+            logging.error(f"Couldn't read kinetics file {path}")
             return None
         except (NameError, TypeError, SyntaxError) as e:
-            logging.error('The kinetics file "{0}" was invalid:'.format(path))
+            logging.error(f'The kinetics file "{path}" was invalid:')
             logging.exception(e)
             return None
         if 'method' not in local_context:
             logging.error(
-                'The kinetics file "{0}" did not contain a method.'.format(path))
+                f'The kinetics file "{path}" did not contain a method.')
             return None
         if 'Reaction' not in local_context:
             logging.error(
-                'The kinetics file "{0}" did not contain a reaction.'.format(path))
+                f'The kinetics file "{path}" did not contain a reaction.')
             return None
         return local_context

@@ -69,7 +69,7 @@ class VibrationalAnalysisTest(unittest.TestCase):
             "ts",
             self.ts.reaction_label,
             "conformers",
-            "{}_{}_{}.log".format(self.ts.reaction_label, self.ts.direction, self.ts.index)
+            f"{self.ts.reaction_label}_{self.ts.direction}_{self.ts.index}.log"
         )
 
         self.assertEqual(log_file, actual_path)

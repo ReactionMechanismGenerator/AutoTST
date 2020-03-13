@@ -88,12 +88,11 @@ class QMData():
         object.
         """
         string = 'QMData('
-        string += "ground_state_degeneracy={0!r}, ".format(
-            self.ground_state_degeneracy)
-        string += "number_of_atoms={0!r}, ".format(self.number_of_atoms)
-        string += "steric_energy={0!r}, ".format(self.steric_energy)
-        string += "molecular_mass={0!r}, ".format(self.molecular_mass)
-        string += "energy={0!r}, ".format(self.energy)
+        string += f"ground_state_degeneracy={self.ground_state_degeneracy!r}, "
+        string += f"number_of_atoms={self.number_of_atoms!r}, "
+        string += f"steric_energy={self.steric_energy!r}, "
+        string += f"molecular_mass={self.molecular_mass!r}, "
+        string += f"energy={self.energy!r}, "
         string += "atomic_numbers={0}, ".format(
             "{0!r}".format(self.atomic_numbers).replace(" ", ""))
         string += "rotational_constants={0}, ".format("{0}".format(
@@ -102,7 +101,7 @@ class QMData():
             self.atom_coords).replace("\n", "").replace(" ", ""))
         string += "frequencies={0}, ".format("{0}".format(
             self.frequencies).replace("\n", "").replace(" ", ""))
-        string += "source={0!r}, ".format(self.source)
+        string += f"source={self.source!r}, "
         string = string[:-2] + ')'
         return string
 
@@ -144,20 +143,19 @@ class DistanceData():
 
         strings.append("distances={")
         for key in sorted(self.distances.keys()):
-            strings.append("{0!r}: {1:.6f},".format(key, self.distances[key]))
+            strings.append(f"{key!r}: {self.distances[key]:.6f},")
         strings.append("}")
 
         if self.uncertainties is not None:
             strings.append(", uncertainties={")
             for key in sorted(self.uncertainties.keys()):
-                strings.append("{0!r}: {1:.6f},".format(
-                    key, self.uncertainties[key]))
+                strings.append(f"{key!r}: {self.uncertainties[key]:.6f},")
             strings.append("}")
 
         if self.method:
-            strings.append(", method={0!r}".format(self.method))
+            strings.append(f", method={self.method!r}")
         if self.comment:
-            strings.append(", comment={0!r}".format(self.comment))
+            strings.append(f", comment={self.comment!r}")
         strings.append(")")
         return ''.join(strings)
 
@@ -165,8 +163,7 @@ class DistanceData():
         """Adds the `other` distances to these."""
         assert len(
             self.distances) == len(
-            other.distances), "self and other must have the same size dictionary of distances, but self={0!r} and other={1!r}".format(
-            self, other)
+            other.distances), f"self and other must have the same size dictionary of distances, but self={self} and other={other}"
         for key, value in other.distances.items():
             self.distances[key] += value
         if self.uncertainties and other.uncertainties:
@@ -203,18 +200,18 @@ class TransitionStates(rmgpy.data.base.Database):
         fpath = os.path.join(path, 'TS_training', 'reactions.py')
 
         logging.debug(
-            "Loading transitions state family training set from {0}".format(fpath))
+            f"Loading transitions state family training set from {fpath}")
 
         depository = TransitionStateDepository(
-            label='{0}/TS_training'.format(path.split('/')[-1]))  # 'intra_H_migration/TS_training')
+            label=f"{path.split('/')[-1]}/TS_training")  # 'intra_H_migration/TS_training')
         depository.load(fpath, local_context, global_context)
         self.depository = depository
 
         fpath = os.path.join(path, 'TS_groups.py')
         logging.info(
-            "Loading transitions state family groups from {0}".format(fpath))
+            f"Loading transitions state family groups from {fpath}")
         # 'intra_H_migration/TS_groups')
-        groups = TSGroups(label='{0}/TS_groups'.format(path.split('/')[-1]))
+        groups = TSGroups(label=f"{path.split('/')[-1]}/TS_groups")
         groups.load(fpath, local_context, global_context)
 
         self.family.forward_template.reactants = [
@@ -245,8 +242,8 @@ class TransitionStates(rmgpy.data.base.Database):
         f = codecs.open(path, 'w', 'utf-8')
         f.write('#!/usr/bin/env python\n')
         f.write('# encoding: utf-8\n\n')
-        f.write('name = "{0}"\n'.format(self.groups.name))
-        f.write('short_desc = u"{0}"\n'.format(self.groups.short_desc))
+        f.write(f'name = "{self.groups.name}\"\n')
+        f.write(f'short_desc = u"{self.groups.short_desc}\"\n')
         f.write('long_desc = u"""\n')
         f.write(self.groups.long_desc)
         f.write('\n"""\n\n')
@@ -288,9 +285,9 @@ class TransitionStates(rmgpy.data.base.Database):
             return [(key, efficiencies[key]) for key in keys]
 
         f.write('entry(\n')
-        f.write('    index = {0:d},\n'.format(entry.index))
+        f.write(f'    index = {entry.index:d},\n')
         if entry.label != '':
-            f.write('    label = "{0}",\n'.format(entry.label))
+            f.write(f'    label = "{entry.label}",\n')
 
         # Entries for kinetic rules, libraries, training reactions
         # and depositories will have a rmgpy.reaction.Reaction object for its item
@@ -299,23 +296,17 @@ class TransitionStates(rmgpy.data.base.Database):
             # kinetic rules would have a Group object for its reactants instead of Species
             if isinstance(entry.item.reactants[0], rmgpy.species.Species):
                 # Add degeneracy if the reaction is coming from a depository or kinetics library
-                f.write('    degeneracy = {0:.1f},\n'.format(
-                    entry.item.degeneracy))
+                f.write(f'    degeneracy = {entry.item.degeneracy:.1f},\n')
                 if entry.item.duplicate:
-                    f.write('    duplicate = {0!r},\n'.format(
-                        entry.item.duplicate))
+                    f.write(f'    duplicate = {entry.item.duplicate!r},\n')
                 if not entry.item.reversible:
-                    f.write('    reversible = {0!r},\n'.format(
-                        entry.item.reversible))
+                    f.write(f'    reversible = {entry.item.reversible!r},\n')
                 if entry.item.allow_pdep_route:
-                    f.write('    allow_pdep_route = {0!r},\n'.format(
-                        entry.item.allow_pdep_route))
+                    f.write(f'    allow_pdep_route = {entry.item.allow_pdep_route},\n')
                 if entry.item.elementary_high_p:
-                    f.write('    elementary_high_p = {0!r},\n'.format(
-                        entry.item.elementary_high_p))
+                    f.write(f'    elementary_high_p = {entry.item.elementary_high_p!r},\n')
                 if entry.item.allow_max_rate_violation:
-                    f.write('    allow_max_rate_violation = {0!r},\n'.format(
-                        entry.item.allow_max_rate_violation))
+                    f.write(f'    allow_max_rate_violation = {entry.item.allow_max_rate_violation!r},\n')
             # Entries for groups with have a group or logicNode for its item
         elif isinstance(entry.item, rmgpy.molecule.Group):
             f.write('    group = \n')
@@ -323,16 +314,16 @@ class TransitionStates(rmgpy.data.base.Database):
             f.write(entry.item.to_adjacency_list())
             f.write('""",\n')
         elif isinstance(entry.item, rmgpy.data.base.LogicNode):
-            f.write('    group = "{0}",\n'.format(entry.item))
+            f.write(f'    group = "{entry.item}",\n')
         else:
             raise rmgpy.data.base.DatabaseError(
-                "Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
+                f"Encountered unexpected item of type {entry.item.__class__} while saving database.")
 
         # Write distances
         if isinstance(entry.data, DistanceData):
             data_str = arkane.output.prettify(repr(entry.data))
             data_str = data_str.replace('\n', '\n    ')
-            f.write('    distances = {},\n'.format(data_str))
+            f.write(f'    distances = {data_str},\n')
         else:
             assert False
 
@@ -340,15 +331,15 @@ class TransitionStates(rmgpy.data.base.Database):
         if entry.reference is not None:
             reference = entry.reference.to_pretty_repr()
             lines = reference.splitlines()
-            f.write('    reference = {0}\n'.format(lines[0]))
+            f.write(f'    reference = {lines[0]}\n')
             for line in lines[1:-1]:
-                f.write('    {0}\n'.format(line))
-            f.write('    ),\n'.format(lines[0]))
+                f.write(f'    {line}\n')
+            f.write('    ),\n')
 
         if entry.reference_type != "":
-            f.write('    reference_type = "{0}",\n'.format(entry.reference_type))
+            f.write(f'    reference_type = "{entry.reference_type}",\n')
         if entry.rank is not None:
-            f.write('    rank = {0},\n'.format(entry.rank))
+            f.write(f'    rank = {entry.rank},\n')
 
         if entry.short_desc.strip() != '':
             f.write('    short_desc = u"""')
@@ -390,7 +381,7 @@ class TransitionStateDepository(rmgpy.data.base.Database):
                           short_desc=short_desc, long_desc=long_desc)
 
     def __repr__(self):
-        return '<TransitionStateDepository "{0}">'.format(self.label)
+        return f'<TransitionStateDepository "{self.label}">'
 
     def load(self, path, local_context=None, global_context=None):
 
@@ -420,8 +411,7 @@ class TransitionStateDepository(rmgpy.data.base.Database):
                 reactant = reactant.strip()
                 if reactant not in species_dict:
                     raise rmgpy.data.base.DatabaseError(
-                        'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(
-                            reactant, self.label))
+                        f'RMGSpecies {reactant} in kinetics depository {self.label} is missing from its dictionary.')
                 # For some reason we need molecule objects in the depository
                 # rather than species objects
                 rxn.reactants.append(species_dict[reactant])
@@ -429,16 +419,14 @@ class TransitionStateDepository(rmgpy.data.base.Database):
                 product = product.strip()
                 if product not in species_dict:
                     raise rmgpy.data.base.DatabaseError(
-                        'RMGSpecies {0} in kinetics depository {1} is missing from its dictionary.'.format(
-                            product, self.label))
+                        f'RMGSpecies {product} in kinetics depository {self.label} is missing from its dictionary.')
                 # For some reason we need molecule objects in the depository
                 # rather than species objects
                 rxn.products.append(species_dict[product])
 
             if not rxn.is_balanced():
                 raise rmgpy.data.base.DatabaseError(
-                    'Reaction {0} in kinetics depository {1} was not balanced! Please reformulate.'.format(
-                        rxn, self.label))
+                    f'Reaction {rxn} in kinetics depository {self.label} was not balanced! Please reformulate.')
 
     def load_entry(self,
                   index,
@@ -474,7 +462,7 @@ class TransitionStateDepository(rmgpy.data.base.Database):
             long_desc=long_desc.strip(),
             rank=rank,
         )
-        self.entries['{0:d}:{1}'.format(index, label)] = entry
+        self.entries[f'{index:d}:{label}'] = entry
         return entry
 
     def save_entry(self, f, entry):
@@ -499,9 +487,9 @@ class TransitionStateDepository(rmgpy.data.base.Database):
             return [(key, efficiencies[key]) for key in keys]
 
         f.write('entry(\n')
-        f.write('    index = {0:d},\n'.format(entry.index))
+        f.write(f'    index = {entry.index:d},\n')
         if entry.label != '':
-            f.write('    label = "{0}",\n'.format(entry.label))
+            f.write(f'    label = "{entry.label}",\n')
 
         # Entries for kinetic rules, libraries, training reactions
         # and depositories will have a Reaction object for its item
@@ -510,23 +498,17 @@ class TransitionStateDepository(rmgpy.data.base.Database):
             # kinetic rules would have a Group object for its reactants instead of Species
             if isinstance(entry.item.reactants[0], rmgpy.species.Species):
                 # Add degeneracy if the reaction is coming from a depository or kinetics library
-                f.write('    degeneracy = {0:.1f},\n'.format(
-                    entry.item.degeneracy))
+                f.write(f'    degeneracy = {entry.item.degeneracy:.1f},\n')
                 if entry.item.duplicate:
-                    f.write('    duplicate = {0!r},\n'.format(
-                        entry.item.duplicate))
+                    f.write(f'    duplicate = {entry.item.duplicate!r},\n')
                 if not entry.item.reversible:
-                    f.write('    reversible = {0!r},\n'.format(
-                        entry.item.reversible))
+                    f.write(f'    reversible = {entry.item.reversible!r},\n')
                 if entry.item.allow_pdep_route:
-                    f.write('    allow_pdep_route = {0!r},\n'.format(
-                        entry.item.allow_pdep_route))
+                    f.write(f'    allow_pdep_route = {entry.item.allow_pdep_route!r},\n')
                 if entry.item.elementary_high_p:
-                    f.write('    elementary_high_p = {0!r},\n'.format(
-                        entry.item.elementary_high_p))
+                    f.write(f'    elementary_high_p = {entry.item.elementary_high_p!r},\n')
                 if entry.item.allow_max_rate_violation:
-                    f.write('    allow_max_rate_violation = {0!r},\n'.format(
-                        entry.item.allow_max_rate_violation))
+                    f.write(f'    allow_max_rate_violation = {entry.item.allow_max_rate_violation!r},\n')
             # Entries for groups with have a group or logicNode for its item
         elif isinstance(entry.item, rmgpy.molecule.Group):
             f.write('    group = \n')
@@ -534,10 +516,10 @@ class TransitionStateDepository(rmgpy.data.base.Database):
             f.write(entry.item.to_adjacency_list())
             f.write('""",\n')
         elif isinstance(entry.item, rmgpy.data.base.LogicNode):
-            f.write('    group = "{0}",\n'.format(entry.item))
+            f.write(f'    group = "{entry.item}",\n')
         else:
             raise rmgpy.data.base.DatabaseError(
-                "Encountered unexpected item of type {0} while saving database.".format(entry.item.__class__))
+                f"Encountered unexpected item of type {entry.item.__class__} while saving database.")
 
         # Write distances
         if isinstance(entry.data, DistanceData):
@@ -545,7 +527,7 @@ class TransitionStateDepository(rmgpy.data.base.Database):
 
             data_str = data_str.replace('\n', '\n   ')
 
-            f.write('    distances = {},\n'.format(data_str))
+            f.write(f'    distances = {data_str},\n')
         else:
             assert False
 
@@ -553,15 +535,15 @@ class TransitionStateDepository(rmgpy.data.base.Database):
         if entry.reference is not None:
             reference = entry.reference.to_pretty_repr()
             lines = reference.splitlines()
-            f.write('    reference = {0}\n'.format(lines[0]))
+            f.write(f'    reference = {lines[0]}\n')
             for line in lines[1:-1]:
-                f.write('    {0}\n'.format(line))
-            f.write('    ),\n'.format(lines[0]))
+                f.write(f'    {line}\n')
+            f.write('    ),\n')
 
         if entry.reference_type != "":
-            f.write('    reference_type = "{0}",\n'.format(entry.reference_type))
+            f.write(f'    reference_type = "{entry.reference_type}",\n')
         if entry.rank is not None:
-            f.write('    rank = {0},\n'.format(entry.rank))
+            f.write(f'    rank = {entry.rank},\n')
 
         if entry.short_desc.strip() != '':
             f.write('    short_desc = u"""')
@@ -611,7 +593,7 @@ class TSGroups(rmgpy.data.base.Database):
         self.num_reactants = 0
 
     def __repr__(self):
-        return '<TSGroups "{0}">'.format(self.label)
+        return f'<TSGroups "{self.label}">'
 
     def load_entry(
             self,
@@ -707,8 +689,7 @@ class TSGroups(rmgpy.data.base.Database):
         # matched
         if len(template) != len(forward_template):
             logging.warning(
-                'Unable to find matching template for reaction {0} in reaction family {1}'.format(
-                    str(reaction), str(self)))
+                f'Unable to find matching template for reaction {reactin!s} in reaction family {self!s}')
             logging.warning(" Trying to match " + str(forward_template))
             logging.warning(" Matched " + str(template))
             print(str(self), template, forward_template)
@@ -746,14 +727,14 @@ class TSGroups(rmgpy.data.base.Database):
             while not entry.data.distances and entry not in self.top:
                 # Keep climbing tree until you find a (non-top) node with
                 # distances.
-                comment_line += "{0} >> ".format(entry.label)
+                comment_line += f"{entry.label} >> "
                 entry = entry.parent
             if entry.data.distances and entry not in self.top:
                 ts_distances.add(entry.data)
                 comment_line += "{0} ({1})".format(entry.label,
                                                    entry.long_desc.split('\n')[0])
             elif entry in self.top:
-                comment_line += "{0} (Top node)".format(entry.label)
+                comment_line += f"{entry.label} (Top node)"
             ts_distances.comment += comment_line + '\n'
 
         return ts_distances
@@ -837,12 +818,11 @@ class TSGroups(rmgpy.data.base.Database):
                     for group in groups:
                         if isinstance(group, str):
                             group = self.entries[group]
-                        group_comments[group].add("{0!s}".format(template))
+                        group_comments[group].add(f"{template!s}")
 
             if len(A) == 0:
                 logging.warning(
-                    'Unable to fit kinetics groups for family "{0}"; no valid data found.'.format(
-                        self.label))
+                    f'Unable to fit kinetics groups for family "{self.label}"; no valid data found.')
                 return
             A = np.array(A)
             b = np.array(b)
@@ -915,8 +895,7 @@ class TSGroups(rmgpy.data.base.Database):
                     else:
                         uncertainties = {}
                     # should be entry.*
-                    short_desc = "Fitted to {0} distances.\n".format(
-                        group_counts[entry][0])
+                    short_desc = f"Fitted to {group_counts[entry][0]} distances.\n"
                     long_desc = "\n".join(group_comments[entry.label])
                     distances_dict = {key: distance for key, distance in zip(
                         distance_keys, group_values[entry])}

@@ -176,11 +176,11 @@ class StatMech():
         for smiles, confs in list(species.conformers.items()):
             if os.path.exists(os.path.join(self.directory, "species", smiles, smiles + ".log")):
                 logging.info(
-                    "Lowest energy conformer log file exists for {}".format(smiles))
+                    f"Lowest energy conformer log file exists for {smiles}")
                 self.write_conformer_file(conformer=confs[0])
             else:
                 logging.info(
-                    "Lowest energy conformer log file DOES NOT exist for {}".format(smiles))
+                    f"Lowest energy conformer log file DOES NOT exist for {smiles}")
 
     def write_conformer_file(self, conformer):
         """
@@ -229,14 +229,14 @@ class StatMech():
         atom_dict = self.get_atoms(conformer=conformer)  # Fix this
 
         for atom, count in atom_dict.items():
-            output.append("    '{0}': {1},".format(atom, count))
+            output.append(f"    '{atom}': {count},")
         output = output + ['}', '']
 
         bond_dict = self.get_bonds(conformer=conformer) 
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.items():
-                output.append("    '{0}': {1},".format(bond_type, num))
+                output.append(f"    '{bond_type}': {num},")
             output.append("}")
         else:
             output.append('bonds = {}')
@@ -244,22 +244,21 @@ class StatMech():
         external_symmetry = conformer.calculate_symmetry_number()
 
         output += ["",
-                   "linear = {}".format(conformer.rmg_molecule.is_linear()),
+                   f"linear = {conformer.rmg_molecule.is_linear()}",
                    "",
-                   "externalSymmetry = {}".format(external_symmetry),
+                   f"externalSymmetry = {external_symmetry}",
                    "",
-                   "spinMultiplicity = {}".format(conformer.rmg_molecule.multiplicity),
+                   f"spinMultiplicity = {conformer.rmg_molecule.multiplicity}",
                    "",
                    "opticalIsomers = 1",
                    ""]
 
-        output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
-            self.model_chemistry, label), "}", ""]  # fix this
+        output += ["energy = {", f"    '{self.model_chemistry}': Log('{label}.log'),", "}", ""]  # fix this
 
-        output += ["geometry = Log('{0}.log')".format(label), ""]
+        output += [f"geometry = Log('{label}.log')", ""]
 
         output += [
-            "frequencies = Log('{0}.log')".format(label), ""]
+            f"frequencies = Log('{label}.log')", ""]
 
         """
         TODO: add rotor information @carl
@@ -306,7 +305,7 @@ class StatMech():
                 "ts",
                 conformer.reaction_label,
                 "torsions",
-                comformer.reaction_label + "_36by10_{0}_{1}.log".format(j, k)
+                comformer.reaction_label + f"_36by10_{j}_{k}.log"
             )
         else:
             tor_log = os.path.join(
@@ -314,12 +313,12 @@ class StatMech():
                 "species",
                 conformer.smiles,
                 "torsions",
-                conformer.smiles + '_36by10_{0}_{1}.log'.format(j, k)
+                conformer.smiles + f'_36by10_{j}_{k}.log'
             )
 
         if not os.path.exists(tor_log):
             logging.info(
-                "Torsion log file does not exist for {}".format(torsion))
+                f"Torsion log file does not exist for {torsion}")
             return ""
 
         top_IDs = []
@@ -330,8 +329,7 @@ class StatMech():
         # Adjusted to start from 1 instead of 0
         top_IDs_adj = [ID+1 for ID in top_IDs]
 
-        info = "     HinderedRotor(scanLog=Log('{0}'), pivots={1}, top={2}, fit='fourier'),".format(
-            tor_log, tor_center_adj, top_IDs_adj)
+        info = f"     HinderedRotor(scanLog=Log('{tor_log}'), pivots={tor_center_adj}, top={top_IDs_adj}, fit='fourier'),"
 
         return info
 
@@ -380,14 +378,14 @@ class StatMech():
         atom_dict = self.get_atoms(conformer=transitionstate)  # need to fix
 
         for atom, count in atom_dict.items():
-            output.append("    '{0}': {1},".format(atom, count))
+            output.append(f"    '{atom}': {count},")
         output = output + ['}', '']
 
         bond_dict = self.get_bonds(conformer=transitionstate)  # need to fix
         if bond_dict != {}:
             output.append('bonds = {')
             for bond_type, num in bond_dict.items():
-                output.append("    '{0}': {1},".format(bond_type, num))
+                output.append(f"    '{bond_type}': {num},")
 
             output.append("}")
         else:
@@ -399,21 +397,19 @@ class StatMech():
         output += ["",
                    "linear = False",
                    "",
-                   "externalSymmetry = {}".format(external_symmetry),
+                   f"externalSymmetry = {external_symmetry}",
                    "",
-                   "spinMultiplicity = {}".format(
-                       transitionstate.rmg_molecule.multiplicity),
+                   f"spinMultiplicity = {transitionstate.rmg_molecule.multiplicity}",
                    "",
                    "opticalIsomers = 1",
                    ""]
 
-        output += ["energy = {", "    '{0}': Log('{1}.log'),".format(
-            self.model_chemistry, label), "}", ""]  # fix this
+        output += ["energy = {", f"    '{self.model_chemistry}': Log('{label}.log'),", "}", ""]  # fix this
 
-        output += ["geometry = Log('{0}.log')".format(label), ""]
+        output += [f"geometry = Log('{label}.log')", ""]
 
         output += [
-            "frequencies = Log('{0}.log')".format(label), ""]
+            f"frequencies = Log('{label}.log')", ""]
 
         output += ["rotors = []", ""]  # TODO: Fix this
 
@@ -442,10 +438,8 @@ class StatMech():
             "#!/usr/bin/env python",
             "# -*- coding: utf-8 -*-",
             "",
-            'modelChemistry = "{0}"'.format(
-                self.model_chemistry),  # fix this
-            "frequencyScaleFactor = {0}".format(
-                self.freq_scale_factor),  # fix this
+            f'modelChemistry = "{self.model_chemistry}"',  # fix this
+            f"frequencyScaleFactor = {self.freq_scale_factor}",  # fix this
             "useHinderedRotors = False",  # fix this @carl
             "useBondCorrections = False",
             ""]
@@ -463,7 +457,7 @@ class StatMech():
                                         smiles, smiles + ".log")
                     if not os.path.exists(path):
                         logging.info(
-                            "It looks like {} doesn't have any optimized geometries".format(smiles))
+                            f"It looks like {smiles} doesn't have any optimized geometries")
                         continue
 
                     parser = cclib.io.ccread(path, loglevel=logging.ERROR)
@@ -478,7 +472,7 @@ class StatMech():
                                     smiles, smiles + ".log")
                 if not os.path.exists(path):
                     logging.info(
-                        "It looks like {} doesn't have any optimized geometries".format(smiles))
+                        f"It looks like {smiles} doesn't have any optimized geometries")
                     continue
 
                 parser = cclib.io.ccread(path, loglevel=logging.ERROR)
@@ -486,14 +480,14 @@ class StatMech():
                 lowest_energy_conf = list(react.conformers.values())[0][0]
 
             # r_smiles.append(lowest_energy_conf.smiles)
-            r_smiles.append("react_{}".format(i))
+            r_smiles.append(f"react_{i}")
             label = lowest_energy_conf.smiles
             if label in labels:
                 continue
             else:
                 labels.append(label)
-            line = "species('{0}', '{1}', structure=SMILES('{2}'))".format(
-                "react_{}".format(i), os.path.join(self.directory, "species", label, label + ".py"), label)
+            p = os.path.join(self.directory, "species", label, label + ".py")
+            line = f"species('react_{i}', '{p}', structure=SMILES('{label}'))"
             top.append(line)
 
         for i, prod in enumerate(self.reaction.products):
@@ -507,7 +501,7 @@ class StatMech():
                                         smiles, smiles + ".log")
                     if not os.path.exists(path):
                         logging.info(
-                            "It looks like {} doesn't have any optimized geometries".format(smiles))
+                            f"It looks like {smiles} doesn't have any optimized geometries")
                         continue
 
                     parser = cclib.io.ccread(path, loglevel=logging.ERROR)
@@ -522,7 +516,7 @@ class StatMech():
                                     smiles, smiles + ".log")
                 if not os.path.exists(path):
                     logging.info(
-                        "It looks like {} doesn't have any optimized geometries".format(smiles))
+                        f"It looks like {smiles} doesn't have any optimized geometries")
                     continue
 
                 parser = cclib.io.ccread(path, loglevel=logging.ERROR)
@@ -530,33 +524,30 @@ class StatMech():
                 lowest_energy_conf = list(prod.conformers.values())[0][0]
 
             # p_smiles.append(lowest_energy_conf.smiles)
-            p_smiles.append("prod_{}".format(i))
+            p_smiles.append(f"prod_{i}")
             label = lowest_energy_conf.smiles
             if label in labels:
                 continue
             else:
                 labels.append(label)
-            line = "species('{0}', '{1}', structure=SMILES('{2}'))".format(
-                "prod_{}".format(i), os.path.join(self.directory, "species", label, label + ".py"), label)
+            p = os.path.join(self.directory, "species", label, label + ".py")
+            line = f"species('prod_{i}', '{p}', structure=SMILES('{label}'))"
             top.append(line)
-
-        line = "transitionState('TS', '{0}')".format(os.path.join(
-            self.directory, "ts", self.reaction.label, self.reaction.label + ".py"))
+        p = os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".py")
+        line = f"transitionState('TS', '{p}')"
         top.append(line)
 
         line = ["",
                 "reaction(",
-                "    label = '{0}',".format(self.reaction.label),
-                "    reactants = {},".format(
-                    r_smiles),
-                "    products = {},".format(
-                    p_smiles),
+                f"    label = '{self.reaction.label}',",
+                f"    reactants = {r_smiles},",
+                f"    products = {p_smiles},",
                 "    transitionState = 'TS',",
                 "    tunneling = 'Eckart',",
                 ")",
                 "",
                 "statmech('TS')",
-                "kinetics('{0}')".format(self.reaction.label)]
+                f"kinetics('{self.reaction.label}')"]
 
         top += line
 
@@ -587,16 +578,13 @@ class StatMech():
             "#!/usr/bin/env python",
             "# -*- coding: utf-8 -*-",
             "",
-            'modelChemistry = "{0}"'.format(
-                model_chemistry),  # fix this
-            "frequencyScaleFactor = {0}".format(
-                freq_scale_factor),  # fix this
+            f'modelChemistry = "{model_chemistry}"',  # fix this
+            f"frequencyScaleFactor = {freq_scale_factor}",  # fix this
             "useHinderedRotors = False",  # fix this @carl
             "useBondCorrections = False",
             ""]
-
-        line = "species('species', '{1}', structure=SMILES('{2}'))".format(
-            "species", os.path.join(conformer.smiles + ".py"), conformer.smiles)
+        p = os.path.join(conformer.smiles + ".py")
+        line = f"species('species', '{f}', structure=SMILES('{conformer.smiles}'))"
         top.append(line)
 
         top.append("statmech('species')")
