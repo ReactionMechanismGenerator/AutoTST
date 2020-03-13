@@ -73,7 +73,7 @@ class ThermoJob(Job):
         self.torsion_conformer = None
 
     def __repr__(self):
-        return "< ThermoJob '{}'>".format(self.label)
+        return f"< ThermoJob '{self.label}'>"
 
     # def _submit_conformer(self, conformer, calc, restart=False):
     #     """
@@ -158,7 +158,7 @@ class ThermoJob(Job):
         calc = self.calculator.get_conformer_calc()
         log_path = os.path.join(calc.scratch,calc.label + ".log")
         logging.info(
-            "Submitting conformer calculation for {}".format(calc.label))
+            f"Submitting conformer calculation for {calc.label}")
 
         label = self.submit(conformer,calc)
         time.sleep(15)
@@ -169,7 +169,7 @@ class ThermoJob(Job):
 
         if not complete:
             logging.info(
-                "It seems that the file never completed for {} completed, running it again".format(calc.label))
+                f"It seems that the file never completed for {calc.label} completed, running it again")
             calc.parameters["time"] = "24:00:00"
             calc.parameters["mem"] = "60GB"
             ase_calculator.nprocshared["nprocshared"] = 8
@@ -187,7 +187,7 @@ class ThermoJob(Job):
 
         if not complete: # try again
             logging.info(
-                "It appears that {} was killed prematurely".format(calc.label))
+                f"It appears that {calc.label} was killed prematurely")
             calc.parameters["time"] = "24:00:00"
             calc.parameters["mem"] = "60GB"
             calc.parameters["nprocshared"] = 8
@@ -202,18 +202,18 @@ class ThermoJob(Job):
                 return check_isomorphic(conformer=conformer,log_path=log_path)
             elif not complete:
                 logging.info(
-                    "It appears that {} was killed prematurely or never completed :(".format(calc.label))
+                    f"It appears that {calc.label} was killed prematurely or never completed :(")
                 return False
 
         if not converged:
 
             if self.calculator.settings["convergence"] not in ["verytight", "tight"]:
-                logging.info("{} did not converge".format(calc.label))
+                logging.info(f"{calc.label} did not converge")
                 return False
     
-            logging.info("{} did not converge, trying it as a looser convergence criteria".format(calc.label))
+            logging.info(f"{calc.label} did not converge, trying it as a looser convergence criteria")
 
-            logging.info("Resubmitting {} with default convergence criteria".format(conformer))
+            logging.info(f"Resubmitting {conformer} with default convergence criteria")
             try:
                 atoms = read_log(log_path)
                 conformer._ase_molecule = atoms
@@ -233,18 +233,18 @@ class ThermoJob(Job):
 
             if not os.path.exists(log_path):
                 logging.info(
-                "It seems that {}'s loose optimization was never run...".format(calc.label))
+                f"It seems that {calc.label}'s loose optimization was never run...")
                 return False
 
             complete, converged = self.calculator.verify_output_file(log_path)
 
             if not complete:
                 logging.info(
-                "It appears that {} was killed prematurely or never completed :(".format(calc.label))
+                f"It appears that {calc.label} was killed prematurely or never completed :(")
                 return False
 
             elif not converged:
-                logging.info("{} failed second QM optimization :(".format(calc.label))
+                logging.info(f"{calc.label} failed second QM optimization :(")
                 return False
 
             else:
@@ -267,7 +267,7 @@ class ThermoJob(Job):
                 method_name,
                 conformer.smiles,
                 "sp")
-            calc.label = "{}_{}".format(conformer.smiles, sp_method)
+            calc.label = f"{conformer.smiles}_{sp_method}"
             label = calc.label
             log_path = os.path.join(calc.scratch,calc.label + ".log")
             slurm_path = os.path.join(calc.scratch,calc.label + ".slurm.log")
@@ -279,13 +279,13 @@ class ThermoJob(Job):
                 conformer.smiles,
                 "sp"))
             # restart = True ######    remove this later
-            calc.label = "{}_{}".format(conformer.smiles, sp_method)
+            calc.label = f"{conformer.smiles}_{sp_method}"
             label = calc.label
             log_path = os.path.join(calc.scratch,calc.label + ".log")
             slurm_path = os.path.join(calc.scratch,calc.label + ".slurm.log")
             
         logging.info(
-            "Submitting {} calculation".format(calc.label))
+            f"Submitting {calc.label} calculation")
         label = self.submit(conformer,calc,restart)
         time.sleep(15)
         while not self.check_complete(label):
@@ -319,7 +319,7 @@ class ThermoJob(Job):
 
         if not complete: # try again
             logging.info(
-                "It appears that {} was killed prematurely".format(calc.label))
+                f"It appears that {calc.label} was killed prematurely")
             calc.parameters["time"] = "24:00:00"
             calc.parameters["nprocshared"] = 28
             calc.parameters["mem"] = "250Gb"
@@ -333,7 +333,7 @@ class ThermoJob(Job):
                     break
 
             if exceeded_mem is True:
-                logging.info("{} exceeded mem limit, increasing mem to 375 Gb and resubmitting".format(calc.label))
+                logging.info(f"{calc.label} exceeded mem limit, increasing mem to 375 Gb and resubmitting")
                 # calc.parameters["time"] = "24:00:00"
                 # calc.parameters["nprocshared"] = 28
                 # calc.parameters["mem"] = "250Gb"
@@ -347,17 +347,17 @@ class ThermoJob(Job):
             complete, converged = self.calculator.verify_output_file(log_path)
             
             if (complete and converged):
-                logging.info("{} completed!".format(label))
+                logging.info(f"{label} completed!")
                 return check_isomorphic(conformer=conformer,log_path=log_path)
             elif not complete:
                 logging.info(
-                    "It appears that {} was killed prematurely or never completed :(".format(calc.label))
+                    f"It appears that {calc.label} was killed prematurely or never completed :(")
                 return False
             # else complete but not converged
 
         if not converged:
-            logging.info("{} did not converge, trying it as a looser convergence criteria".format(calc.label))
-            logging.info("Resubmitting {} with default convergence criteria".format(conformer))
+            logging.info(f"{calc.label} did not converge, trying it as a looser convergence criteria")
+            logging.info(f"Resubmitting {conformer} with default convergence criteria")
             atoms = read_log(log_path)
             conformer._ase_molecule = atoms
             conformer.update_coords_from("ase")
@@ -371,7 +371,7 @@ class ThermoJob(Job):
                 conformer.smiles,
                 "sp"
             )
-            calc.label = "{}_{}".format(conformer.smiles, sp_method)
+            calc.label = f"{conformer.smiles}_{sp_method}"
             logging.info("Removing the old log file that didn't converge, restarting from last geometry")
             os.remove(log_path)
 
@@ -382,18 +382,18 @@ class ThermoJob(Job):
 
             if not os.path.exists(log_path):
                 logging.info(
-                "It seems that {}'s loose optimization was never run...".format(calc.label))
+                f"It seems that {calc.label}'s loose optimization was never run...")
                 return False
 
             complete, converged = self.calculator.verify_output_file(log_path)
             
             if (complete and converged):
-                logging.info("{} completed!".format(label))
+                logging.info(f"{label} completed!")
                 return check_isomorphic(conformer=conformer,log_path=log_path)
             
             elif not complete:
                 logging.info(
-                    "It appears that {} was killed prematurely".format(calc.label))
+                    f"It appears that {calc.label} was killed prematurely")
                 calc.parameters["time"] = "24:00:00"
                 calc.parameters["nprocshared"] = 28
                 calc.parameters["mem"] = "250Gb"
@@ -407,7 +407,7 @@ class ThermoJob(Job):
                         break
 
                 if exceeded_mem is True:
-                    logging.info("{} exceeded mem limit, increasing mem to 375 Gb and resubmitting".format(calc.label))
+                    logging.info(f"{calc.label} exceeded mem limit, increasing mem to 375 Gb and resubmitting")
                     # calc.parameters["time"] = "24:00:00"
                     # calc.parameters["nprocshared"] = 28
                     # calc.parameters["mem"] = "250Gb"
@@ -420,18 +420,18 @@ class ThermoJob(Job):
                 complete, converged = self.calculator.verify_output_file(log_path)
             
                 if (complete and converged):
-                    logging.info("{} completed!".format(label))
+                    logging.info(f"{label} completed!")
                     return check_isomorphic(conformer=conformer,log_path=log_path)
                 elif not complete:
                     logging.info(
-                        "It appears that {} was killed prematurely or never completed :(".format(calc.label))
+                        f"It appears that {calc.label} was killed prematurely or never completed :(")
                     return False
                 elif not converged:
-                    logging.info("{} failed second QM optimization :(".format(calc.label))
+                    logging.info(f"{calc.label} failed second QM optimization :(")
                     return False
 
             elif not converged:
-                logging.info("{} failed second QM optimization :(".format(calc.label))
+                logging.info(f"{calc.label} failed second QM optimization :(")
                 return False
      
 
@@ -492,7 +492,7 @@ class ThermoJob(Job):
             # assert False
             for label in list(complete.keys()):
                 subprocess.call(
-                    """scancel -n '{}'""".format(label), shell=True)
+                    f"""scancel -n '{label}'""", shell=True)
             # shutil.rmtree(self.directory,"species",self.method_name, conformer.smiles,"rotors")
             # if isinstance(conformer, TS):
             #     t = "ts"
@@ -533,7 +533,7 @@ class ThermoJob(Job):
             log_path = os.path.join(sp_dir,label + '.log')
             complete, converged = self.calculator.verify_output_file(log_path)
             if not all([complete,converged]):
-                logging.info("It seems the log file {} is incomplete or didnt converge".format(log_path))
+                logging.info(f"It seems the log file {log_path} is incomplete or didnt converge")
                 assert False
             # conformer = Conformer(smiles=self.rmg_mol.smiles)
             # conformer.smiles = smiles
@@ -634,7 +634,7 @@ class ThermoJob(Job):
         continuous = self.check_rotor_continuous(
             steps, step_size, parser=parser)
         if continuous is True:
-            logging.info("Rotor scan {} is continuous".format(label))
+            logging.info(f"Rotor scan {label} is continuous")
 
         lowest_conf,atoms = self.check_rotor_lowest_conf(parser=parser)
         # [lowest_conf, energy, atomnos,
@@ -764,7 +764,7 @@ class ThermoJob(Job):
                 )
             if not starting_molecule.is_isomorphic(test_molecule):
                 logging.info(
-                    "Output geometry of {} is not isomorphic with input geometry".format(log_path))
+                    f"Output geometry of {log_path} is not isomorphic with input geometry")
                 assert False
             return (False, atoms)
 
@@ -839,7 +839,7 @@ class ThermoJob(Job):
         else:
             dest2 = None
         
-        label = "{}_{}_optfreq".format(smiles,self.method_name)
+        label = f"{smiles}_{self.method_name}_optfreq"
         log_path = os.path.join(self.calculator.directory,
                                 "species", method_name, smiles, label+".log")
         ref_conformer = self.species.conformers[smiles][0]
@@ -875,9 +875,9 @@ class ThermoJob(Job):
                         rmtree(sp_dir)
 
             if (options["recalculate"] is False) and (got_one is True):
-                logging.info("It appears we have already optimized {}".format(species))
+                logging.info(f"It appears we have already optimized {species}")
             else:
-                logging.info("Calculating geometries for {}".format(species))
+                logging.info(f"Calculating geometries for {species}")
 
                 if self.conformer_calculator:
                     species.generate_conformers(
@@ -919,11 +919,11 @@ class ThermoJob(Job):
                         conformer.smiles,
                         "conformers"
                     )
-                    f = "{}_{}_{}_optfreq.log".format(conformer.smiles, conformer.index, self.method_name)
+                    f = f"{conformer.smiles}_{conformer.index}_{self.method_name}_optfreq.log"
                     path = os.path.join(scratch_dir, f)
                     if not os.path.exists(path):
                         logging.info(
-                            "It seems that {} was never run...".format(f))
+                            f"It seems that {f} was never run...")
                         continue
                     try:
                         atoms = read_log(path)
@@ -931,20 +931,20 @@ class ThermoJob(Job):
                         conformer.update_coords_from("ase")
                         complete, converged = self.calculator.verify_output_file(path)
                         if not all([complete, converged]): 
-                            logging.info("It appears {} is incomplete or did not converge".format(f))
+                            logging.info(f"It appears {f} is incomplete or did not converge")
                             continue
                         parser = ccread(path, loglevel=logging.ERROR)
                         if not check_isomorphic(conformer=conformer,log_path=path):
-                            logging.info("{}_{} is not isomorphic with starting species".format(conformer.smiles, conformer.index))
+                            logging.info(f"{conformer.smiles}_{conformer.index} is not isomorphic with starting species")
                             continue
                         if parser is None:
                             logging.info(
-                                "Something went wrong when reading in results for {} using cclib...".format(f))
+                                f"Something went wrong when reading in results for {f} using cclib...")
                             continue
                         energy = parser.scfenergies[-1]
                     except:
                         logging.info(
-                            "The parser does not have an scf energies attribute, we are not considering {}".format(f))
+                            f"The parser does not have an scf energies attribute, we are not considering {f}")
                         continue
 
                     results.append([energy, conformer, f])
@@ -954,7 +954,7 @@ class ThermoJob(Job):
 
                 if results.shape[0] == 0:
                     logging.info(
-                        "No conformer for {} was successfully calculated... :(".format(species))
+                        f"No conformer for {species} was successfully calculated... :(")
                     return False
                 
                 conformer = results['conformer'][0]
@@ -966,10 +966,10 @@ class ThermoJob(Job):
                 #     break
 
                 logging.info(
-                    "The lowest energy conformer is {}".format(lowest_energy_file))
+                    f"The lowest energy conformer is {lowest_energy_file}")
 
                 lowest_energy_file_path = os.path.join(self.calculator.directory, "species",method_name, conformer.smiles,"conformers",lowest_energy_file)
-                label =  "{}_{}_optfreq".format(conformer.smiles,self.method_name)
+                label =  f"{conformer.smiles}_{self.method_name}_optfreq"
                 dest = os.path.join(self.calculator.directory,"species",method_name,conformer.smiles,label+".log")
 
                 try:
@@ -978,8 +978,7 @@ class ThermoJob(Job):
                     os.makedirs(os.path.dirname(dest))
                     copyfile(lowest_energy_file_path,dest)
 
-                logging.info("The lowest energy file is {}! :)".format(
-                    lowest_energy_file))
+                logging.info(f"The lowest energy file is {lowest_energy_file}! :)")
 
                 # parser = ccread(dest, loglevel=logging.ERROR)
 
@@ -992,7 +991,7 @@ class ThermoJob(Job):
 
         if len(self.species.smiles) > 1 and os.path.exists(log_path):
             # Determine "best" Lewis structure from NBO calcuation
-            logging.info("There are multiple resonance structures for {}".format(self.species))
+            logging.info(f"There are multiple resonance structures for {self.species}")
             # Check for existing nbo log
             nbo_dir = os.path.join(self.directory,"species",method_name,smiles,"nbo")
             nbo_log = os.path.join(nbo_dir,smiles+'_nbo.log')
@@ -1016,16 +1015,15 @@ class ThermoJob(Job):
                     except:
                         mol = self.species.rmg_species[0]
                         logging.info(
-                            "Could not determine best Lewis struture for species {}...using {} for structure".format(self.species,mol.smiles))
+                            f"Could not determine best Lewis struture for species {self.species}...using {mol.smiles} for structure")
     
-                logging.info("the best smiles for {} is {}".format(
-                    self.species, mol.smiles))
+                logging.info(f"the best smiles for {self.species} is {mol.smiles}")
                 best_smiles = mol.smiles
                 self.rmg_mol = mol
 
             else:
                 logging.info(
-                    "Performing NBO calculation to determine best Lewis structure for {}".format(self.species))
+                    f"Performing NBO calculation to determine best Lewis structure for {self.species}")
                 atoms = read_log(log_path)
                 ref_conformer._ase_molecule = atoms
                 ref_conformer.update_coords_from("ase")
@@ -1034,7 +1032,7 @@ class ThermoJob(Job):
                 label = calc.label
                 nbo_path = os.path.join(calc.scratch, calc.label + ".log")
                 logging.info(
-                    "Submitting conformer calculation for {}".format(calc.label))
+                    f"Submitting conformer calculation for {calc.label}")
                 label = self.submit(ref_conformer, calc)
                 time.sleep(15)
                 while not self.check_complete(label):
@@ -1061,10 +1059,9 @@ class ThermoJob(Job):
                     except:
                         mol = self.species.rmg_species[0]
                         logging.info(
-                            "Could not determine best Lewis struture for species {}...using {} for structure".format(self.species, mol.smiles))
+                            f"Could not determine best Lewis struture for species {self.species}...using {mol.smiles} for structure")
 
-                logging.info("the best smiles for {} is {}".format(
-                    self.species, mol.smiles))
+                logging.info(f"the best smiles for {self.species} is {mol.smiles}")
                 best_smiles = mol.smiles
                 self.rmg_mol = mol
         else:
@@ -1077,10 +1074,10 @@ class ThermoJob(Job):
             method_name = self.method_name
             # Update the lowest energy conformer 
             # with the lowest energy logfile
-            label =  "{}_{}".format(smiles,method_name)
+            label =  f"{smiles}_{method_name}"
             conformer = Conformer(smiles=smiles)
             log = os.path.join(self.calculator.directory,"species",method_name,conformer.smiles,label+"_optfreq.log")
-            assert os.path.exists(log),"It appears the calculation failed for {}...cannot calculate fod".format(conformer.smiles)
+            assert os.path.exists(log),f"It appears the calculation failed for {conformer.smiles}...cannot calculate fod"
             atoms = read_log(log)
             mult = ccread(log,loglevel=logging.ERROR).mult
             conformer._ase_molecule = atoms
@@ -1100,7 +1097,7 @@ class ThermoJob(Job):
 
         if options['run_arkane_dft']:
             ##### run Arkane
-            logging.info("running arkane for {} with {} method".format(smiles,method_name))
+            logging.info(f"running arkane for {smiles} with {method_name} method")
             arkane_dir = os.path.join(
                 self.directory,
                 "species",
@@ -1111,7 +1108,7 @@ class ThermoJob(Job):
             if not os.path.exists(arkane_dir):
                 os.makedirs(arkane_dir)
 
-            label =  "{}_optfreq".format(smiles)
+            label =  f"{smiles}_optfreq"
             log_path = os.path.join(self.directory,"species",method_name,smiles,label+".log")
             assert os.path.exists(log_path)
             mult = ccread(log_path,loglevel=logging.ERROR).mult
@@ -1163,11 +1160,11 @@ class ThermoJob(Job):
                 logging.info('Arkane job completed successfully!')
 
             else:
-                logging.info('It appears the arkane job failed or was never run for {}'.format(smiles))
+                logging.info(f'It appears the arkane job failed or was never run for {smiles}')
 
         if options["run_sp"]:
             
-            label =  "{}_{}".format(smiles,self.method_name)
+            label =  f"{smiles}_{self.method_name}"
             conformer = Conformer(smiles=smiles)
             freq_log = os.path.join(self.directory,"species",method_name,conformer.smiles,"sp",conformer.smiles+"_B3LYP_freq.log")
             # if os.path.exists(freq_log):
@@ -1175,7 +1172,7 @@ class ThermoJob(Job):
             #     log = freq_log
             # else:
             log = os.path.join(self.directory,"species",method_name,conformer.smiles,label + "_optfreq.log")
-            assert os.path.exists(log), "It appears the calculation failed for {}...cannot perform single point calculations".format(conformer.smiles)
+            assert os.path.exists(log), f"It appears the calculation failed for {conformer.smiles}...cannot perform single point calculations"
             complete, converged = self.calculator.verify_output_file(log)
             assert all([complete, converged]), "It appears the log file in incomplete or did not converge"
             atoms = read_log(log)
@@ -1223,7 +1220,7 @@ class ThermoJob(Job):
                 log_path = os.path.join(sp_dir,label + '.log')
                 complete, converged = self.calculator.verify_output_file(log_path)
                 if not all([complete,converged]):
-                    logging.info("It seems the log file {} is incomplete or didnt converge".format(log_path))
+                    logging.info(f"It seems the log file {log_path} is incomplete or didnt converge")
                     assert False                
                 conformer = Conformer(smiles=self.rmg_mol.smiles)
                 conformer.smiles = smiles
@@ -1253,7 +1250,7 @@ class ThermoJob(Job):
             log_path = os.path.join(sp_dir,label + '.log')
             complete, converged = self.calculator.verify_output_file(log_path)
             if not all([complete,converged]):
-                logging.info("It seems the log file {} is incomplete or didnt converge".format(log_path))
+                logging.info(f"It seems the log file {log_path} is incomplete or didnt converge")
                 assert False
             conformer = Conformer(smiles=self.rmg_mol.smiles)
             conformer.smiles = smiles
@@ -1327,11 +1324,11 @@ class ThermoJob(Job):
                     sp_energy = None
                     complete, converged = self.calculator.verify_output_file(log_path)
                     if not all([complete,converged]):
-                        logging.info("It seems the log file {} is incomplete or didnt converge".format(log_path))
+                        logging.info(f"It seems the log file {log_path} is incomplete or didnt converge")
                         continue
                 complete, converged = self.calculator.verify_output_file(freq_path)
                 if not all([complete,converged]):
-                    logging.info("It seems the log file {} is incomplete or didnt converge".format(freq_path))
+                    logging.info(f"It seems the log file {freq_path} is incomplete or didnt converge")
                     continue
 
                 if self.torsion_conformer is not None:
@@ -1340,7 +1337,7 @@ class ThermoJob(Job):
                 else:
                     conf = Conformer(smiles=self.rmg_mol.smiles)
                     assert check_isomorphic(conf,log_path)
-                    dft_label =  "{}_{}_optfreq".format(smiles,self.method_name)
+                    dft_label =  f"{smiles}_{self.method_name}_optfreq"
                     dft_log = os.path.join(self.directory,"species",method_name,smiles,dft_label+".log")
                     mult = ccread(dft_log,loglevel=logging.ERROR).mult
                     molecule = self.rmg_mol
@@ -1385,7 +1382,7 @@ class ThermoJob(Job):
                 #     logging.info("It appears the arkane job has already been run...not running again")
                 # else:
 
-                logging.info("starting arkane calc for {}".format(label))
+                logging.info(f"starting arkane calc for {label}")
                 subprocess.run(
                     """python $RMGpy/Arkane.py arkane_input.py""", 
                     shell=True, cwd=arkane_calc.directory)
@@ -1430,8 +1427,7 @@ class ThermoJob(Job):
                         H298 = float(data['thermo_data']['H298']['value'])
                         if H298_existing < H298:
                             copy = False
-                            logging.info("{} already exists and has lower enthalpy, not copying to {}".format(
-                                yml_dest, dest))
+                            logging.info(f"{yml_dest} already exists and has lower enthalpy, not copying to {dest}")
                     
                     if copy is True:
                         copyfile(yml_file,yml_dest)
@@ -1441,5 +1437,5 @@ class ThermoJob(Job):
                         except:
                             pass
                 else:
-                    logging.info('It appears the arkane job failed or was never run for {}'.format(smiles))
+                    logging.info(f'It appears the arkane job failed or was never run for {smiles}')
                     continue

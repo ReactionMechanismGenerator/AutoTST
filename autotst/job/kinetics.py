@@ -83,7 +83,7 @@ class KineticsJob(Job):
         global_results = manager.dict()
 
     def __repr__(self):
-        return "< KineticsJob '{}'>".format(self.label)
+        return f"< KineticsJob '{self.label}'>"
 
     def submit_transitionstate(self, transitionstate, opt_type, restart=False):
         """
@@ -114,36 +114,36 @@ class KineticsJob(Job):
         attempted = False
         if os.path.exists(file_path + ".log"):
             attempted = True
-            logging.info("It appears that {} has already been attempted...".format(label))
+            logging.info(f"It appears that {label} has already been attempted...")
 
         if (not attempted) or restart:
             command = [
                 """sbatch""", 
-                """--job-name="{}" """.format(label), 
-                """--output="{}.slurm.log" """.format(label), 
-                """--error="{}.slurm.log" """.format(label),
+                f"""--job-name="{label}" """, 
+                f"""--output="{label}.slurm.log" """, 
+                f"""--error="{label}.slurm.log" """,
                 """-N 1""",
-                """-n {}""".format(nproc),
+                f"""-n {nproc}""",
                 """-t 24:00:00""",
-                """--mem {}""".format(self.calculator.settings["mem"])
+                f"--mem {self.calculator.settings['mem']}"
             ]
             # Building on the remaining commands
             if self.partition:
-                command.append("""-p {}""".format(self.partition))
+                command.append(f"""-p {self.partition}""")
             if self.exclude:
                 if isinstance(self.exclude, str):
-                    command.append("""--exclude={}""".format(self.exclude))
+                    command.append(f"""--exclude={self.exclude}""")
                 elif isinstance(self.exclude, list):
                     exc = ""
                     for e in self.exclude:
                         exc += e
                         exc += ","
                     exc = exc[:-1]
-                    command.append("""--exclude={}""".format(exc))
+                    command.append(f"""--exclude={exc}""")
             if self.account:
-                command.append("""-A {}""".format(self.account))
+                command.append(f"""-A {self.account}""")
             
-            command.append("""--wrap="{0} '{1}.com' > '{1}.log'" """.format(self.calculator.command, file_path))
+            command.append(f"""--wrap="{self.calculator.command} '{file_path}.com' > '{file_path}.log'" """)
             exe = ""
             for c in command:
                 exe += c + " " #combining the command into a single string, this makes submit go faster.
@@ -162,16 +162,15 @@ class KineticsJob(Job):
         if there is an error along the way.
         """
 
-        ts_identifier = "{}_{}_{}".format(
-            transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
+        ts_identifier = f"{transitionstate.reaction_label}_{transitionstate.direction}_{transitionstate.index}"
 
         for opt_type in ["shell", "overall"]:
             self.calculator.conformer = transitionstate
 
             if opt_type == "overall":
-                 file_path = "{}_{}_{}.log".format(transitionstate.reaction_label, transitionstate.direction, transitionstate.index)
+                 file_path = f"{transitionstate.reaction_label}_{transitionstate.direction}_{transitionstate.index}.log"
             else:
-                 file_path = "{}_{}_{}_{}.log".format(transitionstate.reaction_label, transitionstate.direction, opt_type, transitionstate.index)
+                 file_path = f"{transitionstate.reaction_label}_{transitionstate.direction}_{opt_type}_{transitionstate.index}.log"
 
             file_path = os.path.join(
                 self.directory, 
@@ -184,7 +183,7 @@ class KineticsJob(Job):
 
             if not os.path.exists(file_path):
                 logging.info(
-                    "Submitting {} calculations for {}".format(opt_type.upper(),ts_identifier))
+                    f"Submitting {opt_type.upper()} calculations for {ts_identifier}")
                 label = self.submit_transitionstate(
                     transitionstate, opt_type=opt_type.lower())
                 while not self.check_complete(label):
@@ -192,13 +191,13 @@ class KineticsJob(Job):
 
             else:
                 logging.info(
-                    "It appears that we already have a complete {} log file for {}".format(opt_type.upper(), ts_identifier))
+                    f"It appears that we already have a complete {opt_type.upper()} log file for {ts_identifier}")
 
                 complete, converged = self.calculator.verify_output_file(file_path)
                 
                 if not complete:
                     logging.info(
-                        "It seems that the {} file never completed for {} never completed, running it again".format(opt_type.upper(), ts_identifier))
+                        f"It seems that the {opt_type.upper()} file never completed for {ts_identifier} never completed, running it again")
                     label = self.submit_transitionstate(
                         transitionstate, opt_type=opt_type.lower(), restart=True)
                     while not self.check_complete(label):
@@ -208,16 +207,16 @@ class KineticsJob(Job):
 
             if not (complete and converged):
                 logging.info(
-                    "{} failed the {} optimization".format(ts_identifier, opt_type.upper()))
+                    f"{ts_identifier} failed the {opt_type.upper()} optimization")
                 global_results[ts_identifier] = False
                 return False
             logging.info(
-                "{} successfully completed the {} optimization!".format(ts_identifier, opt_type.upper()))
+                f"{ts_identifier} successfully completed the {opt_type.upper()} optimization!")
             transitionstate._ase_molecule = self.read_log(file_path)
             transitionstate.update_coords_from("ase")
 
         logging.info(
-            "Calculations for {} are complete and resulted in a normal termination!".format(ts_identifier))
+            f"Calculations for {ts_identifier} are complete and resulted in a normal termination!")
 
         got_one = self.validate_transitionstate(
                 transitionstate=transitionstate, vibrational_analysis=vibrational_analysis)
@@ -233,7 +232,7 @@ class KineticsJob(Job):
         A method to run calculations for all tranitionstates for a reaction
         """
 
-        logging.info("Calculating geometries for {}".format(self.reaction))
+        logging.info(f"Calculating geometries for {self.reaction}")
         if not restart: 
             if os.path.exists(
                 os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".log")):
@@ -278,24 +277,24 @@ class KineticsJob(Job):
         energies = []
         for label, result in global_results.items():
             if not result:
-                logging.info("Calculations for {} FAILED".format(label))
+                logging.info(f"Calculations for {label} FAILED")
                 continue
-            f = "{}.log".format(label)
+            f = f"{label}.log"
             path = os.path.join(self.calculator.directory, "ts",
                     self.reaction.label, "conformers", f)
             if not os.path.exists(path):
-                logging.info("It appears that {} failed...".format(f))
+                logging.info(f"It appears that {f} failed...")
                 continue
             try:
                 parser = cclib.io.ccread(path, loglevel=logging.ERROR)
                 if parser is None:
                     logging.info(
-                        "Something went wrong when reading in results for {}...".format(f))
+                        f"Something went wrong when reading in results for {f}...")
                     continue
                 energy = parser.scfenergies[-1]
             except:
                 logging.info(
-                    "The parser does not have an scf energies attribute, we are not considering {}".format(f))
+                    f"The parser does not have an scf energies attribute, we are not considering {f}")
                 energy = 1e5
 
             energies.append([energy, transitionstate, f])
@@ -305,12 +304,12 @@ class KineticsJob(Job):
 
         if energies.shape[0] == 0:
             logging.info(
-                "No transition state for {} was successfully calculated... :(".format(self.reaction))
+                f"No transition state for {self.reaction} was successfully calculated... :(")
             return False
 
         energies.reset_index(inplace=True)
         lowest_energy_label = energies.iloc[0].file
-        logging.info("The lowest energy transition state is {}".format(lowest_energy_label))
+        logging.info(f"The lowest energy transition state is {lowest_energy_label}")
 
         shutil.copyfile(
             os.path.join(self.calculator.directory, "ts", self.reaction.label,
@@ -318,8 +317,7 @@ class KineticsJob(Job):
             os.path.join(self.calculator.directory, "ts",
                          self.reaction.label, self.reaction.label + ".log")
         )
-        logging.info("The lowest energy file is {}! :)".format(
-            lowest_energy_label))
+        logging.info(f"The lowest energy file is {lowest_energy_label}! :)")
         return True
 
     def validate_transitionstate(self, transitionstate, vibrational_analysis=True):
