@@ -51,12 +51,15 @@ class Gaussian():
     def __init__(self,
                  conformer=None, # Either a transition state or a conformer
                  settings={
-                     "method": "m062x",
-                     "basis": "cc-pVTZ",
-                     "mem": "5GB",
-                     "nprocshared": 24,
+                        "method": "m062x",
+                        "basis": "cc-pVTZ",
+                        "dispersion": "",
+                        "mem": "5GB",
+                        "sp": "",
+                        "convergence": "",
+                        "nprocshared": 24,
+                        "time": "24:00:00",
                  },
-                 convergence="",
                  directory=".", #where you want input and log files to be written, default is current directory
                  scratch=None  #where you want temporary files to be written
                  ):
@@ -64,8 +67,13 @@ class Gaussian():
         default_settings = {
             "method": "m062x",
             "basis": "cc-pVTZ",
+            "dispersion": "",
             "mem": "5GB",
+            "sp": "",
+            "convergence": "",
             "nprocshared": 24,
+            "time": "24:00:00",
+
         }
 
         self.conformer = conformer
@@ -82,9 +90,29 @@ class Gaussian():
 
         self.command = "g16"
         self.settings = settings
-        self.convergence = convergence
+
+        # Assert convergence is a valid option
         convergence_options = ["", "verytight", "tight", "loose"]
-        assert self.convergence.lower() in convergence_options,f"{self.convergence} is not among the supported convergence options {convergence_options}"
+        convergence = self.settings["convergence"].lower()
+        assert convergence in convergence_options, f"{convergence} is not among the supported convergence options {convergence_options}"
+        
+        if settings["dispersion"]:
+            dispersion = settings["dispersion"].upper()
+            assert dispersion in ['GD3','GD3BJ','GD2'],'Acceptable keywords for dispersion are GD3, GD3BJ, or GD2'
+            self.opt_method = settings["method"].upper() + '-' + dispersion + '_' + settings["basis"].upper()
+        else:
+            self.opt_method = settings["method"].upper() + '_' + settings["basis"].upper()
+        
+        # Assert disperion is a valid option
+        dispersion_options = ['GD3', 'GD3BJ', 'GD2']
+        dispersion = self.settings["dispersion"].upper()
+        if dispersion is not "":
+            assert dispersion in dispersion_options, f"{dispersion} is not among the supported convergence options {dispersion_options}"
+            self.settings["dispersion"] = f'EmpiricalDispersion={dispersion}'
+            self.model_chemistry = settings["method"].upper() + '-' + dispersion + '_' + settings["basis"].upper()
+        else:
+            self.model_chemistry = settings["method"].upper() + '_' + settings["basis"].upper()
+
         self.directory = directory
 
         try: 
@@ -132,6 +160,28 @@ class Gaussian():
         assert isinstance(
             self.conformer, Conformer), "A Conformer object was not provided..."
 
+        # Determine number of heavy atoms
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms(
+        ) - self.conformer.rmg_molecule.get_num_atoms('H')
+
+        time = "24:00:00"
+
+        if num_atoms <= 2:
+            mem = "10GB"
+            nprocshared = 2
+        elif num_atoms <= 4:
+            mem = "20GB"
+            nprocshared = 6
+        elif num_atoms <= 10:
+            mem = '40GB'
+            nprocshared = 12
+        elif num_atoms <= 20:
+            mem = '50GB'
+            nprocshared = 16
+        else:
+            mem = '60GB'
+            nprocshared = 20
+
         addsec = ""
         for bond in self.conformer.bonds:
             i, j = bond.atom_indices
@@ -142,7 +192,7 @@ class Gaussian():
             i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
 
         if isinstance(self.conformer, TS):
-            extra = "Opt=(ts,CalcFC,ModRedun)"
+            extra = f"{self.settings["dispersion"]} Opt=(ts,CalcFC,ModRedun,{self.settings["convergence"]})"
             label = conformer_dir = self.conformer.reaction_label
             label += f"_{steps}by{int(step_size)}_{j}_{k}"
             conformer_type = "ts"
@@ -150,17 +200,20 @@ class Gaussian():
             label = conformer_dir = self.conformer.smiles
             label += f"_{steps}by{int(step_size)}_{j}_{k}"
             conformer_type = "species"
-            extra = "Opt=(CalcFC,ModRedun)"
+            extra = f"{self.settings["dispersion"]} Opt=(CalcFC,ModRedun,{self.settings["convergence"]})"
 
-        for locked_torsion in self.conformer.torsions:  # TODO: maybe doesn't work;
-            if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
-                a, b, c, d = locked_torsion.atom_indices
-                addsec += f'D {(a + 1)} {(b + 1)} {(c + 1)} {(d + 1)} F\n'
+        # I don't think we should be freezing the other torsions during a scan
+        # for locked_torsion in self.conformer.torsions:  # TODO: maybe doesn't work;
+        #     if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
+        #         a, b, c, d = locked_torsion.atom_indices
+        #         addsec += f'D {(a + 1)} {(b + 1)} {(c + 1)} {(d + 1)} F\n'
 
-        self.conformer.rmg_molecule.update_multiplicity()
+        # Dont think this is needed
+        #self.conformer.rmg_molecule.update_multiplicity()
+        
         mult = self.conformer.rmg_molecule.multiplicity
 
-        new_scratch = os.path.join(
+        directory = os.path.join(
             self.directory,
             conformer_type,
             conformer_dir,
@@ -168,8 +221,8 @@ class Gaussian():
         )
 
         ase_gaussian = ase.calculators.gaussian.Gaussian(
-            mem=self.settings["mem"],
-            nprocshared=self.settings["nprocshared"],
+            mem=mem,
+            nprocshared=nprocshared,
             label=label,
             scratch=new_scratch,
             method=self.settings["method"],
@@ -177,12 +230,15 @@ class Gaussian():
             extra=extra,
             multiplicity=mult,
             addsec=[addsec[:-1]])
-
+        
+        ase_gaussian.directory = directory
+        ase_gaussian.parameters["partition"] = "" # Create parition parameter to assign in Job
+        ase_gaussian.parameters["time"] = time
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
         return ase_gaussian
 
-    def get_conformer_calc(self):
+    def get_conformer_calc(self, opt=True, freq=True):
         """
         A method that creates a calculator for a `Conformer` that will perform a geometry optimization
 
@@ -206,7 +262,34 @@ class Gaussian():
         assert isinstance(
             self.conformer, Conformer), "A Conformer object was not provided..."
 
-        self.conformer.rmg_molecule.update_multiplicity()
+        #self.conformer.rmg_molecule.update_multiplicity()
+
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms(
+        ) - self.conformer.rmg_molecule.get_num_atoms('H')
+
+        if num_atoms <= 4:
+            mem = '20GB'
+            nprocshared = 16
+            time = '1:00:00'
+        elif num_atoms <= 6:
+            mem = '30GB'
+            nprocshared = 24
+            time = '1:00:00'
+        elif num_atoms <= 12:
+            mem = '40GB'
+            nprocshared = 8
+            time = '12:00:00'
+        elif num_atoms <= 20:
+            mem = '50GB'
+            nprocshared = 12
+            time = '12:00:00'
+        else:
+            mem = '50GB'
+            nprocshared = 16
+            time = '12:00:00'
+
+        if opt is False:
+            time = '1:00:00'
 
         label = f"{self.conformer.smiles}_{self.conformer.index}"
 
@@ -222,16 +305,91 @@ class Gaussian():
         except OSError:
             pass
 
+        extra = f"{self.settings['dispersion']} IOP(7/33=1,2/16=3) scf=(maxcycle=900)"
+
+        if opt is True:
+            extra += f" opt=(calcfc,maxcycles=900,{self.settings["convergence"]})"
+        if freq is True:
+            extra += " freq"
+
+
         ase_gaussian = ase.calculators.gaussian.Gaussian(
-            mem=self.settings["mem"],
-            nprocshared=self.settings["nprocshared"],
+            mem=mem,
+            nprocshared=nprocshared,
             label=label,
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra=f"opt=(calcfc,maxcycles=900,{self.convergence}) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
+            extra=extra,
             multiplicity=self.conformer.rmg_molecule.multiplicity)
+
+        ase_gaussian.directory = new_scratch
+        ase_gaussian.parameters["partition"] = ""
+        ase_gaussian.parameters["time"] = time
         ase_gaussian.atoms = self.conformer.ase_molecule
+        del ase_gaussian.parameters['force']
+        return ase_gaussian
+
+    def get_sp_calc(self):
+
+        assert isinstance(
+            self.conformer, Conformer), "A Conformer object was not provided..."
+
+        method = self.settings["sp"].upper()
+
+        gaussian_methods = [
+            "G1", "G2", "G3", "G4", "G2MP2", "G3MP2", "G3B3", "G3MP2B3", "G4", "G4MP2",
+            "W1", "W1U", "W1BD", "W1RO",
+            "CBS-4M", "CBS-QB3", "CBS-APNO",
+        ]
+        assert method in gaussian_methods
+
+        time = "24:00:00"
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms(
+        ) - self.conformer.rmg_molecule.get_num_atoms('H')
+
+        if num_atoms <= 6:
+            mem = '120GB'
+            nprocshared = 12
+        elif num_atoms <= 8:
+            mem = '180GB'
+            nprocshared = 16
+        elif num_atoms <= 10:
+            mem = '250GB'
+            nprocshared = 28
+        else num_atoms <= 12:
+            mem = '380GB'
+            nprocshared = 16
+
+        label = "{}_{}".format(self.conformer.smiles, method)
+
+        new_scratch = os.path.join(
+            self.directory,
+            "species",
+            self.conformer.smiles,
+            "sp"
+        )
+
+        try:
+            os.makedirs(new_scratch)
+        except OSError:
+            pass
+
+        ase_gaussian = ASEGaussian(
+            mem=mem,
+            nprocshared=nprocshared,
+            label=label,
+            scratch=new_scratch,
+            method=method,
+            basis='',
+            extra=f"opt=(calcfc,maxcycles=900,{self.settings["convergence"]}) IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
+            multiplicity=self.conformer.rmg_molecule.multiplicity)
+        
+        ase_gaussian.atoms = self.conformer.ase_molecule
+        ase_gaussian.directory = new_scratch
+        ase_gaussian.label = label
+        ase_gaussian.parameters["partition"] = ""
+        ase_gaussian.parameters["time"] = time
         del ase_gaussian.parameters['force']
         return ase_gaussian
 
@@ -250,6 +408,30 @@ class Gaussian():
         """
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
         assert self.conformer.direction.lower() in ["forward", "reverse"]
+
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms(
+        ) - self.conformer.rmg_molecule.get_num_atoms('H')
+
+        if num_atoms <= 4:
+            mem = '20GB'
+            nprocshared = 16
+            time = '1:00:00'
+        elif num_atoms <= 6:
+            mem = '30GB'
+            nprocshared = 24
+            time = '1:00:00'
+        elif num_atoms <= 12:
+            mem = '40GB'
+            nprocshared = 8
+            time = '12:00:00'
+        elif num_atoms <= 20:
+            mem = '50GB'
+            nprocshared = 12
+            time = '12:00:00'
+        else:
+            mem = '50GB'
+            nprocshared = 16
+            time = '12:00:00'
 
         self.conformer.rmg_molecule.update_multiplicity()
 
@@ -282,16 +464,20 @@ class Gaussian():
         combos += f"{(ind1 + 1)} {(ind2 + 1)} {(ind3 + 1)} F"
 
         ase_gaussian = ase.calculators.gaussian.Gaussian(
-            mem=self.settings["mem"],
-            nprocshared=self.settings["nprocshared"],
+            mem=mem,
+            nprocshared=nprocshared,
             label=label,
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra="Opt=(ModRedun,Loose,maxcycles=900) Int(Grid=SG1) scf=(maxcycle=900)",
+            extra=f"{self.settings['dispersion']} Opt=(ModRedun,Loose,maxcycles=900, {self.settings['convergence']}) Int(Grid=SG1) scf=(maxcycle=900)",
             multiplicity=self.conformer.rmg_molecule.multiplicity,
             addsec=[combos]
         )
+
+        ase_gaussian.directory = new_scratch
+        ase_gaussian.parameters["time"] = time
+        ase_gaussian.parameters["partition"] = ""
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
 
@@ -373,6 +559,26 @@ class Gaussian():
 
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms(
+        ) - self.conformer.rmg_molecule.get_num_atoms('H')
+
+        if num_atoms <= 4:
+            mem = '20GB'
+            nprocshared = 24
+            time = '1:00:00'
+        elif num_atoms <= 12:
+            mem = '40GB'
+            nprocshared = 8
+            time = '24:00:00'
+        elif num_atoms <= 20:
+            mem = '50GB'
+            nprocshared = 12
+            time = '24:00:00'
+        else:
+            mem = '50GB'
+            nprocshared = 16
+            time = '24:00:00'
+
         self.conformer.rmg_molecule.update_multiplicity()
 
         label = self.conformer.reaction_label + "_" + self.conformer.direction.lower() + "_" + str(self.conformer.index)
@@ -390,14 +596,18 @@ class Gaussian():
             pass
 
         ase_gaussian = ase.calculators.gaussian.Gaussian(
-            mem=self.settings["mem"],
-            nprocshared=self.settings["nprocshared"],
+            mem=mem,
+            nprocshared=nprocshared,
             label=label,
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900) IOP(7/33=1,2/16=3)",
+            extra=f"{self.settings['dispersion']} opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900) IOP(7/33=1,2/16=3)",
             multiplicity=self.conformer.rmg_molecule.multiplicity)
+
+        ase_gaussian.directory = new_scratch
+        ase_gaussian.parameters["time"] = time
+        ase_gaussian.parameters["partition"] = ""
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
 
@@ -419,6 +629,24 @@ class Gaussian():
 
         assert isinstance(self.conformer, TS), "A TS object was not provided..."
 
+        num_atoms = self.conformer.rmg_molecule.get_num_atoms(
+        ) - self.conformer.rmg_molecule.get_num_atoms('H')
+
+        time = '24:00:00'
+
+        if num_atoms <= 4:
+            mem = '20GB'
+            nprocshared = 8
+        elif num_atoms <= 12:
+            mem = '40GB'
+            nprocshared = 16
+        elif num_atoms <= 20:
+            mem = '50GB'
+            nprocshared = 20
+        else:
+            mem = '60GB'
+            nprocshared = 24
+
         self.conformer.rmg_molecule.update_multiplicity()
         label = self.conformer.reaction_label + "_irc_" + self.conformer.direction + "_" + str(self.conformer.index)
 
@@ -434,16 +662,20 @@ class Gaussian():
             pass
 
         ase_gaussian = ase.calculators.gaussian.Gaussian(
-            mem=self.settings["mem"],
-            nprocshared=self.settings["nprocshared"],
+            mem=mem,
+            nprocshared=nprocshared,
             label=label,
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra="irc=(calcall)",
+            extra=f"{self.settings["dispersion"]} irc=(calcall)",
             multiplicity=self.conformer.rmg_molecule.multiplicity
         )
+        
         ase_gaussian.atoms = self.conformer.ase_molecule
+        ase_gaussian.directory = new_scratch
+        ase_gaussian.parameters["time"] = time
+        ase_gaussian.parameters["partition"] = ""
         del ase_gaussian.parameters['force']
 
         return ase_gaussian
