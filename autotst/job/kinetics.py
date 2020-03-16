@@ -79,8 +79,8 @@ class KineticsJob(Job):
             self.label = None
 
         manager = multiprocessing.Manager()
-        global global_results
-        global_results = manager.dict()
+        global pool_variables
+        pool_variables = manager.list()
 
     def __repr__(self):
         return f"< KineticsJob '{self.label}'>"
@@ -100,60 +100,19 @@ class KineticsJob(Job):
             ase_calculator = self.calculator.get_overall_calc()
         elif opt_type.lower() == "irc":
             ase_calculator = self.calculator.get_irc_calc()
-
-        nproc = ase_calculator.nprocshared
-
-        self.write_input(transitionstate, ase_calculator)
-
-        label = ase_calculator.label
-        scratch = ase_calculator.scratch
-        file_path = os.path.join(scratch, label)
-        # for testing
-        os.environ["FILE_PATH"] = file_path
-
-        attempted = False
-        if os.path.exists(file_path + ".log"):
-            attempted = True
-            logging.info(f"It appears that {label} has already been attempted...")
-
-        if (not attempted) or restart:
-            command = [
-                """sbatch""", 
-                f"""--job-name="{label}" """, 
-                f"""--output="{label}.slurm.log" """, 
-                f"""--error="{label}.slurm.log" """,
-                """-N 1""",
-                f"""-n {nproc}""",
-                """-t 24:00:00""",
-                f"--mem {self.calculator.settings['mem']}"
-            ]
-            # Building on the remaining commands
-            if self.partition:
-                command.append(f"""-p {self.partition}""")
-            if self.exclude:
-                if isinstance(self.exclude, str):
-                    command.append(f"""--exclude={self.exclude}""")
-                elif isinstance(self.exclude, list):
-                    exc = ""
-                    for e in self.exclude:
-                        exc += e
-                        exc += ","
-                    exc = exc[:-1]
-                    command.append(f"""--exclude={exc}""")
-            if self.account:
-                command.append(f"""-A {self.account}""")
             
-            command.append(f"""--wrap="{self.calculator.command} '{file_path}.com' > '{file_path}.log'" """)
-            exe = ""
-            for c in command:
-                exe += c + " " #combining the command into a single string, this makes submit go faster.
-            if self.check_complete(label): #checking to see if the job is already in the queue
-                # if it's not, then we're gona submit it
-                self.submit(exe)
-            else:
-                # it's currently in the queue, so not actually submitting it
-                return label
-        return label
+        return self.submit(transitionstate, ase_calculator)
+
+
+    def _calculate_transitionstate(self, index=0):
+        """
+        An internal method that is used to calculate transitionstates in parallel
+
+        Uses a global results list to read in transitionstates and runs calculations on those
+        """
+        transitionstate = pool_variables[index]
+        label = f"{transitionstate.reaction_label}_{transitionstate.direction}_{transitionstate.index}"
+        return (label, self.calculate_transitionstate(transitionstate))
 
     def calculate_transitionstate(self, transitionstate, vibrational_analysis=True):
         """
@@ -179,7 +138,6 @@ class KineticsJob(Job):
                 "conformers", 
                 file_path
             )
-
 
             if not os.path.exists(file_path):
                 logging.info(
@@ -221,10 +179,8 @@ class KineticsJob(Job):
         got_one = self.validate_transitionstate(
                 transitionstate=transitionstate, vibrational_analysis=vibrational_analysis)
         if got_one:
-            global_results[ts_identifier] = True
             return True
         else:
-            global_results[ts_identifier] = False
             return False
 
     def calculate_reaction(self, vibrational_analysis=True, restart=False):
@@ -239,43 +195,21 @@ class KineticsJob(Job):
                 logging.info("This reaction has already been run and has a successful validated transition state! :)")
                 return True
 
-
-
         if self.conformer_calculator:
             self.reaction.generate_conformers(ase_calculator=self.conformer_calculator)
 
-        currently_running = []
-        processes = {}
+        for direction, confs in self.reaction.ts.items():
+            conformers += confs
 
-        for direction, transitionstates in list(self.reaction.ts.items()):
-
-            for transitionstate in transitionstates:
-
-                process = multiprocessing.Process(target=self.calculate_transitionstate, args=(
-                    transitionstate,))
-                processes[process.name] = process
-
-        for name, process in list(processes.items()):
-            while len(currently_running) >= 50:
-                for running in currently_running:
-                    if not processes[running].is_alive():
-                        currently_running.remove(name)
-                time.sleep(90)
-            time.sleep(90)
-            process.start()
-            process.join()
-            currently_running.append(name)
-
-        while len(currently_running) > 0:
-            for name, process in list(processes.items()):
-                if not (name in currently_running):
-                    continue
-                if not process.is_alive():
-                    currently_running.remove(name)
-            time.sleep(90) 
+        num_threads = multiprocessing.cpu_count() - 1 or 1
+        pool = multiprocessing.Pool(processes=num_threads)
+        # results should be a list of booleans corresponding to list of conformers
+        results = pool.map(self._calculate_transitionstate,range(len(conformers)))
+        pool.close()
+        pool.join()
 
         energies = []
-        for label, result in global_results.items():
+        for label, result in results:
             if not result:
                 logging.info(f"Calculations for {label} FAILED")
                 continue
