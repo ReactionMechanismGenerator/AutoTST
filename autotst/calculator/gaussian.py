@@ -192,7 +192,7 @@ class Gaussian():
             i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
 
         if isinstance(self.conformer, TS):
-            extra = f"{self.settings["dispersion"]} Opt=(CalcFC,ModRedun,{self.settings["convergence"]})"
+            extra = f"{self.settings['dispersion']} Opt=(CalcFC,ModRedun,{self.settings['convergence']})"
             label = conformer_dir = self.conformer.reaction_label
             label += f"_{steps}by{int(step_size)}_{j}_{k}"
             conformer_type = "ts"
@@ -210,7 +210,7 @@ class Gaussian():
             label = conformer_dir = self.conformer.smiles
             label += f"_{steps}by{int(step_size)}_{j}_{k}"
             conformer_type = "species"
-            extra = f"{self.settings["dispersion"]} Opt=(CalcFC,ModRedun,{self.settings["convergence"]})"
+            extra = f"{self.settings['dispersion']} Opt=(CalcFC,ModRedun,{self.settings['convergence']})"
 
         # I don't think we should be freezing the other torsions during a scan
         # for locked_torsion in self.conformer.torsions:  # TODO: maybe doesn't work;
@@ -318,7 +318,7 @@ class Gaussian():
         extra = f"{self.settings['dispersion']} IOP(7/33=1,2/16=3) scf=(maxcycle=900)"
 
         if opt is True:
-            extra += f" opt=(calcfc,maxcycles=900,{self.settings["convergence"]})"
+            extra += f" opt=(calcfc,maxcycles=900,{self.settings['convergence']})"
         if freq is True:
             extra += " freq"
 
@@ -367,7 +367,7 @@ class Gaussian():
         elif num_atoms <= 10:
             mem = '250GB'
             nprocshared = 28
-        else num_atoms <= 12:
+        else:
             mem = '380GB'
             nprocshared = 16
 
@@ -392,7 +392,7 @@ class Gaussian():
             scratch=new_scratch,
             method=method,
             basis='',
-            extra=f"opt=(calcfc,maxcycles=900,{self.settings["convergence"]}) IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
+            extra=f"opt=(calcfc,maxcycles=900,{self.settings['convergence']}) IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         
         ase_gaussian.atoms = self.conformer.ase_molecule
@@ -678,7 +678,7 @@ class Gaussian():
             scratch=new_scratch,
             method=self.settings["method"],
             basis=self.settings["basis"],
-            extra=f"{self.settings["dispersion"]} irc=(calcall)",
+            extra=f"{self.settings['dispersion']} irc=(calcall)",
             multiplicity=self.conformer.rmg_molecule.multiplicity
         )
         
