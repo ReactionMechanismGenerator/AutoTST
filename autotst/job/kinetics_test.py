@@ -40,7 +40,7 @@ import multiprocessing
 import subprocess
 import time
 
-class JobTest(unittest.TestCase):
+class KineticsJobTest(unittest.TestCase):
 
     def setUp(self):
         os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
@@ -55,7 +55,7 @@ class JobTest(unittest.TestCase):
             exclude="test",
             account="test"
         )
-        self.job2 = Job(
+        self.job2 = KineticsJob(
             reaction=self.reaction,
             calculator=self.calculator,
             partition="test",
