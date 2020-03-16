@@ -222,7 +222,7 @@ class Job():
                 calculator.label + ".com",
                 os.path.join(
                     calculator.scratch,
-                    acalculator.label + ".com"
+                    calculator.label + ".com"
                 ))
 
             shutil.move(
