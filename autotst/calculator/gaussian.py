@@ -246,6 +246,7 @@ class Gaussian():
         ase_gaussian.parameters["time"] = time
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
+        ase_gaussian.label = label
         return ase_gaussian
 
     def get_conformer_calc(self, opt=True, freq=True):
@@ -338,6 +339,7 @@ class Gaussian():
         ase_gaussian.parameters["time"] = time
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
+        ase_gaussian.label = label
         return ase_gaussian
 
     def get_sp_calc(self):
@@ -401,6 +403,7 @@ class Gaussian():
         ase_gaussian.parameters["partition"] = ""
         ase_gaussian.parameters["time"] = time
         del ase_gaussian.parameters['force']
+        ase_gaussian.label = label
         return ase_gaussian
 
     def get_shell_calc(self):
@@ -490,7 +493,7 @@ class Gaussian():
         ase_gaussian.parameters["partition"] = ""
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
-
+        ase_gaussian.label = label
         return ase_gaussian
 
     def get_center_calc(self):
@@ -550,7 +553,7 @@ class Gaussian():
         )
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
-
+        ase_gaussian.label = label
         return ase_gaussian
 
     def get_overall_calc(self):
@@ -620,7 +623,7 @@ class Gaussian():
         ase_gaussian.parameters["partition"] = ""
         ase_gaussian.atoms = self.conformer.ase_molecule
         del ase_gaussian.parameters['force']
-
+        ase_gaussian.label = label
         return ase_gaussian
 
     def get_irc_calc(self):
@@ -687,7 +690,7 @@ class Gaussian():
         ase_gaussian.parameters["time"] = time
         ase_gaussian.parameters["partition"] = ""
         del ase_gaussian.parameters['force']
-
+        ase_gaussian.label = label
         return ase_gaussian
 
     def verify_output_file(self, path):
