@@ -136,7 +136,7 @@ class Job():
 
     def build_command(self, autotst_object, ase_calculator):
 
-        nproc = ase_calculator.nprocshared
+        nproc = ase_calculator.parameters["nprocshared"]
         self.write_input(autotst_object, ase_calculator)
 
         label = ase_calculator.label
@@ -152,7 +152,7 @@ class Job():
             f"""--error="{label}.slurm.log" """,
             """-N 1""",
             f"""-n {nproc}""",
-            f"""-t {self.partition[partition]}""", 
+            f"""-t {ase_calculator.parameters["time"]}""", 
             f"""--mem {ase_calculator.parameters["mem"]}"""
         ]
         # Building on the remaining commands
