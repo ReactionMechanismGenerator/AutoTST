@@ -192,10 +192,20 @@ class Gaussian():
             i + 1, j + 1, k + 1, l + 1, steps, float(step_size))
 
         if isinstance(self.conformer, TS):
-            extra = f"{self.settings["dispersion"]} Opt=(ts,CalcFC,ModRedun,{self.settings["convergence"]})"
+            extra = f"{self.settings["dispersion"]} Opt=(CalcFC,ModRedun,{self.settings["convergence"]})"
             label = conformer_dir = self.conformer.reaction_label
             label += f"_{steps}by{int(step_size)}_{j}_{k}"
             conformer_type = "ts"
+
+            # Freezing the reaction center for TS HR scans, this is how Pierre did it when running
+            # benchmark calcualations for the original AutoTST paper @nateharms
+            ind1 = self.conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
+            ind2 = self.conformer.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
+            ind3 = self.conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
+            addsec += f"{(ind1 + 1)} {(ind2 + 1)} F\n"
+            addsec += f"{(ind2 + 1)} {(ind3 + 1)} F\n"
+            addsec += f"{(ind1 + 1)} {(ind2 + 1)} {(ind3 + 1)} F"
+
         elif isinstance(self.conformer, Conformer):
             label = conformer_dir = self.conformer.smiles
             label += f"_{steps}by{int(step_size)}_{j}_{k}"
@@ -229,7 +239,7 @@ class Gaussian():
             basis=self.settings["basis"],
             extra=extra,
             multiplicity=mult,
-            addsec=[addsec[:-1]])
+            addsec=[addsec])
         
         ase_gaussian.directory = directory
         ase_gaussian.parameters["partition"] = "" # Create parition parameter to assign in Job
