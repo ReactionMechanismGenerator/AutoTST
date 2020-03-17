@@ -98,17 +98,22 @@ class Torsion():
 
     def __init__(
             self,
-            index,
             atom_indices,
             dihedral,
-            mask,
-            reaction_center=False):
+            index = -1,
+            mask = [],
+            description = 'hindered',
+            reaction_center = False,
+            center_atoms = []):
+
         self.index = index
         self.atom_indices = atom_indices
         self.dihedral = dihedral
         self.mask = mask
+        self.description = description.lower()
+        self.center_atoms = center_atoms
         self.reaction_center = reaction_center
-
+        
     def __repr__(self):
         return f'<Torsion "{self.atom_indices}">'
 
