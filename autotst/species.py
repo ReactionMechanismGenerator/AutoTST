@@ -758,12 +758,17 @@ class Conformer():
         """
 
         rdkit_atoms = self.rdkit_molecule.GetAtoms()
-        if (isinstance(geometry, autotst.geometry.Torsion) or
-                isinstance(geometry, autotst.geometry.CisTrans)):
+        if isinstance(geometry, autotst.geometry.Torsion):
 
             L1, L0, R0, R1 = geometry.atom_indices
 
-            # trying to get the left hand side of this torsion
+            LHS_atoms_index = [L0, L1] + geometry.center_atoms
+            RHS_atoms_index = [R0, R1]
+
+        elif isinstance(geometry, autotst.geometry.CisTrans):
+
+            L1, L0, R0, R1 = geometry.atom_indices
+
             LHS_atoms_index = [L0, L1]
             RHS_atoms_index = [R0, R1]
 

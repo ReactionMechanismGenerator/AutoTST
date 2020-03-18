@@ -74,7 +74,7 @@ class TestConformer(unittest.TestCase):
         torsion = torsions[0]
         self.assertIsInstance(torsion, Torsion)
         self.assertEquals(len(torsion.center_atoms),2)
-        self.assertEquals(len(torsion.mask).count(True),4)
+        self.assertEquals(torsion.mask.count(True),4)
     def test_get_cistrans(self):
         cistrans = self.conformer.get_cistrans()
         self.assertIsInstance(cistrans,list)
