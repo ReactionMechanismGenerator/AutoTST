@@ -44,6 +44,7 @@ from .species import Species, Conformer
 class TestConformer(unittest.TestCase):
     def setUp(self):
         self.conformer = Conformer(smiles='CC')
+        self.conformer_torsion_test = Conformer(smiles='CC#CC')
     def test_rmg_molecules(self):
         self.assertIsInstance(self.conformer.rmg_molecule,rmgpy.molecule.Molecule)
     def test_rdkit_mol(self):
@@ -67,10 +68,13 @@ class TestConformer(unittest.TestCase):
         self.assertIsInstance(angles[0],Angle)
         self.assertEquals(len(angles),12)
     def test_get_torsions(self):
-        torsions = self.conformer.get_torsions()
+        torsions = self.conformer_torsion_test.get_torsions()
         self.assertIsInstance(torsions,list)
-        self.assertIsInstance(torsions[0],Torsion)
-        self.assertEquals(len(torsions),1)
+        self.assertEquals(len(torsions), 1)
+        torsion = torsions[0]
+        self.assertIsInstance(torsion, Torsion)
+        self.assertEquals(len(torsion.center_atoms),2)
+        self.assertEquals(len(torsion.mask).count(True),4)
     def test_get_cistrans(self):
         cistrans = self.conformer.get_cistrans()
         self.assertIsInstance(cistrans,list)
