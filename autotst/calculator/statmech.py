@@ -133,11 +133,7 @@ class StatMech():
                   '# -*- coding: utf-8 -*-', ]
 
         output += ["",
-                   f"linear = {conformer.rmg_molecule.is_linear()}",
-                   "",
                    f"spinMultiplicity = {conformer.rmg_molecule.multiplicity}",
-                   "",
-                   "opticalIsomers = 1",
                    ""]
 
         output += ["energy = {", f"    '{self.model_chemistry}': Log('{label}.log'),", "}", ""]  # fix this
@@ -265,11 +261,7 @@ class StatMech():
         transitionstate.rmg_molecule.update_multiplicity()
 
         output += ["",
-                   "linear = False",
-                   "",
                    f"spinMultiplicity = {transitionstate.rmg_molecule.multiplicity}",
-                   "",
-                   "opticalIsomers = 1",
                    ""]
 
         output += ["energy = {", f"    '{self.model_chemistry}': Log('{label}.log'),", "}", ""]  # fix this
