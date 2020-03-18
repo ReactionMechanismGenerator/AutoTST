@@ -111,7 +111,6 @@ class Torsion():
         self.dihedral = dihedral
         self.mask = mask
         self.description = description.lower()
-        self.center_atoms = center_atoms
         self.reaction_center = reaction_center
         
     def __repr__(self):
