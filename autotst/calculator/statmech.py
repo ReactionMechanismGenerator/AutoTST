@@ -67,100 +67,6 @@ class StatMech():
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
 
-    def get_atoms(self, conformer):
-        """
-        A method to create an atom dictionary for an rmg molecule from a `Conformer` object.
-
-        Parameters:
-        - conformer (Conformer): a conformer object that you want atom info from
-
-        Returns:
-        - atom_dict (dict): a dictionary containing counts of different atom types
-        """
-        atom_dict = {}
-        for atom in conformer.rmg_molecule.atoms:
-            if atom.is_carbon():
-                atom_type = "C"
-            if atom.is_hydrogen():
-                atom_type = "H"
-            if atom.is_oxygen():
-                atom_type = "O"
-
-            try:
-                atom_dict[atom_type] += 1
-            except KeyError:
-                atom_dict[atom_type] = 1
-
-        return atom_dict
-
-    def get_bonds(self, conformer):
-        """
-        A method to create a bond dictionary for an rmg molecule from a `Conformer` object.
-
-        Parameters:
-        - conformer (Conformer): a conformer object that you want bond info from
-
-        Returns:
-        - bond_dict (dict): a dictionary containing counts of different bond types
-        """
-
-        bonds = conformer.rmg_molecule.get_all_edges()
-        bond_dict = {}
-        for bond in bonds:
-            if bond.is_single():
-                if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bond_type = 'C-C'
-                elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'H'):
-                    bond_type = 'H-H'
-                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'H') or (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'C'):
-                    bond_type = 'C-H'
-                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'O'):
-                    bond_type = 'O-O'
-                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'C'):
-                    bond_type = 'C-O'
-                elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'H'):
-                    bond_type = 'O-H'
-                elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bond_type = 'N-N'
-                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bond_type = 'N-C'
-                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'O'):
-                    bond_type = 'N-O'
-                elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'H'):
-                    bond_type = 'N-H'
-                elif bond.atom1.symbol == 'S' and bond.atom2.symbol == 'S':
-                    bond_type = 'S-S'
-                elif (bond.atom1.symbol == 'H' and bond.atom2.symbol == 'S') or (bond.atom1.symbol == 'S' and bond.atom2.symbol == 'H'):
-                    bond_type = 'S-H'
-            elif bond.is_double():
-                if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bond_type = 'C=C'
-                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'O'):
-                    bond_type = 'O=O'
-                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'O') or (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'C'):
-                    bond_type = 'C=O'
-                elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bond_type = 'N=N'
-                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bond_type = 'N=C'
-                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'O'):
-                    bond_type = 'N=O'
-                elif (bond.atom1.symbol == 'O' and bond.atom2.symbol == 'S') or (bond.atom1.symbol == 'S' and bond.atom2.symbol == 'O'):
-                    bond_type = 'S=O'
-            elif bond.is_triple():
-                if bond.atom1.symbol == 'C' and bond.atom2.symbol == 'C':
-                    bond_type = 'C#C'
-                elif bond.atom1.symbol == 'N' and bond.atom2.symbol == 'N':
-                    bond_type = 'N#N'
-                elif (bond.atom1.symbol == 'C' and bond.atom2.symbol == 'N') or (bond.atom1.symbol == 'N' and bond.atom2.symbol == 'C'):
-                    bond_type = 'N#C'
-            try:
-                bond_dict[bond_type] += 1
-            except KeyError:
-                bond_dict[bond_type] = 1
-
-        return bond_dict
-
     def write_species_files(self, species):
         """
         A method to write Arkane files for all conformers in a Species object
@@ -224,33 +130,10 @@ class StatMech():
         conformer.update_coords_from("ase")
         mol = conformer.rmg_molecule
         output = ['#!/usr/bin/env python',
-                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
-
-        atom_dict = self.get_atoms(conformer=conformer)  # Fix this
-
-        for atom, count in atom_dict.items():
-            output.append(f"    '{atom}': {count},")
-        output = output + ['}', '']
-
-        bond_dict = self.get_bonds(conformer=conformer) 
-        if bond_dict != {}:
-            output.append('bonds = {')
-            for bond_type, num in bond_dict.items():
-                output.append(f"    '{bond_type}': {num},")
-            output.append("}")
-        else:
-            output.append('bonds = {}')
-
-        external_symmetry = conformer.calculate_symmetry_number()
+                  '# -*- coding: utf-8 -*-', ]
 
         output += ["",
-                   f"linear = {conformer.rmg_molecule.is_linear()}",
-                   "",
-                   f"externalSymmetry = {external_symmetry}",
-                   "",
                    f"spinMultiplicity = {conformer.rmg_molecule.multiplicity}",
-                   "",
-                   "opticalIsomers = 1",
                    ""]
 
         output += ["energy = {", f"    '{self.model_chemistry}': Log('{label}.log'),", "}", ""]  # fix this
@@ -373,35 +256,12 @@ class StatMech():
         transitionstate.update_coords_from("ase")
 
         output = ['#!/usr/bin/env python',
-                  '# -*- coding: utf-8 -*-', '', 'atoms = {']
+                  '# -*- coding: utf-8 -*-']
 
-        atom_dict = self.get_atoms(conformer=transitionstate)  # need to fix
-
-        for atom, count in atom_dict.items():
-            output.append(f"    '{atom}': {count},")
-        output = output + ['}', '']
-
-        bond_dict = self.get_bonds(conformer=transitionstate)  # need to fix
-        if bond_dict != {}:
-            output.append('bonds = {')
-            for bond_type, num in bond_dict.items():
-                output.append(f"    '{bond_type}': {num},")
-
-            output.append("}")
-        else:
-            output.append('bonds = {}')
         transitionstate.rmg_molecule.update_multiplicity()
 
-        external_symmetry = transitionstate.calculate_symmetry_number()
-
         output += ["",
-                   "linear = False",
-                   "",
-                   f"externalSymmetry = {external_symmetry}",
-                   "",
                    f"spinMultiplicity = {transitionstate.rmg_molecule.multiplicity}",
-                   "",
-                   "opticalIsomers = 1",
                    ""]
 
         output += ["energy = {", f"    '{self.model_chemistry}': Log('{label}.log'),", "}", ""]  # fix this
