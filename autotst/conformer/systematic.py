@@ -112,7 +112,7 @@ def opt_conf(i):
             reference_mol = conformer.rmg_molecule.copy(deep=True)
             reference_mol = reference_mol.to_single_bonds()
 
-        calculator = deepcopy(conformer.ase_molecule.get_calculator())
+        calculator = deepcopy(conformer.ase_molecule.get_calculator().__init__())
 
         labels = []
         for bond in conformer.get_bonds():
