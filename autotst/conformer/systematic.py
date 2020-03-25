@@ -32,6 +32,7 @@ import itertools, logging, os, time
 import pandas as pd
 import numpy as np
 import multiprocessing
+from copy import deepcopy
 
 import ase
 import ase.units
@@ -111,7 +112,7 @@ def opt_conf(i):
             reference_mol = conformer.rmg_molecule.copy(deep=True)
             reference_mol = reference_mol.to_single_bonds()
 
-        calculator = conformer.ase_molecule.get_calculator()
+        calculator = deepcopy(conformer.ase_molecule.get_calculator())
 
         labels = []
         for bond in conformer.get_bonds():
