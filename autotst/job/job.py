@@ -949,7 +949,7 @@ class Job():
                 if done:
                     continue
                 complete[label] = True
-                lowest_conf, continuous = self.verify_rotor( ##################################
+                lowest_conf, continuous = self.verify_rotor( 
                     conformer, label)
                 if all([lowest_conf, continuous]):
                     verified[label] = True
@@ -984,8 +984,6 @@ class Job():
 
                 direction = None
       
-
-
             atoms = self.read_log(file_name)
             conformer._ase_molecule = atoms
             conformer.update_coords_from("ase")
@@ -1069,8 +1067,8 @@ class Job():
             atomcoords] = self.check_rotor_lowest_conf(parser=parser)
         #opt_count_check = self.check_rotor_opts(steps, parser=parser)
         #good_slope = self.check_rotor_slope(steps, step_size, parser=parser)
-
-        return [lowest_conf, continuous]#, good_slope, opt_count_check] ### Previously used, but the second two checks were deemed unecessary
+        rotor_geometries = self.check_rotor_geometries(conformer, parser)
+        return [lowest_conf, continuous, rotor_geometries]#, good_slope, opt_count_check] ### Previously used, but the second two checks were deemed unecessary
 
     def check_rotor_opts(self, steps, parser):
 
@@ -1176,3 +1174,16 @@ class Job():
         atomcoords = parser.atomcoords[min_opt_idx]
 
         return [first_is_lowest, min_energy, atomnos, atomcoords]
+
+    def check_rotor_geometries(self, conformer, parser):
+
+        for converged_geometry in parser.converged_geometries:
+            atoms = Atoms(parser.atomnos, converged_geometry)
+            bonds_changed = []
+            for bond in conformer.bonds:
+                i,j = bond.atom_indices
+                difference = (atoms.get_distance(i,j) - conformer.ase_molecule.get_distance(i,j)) / conformer.ase_molecule.get_distance(i,j)
+                bonds_changed.append(0.05 > difference)
+            if not all(bonds_changed):
+                return False
+        return True
