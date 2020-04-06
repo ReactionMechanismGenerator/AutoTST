@@ -112,8 +112,9 @@ def opt_conf(i):
             reference_mol = conformer.rmg_molecule.copy(deep=True)
             reference_mol = reference_mol.to_single_bonds()
 
-        calculator = deepcopy(conformer.ase_molecule.get_calculator().__init__())
-
+        calculator = conformer.ase_molecule.get_calculator()
+        calculator.__init__()
+        calculator = deepcopy(calculator)
         labels = []
         for bond in conformer.get_bonds():
             labels.append(bond.atom_indices)
@@ -169,7 +170,7 @@ def opt_conf(i):
                 except rmgpy.exceptions.AtomTypeError:
                     logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
                     return False
-        
+        unconvirged = False
         if type == 'ts':
             c = ase.constraints.FixBondLengths(labels)
             conformer.ase_molecule.set_constraint(c)
@@ -177,10 +178,18 @@ def opt_conf(i):
                 opt.run(fmax=0.20, steps=1e6)
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
+                unconvirged = True
                 pass
        
         conformer.update_coords_from("ase")  
-        energy = conformer.ase_molecule.get_potential_energy()
+        try:
+            energy = conformer.ase_molecule.get_potential_energy()
+        except:
+            if unconvirged:
+                logging.error("Unable to parse energy from unconvirged geometry")
+            else:
+                logging.error("Unable to parse energy from geometry")
+            energy = 1e5
         conformers[i] = conformer #update the conformer from old object
         return energy #return energy
 def systematic_search(conformer,
