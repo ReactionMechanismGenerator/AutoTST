@@ -106,12 +106,15 @@ def opt_conf(i):
         """
         A helper function to optimize the geometry of a conformer.
         param i: index of the conformer
-        """   
-        conformer = conformers[i] #use the global object
+        """
+        try:   
+            conformer = conformers[i] #use the global object
+        except NameError:
+            conformer = i
+            
         if not isinstance(conformer, TS):
             reference_mol = conformer.rmg_molecule.copy(deep=True)
             reference_mol = reference_mol.to_single_bonds()
-
         calculator = conformer.ase_molecule.get_calculator()
         calculator.__init__()
         calculator = deepcopy(calculator)
@@ -143,10 +146,8 @@ def opt_conf(i):
                     logging.info(f"An error occured when creating {calculator.directory}")
 
             calculator.atoms = conformer.ase_molecule
-
         conformer.ase_molecule.set_calculator(calculator)
         opt = ase.optimize.BFGS(conformer.ase_molecule, logfile=None)
-
         if type == 'species':
             if isinstance(conformer.index,int):
                 c = ase.constraints.FixBondLengths(labels)
@@ -190,7 +191,10 @@ def opt_conf(i):
             else:
                 logging.error("Unable to parse energy from geometry")
             energy = 1e5
-        conformers[i] = conformer #update the conformer from old object
+        try:
+            conformers[i] = conformer #update the conformer from old object
+        except:
+            logging.error('Could not add updated conformer to conformers dict')
         return energy #return energy
 def systematic_search(conformer,
                       delta=float(120),
@@ -316,7 +320,6 @@ def systematic_search(conformer,
     results = pool.map(opt_conf,range(len(conformers)))
     pool.close()
     pool.join()
-
     energies = []
     for i,energy in enumerate(results):
         energies.append((conformers[i],energy))
