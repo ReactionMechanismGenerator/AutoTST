@@ -1178,7 +1178,7 @@ class Job():
     def check_rotor_geometries(self, conformer, parser):
 
         for converged_geometry in parser.converged_geometries:
-            atoms = Atoms(parser.atomnos, converged_geometry)
+            atoms = ase.(parser.atomnos, converged_geometry)
             bonds_changed = []
             for bond in conformer.bonds:
                 i,j = bond.atom_indices
