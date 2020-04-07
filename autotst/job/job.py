@@ -867,13 +867,13 @@ class Job():
             # Getting the number of processors needed for a child job
             number_of_atoms = conformer.rmg_molecule.get_num_atoms() - conformer.rmg_molecule.get_num_atoms('H')
             if number_of_atoms >= 4:
-                nproc = 2
-            elif number_of_atoms >= 7:
-                nproc = 4
-            elif number_of_atoms >= 9:
-                nproc = 6
-            else:
                 nproc = 8
+            elif number_of_atoms >= 7:
+                nproc = 10
+            elif number_of_atoms >= 9:
+                nproc = 12
+            else:
+                nproc = 14
             ase_calculator.nprocshared = nproc
             self.write_input(conformer, ase_calculator)
             if restart:
