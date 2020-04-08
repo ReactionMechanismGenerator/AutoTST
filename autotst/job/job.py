@@ -942,16 +942,23 @@ class Job():
         lowest_energy_label = None
         conformer_error = False
 
+        if isinstance(conformer, TS):
+            file_dir = os.path.join(self.directory, 'ts', conformer.reaction_label, 'rotors')
+        elif isinstance(conformer, Conformer):
+            file_dir = os.path.join(self.directory, 'species', conformer.smiles, 'rotors')
+
         while not done:
             for label in list(complete.keys()):
                 if not self.check_complete(label):
                     continue
                 if done:
                     continue
+                file_path = os.path.join(file_dir, f'{label}.log')
+                complete, converged = self.calculator.verify_output_file(file_path)
                 complete[label] = True
-                lowest_conf, continuous = self.verify_rotor( 
-                    conformer, label)
-                if all([lowest_conf, continuous]):
+                lowest_conf, continuous, rotor_geometries= self.verify_rotor( 
+                    conformer, label) 
+                if all([lowest_conf, continuous,rotor_geometries, converged]):
                     verified[label] = True
                 else:
                     verified[label] = False
@@ -1178,7 +1185,7 @@ class Job():
     def check_rotor_geometries(self, conformer, parser):
 
         for converged_geometry in parser.converged_geometries:
-            atoms = ase.(parser.atomnos, converged_geometry)
+            atoms = ase.Atoms(parser.atomnos, converged_geometry)
             bonds_changed = []
             for bond in conformer.bonds:
                 i,j = bond.atom_indices
