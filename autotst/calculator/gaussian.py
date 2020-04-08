@@ -133,9 +133,9 @@ class Gaussian():
             self.conformer, Conformer), "A Conformer object was not provided..."
 
         addsec = ""
-        for bond in self.conformer.bonds:
-            i, j = bond.atom_indices
-            addsec += f"B {(i + 1)} {(j + 1)}\n"
+        #for bond in self.conformer.bonds:
+        #    i, j = bond.atom_indices
+        #    addsec += f"B {(i + 1)} {(j + 1)}\n"
 
         i, j, k, l = torsion.atom_indices
         addsec += "D {} {} {} {} S {} {}\n".format(
@@ -152,10 +152,10 @@ class Gaussian():
             conformer_type = "species"
             extra = "Opt=(CalcFC,ModRedun)"
 
-        for locked_torsion in self.conformer.torsions:  # TODO: maybe doesn't work;
-            if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
-                a, b, c, d = locked_torsion.atom_indices
-                addsec += f'D {(a + 1)} {(b + 1)} {(c + 1)} {(d + 1)} F\n'
+        #for locked_torsion in self.conformer.torsions:  # TODO: maybe doesn't work;
+        #    if sorted(locked_torsion.atom_indices) != sorted(torsion.atom_indices):
+        #        a, b, c, d = locked_torsion.atom_indices
+        #        addsec += f'D {(a + 1)} {(b + 1)} {(c + 1)} {(d + 1)} F\n'
 
         self.conformer.rmg_molecule.update_multiplicity()
         mult = self.conformer.rmg_molecule.multiplicity
