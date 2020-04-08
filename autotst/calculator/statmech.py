@@ -143,13 +143,12 @@ class StatMech():
         output += [
             f"frequencies = Log('{label}.log')", ""]
 
-        """
-        TODO: add rotor information @carl
+        
         output += ["rotors = ["]
         for torsion in conf.torsions:
             output += [self.get_rotor_info(conf, torsion)]
         output += ["]"]
-        """
+        
         input_string = ""
 
         for t in output:
@@ -271,7 +270,11 @@ class StatMech():
         output += [
             f"frequencies = Log('{label}.log')", ""]
 
-        output += ["rotors = []", ""]  # TODO: Fix this
+
+        output += ["rotors = ["]
+        for torsion in transitionstate.torsions:
+            output += [self.get_rotor_info(transitionstate, torsion)]
+        output += ["]"]
 
         input_string = ""
 
