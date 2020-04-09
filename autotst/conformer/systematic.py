@@ -105,11 +105,14 @@ def find_all_combos(
 def opt_conf(i):
         """
         A helper function to optimize the geometry of a conformer.
-        param i: index of the conformer
+        param i: index of the conformer or a conformer object
         """
         try:   
             conformer = conformers[i] #use the global object
-        except NameError:
+        except:
+            # When running tests for this single function, it's hard to create a global 
+            # conformers dict. This step allows users to pass in conformer objects rather
+            # than specify a global dict
             conformer = i
             
         if not isinstance(conformer, TS):
@@ -171,7 +174,7 @@ def opt_conf(i):
                 except rmgpy.exceptions.AtomTypeError:
                     logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
                     return False
-        unconvirged = False
+        convirged = False
         if type == 'ts':
             c = ase.constraints.FixBondLengths(labels)
             conformer.ase_molecule.set_constraint(c)
@@ -179,14 +182,14 @@ def opt_conf(i):
                 opt.run(fmax=0.20, steps=1e6)
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
-                unconvirged = True
+                convirged = True
                 pass
        
         conformer.update_coords_from("ase")  
         try:
             energy = conformer.ase_molecule.get_potential_energy()
         except:
-            if unconvirged:
+            if not convirged:
                 logging.error("Unable to parse energy from unconvirged geometry")
             else:
                 logging.error("Unable to parse energy from geometry")
