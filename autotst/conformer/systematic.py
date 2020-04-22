@@ -174,7 +174,7 @@ def opt_conf(i):
                 except rmgpy.exceptions.AtomTypeError:
                     logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
                     return False
-        convirged = False
+        converged = False
         if type == 'ts':
             c = ase.constraints.FixBondLengths(labels)
             conformer.ase_molecule.set_constraint(c)
@@ -182,15 +182,15 @@ def opt_conf(i):
                 opt.run(fmax=0.20, steps=1e6)
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
-                convirged = True
+                converged = True
                 pass
        
         conformer.update_coords_from("ase")  
         try:
             energy = conformer.ase_molecule.get_potential_energy()
         except:
-            if not convirged:
-                logging.error("Unable to parse energy from unconvirged geometry")
+            if not converged:
+                logging.error("Unable to parse energy from unconverged geometry")
             else:
                 logging.error("Unable to parse energy from geometry")
             energy = 1e5
