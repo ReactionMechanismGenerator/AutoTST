@@ -29,9 +29,9 @@
 ##########################################################################
 
 import unittest, os, sys, shutil
-from ..species import Conformer
-from .utilities import get_energy, find_terminal_torsions
-from .systematic import find_all_combos, systematic_search
+from autotst.species import Conformer
+from autotst.conformer.utilities import get_energy, find_terminal_torsions
+from autotst.conformer.systematic import find_all_combos, systematic_search, opt_conf
 import ase.calculators.emt
 
 class TestSystematic(unittest.TestCase):
@@ -46,7 +46,12 @@ class TestSystematic(unittest.TestCase):
         combos = find_all_combos(self.conformer, delta=120, cistrans=True, chiral_centers=True)
         self.assertTrue(len(combos), 108)
         self.assertTrue(len(combos[0]), 3)
+
+    def test_opt_conf(self):
+        self.conformer.ase_molecule.set_calculator(ase.calculators.emt.EMT())
         
+        opt_conf(self.conformer)
+
     def test_systematic_search(self):
         "Test that the systematic search can find more than 1 conformer"
         self.conformer.ase_molecule.set_calculator(ase.calculators.emt.EMT())

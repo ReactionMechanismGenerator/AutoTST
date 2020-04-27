@@ -32,6 +32,7 @@ import itertools, logging, os, time
 import pandas as pd
 import numpy as np
 import multiprocessing
+from copy import deepcopy
 
 import ase
 import ase.units
@@ -104,15 +105,22 @@ def find_all_combos(
 def opt_conf(i):
         """
         A helper function to optimize the geometry of a conformer.
-        param i: index of the conformer
-        """   
-        conformer = conformers[i] #use the global object
+        param i: index of the conformer or a conformer object
+        """
+        try:   
+            conformer = conformers[i] #use the global object
+        except:
+            # When running tests for this single function, it's hard to create a global 
+            # conformers dict. This step allows users to pass in conformer objects rather
+            # than specify a global dict
+            conformer = i
+            
         if not isinstance(conformer, TS):
             reference_mol = conformer.rmg_molecule.copy(deep=True)
             reference_mol = reference_mol.to_single_bonds()
-
         calculator = conformer.ase_molecule.get_calculator()
-
+        calculator.__init__()
+        calculator = deepcopy(calculator)
         labels = []
         for bond in conformer.get_bonds():
             labels.append(bond.atom_indices)
@@ -141,10 +149,8 @@ def opt_conf(i):
                     logging.info(f"An error occured when creating {calculator.directory}")
 
             calculator.atoms = conformer.ase_molecule
-
         conformer.ase_molecule.set_calculator(calculator)
         opt = ase.optimize.BFGS(conformer.ase_molecule, logfile=None)
-
         if type == 'species':
             if isinstance(conformer.index,int):
                 c = ase.constraints.FixBondLengths(labels)
@@ -168,7 +174,7 @@ def opt_conf(i):
                 except rmgpy.exceptions.AtomTypeError:
                     logging.info("Could not create a RMG Molecule from optimized conformer coordinates...assuming not isomorphic")
                     return False
-        
+        converged = False
         if type == 'ts':
             c = ase.constraints.FixBondLengths(labels)
             conformer.ase_molecule.set_constraint(c)
@@ -176,11 +182,22 @@ def opt_conf(i):
                 opt.run(fmax=0.20, steps=1e6)
             except RuntimeError:
                 logging.info("Optimization failed...we will use the unconverged geometry")
+                converged = True
                 pass
        
         conformer.update_coords_from("ase")  
-        energy = conformer.ase_molecule.get_potential_energy()
-        conformers[i] = conformer #update the conformer from old object
+        try:
+            energy = conformer.ase_molecule.get_potential_energy()
+        except:
+            if not converged:
+                logging.error("Unable to parse energy from unconverged geometry")
+            else:
+                logging.error("Unable to parse energy from geometry")
+            energy = 1e5
+        try:
+            conformers[i] = conformer #update the conformer from old object
+        except:
+            logging.error('Could not add updated conformer to conformers dict')
         return energy #return energy
 def systematic_search(conformer,
                       delta=float(120),
@@ -306,7 +323,6 @@ def systematic_search(conformer,
     results = pool.map(opt_conf,range(len(conformers)))
     pool.close()
     pool.join()
-
     energies = []
     for i,energy in enumerate(results):
         energies.append((conformers[i],energy))
