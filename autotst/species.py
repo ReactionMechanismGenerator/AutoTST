@@ -168,7 +168,7 @@ class Species():
         for s in self.smiles:
             string += s + " / "
 
-        return '<Species "{}">'.format(string[:-3])
+        return f'<Species "{string[:-3]}">'
 
     @property
     def conformers(self):
@@ -240,7 +240,7 @@ class Conformer():
             self._symmetry_number = None
 
     def __repr__(self):
-        return '<Conformer "{}">'.format(self.smiles)
+        return f'<Conformer "{self.smiles}">'
 
     def copy(self):
         copy_conf = Conformer()
@@ -433,12 +433,35 @@ class Conformer():
         self.angles = angles
         return self.angles
 
-    def get_torsions(self):
+    def get_torsions(self,tol=5.0):
         """
         A method for identifying all of the torsions in a conformer
         """
+
+        def check_angles(tor):
+            """
+            Checks for linearity in torsion angles.  If angle is close to 180 degrees, 
+            the tuple index corresponding to the the endpoint atom of that angle is returned in a list.
+            """
+            i,j,k,l = tor
+            angles = ((0,self.ase_molecule.get_angle(i, j, k)), (-1,self.ase_molecule.get_angle(j, k, l)))
+            endpoints = []
+            for index,angle in angles:
+                if abs(angle-180) <= tol:  # we have a linear angle and invalid torsion
+                    endpoints.append(index)
+            return endpoints
+
         torsion_list = []
+        if self.rmg_molecule.is_linear(): # No torsions if linear molecule
+            self.torsions  = []
+            return []
+
         for bond1 in self.rdkit_molecule.GetBonds():
+            
+            # Make sure the bond is single and rotatable
+            if str(bond1.GetBondType()) != 'SINGLE':
+                continue
+
             atom1 = bond1.GetBeginAtom()
             atom2 = bond1.GetEndAtom()
             if atom1.IsInRing() or atom2.IsInRing():
@@ -465,22 +488,17 @@ class Conformer():
 
             for bond0 in bond_list1:
                 atomX = bond0.GetOtherAtom(atom1)
-                # if atomX.GetAtomicNum() == 1 and len(atomX.GetBonds()) == 1:
-                # This means that we have a terminal hydrogen, skip this
-                # NOTE: for H_abstraction TSs, a non teminal H should exist
-                #    continue
                 if atomX.GetIdx() != atom2.GetIdx():
                     got_atom0 = True
                     atom0 = atomX
+                    break
 
             for bond2 in bond_list2:
                 atomY = bond2.GetOtherAtom(atom2)
-                # if atomY.GetAtomicNum() == 1 and len(atomY.GetBonds()) == 1:
-                # This means that we have a terminal hydrogen, skip this
-                #    continue
                 if atomY.GetIdx() != atom1.GetIdx():
                     got_atom3 = True
                     atom3 = atomY
+                    break
 
             if not (got_atom0 and got_atom3):
                 # Making sure atom0 and atom3 were not found
@@ -503,37 +521,73 @@ class Conformer():
                 torsion_tup = (atom0.GetIdx(), atom1.GetIdx(),
                                atom2.GetIdx(), atom3.GetIdx())
 
-                already_in_list = False
-                for torsion_entry in torsion_list:
-                    a, b, c, d = torsion_entry
-                    e, f, g, h = torsion_tup
+                endpoints = check_angles(torsion_tup) # check to see if we have any near-linear angles
+                center_atoms = []
+                valid_torsion = True
+   
+                while len(endpoints) > 0: # while we have a near-linear angle in the torsion...
+                    
+                    reached_the_end = [False for i in range(len(endpoints))] 
+                    for i,index in enumerate(endpoints):
+                        if index == 0: # angle i,j,k is near-linear
+                            vertex = torsion_tup[1] # vertex of angle is j
+                        else:  # angle j,k,l is near-linear
+                            vertex = torsion_tup[2] # vertex of angle is k
+                        atom_id = torsion_tup[index] # index of endpoint atom (i or l)
+                        atom = self.rdkit_molecule.GetAtomWithIdx(atom_id) # retrieve endpoint atom
+                        bonds = list(atom.GetBonds()) # get atoms connected to endpoint atoms
+                        got_one = False
+                        for bond in bonds:
+                            atomX = bond.GetOtherAtom(atom)
+                            if atomX.GetIdx() != vertex: # make sure we do not go backwards
+                                got_one = True
+                                break
+            
+                        if got_one is True: # we found a new atom
+                            if index == 0:  # angle i,j,k was near-linear
+                                center_atoms.append(torsion_tup[1]) # we are skipping over j and adding to center atoms
+                                torsion_tup = (atomX.GetIdx(),) + \
+                                (torsion_tup[0], torsion_tup[2], torsion_tup[3]) # new torsion atom indicies
+                            else:  # angle j,k,l was near-linear
+                                center_atoms.append(torsion_tup[2])  # we are skipping over k and adding to center atoms
+                                torsion_tup = (
+                                    torsion_tup[0], torsion_tup[1], torsion_tup[3]) \
+                                    + (atomX.GetIdx(),) # new torsion atom indicies
+                        else: # we did not find a new atom because atom endpoint atom is terminal
+                            reached_the_end[i] = True # we reached the end of the molecule
 
-                    if (b, c) == (f, g) or (b, c) == (g, f):
+                    if all(reached_the_end): # We reached the end of the molecule and still have linear angle
+                        valid_torsion = False
+                        break
+                    
+                    endpoints = check_angles(torsion_tup)
+
+                if not valid_torsion:
+                    continue
+
+                already_in_list = False
+                i, j, k, l = torsion_tup
+                for torsion in torsion_list:
+                    a, b, c, d = torsion.atom_indices
+                    if (b, c) == (j, k) or (b, c) == (k, j):
                         already_in_list = True
+                        break
 
                 if not already_in_list:
-                    torsion_list.append(torsion_tup)
+                    dihedral = self.ase_molecule.get_dihedral(i, j, k, l)
+                    tor = Torsion(atom_indices=torsion_tup,
+                                  dihedral=dihedral,
+                                  center_atoms=center_atoms,
+                                  reaction_center=False,
+                                  )
+                    torsion_list.append(tor)
 
-        torsions = []
-        for index, indices in enumerate(torsion_list):
-            i, j, k, l = indices
-
-            dihedral = self.ase_molecule.get_dihedral(i, j, k, l)
-            tor = Torsion(index=index,
-                          atom_indices=indices,
-                          dihedral=dihedral,
-                          mask=[])
-            mask = self.get_mask(tor)
-            reaction_center = False
-
-            torsions.append(Torsion(index=index,
-                                    atom_indices=indices,
-                                    dihedral=dihedral,
-                                    mask=mask,
-                                    reaction_center=reaction_center))
-
-        self.torsions = torsions
-        return self.torsions
+        for index, tor in enumerate(torsion_list):
+            tor.index = index
+            tor.mask = self.get_mask(tor)
+        
+        self.torsions = torsion_list
+        return torsion_list
 
     def get_cistrans(self):
         """
@@ -704,12 +758,17 @@ class Conformer():
         """
 
         rdkit_atoms = self.rdkit_molecule.GetAtoms()
-        if (isinstance(geometry, autotst.geometry.Torsion) or
-                isinstance(geometry, autotst.geometry.CisTrans)):
+        if isinstance(geometry, autotst.geometry.Torsion):
 
             L1, L0, R0, R1 = geometry.atom_indices
 
-            # trying to get the left hand side of this torsion
+            LHS_atoms_index = [L0, L1] + geometry.center_atoms
+            RHS_atoms_index = [R0, R1]
+
+        elif isinstance(geometry, autotst.geometry.CisTrans):
+
+            L1, L0, R0, R1 = geometry.atom_indices
+
             LHS_atoms_index = [L0, L1]
             RHS_atoms_index = [R0, R1]
 
@@ -830,8 +889,7 @@ class Conformer():
 
         possible_mol_types = ["ase", "rmg", "rdkit"]
 
-        assert (mol_type.lower() in possible_mol_types), "Please specifiy a valid mol type. Valid types are {}".format(
-            possible_mol_types)
+        assert (mol_type.lower() in possible_mol_types), f"Please specifiy a valid mol type. Valid types are {possible_mol_types}"
 
         if mol_type.lower() == "rmg":
             conf = self.rdkit_molecule.GetConformers()[0]

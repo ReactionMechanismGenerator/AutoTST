@@ -88,7 +88,7 @@ class Reaction():
         self._distance_data = None
 
     def __repr__(self):
-        return '<Reaction "{}">'.format(self.label)
+        return f'<Reaction "{self.label}">'
 
     @property
     def ts(self):
@@ -163,7 +163,7 @@ class Reaction():
         else:
             database_path = rmg_database_path
 
-        logging.info("Loading RMG database from '{}'".format(database_path))
+        logging.info(f"Loading RMG database from '{database_path}'")
 
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
             "R_Addition_MultipleBond",
@@ -185,11 +185,11 @@ class Reaction():
             )
         except IOError:
             logging.info(
-                "RMG database not found at '{}'. This can occur if a git repository of the database is being"
-                "used rather than the binary version".format(database_path))
+                f"RMG database not found at '{database_path}'. "
+                "This can occur if a git repository of the database is being used rather than the binary version")
             database_path = os.path.join(database_path, 'input')
             logging.info(
-                "Loading RMG database instead from '{}'".format(database_path))
+                f"Loading RMG database instead from '{database_path}'")
             rmg_database.load(
                 database_path,
                 kinetics_families=self.possible_families,
@@ -248,8 +248,7 @@ class Reaction():
 
             self._distance_data.distances["d13"] -= self._distance_data.uncertainties["d13"] / 2
 
-        logging.info("The distance data is as follows: {}".format(
-            self._distance_data))
+        logging.info(f"The distance data is as follows: {self._distance_data}")
 
         return self._distance_data
 
@@ -308,8 +307,16 @@ class Reaction():
             # Generating lists of lists. Main list is the reactans or products
             # Secondary list is composed of the resonance structures for that species
             r, p = self.label.split("_") 
-            rmg_reactants = [rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures() for smile in r.split("+")]
-            rmg_products = [rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures() for smile in p.split("+")]
+
+            smiles_conversions = {
+                "[CH]":"[CH...]"
+            }
+            def get_rmg_mol(smile):
+                if smile.upper() in list(smiles_conversions.keys()):
+                    smile = smiles_conversions[smile.upper()]
+                return rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures()
+            rmg_reactants = [get_rmg_mol(smile) for smile in r.split("+")]
+            rmg_products = [get_rmg_mol(smile) for smile in p.split("+")]
 
             combos_to_try = list(itertools.product(
                 list(itertools.product(*rmg_reactants)),
@@ -318,7 +325,7 @@ class Reaction():
 
             # looping though each reaction family and each combination of reactants and products
             for name, family in list(self.rmg_database.kinetics.families.items()):
-                logging.info("Trying to match reacction to {}".format(family))
+                logging.info(f"Trying to match reacction to {family}")
                 for rmg_reactants, rmg_products in combos_to_try:
                     # Making a test reaction
                     test_reaction = rmgpy.reaction.Reaction(
@@ -329,7 +336,7 @@ class Reaction():
                         labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                             test_reaction.reactants, test_reaction.products)
                     except: # Failed to match a reaction to the family
-                        logging.error("Couldn't match {} to {}, trying different combination...".format(test_reaction, name))
+                        logging.error(f"Couldn't match {test_reaction} to {name}, trying different combination...")
                         continue
                         
                     if not (labeled_r and labeled_p):
@@ -346,7 +353,7 @@ class Reaction():
                             logging.warning("Skipping this duplicate for now")
                             continue
 
-                        logging.info("Matched reaction to {} family".format(name))
+                        logging.info(f"Matched reaction to {name} family")
                         
                         # Copying labed reactions and saving them for later
                         labeled_reactants = deepcopy(labeled_r)
@@ -382,7 +389,7 @@ class Reaction():
             ))
 
             for name, family in list(self.rmg_database.kinetics.families.items()):
-                logging.info("Trying to match reaction to {}".format(name))
+                logging.info(f"Trying to match reaction to {name}")
                 for rmg_reactants, rmg_products in combos_to_try:
                     # Making a test reaction
                     test_reaction = rmgpy.reaction.Reaction(
@@ -402,7 +409,7 @@ class Reaction():
                             labeled_r, labeled_p = family.get_labeled_reactants_and_products(
                                 test_reaction.products, test_reaction.reactants)
                         except:
-                            logging.error("Couldn't match {} to {}, trying different combination...".format(test_reaction, name))
+                            logging.error(f"Couldn't match {test_reaction} to {name}, trying different combination...")
                             continue
                         
                     if not (labeled_r and labeled_p):
@@ -419,7 +426,7 @@ class Reaction():
                             logging.warning("Skipping this duplicate for now")
                             continue
 
-                        logging.info("Matched reaction to {} family".format(name))
+                        logging.info(f"Matched reaction to {name} family")
                         
                         # Copying labed reactions and saving them for later
                         labeled_reactants = deepcopy(labeled_r)
@@ -465,16 +472,16 @@ class Reaction():
         string = ""
         for react in self.rmg_reaction.reactants:
             if isinstance(react, rmgpy.species.Species):
-                string += "{}+".format(react.molecule[0].to_smiles())
+                string += f"{react.molecule[0].to_smiles()}+"
             elif isinstance(react, rmgpy.molecule.Molecule):
-                string += "{}+".format(react.to_smiles())
+                string += f"{react.to_smiles()}+"
         string = string[:-1]
         string += "_"
         for prod in self.rmg_reaction.products:
             if isinstance(prod, rmgpy.species.Species):
-                string += "{}+".format(prod.molecule[0].to_smiles())
+                string += f"{prod.molecule[0].to_smiles()}+"
             elif isinstance(prod, rmgpy.molecule.Molecule):
-                string += "{}+".format(prod.to_smiles())
+                string += f"{prod.to_smiles()}+"
         self.label = string[:-1]
         return self.label
 
@@ -629,7 +636,7 @@ class TS(Conformer):
             self._symmetry_number = None
 
     def __repr__(self):
-        return '<TS "{}">'.format(self.smiles)
+        return f'<TS "{self.smiles}">'
 
     def copy(self):
         copy_conf = TS(
@@ -730,8 +737,7 @@ class TS(Conformer):
         :return bm: an array of arrays corresponding to the edited bounds matrix
         """
         logging.info(
-            "For atoms {0} and {1} we have a distance of: \t {2}".format(
-                lbl1, lbl2, value))
+            f"For atoms {lbl1} and {lbl2} we have a distance of: \t {value}")
         if lbl1 > lbl2:
             self.bm[lbl2][lbl1] = value + uncertainty / 2
             self.bm[lbl1][lbl2] = max(0, value - uncertainty / 2)
@@ -766,7 +772,7 @@ class TS(Conformer):
                     max_lij = u_ik + u_kj - 0.1
                     if self.bm[i, j] > max_lij:
                         logging.info(
-                            "Changing lower limit {0} to {1}".format(self.bm[i, j], max_lij))
+                            f"Changing lower limit {self.bm[i, j]} to {max_lij}")
                         self.bm[i, j] = max_lij
 
         return self.bm
@@ -802,7 +808,7 @@ class TS(Conformer):
             labels = [lbl1, lbl2, lbl3]
             atom_match = ((lbl1,), (lbl2,), (lbl3,))
 
-        #logging.info("The labled atoms are {}.".format(labels))
+        #logging.info(f"The labled atoms are {labels}.")
         self.labels = labels
         self.atom_match = atom_match
         return self.labels, self.atom_match
@@ -894,8 +900,7 @@ class TS(Conformer):
                     break
                 except ValueError:
                     logging.info(
-                        "RDKit failed to embed on attempt {0} of {1}".format(
-                            i + 1, num_conf_attempts))
+                        f"RDKit failed to embed on attempt {i + 1} of {num_conf_attempts}")
                 except RuntimeError:
                     logging.info("RDKit failed to embed.")
             else:

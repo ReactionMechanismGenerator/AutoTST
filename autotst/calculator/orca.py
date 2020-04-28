@@ -158,13 +158,13 @@ class Orca():
 
         # Write FOD input
         with open(outfile, 'w+') as f:
-            f.write('# FOD anaylsis for {} \n'.format(self.label))
+            f.write(f'# FOD anaylsis for {self.label} \n')
             f.write('! FOD \n')
             f.write('\n')
-            f.write('%pal nprocs {} end \n'.format(str(self.nprocs)))
+            f.write(f'%pal nprocs {str(self.nprocs)} end \n')
             f.write('%scf\n  MaxIter  600\nend\n')
-            f.write('%base "{}_fod" \n'.format(self.base))
-            f.write('*xyz {} {}\n'.format(self.charge, self.mult))
+            f.write(f'%base "{self.base}_fod" \n')
+            f.write(f'*xyz {self.charge} {self.mult}\n')
             f.write(self.coords)
             f.write('*\n')
 
@@ -173,7 +173,7 @@ class Orca():
         checks if an Orca job terminated normally.
         Returns True is normal termination and False if something went wrong.
         """
-        assert os.path.exists(path), 'It seems {} is not a valid path'.format(path)
+        assert os.path.exists(path), f'It seems {path} is not a valid path'
 
         lines = open(path,'r').readlines()[-5:]
         complete = False
@@ -188,7 +188,7 @@ class Orca():
         Reads an FOD log to get the FOD number.
         Returns FOD number if log terminated normally and FOD number can be found.
         """
-        assert os.path.exists(path),'It seems {} is not a valid path'.format(path)
+        assert os.path.exists(path),f'It seems {path} is not a valid path'
 
         if self.check_normal_termination(path):
             N_FOD = None
@@ -197,10 +197,10 @@ class Orca():
                     N_FOD = float(line.split(" ")[-1])
                     break
             if N_FOD:
-                logging.info("the FOD number is {}".format(N_FOD))
+                logging.info(f"the FOD number is {N_FOD}")
                 return N_FOD
             else:
-                logging.info("It appears that the orca terminated normally for {}, but we couldn't find the FOD number".format(path))
+                logging.info(f"It appears that the orca terminated normally for {path}, but we couldn't find the FOD number")
         else:
-            logging.info('It appears the orca FOD job for {} did not terminate normally'.format(path))
+            logging.info(f'It appears the orca FOD job for {path} did not terminate normally')
             
