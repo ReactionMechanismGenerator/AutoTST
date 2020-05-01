@@ -631,7 +631,7 @@ u"""
 entry(
     index = 2,
     label = "Y_rad_birad_trirad_quadrad",
-    group = "OR{Hrad, Orad, Crad}",
+    group = "OR{Hrad, Orad, Crad, Val7rad}",
     distances = DistanceData(distances={}),
 )
 
@@ -11637,6 +11637,50 @@ multiplicity [1,2,3,4,5]
     distances = DistanceData(distances={}),
 )
 
+entry(
+    index = 341,
+    label = "Val7rad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 Val7 u1 p3
+""",
+    distances = DistanceData(distances={}),
+)
+
+entry(
+    index = 342,
+    label = "Frad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 F u1 p3
+""",
+    distances = DistanceData(distances={}),
+)
+
+entry(
+    index = 343,
+    label = "Clrad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 Cl u1 p3
+""",
+    distances = DistanceData(distances={}),
+)
+
+entry(
+    index = 344,
+    label = "Brrad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 Br u1 p3
+""",
+    distances = DistanceData(distances={}),
+)
+
 tree(
 """
 L1: X_H_or_Xrad_H_Xbirad_H_Xtrirad_H
@@ -11802,6 +11846,10 @@ L1: X_H_or_Xrad_H_Xbirad_H_Xtrirad_H
                 L5: O/Cb/H
             L4: OOH
 L1: Y_rad_birad_trirad_quadrad
+    L2: Val7rad
+        L3: Frad
+        L3: Clrad
+        L3: Brrad
     L2: Hrad
     L2: Orad
         L3: OjR
