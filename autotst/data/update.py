@@ -286,7 +286,7 @@ def update_known_reactions(
         Distances = reaction.distance_data.distances
         distance_data = DistanceData(distances=Distances, method=method)
 
-        rmg_reaction = reaction.rmg_reaction
+        rmg_reaction, family = reaction.get_labeled_reaction()
 
         relavent_species = rmg_reaction.reactants + rmg_reaction.products
         relavent_labels = {}
