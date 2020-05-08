@@ -8,635 +8,531 @@ long_desc = u"""
 """
 
 entry(
-    index = 1,
+    index = 0,
     label = "X_H_or_Xrad_H_Xbirad_H_Xtrirad_H",
     group = "OR{H2, C_H, O_H}",
     distances = DistanceData(
-        distances = {'d12': 1.29715, 'd13': 2.57849, 'd23': 1.29649},
-        uncertainties = {'d12': 0.112158, 'd13': 0.077474, 'd23': 0.112405},
+        distances = {'d12': 1.29857, 'd13': 2.5739, 'd23': 1.29163},
+        uncertainties = {'d12': 0.173583, 'd13': 0.152413, 'd23': 0.157494},
     ),
-    short_desc = u"""Fitted to 2490 distances.
+    short_desc = u"""Fitted to 2674 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=4 label="C_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=30 label="OjH">]
-[<Entry index=12 label="Cb_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=43 label="C_methane">, <Entry index=6 label="Hrad">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=62 label="OjCs">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=6 label="Hrad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=3 label="H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=4 label="C_H">, <Entry index=6 label="Hrad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=29 label="OOH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=4 label="C_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=4 label="C_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=4 label="C_H">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=62 label="OjCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=11 label="Ct_H">, <Entry index=36 label="Cbj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=28 label="OCH">, <Entry index=32 label="OjO">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=6 label="Hrad">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=47 label="C_methyl">, <Entry index=17 label="Cj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=32 label="OjO">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=3 label="H2">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=62 label="OjCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=3 label="H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=3 label="H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=3 label="H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=47 label="C_methyl">, <Entry index=6 label="Hrad">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=30 label="OjH">]
-[<Entry index=4 label="C_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=40 label="C_quartetR">]
-[<Entry index=29 label="OOH">, <Entry index=36 label="Cbj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=4 label="C_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=32 label="OjO">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=17 label="Cj">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=36 label="Cbj">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=13 label="OradH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=3 label="H2">, <Entry index=40 label="C_quartetR">]
-[<Entry index=3 label="H2">, <Entry index=30 label="OjH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=43 label="C_methane">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=8 label="Crad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=4 label="C_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=8 label="Crad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=78 label="CsOHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=11 label="Ct_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=31 label="OjC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=4 label="C_H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=6 label="Hrad">]
-[<Entry index=3 label="H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=4 label="C_H">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=4 label="C_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=8 label="Crad">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=12 label="Cb_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=13 label="OradH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=3 label="H2">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=6 label="Hrad">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=12 label="Cb_H">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=6 label="Hrad">]
-[<Entry index=3 label="H2">, <Entry index=63 label="OjCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=4 label="C_H">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=47 label="C_methyl">, <Entry index=30 label="OjH">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=4 label="C_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=36 label="Cbj">]
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=4 label="C_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=13 label="OradH">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=17 label="Cj">]
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=17 label="Cj">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=8 label="Crad">]
-[<Entry index=29 label="OOH">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=17 label="Cj">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=12 label="Cb_H">, <Entry index=30 label="OjH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=13 label="OradH">, <Entry index=32 label="OjO">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=29 label="OOH">, <Entry index=63 label="OjCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=31 label="OjC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=13 label="OradH">, <Entry index=6 label="Hrad">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=13 label="OradH">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=4 label="C_H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=12 label="Cb_H">, <Entry index=72 label="CtjC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=3 label="H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=82 label="CsCCCH">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=6 label="Hrad">]
-[<Entry index=3 label="H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=4 label="C_H">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=176 label="OjO">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=178 label="Crad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=154 label="ORH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=14 label="CsCCHH">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=1 label="H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=135 label="Cd_Cds/O/H">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=178 label="Crad">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=5 label="C_methane">, <Entry index=170 label="OjH">]
+[<Entry index=1 label="H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=2 label="C_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=2 label="C_H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=1 label="H2">, <Entry index=173 label="OjCd">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=79 label="CsradRRH">, <Entry index=164 label="Frad">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=2 label="C_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=154 label="ORH">, <Entry index=164 label="Frad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=161 label="OOH">, <Entry index=179 label="Cj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=31 label="CsRRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=153 label="OradH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=2 label="C_H">, <Entry index=172 label="OjCs">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=1 label="H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=2 label="C_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=31 label="CsRRRH">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=161 label="OOH">, <Entry index=173 label="OjCd">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=1 label="H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=2 label="C_H">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=31 label="CsRRRH">, <Entry index=167 label="Hrad">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=151 label="Cb_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=179 label="Cj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=170 label="OjH">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=170 label="OjH">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=172 label="OjCs">]
+[<Entry index=13 label="CsRRHH">, <Entry index=170 label="OjH">]
+[<Entry index=156 label="OCH">, <Entry index=170 label="OjH">]
+[<Entry index=155 label="OHH">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=71 label="C_methyl">, <Entry index=170 label="OjH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=13 label="CsRRHH">, <Entry index=167 label="Hrad">]
+[<Entry index=155 label="OHH">, <Entry index=273 label="Cbj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=179 label="Cj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=170 label="OjH">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=5 label="C_methane">, <Entry index=176 label="OjO">]
+[<Entry index=2 label="C_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=179 label="Cj">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=172 label="OjCs">]
+[<Entry index=151 label="Cb_H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=178 label="Crad">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=25 label="CsCOHH">, <Entry index=167 label="Hrad">]
+[<Entry index=153 label="OradH">, <Entry index=176 label="OjO">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=273 label="Cbj">]
+[<Entry index=151 label="Cb_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=161 label="OOH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=150 label="Ct_H">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=153 label="OradH">, <Entry index=208 label="CsjCCC">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=2 label="C_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=13 label="CsRRHH">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=1 label="H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=176 label="OjO">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=161 label="OOH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=167 label="Hrad">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=167 label="Hrad">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=339 label="C_quartetR">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=339 label="C_quartetR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=164 label="Frad">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=12 label="CsOHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=150 label="Ct_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=272 label="CtjC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
+[<Entry index=1 label="H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=13 label="CsRRHH">, <Entry index=164 label="Frad">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=1 label="H2">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=189 label="CsjRRH">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=2 label="C_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=154 label="ORH">, <Entry index=176 label="OjO">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
+[<Entry index=2 label="C_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=71 label="C_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=1 label="H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=13 label="CsRRHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=72 label="CsradRH2">, <Entry index=164 label="Frad">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=5 label="C_methane">, <Entry index=167 label="Hrad">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=176 label="OjO">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=167 label="Hrad">]
+[<Entry index=151 label="Cb_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=31 label="CsRRRH">, <Entry index=164 label="Frad">]
+[<Entry index=1 label="H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=161 label="OOH">, <Entry index=167 label="Hrad">]
+[<Entry index=2 label="C_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=155 label="OHH">, <Entry index=176 label="OjO">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=2 label="C_H">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=1 label="H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=150 label="Ct_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=171 label="OjC">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=179 label="Cj">]
+[<Entry index=79 label="CsradRRH">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=31 label="CsRRRH">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=5 label="C_methane">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 2,
+    index = 1,
     label = "Y_rad_birad_trirad_quadrad",
     group = "OR{Hrad, Orad, Crad, Val7rad}",
     distances = DistanceData(distances={}),
 )
 
 entry(
-    index = 3,
+    index = 2,
     label = "H2",
     group = 
 """
@@ -645,48 +541,51 @@ multiplicity [1,2,3,4,5]
 2 *2 H u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.332776, 'd13': -0.346414, 'd23': -0.024913},
-        uncertainties = {'d12': 0.08123, 'd13': 0.041105, 'd23': 0.066637},
+        distances = {
+            'd12': -0.333207,
+            'd13': -0.344189,
+            'd23': -0.023018,
+        },
+        uncertainties = {'d12': 0.081744, 'd13': 0.04775, 'd23': 0.070422},
     ),
-    short_desc = u"""Fitted to 106 distances.
+    short_desc = u"""Fitted to 101 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=3 label="H2">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=3 label="H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=3 label="H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=3 label="H2">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=3 label="H2">, <Entry index=62 label="OjCs">]
-[<Entry index=3 label="H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=3 label="H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=3 label="H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=3 label="H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=3 label="H2">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=3 label="H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=3 label="H2">, <Entry index=36 label="Cbj">]
-[<Entry index=3 label="H2">, <Entry index=40 label="C_quartetR">]
-[<Entry index=3 label="H2">, <Entry index=30 label="OjH">]
-[<Entry index=3 label="H2">, <Entry index=32 label="OjO">]
-[<Entry index=3 label="H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=3 label="H2">, <Entry index=63 label="OjCd">]
-[<Entry index=3 label="H2">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=3 label="H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=3 label="H2">, <Entry index=16 label="O_atom_triplet">]
+[<Entry index=1 label="H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=339 label="C_quartetR">]
+[<Entry index=1 label="H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=1 label="H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=1 label="H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=1 label="H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=1 label="H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=1 label="H2">, <Entry index=176 label="OjO">]
+[<Entry index=1 label="H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=170 label="OjH">]
+[<Entry index=1 label="H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=1 label="H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=1 label="H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=1 label="H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=179 label="Cj">]
+[<Entry index=1 label="H2">, <Entry index=173 label="OjCd">]
+[<Entry index=1 label="H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=1 label="H2">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=1 label="H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=1 label="H2">, <Entry index=183 label="CsjCH2">]
 """,
 )
 
 entry(
-    index = 4,
+    index = 3,
     label = "C_H",
     group = 
 """
@@ -695,492 +594,418 @@ multiplicity [1,2,3,4,5]
 2 *2 H u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.047252, 'd13': 0.06139, 'd23': 0.013801},
-        uncertainties = {'d12': 0.101194, 'd13': 0.069284, 'd23': 0.099989},
+        distances = {'d12': 0.020476, 'd13': 0.027623, 'd23': 0.006691},
+        uncertainties = {'d12': 0.175351, 'd13': 0.156032, 'd23': 0.155141},
     ),
-    short_desc = u"""Fitted to 1733 distances.
+    short_desc = u"""Fitted to 2323 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=4 label="C_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=43 label="C_methane">, <Entry index=6 label="Hrad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=4 label="C_H">, <Entry index=6 label="Hrad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=4 label="C_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=4 label="C_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=4 label="C_H">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=11 label="Ct_H">, <Entry index=36 label="Cbj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=47 label="C_methyl">, <Entry index=17 label="Cj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=32 label="OjO">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=4 label="C_H">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=32 label="OjO">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=47 label="C_methyl">, <Entry index=6 label="Hrad">]
-[<Entry index=43 label="C_methane">, <Entry index=30 label="OjH">]
-[<Entry index=4 label="C_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=17 label="Cj">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=8 label="Crad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=4 label="C_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=8 label="Crad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=78 label="CsOHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=32 label="OjO">]
-[<Entry index=11 label="Ct_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=4 label="C_H">, <Entry index=31 label="OjC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=4 label="C_H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=6 label="Hrad">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=4 label="C_H">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=4 label="C_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=8 label="Crad">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=6 label="Hrad">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=4 label="C_H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=12 label="Cb_H">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=4 label="C_H">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=47 label="C_methyl">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=4 label="C_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=4 label="C_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=17 label="Cj">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=8 label="Crad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=17 label="Cj">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=12 label="Cb_H">, <Entry index=30 label="OjH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=12 label="Cb_H">, <Entry index=72 label="CtjC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=82 label="CsCCCH">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=4 label="C_H">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=176 label="OjO">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=178 label="Crad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=2 label="C_H">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=14 label="CsCCHH">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=135 label="Cd_Cds/O/H">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=178 label="Crad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=5 label="C_methane">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=2 label="C_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=2 label="C_H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=79 label="CsradRRH">, <Entry index=164 label="Frad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=2 label="C_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=31 label="CsRRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=2 label="C_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=2 label="C_H">, <Entry index=172 label="OjCs">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=2 label="C_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=31 label="CsRRRH">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=2 label="C_H">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=31 label="CsRRRH">, <Entry index=167 label="Hrad">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=151 label="Cb_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=179 label="Cj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=170 label="OjH">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=13 label="CsRRHH">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=71 label="C_methyl">, <Entry index=170 label="OjH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=13 label="CsRRHH">, <Entry index=167 label="Hrad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=179 label="Cj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=5 label="C_methane">, <Entry index=176 label="OjO">]
+[<Entry index=2 label="C_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=151 label="Cb_H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=178 label="Crad">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=25 label="CsCOHH">, <Entry index=167 label="Hrad">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=273 label="Cbj">]
+[<Entry index=151 label="Cb_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=150 label="Ct_H">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=2 label="C_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=13 label="CsRRHH">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=167 label="Hrad">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=167 label="Hrad">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=2 label="C_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=164 label="Frad">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=12 label="CsOHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=150 label="Ct_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=272 label="CtjC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
+[<Entry index=2 label="C_H">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=13 label="CsRRHH">, <Entry index=164 label="Frad">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=2 label="C_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
+[<Entry index=2 label="C_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=71 label="C_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=13 label="CsRRHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=72 label="CsradRH2">, <Entry index=164 label="Frad">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=5 label="C_methane">, <Entry index=167 label="Hrad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=176 label="OjO">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=167 label="Hrad">]
+[<Entry index=151 label="Cb_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=31 label="CsRRRH">, <Entry index=164 label="Frad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=2 label="C_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=2 label="C_H">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=2 label="C_H">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=150 label="Ct_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=171 label="OjC">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=79 label="CsradRRH">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=31 label="CsRRRH">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=5 label="C_methane">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 9,
+    index = 4,
     label = "Cs_H",
     group = 
 """
@@ -1189,320 +1014,290 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.028722, 'd13': 0.059124, 'd23': 0.027662},
-        uncertainties = {'d12': 0.0901, 'd13': 0.057302, 'd23': 0.080201},
+        distances = {'d12': 0.006549, 'd13': 0.018814, 'd23': 0.01031},
+        uncertainties = {'d12': 0.166155, 'd13': 0.159354, 'd23': 0.149996},
     ),
-    short_desc = u"""Fitted to 1148 distances.
+    short_desc = u"""Fitted to 1860 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=47 label="C_methyl">, <Entry index=6 label="Hrad">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=8 label="Crad">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=79 label="CsCCHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=77 label="CsCHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=47 label="C_methyl">, <Entry index=32 label="OjO">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=17 label="Cj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=43 label="C_methane">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=30 label="OjH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=8 label="Crad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=47 label="C_methyl">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=6 label="Hrad">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=6 label="Hrad">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=17 label="Cj">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=6 label="Hrad">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=17 label="Cj">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=71 label="C_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=13 label="CsRRHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=14 label="CsCCHH">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=31 label="CsRRRH">, <Entry index=167 label="Hrad">]
+[<Entry index=72 label="CsradRH2">, <Entry index=164 label="Frad">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=178 label="Crad">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=170 label="OjH">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=179 label="Cj">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=167 label="Hrad">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=31 label="CsRRRH">, <Entry index=164 label="Frad">]
+[<Entry index=79 label="CsradRRH">, <Entry index=164 label="Frad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=13 label="CsRRHH">, <Entry index=170 label="OjH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=71 label="C_methyl">, <Entry index=170 label="OjH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=13 label="CsRRHH">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=164 label="Frad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=167 label="Hrad">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=71 label="C_methyl">, <Entry index=176 label="OjO">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=179 label="Cj">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=79 label="CsradRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=178 label="Crad">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=25 label="CsCOHH">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=31 label="CsRRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=79 label="CsradRRH">, <Entry index=176 label="OjO">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=31 label="CsRRRH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=31 label="CsRRRH">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=13 label="CsRRHH">, <Entry index=164 label="Frad">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=5 label="C_methane">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=13 label="CsRRHH">, <Entry index=176 label="OjO">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
 """,
 )
 
 entry(
-    index = 21,
+    index = 5,
     label = "Csnorad_H",
     group = 
 """
@@ -1511,292 +1306,252 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.027896, 'd13': 0.060009, 'd23': 0.029439},
-        uncertainties = {'d12': 0.089666, 'd13': 0.056867, 'd23': 0.080517},
+        distances = {'d12': 0.004994, 'd13': 0.018598, 'd23': 0.011033},
+        uncertainties = {'d12': 0.165952, 'd13': 0.154196, 'd23': 0.14687},
     ),
-    short_desc = u"""Fitted to 1113 distances.
+    short_desc = u"""Fitted to 1768 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=43 label="C_methane">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=8 label="Crad">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=79 label="CsCCHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=77 label="CsCHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=17 label="Cj">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=17 label="Cj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=8 label="Crad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=43 label="C_methane">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=6 label="Hrad">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=17 label="Cj">]
-[<Entry index=79 label="CsCCHH">, <Entry index=6 label="Hrad">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=13 label="CsRRHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=14 label="CsCCHH">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=31 label="CsRRRH">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=5 label="C_methane">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=178 label="Crad">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=179 label="Cj">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=31 label="CsRRRH">, <Entry index=164 label="Frad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=13 label="CsRRHH">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=13 label="CsRRHH">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=164 label="Frad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=172 label="OjCs">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=179 label="Cj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=178 label="Crad">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=25 label="CsCOHH">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=31 label="CsRRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=31 label="CsRRRH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=31 label="CsRRRH">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=13 label="CsRRHH">, <Entry index=164 label="Frad">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=5 label="C_methane">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=13 label="CsRRHH">, <Entry index=176 label="OjO">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
 """,
 )
 
 entry(
-    index = 43,
+    index = 6,
     label = "C_methane",
     group = 
 """
@@ -1808,45 +1563,48 @@ multiplicity [1,2,3,4,5]
 5    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.094206, 'd13': 0.06078, 'd23': -0.044751},
-        uncertainties = {'d12': 0.079823, 'd13': 0.051219, 'd23': 0.040885},
+        distances = {
+            'd12': 0.095121,
+            'd13': 0.065004,
+            'd23': -0.04187,
+        },
+        uncertainties = {'d12': 0.083439, 'd13': 0.05955, 'd23': 0.044962},
     ),
-    short_desc = u"""Fitted to 82 distances.
+    short_desc = u"""Fitted to 78 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=30 label="OjH">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=43 label="C_methane">, <Entry index=6 label="Hrad">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=32 label="OjO">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=43 label="C_methane">, <Entry index=17 label="Cj">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=167 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=5 label="C_methane">, <Entry index=170 label="OjH">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=5 label="C_methane">, <Entry index=179 label="Cj">]
+[<Entry index=5 label="C_methane">, <Entry index=176 label="OjO">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=5 label="C_methane">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
 """,
 )
 
 entry(
-    index = 44,
+    index = 7,
     label = "CsRHHH",
     group = 
 """
@@ -1858,141 +1616,142 @@ multiplicity [1,2,3,4,5]
 5    R!H ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.036763, 'd13': 0.057137, 'd23': 0.016433},
-        uncertainties = {'d12': 0.091981, 'd13': 0.061209, 'd23': 0.083668},
+        distances = {'d12': 0.001686, 'd13': 0.009359, 'd23': 0.005226},
+        uncertainties = {'d12': 0.160461, 'd13': 0.160695, 'd23': 0.138922},
     ),
-    short_desc = u"""Fitted to 637 distances.
+    short_desc = u"""Fitted to 1412 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=8 label="Crad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=77 label="CsCHHH">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=17 label="Cj">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=8 label="Crad">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=78 label="CsOHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=178 label="Crad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=178 label="Crad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
 """,
 )
 
 entry(
-    index = 77,
+    index = 8,
     label = "CsCHHH",
     group = 
 """
@@ -2004,115 +1763,115 @@ multiplicity [1,2,3,4,5]
 5    C  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.038561, 'd13': 0.057585, 'd23': 0.01305},
-        uncertainties = {'d12': 0.091224, 'd13': 0.050002, 'd23': 0.070331},
+        distances = {'d12': 0.006232, 'd13': 0.016329, 'd23': 0.006806},
+        uncertainties = {'d12': 0.161134, 'd13': 0.156286, 'd23': 0.136314},
     ),
-    short_desc = u"""Fitted to 550 distances.
+    short_desc = u"""Fitted to 1221 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=8 label="Crad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=77 label="CsCHHH">, <Entry index=17 label="Cj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=8 label="Crad">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=178 label="Crad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=178 label="Crad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
 """,
 )
 
 entry(
-    index = 118,
+    index = 9,
     label = "C/H3/Cs",
     group = 
 """
@@ -2124,49 +1883,55 @@ multiplicity [1,2,3,4,5]
 5    Cs ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.059214, 'd13': 0.051611, 'd23': -0.015129},
-        uncertainties = {'d12': 0.096662, 'd13': 0.05057, 'd23': 0.055299},
+        distances = {
+            'd12': -0.001238,
+            'd13': 0.001226,
+            'd23': -0.000873,
+        },
+        uncertainties = {'d12': 0.167893, 'd13': 0.167889, 'd23': 0.128479},
     ),
-    short_desc = u"""Fitted to 305 distances.
+    short_desc = u"""Fitted to 892 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
 """,
 )
 
 entry(
-    index = 119,
+    index = 10,
     label = "C/H3/Cd",
     group = 
 """
@@ -2178,45 +1943,46 @@ multiplicity [1,2,3,4,5]
 5    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.001041, 'd13': 0.068711, 'd23': 0.063126},
-        uncertainties = {'d12': 0.080567, 'd13': 0.051965, 'd23': 0.064903},
+        distances = {'d12': 0.032726, 'd13': 0.058503, 'd23': 0.021355},
+        uncertainties = {'d12': 0.152288, 'd13': 0.111728, 'd23': 0.145048},
     ),
-    short_desc = u"""Fitted to 156 distances.
+    short_desc = u"""Fitted to 201 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=8 label="Crad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=178 label="Crad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
 """,
 )
 
 entry(
-    index = 120,
+    index = 11,
     label = "C/H3/Ct",
     group = 
 """
@@ -2228,32 +1994,28 @@ multiplicity [1,2,3,4,5]
 5    Ct u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.033029, 'd13': 0.061724, 'd23': 0.027092},
-        uncertainties = {'d12': 0.11304, 'd13': 0.049223, 'd23': 0.21114},
+        distances = {'d12': 0.04617, 'd13': 0.063263, 'd23': 0.016212},
+        uncertainties = {'d12': 0.150937, 'd13': 0.068744, 'd23': 0.263654},
     ),
-    short_desc = u"""Fitted to 22 distances.
+    short_desc = u"""Fitted to 16 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=6 label="Hrad">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=8 label="Crad">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=167 label="Hrad">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=178 label="Crad">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
 """,
 )
 
 entry(
-    index = 121,
+    index = 12,
     label = "C/H3/Cb",
     group = 
 """
@@ -2268,7 +2030,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 78,
+    index = 13,
     label = "CsOHHH",
     group = 
 """
@@ -2280,44 +2042,49 @@ multiplicity [1,2,3,4,5]
 5    O  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.025268, 'd13': 0.054273, 'd23': 0.038054},
-        uncertainties = {'d12': 0.098553, 'd13': 0.109762, 'd23': 0.143922},
+        distances = {
+            'd12': -0.025891,
+            'd13': -0.032921,
+            'd23': -0.004355,
+        },
+        uncertainties = {'d12': 0.157515, 'd13': 0.188057, 'd23': 0.155915},
     ),
-    short_desc = u"""Fitted to 87 distances.
+    short_desc = u"""Fitted to 191 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=78 label="CsOHHH">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
 """,
 )
 
 entry(
-    index = 45,
+    index = 14,
     label = "CsRRHH",
     group = 
 """
@@ -2329,117 +2096,86 @@ multiplicity [1,2,3,4,5]
 5    R!H ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.003096, 'd13': 0.065892, 'd23': 0.070812},
-        uncertainties = {'d12': 0.087433, 'd13': 0.05087, 'd23': 0.081617},
+        distances = {'d12': 0.004612, 'd13': 0.057216, 'd23': 0.051425},
+        uncertainties = {'d12': 0.214847, 'd13': 0.126406, 'd23': 0.207072},
     ),
-    short_desc = u"""Fitted to 357 distances.
+    short_desc = u"""Fitted to 196 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=6 label="Hrad">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=25 label="CsCOHH">, <Entry index=167 label="Hrad">]
+[<Entry index=13 label="CsRRHH">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=13 label="CsRRHH">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=13 label="CsRRHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=13 label="CsRRHH">, <Entry index=164 label="Frad">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=14 label="CsCCHH">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=13 label="CsRRHH">, <Entry index=176 label="OjO">]
 """,
 )
 
 entry(
-    index = 79,
+    index = 15,
     label = "CsCCHH",
     group = 
 """
@@ -2451,94 +2187,65 @@ multiplicity [1,2,3,4,5]
 5    C  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.008171, 'd13': 0.069716, 'd23': 0.076509},
-        uncertainties = {'d12': 0.089264, 'd13': 0.04998, 'd23': 0.080635},
+        distances = {'d12': 0.001253, 'd13': 0.071767, 'd23': 0.069329},
+        uncertainties = {'d12': 0.18279, 'd13': 0.091315, 'd23': 0.195471},
     ),
-    short_desc = u"""Fitted to 288 distances.
+    short_desc = u"""Fitted to 151 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=14 label="CsCCHH">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 122,
+    index = 16,
     label = "C/H2/Cs/Cs",
     group = 
 """
@@ -2550,35 +2257,26 @@ multiplicity [1,2,3,4,5]
 5    Cs ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.030331, 'd13': 0.046577, 'd23': 0.011523},
-        uncertainties = {'d12': 0.103743, 'd13': 0.054861, 'd23': 0.074841},
+        distances = {
+            'd12': 0.013519,
+            'd13': -0.023543,
+            'd23': -0.015022,
+        },
+        uncertainties = {'d12': 0.307596, 'd13': 0.198844, 'd23': 0.314648},
     ),
-    short_desc = u"""Fitted to 97 distances.
+    short_desc = u"""Fitted to 15 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
 """,
 )
 
 entry(
-    index = 123,
+    index = 17,
     label = "C/H2/Cs/Cd",
     group = 
 """
@@ -2590,42 +2288,38 @@ multiplicity [1,2,3,4,5]
 5    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.023078, 'd13': 0.076794, 'd23': 0.101088},
-        uncertainties = {'d12': 0.082608, 'd13': 0.049051, 'd23': 0.089064},
+        distances = {
+            'd12': -0.02349,
+            'd13': 0.078415,
+            'd23': 0.101125,
+        },
+        uncertainties = {'d12': 0.087933, 'd13': 0.050372, 'd23': 0.097158},
     ),
-    short_desc = u"""Fitted to 109 distances.
+    short_desc = u"""Fitted to 44 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
 """,
 )
 
 entry(
-    index = 124,
+    index = 18,
     label = "C/H2/Cs/Ct",
     group = 
 """
@@ -2640,7 +2334,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 125,
+    index = 19,
     label = "C/H2/Cs/Cb",
     group = 
 """
@@ -2655,7 +2349,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 126,
+    index = 20,
     label = "C/H2/Cd/Cd",
     group = 
 """
@@ -2667,40 +2361,40 @@ multiplicity [1,2,3,4,5]
 5    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.036548, 'd13': 0.095211, 'd23': 0.130824},
-        uncertainties = {'d12': 0.079682, 'd13': 0.044051, 'd23': 0.070959},
+        distances = {'d12': 0.013284, 'd13': 0.077019, 'd23': 0.06024},
+        uncertainties = {'d12': 0.205119, 'd13': 0.088102, 'd23': 0.221706},
     ),
-    short_desc = u"""Fitted to 60 distances.
+    short_desc = u"""Fitted to 85 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 127,
+    index = 21,
     label = "C/H2/Cd/Ct",
     group = 
 """
@@ -2715,7 +2409,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 128,
+    index = 22,
     label = "C/H2/Cd/Cb",
     group = 
 """
@@ -2730,7 +2424,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 129,
+    index = 23,
     label = "C/H2/Ct/Ct",
     group = 
 """
@@ -2745,7 +2439,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 130,
+    index = 24,
     label = "C/H2/Ct/Cb",
     group = 
 """
@@ -2760,7 +2454,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 131,
+    index = 25,
     label = "C/H2/Cb/Cb",
     group = 
 """
@@ -2775,7 +2469,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 80,
+    index = 26,
     label = "CsCOHH",
     group = 
 """
@@ -2787,41 +2481,37 @@ multiplicity [1,2,3,4,5]
 5    O  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.018126, 'd13': 0.049904, 'd23': 0.046987},
-        uncertainties = {'d12': 0.08147, 'd13': 0.055777, 'd23': 0.087737},
+        distances = {
+            'd12': 0.003037,
+            'd13': -0.017223,
+            'd23': -0.021825,
+        },
+        uncertainties = {'d12': 0.293468, 'd13': 0.233795, 'd23': 0.250966},
     ),
-    short_desc = u"""Fitted to 69 distances.
+    short_desc = u"""Fitted to 27 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=25 label="CsCOHH">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
 """,
 )
 
 entry(
-    index = 132,
+    index = 27,
     label = "C/H2/Cs/O",
     group = 
 """
@@ -2833,41 +2523,29 @@ multiplicity [1,2,3,4,5]
 5    O  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.018126, 'd13': 0.049904, 'd23': 0.046987},
-        uncertainties = {'d12': 0.08147, 'd13': 0.055777, 'd23': 0.087737},
+        distances = {
+            'd12': 0.014693,
+            'd13': -0.03347,
+            'd23': -0.047301,
+        },
+        uncertainties = {'d12': 0.360187, 'd13': 0.212394, 'd23': 0.327318},
     ),
-    short_desc = u"""Fitted to 69 distances.
+    short_desc = u"""Fitted to 13 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
 """,
 )
 
 entry(
-    index = 133,
+    index = 28,
     label = "C/H2/Cd/O",
     group = 
 """
@@ -2878,17 +2556,28 @@ multiplicity [1,2,3,4,5]
 4    Cd ux {1,S}
 5    O  ux {1,S}
 """,
-    distances = DistanceData(distances={}),
-    short_desc = u"""Fitted to 1 distances.
+    distances = DistanceData(
+        distances = {
+            'd12': -0.014651,
+            'd13': -0.033146,
+            'd23': -0.020984,
+        },
+        uncertainties = {'d12': 0.333941, 'd13': 0.323567, 'd23': 0.140333},
+    ),
+    short_desc = u"""Fitted to 9 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=133 label="C/H2/Cd/O">, <Entry index=208 label="Csj/Cs/H2">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=167 label="Hrad">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
 """,
 )
 
 entry(
-    index = 134,
+    index = 29,
     label = "C/H2/Ct/O",
     group = 
 """
@@ -2903,7 +2592,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 135,
+    index = 30,
     label = "C/H2/Cb/O",
     group = 
 """
@@ -2918,7 +2607,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 81,
+    index = 31,
     label = "CsOOHH",
     group = 
 """
@@ -2932,15 +2621,10 @@ multiplicity [1,2,3,4,5]
     distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 2 distances.
 """,
-    long_desc = 
-u"""
-[<Entry index=81 label="CsOOHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=81 label="CsOOHH">, <Entry index=208 label="Csj/Cs/H2">]
-""",
 )
 
 entry(
-    index = 46,
+    index = 32,
     label = "CsRRRH",
     group = 
 """
@@ -2952,43 +2636,28 @@ multiplicity [1,2,3,4,5]
 5    R!H ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.008185, 'd13': 0.050464, 'd23': 0.03942},
-        uncertainties = {'d12': 0.102993, 'd13': 0.052693, 'd23': 0.089834},
+        distances = {
+            'd12': 0.028895,
+            'd13': 0.018809,
+            'd23': -0.007902,
+        },
+        uncertainties = {'d12': 0.212706, 'd13': 0.152848, 'd23': 0.19281},
     ),
-    short_desc = u"""Fitted to 37 distances.
+    short_desc = u"""Fitted to 19 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=82 label="CsCCCH">, <Entry index=6 label="Hrad">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=82 label="CsCCCH">, <Entry index=17 label="Cj">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=82 label="CsCCCH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=31 label="CsRRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=31 label="CsRRRH">, <Entry index=170 label="OjH">]
+[<Entry index=31 label="CsRRRH">, <Entry index=167 label="Hrad">]
+[<Entry index=31 label="CsRRRH">, <Entry index=176 label="OjO">]
+[<Entry index=31 label="CsRRRH">, <Entry index=164 label="Frad">]
 """,
 )
 
 entry(
-    index = 82,
+    index = 33,
     label = "CsCCCH",
     group = 
 """
@@ -2999,38 +2668,13 @@ multiplicity [1,2,3,4,5]
 4    C  ux {1,S}
 5    C  ux {1,S}
 """,
-    distances = DistanceData(
-        distances = {'d12': 0.005513, 'd13': 0.048522, 'd23': 0.039051},
-        uncertainties = {'d12': 0.102348, 'd13': 0.049591, 'd23': 0.091985},
-    ),
+    distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 30 distances.
-""",
-    long_desc = 
-u"""
-[<Entry index=82 label="CsCCCH">, <Entry index=6 label="Hrad">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=17 label="Cj">]
-[<Entry index=82 label="CsCCCH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
 """,
 )
 
 entry(
-    index = 136,
+    index = 34,
     label = "C/H/Cs/Cs/Cs",
     group = 
 """
@@ -3041,27 +2685,13 @@ multiplicity [1,2,3,4,5]
 4    Cs ux {1,S}
 5    Cs ux {1,S}
 """,
-    distances = DistanceData(
-        distances = {'d12': 0.002656, 'd13': 0.043726, 'd23': 0.033485},
-        uncertainties = {'d12': 0.096175, 'd13': 0.049197, 'd23': 0.085908},
-    ),
+    distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 13 distances.
-""",
-    long_desc = 
-u"""
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
 """,
 )
 
 entry(
-    index = 137,
+    index = 35,
     label = "C/H/Cs/Cs/Cd",
     group = 
 """
@@ -3076,7 +2706,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 138,
+    index = 36,
     label = "C/H/Cs/Cs/Ct",
     group = 
 """
@@ -3091,7 +2721,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 139,
+    index = 37,
     label = "C/H/Cs/Cs/Cb",
     group = 
 """
@@ -3106,7 +2736,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 140,
+    index = 38,
     label = "C/H/Cs/Cd/Cd",
     group = 
 """
@@ -3120,14 +2750,10 @@ multiplicity [1,2,3,4,5]
     distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 1 distances.
 """,
-    long_desc = 
-u"""
-[<Entry index=140 label="C/H/Cs/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-""",
 )
 
 entry(
-    index = 141,
+    index = 39,
     label = "C/H/Cs/Cd/Ct",
     group = 
 """
@@ -3142,7 +2768,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 142,
+    index = 40,
     label = "C/H/Cs/Cd/Cb",
     group = 
 """
@@ -3157,7 +2783,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 143,
+    index = 41,
     label = "C/H/Cs/Ct/Ct",
     group = 
 """
@@ -3172,7 +2798,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 144,
+    index = 42,
     label = "C/H/Cs/Ct/Cb",
     group = 
 """
@@ -3187,7 +2813,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 145,
+    index = 43,
     label = "C/H/Cs/Cb/Cb",
     group = 
 """
@@ -3202,7 +2828,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 146,
+    index = 44,
     label = "C/H/Cd/Cd/Cd",
     group = 
 """
@@ -3217,7 +2843,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 147,
+    index = 45,
     label = "C/H/Cd/Cd/Ct",
     group = 
 """
@@ -3232,7 +2858,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 148,
+    index = 46,
     label = "C/H/Cd/Cd/Cb",
     group = 
 """
@@ -3247,7 +2873,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 149,
+    index = 47,
     label = "C/H/Cd/Ct/Ct",
     group = 
 """
@@ -3262,7 +2888,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 150,
+    index = 48,
     label = "C/H/Cd/Ct/Cb",
     group = 
 """
@@ -3277,7 +2903,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 151,
+    index = 49,
     label = "C/H/Cd/Cb/Cb",
     group = 
 """
@@ -3292,7 +2918,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 152,
+    index = 50,
     label = "C/H/Ct/Ct/Ct",
     group = 
 """
@@ -3307,7 +2933,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 153,
+    index = 51,
     label = "C/H/Ct/Ct/Cb",
     group = 
 """
@@ -3322,7 +2948,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 154,
+    index = 52,
     label = "C/H/Ct/Cb/Cb",
     group = 
 """
@@ -3337,7 +2963,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 155,
+    index = 53,
     label = "C/H/Cb/Cb/Cb",
     group = 
 """
@@ -3352,7 +2978,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 83,
+    index = 54,
     label = "CsCCOH",
     group = 
 """
@@ -3363,25 +2989,13 @@ multiplicity [1,2,3,4,5]
 4    C  ux {1,S}
 5    O  ux {1,S}
 """,
-    distances = DistanceData(
-        distances = {'d12': 0.020421, 'd13': 0.059357, 'd23': 0.041108},
-        uncertainties = {'d12': 0.142039, 'd13': 0.085068, 'd23': 0.109298},
-    ),
+    distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 7 distances.
-""",
-    long_desc = 
-u"""
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
 """,
 )
 
 entry(
-    index = 156,
+    index = 55,
     label = "C/H/Cs/Cs/O",
     group = 
 """
@@ -3392,25 +3006,13 @@ multiplicity [1,2,3,4,5]
 4    Cs ux {1,S}
 5    O  ux {1,S}
 """,
-    distances = DistanceData(
-        distances = {'d12': 0.020421, 'd13': 0.059357, 'd23': 0.041108},
-        uncertainties = {'d12': 0.142039, 'd13': 0.085068, 'd23': 0.109298},
-    ),
+    distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 7 distances.
-""",
-    long_desc = 
-u"""
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
 """,
 )
 
 entry(
-    index = 157,
+    index = 56,
     label = "C/H/Cs/Cd/O",
     group = 
 """
@@ -3425,7 +3027,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 158,
+    index = 57,
     label = "C/H/Cs/Ct/O",
     group = 
 """
@@ -3440,7 +3042,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 159,
+    index = 58,
     label = "C/H/Cs/Cb/O",
     group = 
 """
@@ -3455,7 +3057,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 160,
+    index = 59,
     label = "C/H/Cd/Cd/O",
     group = 
 """
@@ -3470,7 +3072,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 161,
+    index = 60,
     label = "C/H/Cd/Ct/O",
     group = 
 """
@@ -3485,7 +3087,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 162,
+    index = 61,
     label = "C/H/Cd/Cb/O",
     group = 
 """
@@ -3500,7 +3102,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 163,
+    index = 62,
     label = "C/H/Ct/Ct/O",
     group = 
 """
@@ -3515,7 +3117,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 164,
+    index = 63,
     label = "C/H/Ct/Cb/O",
     group = 
 """
@@ -3530,7 +3132,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 165,
+    index = 64,
     label = "C/H/Cb/Cb/O",
     group = 
 """
@@ -3545,7 +3147,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 84,
+    index = 65,
     label = "CsCOOH",
     group = 
 """
@@ -3560,7 +3162,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 166,
+    index = 66,
     label = "C/H/Cs/O/O",
     group = 
 """
@@ -3575,7 +3177,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 167,
+    index = 67,
     label = "C/H/Cd/O/O",
     group = 
 """
@@ -3590,7 +3192,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 168,
+    index = 68,
     label = "C/H/Ct/O/O",
     group = 
 """
@@ -3605,7 +3207,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 169,
+    index = 69,
     label = "C/H/Cb/O/O",
     group = 
 """
@@ -3620,7 +3222,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 85,
+    index = 70,
     label = "CsOOOH",
     group = 
 """
@@ -3635,7 +3237,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 22,
+    index = 71,
     label = "Csrad_H",
     group = 
 """
@@ -3644,43 +3246,57 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.052254, 'd13': 0.039105, 'd23': -0.019755},
-        uncertainties = {'d12': 0.105857, 'd13': 0.061514, 'd23': 0.073331},
+        distances = {
+            'd12': 0.038329,
+            'd13': 0.026218,
+            'd23': -0.001262,
+        },
+        uncertainties = {'d12': 0.17458, 'd13': 0.244668, 'd23': 0.207805},
     ),
-    short_desc = u"""Fitted to 32 distances.
+    short_desc = u"""Fitted to 89 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=47 label="C_methyl">, <Entry index=6 label="Hrad">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=30 label="OjH">]
-[<Entry index=47 label="C_methyl">, <Entry index=32 label="OjO">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=47 label="C_methyl">, <Entry index=17 label="Cj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=79 label="CsradRRH">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=179 label="Cj">]
+[<Entry index=71 label="C_methyl">, <Entry index=170 label="OjH">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=71 label="C_methyl">, <Entry index=71 label="C_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=167 label="Hrad">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=79 label="CsradRRH">, <Entry index=164 label="Frad">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=79 label="CsradRRH">, <Entry index=170 label="OjH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=79 label="CsradRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=71 label="C_methyl">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=72 label="CsradRH2">, <Entry index=164 label="Frad">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=167 label="Hrad">]
 """,
 )
 
 entry(
-    index = 47,
+    index = 72,
     label = "C_methyl",
     group = 
 """
@@ -3691,30 +3307,39 @@ multiplicity [1,2,3,4,5]
 4    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.096189, 'd13': 0.043235, 'd23': -0.060452},
-        uncertainties = {'d12': 0.121634, 'd13': 0.086131, 'd23': 0.044781},
+        distances = {
+            'd12': 0.046216,
+            'd13': 0.048238,
+            'd23': -0.007506,
+        },
+        uncertainties = {'d12': 0.164072, 'd13': 0.102994, 'd23': 0.170266},
     ),
-    short_desc = u"""Fitted to 17 distances.
+    short_desc = u"""Fitted to 46 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=30 label="OjH">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=47 label="C_methyl">, <Entry index=32 label="OjO">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=47 label="C_methyl">, <Entry index=6 label="Hrad">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=47 label="C_methyl">, <Entry index=17 label="Cj">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=71 label="C_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=71 label="C_methyl">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=71 label="C_methyl">, <Entry index=167 label="Hrad">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=179 label="Cj">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=170 label="OjH">]
 """,
 )
 
 entry(
-    index = 48,
+    index = 73,
     label = "CsradRH2",
     group = 
 """
@@ -3725,31 +3350,32 @@ multiplicity [1,2,3,4,5]
 4    R!H ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.00336, 'd13': 0.033877, 'd23': 0.03176},
-        uncertainties = {'d12': 0.100662, 'd13': 0.024243, 'd23': 0.10403},
+        distances = {'d12': 0.032789, 'd13': 0.032334, 'd23': 0.002152},
+        uncertainties = {'d12': 0.104288, 'd13': 0.071536, 'd23': 0.103592},
     ),
-    short_desc = u"""Fitted to 15 distances.
+    short_desc = u"""Fitted to 37 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=72 label="CsradRH2">, <Entry index=164 label="Frad">]
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=167 label="Hrad">]
 """,
 )
 
 entry(
-    index = 86,
+    index = 74,
     label = "CsradCHH",
     group = 
 """
@@ -3760,31 +3386,34 @@ multiplicity [1,2,3,4,5]
 4    C  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.00336, 'd13': 0.033877, 'd23': 0.03176},
-        uncertainties = {'d12': 0.100662, 'd13': 0.024243, 'd23': 0.10403},
+        distances = {
+            'd12': -0.003238,
+            'd13': 0.022885,
+            'd23': 0.025735,
+        },
+        uncertainties = {'d12': 0.090597, 'd13': 0.037033, 'd23': 0.084136},
     ),
-    short_desc = u"""Fitted to 15 distances.
+    short_desc = u"""Fitted to 12 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=167 label="Hrad">]
 """,
 )
 
 entry(
-    index = 170,
+    index = 75,
     label = "Csrad/H/Cs/H",
     group = 
 """
@@ -3794,11 +3423,24 @@ multiplicity [1,2,3,4,5]
 3    H  u0 {1,S}
 4    Cs ux {1,S}
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.122425,
+            'd13': -0.084943,
+            'd23': 0.114556,
+        },
+        uncertainties = {},
+    ),
+    short_desc = u"""Fitted to 1 distances.
+""",
+    long_desc = 
+u"""
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+""",
 )
 
 entry(
-    index = 171,
+    index = 76,
     label = "Csrad/H/Cd/H",
     group = 
 """
@@ -3812,7 +3454,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 172,
+    index = 77,
     label = "Csrad/H/Ct/H",
     group = 
 """
@@ -3823,31 +3465,29 @@ multiplicity [1,2,3,4,5]
 4    Ct u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.00336, 'd13': 0.033877, 'd23': 0.03176},
-        uncertainties = {'d12': 0.100662, 'd13': 0.024243, 'd23': 0.10403},
+        distances = {'d12': 0.003509, 'd13': 0.028989, 'd23': 0.020708},
+        uncertainties = {'d12': 0.094081, 'd13': 0.039297, 'd23': 0.080315},
     ),
-    short_desc = u"""Fitted to 15 distances.
+    short_desc = u"""Fitted to 11 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=167 label="Hrad">]
 """,
 )
 
 entry(
-    index = 173,
+    index = 78,
     label = "Csrad/H/Cb/H",
     group = 
 """
@@ -3861,7 +3501,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 87,
+    index = 79,
     label = "CsradOH2",
     group = 
 """
@@ -3875,7 +3515,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 49,
+    index = 80,
     label = "CsradRRH",
     group = 
 """
@@ -3885,11 +3525,27 @@ multiplicity [1,2,3,4,5]
 3    R!H ux {1,S}
 4    R!H ux {1,S}
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': 0.0018,
+            'd13': -0.259746,
+            'd23': 0.035946,
+        },
+        uncertainties = {'d12': 0.614054, 'd13': 1.24423, 'd23': 0.850007},
+    ),
+    short_desc = u"""Fitted to 6 distances.
+""",
+    long_desc = 
+u"""
+[<Entry index=79 label="CsradRRH">, <Entry index=164 label="Frad">]
+[<Entry index=79 label="CsradRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=79 label="CsradRRH">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=170 label="OjH">]
+""",
 )
 
 entry(
-    index = 88,
+    index = 81,
     label = "CsradCCH",
     group = 
 """
@@ -3903,7 +3559,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 174,
+    index = 82,
     label = "Csrad/Cs/Cs/H",
     group = 
 """
@@ -3917,7 +3573,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 175,
+    index = 83,
     label = "Csrad/Cs/Cd/H",
     group = 
 """
@@ -3931,7 +3587,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 176,
+    index = 84,
     label = "Csrad/Cs/Ct/H",
     group = 
 """
@@ -3945,7 +3601,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 177,
+    index = 85,
     label = "Csrad/Cs/Cb/H",
     group = 
 """
@@ -3959,7 +3615,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 178,
+    index = 86,
     label = "Csrad/Cd/Cd/H",
     group = 
 """
@@ -3973,7 +3629,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 179,
+    index = 87,
     label = "Csrad/Cd/Ct/H",
     group = 
 """
@@ -3987,7 +3643,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 180,
+    index = 88,
     label = "Csrad/Cd/Cb/H",
     group = 
 """
@@ -4001,7 +3657,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 181,
+    index = 89,
     label = "Csrad/Ct/Ct/H",
     group = 
 """
@@ -4015,7 +3671,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 182,
+    index = 90,
     label = "Csrad/Ct/Cb/H",
     group = 
 """
@@ -4029,7 +3685,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 183,
+    index = 91,
     label = "Csrad/Cb/Cb/H",
     group = 
 """
@@ -4043,7 +3699,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 89,
+    index = 92,
     label = "CsradCOH",
     group = 
 """
@@ -4057,7 +3713,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 184,
+    index = 93,
     label = "Csrad/Cs/O/H",
     group = 
 """
@@ -4071,7 +3727,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 185,
+    index = 94,
     label = "Csrad/Cd/O/H",
     group = 
 """
@@ -4085,7 +3741,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 186,
+    index = 95,
     label = "Csrad/Ct/O/H",
     group = 
 """
@@ -4099,7 +3755,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 187,
+    index = 96,
     label = "Csrad/Cb/O/H",
     group = 
 """
@@ -4113,7 +3769,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 90,
+    index = 97,
     label = "CsradOOH",
     group = 
 """
@@ -4127,25 +3783,29 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 23,
+    index = 98,
     label = "CsbiradH",
     group = "OR{Cs_singletH, Cs_tripletH}",
     distances = DistanceData(
-        distances = {'d12': 0.081689, 'd13': -0.069326, 'd23': -0.130682},
-        uncertainties = {'d12': 0.346819, 'd13': 0.385275, 'd23': 0.189704},
+        distances = {
+            'd12': 0.078925,
+            'd13': -0.06801,
+            'd23': -0.127619,
+        },
+        uncertainties = {'d12': 0.345458, 'd13': 0.398548, 'd23': 0.166879},
     ),
     short_desc = u"""Fitted to 3 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=6 label="Hrad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=167 label="Hrad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
 """,
 )
 
 entry(
-    index = 50,
+    index = 99,
     label = "Cs_singletH",
     group = 
 """
@@ -4158,7 +3818,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 91,
+    index = 100,
     label = "Cs_singletHH",
     group = 
 """
@@ -4171,7 +3831,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 92,
+    index = 101,
     label = "Cs_singletRH",
     group = 
 """
@@ -4184,7 +3844,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 188,
+    index = 102,
     label = "C_singletCH",
     group = 
 """
@@ -4197,7 +3857,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 276,
+    index = 103,
     label = "C_singlet/Cs/H",
     group = 
 """
@@ -4210,7 +3870,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 277,
+    index = 104,
     label = "C_singlet/Cd/H",
     group = 
 """
@@ -4223,7 +3883,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 278,
+    index = 105,
     label = "C_singlet/Ct/H",
     group = 
 """
@@ -4236,7 +3896,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 279,
+    index = 106,
     label = "C_singlet/Cb/H",
     group = 
 """
@@ -4249,7 +3909,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 189,
+    index = 107,
     label = "C_singletOH",
     group = 
 """
@@ -4262,7 +3922,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 51,
+    index = 108,
     label = "Cs_tripletH",
     group = 
 """
@@ -4272,21 +3932,25 @@ multiplicity [1,2,3,4,5]
 3    R  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.081689, 'd13': -0.069326, 'd23': -0.130682},
-        uncertainties = {'d12': 0.346819, 'd13': 0.385275, 'd23': 0.189704},
+        distances = {
+            'd12': 0.078925,
+            'd13': -0.06801,
+            'd23': -0.127619,
+        },
+        uncertainties = {'d12': 0.345458, 'd13': 0.398548, 'd23': 0.166879},
     ),
     short_desc = u"""Fitted to 3 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=6 label="Hrad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=167 label="Hrad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
 """,
 )
 
 entry(
-    index = 93,
+    index = 109,
     label = "Cs_tripletHH",
     group = 
 """
@@ -4296,21 +3960,25 @@ multiplicity [1,2,3,4,5]
 3    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.081689, 'd13': -0.069326, 'd23': -0.130682},
-        uncertainties = {'d12': 0.346819, 'd13': 0.385275, 'd23': 0.189704},
+        distances = {
+            'd12': 0.078925,
+            'd13': -0.06801,
+            'd23': -0.127619,
+        },
+        uncertainties = {'d12': 0.345458, 'd13': 0.398548, 'd23': 0.166879},
     ),
     short_desc = u"""Fitted to 3 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=6 label="Hrad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=167 label="Hrad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
 """,
 )
 
 entry(
-    index = 94,
+    index = 110,
     label = "Cs_tripletRH",
     group = 
 """
@@ -4323,7 +3991,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 190,
+    index = 111,
     label = "Cs_tripletCH",
     group = 
 """
@@ -4336,7 +4004,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 280,
+    index = 112,
     label = "C_triplet/Cs/H",
     group = 
 """
@@ -4349,7 +4017,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 281,
+    index = 113,
     label = "C_triplet/Cd/H",
     group = 
 """
@@ -4362,7 +4030,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 282,
+    index = 114,
     label = "C_triplet/Ct/H",
     group = 
 """
@@ -4375,7 +4043,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 283,
+    index = 115,
     label = "C_triplet/Cb/H",
     group = 
 """
@@ -4388,7 +4056,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 191,
+    index = 116,
     label = "Cs_tripletOH",
     group = 
 """
@@ -4401,14 +4069,14 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 24,
+    index = 117,
     label = "CstriradH",
     group = "OR{Cdoublet_H, Cquartet_H}",
     distances = DistanceData(distances={}),
 )
 
 entry(
-    index = 52,
+    index = 118,
     label = "Cdoublet_H",
     group = 
 """
@@ -4420,7 +4088,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 53,
+    index = 119,
     label = "Cquartet_H",
     group = 
 """
@@ -4432,7 +4100,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 10,
+    index = 120,
     label = "Cd_H",
     group = 
 """
@@ -4441,131 +4109,94 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.094798, 'd13': 0.045342, 'd23': -0.051202},
-        uncertainties = {'d12': 0.106192, 'd13': 0.072339, 'd23': 0.06969},
+        distances = {
+            'd12': 0.060507,
+            'd13': 0.045675,
+            'd23': -0.016065,
+        },
+        uncertainties = {'d12': 0.174418, 'd13': 0.120297, 'd23': 0.147257},
     ),
-    short_desc = u"""Fitted to 322 distances.
+    short_desc = u"""Fitted to 306 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=8 label="Crad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=8 label="Crad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=167 label="Hrad">]
+[<Entry index=135 label="Cd_Cds/O/H">, <Entry index=167 label="Hrad">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=178 label="Crad">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
 """,
 )
 
 entry(
-    index = 25,
+    index = 121,
     label = "Cdnorad_H",
     group = 
 """
@@ -4574,116 +4205,82 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.102463, 'd13': 0.048217, 'd23': -0.057319},
-        uncertainties = {'d12': 0.108648, 'd13': 0.073818, 'd23': 0.069597},
+        distances = {
+            'd12': 0.064033,
+            'd13': 0.04772,
+            'd23': -0.018598,
+        },
+        uncertainties = {'d12': 0.179514, 'd13': 0.123521, 'd23': 0.151565},
     ),
-    short_desc = u"""Fitted to 296 distances.
+    short_desc = u"""Fitted to 284 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=8 label="Crad">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=8 label="Crad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=167 label="Hrad">]
+[<Entry index=135 label="Cd_Cds/O/H">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=178 label="Crad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
 """,
 )
 
 entry(
-    index = 54,
+    index = 122,
     label = "Cd_C/R/H",
     group = 
 """
@@ -4693,116 +4290,80 @@ multiplicity [1,2,3,4,5]
 3    C  ux {1,D}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.102463, 'd13': 0.048217, 'd23': -0.057319},
-        uncertainties = {'d12': 0.108648, 'd13': 0.073818, 'd23': 0.069597},
+        distances = {
+            'd12': 0.0749,
+            'd13': 0.050831,
+            'd23': -0.026333,
+        },
+        uncertainties = {'d12': 0.186572, 'd13': 0.123781, 'd23': 0.152433},
     ),
-    short_desc = u"""Fitted to 296 distances.
+    short_desc = u"""Fitted to 248 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=8 label="Crad">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=8 label="Crad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=167 label="Hrad">]
+[<Entry index=135 label="Cd_Cds/O/H">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=178 label="Crad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
 """,
 )
 
 entry(
-    index = 95,
+    index = 123,
     label = "Cd_C/H2",
     group = 
 """
@@ -4813,64 +4374,73 @@ multiplicity [1,2,3,4,5]
 4    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.102945, 'd13': 0.046738, 'd23': -0.058179},
-        uncertainties = {'d12': 0.104276, 'd13': 0.074304, 'd23': 0.069414},
+        distances = {
+            'd12': 0.07734,
+            'd13': 0.050868,
+            'd23': -0.028678,
+        },
+        uncertainties = {'d12': 0.161324, 'd13': 0.115334, 'd23': 0.140007},
     ),
-    short_desc = u"""Fitted to 190 distances.
+    short_desc = u"""Fitted to 236 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=8 label="Crad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=178 label="Crad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
 """,
 )
 
 entry(
-    index = 192,
+    index = 124,
     label = "Cd_Cds/H2",
     group = 
 """
@@ -4881,43 +4451,51 @@ multiplicity [1,2,3,4,5]
 4    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.124159, 'd13': 0.052822, 'd23': -0.075275},
-        uncertainties = {'d12': 0.099691, 'd13': 0.075739, 'd23': 0.04923},
+        distances = {
+            'd12': 0.076396,
+            'd13': 0.054399,
+            'd23': -0.025078,
+        },
+        uncertainties = {'d12': 0.173109, 'd13': 0.123784, 'd23': 0.152289},
     ),
-    short_desc = u"""Fitted to 121 distances.
+    short_desc = u"""Fitted to 178 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=8 label="Crad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=178 label="Crad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
 """,
 )
 
 entry(
-    index = 193,
+    index = 125,
     label = "Cd_Cdd/H2",
     group = 
 """
@@ -4928,39 +4506,44 @@ multiplicity [1,2,3,4,5]
 4    H   u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.067656, 'd13': 0.036617, 'd23': -0.029741},
-        uncertainties = {'d12': 0.114508, 'd13': 0.073625, 'd23': 0.096747},
+        distances = {
+            'd12': 0.080097,
+            'd13': 0.040556,
+            'd23': -0.039195,
+        },
+        uncertainties = {'d12': 0.12264, 'd13': 0.087569, 'd23': 0.096654},
     ),
-    short_desc = u"""Fitted to 69 distances.
+    short_desc = u"""Fitted to 58 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
 """,
 )
 
 entry(
-    index = 96,
+    index = 126,
     label = "Cd_C/C/H",
     group = 
 """
@@ -4971,70 +4554,27 @@ multiplicity [1,2,3,4,5]
 4    C  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.101583, 'd13': 0.050924, 'd23': -0.055747},
-        uncertainties = {'d12': 0.117854, 'd13': 0.074155, 'd23': 0.071069},
+        distances = {
+            'd12': 0.074402,
+            'd13': 0.060972,
+            'd23': -0.023908,
+        },
+        uncertainties = {'d12': 0.838649, 'd13': 0.409742, 'd23': 0.495771},
     ),
-    short_desc = u"""Fitted to 106 distances.
+    short_desc = u"""Fitted to 6 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=167 label="Hrad">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
 """,
 )
 
 entry(
-    index = 194,
+    index = 127,
     label = "Cd_Cds/Cs/H",
     group = 
 """
@@ -5045,39 +4585,26 @@ multiplicity [1,2,3,4,5]
 4    Cs ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.096475, 'd13': 0.052448, 'd23': -0.049359},
-        uncertainties = {'d12': 0.109024, 'd13': 0.071135, 'd23': 0.056662},
+        distances = {
+            'd12': 0.23455,
+            'd13': 0.080089,
+            'd23': -0.168487,
+        },
+        uncertainties = {'d12': 1.28197, 'd13': 0.621956, 'd23': 0.768075},
     ),
-    short_desc = u"""Fitted to 40 distances.
+    short_desc = u"""Fitted to 4 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=167 label="Hrad">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
 """,
 )
 
 entry(
-    index = 195,
+    index = 128,
     label = "Cd_Cds/Cd/H",
     group = 
 """
@@ -5088,38 +4615,23 @@ multiplicity [1,2,3,4,5]
 4    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.110777, 'd13': 0.050492, 'd23': -0.065391},
-        uncertainties = {'d12': 0.140394, 'd13': 0.087673, 'd23': 0.089685},
+        distances = {
+            'd12': -0.074308,
+            'd13': 0.043221,
+            'd23': 0.110344,
+        },
+        uncertainties = {},
     ),
-    short_desc = u"""Fitted to 51 distances.
+    short_desc = u"""Fitted to 2 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=8 label="Crad">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
 """,
 )
 
 entry(
-    index = 196,
+    index = 129,
     label = "Cd_Cds/Ct/H",
     group = 
 """
@@ -5129,30 +4641,13 @@ multiplicity [1,2,3,4,5]
 3    Cd ux {1,D}
 4    Ct u0 {1,S}
 """,
-    distances = DistanceData(
-        distances = {'d12': 0.083371, 'd13': 0.048506, 'd23': -0.039267},
-        uncertainties = {'d12': 0.066243, 'd13': 0.033237, 'd23': 0.038877},
-    ),
+    distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 15 distances.
-""",
-    long_desc = 
-u"""
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
 """,
 )
 
 entry(
-    index = 197,
+    index = 130,
     label = "Cd_Cds/Cb/H",
     group = 
 """
@@ -5166,7 +4661,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 198,
+    index = 131,
     label = "Cd_Cdd/Cs/H",
     group = 
 """
@@ -5180,7 +4675,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 199,
+    index = 132,
     label = "Cd_Cdd/Cd/H",
     group = 
 """
@@ -5194,7 +4689,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 200,
+    index = 133,
     label = "Cd_Cdd/Ct/H",
     group = 
 """
@@ -5208,7 +4703,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 201,
+    index = 134,
     label = "Cd_Cdd/Cb/H",
     group = 
 """
@@ -5222,7 +4717,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 97,
+    index = 135,
     label = "Cd_C/O/H",
     group = 
 """
@@ -5232,11 +4727,24 @@ multiplicity [1,2,3,4,5]
 3    C  ux {1,D}
 4    O  ux {1,S}
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.181003,
+            'd13': -0.268806,
+            'd23': -0.096293,
+        },
+        uncertainties = {},
+    ),
+    short_desc = u"""Fitted to 1 distances.
+""",
+    long_desc = 
+u"""
+[<Entry index=135 label="Cd_Cds/O/H">, <Entry index=167 label="Hrad">]
+""",
 )
 
 entry(
-    index = 202,
+    index = 136,
     label = "Cd_Cds/O/H",
     group = 
 """
@@ -5246,11 +4754,24 @@ multiplicity [1,2,3,4,5]
 3    Cd ux {1,D}
 4    O  ux {1,S}
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.181003,
+            'd13': -0.268806,
+            'd23': -0.096293,
+        },
+        uncertainties = {},
+    ),
+    short_desc = u"""Fitted to 1 distances.
+""",
+    long_desc = 
+u"""
+[<Entry index=135 label="Cd_Cds/O/H">, <Entry index=167 label="Hrad">]
+""",
 )
 
 entry(
-    index = 203,
+    index = 137,
     label = "Cd_Cdd/O/H",
     group = 
 """
@@ -5264,7 +4785,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 55,
+    index = 138,
     label = "Cd_O/R/H",
     group = 
 """
@@ -5277,7 +4798,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 98,
+    index = 139,
     label = "Cd_O/H2",
     group = 
 """
@@ -5291,7 +4812,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 99,
+    index = 140,
     label = "Cd_O/C/H",
     group = 
 """
@@ -5305,7 +4826,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 204,
+    index = 141,
     label = "Cd_O/Cs/H",
     group = 
 """
@@ -5319,7 +4840,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 205,
+    index = 142,
     label = "Cd_O/Cd/H",
     group = 
 """
@@ -5333,7 +4854,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 206,
+    index = 143,
     label = "Cd_O/Ct/H",
     group = 
 """
@@ -5347,7 +4868,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 207,
+    index = 144,
     label = "Cd_O/Cb/H",
     group = 
 """
@@ -5361,7 +4882,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 100,
+    index = 145,
     label = "Cd_O/O/H",
     group = 
 """
@@ -5375,7 +4896,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 26,
+    index = 146,
     label = "Cdrad_H",
     group = 
 """
@@ -5384,33 +4905,30 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.012331, 'd13': 0.014409, 'd23': 0.014602},
-        uncertainties = {'d12': 0.078286, 'd13': 0.056714, 'd23': 0.075791},
+        distances = {'d12': 0.017543, 'd13': 0.020755, 'd23': 0.014806},
+        uncertainties = {'d12': 0.093515, 'd13': 0.072434, 'd23': 0.078807},
     ),
-    short_desc = u"""Fitted to 26 distances.
+    short_desc = u"""Fitted to 22 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 56,
+    index = 147,
     label = "Cdrad_C/H",
     group = 
 """
@@ -5420,33 +4938,30 @@ multiplicity [1,2,3,4,5]
 3    C  ux {1,D}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.012331, 'd13': 0.014409, 'd23': 0.014602},
-        uncertainties = {'d12': 0.078286, 'd13': 0.056714, 'd23': 0.075791},
+        distances = {'d12': 0.017543, 'd13': 0.020755, 'd23': 0.014806},
+        uncertainties = {'d12': 0.093515, 'd13': 0.072434, 'd23': 0.078807},
     ),
-    short_desc = u"""Fitted to 26 distances.
+    short_desc = u"""Fitted to 22 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 101,
+    index = 148,
     label = "Cdrad_Cds/H",
     group = 
 """
@@ -5459,7 +4974,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 102,
+    index = 149,
     label = "Cdrad_Cdd/H",
     group = 
 """
@@ -5469,33 +4984,30 @@ multiplicity [1,2,3,4,5]
 3    Cdd u0 {1,D}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.012331, 'd13': 0.014409, 'd23': 0.014602},
-        uncertainties = {'d12': 0.078286, 'd13': 0.056714, 'd23': 0.075791},
+        distances = {'d12': 0.017543, 'd13': 0.020755, 'd23': 0.014806},
+        uncertainties = {'d12': 0.093515, 'd13': 0.072434, 'd23': 0.078807},
     ),
-    short_desc = u"""Fitted to 26 distances.
+    short_desc = u"""Fitted to 22 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 57,
+    index = 150,
     label = "Cdrad_O/H",
     group = 
 """
@@ -5508,7 +5020,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 11,
+    index = 151,
     label = "Ct_H",
     group = 
 """
@@ -5517,29 +5029,35 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.465884, 'd13': 0.213502, 'd23': -0.203837},
-        uncertainties = {'d12': 0.118629, 'd13': 0.141496, 'd23': 0.102026},
+        distances = {
+            'd12': 0.251165,
+            'd13': 0.17445,
+            'd23': -0.027036,
+        },
+        uncertainties = {'d12': 0.437208, 'd13': 0.245529, 'd23': 0.31056},
     ),
-    short_desc = u"""Fitted to 20 distances.
+    short_desc = u"""Fitted to 39 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=36 label="Cbj">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=272 label="CtjC">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=273 label="Cbj">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
 """,
 )
 
 entry(
-    index = 12,
+    index = 152,
     label = "Cb_H",
     group = 
 """
@@ -5548,38 +5066,42 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.124864, 'd13': 0.049546, 'd23': -0.080197},
-        uncertainties = {'d12': 0.129394, 'd13': 0.097774, 'd23': 0.059126},
+        distances = {
+            'd12': 0.076571,
+            'd13': 0.042909,
+            'd23': -0.038975,
+        },
+        uncertainties = {'d12': 0.233706, 'd13': 0.154946, 'd23': 0.162232},
     ),
-    short_desc = u"""Fitted to 30 distances.
+    short_desc = u"""Fitted to 44 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=12 label="Cb_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=32 label="OjO">]
-[<Entry index=12 label="Cb_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=6 label="Hrad">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=12 label="Cb_H">, <Entry index=72 label="CtjC">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=12 label="Cb_H">, <Entry index=30 label="OjH">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=273 label="Cbj">]
+[<Entry index=151 label="Cb_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=151 label="Cb_H">, <Entry index=176 label="OjO">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=151 label="Cb_H">, <Entry index=167 label="Hrad">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=170 label="OjH">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=179 label="Cj">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 5,
+    index = 153,
     label = "O_H",
     group = 
 """
@@ -5588,120 +5110,95 @@ multiplicity [1,2,3,4,5]
 2 *2 H u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.066363, 'd13': -0.100872, 'd23': -0.031709},
-        uncertainties = {'d12': 0.141092, 'd13': 0.099795, 'd23': 0.14529},
+        distances = {
+            'd12': -0.031612,
+            'd13': -0.072574,
+            'd23': -0.034097,
+        },
+        uncertainties = {'d12': 0.214431, 'd13': 0.135949, 'd23': 0.210937},
     ),
-    short_desc = u"""Fitted to 651 distances.
+    short_desc = u"""Fitted to 267 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=29 label="OOH">, <Entry index=30 label="OjH">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=13 label="OradH">, <Entry index=6 label="Hrad">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=13 label="OradH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=62 label="OjCs">]
-[<Entry index=13 label="OradH">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=17 label="Cj">]
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=27 label="OHH">, <Entry index=6 label="Hrad">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=27 label="OHH">, <Entry index=36 label="Cbj">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=32 label="OjO">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=28 label="OCH">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=29 label="OOH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=13 label="OradH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=63 label="OjCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=13 label="OradH">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=29 label="OOH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=29 label="OOH">, <Entry index=31 label="OjC">]
-[<Entry index=29 label="OOH">, <Entry index=36 label="Cbj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=27 label="OHH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=13 label="OradH">, <Entry index=17 label="Cj">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=32 label="OjO">]
-[<Entry index=28 label="OCH">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=13 label="OradH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=6 label="Hrad">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=13 label="OradH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=40 label="C_quartetR">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=172 label="OjCs">]
+[<Entry index=161 label="OOH">, <Entry index=167 label="Hrad">]
+[<Entry index=153 label="OradH">, <Entry index=176 label="OjO">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=153 label="OradH">, <Entry index=167 label="Hrad">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=153 label="OradH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=170 label="OjH">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=161 label="OOH">]
+[<Entry index=155 label="OHH">, <Entry index=167 label="Hrad">]
+[<Entry index=155 label="OHH">, <Entry index=339 label="C_quartetR">]
+[<Entry index=153 label="OradH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=153 label="OradH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=155 label="OHH">, <Entry index=273 label="Cbj">]
+[<Entry index=153 label="OradH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=155 label="OHH">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=161 label="OOH">, <Entry index=172 label="OjCs">]
+[<Entry index=154 label="ORH">, <Entry index=164 label="Frad">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=208 label="CsjCCC">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=154 label="ORH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=189 label="CsjRRH">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=173 label="OjCd">]
+[<Entry index=155 label="OHH">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=156 label="OCH">, <Entry index=170 label="OjH">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=154 label="ORH">, <Entry index=176 label="OjO">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=155 label="OHH">, <Entry index=181 label="Cs_methyl">]
 """,
 )
 
 entry(
-    index = 13,
+    index = 154,
     label = "OradH",
     group = 
 """
@@ -5710,39 +5207,43 @@ multiplicity [1,2,3,4,5]
 2 *2 H u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.033087, 'd13': -0.113663, 'd23': -0.085038},
-        uncertainties = {'d12': 0.147508, 'd13': 0.090699, 'd23': 0.073855},
+        distances = {
+            'd12': -0.033506,
+            'd13': -0.110576,
+            'd23': -0.081956,
+        },
+        uncertainties = {'d12': 0.148448, 'd13': 0.099706, 'd23': 0.077071},
     ),
     short_desc = u"""Fitted to 42 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=13 label="OradH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=13 label="OradH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=13 label="OradH">, <Entry index=6 label="Hrad">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=13 label="OradH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=62 label="OjCs">]
-[<Entry index=13 label="OradH">, <Entry index=32 label="OjO">]
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=17 label="Cj">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=13 label="OradH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=13 label="OradH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=172 label="OjCs">]
+[<Entry index=153 label="OradH">, <Entry index=176 label="OjO">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=153 label="OradH">, <Entry index=167 label="Hrad">]
+[<Entry index=153 label="OradH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=153 label="OradH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=179 label="Cj">]
+[<Entry index=153 label="OradH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=153 label="OradH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=153 label="OradH">, <Entry index=208 label="CsjCCC">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
 """,
 )
 
 entry(
-    index = 14,
+    index = 155,
     label = "ORH",
     group = 
 """
@@ -5751,99 +5252,74 @@ multiplicity [1,2,3,4,5]
 2 *2 H u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.068816, 'd13': -0.099929, 'd23': -0.027778},
-        uncertainties = {'d12': 0.141067, 'd13': 0.100624, 'd23': 0.149082},
+        distances = {
+            'd12': -0.031239,
+            'd13': -0.065088,
+            'd23': -0.024669,
+        },
+        uncertainties = {'d12': 0.225512, 'd13': 0.142312, 'd23': 0.227799},
     ),
-    short_desc = u"""Fitted to 609 distances.
+    short_desc = u"""Fitted to 225 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=29 label="OOH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=29 label="OOH">, <Entry index=30 label="OjH">]
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=27 label="OHH">, <Entry index=36 label="Cbj">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=6 label="Hrad">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=6 label="Hrad">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=29 label="OOH">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=29 label="OOH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=31 label="OjC">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=36 label="Cbj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=40 label="C_quartetR">]
-[<Entry index=27 label="OHH">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=28 label="OCH">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=29 label="OOH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=63 label="OjCd">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=28 label="OCH">, <Entry index=32 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=167 label="Hrad">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=170 label="OjH">]
+[<Entry index=156 label="OCH">, <Entry index=170 label="OjH">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=161 label="OOH">, <Entry index=161 label="OOH">]
+[<Entry index=155 label="OHH">, <Entry index=167 label="Hrad">]
+[<Entry index=155 label="OHH">, <Entry index=339 label="C_quartetR">]
+[<Entry index=161 label="OOH">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=161 label="OOH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=155 label="OHH">, <Entry index=273 label="Cbj">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=161 label="OOH">, <Entry index=172 label="OjCs">]
+[<Entry index=154 label="ORH">, <Entry index=164 label="Frad">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=154 label="ORH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=189 label="CsjRRH">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=161 label="OOH">, <Entry index=173 label="OjCd">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=154 label="ORH">, <Entry index=176 label="OjO">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=155 label="OHH">, <Entry index=181 label="Cs_methyl">]
 """,
 )
 
 entry(
-    index = 27,
+    index = 156,
     label = "OHH",
     group = 
 """
@@ -5853,40 +5329,44 @@ multiplicity [1,2,3,4,5]
 3    H u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.124161, 'd13': -0.066682, 'd23': -0.170497},
-        uncertainties = {'d12': 0.156052, 'd13': 0.149094, 'd23': 0.065174},
+        distances = {
+            'd12': 0.123411,
+            'd13': -0.063444,
+            'd23': -0.166881,
+        },
+        uncertainties = {'d12': 0.159898, 'd13': 0.159526, 'd23': 0.068061},
     ),
     short_desc = u"""Fitted to 74 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=27 label="OHH">, <Entry index=36 label="Cbj">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=27 label="OHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=40 label="C_quartetR">]
-[<Entry index=27 label="OHH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=6 label="Hrad">]
-[<Entry index=27 label="OHH">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=32 label="OjO">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=155 label="OHH">, <Entry index=167 label="Hrad">]
+[<Entry index=155 label="OHH">, <Entry index=339 label="C_quartetR">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=155 label="OHH">, <Entry index=273 label="Cbj">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=176 label="OjO">]
+[<Entry index=155 label="OHH">, <Entry index=179 label="Cj">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=155 label="OHH">, <Entry index=181 label="Cs_methyl">]
 """,
 )
 
 entry(
-    index = 28,
+    index = 157,
     label = "OCH",
     group = 
 """
@@ -5896,48 +5376,23 @@ multiplicity [1,2,3,4,5]
 3    C ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.006332, 'd13': -0.123516, 'd23': -0.112078},
-        uncertainties = {'d12': 0.156001, 'd13': 0.127949, 'd23': 0.054575},
+        distances = {
+            'd12': -0.04762,
+            'd13': -0.26414,
+            'd23': -0.162516,
+        },
+        uncertainties = {},
     ),
-    short_desc = u"""Fitted to 119 distances.
+    short_desc = u"""Fitted to 1 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=28 label="OCH">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
+[<Entry index=156 label="OCH">, <Entry index=170 label="OjH">]
 """,
 )
 
 entry(
-    index = 58,
+    index = 158,
     label = "O/Cs/H",
     group = 
 """
@@ -5946,43 +5401,13 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 3    Cs ux {1,S}
 """,
-    distances = DistanceData(
-        distances = {'d12': -0.012959, 'd13': -0.128468, 'd23': -0.110756},
-        uncertainties = {'d12': 0.112202, 'd13': 0.097674, 'd23': 0.048364},
-    ),
+    distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 113 distances.
-""",
-    long_desc = 
-u"""
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
 """,
 )
 
 entry(
-    index = 59,
+    index = 159,
     label = "O/Cd/H",
     group = 
 """
@@ -5991,22 +5416,13 @@ multiplicity [1,2,3,4,5]
 2 *2 H  u0 {1,S}
 3    Cd ux {1,S}
 """,
-    distances = DistanceData(
-        distances = {'d12': -0.075716, 'd13': -0.152732, 'd23': -0.078062},
-        uncertainties = {'d12': 0.193801, 'd13': 0.210081, 'd23': 0.243623},
-    ),
+    distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 3 distances.
-""",
-    long_desc = 
-u"""
-[<Entry index=59 label="O/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
 """,
 )
 
 entry(
-    index = 60,
+    index = 160,
     label = "O/Ct/H",
     group = 
 """
@@ -6019,7 +5435,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 61,
+    index = 161,
     label = "O/Cb/H",
     group = 
 """
@@ -6031,14 +5447,10 @@ multiplicity [1,2,3,4,5]
     distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 1 distances.
 """,
-    long_desc = 
-u"""
-[<Entry index=61 label="O/Cb/H">, <Entry index=6 label="Hrad">]
-""",
 )
 
 entry(
-    index = 29,
+    index = 162,
     label = "OOH",
     group = 
 """
@@ -6048,47 +5460,140 @@ multiplicity [1,2,3,4,5]
 3    O ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.122509, 'd13': -0.10007, 'd23': 0.022031},
-        uncertainties = {'d12': 0.134995, 'd13': 0.080443, 'd23': 0.176241},
+        distances = {
+            'd12': -0.123068,
+            'd13': -0.075409,
+            'd23': 0.049526,
+        },
+        uncertainties = {'d12': 0.259062, 'd13': 0.117967, 'd23': 0.272085},
     ),
-    short_desc = u"""Fitted to 416 distances.
+    short_desc = u"""Fitted to 136 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=29 label="OOH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=30 label="OjH">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=6 label="Hrad">]
-[<Entry index=29 label="OOH">, <Entry index=63 label="OjCd">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=29 label="OOH">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=31 label="OjC">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=36 label="Cbj">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=17 label="Cj">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=167 label="Hrad">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=170 label="OjH">]
+[<Entry index=161 label="OOH">, <Entry index=161 label="OOH">]
+[<Entry index=161 label="OOH">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=161 label="OOH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=161 label="OOH">, <Entry index=172 label="OjCs">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=161 label="OOH">, <Entry index=189 label="CsjRRH">]
+[<Entry index=161 label="OOH">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=161 label="OOH">, <Entry index=173 label="OjCd">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
 """,
 )
 
 entry(
-    index = 6,
+    index = 163,
+    label = "Val7rad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 Val7 u1 p3
+""",
+    distances = DistanceData(
+        distances = {
+            'd12': -0.085325,
+            'd13': -0.00567,
+            'd23': 0.166524,
+        },
+        uncertainties = {'d12': 0.501276, 'd13': 0.28389, 'd23': 0.433963},
+    ),
+    short_desc = u"""Fitted to 17 distances.
+""",
+    long_desc = 
+u"""
+[<Entry index=79 label="CsradRRH">, <Entry index=164 label="Frad">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=154 label="ORH">, <Entry index=164 label="Frad">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=13 label="CsRRHH">, <Entry index=164 label="Frad">]
+[<Entry index=31 label="CsRRRH">, <Entry index=164 label="Frad">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=72 label="CsradRH2">, <Entry index=164 label="Frad">]
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
+""",
+)
+
+entry(
+    index = 164,
+    label = "Frad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 F u1 p3
+""",
+    distances = DistanceData(
+        distances = {
+            'd12': -0.085325,
+            'd13': -0.00567,
+            'd23': 0.166524,
+        },
+        uncertainties = {'d12': 0.501276, 'd13': 0.28389, 'd23': 0.433963},
+    ),
+    short_desc = u"""Fitted to 17 distances.
+""",
+    long_desc = 
+u"""
+[<Entry index=79 label="CsradRRH">, <Entry index=164 label="Frad">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=164 label="Frad">]
+[<Entry index=154 label="ORH">, <Entry index=164 label="Frad">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=13 label="CsRRHH">, <Entry index=164 label="Frad">]
+[<Entry index=31 label="CsRRRH">, <Entry index=164 label="Frad">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=164 label="Frad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=164 label="Frad">]
+[<Entry index=72 label="CsradRH2">, <Entry index=164 label="Frad">]
+[<Entry index=74 label="Csrad/H/Cs/H">, <Entry index=164 label="Frad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=164 label="Frad">]
+""",
+)
+
+entry(
+    index = 165,
+    label = "Clrad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 Cl u1 p3
+""",
+    distances = DistanceData(distances={}),
+)
+
+entry(
+    index = 166,
+    label = "Brrad",
+    group = 
+"""
+multiplicity [1,2,3,4,5]
+1 *3 Br u1 p3
+""",
+    distances = DistanceData(distances={}),
+)
+
+entry(
+    index = 167,
     label = "Hrad",
     group = 
 """
@@ -6096,165 +5601,155 @@ multiplicity [1,2,3,4,5]
 1 *3 H u1
 """,
     distances = DistanceData(
-        distances = {'d12': -0.023423, 'd13': -0.346629, 'd23': -0.334294},
-        uncertainties = {'d12': 0.067947, 'd13': 0.041697, 'd23': 0.082478},
+        distances = {
+            'd12': -0.02031,
+            'd13': -0.334974,
+            'd23': -0.32665,
+        },
+        uncertainties = {'d12': 0.170632, 'd13': 0.14525, 'd23': 0.136873},
     ),
-    short_desc = u"""Fitted to 106 distances.
+    short_desc = u"""Fitted to 123 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=47 label="C_methyl">, <Entry index=6 label="Hrad">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=6 label="Hrad">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=29 label="OOH">, <Entry index=6 label="Hrad">]
-[<Entry index=82 label="CsCCCH">, <Entry index=6 label="Hrad">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=13 label="OradH">, <Entry index=6 label="Hrad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=6 label="Hrad">]
-[<Entry index=43 label="C_methane">, <Entry index=6 label="Hrad">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=6 label="Hrad">]
-[<Entry index=12 label="Cb_H">, <Entry index=6 label="Hrad">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=6 label="Hrad">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=6 label="Hrad">]
-[<Entry index=79 label="CsCCHH">, <Entry index=6 label="Hrad">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=77 label="CsCHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=6 label="Hrad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=6 label="Hrad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=6 label="Hrad">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=6 label="Hrad">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=6 label="Hrad">]
-[<Entry index=4 label="C_H">, <Entry index=6 label="Hrad">]
-[<Entry index=27 label="OHH">, <Entry index=6 label="Hrad">]
+[<Entry index=5 label="C_methane">, <Entry index=167 label="Hrad">]
+[<Entry index=25 label="CsCOHH">, <Entry index=167 label="Hrad">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=161 label="OOH">, <Entry index=167 label="Hrad">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=167 label="Hrad">]
+[<Entry index=135 label="Cd_Cds/O/H">, <Entry index=167 label="Hrad">]
+[<Entry index=153 label="OradH">, <Entry index=167 label="Hrad">]
+[<Entry index=155 label="OHH">, <Entry index=167 label="Hrad">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=167 label="Hrad">]
+[<Entry index=13 label="CsRRHH">, <Entry index=167 label="Hrad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=167 label="Hrad">]
+[<Entry index=71 label="C_methyl">, <Entry index=167 label="Hrad">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=167 label="Hrad">]
+[<Entry index=12 label="CsOHHH">, <Entry index=167 label="Hrad">]
+[<Entry index=151 label="Cb_H">, <Entry index=167 label="Hrad">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=167 label="Hrad">]
+[<Entry index=14 label="CsCCHH">, <Entry index=167 label="Hrad">]
+[<Entry index=2 label="C_H">, <Entry index=167 label="Hrad">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=167 label="Hrad">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=167 label="Hrad">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=167 label="Hrad">]
+[<Entry index=31 label="CsRRRH">, <Entry index=167 label="Hrad">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=167 label="Hrad">]
 """,
 )
 
 entry(
-    index = 7,
+    index = 168,
     label = "Orad",
     group = "OR{OjR, O_atom_triplet}",
     distances = DistanceData(
-        distances = {'d12': -0.029813, 'd13': -0.101207, 'd23': -0.068644},
-        uncertainties = {'d12': 0.145455, 'd13': 0.100222, 'd23': 0.14189},
+        distances = {
+            'd12': -0.025712,
+            'd13': -0.088568,
+            'd23': -0.05812,
+        },
+        uncertainties = {'d12': 0.189906, 'd13': 0.185335, 'd23': 0.178857},
     ),
-    short_desc = u"""Fitted to 651 distances.
+    short_desc = u"""Fitted to 701 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=30 label="OjH">]
-[<Entry index=4 label="C_H">, <Entry index=32 label="OjO">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=47 label="C_methyl">, <Entry index=30 label="OjH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=3 label="H2">, <Entry index=62 label="OjCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=3 label="H2">, <Entry index=30 label="OjH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=62 label="OjCs">]
-[<Entry index=13 label="OradH">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=47 label="C_methyl">, <Entry index=32 label="OjO">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=12 label="Cb_H">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=12 label="Cb_H">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=3 label="H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=43 label="C_methane">, <Entry index=30 label="OjH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=4 label="C_H">, <Entry index=31 label="OjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=29 label="OOH">, <Entry index=63 label="OjCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=13 label="OradH">, <Entry index=32 label="OjO">]
-[<Entry index=4 label="C_H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=29 label="OOH">, <Entry index=31 label="OjC">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=4 label="C_H">, <Entry index=30 label="OjH">]
-[<Entry index=3 label="H2">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=32 label="OjO">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=28 label="OCH">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=43 label="C_methane">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=4 label="C_H">, <Entry index=62 label="OjCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=3 label="H2">, <Entry index=63 label="OjCd">]
+[<Entry index=2 label="C_H">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=1 label="H2">, <Entry index=176 label="OjO">]
+[<Entry index=13 label="CsRRHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=161 label="OOH">, <Entry index=172 label="OjCs">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=151 label="Cb_H">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=5 label="C_methane">, <Entry index=170 label="OjH">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
+[<Entry index=2 label="C_H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=151 label="Cb_H">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=1 label="H2">, <Entry index=173 label="OjCd">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=153 label="OradH">, <Entry index=172 label="OjCs">]
+[<Entry index=13 label="CsRRHH">, <Entry index=170 label="OjH">]
+[<Entry index=156 label="OCH">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=170 label="OjH">]
+[<Entry index=2 label="C_H">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=155 label="OHH">, <Entry index=176 label="OjO">]
+[<Entry index=12 label="CsOHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=170 label="OjH">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=5 label="C_methane">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=153 label="OradH">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=31 label="CsRRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=2 label="C_H">, <Entry index=171 label="OjC">]
+[<Entry index=79 label="CsradRRH">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=2 label="C_H">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=31 label="CsRRRH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=31 label="CsRRRH">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=1 label="H2">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=5 label="C_methane">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=161 label="OOH">, <Entry index=173 label="OjCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=154 label="ORH">, <Entry index=176 label="OjO">]
+[<Entry index=13 label="CsRRHH">, <Entry index=176 label="OjO">]
 """,
 )
 
 entry(
-    index = 15,
+    index = 169,
     label = "OjR",
     group = 
 """
@@ -6263,99 +5758,94 @@ multiplicity [1,2,3,4,5]
 2    R ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.025915, 'd13': -0.100181, 'd23': -0.070997},
-        uncertainties = {'d12': 0.149186, 'd13': 0.101017, 'd23': 0.14181},
+        distances = {
+            'd12': -0.022413,
+            'd13': -0.087863,
+            'd23': -0.059718,
+        },
+        uncertainties = {'d12': 0.19439, 'd13': 0.186253, 'd23': 0.178678},
     ),
-    short_desc = u"""Fitted to 609 distances.
+    short_desc = u"""Fitted to 645 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=12 label="Cb_H">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=28 label="OCH">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=30 label="OjH">]
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=4 label="C_H">, <Entry index=30 label="OjH">]
-[<Entry index=4 label="C_H">, <Entry index=32 label="OjO">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=43 label="C_methane">, <Entry index=30 label="OjH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=4 label="C_H">, <Entry index=31 label="OjC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=47 label="C_methyl">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=29 label="OOH">, <Entry index=63 label="OjCd">]
-[<Entry index=47 label="C_methyl">, <Entry index=32 label="OjO">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=13 label="OradH">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=3 label="H2">, <Entry index=62 label="OjCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=3 label="H2">, <Entry index=63 label="OjCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=12 label="Cb_H">, <Entry index=30 label="OjH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=31 label="OjC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=43 label="C_methane">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=3 label="H2">, <Entry index=30 label="OjH">]
-[<Entry index=3 label="H2">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=62 label="OjCs">]
-[<Entry index=13 label="OradH">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=4 label="C_H">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=27 label="OHH">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=32 label="OjO">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=2 label="C_H">, <Entry index=176 label="OjO">]
+[<Entry index=153 label="OradH">, <Entry index=176 label="OjO">]
+[<Entry index=153 label="OradH">, <Entry index=172 label="OjCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=13 label="CsRRHH">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=170 label="OjH">]
+[<Entry index=156 label="OCH">, <Entry index=170 label="OjH">]
+[<Entry index=2 label="C_H">, <Entry index=171 label="OjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=151 label="Cb_H">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=176 label="OjO">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=79 label="CsradRRH">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=170 label="OjH">]
+[<Entry index=5 label="C_methane">, <Entry index=170 label="OjH">]
+[<Entry index=2 label="C_H">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=2 label="C_H">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=31 label="CsRRRH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=155 label="OHH">, <Entry index=176 label="OjO">]
+[<Entry index=1 label="H2">, <Entry index=176 label="OjO">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=31 label="CsRRRH">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=161 label="OOH">, <Entry index=172 label="OjCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=170 label="OjH">]
+[<Entry index=151 label="Cb_H">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=1 label="H2">, <Entry index=172 label="OjCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=5 label="C_methane">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=1 label="H2">, <Entry index=173 label="OjCd">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=161 label="OOH">, <Entry index=173 label="OjCd">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=79 label="CsradRRH">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=176 label="OjO">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=154 label="ORH">, <Entry index=176 label="OjO">]
+[<Entry index=13 label="CsRRHH">, <Entry index=176 label="OjO">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
 """,
 )
 
 entry(
-    index = 30,
+    index = 170,
     label = "OjH",
     group = 
 """
@@ -6364,40 +5854,45 @@ multiplicity [1,2,3,4,5]
 2    H u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.168874, 'd13': -0.069132, 'd23': 0.120148},
-        uncertainties = {'d12': 0.067007, 'd13': 0.14994, 'd23': 0.157798},
+        distances = {
+            'd12': -0.146428,
+            'd13': -0.054342,
+            'd23': 0.11351,
+        },
+        uncertainties = {'d12': 0.090799, 'd13': 0.206496, 'd23': 0.212789},
     ),
-    short_desc = u"""Fitted to 74 distances.
+    short_desc = u"""Fitted to 96 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=30 label="OjH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=30 label="OjH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=30 label="OjH">]
-[<Entry index=43 label="C_methane">, <Entry index=30 label="OjH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=30 label="OjH">]
-[<Entry index=47 label="C_methyl">, <Entry index=30 label="OjH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=30 label="OjH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=30 label="OjH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=30 label="OjH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=30 label="OjH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=30 label="OjH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=30 label="OjH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=4 label="C_H">, <Entry index=30 label="OjH">]
-[<Entry index=12 label="Cb_H">, <Entry index=30 label="OjH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=30 label="OjH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=30 label="OjH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=30 label="OjH">]
-[<Entry index=3 label="H2">, <Entry index=30 label="OjH">]
+[<Entry index=13 label="CsRRHH">, <Entry index=170 label="OjH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=170 label="OjH">]
+[<Entry index=161 label="OOH">, <Entry index=170 label="OjH">]
+[<Entry index=156 label="OCH">, <Entry index=170 label="OjH">]
+[<Entry index=71 label="C_methyl">, <Entry index=170 label="OjH">]
+[<Entry index=5 label="C_methane">, <Entry index=170 label="OjH">]
+[<Entry index=2 label="C_H">, <Entry index=170 label="OjH">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=170 label="OjH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=31 label="CsRRRH">, <Entry index=170 label="OjH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=170 label="OjH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=170 label="OjH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=170 label="OjH">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=170 label="OjH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=170 label="OjH">]
+[<Entry index=1 label="H2">, <Entry index=170 label="OjH">]
+[<Entry index=151 label="Cb_H">, <Entry index=170 label="OjH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=170 label="OjH">]
+[<Entry index=14 label="CsCCHH">, <Entry index=170 label="OjH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=170 label="OjH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=170 label="OjH">]
+[<Entry index=79 label="CsradRRH">, <Entry index=170 label="OjH">]
 """,
 )
 
 entry(
-    index = 31,
+    index = 171,
     label = "OjC",
     group = 
 """
@@ -6406,48 +5901,44 @@ multiplicity [1,2,3,4,5]
 2    C ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.110605, 'd13': -0.124378, 'd23': -0.008759},
-        uncertainties = {'d12': 0.054977, 'd13': 0.129049, 'd23': 0.156927},
+        distances = {
+            'd12': -0.110349,
+            'd13': -0.114588,
+            'd23': -3.2e-05,
+        },
+        uncertainties = {'d12': 0.11027, 'd13': 0.205953, 'd23': 0.189647},
     ),
-    short_desc = u"""Fitted to 119 distances.
+    short_desc = u"""Fitted to 118 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=4 label="C_H">, <Entry index=31 label="OjC">]
-[<Entry index=29 label="OOH">, <Entry index=63 label="OjCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=3 label="H2">, <Entry index=62 label="OjCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=31 label="OjC">]
-[<Entry index=3 label="H2">, <Entry index=63 label="OjCd">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=31 label="OjC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=62 label="OjCs">]
-[<Entry index=13 label="OradH">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=4 label="C_H">, <Entry index=62 label="OjCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=62 label="OjCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=153 label="OradH">, <Entry index=172 label="OjCs">]
+[<Entry index=2 label="C_H">, <Entry index=171 label="OjC">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=2 label="C_H">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
+[<Entry index=161 label="OOH">, <Entry index=172 label="OjCs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=173 label="OjCd">]
+[<Entry index=161 label="OOH">, <Entry index=173 label="OjCd">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=172 label="OjCs">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=171 label="OjC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
 """,
 )
 
 entry(
-    index = 62,
+    index = 172,
     label = "OjCs",
     group = 
 """
@@ -6456,42 +5947,39 @@ multiplicity [1,2,3,4,5]
 2    Cs ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.109356, 'd13': -0.129229, 'd23': -0.015183},
-        uncertainties = {'d12': 0.048776, 'd13': 0.098873, 'd23': 0.112781},
+        distances = {
+            'd12': -0.109513,
+            'd13': -0.11898,
+            'd23': -0.005462,
+        },
+        uncertainties = {'d12': 0.10621, 'd13': 0.183325, 'd23': 0.151589},
     ),
-    short_desc = u"""Fitted to 113 distances.
+    short_desc = u"""Fitted to 112 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=47 label="C_methyl">, <Entry index=62 label="OjCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=62 label="OjCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=62 label="OjCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=62 label="OjCs">]
-[<Entry index=3 label="H2">, <Entry index=62 label="OjCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=62 label="OjCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=43 label="C_methane">, <Entry index=62 label="OjCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=62 label="OjCs">]
-[<Entry index=29 label="OOH">, <Entry index=62 label="OjCs">]
-[<Entry index=13 label="OradH">, <Entry index=62 label="OjCs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=62 label="OjCs">]
-[<Entry index=4 label="C_H">, <Entry index=62 label="OjCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=62 label="OjCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=62 label="OjCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=62 label="OjCs">]
-[<Entry index=27 label="OHH">, <Entry index=62 label="OjCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=62 label="OjCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=153 label="OradH">, <Entry index=172 label="OjCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=71 label="C_methyl">, <Entry index=172 label="OjCs">]
+[<Entry index=155 label="OHH">, <Entry index=172 label="OjCs">]
+[<Entry index=5 label="C_methane">, <Entry index=172 label="OjCs">]
+[<Entry index=161 label="OOH">, <Entry index=172 label="OjCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=172 label="OjCs">]
+[<Entry index=2 label="C_H">, <Entry index=172 label="OjCs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=172 label="OjCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=172 label="OjCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=172 label="OjCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=172 label="OjCs">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=172 label="OjCs">]
+[<Entry index=1 label="H2">, <Entry index=172 label="OjCs">]
+[<Entry index=14 label="CsCCHH">, <Entry index=172 label="OjCs">]
 """,
 )
 
 entry(
-    index = 63,
+    index = 173,
     label = "OjCd",
     group = 
 """
@@ -6500,21 +5988,25 @@ multiplicity [1,2,3,4,5]
 2    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.077624, 'd13': -0.152544, 'd23': -0.075799},
-        uncertainties = {'d12': 0.232363, 'd13': 0.209235, 'd23': 0.196518},
+        distances = {
+            'd12': -0.079082,
+            'd13': -0.146028,
+            'd23': -0.070043,
+        },
+        uncertainties = {'d12': 0.233542, 'd13': 0.132848, 'd23': 0.143213},
     ),
     short_desc = u"""Fitted to 3 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=63 label="OjCd">]
-[<Entry index=43 label="C_methane">, <Entry index=63 label="OjCd">]
-[<Entry index=3 label="H2">, <Entry index=63 label="OjCd">]
+[<Entry index=1 label="H2">, <Entry index=173 label="OjCd">]
+[<Entry index=161 label="OOH">, <Entry index=173 label="OjCd">]
+[<Entry index=5 label="C_methane">, <Entry index=173 label="OjCd">]
 """,
 )
 
 entry(
-    index = 64,
+    index = 174,
     label = "OjCt",
     group = 
 """
@@ -6526,7 +6018,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 65,
+    index = 175,
     label = "OjCb",
     group = 
 """
@@ -6537,14 +6029,10 @@ multiplicity [1,2,3,4,5]
     distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 1 distances.
 """,
-    long_desc = 
-u"""
-[<Entry index=3 label="H2">, <Entry index=65 label="OjCb">]
-""",
 )
 
 entry(
-    index = 32,
+    index = 176,
     label = "OjO",
     group = 
 """
@@ -6553,47 +6041,49 @@ multiplicity [1,2,3,4,5]
 2    O ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.024037, 'd13': -0.099758, 'd23': -0.124287},
-        uncertainties = {'d12': 0.176218, 'd13': 0.080405, 'd23': 0.135487},
+        distances = {
+            'd12': 0.025247,
+            'd13': -0.088968,
+            'd23': -0.111562,
+        },
+        uncertainties = {'d12': 0.227278, 'd13': 0.177343, 'd23': 0.168701},
     ),
-    short_desc = u"""Fitted to 416 distances.
+    short_desc = u"""Fitted to 431 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=28 label="OCH">, <Entry index=32 label="OjO">]
-[<Entry index=77 label="CsCHHH">, <Entry index=32 label="OjO">]
-[<Entry index=4 label="C_H">, <Entry index=32 label="OjO">]
-[<Entry index=82 label="CsCCCH">, <Entry index=32 label="OjO">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=79 label="CsCCHH">, <Entry index=32 label="OjO">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=43 label="C_methane">, <Entry index=32 label="OjO">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=47 label="C_methyl">, <Entry index=32 label="OjO">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=32 label="OjO">]
-[<Entry index=13 label="OradH">, <Entry index=32 label="OjO">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=32 label="OjO">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=32 label="OjO">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=29 label="OOH">, <Entry index=32 label="OjO">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=32 label="OjO">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=32 label="OjO">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=32 label="OjO">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=32 label="OjO">]
-[<Entry index=78 label="CsOHHH">, <Entry index=32 label="OjO">]
-[<Entry index=3 label="H2">, <Entry index=32 label="OjO">]
-[<Entry index=12 label="Cb_H">, <Entry index=32 label="OjO">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=32 label="OjO">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=32 label="OjO">]
-[<Entry index=27 label="OHH">, <Entry index=32 label="OjO">]
+[<Entry index=2 label="C_H">, <Entry index=176 label="OjO">]
+[<Entry index=153 label="OradH">, <Entry index=176 label="OjO">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=176 label="OjO">]
+[<Entry index=12 label="CsOHHH">, <Entry index=176 label="OjO">]
+[<Entry index=151 label="Cb_H">, <Entry index=176 label="OjO">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=176 label="OjO">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=176 label="OjO">]
+[<Entry index=161 label="OOH">, <Entry index=176 label="OjO">]
+[<Entry index=79 label="CsradRRH">, <Entry index=176 label="OjO">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=176 label="OjO">]
+[<Entry index=14 label="CsCCHH">, <Entry index=176 label="OjO">]
+[<Entry index=155 label="OHH">, <Entry index=176 label="OjO">]
+[<Entry index=1 label="H2">, <Entry index=176 label="OjO">]
+[<Entry index=31 label="CsRRRH">, <Entry index=176 label="OjO">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=176 label="OjO">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=5 label="C_methane">, <Entry index=176 label="OjO">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=176 label="OjO">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=176 label="OjO">]
+[<Entry index=7 label="CsCHHH">, <Entry index=176 label="OjO">]
+[<Entry index=71 label="C_methyl">, <Entry index=176 label="OjO">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=176 label="OjO">]
+[<Entry index=25 label="CsCOHH">, <Entry index=176 label="OjO">]
+[<Entry index=154 label="ORH">, <Entry index=176 label="OjO">]
+[<Entry index=13 label="CsRRHH">, <Entry index=176 label="OjO">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=176 label="OjO">]
 """,
 )
 
 entry(
-    index = 16,
+    index = 177,
     label = "O_atom_triplet",
     group = 
 """
@@ -6601,39 +6091,37 @@ multiplicity [1,2,3,4,5]
 1 *3 O u2
 """,
     distances = DistanceData(
-        distances = {'d12': -0.082585, 'd13': -0.115096, 'd23': -0.036796},
-        uncertainties = {'d12': 0.075966, 'd13': 0.091736, 'd23': 0.149183},
+        distances = {
+            'd12': -0.062342,
+            'd13': -0.09639,
+            'd23': -0.040383,
+        },
+        uncertainties = {'d12': 0.131816, 'd13': 0.18001, 'd23': 0.186638},
     ),
-    short_desc = u"""Fitted to 42 distances.
+    short_desc = u"""Fitted to 56 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=3 label="H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=82 label="CsCCCH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=78 label="CsOHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=79 label="CsCCHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=29 label="OOH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=4 label="C_H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=43 label="C_methane">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=77 label="CsCHHH">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=16 label="O_atom_triplet">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=16 label="O_atom_triplet">]
+[<Entry index=5 label="C_methane">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=12 label="CsOHHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=31 label="CsRRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=1 label="H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=79 label="CsradRRH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=15 label="C/H2/Cs/Cs">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=13 label="CsRRHH">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=2 label="C_H">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=177 label="O_atom_triplet">]
+[<Entry index=7 label="CsCHHH">, <Entry index=177 label="O_atom_triplet">]
 """,
 )
 
 entry(
-    index = 8,
+    index = 178,
     label = "Crad",
     group = 
 """
@@ -6641,492 +6129,393 @@ multiplicity [1,2,3,4,5]
 1 *3 C u[1,2,3,4]
 """,
     distances = DistanceData(
-        distances = {'d12': 0.012918, 'd13': 0.061364, 'd23': 0.048123},
-        uncertainties = {'d12': 0.099446, 'd13': 0.069032, 'd23': 0.10111},
+        distances = {'d12': 0.012232, 'd13': 0.061527, 'd23': 0.047588},
+        uncertainties = {'d12': 0.15715, 'd13': 0.138801, 'd23': 0.143471},
     ),
-    short_desc = u"""Fitted to 1733 distances.
+    short_desc = u"""Fitted to 1816 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=4 label="C_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=12 label="Cb_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=3 label="H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=29 label="OOH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=4 label="C_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=4 label="C_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=11 label="Ct_H">, <Entry index=36 label="Cbj">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=3 label="H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=17 label="Cj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=3 label="H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=4 label="C_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=4 label="C_H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=40 label="C_quartetR">]
-[<Entry index=29 label="OOH">, <Entry index=36 label="Cbj">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=28 label="OCH">, <Entry index=17 label="Cj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=13 label="OradH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=36 label="Cbj">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=13 label="OradH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=40 label="C_quartetR">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=8 label="Crad">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=8 label="Crad">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=8 label="Crad">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=11 label="Ct_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=3 label="H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=3 label="H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=4 label="C_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=8 label="Crad">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=12 label="Cb_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=13 label="OradH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=3 label="H2">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=4 label="C_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=36 label="Cbj">]
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=4 label="C_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=17 label="Cj">]
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=17 label="Cj">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=8 label="Crad">]
-[<Entry index=78 label="CsOHHH">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=13 label="OradH">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=4 label="C_H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=12 label="Cb_H">, <Entry index=72 label="CtjC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=3 label="H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=178 label="Crad">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=154 label="ORH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=1 label="H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=178 label="Crad">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=2 label="C_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=2 label="C_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=161 label="OOH">, <Entry index=179 label="Cj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=153 label="OradH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=1 label="H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=2 label="C_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=1 label="H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=179 label="Cj">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=273 label="Cbj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=179 label="Cj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=2 label="C_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=179 label="Cj">]
+[<Entry index=151 label="Cb_H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=179 label="Cj">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=178 label="Crad">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=273 label="Cbj">]
+[<Entry index=151 label="Cb_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=1 label="H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=153 label="OradH">, <Entry index=208 label="CsjCCC">]
+[<Entry index=2 label="C_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=1 label="H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=161 label="OOH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=339 label="C_quartetR">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=339 label="C_quartetR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=150 label="Ct_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=272 label="CtjC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
+[<Entry index=1 label="H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=189 label="CsjRRH">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
+[<Entry index=2 label="C_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=151 label="Cb_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=1 label="H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=2 label="C_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=2 label="C_H">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=1 label="H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=150 label="Ct_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=179 label="Cj">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 17,
+    index = 179,
     label = "Cj",
     group = 
 """
@@ -7134,444 +6523,358 @@ multiplicity [1,2,3,4,5]
 1 *3 C u1
 """,
     distances = DistanceData(
-        distances = {'d12': 0.013324, 'd13': 0.062527, 'd23': 0.04831},
-        uncertainties = {'d12': 0.09888, 'd13': 0.068666, 'd23': 0.099094},
+        distances = {'d12': 0.012194, 'd13': 0.062176, 'd23': 0.047693},
+        uncertainties = {'d12': 0.156769, 'd13': 0.138794, 'd23': 0.142389},
     ),
-    short_desc = u"""Fitted to 1666 distances.
+    short_desc = u"""Fitted to 1749 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=4 label="C_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=12 label="Cb_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=29 label="OOH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=4 label="C_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=4 label="C_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=4 label="C_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=11 label="Ct_H">, <Entry index=36 label="Cbj">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=3 label="H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=17 label="Cj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=3 label="H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=36 label="Cbj">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=4 label="C_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=4 label="C_H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=36 label="Cbj">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=17 label="Cj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=17 label="Cj">]
-[<Entry index=28 label="OCH">, <Entry index=17 label="Cj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=13 label="OradH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=36 label="Cbj">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=13 label="OradH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=17 label="Cj">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=3 label="H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=3 label="H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=4 label="C_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=17 label="Cj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=3 label="H2">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=12 label="Cb_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=13 label="OradH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=3 label="H2">, <Entry index=17 label="Cj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=4 label="C_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=17 label="Cj">]
-[<Entry index=3 label="H2">, <Entry index=36 label="Cbj">]
-[<Entry index=4 label="C_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=17 label="Cj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=17 label="Cj">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=17 label="Cj">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=17 label="Cj">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=17 label="Cj">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=13 label="OradH">, <Entry index=17 label="Cj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=12 label="Cb_H">, <Entry index=72 label="CtjC">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=17 label="Cj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=179 label="Cj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=154 label="ORH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=2 label="C_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=2 label="C_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=1 label="H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=179 label="Cj">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=161 label="OOH">, <Entry index=179 label="Cj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=153 label="OradH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=1 label="H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=2 label="C_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=1 label="H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=179 label="Cj">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=273 label="Cbj">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=179 label="Cj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=2 label="C_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=179 label="Cj">]
+[<Entry index=151 label="Cb_H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=179 label="Cj">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=273 label="Cbj">]
+[<Entry index=151 label="Cb_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=1 label="H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=153 label="OradH">, <Entry index=208 label="CsjCCC">]
+[<Entry index=2 label="C_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=179 label="Cj">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=1 label="H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=179 label="Cj">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=161 label="OOH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=179 label="Cj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=150 label="Ct_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=272 label="CtjC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=1 label="H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=189 label="CsjRRH">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=179 label="Cj">]
+[<Entry index=2 label="C_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=151 label="Cb_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=1 label="H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=2 label="C_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=179 label="Cj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=2 label="C_H">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=1 label="H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=150 label="Ct_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=179 label="Cj">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 33,
+    index = 180,
     label = "Csj",
     group = 
 """
@@ -7579,290 +6882,249 @@ multiplicity [1,2,3,4,5]
 1 *3 Cs u1
 """,
     distances = DistanceData(
-        distances = {'d12': 0.028158, 'd13': 0.059772, 'd23': 0.028739},
-        uncertainties = {'d12': 0.080213, 'd13': 0.056834, 'd23': 0.089651},
+        distances = {'d12': 0.024568, 'd13': 0.059358, 'd23': 0.030735},
+        uncertainties = {'d12': 0.145905, 'd13': 0.130747, 'd23': 0.132165},
     ),
-    short_desc = u"""Fitted to 1113 distances.
+    short_desc = u"""Fitted to 1168 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=4 label="C_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=4 label="C_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=13 label="OradH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=4 label="C_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=3 label="H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=3 label="H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=3 label="H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=11 label="Ct_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=3 label="H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=4 label="C_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=3 label="H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=4 label="C_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=4 label="C_H">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=3 label="H2">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=4 label="C_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=13 label="OradH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=3 label="H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=3 label="H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=1 label="H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=161 label="OOH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=154 label="ORH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=1 label="H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=153 label="OradH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=151 label="Cb_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=1 label="H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=1 label="H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=2 label="C_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=2 label="C_H">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=2 label="C_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=151 label="Cb_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=1 label="H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=153 label="OradH">, <Entry index=208 label="CsjCCC">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=1 label="H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=1 label="H2">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=189 label="CsjRRH">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=1 label="H2">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=2 label="C_H">, <Entry index=184 label="Csj/Cs/H2">]
 """,
 )
 
 entry(
-    index = 66,
+    index = 181,
     label = "Cs_methyl",
     group = 
 """
@@ -7873,45 +7135,43 @@ multiplicity [1,2,3,4,5]
 4    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.043684, 'd13': 0.060196, 'd23': 0.092753},
-        uncertainties = {'d12': 0.041839, 'd13': 0.052069, 'd23': 0.080475},
+        distances = {
+            'd12': -0.040903,
+            'd13': 0.075756,
+            'd23': 0.104715,
+        },
+        uncertainties = {'d12': 0.113291, 'd13': 0.145801, 'd23': 0.11911},
     ),
     short_desc = u"""Fitted to 82 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=119 label="C/H3/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=29 label="OOH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=79 label="CsCCHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=12 label="Cb_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=59 label="O/Cd/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=4 label="C_H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=78 label="CsOHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=77 label="CsCHHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=27 label="OHH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=3 label="H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=13 label="OradH">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=66 label="Cs_methyl">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=66 label="Cs_methyl">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=7 label="CsCHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=153 label="OradH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=12 label="CsOHHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=151 label="Cb_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=161 label="OOH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=1 label="H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=2 label="C_H">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=25 label="CsCOHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=14 label="CsCCHH">, <Entry index=181 label="Cs_methyl">]
+[<Entry index=155 label="OHH">, <Entry index=181 label="Cs_methyl">]
 """,
 )
 
 entry(
-    index = 67,
+    index = 182,
     label = "CsjRH2",
     group = 
 """
@@ -7922,139 +7182,109 @@ multiplicity [1,2,3,4,5]
 4    R!H ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.015437, 'd13': 0.056933, 'd23': 0.037571},
-        uncertainties = {'d12': 0.08352, 'd13': 0.061251, 'd23': 0.091895},
+        distances = {'d12': 0.013007, 'd13': 0.055259, 'd23': 0.037406},
+        uncertainties = {'d12': 0.145403, 'd13': 0.137135, 'd23': 0.138531},
     ),
-    short_desc = u"""Fitted to 637 distances.
+    short_desc = u"""Fitted to 663 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=4 label="C_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=4 label="C_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=3 label="H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=3 label="H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=4 label="C_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=13 label="OradH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=154 label="ORH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=1 label="H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=2 label="C_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=72 label="CsradRH2">, <Entry index=182 label="CsjRH2">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=2 label="C_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=151 label="Cb_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=153 label="OradH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=2 label="C_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=1 label="H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=2 label="C_H">, <Entry index=184 label="Csj/Cs/H2">]
 """,
 )
 
 entry(
-    index = 103,
+    index = 183,
     label = "CsjCH2",
     group = 
 """
@@ -8065,113 +7295,91 @@ multiplicity [1,2,3,4,5]
 4    C  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.011999, 'd13': 0.057291, 'd23': 0.039439},
-        uncertainties = {'d12': 0.070327, 'd13': 0.050175, 'd23': 0.091192},
+        distances = {'d12': 0.008937, 'd13': 0.056016, 'd23': 0.040471},
+        uncertainties = {'d12': 0.143401, 'd13': 0.133986, 'd23': 0.137073},
     ),
-    short_desc = u"""Fitted to 550 distances.
+    short_desc = u"""Fitted to 552 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=4 label="C_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=4 label="C_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=3 label="H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=103 label="CsjCH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=103 label="CsjCH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=3 label="H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=103 label="CsjCH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=103 label="CsjCH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=103 label="CsjCH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=103 label="CsjCH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=103 label="CsjCH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=13 label="OradH">, <Entry index=103 label="CsjCH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=1 label="H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=153 label="OradH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=2 label="C_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=1 label="H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=2 label="C_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=2 label="C_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=183 label="CsjCH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=183 label="CsjCH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=183 label="CsjCH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=183 label="CsjCH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=1 label="H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=2 label="C_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
 """,
 )
 
 entry(
-    index = 208,
+    index = 184,
     label = "Csj/Cs/H2",
     group = 
 """
@@ -8182,49 +7390,44 @@ multiplicity [1,2,3,4,5]
 4    Cs ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.016273, 'd13': 0.051143, 'd23': 0.059875},
-        uncertainties = {'d12': 0.055149, 'd13': 0.050946, 'd23': 0.096485},
+        distances = {
+            'd12': -0.021074,
+            'd13': 0.045798,
+            'd23': 0.058679,
+        },
+        uncertainties = {'d12': 0.127785, 'd13': 0.142364, 'd23': 0.148231},
     ),
-    short_desc = u"""Fitted to 305 distances.
+    short_desc = u"""Fitted to 306 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=119 label="C/H3/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=29 label="OOH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=93 label="Cs_tripletHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=4 label="C_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=13 label="OradH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=27 label="OHH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=3 label="H2">, <Entry index=208 label="Csj/Cs/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=208 label="Csj/Cs/H2">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=161 label="OOH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=155 label="OHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=153 label="OradH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=108 label="Cs_tripletHH">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=1 label="H2">, <Entry index=184 label="Csj/Cs/H2">]
+[<Entry index=2 label="C_H">, <Entry index=184 label="Csj/Cs/H2">]
 """,
 )
 
 entry(
-    index = 209,
+    index = 185,
     label = "Csj/Cd/H2",
     group = 
 """
@@ -8235,44 +7438,38 @@ multiplicity [1,2,3,4,5]
 4    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.061673, 'd13': 0.068721, 'd23': 0.002672},
-        uncertainties = {'d12': 0.064703, 'd13': 0.051685, 'd23': 0.08043},
+        distances = {'d12': 0.052907, 'd13': 0.065547, 'd23': 0.007484},
+        uncertainties = {'d12': 0.164953, 'd13': 0.131778, 'd23': 0.114302},
     ),
     short_desc = u"""Fitted to 156 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=3 label="H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=13 label="OradH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=78 label="CsOHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=29 label="OOH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=27 label="OHH">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=4 label="C_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=11 label="Ct_H">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=209 label="Csj/Cd/H2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=209 label="Csj/Cd/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=1 label="H2">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=2 label="C_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=161 label="OOH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=27 label="C/H2/Cd/O">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=155 label="OHH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=153 label="OradH">, <Entry index=185 label="Csj/Cd/H2">]
+[<Entry index=121 label="Cd_C/R/H">, <Entry index=185 label="Csj/Cd/H2">]
 """,
 )
 
 entry(
-    index = 210,
+    index = 186,
     label = "Csj/Ct/H2",
     group = 
 """
@@ -8283,31 +7480,31 @@ multiplicity [1,2,3,4,5]
 4    Ct u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.027927, 'd13': 0.061525, 'd23': 0.032457},
-        uncertainties = {'d12': 0.210933, 'd13': 0.049486, 'd23': 0.112848},
+        distances = {'d12': 0.040089, 'd13': 0.08387, 'd23': 0.043115},
+        uncertainties = {'d12': 0.216935, 'd13': 0.135157, 'd23': 0.136013},
     ),
     short_desc = u"""Fitted to 22 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=119 label="C/H3/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=29 label="OOH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=47 label="C_methyl">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=3 label="H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=4 label="C_H">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=43 label="C_methane">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=210 label="Csj/Ct/H2">]
-[<Entry index=12 label="Cb_H">, <Entry index=210 label="Csj/Ct/H2">]
+[<Entry index=151 label="Cb_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=5 label="C_methane">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=2 label="C_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=1 label="H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=71 label="C_methyl">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=161 label="OOH">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=150 label="Ct_H">, <Entry index=186 label="Csj/Ct/H2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=186 label="Csj/Ct/H2">]
 """,
 )
 
 entry(
-    index = 211,
+    index = 187,
     label = "Csj/Cb/H2",
     group = 
 """
@@ -8321,7 +7518,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 104,
+    index = 188,
     label = "CsjOH2",
     group = 
 """
@@ -8332,44 +7529,35 @@ multiplicity [1,2,3,4,5]
 4    O  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.037286, 'd13': 0.054657, 'd23': 0.0257},
-        uncertainties = {'d12': 0.143283, 'd13': 0.109424, 'd23': 0.098129},
+        distances = {'d12': 0.031214, 'd13': 0.047808, 'd23': 0.022322},
+        uncertainties = {'d12': 0.170601, 'd13': 0.169831, 'd23': 0.156944},
     ),
     short_desc = u"""Fitted to 87 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=136 label="C/H/Cs/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=4 label="C_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=13 label="OradH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=43 label="C_methane">, <Entry index=104 label="CsjOH2">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=28 label="OCH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=29 label="OOH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=156 label="C/H/Cs/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=3 label="H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=11 label="Ct_H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=104 label="CsjOH2">]
-[<Entry index=27 label="OHH">, <Entry index=104 label="CsjOH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=104 label="CsjOH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=104 label="CsjOH2">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=104 label="CsjOH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=104 label="CsjOH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=104 label="CsjOH2">]
+[<Entry index=2 label="C_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=1 label="H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=161 label="OOH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=5 label="C_methane">, <Entry index=188 label="CsjOH2">]
+[<Entry index=150 label="Ct_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=153 label="OradH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=188 label="CsjOH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=188 label="CsjOH2">]
+[<Entry index=154 label="ORH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=7 label="CsCHHH">, <Entry index=188 label="CsjOH2">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=188 label="CsjOH2">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=151 label="Cb_H">, <Entry index=188 label="CsjOH2">]
+[<Entry index=155 label="OHH">, <Entry index=188 label="CsjOH2">]
 """,
 )
 
 entry(
-    index = 68,
+    index = 189,
     label = "CsjRRH",
     group = 
 """
@@ -8380,117 +7568,104 @@ multiplicity [1,2,3,4,5]
 4    R!H ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.068294, 'd13': 0.065683, 'd23': -0.001448},
-        uncertainties = {'d12': 0.080823, 'd13': 0.050464, 'd23': 0.087276},
+        distances = {
+            'd12': 0.065671,
+            'd13': 0.064031,
+            'd23': -0.001862,
+        },
+        uncertainties = {'d12': 0.151871, 'd13': 0.110327, 'd23': 0.118993},
     ),
-    short_desc = u"""Fitted to 357 distances.
+    short_desc = u"""Fitted to 363 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=3 label="H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=4 label="C_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=13 label="OradH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=3 label="H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=71 label="C_methyl">, <Entry index=189 label="CsjRRH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=153 label="OradH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=1 label="H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=189 label="CsjRRH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 105,
+    index = 190,
     label = "CsjCCH",
     group = 
 """
@@ -8501,94 +7676,83 @@ multiplicity [1,2,3,4,5]
 4    C  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.073826, 'd13': 0.069378, 'd23': -0.006374},
-        uncertainties = {'d12': 0.07971, 'd13': 0.049564, 'd23': 0.089056},
+        distances = {
+            'd12': 0.070046,
+            'd13': 0.068239,
+            'd23': -0.004688,
+        },
+        uncertainties = {'d12': 0.150303, 'd13': 0.109589, 'd23': 0.111834},
     ),
-    short_desc = u"""Fitted to 288 distances.
+    short_desc = u"""Fitted to 287 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=27 label="OHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=105 label="CsjCCH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=105 label="CsjCCH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=3 label="H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=29 label="OOH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=105 label="CsjCCH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=105 label="CsjCCH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=105 label="CsjCCH">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=105 label="CsjCCH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=105 label="CsjCCH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=105 label="CsjCCH">]
+[<Entry index=2 label="C_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=190 label="CsjCCH">]
+[<Entry index=2 label="C_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=190 label="CsjCCH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=153 label="OradH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=5 label="C_methane">, <Entry index=190 label="CsjCCH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=190 label="CsjCCH">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=190 label="CsjCCH">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=190 label="CsjCCH">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
 """,
 )
 
 entry(
-    index = 212,
+    index = 191,
     label = "Csj/Cs/Cs/H",
     group = 
 """
@@ -8599,35 +7763,38 @@ multiplicity [1,2,3,4,5]
 4    Cs ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.010095, 'd13': 0.046527, 'd23': 0.031177},
-        uncertainties = {'d12': 0.074092, 'd13': 0.054168, 'd23': 0.103419},
+        distances = {
+            'd12': -0.007495,
+            'd13': 0.026308,
+            'd23': 0.027693,
+        },
+        uncertainties = {'d12': 0.136061, 'd13': 0.132617, 'd23': 0.126593},
     ),
     short_desc = u"""Fitted to 97 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=43 label="C_methane">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=29 label="OOH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=4 label="C_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=27 label="OHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=13 label="OradH">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=3 label="H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=212 label="Csj/Cs/Cs/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=212 label="Csj/Cs/Cs/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=153 label="OradH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=1 label="H2">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=155 label="OHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=5 label="C_methane">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=161 label="OOH">, <Entry index=191 label="Csj/Cs/Cs/H">]
+[<Entry index=2 label="C_H">, <Entry index=191 label="Csj/Cs/Cs/H">]
 """,
 )
 
 entry(
-    index = 213,
+    index = 192,
     label = "Csj/Cs/Cd/H",
     group = 
 """
@@ -8638,42 +7805,40 @@ multiplicity [1,2,3,4,5]
 4    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.097352, 'd13': 0.076347, 'd23': -0.020598},
-        uncertainties = {'d12': 0.08749, 'd13': 0.048728, 'd23': 0.082057},
+        distances = {
+            'd12': 0.099491,
+            'd13': 0.081557,
+            'd23': -0.018377,
+        },
+        uncertainties = {'d12': 0.176328, 'd13': 0.104062, 'd23': 0.114079},
     ),
     short_desc = u"""Fitted to 109 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=213 label="Csj/Cs/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=213 label="Csj/Cs/Cd/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=192 label="Csj/Cs/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=192 label="Csj/Cs/Cd/H">]
 """,
 )
 
 entry(
-    index = 214,
+    index = 193,
     label = "Csj/Cs/Ct/H",
     group = 
 """
@@ -8687,7 +7852,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 215,
+    index = 194,
     label = "Csj/Cs/Cb/H",
     group = 
 """
@@ -8701,7 +7866,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 216,
+    index = 195,
     label = "Csj/Cd/Cd/H",
     group = 
 """
@@ -8712,40 +7877,39 @@ multiplicity [1,2,3,4,5]
 4    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.12906, 'd13': 0.095076, 'd23': -0.03522},
-        uncertainties = {'d12': 0.070709, 'd13': 0.043788, 'd23': 0.080152},
+        distances = {
+            'd12': 0.142952,
+            'd13': 0.114159,
+            'd23': -0.030932,
+        },
+        uncertainties = {'d12': 0.122807, 'd13': 0.086518, 'd23': 0.083712},
     ),
-    short_desc = u"""Fitted to 60 distances.
+    short_desc = u"""Fitted to 59 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=78 label="CsOHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=13 label="OradH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=47 label="C_methyl">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=27 label="OHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=4 label="C_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=29 label="OOH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=3 label="H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=43 label="C_methane">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=216 label="Csj/Cd/Cd/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=216 label="Csj/Cd/Cd/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=153 label="OradH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=161 label="OOH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=127 label="Cd_Cds/Cd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=155 label="OHH">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=2 label="C_H">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=5 label="C_methane">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=1 label="H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=195 label="Csj/Cd/Cd/H">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=195 label="Csj/Cd/Cd/H">]
 """,
 )
 
 entry(
-    index = 217,
+    index = 196,
     label = "Csj/Cd/Ct/H",
     group = 
 """
@@ -8759,7 +7923,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 218,
+    index = 197,
     label = "Csj/Cd/Cb/H",
     group = 
 """
@@ -8773,7 +7937,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 219,
+    index = 198,
     label = "Csj/Ct/Ct/H",
     group = 
 """
@@ -8787,7 +7951,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 220,
+    index = 199,
     label = "Csj/Ct/Cb/H",
     group = 
 """
@@ -8801,7 +7965,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 221,
+    index = 200,
     label = "Csj/Cb/Cb/H",
     group = 
 """
@@ -8815,7 +7979,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 106,
+    index = 201,
     label = "CsjCOH",
     group = 
 """
@@ -8826,41 +7990,37 @@ multiplicity [1,2,3,4,5]
 4    O  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.045168, 'd13': 0.050239, 'd23': 0.019142},
-        uncertainties = {'d12': 0.087439, 'd13': 0.055399, 'd23': 0.081543},
+        distances = {'d12': 0.04651, 'd13': 0.048001, 'd23': 0.013926},
+        uncertainties = {'d12': 0.156886, 'd13': 0.11513, 'd23': 0.135581},
     ),
-    short_desc = u"""Fitted to 69 distances.
+    short_desc = u"""Fitted to 70 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=4 label="C_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=3 label="H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=2 label="C_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=1 label="H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 222,
+    index = 202,
     label = "Csj/Cs/O/H",
     group = 
 """
@@ -8871,41 +8031,37 @@ multiplicity [1,2,3,4,5]
 4    O  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.045168, 'd13': 0.050239, 'd23': 0.019142},
-        uncertainties = {'d12': 0.087439, 'd13': 0.055399, 'd23': 0.081543},
+        distances = {'d12': 0.04651, 'd13': 0.048001, 'd23': 0.013926},
+        uncertainties = {'d12': 0.156886, 'd13': 0.11513, 'd23': 0.135581},
     ),
-    short_desc = u"""Fitted to 69 distances.
+    short_desc = u"""Fitted to 70 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=27 label="OHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=78 label="CsOHHH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=29 label="OOH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=13 label="OradH">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=4 label="C_H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=43 label="C_methane">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=3 label="H2">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=222 label="Csj/Cs/O/H">]
+[<Entry index=153 label="OradH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=161 label="OOH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=71 label="C_methyl">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=155 label="OHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=12 label="CsOHHH">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=2 label="C_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=1 label="H2">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=5 label="C_methane">, <Entry index=202 label="Csj/Cs/O/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=202 label="Csj/Cs/O/H">]
 """,
 )
 
 entry(
-    index = 223,
+    index = 203,
     label = "Csj/Cd/O/H",
     group = 
 """
@@ -8918,14 +8074,10 @@ multiplicity [1,2,3,4,5]
     distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 1 distances.
 """,
-    long_desc = 
-u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=223 label="Csj/Cd/O/H">]
-""",
 )
 
 entry(
-    index = 224,
+    index = 204,
     label = "Csj/Ct/O/H",
     group = 
 """
@@ -8939,7 +8091,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 225,
+    index = 205,
     label = "Csj/Cb/O/H",
     group = 
 """
@@ -8953,7 +8105,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 107,
+    index = 206,
     label = "CsjOOH",
     group = 
 """
@@ -8966,15 +8118,10 @@ multiplicity [1,2,3,4,5]
     distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 2 distances.
 """,
-    long_desc = 
-u"""
-[<Entry index=43 label="C_methane">, <Entry index=107 label="CsjOOH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=107 label="CsjOOH">]
-""",
 )
 
 entry(
-    index = 69,
+    index = 207,
     label = "CsjRRR",
     group = 
 """
@@ -8985,43 +8132,55 @@ multiplicity [1,2,3,4,5]
 4    R!H ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.038726, 'd13': 0.050154, 'd23': 0.007864},
-        uncertainties = {'d12': 0.090003, 'd13': 0.052749, 'd23': 0.104238},
+        distances = {'d12': 0.009753, 'd13': 0.049518, 'd23': 0.034031},
+        uncertainties = {'d12': 0.165184, 'd13': 0.160394, 'd23': 0.161586},
     ),
-    short_desc = u"""Fitted to 37 distances.
+    short_desc = u"""Fitted to 60 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=4 label="C_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=12 label="Cb_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=3 label="H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=13 label="OradH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=4 label="C_H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=4 label="C_H">, <Entry index=246 label="Csj/Cs/Cs/O">]
+[<Entry index=31 label="CsRRRH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=26 label="C/H2/Cs/O">, <Entry index=207 label="CsjRRR">]
+[<Entry index=151 label="Cb_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=2 label="C_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=161 label="OOH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=2 label="C_H">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=126 label="Cd_Cds/Cs/H">, <Entry index=207 label="CsjRRR">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=207 label="CsjRRR">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=153 label="OradH">, <Entry index=208 label="CsjCCC">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=1 label="H2">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=1 label="H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=2 label="C_H">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=1 label="H2">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=13 label="CsRRHH">, <Entry index=207 label="CsjRRR">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=207 label="CsjRRR">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=207 label="CsjRRR">]
+[<Entry index=71 label="C_methyl">, <Entry index=207 label="CsjRRR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
 """,
 )
 
 entry(
-    index = 108,
+    index = 208,
     label = "CsjCCC",
     group = 
 """
@@ -9032,37 +8191,36 @@ multiplicity [1,2,3,4,5]
 4    C  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.037862, 'd13': 0.04771, 'd23': 0.005601},
-        uncertainties = {'d12': 0.092407, 'd13': 0.050119, 'd23': 0.103658},
+        distances = {'d12': 0.023361, 'd13': 0.037827, 'd23': 0.009505},
+        uncertainties = {'d12': 0.19741, 'd13': 0.181052, 'd23': 0.128133},
     ),
     short_desc = u"""Fitted to 30 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=12 label="Cb_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=4 label="C_H">, <Entry index=108 label="CsjCCC">]
-[<Entry index=3 label="H2">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=3 label="H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=108 label="CsjCCC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=108 label="CsjCCC">]
-[<Entry index=4 label="C_H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=29 label="OOH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=47 label="C_methyl">, <Entry index=108 label="CsjCCC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=108 label="CsjCCC">]
-[<Entry index=13 label="OradH">, <Entry index=108 label="CsjCCC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=108 label="CsjCCC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=208 label="CsjCCC">]
+[<Entry index=151 label="Cb_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=71 label="C_methyl">, <Entry index=208 label="CsjCCC">]
+[<Entry index=153 label="OradH">, <Entry index=208 label="CsjCCC">]
+[<Entry index=1 label="H2">, <Entry index=208 label="CsjCCC">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=1 label="H2">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=2 label="C_H">, <Entry index=208 label="CsjCCC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=208 label="CsjCCC">]
+[<Entry index=2 label="C_H">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
 """,
 )
 
 entry(
-    index = 226,
+    index = 209,
     label = "Csj/Cs/Cs/Cs",
     group = 
 """
@@ -9073,26 +8231,30 @@ multiplicity [1,2,3,4,5]
 4    Cs ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.035198, 'd13': 0.043639, 'd23': 0.000571},
-        uncertainties = {'d12': 0.083024, 'd13': 0.048502, 'd23': 0.096253},
+        distances = {
+            'd12': 0.018449,
+            'd13': 0.026608,
+            'd23': -0.000691,
+        },
+        uncertainties = {'d12': 0.140738, 'd13': 0.162569, 'd23': 0.126526},
     ),
     short_desc = u"""Fitted to 13 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=58 label="O/Cs/H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=13 label="OradH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=29 label="OOH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=3 label="H2">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=4 label="C_H">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=43 label="C_methane">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=226 label="Csj/Cs/Cs/Cs">]
+[<Entry index=1 label="H2">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=5 label="C_methane">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=161 label="OOH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=153 label="OradH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
+[<Entry index=2 label="C_H">, <Entry index=209 label="Csj/Cs/Cs/Cs">]
 """,
 )
 
 entry(
-    index = 227,
+    index = 210,
     label = "Csj/Cs/Cs/Cd",
     group = 
 """
@@ -9106,7 +8268,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 228,
+    index = 211,
     label = "Csj/Cs/Cs/Ct",
     group = 
 """
@@ -9120,7 +8282,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 229,
+    index = 212,
     label = "Csj/Cs/Cs/Cb",
     group = 
 """
@@ -9134,7 +8296,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 230,
+    index = 213,
     label = "Csj/Cs/Cd/Cd",
     group = 
 """
@@ -9147,14 +8309,10 @@ multiplicity [1,2,3,4,5]
     distances = DistanceData(distances={}),
     short_desc = u"""Fitted to 1 distances.
 """,
-    long_desc = 
-u"""
-[<Entry index=43 label="C_methane">, <Entry index=230 label="Csj/Cs/Cd/Cd">]
-""",
 )
 
 entry(
-    index = 231,
+    index = 214,
     label = "Csj/Cs/Cd/Ct",
     group = 
 """
@@ -9168,7 +8326,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 232,
+    index = 215,
     label = "Csj/Cs/Cd/Cb",
     group = 
 """
@@ -9182,7 +8340,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 233,
+    index = 216,
     label = "Csj/Cs/Ct/Ct",
     group = 
 """
@@ -9196,7 +8354,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 234,
+    index = 217,
     label = "Csj/Cs/Ct/Cb",
     group = 
 """
@@ -9210,7 +8368,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 235,
+    index = 218,
     label = "Csj/Cs/Cb/Cb",
     group = 
 """
@@ -9224,7 +8382,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 236,
+    index = 219,
     label = "Csj/Cd/Cd/Cd",
     group = 
 """
@@ -9238,7 +8396,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 237,
+    index = 220,
     label = "Csj/Cd/Cd/Ct",
     group = 
 """
@@ -9252,7 +8410,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 238,
+    index = 221,
     label = "Csj/Cd/Cd/Cb",
     group = 
 """
@@ -9266,7 +8424,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 239,
+    index = 222,
     label = "Csj/Cd/Ct/Ct",
     group = 
 """
@@ -9280,7 +8438,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 240,
+    index = 223,
     label = "Csj/Cd/Ct/Cb",
     group = 
 """
@@ -9294,7 +8452,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 241,
+    index = 224,
     label = "Csj/Cd/Cb/Cb",
     group = 
 """
@@ -9308,7 +8466,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 242,
+    index = 225,
     label = "Csj/Ct/Ct/Ct",
     group = 
 """
@@ -9322,7 +8480,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 243,
+    index = 226,
     label = "Csj/Ct/Ct/Cb",
     group = 
 """
@@ -9336,7 +8494,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 244,
+    index = 227,
     label = "Csj/Ct/Cb/Cb",
     group = 
 """
@@ -9350,7 +8508,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 245,
+    index = 228,
     label = "Csj/Cb/Cb/Cb",
     group = 
 """
@@ -9364,7 +8522,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 109,
+    index = 229,
     label = "CsjCCO",
     group = 
 """
@@ -9375,24 +8533,24 @@ multiplicity [1,2,3,4,5]
 4    O  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.042671, 'd13': 0.061316, 'd23': 0.0182},
-        uncertainties = {'d12': 0.108049, 'd13': 0.083212, 'd23': 0.143398},
+        distances = {'d12': 0.03991, 'd13': 0.064961, 'd23': 0.024002},
+        uncertainties = {'d12': 0.158022, 'd13': 0.163086, 'd23': 0.117897},
     ),
     short_desc = u"""Fitted to 7 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=3 label="H2">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=4 label="C_H">, <Entry index=246 label="Csj/Cs/Cs/O">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=2 label="C_H">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=1 label="H2">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
 """,
 )
 
 entry(
-    index = 246,
+    index = 230,
     label = "Csj/Cs/Cs/O",
     group = 
 """
@@ -9403,24 +8561,24 @@ multiplicity [1,2,3,4,5]
 4    O  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.042671, 'd13': 0.061316, 'd23': 0.0182},
-        uncertainties = {'d12': 0.108049, 'd13': 0.083212, 'd23': 0.143398},
+        distances = {'d12': 0.03991, 'd13': 0.064961, 'd23': 0.024002},
+        uncertainties = {'d12': 0.158022, 'd13': 0.163086, 'd23': 0.117897},
     ),
     short_desc = u"""Fitted to 7 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=43 label="C_methane">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=78 label="CsOHHH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=29 label="OOH">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=3 label="H2">, <Entry index=246 label="Csj/Cs/Cs/O">]
-[<Entry index=4 label="C_H">, <Entry index=246 label="Csj/Cs/Cs/O">]
+[<Entry index=161 label="OOH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=2 label="C_H">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=12 label="CsOHHH">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=1 label="H2">, <Entry index=230 label="Csj/Cs/Cs/O">]
+[<Entry index=5 label="C_methane">, <Entry index=230 label="Csj/Cs/Cs/O">]
 """,
 )
 
 entry(
-    index = 247,
+    index = 231,
     label = "Csj/Cs/Cd/O",
     group = 
 """
@@ -9434,7 +8592,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 248,
+    index = 232,
     label = "Csj/Cs/Ct/O",
     group = 
 """
@@ -9448,7 +8606,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 249,
+    index = 233,
     label = "Csj/Cs/Cb/O",
     group = 
 """
@@ -9462,7 +8620,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 250,
+    index = 234,
     label = "Csj/Cd/Cd/O",
     group = 
 """
@@ -9476,7 +8634,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 251,
+    index = 235,
     label = "Csj/Cd/Ct/O",
     group = 
 """
@@ -9490,7 +8648,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 252,
+    index = 236,
     label = "Csj/Cd/Cb/O",
     group = 
 """
@@ -9504,7 +8662,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 253,
+    index = 237,
     label = "Csj/Ct/Ct/O",
     group = 
 """
@@ -9518,7 +8676,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 254,
+    index = 238,
     label = "Csj/Ct/Cb/O",
     group = 
 """
@@ -9532,7 +8690,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 255,
+    index = 239,
     label = "Csj/Cb/Cb/O",
     group = 
 """
@@ -9546,7 +8704,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 110,
+    index = 240,
     label = "CsjCOO",
     group = 
 """
@@ -9560,7 +8718,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 256,
+    index = 241,
     label = "Csj/Cs/O/O",
     group = 
 """
@@ -9574,7 +8732,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 257,
+    index = 242,
     label = "Csj/Cd/O/O",
     group = 
 """
@@ -9588,7 +8746,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 258,
+    index = 243,
     label = "Csj/Ct/O/O",
     group = 
 """
@@ -9602,7 +8760,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 259,
+    index = 244,
     label = "Csj/Cb/O/O",
     group = 
 """
@@ -9616,7 +8774,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 111,
+    index = 245,
     label = "CsjOOO",
     group = 
 """
@@ -9630,7 +8788,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 34,
+    index = 246,
     label = "Cdj",
     group = 
 """
@@ -9638,113 +8796,97 @@ multiplicity [1,2,3,4,5]
 1 *3 Cd u1
 """,
     distances = DistanceData(
-        distances = {'d12': -0.057815, 'd13': 0.048505, 'd23': 0.103477},
-        uncertainties = {'d12': 0.06988, 'd13': 0.074326, 'd23': 0.108514},
+        distances = {
+            'd12': -0.053639,
+            'd13': 0.059415,
+            'd23': 0.110364,
+        },
+        uncertainties = {'d12': 0.132315, 'd13': 0.140172, 'd23': 0.165592},
     ),
-    short_desc = u"""Fitted to 296 distances.
+    short_desc = u"""Fitted to 324 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=4 label="C_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=3 label="H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=4 label="C_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=3 label="H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=2 label="C_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=2 label="C_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
 """,
 )
 
 entry(
-    index = 70,
+    index = 247,
     label = "Cdj_CR",
     group = 
 """
@@ -9753,113 +8895,97 @@ multiplicity [1,2,3,4,5]
 2    C  ux {1,D}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.057815, 'd13': 0.048505, 'd23': 0.103477},
-        uncertainties = {'d12': 0.06988, 'd13': 0.074326, 'd23': 0.108514},
+        distances = {
+            'd12': -0.053639,
+            'd13': 0.059415,
+            'd23': 0.110364,
+        },
+        uncertainties = {'d12': 0.132315, 'd13': 0.140172, 'd23': 0.165592},
     ),
-    short_desc = u"""Fitted to 296 distances.
+    short_desc = u"""Fitted to 324 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=4 label="C_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=3 label="H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=4 label="C_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=3 label="H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=2 label="C_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=2 label="C_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
 """,
 )
 
 entry(
-    index = 112,
+    index = 248,
     label = "Cdj_CH",
     group = 
 """
@@ -9869,63 +8995,57 @@ multiplicity [1,2,3,4,5]
 3    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.05885, 'd13': 0.047049, 'd23': 0.104216},
-        uncertainties = {'d12': 0.069677, 'd13': 0.074756, 'd23': 0.104117},
+        distances = {
+            'd12': -0.056332,
+            'd13': 0.055935,
+            'd23': 0.110772,
+        },
+        uncertainties = {'d12': 0.137487, 'd13': 0.149144, 'd23': 0.173348},
     ),
-    short_desc = u"""Fitted to 190 distances.
+    short_desc = u"""Fitted to 219 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=2 label="C_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
 """,
 )
 
 entry(
-    index = 260,
+    index = 249,
     label = "Cdj_CdsH",
     group = 
 """
@@ -9935,42 +9055,40 @@ multiplicity [1,2,3,4,5]
 3    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.076498, 'd13': 0.05324, 'd23': 0.126086},
-        uncertainties = {'d12': 0.049332, 'd13': 0.076096, 'd23': 0.099328},
+        distances = {
+            'd12': -0.076283,
+            'd13': 0.059146,
+            'd23': 0.13231,
+        },
+        uncertainties = {'d12': 0.143327, 'd13': 0.146401, 'd23': 0.167947},
     ),
-    short_desc = u"""Fitted to 121 distances.
+    short_desc = u"""Fitted to 146 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=4 label="C_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=13 label="OradH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=3 label="H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=12 label="Cb_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=29 label="OOH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=11 label="Ct_H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=27 label="OHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=79 label="CsCCHH">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=43 label="C_methane">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=260 label="Cdj_CdsH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=260 label="Cdj_CdsH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=155 label="OHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=1 label="H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=151 label="Cb_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=5 label="C_methane">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=161 label="OOH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=150 label="Ct_H">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=153 label="OradH">, <Entry index=249 label="Cdj_CdsH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=249 label="Cdj_CdsH">]
 """,
 )
 
 entry(
-    index = 261,
+    index = 250,
     label = "Cdj_CddH",
     group = 
 """
@@ -9980,39 +9098,39 @@ multiplicity [1,2,3,4,5]
 3    H   u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.029699, 'd13': 0.036823, 'd23': 0.068093},
-        uncertainties = {'d12': 0.097192, 'd13': 0.074265, 'd23': 0.114662},
+        distances = {
+            'd12': -0.019381,
+            'd13': 0.049987,
+            'd23': 0.070886,
+        },
+        uncertainties = {'d12': 0.128316, 'd13': 0.158082, 'd23': 0.187861},
     ),
-    short_desc = u"""Fitted to 69 distances.
+    short_desc = u"""Fitted to 73 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=82 label="CsCCCH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=77 label="CsCHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=43 label="C_methane">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=3 label="H2">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=27 label="OHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=4 label="C_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=78 label="CsOHHH">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=12 label="Cb_H">, <Entry index=261 label="Cdj_CddH">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=261 label="Cdj_CddH">]
+[<Entry index=161 label="OOH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=7 label="CsCHHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=155 label="OHH">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=184 label="Csj/Cs/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=5 label="C_methane">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=151 label="Cb_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=2 label="C_H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=1 label="H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=148 label="Cdrad_Cdd/H">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=250 label="Cdj_CddH">]
+[<Entry index=12 label="CsOHHH">, <Entry index=250 label="Cdj_CddH">]
 """,
 )
 
 entry(
-    index = 113,
+    index = 251,
     label = "Cdj_CC",
     group = 
 """
@@ -10022,68 +9140,62 @@ multiplicity [1,2,3,4,5]
 3    C  ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.055926, 'd13': 0.051161, 'd23': 0.102128},
-        uncertainties = {'d12': 0.071391, 'd13': 0.074771, 'd23': 0.117757},
+        distances = {
+            'd12': -0.048061,
+            'd13': 0.066624,
+            'd23': 0.109519,
+        },
+        uncertainties = {'d12': 0.123014, 'd13': 0.121648, 'd23': 0.15087},
     ),
-    short_desc = u"""Fitted to 106 distances.
+    short_desc = u"""Fitted to 105 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=3 label="H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=3 label="H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=4 label="C_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=3 label="H2">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=2 label="C_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
 """,
 )
 
 entry(
-    index = 262,
+    index = 252,
     label = "Cdj_CdsCs",
     group = 
 """
@@ -10093,38 +9205,39 @@ multiplicity [1,2,3,4,5]
 3    Cs ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.049357, 'd13': 0.052474, 'd23': 0.096675},
-        uncertainties = {'d12': 0.057466, 'd13': 0.071982, 'd23': 0.109107},
+        distances = {
+            'd12': -0.03784,
+            'd13': 0.068445,
+            'd23': 0.100887,
+        },
+        uncertainties = {'d12': 0.100625, 'd13': 0.135849, 'd23': 0.157249},
     ),
-    short_desc = u"""Fitted to 40 distances.
+    short_desc = u"""Fitted to 39 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=4 label="C_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=43 label="C_methane">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=27 label="OHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=102 label="Cdrad_Cdd/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=13 label="OradH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=3 label="H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=78 label="CsOHHH">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=12 label="Cb_H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=262 label="Cdj_CdsCs">]
-[<Entry index=77 label="CsCHHH">, <Entry index=262 label="Cdj_CdsCs">]
+[<Entry index=4 label="Csnorad_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=151 label="Cb_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=155 label="OHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=7 label="CsCHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=1 label="H2">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=5 label="C_methane">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=12 label="CsOHHH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=153 label="OradH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=2 label="C_H">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=161 label="OOH">, <Entry index=252 label="Cdj_CdsCs">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=252 label="Cdj_CdsCs">]
 """,
 )
 
 entry(
-    index = 263,
+    index = 253,
     label = "Cdj_CdsCd",
     group = 
 """
@@ -10134,37 +9247,34 @@ multiplicity [1,2,3,4,5]
 3    Cd ux {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.066209, 'd13': 0.05083, 'd23': 0.112027},
-        uncertainties = {'d12': 0.089963, 'd13': 0.088136, 'd23': 0.140236},
+        distances = {
+            'd12': -0.059254,
+            'd13': 0.062072,
+            'd23': 0.116215,
+        },
+        uncertainties = {'d12': 0.149174, 'd13': 0.127706, 'd23': 0.163333},
     ),
     short_desc = u"""Fitted to 51 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=29 label="OOH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=78 label="CsOHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=4 label="C_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=77 label="CsCHHH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=12 label="Cb_H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=13 label="OradH">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=43 label="C_methane">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=3 label="H2">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=263 label="Cdj_CdsCd">]
-[<Entry index=27 label="OHH">, <Entry index=263 label="Cdj_CdsCd">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=5 label="C_methane">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=12 label="CsOHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=7 label="CsCHHH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=151 label="Cb_H">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=153 label="OradH">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=1 label="H2">, <Entry index=253 label="Cdj_CdsCd">]
+[<Entry index=155 label="OHH">, <Entry index=253 label="Cdj_CdsCd">]
 """,
 )
 
 entry(
-    index = 264,
+    index = 254,
     label = "Cdj_CdsCt",
     group = 
 """
@@ -10174,29 +9284,33 @@ multiplicity [1,2,3,4,5]
 3    Ct u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.03765, 'd13': 0.048944, 'd23': 0.082316},
-        uncertainties = {'d12': 0.037726, 'd13': 0.034615, 'd23': 0.065661},
+        distances = {
+            'd12': -0.02954,
+            'd13': 0.079734,
+            'd23': 0.104451,
+        },
+        uncertainties = {'d12': 0.100144, 'd13': 0.077154, 'd23': 0.117551},
     ),
     short_desc = u"""Fitted to 15 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=13 label="OradH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=4 label="C_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=43 label="C_methane">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=12 label="Cb_H">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=3 label="H2">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=78 label="CsOHHH">, <Entry index=264 label="Cdj_CdsCt">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=264 label="Cdj_CdsCt">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=151 label="Cb_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=12 label="CsOHHH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=1 label="H2">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=153 label="OradH">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=5 label="C_methane">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=120 label="Cdnorad_H">, <Entry index=254 label="Cdj_CdsCt">]
+[<Entry index=7 label="CsCHHH">, <Entry index=254 label="Cdj_CdsCt">]
 """,
 )
 
 entry(
-    index = 265,
+    index = 255,
     label = "Cdj_CdsCb",
     group = 
 """
@@ -10209,7 +9323,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 266,
+    index = 256,
     label = "Cdj_CddCs",
     group = 
 """
@@ -10222,7 +9336,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 267,
+    index = 257,
     label = "Cdj_CddCd",
     group = 
 """
@@ -10235,7 +9349,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 268,
+    index = 258,
     label = "Cdj_CddCt",
     group = 
 """
@@ -10248,7 +9362,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 269,
+    index = 259,
     label = "Cdj_CddCb",
     group = 
 """
@@ -10261,7 +9375,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 114,
+    index = 260,
     label = "Cdj_CO",
     group = 
 """
@@ -10274,7 +9388,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 270,
+    index = 261,
     label = "Cdj_CdsO",
     group = 
 """
@@ -10287,7 +9401,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 271,
+    index = 262,
     label = "Cdj_CddO",
     group = 
 """
@@ -10300,7 +9414,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 71,
+    index = 263,
     label = "Cdj_OR",
     group = 
 """
@@ -10312,7 +9426,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 115,
+    index = 264,
     label = "Cdj_OH",
     group = 
 """
@@ -10325,7 +9439,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 116,
+    index = 265,
     label = "Cdj_OC",
     group = 
 """
@@ -10338,7 +9452,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 272,
+    index = 266,
     label = "Cdj_OCs",
     group = 
 """
@@ -10351,7 +9465,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 273,
+    index = 267,
     label = "Cdj_OCd",
     group = 
 """
@@ -10364,7 +9478,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 274,
+    index = 268,
     label = "Cdj_OCt",
     group = 
 """
@@ -10377,7 +9491,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 275,
+    index = 269,
     label = "Cdj_OCb",
     group = 
 """
@@ -10390,7 +9504,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 117,
+    index = 270,
     label = "Cdj_OO",
     group = 
 """
@@ -10403,7 +9517,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 35,
+    index = 271,
     label = "Ctj",
     group = 
 """
@@ -10411,29 +9525,27 @@ multiplicity [1,2,3,4,5]
 1 *3 Ct u1
 """,
     distances = DistanceData(
-        distances = {'d12': -0.202236, 'd13': 0.214472, 'd23': 0.466334},
-        uncertainties = {'d12': 0.102183, 'd13': 0.141482, 'd23': 0.119169},
+        distances = {
+            'd12': -0.229901,
+            'd13': 0.226966,
+            'd23': 0.486676,
+        },
+        uncertainties = {'d12': 0.361733, 'd13': 0.314976, 'd23': 0.210558},
     ),
     short_desc = u"""Fitted to 20 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=12 label="Cb_H">, <Entry index=72 label="CtjC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=150 label="Ct_H">, <Entry index=272 label="CtjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
 """,
 )
 
 entry(
-    index = 72,
+    index = 272,
     label = "CtjC",
     group = 
 """
@@ -10442,29 +9554,27 @@ multiplicity [1,2,3,4,5]
 2    C  ux {1,T}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.202236, 'd13': 0.214472, 'd23': 0.466334},
-        uncertainties = {'d12': 0.102183, 'd13': 0.141482, 'd23': 0.119169},
+        distances = {
+            'd12': -0.229901,
+            'd13': 0.226966,
+            'd23': 0.486676,
+        },
+        uncertainties = {'d12': 0.361733, 'd13': 0.314976, 'd23': 0.210558},
     ),
     short_desc = u"""Fitted to 20 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=72 label="CtjC">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=72 label="CtjC">]
-[<Entry index=12 label="Cb_H">, <Entry index=72 label="CtjC">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=72 label="CtjC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=72 label="CtjC">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=72 label="CtjC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=72 label="CtjC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=72 label="CtjC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=272 label="CtjC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=272 label="CtjC">]
+[<Entry index=150 label="Ct_H">, <Entry index=272 label="CtjC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=272 label="CtjC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=272 label="CtjC">]
 """,
 )
 
 entry(
-    index = 36,
+    index = 273,
     label = "Cbj",
     group = 
 """
@@ -10472,133 +9582,115 @@ multiplicity [1,2,3,4,5]
 1 *3 Cb u1
 """,
     distances = DistanceData(
-        distances = {'d12': -0.082988, 'd13': 0.049959, 'd23': 0.128504},
-        uncertainties = {'d12': 0.056512, 'd13': 0.098015, 'd23': 0.127946},
+        distances = {
+            'd12': -0.071523,
+            'd13': 0.065095,
+            'd23': 0.13146,
+        },
+        uncertainties = {'d12': 0.235532, 'd13': 0.181214, 'd23': 0.20015},
     ),
     short_desc = u"""Fitted to 30 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=120 label="C/H3/Ct">, <Entry index=36 label="Cbj">]
-[<Entry index=3 label="H2">, <Entry index=36 label="Cbj">]
-[<Entry index=172 label="Csrad/H/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=36 label="Cbj">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=122 label="C/H2/Cs/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=36 label="Cbj">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=36 label="Cbj">]
-[<Entry index=27 label="OHH">, <Entry index=36 label="Cbj">]
-[<Entry index=196 label="Cd_Cds/Ct/H">, <Entry index=36 label="Cbj">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=36 label="Cbj">]
-[<Entry index=4 label="C_H">, <Entry index=36 label="Cbj">]
-[<Entry index=82 label="CsCCCH">, <Entry index=36 label="Cbj">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=36 label="Cbj">]
-[<Entry index=77 label="CsCHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=78 label="CsOHHH">, <Entry index=36 label="Cbj">]
-[<Entry index=29 label="OOH">, <Entry index=36 label="Cbj">]
-[<Entry index=11 label="Ct_H">, <Entry index=36 label="Cbj">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=36 label="Cbj">]
-[<Entry index=43 label="C_methane">, <Entry index=36 label="Cbj">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=273 label="Cbj">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=273 label="Cbj">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=273 label="Cbj">]
+[<Entry index=151 label="Cb_H">, <Entry index=273 label="Cbj">]
+[<Entry index=7 label="CsCHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=155 label="OHH">, <Entry index=273 label="Cbj">]
+[<Entry index=12 label="CsOHHH">, <Entry index=273 label="Cbj">]
+[<Entry index=2 label="C_H">, <Entry index=273 label="Cbj">]
+[<Entry index=76 label="Csrad/H/Ct/H">, <Entry index=273 label="Cbj">]
+[<Entry index=150 label="Ct_H">, <Entry index=273 label="Cbj">]
 """,
 )
 
 entry(
-    index = 18,
+    index = 274,
     label = "Cjj",
     group = "OR{Csjj, Cdjj}",
     distances = DistanceData(
-        distances = {'d12': -0.003958, 'd13': 0.027268, 'd23': 0.034045},
-        uncertainties = {'d12': 0.070845, 'd13': 0.058157, 'd23': 0.091471},
+        distances = {'d12': 0.003023, 'd13': 0.037484, 'd23': 0.037713},
+        uncertainties = {'d12': 0.137588, 'd13': 0.138497, 'd23': 0.132787},
     ),
     short_desc = u"""Fitted to 58 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=4 label="C_H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=3 label="H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=1 label="H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
 """,
 )
 
 entry(
-    index = 37,
+    index = 275,
     label = "Csjj",
     group = "OR{Cs_sing, Cs_trip}",
     distances = DistanceData(
-        distances = {'d12': -0.020829, 'd13': 0.038155, 'd23': 0.052946},
-        uncertainties = {'d12': 0.071927, 'd13': 0.062315, 'd23': 0.105625},
+        distances = {
+            'd12': -0.009478,
+            'd13': 0.057967,
+            'd23': 0.059708,
+        },
+        uncertainties = {'d12': 0.153215, 'd13': 0.111853, 'd23': 0.150266},
     ),
     short_desc = u"""Fitted to 32 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=4 label="C_H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
 """,
 )
 
 entry(
-    index = 73,
+    index = 276,
     label = "Cs_sing",
     group = 
 """
@@ -10609,7 +9701,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 284,
+    index = 277,
     label = "Cs_singH2",
     group = 
 """
@@ -10622,7 +9714,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 285,
+    index = 278,
     label = "Cs_singRH",
     group = 
 """
@@ -10635,7 +9727,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 294,
+    index = 279,
     label = "Cs_singCH",
     group = 
 """
@@ -10648,7 +9740,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 304,
+    index = 280,
     label = "Cs_sing/Cs/H",
     group = 
 """
@@ -10661,7 +9753,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 305,
+    index = 281,
     label = "Cs_sing/Cd/H",
     group = 
 """
@@ -10674,7 +9766,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 306,
+    index = 282,
     label = "Cs_sing/Ct/H",
     group = 
 """
@@ -10687,7 +9779,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 307,
+    index = 283,
     label = "Cs_sing/Cb/H",
     group = 
 """
@@ -10700,7 +9792,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 295,
+    index = 284,
     label = "Cs_singOH",
     group = 
 """
@@ -10713,7 +9805,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 286,
+    index = 285,
     label = "Cs_singRR",
     group = 
 """
@@ -10726,7 +9818,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 296,
+    index = 286,
     label = "Cs_singCC",
     group = 
 """
@@ -10739,7 +9831,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 308,
+    index = 287,
     label = "Cs_sing/Cs/Cs",
     group = 
 """
@@ -10752,7 +9844,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 309,
+    index = 288,
     label = "Cs_sing/Cs/Cd",
     group = 
 """
@@ -10765,7 +9857,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 310,
+    index = 289,
     label = "Cs_sing/Cs/Ct",
     group = 
 """
@@ -10778,7 +9870,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 311,
+    index = 290,
     label = "Cs_sing/Cs/Cb",
     group = 
 """
@@ -10791,7 +9883,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 312,
+    index = 291,
     label = "Cs_sing/Cd/Cd",
     group = 
 """
@@ -10804,7 +9896,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 313,
+    index = 292,
     label = "Cs_sing/Cd/Ct",
     group = 
 """
@@ -10817,7 +9909,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 314,
+    index = 293,
     label = "Cs_sing/Cd/Cb",
     group = 
 """
@@ -10830,7 +9922,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 315,
+    index = 294,
     label = "Cs_sing/Ct/Ct",
     group = 
 """
@@ -10843,7 +9935,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 316,
+    index = 295,
     label = "Cs_sing/Ct/Cb",
     group = 
 """
@@ -10856,7 +9948,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 317,
+    index = 296,
     label = "Cs_sing/Cb/Cb",
     group = 
 """
@@ -10882,7 +9974,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 318,
+    index = 298,
     label = "Cs_sing/Cs/O",
     group = 
 """
@@ -10895,7 +9987,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 319,
+    index = 299,
     label = "Cs_sing/Cd/O",
     group = 
 """
@@ -10908,7 +10000,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 320,
+    index = 300,
     label = "Cs_sing/Ct/O",
     group = 
 """
@@ -10921,7 +10013,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 321,
+    index = 301,
     label = "Cs_sing/Cb/O",
     group = 
 """
@@ -10934,7 +10026,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 298,
+    index = 302,
     label = "Cs_singOO",
     group = 
 """
@@ -10947,7 +10039,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 74,
+    index = 303,
     label = "Cs_trip",
     group = 
 """
@@ -10955,43 +10047,41 @@ multiplicity [1,2,3,4,5]
 1 *3 Cs u2 p0
 """,
     distances = DistanceData(
-        distances = {'d12': -0.020829, 'd13': 0.038155, 'd23': 0.052946},
-        uncertainties = {'d12': 0.071927, 'd13': 0.062315, 'd23': 0.105625},
+        distances = {
+            'd12': -0.009478,
+            'd13': 0.057967,
+            'd23': 0.059708,
+        },
+        uncertainties = {'d12': 0.153215, 'd13': 0.111853, 'd23': 0.150266},
     ),
     short_desc = u"""Fitted to 32 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=4 label="C_H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
 """,
 )
 
 entry(
-    index = 287,
+    index = 304,
     label = "Cs_tripH2",
     group = 
 """
@@ -11001,30 +10091,31 @@ multiplicity [1,2,3,4,5]
 3    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': -0.058196, 'd13': 0.042902, 'd23': 0.093821},
-        uncertainties = {'d12': 0.04817, 'd13': 0.087074, 'd23': 0.123491},
+        distances = {
+            'd12': -0.050031,
+            'd13': 0.067002,
+            'd23': 0.108031,
+        },
+        uncertainties = {'d12': 0.097413, 'd13': 0.126794, 'd23': 0.15111},
     ),
     short_desc = u"""Fitted to 17 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=58 label="O/Cs/H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=79 label="CsCCHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=82 label="CsCCCH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=3 label="H2">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=119 label="C/H3/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=29 label="OOH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=27 label="OHH">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=4 label="C_H">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=120 label="C/H3/Ct">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=287 label="Cs_tripH2">]
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=287 label="Cs_tripH2">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=1 label="H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=155 label="OHH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=161 label="OOH">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=304 label="Cs_tripH2">]
+[<Entry index=10 label="C/H3/Ct">, <Entry index=304 label="Cs_tripH2">]
 """,
 )
 
 entry(
-    index = 288,
+    index = 305,
     label = "Cs_tripRH",
     group = 
 """
@@ -11034,31 +10125,32 @@ multiplicity [1,2,3,4,5]
 3    H   u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.028496, 'd13': 0.031888, 'd23': -0.001009},
-        uncertainties = {'d12': 0.099771, 'd13': 0.025284, 'd23': 0.097365},
+        distances = {
+            'd12': 0.046673,
+            'd13': 0.045456,
+            'd23': -0.007201,
+        },
+        uncertainties = {'d12': 0.215368, 'd13': 0.108764, 'd23': 0.169058},
     ),
     short_desc = u"""Fitted to 15 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
 """,
 )
 
 entry(
-    index = 299,
+    index = 306,
     label = "Cs_tripCH",
     group = 
 """
@@ -11068,31 +10160,32 @@ multiplicity [1,2,3,4,5]
 3    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.028496, 'd13': 0.031888, 'd23': -0.001009},
-        uncertainties = {'d12': 0.099771, 'd13': 0.025284, 'd23': 0.097365},
+        distances = {
+            'd12': 0.046673,
+            'd13': 0.045456,
+            'd23': -0.007201,
+        },
+        uncertainties = {'d12': 0.215368, 'd13': 0.108764, 'd23': 0.169058},
     ),
     short_desc = u"""Fitted to 15 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
 """,
 )
 
 entry(
-    index = 322,
+    index = 307,
     label = "Cs_trip/Cs/H",
     group = 
 """
@@ -11105,7 +10198,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 323,
+    index = 308,
     label = "Cs_trip/Cd/H",
     group = 
 """
@@ -11118,7 +10211,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 324,
+    index = 309,
     label = "Cs_trip/Ct/H",
     group = 
 """
@@ -11128,31 +10221,32 @@ multiplicity [1,2,3,4,5]
 3    H  u0 {1,S}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.028496, 'd13': 0.031888, 'd23': -0.001009},
-        uncertainties = {'d12': 0.099771, 'd13': 0.025284, 'd23': 0.097365},
+        distances = {
+            'd12': 0.046673,
+            'd13': 0.045456,
+            'd23': -0.007201,
+        },
+        uncertainties = {'d12': 0.215368, 'd13': 0.108764, 'd23': 0.169058},
     ),
     short_desc = u"""Fitted to 15 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=13 label="OradH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=4 label="C_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=12 label="Cb_H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=43 label="C_methane">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=27 label="OHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=77 label="CsCHHH">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=3 label="H2">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=195 label="Cd_Cds/Cd/H">, <Entry index=324 label="Cs_trip/Ct/H">]
-[<Entry index=11 label="Ct_H">, <Entry index=324 label="Cs_trip/Ct/H">]
+[<Entry index=1 label="H2">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=151 label="Cb_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=155 label="OHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=7 label="CsCHHH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=5 label="C_methane">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=150 label="Ct_H">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=153 label="OradH">, <Entry index=309 label="Cs_trip/Ct/H">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=309 label="Cs_trip/Ct/H">]
 """,
 )
 
 entry(
-    index = 325,
+    index = 310,
     label = "Cs_trip/Cb/H",
     group = 
 """
@@ -11165,7 +10259,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 300,
+    index = 311,
     label = "Cs_tripOH",
     group = 
 """
@@ -11178,7 +10272,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 289,
+    index = 312,
     label = "Cs_tripRR",
     group = 
 """
@@ -11191,7 +10285,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 301,
+    index = 313,
     label = "Cs_tripCC",
     group = 
 """
@@ -11204,7 +10298,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 326,
+    index = 314,
     label = "Cs_trip/Cs/Cs",
     group = 
 """
@@ -11217,7 +10311,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 327,
+    index = 315,
     label = "Cs_trip/Cs/Cd",
     group = 
 """
@@ -11230,7 +10324,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 328,
+    index = 316,
     label = "Cs_trip/Cs/Ct",
     group = 
 """
@@ -11243,7 +10337,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 329,
+    index = 317,
     label = "Cs_trip/Cs/Cb",
     group = 
 """
@@ -11256,7 +10350,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 330,
+    index = 318,
     label = "Cs_trip/Cd/Cd",
     group = 
 """
@@ -11269,7 +10363,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 331,
+    index = 319,
     label = "Cs_trip/Cd/Ct",
     group = 
 """
@@ -11282,7 +10376,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 332,
+    index = 320,
     label = "Cs_trip/Cd/Cb",
     group = 
 """
@@ -11295,7 +10389,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 333,
+    index = 321,
     label = "Cs_trip/Ct/Ct",
     group = 
 """
@@ -11308,7 +10402,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 334,
+    index = 322,
     label = "Cs_trip/Ct/Cb",
     group = 
 """
@@ -11321,7 +10415,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 335,
+    index = 323,
     label = "Cs_trip/Cb/Cb",
     group = 
 """
@@ -11334,7 +10428,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 302,
+    index = 324,
     label = "Cs_tripCO",
     group = 
 """
@@ -11347,7 +10441,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 336,
+    index = 325,
     label = "Cs_trip/Cs/O",
     group = 
 """
@@ -11360,7 +10454,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 337,
+    index = 326,
     label = "Cs_trip/Cd/O",
     group = 
 """
@@ -11373,7 +10467,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 338,
+    index = 327,
     label = "Cs_trip/Ct/O",
     group = 
 """
@@ -11386,7 +10480,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 339,
+    index = 328,
     label = "Cs_trip/Cb/O",
     group = 
 """
@@ -11399,7 +10493,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 303,
+    index = 329,
     label = "Cs_tripOO",
     group = 
 """
@@ -11412,37 +10506,32 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 38,
+    index = 330,
     label = "Cdjj",
     group = "OR{Cd_singletR, Cd_tripletR}",
     distances = DistanceData(
-        distances = {'d12': 0.014739, 'd13': 0.015204, 'd23': 0.013098},
-        uncertainties = {'d12': 0.074587, 'd13': 0.056984, 'd23': 0.077925},
+        distances = {'d12': 0.016464, 'd13': 0.015462, 'd23': 0.014065},
+        uncertainties = {'d12': 0.126386, 'd13': 0.174477, 'd23': 0.118215},
     ),
     short_desc = u"""Fitted to 26 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=3 label="H2">, <Entry index=292 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=1 label="H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
 """,
 )
 
 entry(
-    index = 75,
+    index = 331,
     label = "Cd_singletR",
     group = 
 """
@@ -11453,7 +10542,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 290,
+    index = 332,
     label = "Cd_singletC",
     group = 
 """
@@ -11465,7 +10554,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 291,
+    index = 333,
     label = "Cd_singletO",
     group = 
 """
@@ -11477,7 +10566,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 76,
+    index = 334,
     label = "Cd_tripletR",
     group = 
 """
@@ -11485,33 +10574,28 @@ multiplicity [1,2,3,4,5]
 1 *3 Cd u2 p0
 """,
     distances = DistanceData(
-        distances = {'d12': 0.014739, 'd13': 0.015204, 'd23': 0.013098},
-        uncertainties = {'d12': 0.074587, 'd13': 0.056984, 'd23': 0.077925},
+        distances = {'d12': 0.016464, 'd13': 0.015462, 'd23': 0.014065},
+        uncertainties = {'d12': 0.126386, 'd13': 0.174477, 'd23': 0.118215},
     ),
     short_desc = u"""Fitted to 26 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=3 label="H2">, <Entry index=292 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=1 label="H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
 """,
 )
 
 entry(
-    index = 292,
+    index = 335,
     label = "Cd_tripletC",
     group = 
 """
@@ -11520,33 +10604,28 @@ multiplicity [1,2,3,4,5]
 2    C  ux {1,D}
 """,
     distances = DistanceData(
-        distances = {'d12': 0.014739, 'd13': 0.015204, 'd23': 0.013098},
-        uncertainties = {'d12': 0.074587, 'd13': 0.056984, 'd23': 0.077925},
+        distances = {'d12': 0.016464, 'd13': 0.015462, 'd23': 0.014065},
+        uncertainties = {'d12': 0.126386, 'd13': 0.174477, 'd23': 0.118215},
     ),
     short_desc = u"""Fitted to 26 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=126 label="C/H2/Cd/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=29 label="OOH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=194 label="Cd_Cds/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=192 label="Cd_Cds/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=123 label="C/H2/Cs/Cd">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=77 label="CsCHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=43 label="C_methane">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=58 label="O/Cs/H">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=78 label="CsOHHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=132 label="C/H2/Cs/O">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=79 label="CsCCHH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=193 label="Cd_Cdd/H2">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=82 label="CsCCCH">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=118 label="C/H3/Cs">, <Entry index=292 label="Cd_tripletC">]
-[<Entry index=3 label="H2">, <Entry index=292 label="Cd_tripletC">]
+[<Entry index=9 label="C/H3/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=123 label="Cd_Cds/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=12 label="CsOHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=1 label="H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=7 label="CsCHHH">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=16 label="C/H2/Cs/Cd">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=124 label="Cd_Cdd/H2">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=5 label="C_methane">, <Entry index=335 label="Cd_tripletC">]
+[<Entry index=19 label="C/H2/Cd/Cd">, <Entry index=335 label="Cd_tripletC">]
 """,
 )
 
 entry(
-    index = 293,
+    index = 336,
     label = "Cd_tripletO",
     group = 
 """
@@ -11558,25 +10637,29 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 19,
+    index = 337,
     label = "Cjjj",
     group = "OR{C_doubletR, C_quartetR}",
     distances = DistanceData(
-        distances = {'d12': -0.130293, 'd13': -0.069409, 'd23': 0.081364},
-        uncertainties = {'d12': 0.206066, 'd13': 0.388033, 'd23': 0.354669},
+        distances = {
+            'd12': -0.121825,
+            'd13': -0.050492,
+            'd23': 0.089286,
+        },
+        uncertainties = {'d12': 0.268468, 'd13': 0.445437, 'd23': 0.316228},
     ),
     short_desc = u"""Fitted to 3 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=27 label="OHH">, <Entry index=40 label="C_quartetR">]
-[<Entry index=3 label="H2">, <Entry index=40 label="C_quartetR">]
+[<Entry index=1 label="H2">, <Entry index=339 label="C_quartetR">]
+[<Entry index=155 label="OHH">, <Entry index=339 label="C_quartetR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
 """,
 )
 
 entry(
-    index = 39,
+    index = 338,
     label = "C_doubletR",
     group = 
 """
@@ -11587,7 +10670,7 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 40,
+    index = 339,
     label = "C_quartetR",
     group = 
 """
@@ -11595,28 +10678,32 @@ multiplicity [1,2,3,4,5]
 1 *3 C u3
 """,
     distances = DistanceData(
-        distances = {'d12': -0.130293, 'd13': -0.069409, 'd23': 0.081364},
-        uncertainties = {'d12': 0.206066, 'd13': 0.388033, 'd23': 0.354669},
+        distances = {
+            'd12': -0.121825,
+            'd13': -0.050492,
+            'd23': 0.089286,
+        },
+        uncertainties = {'d12': 0.268468, 'd13': 0.445437, 'd23': 0.316228},
     ),
     short_desc = u"""Fitted to 3 distances.
 """,
     long_desc = 
 u"""
-[<Entry index=118 label="C/H3/Cs">, <Entry index=40 label="C_quartetR">]
-[<Entry index=27 label="OHH">, <Entry index=40 label="C_quartetR">]
-[<Entry index=3 label="H2">, <Entry index=40 label="C_quartetR">]
+[<Entry index=1 label="H2">, <Entry index=339 label="C_quartetR">]
+[<Entry index=155 label="OHH">, <Entry index=339 label="C_quartetR">]
+[<Entry index=8 label="C/H3/Cs">, <Entry index=339 label="C_quartetR">]
 """,
 )
 
 entry(
-    index = 20,
+    index = 340,
     label = "Cjjjj",
     group = "OR{C_quintet, C_triplet}",
     distances = DistanceData(distances={}),
 )
 
 entry(
-    index = 41,
+    index = 341,
     label = "C_quintet",
     group = 
 """
@@ -11627,56 +10714,12 @@ multiplicity [1,2,3,4,5]
 )
 
 entry(
-    index = 42,
+    index = 342,
     label = "C_triplet",
     group = 
 """
 multiplicity [1,2,3,4,5]
 1 *3 C u2 p1
-""",
-    distances = DistanceData(distances={}),
-)
-
-entry(
-    index = 341,
-    label = "Val7rad",
-    group = 
-"""
-multiplicity [1,2,3,4,5]
-1 *3 Val7 u1 p3
-""",
-    distances = DistanceData(distances={}),
-)
-
-entry(
-    index = 342,
-    label = "Frad",
-    group = 
-"""
-multiplicity [1,2,3,4,5]
-1 *3 F u1 p3
-""",
-    distances = DistanceData(distances={}),
-)
-
-entry(
-    index = 343,
-    label = "Clrad",
-    group = 
-"""
-multiplicity [1,2,3,4,5]
-1 *3 Cl u1 p3
-""",
-    distances = DistanceData(distances={}),
-)
-
-entry(
-    index = 344,
-    label = "Brrad",
-    group = 
-"""
-multiplicity [1,2,3,4,5]
-1 *3 Br u1 p3
 """,
     distances = DistanceData(distances={}),
 )
