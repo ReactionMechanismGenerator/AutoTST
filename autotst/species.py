@@ -452,9 +452,13 @@ class Conformer():
             return endpoints
 
         torsion_list = []
-        if self.rmg_molecule.is_linear(): # No torsions if linear molecule
-            self.torsions  = []
-            return []
+
+        try:
+            if self.rmg_molecule.is_linear(): # No torsions if linear molecule
+                self.torsions  = []
+                return []
+        except:
+            pass
 
         for bond1 in self.rdkit_molecule.GetBonds():
             
