@@ -5578,7 +5578,22 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 Cl u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.085325,
+            'd13': 0.34433, 
+            'd23': 0.516524
+        },
+        uncertainties = {'d12': 0.501276, 'd13': 0.28389, 'd23': 0.433963},
+    ),
+    short_desc = u"""Estimated from Frad.
+""",
+    long_desc = 
+u"""
+d12 = Frad_d12
+d13 = Frad_d13 + 0.35 (Cl covalent radius - F covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23 = Frad_d23 + 0.35 (Cl covalent radius - F covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+""",
 )
 
 entry(
@@ -5589,7 +5604,21 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 Br u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances=DistanceData(
+        distances={
+            'd12': -0.085325,
+            'd13': 0.56433, 
+            'd23': 0.736524,
+        },
+        uncertainties={'d12': 0.501276, 'd13': 0.28389, 'd23': 0.433963},
+    ),
+    short_desc=u"""Estimated from Frad.
+""",
+    long_desc=u"""
+d12 = Frad_d12
+d13 = Frad_d13 + 0.57 (Br covalent radius - F covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23 = Frad_d23 + 0.57 (Br covalent radius - F covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+""",
 )
 
 entry(

@@ -3124,7 +3124,22 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 F u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.150874,
+            'd13': 0.141061, 
+            'd23': 0.284494
+        },
+        uncertainties = {'d12': 0.097481, 'd13': 0.17952, 'd23': 0.149893},
+    ),
+    short_desc=u"""Estimated from Hrad.
+""",
+    long_desc = 
+u"""
+d12 = Hrad_d12
+d13 = Hrad_d13 + 0.41 (F covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23 = Hrad_d23 + 0.41 (F covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+""",
 )
 
 entry(
@@ -3135,7 +3150,21 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 Cl u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances=DistanceData(
+        distances={
+            'd12': -0.150874,
+            'd13': 0.491061, 
+            'd23': 0.634494
+        },
+        uncertainties={'d12': 0.097481, 'd13': 0.17952, 'd23': 0.149893},
+    ),
+    short_desc=u"""Estimated from Hrad.
+""",
+    long_desc=u"""
+d12 = Hrad_d12
+d13 = Hrad_d13 + 0.76 (Cl covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23 = Hrad_d23 + 0.76 (Cl covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+""",
 )
 
 entry(
@@ -3146,7 +3175,21 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 Br u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances=DistanceData(
+        distances={
+            'd12': -0.150874,
+            'd13': 0.711061, 
+            'd23': 0.854494
+        },
+        uncertainties={'d12': 0.097481, 'd13': 0.17952, 'd23': 0.149893},
+    ),
+    short_desc=u"""Estimated from Hrad.
+""",
+    long_desc=u"""
+d12 = Hrad_d12
+d13 = Hrad_d13 + 0.98 (Cl covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23 = Hrad_d23 + 0.98 (Cl covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+""",
 )
 
 entry(

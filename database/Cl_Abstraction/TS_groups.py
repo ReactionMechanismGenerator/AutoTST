@@ -3300,7 +3300,22 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 F u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.155564,
+            'd13': 0.083365, 
+            'd23': 0.231056
+        },
+        uncertainties = {'d12': 0.094709, 'd13': 0.201079, 'd23': 0.118059},
+    ),
+    short_desc = u"""Estimated from Hrad.
+""",
+    long_desc = 
+u"""
+d12 = Hrad_d12
+d13 = Hrad_d13 + 0.41 (F covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23 = Hrad_d23 + 0.41 (F covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+""",
 )
 
 entry(
@@ -3311,7 +3326,22 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 Cl u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.155564,
+            'd13': 0.433365, 
+            'd23': 0.581056
+        },
+        uncertainties = {'d12': 0.094709, 'd13': 0.201079, 'd23': 0.118059},
+    ),
+    short_desc=u"""Estimated from Hrad.
+""",
+    long_desc = 
+u"""
+d12 = Hrad_d12
+d13 = Hrad_d13 + 0.76 (Cl covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23 = Hrad_d23 + 0.76 (Cl covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+""",
 )
 
 entry(
@@ -3322,7 +3352,22 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 Br u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances=DistanceData(
+        distances={
+            'd12': -0.155564,
+            'd13': 0.653365, 
+            'd23': 0.801056
+        },
+        uncertainties={'d12': 0.094709, 'd13': 0.201079, 'd23': 0.118059},
+    ),
+    short_desc=u"""Estimated from Hrad.
+""",
+    long_desc=
+u"""
+d12 = Hrad_d12
+d13 = Hrad_d13 + 0.98 (Br covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23 = Hrad_d23 + 0.98 (Br covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+""",
 )
 
 entry(

@@ -3343,7 +3343,23 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 F u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.225433,
+            'd13': -0.106214,
+            'd23': 0.115211,
+        },
+        uncertainties = {'d12': 0.128778, 'd13': 0.227398, 'd23': 0.137042},
+    ),
+    short_desc = u"""Estimated from Hrad.
+""",
+    long_desc = 
+u"""
+d12: copied from Hrad
+d13: Hrad_d13 + 0.41 (F covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23: Hrad_d23 + 0.41 (F covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+uncertainties = 2*uncertainties_Hrad
+""",
 )
 
 entry(
@@ -3354,7 +3370,23 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 Cl u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances = DistanceData(
+        distances = {
+            'd12': -0.225433,
+            'd13': 0.243786, 
+            'd23': 0.465211,
+        },
+        uncertainties={'d12': 0.128778, 'd13': 0.227398, 'd23': 0.137042},
+    ),
+    short_desc = u"""Estimated from Hrad.
+""",
+    long_desc = 
+u"""
+d12: copied from Hrad
+d13: Hrad_d13 + 0.76 (Cl covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23: Hrad_d23 + 0.76 (Cl covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+uncertainties = 2*uncertainties_Hrad
+""",
 )
 
 entry(
@@ -3365,7 +3397,22 @@ entry(
 multiplicity [1,2,3,4,5]
 1 *3 Br u1 p3
 """,
-    distances = DistanceData(distances={}),
+    distances=DistanceData(
+        distances={
+            'd12': -0.225433,
+            'd13': 0.463786, 
+            'd23': 0.685211,
+        },
+        uncertainties={'d12': 0.128778, 'd13': 0.227398, 'd23': 0.137042},
+    ),
+    short_desc=u"""Estimated from Hrad.
+""",
+    long_desc=u"""
+d12: copied from Hrad
+d13: Hrad_d13 + 0.98 (Br covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+d23: Hrad_d23 + 0.98 (Br covalent radius - H covalent radius, obtained from rdkit.Chem.rdchem.PeriodicTable)
+uncertainties = 2*uncertainties_Hrad
+""",
 )
 
 entry(
