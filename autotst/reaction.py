@@ -799,6 +799,9 @@ class TS(Conformer):
 
         if self.reaction_family.lower() in [
             'h_abstraction',
+            'f_abstraction',
+            'cl_abstraction',
+            'br_abstraction',
             'r_addition_multiplebond',
             'intra_h_migration']:
             # for i, atom in enumerate(reactants.atoms):
