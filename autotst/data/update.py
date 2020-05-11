@@ -113,7 +113,7 @@ def update_dictionary_entries(old_entries, need_to_add):
 
         atom_counts = {}
         rel_label = ''
-        for atom in ['C', 'H', 'O']:
+        for atom in ['C', 'H', 'O', 'F', 'Cl', 'Br']:
             count = species.count(atom)
             if count > 0:
                 rel_label = rel_label + atom + str(count)
