@@ -184,8 +184,21 @@ class VibrationalAnalysis():
             i, j = bond.atom_indices
             before = self.pre_geometry.get_distance(i, j)
             after = self.post_geometry.get_distance(i, j)
+
+            if bond.reaction_center:
+                labels = sorted([self.ts.rmg_molecule.atoms[i].label.lstrip('*'), self.ts.rmg_molecule.atoms[j].label.lstrip('*')])
+                key = f'd{labels[0]}{labels[1]}'
+                reference_distance = self.ts.distance_data.distances[key] * 1.25
+                if before > reference_distance:
+                    logging.error(f'{key} distance is too large, it was measured at {before} Å when the maximum allowable distance is {reference_distance} Å.')
+                    pc = 0.0
+                else:
+                    pc = percent_change(before, after)
+            else:
+                pc = percent_change(before, after)
+
             results.append([bond.index, bond.atom_indices,
-                            bond.reaction_center, percent_change(before, after)])
+                            bond.reaction_center, pc])
 
         self.percent_changes = pd.DataFrame(results, columns=["index", "atom_indices", "center", "percent_change"])
 
@@ -214,11 +227,21 @@ class VibrationalAnalysis():
 
             self.percent_changes = self.obtain_percent_changes()
 
+            if (self.percent_changes[self.percent_changes.center].percent_change == 0.0).any():
+                logging.error('Distance between reacting atoms is too big, we cannot validate this TS through vibrational analysis.')
+                return False
+            
+            center_mean = self.percent_changes[self.percent_changes.center].percent_change.mean()
+            shell_mean = self.percent_changes[self.percent_changes.center == False].percent_change.mean()
+            if center_mean < 25:
+                logging.error(f'The bonds in the reaction center are only changing by {center_mean}, not high enough to validate via vibrational analysis...')
+                return False
+            elif shell_mean > 5:
+                logging.error(f'The bonds in the reaction shell are changing by {shell_mean}, too high to validate via vibrational analysis...')
+                return False
 
-            center_values = np.log(
-                self.percent_changes[self.percent_changes.center].percent_change.mean())
-            shell_values = np.log(
-                self.percent_changes[self.percent_changes.center != True].percent_change.mean())
+            center_values = np.log(center_mean)
+            shell_values = np.log(shell_mean)
 
             if center_values > shell_values + 1:
                 logging.info("Vibrational analysis was successful")
