@@ -69,6 +69,8 @@ class VibrationalAnalysis():
 
         assert os.path.exists(self.log_file), "Log file provided does not exist"
         
+        self.parser = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
+
     def __repr__(self):
         if self.ts is None:
             label = None
@@ -110,11 +112,10 @@ class VibrationalAnalysis():
 
         if not self.log_file:
             self.get_log_file()
+            self.parser = cclib.io.ccread(
+                self.log_file, loglevel=logging.ERROR)
 
-        assert os.path.exists(self.log_file), "Log file provided does not exist"
-
-        log_file_info = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
-        self.vibrations = list(zip(log_file_info.vibfreqs, log_file_info.vibdisps))
+        self.vibrations = list(zip(self.parser.vibfreqs, self.parser.vibdisps))
         
         return self.vibrations
 
@@ -145,9 +146,7 @@ class VibrationalAnalysis():
         }
         atoms = []
 
-        parser = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
-
-        for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
+        for atom_num, coords in zip(self.parser.atomnos, self.parser.atomcoords[-1]):
             atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
         
         self.ts._ase_molecule = ase.Atoms(atoms)
@@ -211,7 +210,8 @@ class VibrationalAnalysis():
         - (bool): True if the TS can be validated via vibrational analysis and False if it cannot
         """
         try:
-            self.get_log_file()
+            if self.log_file is None:
+                self.get_log_file()
 
             self.parse_vibrations()
 
