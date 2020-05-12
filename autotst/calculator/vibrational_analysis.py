@@ -52,7 +52,7 @@ class VibrationalAnalysis():
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, transitionstate=None, directory="."):
+    def __init__(self, transitionstate=None, directory=".", log_file=None):
         """
         Variables:
         - ts (TS): A TS object that you want to run vibratinal analysis on
@@ -62,8 +62,13 @@ class VibrationalAnalysis():
         self.ts.get_geometries()
         self.directory = directory
 
-        self.log_file = None
+        self.log_file = log_file
+        
+        if self.log_file is None:
+            self.get_log_file()
 
+        assert os.path.exists(self.log_file), "Log file provided does not exist"
+        
     def __repr__(self):
         if self.ts is None:
             label = None
