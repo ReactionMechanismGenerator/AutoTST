@@ -927,7 +927,46 @@ class TS(Conformer):
             self.get_rdkit_mol()
             test_conf._rdkit_molecule = self._pseudo_geometry
         test_conf._ase_molecule = self.ase_molecule
-        return test_conf.get_bonds()
+
+    def get_bonds(self):
+        """
+        A method for identifying all of the bonds in a conformer
+        """
+        bond_list = []
+        for bond in self._pseudo_geometry.GetBonds():
+            bond_list.append((bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()))
+
+        bonds = []
+        for index, indices in enumerate(bond_list):
+            i, j = indices
+
+            length = self.ase_molecule.get_distance(i, j)
+            center = False
+
+            supported_labels = []
+            if self.reaction_family.lower() in [
+                'h_abstraction',
+                'r_addition_multiplebond',
+                'intra_h_migration']:
+                supported_labels = ['*1', '*2', '*3']
+            elif self.reaction_family.lower() in ['disproportionation']:
+                supported_labels = ['*1', '*2', '*4']
+            
+            if (self.rmg_molecule.atoms[i].label in supported_labels) and (self.rmg_molecule.atoms[j].label in supported_labels):
+                center = True
+
+            bond = Bond(index=index,
+                        atom_indices=indices,
+                        length=length,
+                        reaction_center=center)
+            mask = self.get_mask(bond)
+            bond.mask = mask
+
+            bonds.append(bond)
+
+        self.bonds = bonds
+
+        return self.bonds
 
     def get_torsions(self):
         test_conf = Conformer()
