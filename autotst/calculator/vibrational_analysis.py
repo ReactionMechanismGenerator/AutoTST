@@ -188,6 +188,10 @@ class VibrationalAnalysis():
             if bond.reaction_center:
                 labels = sorted([self.ts.rmg_molecule.atoms[i].label.lstrip('*'), self.ts.rmg_molecule.atoms[j].label.lstrip('*')])
                 key = f'd{labels[0]}{labels[1]}'
+                if key == 'd24':
+                    key = 'd12'
+                elif key == 'd14':
+                    key = 'd23'
                 reference_distance = self.ts.distance_data.distances[key] * 1.25
                 if before > reference_distance:
                     logging.error(f'{key} distance is too large, it was measured at {before} Å when the maximum allowable distance is {reference_distance} Å.')
