@@ -687,13 +687,22 @@ class TS(Conformer):
             rd_copy = rdkit.Chem.RWMol(self.rdkit_molecule.__copy__())
 
             lbl1, lbl2, lbl3 = self.labels
-
-            if not rd_copy.GetBondBetweenAtoms(lbl1, lbl2):
-                rd_copy.AddBond(lbl1, lbl2,
-                                order=rdkit.Chem.rdchem.BondType.SINGLE)
-            elif not rd_copy.GetBondBetweenAtoms(lbl2, lbl3):
-                rd_copy.AddBond(lbl2, lbl3,
-                                order=rdkit.Chem.rdchem.BondType.SINGLE)
+            if self.reaction_family.lower() in ['h_abstraction', 'r_addition_multiplebond', 'disproportionation']:
+                # We draw a psuedo bond between *1-*2 and *2-*3
+                if not rd_copy.GetBondBetweenAtoms(lbl1, lbl2):
+                    rd_copy.AddBond(lbl1, lbl2,
+                                    order=rdkit.Chem.rdchem.BondType.SINGLE)
+                elif not rd_copy.GetBondBetweenAtoms(lbl2, lbl3):
+                    rd_copy.AddBond(lbl2, lbl3,
+                                    order=rdkit.Chem.rdchem.BondType.SINGLE)
+            elif self.reaction_family.lower() == 'intra_h_migration':
+                # We draw a pseudo bond between *1-*3 and *3-*2 
+                if not rd_copy.GetBondBetweenAtoms(lbl1, lbl3):
+                    rd_copy.AddBond(lbl1, lbl3,
+                                    order=rdkit.Chem.rdchem.BondType.SINGLE)
+                elif not rd_copy.GetBondBetweenAtoms(lbl2, lbl3):
+                    rd_copy.AddBond(lbl2, lbl3,
+                                    order=rdkit.Chem.rdchem.BondType.SINGLE)
             
 
             self._pseudo_geometry = rd_copy
