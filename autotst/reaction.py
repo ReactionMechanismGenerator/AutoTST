@@ -113,7 +113,8 @@ class Reaction():
                     direction=direction,
                     rmg_molecule=complex,
                     reaction_family=self.reaction_family,
-                    distance_data=self.distance_data
+                    distance_data=self.distance_data,
+                    action=self.possible_actions[self.reaction_family][direction]
                 )
                 ts_dict[direction] = [ts]
 
@@ -204,6 +205,17 @@ class Reaction():
             )
 
         self.rmg_database = rmg_database
+
+        actions = {}
+        for possible_family in self.possible_families:
+            actions[possible_family] = {}
+            action = self.rmg_database.kinetics.families[possible_family].forward_recipe.actions
+            actions[possible_family]['forward'] = action
+
+            action = self.rmg_database.kinetics.families[possible_family].reverse_recipe.actions
+            actions[possible_family]['reverse'] = action
+
+        self.possible_actions = actions
 
         self.ts_databases = dict()
         for reaction_family in self.possible_families:
@@ -588,6 +600,7 @@ class TS(Conformer):
             rmg_molecule=None,
             reaction_family="H_Abstraction",
             distance_data=None,
+            action=[],
             index=0):
 
         self.energy = None
@@ -597,6 +610,7 @@ class TS(Conformer):
         self.distance_data = distance_data
         self.index = index
         self.bm = None
+        self.action = action
 
         assert direction in ["forward",
                              "reverse"], "Please provide a valid direction"
@@ -686,15 +700,13 @@ class TS(Conformer):
 
             rd_copy = rdkit.Chem.RWMol(self.rdkit_molecule.__copy__())
 
-            lbl1, lbl2, lbl3 = self.labels
-
-            if not rd_copy.GetBondBetweenAtoms(lbl1, lbl2):
-                rd_copy.AddBond(lbl1, lbl2,
-                                order=rdkit.Chem.rdchem.BondType.SINGLE)
-            elif not rd_copy.GetBondBetweenAtoms(lbl2, lbl3):
-                rd_copy.AddBond(lbl2, lbl3,
-                                order=rdkit.Chem.rdchem.BondType.SINGLE)
-            
+            for a in self.action:
+                if 'BOND' in a[0]:
+                    _, label1, _, label2 = a
+                    sorting_label_1 = self.rmg_molecule.get_labeled_atoms(label1)[0].sorting_label
+                    sorting_label_2 = self.rmg_molecule.get_labeled_atoms(label2)[0].sorting_label
+                    if not rd_copy.GetBondBetweenAtoms(sorting_label_1, sorting_label_2):
+                        rd_copy.AddBond(sorting_label_1, sorting_label_2, order=rdkit.Chem.rdchem.BondType.SINGLE)
 
             self._pseudo_geometry = rd_copy
 
@@ -927,7 +939,43 @@ class TS(Conformer):
             self.get_rdkit_mol()
             test_conf._rdkit_molecule = self._pseudo_geometry
         test_conf._ase_molecule = self.ase_molecule
-        return test_conf.get_bonds()
+
+    def get_bonds(self):
+        """
+        A method for identifying all of the bonds in a conformer
+        """
+        bond_list = []
+        for bond in self._pseudo_geometry.GetBonds():
+            bond_list.append((bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()))
+
+        bonds = []
+        for index, indices in enumerate(bond_list):
+            i, j = indices
+
+            length = self.ase_molecule.get_distance(i, j)
+            center = False
+
+            if self.rmg_molecule.atoms[i].label != '' and self.rmg_molecule.atoms[j].label != '':
+                for a in self.action:
+                    if not 'BOND' in a[0]:
+                        # Not a bond action
+                        continue
+                    elif self.rmg_molecule.atoms[i].label in a and self.rmg_molecule.atoms[j].label in a:
+                        # Both atom labels are participating in a bond being formed or breaking
+                        center = True
+
+            bond = Bond(index=index,
+                        atom_indices=indices,
+                        length=length,
+                        reaction_center=center)
+            mask = self.get_mask(bond)
+            bond.mask = mask
+
+            bonds.append(bond)
+
+        self.bonds = bonds
+
+        return self.bonds
 
     def get_torsions(self):
         test_conf = Conformer()

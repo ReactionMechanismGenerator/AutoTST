@@ -378,9 +378,6 @@ class Conformer():
 
             length = self.ase_molecule.get_distance(i, j)
             center = False
-            if ((self.rmg_molecule.atoms[i].label) and (
-                    self.rmg_molecule.atoms[j].label)):
-                center = True
 
             bond = Bond(index=index,
                         atom_indices=indices,
