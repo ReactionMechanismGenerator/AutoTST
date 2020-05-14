@@ -134,6 +134,9 @@ class VibrationalAnalysisTest(unittest.TestCase):
     def test_validate_by_connecting_the_dots(self):
         self.assertTrue(self.vibrational_analysis2.validate_by_connecting_the_dots())
 
+    def test_validate(self):
+        self.assertTrue(self.vibrational_analysis2.validate())
+
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
     try:
