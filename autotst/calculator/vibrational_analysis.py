@@ -350,3 +350,14 @@ class VibrationalAnalysis():
 
         logging.warning(f"{self.ts} FAILED vibrational analysis with freq {freq}")
         return False
+
+    def validate(self):
+        """
+        Validate ts through the `validate_ts()` and `validate_by_connecting_the_dots()`
+        methods.
+
+        retuns: tup (self.validate_ts(),self.validate_by_connecting_the_dots())
+        """ 
+
+        return (self.validate_ts(),self.validate_by_connecting_the_dots())
+        
