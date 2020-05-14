@@ -36,6 +36,8 @@ import ase
 import cclib.io 
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
+import rmgpy
+import rmgpy.molecule
 
 
 def percent_change(original, new):
@@ -52,17 +54,26 @@ class VibrationalAnalysis():
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, transitionstate=None, directory="."):
+    def __init__(self, transitionstate=None, directory=".", log_file=None):
         """
         Variables:
         - ts (TS): A TS object that you want to run vibratinal analysis on
-        - scratch (str): the directory where log files of the TS are located
+        - directory (str): the directory where log files of the TS are located
+        - log_file (str): path to the TS log file
         """
         self.ts = transitionstate
         self.ts.get_geometries()
         self.directory = directory
 
-        self.log_file = None
+        self.log_file = log_file
+        
+        if self.log_file is None:
+            self.get_log_file()
+        
+        try:
+            self.parser = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
+        except:
+            self.parser = None
 
     def __repr__(self):
         if self.ts is None:
@@ -105,11 +116,10 @@ class VibrationalAnalysis():
 
         if not self.log_file:
             self.get_log_file()
+            self.parser = cclib.io.ccread(
+                self.log_file, loglevel=logging.ERROR)
 
-        assert os.path.exists(self.log_file), "Log file provided does not exist"
-
-        log_file_info = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
-        self.vibrations = list(zip(log_file_info.vibfreqs, log_file_info.vibdisps))
+        self.vibrations = list(zip(self.parser.vibfreqs, self.parser.vibdisps))
         
         return self.vibrations
 
@@ -131,6 +141,7 @@ class VibrationalAnalysis():
 
         
         symbol_dict = {
+            35: "Br",
             17: "Cl",
             9:  "F",
             8:  "O",
@@ -140,9 +151,7 @@ class VibrationalAnalysis():
         }
         atoms = []
 
-        parser = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
-
-        for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
+        for atom_num, coords in zip(self.parser.atomnos, self.parser.atomcoords[-1]):
             atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
         
         self.ts._ase_molecule = ase.Atoms(atoms)
@@ -223,7 +232,8 @@ class VibrationalAnalysis():
         - (bool): True if the TS can be validated via vibrational analysis and False if it cannot
         """
         try:
-            self.get_log_file()
+            if self.log_file is None:
+                self.get_log_file()
 
             self.parse_vibrations()
 
@@ -258,3 +268,123 @@ class VibrationalAnalysis():
             logging.info("Something went wrong when attempting vibrational analysis...")
             logging.info("Cannot verify via vibrational analysis")
             return False
+
+    def _get_complexes_from_rxn_label(self):
+        """
+        Returns a tuple of rmgpy.molecule.Molecule objects of
+        reactant and product complexes from the TS reaction label.
+        Returns:
+            (Reactants Complex (rmgpy.molecule.Molecule),
+            Products Complex (rmgpy.molecule.Molecule))
+        """
+
+        complexes = []
+        for i in (0, 1):
+            smiles = self.ts.reaction_label.split('_')[i].split('+')
+            spcs = [rmgpy.molecule.Molecule(
+                smiles=smi).to_single_bonds() for smi in smiles]
+            spcs_complex = spcs.pop(0)
+            for s in spcs:
+                spcs_complex = spcs_complex.merge(s)
+            spcs_complex.update_connectivity_values()
+            spcs_complex.update_lone_pairs()
+            spcs_complex.update_multiplicity()
+            complexes.append(spcs_complex.copy(deep=True))
+        
+        return complexes
+
+
+    def validate_by_connecting_the_dots(self):
+        """
+        Validates TS by:
+        1) Creating 2 'freq' rmgpy.molecule complexes from negative frequency atom displacements
+        2) Checking isomophism of 'freq' complexes to reactant and product complexes from reaction label
+        Returns True if Validated and False if Invalid TS
+        """
+
+        try:
+            self.parser.vibfreqs
+        except AttributeError:
+            logging.error(
+                f"{self.ts} has no vibrational frequencies. Vibrational analysis FAILED")
+            return False
+
+        freq = self.parser.vibfreqs[0]
+        if freq > 0:
+            logging.error(
+                f"{self.ts} does not have a negative frequency. Vibrational analysis FAILED")
+            return False
+
+        rxn_label_complexes = self._get_complexes_from_rxn_label()
+
+        def make_complexes(coeff):
+            """
+            make the reactant and product complexes from the vibrational displacements
+            for the negative frequency.
+
+            coeff ([int,float]) : coefficient used to scale displacements
+            """
+
+            complex1 = rmgpy.molecule.Molecule()
+            complex2 = rmgpy.molecule.Molecule()
+
+            # Currently (5/13/2020) rmgpy binary does not have
+            # `raise_atomtype_exception` as a keyword for `from_xyz`
+            # Therefore, we will try to set it `False`
+            # If that fails, don't set that keyword
+            try:
+                complex1.from_xyz(
+                    self.parser.atomnos,
+                    self.parser.atomcoords[-1] + coeff*self.parser.vibdisps[0],
+                    raise_atomtype_exception=False,
+                )
+                complex2.from_xyz(
+                    self.parser.atomnos,
+                    self.parser.atomcoords[-1] - coeff*self.parser.vibdisps[0],
+                    raise_atomtype_exception=False
+                )
+            except:
+                complex1.from_xyz(
+                    self.parser.atomnos,
+                    self.parser.atomcoords[-1] + coeff*self.parser.vibdisps[0],
+                )
+                complex2.from_xyz(
+                    self.parser.atomnos,
+                    self.parser.atomcoords[-1] - coeff*self.parser.vibdisps[0],
+                )
+
+            for c in (complex1, complex2):
+                c.update_connectivity_values()
+                c.update_lone_pairs()
+                c.update_multiplicity()
+
+            return (complex1, complex2)
+
+        for i in np.linspace(0.25, 2, 8):
+
+            complex1, complex2 = make_complexes(i)
+
+            if complex1.is_isomorphic(rxn_label_complexes[0]) \
+            and complex2.is_isomorphic(rxn_label_complexes[1]):
+                logging.info(f"Validated {self.ts} through vibrational analysis!")
+                return True
+
+            if complex1.is_isomorphic(rxn_label_complexes[1]) \
+            and complex2.is_isomorphic(rxn_label_complexes[0]):
+                logging.info(
+                    f"Validated {self.ts} through vibrational analysis!")
+                return True
+
+        logging.warning(f"{self.ts} FAILED vibrational analysis with freq {freq}")
+        return False
+
+    def validate(self):
+        """
+        Validate ts through the `validate_ts()` and `validate_by_connecting_the_dots()`
+        methods.
+
+        retuns: tup (self.validate_ts(),self.validate_by_connecting_the_dots())
+        """ 
+
+        return (self.validate_ts(),self.validate_by_connecting_the_dots())
+        

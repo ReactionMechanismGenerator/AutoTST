@@ -34,6 +34,8 @@ import pandas as pd
 import numpy as np
 import ase
 import cclib.io
+import rmgpy
+import rmgpy.molecule
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
 from .vibrational_analysis import percent_change, VibrationalAnalysis
@@ -59,6 +61,16 @@ class VibrationalAnalysisTest(unittest.TestCase):
         self.vibrational_analysis = VibrationalAnalysis(
             transitionstate = self.ts,
             directory = self.directory
+        )
+
+        self.reaction2 = Reaction("[CH3]+CC(F)(F)F_C+[CH2]C(F)(F)F")
+        self.reaction2.get_labeled_reaction()
+        self.ts2 = self.reaction2.ts["forward"][0]
+        log_file = os.path.join(
+            directory, "bin", "log-files", "[CH3]+CC(F)(F)F_C+[CH2]C(F)(F)F.log")
+        self.vibrational_analysis2 = VibrationalAnalysis(
+            transitionstate = self.ts2,
+            log_file = log_file
         )
 
     def test_get_log_file(self):
@@ -118,6 +130,12 @@ class VibrationalAnalysisTest(unittest.TestCase):
 
     def test_validate_ts(self):
         self.assertTrue(self.vibrational_analysis.validate_ts())
+    
+    def test_validate_by_connecting_the_dots(self):
+        self.assertTrue(self.vibrational_analysis2.validate_by_connecting_the_dots())
+
+    def test_validate(self):
+        self.assertTrue(self.vibrational_analysis2.validate())
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
