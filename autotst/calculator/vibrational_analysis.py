@@ -278,12 +278,13 @@ class VibrationalAnalysis():
         try:
             self.parser.vibfreqs
         except AttributeError:
-            logging.warning(f"{self.ts} has no vibrational frequencies. Vibrational analysis FAILED")
+            logging.error(
+                f"{self.ts} has no vibrational frequencies. Vibrational analysis FAILED")
             return False
 
         freq = self.parser.vibfreqs[0]
         if freq > 0:
-            logging.warning(
+            logging.error(
                 f"{self.ts} does not have a negative frequency. Vibrational analysis FAILED")
             return False
 
