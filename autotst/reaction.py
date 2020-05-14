@@ -113,7 +113,8 @@ class Reaction():
                     direction=direction,
                     rmg_molecule=complex,
                     reaction_family=self.reaction_family,
-                    distance_data=self.distance_data
+                    distance_data=self.distance_data,
+                    action=self.possible_actions[self.reaction_family][direction]
                 )
                 ts_dict[direction] = [ts]
 
@@ -204,6 +205,17 @@ class Reaction():
             )
 
         self.rmg_database = rmg_database
+
+        actions = {}
+        for possible_family in self.possible_families:
+            actions[possible_family] = {}
+            action = self.rmg_database.kinetics.families[possible_family].forward_recipe.actions
+            actions[possible_family]['forward'] = action
+
+            action = self.rmg_database.kinetics.families[possible_family].reverse_recipe.actions
+            actions[possible_family]['reverse'] = action
+
+        self.possible_actions = actions
 
         self.ts_databases = dict()
         for reaction_family in self.possible_families:
@@ -588,6 +600,7 @@ class TS(Conformer):
             rmg_molecule=None,
             reaction_family="H_Abstraction",
             distance_data=None,
+            action=[],
             index=0):
 
         self.energy = None
@@ -597,6 +610,7 @@ class TS(Conformer):
         self.distance_data = distance_data
         self.index = index
         self.bm = None
+        self.action = action
 
         assert direction in ["forward",
                              "reverse"], "Please provide a valid direction"
@@ -686,24 +700,13 @@ class TS(Conformer):
 
             rd_copy = rdkit.Chem.RWMol(self.rdkit_molecule.__copy__())
 
-            lbl1, lbl2, lbl3 = self.labels
-            if self.reaction_family.lower() in ['h_abstraction', 'r_addition_multiplebond', 'disproportionation']:
-                # We draw a psuedo bond between *1-*2 and *2-*3
-                if not rd_copy.GetBondBetweenAtoms(lbl1, lbl2):
-                    rd_copy.AddBond(lbl1, lbl2,
-                                    order=rdkit.Chem.rdchem.BondType.SINGLE)
-                elif not rd_copy.GetBondBetweenAtoms(lbl2, lbl3):
-                    rd_copy.AddBond(lbl2, lbl3,
-                                    order=rdkit.Chem.rdchem.BondType.SINGLE)
-            elif self.reaction_family.lower() == 'intra_h_migration':
-                # We draw a pseudo bond between *1-*3 and *3-*2 
-                if not rd_copy.GetBondBetweenAtoms(lbl1, lbl3):
-                    rd_copy.AddBond(lbl1, lbl3,
-                                    order=rdkit.Chem.rdchem.BondType.SINGLE)
-                elif not rd_copy.GetBondBetweenAtoms(lbl2, lbl3):
-                    rd_copy.AddBond(lbl2, lbl3,
-                                    order=rdkit.Chem.rdchem.BondType.SINGLE)
-            
+            for a in self.action:
+                if 'BOND' in a[0]:
+                    _, label1, _, label2 = a
+                    sorting_label_1 = self.rmg_molecule.get_labeled_atoms(label1)[0].sorting_label
+                    sorting_label_2 = self.rmg_molecule.get_labeled_atoms(label2)[0].sorting_label
+                    if not rd_copy.GetBondBetweenAtoms(sorting_label_1, sorting_label_2):
+                        rd_copy.AddBond(sorting_label_1, sorting_label_2, order=rdkit.Chem.rdchem.BondType.SINGLE)
 
             self._pseudo_geometry = rd_copy
 
@@ -952,17 +955,14 @@ class TS(Conformer):
             length = self.ase_molecule.get_distance(i, j)
             center = False
 
-            supported_labels = []
-            if self.reaction_family.lower() in [
-                'h_abstraction',
-                'r_addition_multiplebond',
-                'intra_h_migration']:
-                supported_labels = ['*1', '*2', '*3']
-            elif self.reaction_family.lower() in ['disproportionation']:
-                supported_labels = ['*1', '*2', '*4']
-            
-            if (self.rmg_molecule.atoms[i].label in supported_labels) and (self.rmg_molecule.atoms[j].label in supported_labels):
-                center = True
+            if self.rmg_molecule.atoms[i].label != '' and self.rmg_molecule.atoms[j].label != '':
+                for a in self.action:
+                    if not 'BOND' in a[0]:
+                        # Not a bond action
+                        continue
+                    elif self.rmg_molecule.atoms[i].label in a and self.rmg_molecule.atoms[j].label in a:
+                        # Both atom labels are participating in a bond being formed or breaking
+                        center = True
 
             bond = Bond(index=index,
                         atom_indices=indices,
