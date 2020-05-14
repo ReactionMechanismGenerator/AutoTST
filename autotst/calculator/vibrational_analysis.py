@@ -291,19 +291,40 @@ class VibrationalAnalysis():
         rxn_label_complexes = self._get_complexes_from_rxn_label()
 
         def make_complexes(coeff):
+            """
+            make the reactant and product complexes from the vibrational displacements
+            for the negative frequency.
+
+            coeff ([int,float]) : coefficient used to scale displacements
+            """
 
             complex1 = rmgpy.molecule.Molecule()
-            complex1.from_xyz(
-                self.parser.atomnos,
-                self.parser.atomcoords[-1] + coeff*self.parser.vibdisps[0],
-                raise_atomtype_exception=False,
-            )
             complex2 = rmgpy.molecule.Molecule()
-            complex2.from_xyz(
-                self.parser.atomnos,
-                self.parser.atomcoords[-1] - coeff*self.parser.vibdisps[0],
-                raise_atomtype_exception=False
-            )
+
+            # Currently (5/13/2020) rmgpy binary does not have
+            # `raise_atomtype_exception` as a keyword for `from_xyz`
+            # Therefore, we will try to set it `False`
+            # If that fails, don't set that keyword
+            try:
+                complex1.from_xyz(
+                    self.parser.atomnos,
+                    self.parser.atomcoords[-1] + coeff*self.parser.vibdisps[0],
+                    raise_atomtype_exception=False,
+                )
+                complex2.from_xyz(
+                    self.parser.atomnos,
+                    self.parser.atomcoords[-1] - coeff*self.parser.vibdisps[0],
+                    raise_atomtype_exception=False
+                )
+            except:
+                complex1.from_xyz(
+                    self.parser.atomnos,
+                    self.parser.atomcoords[-1] + coeff*self.parser.vibdisps[0],
+                )
+                complex2.from_xyz(
+                    self.parser.atomnos,
+                    self.parser.atomcoords[-1] - coeff*self.parser.vibdisps[0],
+                )
 
             for c in (complex1, complex2):
                 c.update_connectivity_values()
