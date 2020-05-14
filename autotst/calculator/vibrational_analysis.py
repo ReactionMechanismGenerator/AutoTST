@@ -58,7 +58,8 @@ class VibrationalAnalysis():
         """
         Variables:
         - ts (TS): A TS object that you want to run vibratinal analysis on
-        - scratch (str): the directory where log files of the TS are located
+        - directory (str): the directory where log files of the TS are located
+        - log_file (str): path to the TS log file
         """
         self.ts = transitionstate
         self.ts.get_geometries()
@@ -68,10 +69,11 @@ class VibrationalAnalysis():
         
         if self.log_file is None:
             self.get_log_file()
-
-        assert os.path.exists(self.log_file), "Log file provided does not exist"
         
-        self.parser = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
+        try:
+            self.parser = cclib.io.ccread(self.log_file, loglevel=logging.ERROR)
+        except:
+            self.parser = None
 
     def __repr__(self):
         if self.ts is None:
