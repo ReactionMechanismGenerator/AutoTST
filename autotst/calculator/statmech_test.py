@@ -61,7 +61,9 @@ class TestStatMech(unittest.TestCase):
 
         self.statmech = StatMech(
             reaction = self.reaction,
-            directory = directory
+            ts_directory = os.path.join(directory, "ts"),
+            species_directory = os.path.join(directory,"species"),
+            choose_exothermic_direction = True,
         )
 
     def tearDown(self):
@@ -86,8 +88,7 @@ class TestStatMech(unittest.TestCase):
 
         self.assertTrue(
             os.path.exists(os.path.join(
-                self.statmech.directory,
-                "species",
+                self.statmech.species_directory,
                 conformer.smiles,
                 conformer.smiles + ".py"
             ))
@@ -102,29 +103,26 @@ class TestStatMech(unittest.TestCase):
         for smiles in species.conformers.keys():
             self.assertTrue(
                 os.path.exists(os.path.join(
-                    self.statmech.directory,
-                    "species",
+                    self.statmech.species_directory,
                     smiles,
                     smiles + ".py"
                 ))
             )
     def test_write_ts_input(self):
         ts = self.reaction.ts["forward"][0]
-        self.assertTrue(self.statmech.write_ts_input(ts))
+        self.assertTrue(self.statmech.write_ts_input())
         self.assertTrue(os.path.exists(os.path.join(
-            self.statmech.directory,
-            "ts",
+            self.statmech.ts_directory,
             self.reaction.label,
             self.reaction.label + ".py"
         )))
-        self.assertTrue(self.statmech.write_ts_input(ts))
+        self.assertTrue(self.statmech.write_ts_input())
 
     def test_write_kinetics_input(self):
         self.statmech.write_kinetics_input()
 
         self.assertTrue(os.path.exists(os.path.join(
-            self.statmech.directory,
-            "ts",
+            self.statmech.ts_directory,
             self.reaction.label,
             self.reaction.label + ".kinetics.py"
         )))
@@ -136,20 +134,17 @@ class TestStatMech(unittest.TestCase):
             for confs in list(mol.conformers.values()):
                 conf = confs[0]
                 self.assertTrue(os.path.exists(os.path.join(
-                    self.statmech.directory,
-                    "species", 
+                    self.statmech.species_directory,
                     conf.smiles,
                     conf.smiles + ".py"
                 )))
         self.assertTrue(os.path.exists(os.path.join(
-            self.statmech.directory,
-            "ts",
+            self.statmech.ts_directory,
             self.reaction.label,
             self.reaction.label + ".py"
         )))
         self.assertTrue(os.path.exists(os.path.join(
-            self.statmech.directory,
-            "ts",
+            self.statmech.ts_directory,
             self.reaction.label,
             self.reaction.label + ".kinetics.py"
         )))
