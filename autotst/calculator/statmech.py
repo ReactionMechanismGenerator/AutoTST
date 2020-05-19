@@ -38,6 +38,7 @@ from ..species import Species, Conformer
 
 import rmgpy
 import arkane.main
+from arkane.ess import GaussianLog
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -48,6 +49,15 @@ class StatMech():
     def __init__(
             self,
             reaction = None,
+            direction = "forward",
+            choose_exothermic_direction = True,
+            species_directory = "./species",
+            ts_directory = "./ts",
+            model_chemistry= "M06-2X/cc-pVTZ",
+            atom_corrections = False,
+            bond_corrections = False,
+            hindered_rotors = False,
+            freq_scale_factor= 0.982):
         """
         A class to perform Arkane calculations:
         :param: reaction: (Reaction) The reaction of interest
@@ -65,10 +75,120 @@ class StatMech():
                 "reaction provided must be class :str: or class :autotst.reaction.Reaction:, not "
                 f"{type(reaction)}")
 
+        assert direction.lower() in ("forward","reverse")
+        self.direction = direction.lower()
+        self.choose_exothermic_direction = choose_exothermic_direction
+        self.species_directory = species_directory
+        self.ts_directory = ts_directory
+        
         self.kinetics_job = arkane.main.Arkane()
         self.thermo_job = arkane.main.Arkane()
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
+
+        self.atom_corrections = atom_corrections
+        self.bond_corrections = bond_corrections
+        self.hindered_rotors = hindered_rotors
+
+        self.reactants = {}
+        self.products = {}
+        self.ts = {}
+
+        self.energies = [0.0,0.0,0.0]
+        if self.choose_exothermic_direction is True:
+            self._calculate_wells()
+            self.direction  = self._determine_exothermic_direction()
+
+    def _calculate_e0(self,path):
+
+        if not os.path.exists(path):
+            logging.warning(
+                f"{path} does not exists...cannot calculate energy")
+            return None
+
+        parser = GaussianLog(path)
+        e_elect = parser.load_energy()
+        try:
+            e_zpe = parser.load_zero_point_energy()
+        except:
+            e_zpe = 0
+        E0 = (e_elect + e_zpe) * 1000.0 # kJ/mol
+
+        return E0
+
+    def _calculate_wells(self):
+
+
+        # Determine energy of reactants
+        for react in self.reaction.reactants:
+            lowest_energy = 1e5
+            for smiles in list(react.conformers.keys()):
+                path = os.path.join(self.species_directory,
+                                    smiles, smiles + ".log")
+                e0 = self._calculate_e0(self, path)
+                if e0 is None:
+                    continue
+
+                if e0 < lowest_energy:
+                    lowest_energy = e0
+                    lowest_energy_smiles = smiles
+                    lowest_energy_path = path
+
+            self.energies[0] += lowest_energy
+            self.reactants[lowest_energy_smiles] = (lowest_energy_path, lowest_energy)
+
+        # Determine energy of TS
+        label = self.reaction.label
+        path = os.path.join(self.ts_directory, label, label + ".log")
+        e0 = self._calculate_e0(self, path)
+        self.energies[1] = e0
+        self.ts[label] = (path, e0)
+        
+        # Determine energy of products
+        for prod in self.reaction.products:
+            lowest_energy = 1e5
+            for smiles in list(prod.conformers.keys()):
+                path = os.path.join(self.species_directory,
+                                    smiles, smiles + ".log")
+                e0 = self._calculate_e0(self, path)
+                if e0 is None:
+                    continue
+
+                if e0 < lowest_energy:
+                    lowest_energy = e0
+                    lowest_energy_smiles = smiles
+                    lowest_energy_path = path
+
+            self.energies[2] += lowest_energy
+            self.products[lowest_energy_smiles] = (lowest_energy_path, lowest_energy)
+
+        logging.info(f"The energies of the reactants, ts, and products (in kJ/mol) are {self.energies}")
+        e_reacts, e_ts, e_prods = self.energies
+
+        if e_ts <= min(e_reacts,e_prods):
+            logging.warning("NEGATIVE BARRIER HEIGHT: "
+                            f"The transition state energy ({round(e_ts,3)} kJ/mol) is less than the "
+                            f"energies of the reactants ({round(e_reacts,3)} kJ/mol) "
+                            f"and the products ({round(e_prods,3)} kJ/mol)")
+        
+        return self.energies
+
+    def _determine_exothermic_direction(self):
+
+        if all([e == 0.0 for e in self.energies]):
+            self._calculate_wells()
+        
+        e_reacts, e_ts, e_prods = self.energies
+        
+        if e_reacts > e_prods:
+            logging.info(f"The products are lower in energy by {round(e_reacts-e_prods,3)} kJ/mol")
+            logging.info("The forward direction is exothermic")
+            return "forward"
+        else:
+            logging.info(f"The reactants are lower in energy by {round(e_prods-e_reacts,3)} kJ/mol")
+            logging.info("The reverse direction is exothermic")
+            return "reverse"
+
 
     def write_species_files(self, species):
         """
@@ -83,7 +203,7 @@ class StatMech():
         """
 
         for smiles, confs in list(species.conformers.items()):
-            if os.path.exists(os.path.join(self.directory, "species", smiles, smiles + ".log")):
+            if os.path.exists(os.path.join(self.species_directory, smiles, smiles + ".log")):
                 logging.info(
                     f"Lowest energy conformer log file exists for {smiles}")
                 self.write_conformer_file(conformer=confs[0])
@@ -104,16 +224,17 @@ class StatMech():
         """
         label = conformer.smiles
 
-        if not os.path.exists(os.path.join(self.directory, "species", label, label + ".log")):
+        if not os.path.exists(os.path.join(self.species_directory, label, label + ".log")):
             logging.info("There is no lowest energy conformer file...")
             return False
 
-        if os.path.exists(os.path.join(self.directory, "species", label, label + '.py')):
+        if os.path.exists(os.path.join(self.species_directory, label, label + '.py')):
             logging.info("Species input file already written... Not doing anything")
             return True
 
         parser = cclib.io.ccread(os.path.join(
-            self.directory, "species", label, label + ".log"), loglevel=logging.ERROR)
+            self.species_directory, label, label + ".log"), loglevel=logging.ERROR)
+        
         symbol_dict = {
             35: "Br",
             17: "Cl",
@@ -136,7 +257,7 @@ class StatMech():
                   '# -*- coding: utf-8 -*-', ]
 
         output += ["",
-                   f"spinMultiplicity = {conformer.rmg_molecule.multiplicity}",
+                   f"spinMultiplicity = {parser.mult}",
                    ""]
 
         output += ["energy = {", f"    '{self.model_chemistry}': Log('{label}.log'),", "}", ""]  # fix this
@@ -158,7 +279,7 @@ class StatMech():
         for t in output:
             input_string += t + "\n"
 
-        with open(os.path.join(self.directory, "species", label, label + '.py'), "w") as f:
+        with open(os.path.join(self.species_directory, label, label + '.py'), "w") as f:
             f.write(input_string)
         return True
 
@@ -219,7 +340,7 @@ class StatMech():
 
         return info
 
-    def write_ts_input(self, transitionstate):
+    def write_ts_input(self):
         """
         A method to write Arkane files for a single TS object
 
@@ -231,18 +352,20 @@ class StatMech():
         - None
         """
 
-        label = transitionstate.reaction_label
+        label = self.reaction.label
 
-        if os.path.exists(os.path.join(self.directory, "ts", label, label + '.py')):
+        if os.path.exists(os.path.join(self.ts_directory, label, label + '.py')):
             logging.info("TS input file already written... Not doing anything")
             return True
 
-        if not os.path.exists(os.path.join(self.directory, "ts", label, label + ".log")):
+        if not os.path.exists(os.path.join(self.ts_directory, label, label + ".log")):
             logging.info("There is no lowest energy conformer file...")
             return False
 
-        parser = cclib.io.ccread(os.path.join(self.directory, "ts", label, label + ".log"), loglevel=logging.ERROR)
+        parser = cclib.io.ccread(os.path.join(self.ts_directory, label, label + ".log"), loglevel=logging.ERROR)
+        
         symbol_dict = {
+            35: "Br",
             17: "Cl",
             9:  "F",
             8:  "O",
@@ -251,20 +374,22 @@ class StatMech():
             1:  "H",
         }
 
-        atoms = []
-        for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
-            atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
 
-        transitionstate._ase_molecule = ase.Atoms(atoms)
-        transitionstate.update_coords_from("ase")
+        # atoms = []
+        # for atom_num, coords in zip(parser.atomnos, parser.atomcoords[-1]):
+        #     atoms.append(ase.Atom(symbol=symbol_dict[atom_num], position=coords))
+
+        # transitionstate = self.reaction.ts["forward"][0]
+        # transitionstate._ase_molecule = ase.Atoms(atoms)
+        # transitionstate.update_coords_from("ase")
 
         output = ['#!/usr/bin/env python',
                   '# -*- coding: utf-8 -*-']
 
-        transitionstate.rmg_molecule.update_multiplicity()
+        # transitionstate.rmg_molecule.update_multiplicity()
 
         output += ["",
-                   f"spinMultiplicity = {transitionstate.rmg_molecule.multiplicity}",
+                   f"spinMultiplicity = {parser.mult}",
                    ""]
 
         output += ["energy = {", f"    '{self.model_chemistry}': Log('{label}.log'),", "}", ""]  # fix this
@@ -273,15 +398,16 @@ class StatMech():
 
         output += [
             f"frequencies = Log('{label}.log')", ""]
-
-        output += ["rotors = []", ""]  # TODO: Fix this
+        
+        if self.hindered_rotors is True:
+            output += ["rotors = []", ""]  # TODO: Fix this
 
         input_string = ""
 
         for t in output:
             input_string += t + "\n"
 
-        with open(os.path.join(self.directory, "ts", label, label + '.py'), "w") as f:
+        with open(os.path.join(self.ts_directory, label, label + '.py'), "w") as f:
             f.write(input_string)
         return True
 
@@ -303,108 +429,48 @@ class StatMech():
             "",
             f'modelChemistry = "{self.model_chemistry}"',  # fix this
             f"frequencyScaleFactor = {self.freq_scale_factor}",  # fix this
-            "useHinderedRotors = False",  # fix this @carl
-            "useBondCorrections = False",
+            f"useAtomCorrections = {self.atom_corrections}"
+            f"useHinderedRotors = {self.hindered_rotors}",  # fix this @carl
+            f"useBondCorrections = {self.bond_corrections}",
             ""]
 
-        labels = []
-        r_smiles = []
-        p_smiles = []
-        for i, react in enumerate(self.reaction.reactants):
-            lowest_energy = 1e5
-            lowest_energy_conf = None
-
-            if len(list(react.conformers.keys())) > 1:
-                for smiles in list(react.conformers.keys()):
-                    path = os.path.join(self.directory, "species",
-                                        smiles, smiles + ".log")
-                    if not os.path.exists(path):
-                        logging.info(
-                            f"It looks like {smiles} doesn't have any optimized geometries")
-                        continue
-
-                    parser = cclib.io.ccread(path, loglevel=logging.ERROR)
-                    energy = parser.scfenergies[-1]
-                    if energy < lowest_energy:
-                        lowest_energy = energy
-                        lowest_energy_conf = react.conformers[smiles][0]
-
-            else:
-                smiles = list(react.conformers.keys())[0]
-                path = os.path.join(self.directory, "species",
-                                    smiles, smiles + ".log")
-                if not os.path.exists(path):
-                    logging.info(
-                        f"It looks like {smiles} doesn't have any optimized geometries")
-                    continue
-
-                parser = cclib.io.ccread(path, loglevel=logging.ERROR)
-                lowest_energy = parser.scfenergies[-1]
-                lowest_energy_conf = list(react.conformers.values())[0][0]
-
-            # r_smiles.append(lowest_energy_conf.smiles)
-            r_smiles.append(f"react_{i}")
-            label = lowest_energy_conf.smiles
-            if label in labels:
-                continue
-            else:
-                labels.append(label)
-            p = os.path.join(self.directory, "species", label, label + ".py")
-            line = f"species('react_{i}', '{p}', structure=SMILES('{label}'))"
-            top.append(line)
-
-        for i, prod in enumerate(self.reaction.products):
-
-            lowest_energy = 1e5
-            lowest_energy_conf = None
-
-            if len(list(prod.conformers.keys())) > 1:
-                for smiles in list(prod.conformers.keys()):
-                    path = os.path.join(self.directory, "species",
-                                        smiles, smiles + ".log")
-                    if not os.path.exists(path):
-                        logging.info(
-                            f"It looks like {smiles} doesn't have any optimized geometries")
-                        continue
-
-                    parser = cclib.io.ccread(path, loglevel=logging.ERROR)
-                    energy = parser.scfenergies[-1]
-                    if energy < lowest_energy:
-                        lowest_energy = energy
-                        lowest_energy_conf = prod.conformers[smiles][0]
-
-            else:
-                smiles = list(prod.conformers.keys())[0]
-                path = os.path.join(self.directory, "species",
-                                    smiles, smiles + ".log")
-                if not os.path.exists(path):
-                    logging.info(
-                        f"It looks like {smiles} doesn't have any optimized geometries")
-                    continue
-
-                parser = cclib.io.ccread(path, loglevel=logging.ERROR)
-                lowest_energy = parser.scfenergies[-1]
-                lowest_energy_conf = list(prod.conformers.values())[0][0]
-
-            # p_smiles.append(lowest_energy_conf.smiles)
-            p_smiles.append(f"prod_{i}")
-            label = lowest_energy_conf.smiles
-            if label in labels:
-                continue
-            else:
-                labels.append(label)
-            p = os.path.join(self.directory, "species", label, label + ".py")
-            line = f"species('prod_{i}', '{p}', structure=SMILES('{label}'))"
-            top.append(line)
-        p = os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".py")
-        line = f"transitionState('TS', '{p}')"
+        if len(self.reactants) == 0:
+            self._calculate_wells()
+        
+        r_labels = []
+        p_lables = []
+        if self.direction == "forward":
+            for i, (smiles, (path, energy)) in enumerate(self.reactants.items()):
+                label = f"react_{i}"
+                line = f"species('{label}', '{path}', structure=SMILES('{smiles}'))"
+                top.append(line)
+                r_labels.append(label)
+            for i, (smiles, (path, energy)) in enumerate(self.products.items()):
+                label = f"prod_{i}"
+                line = f"species('{label}', '{path}', structure=SMILES('{smiles}'))"
+                top.append(line)
+                p_labels.append(label)
+        else: # direction == 'reverse'
+            for i, (smiles, (path, energy)) in enumerate(self.products.items()):
+                label = f"react_{i}"
+                line = f"species('{label}', '{path}', structure=SMILES('{smiles}'))"
+                top.append(line)
+                r_labels.append(label)
+            for i, (smiles, (path, energy)) in enumerate(self.reactants.items()):
+                label = f"prod_{i}"
+                line = f"species('{label}', '{path}', structure=SMILES('{smiles}'))"
+                top.append(line)
+                p_labels.append(label)
+    
+        ts_path = os.path.join(self.ts_directory, self.reaction.label, self.reaction.label + ".py")
+        line = f"transitionState('TS', '{ts_path}')"
         top.append(line)
 
         line = ["",
                 "reaction(",
                 f"    label = '{self.reaction.label}',",
-                f"    reactants = {r_smiles},",
-                f"    products = {p_smiles},",
+                f"    reactants = {r_labels},",
+                f"    products = {p_labels},",
                 "    transitionState = 'TS',",
                 "    tunneling = 'Eckart',",
                 ")",
@@ -419,7 +485,7 @@ class StatMech():
         for t in top:
             input_string += t + "\n"
 
-        with open(os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py"), "w") as f:
+        with open(os.path.join(self.ts_directory, self.reaction.label, self.reaction.label + ".kinetics.py"), "w") as f:
             f.write(input_string)
 
     def write_thermo_input(self, conformer):
@@ -458,7 +524,7 @@ class StatMech():
         for t in top:
             input_string += t + "\n"
 
-        with open(os.path.join(self.directory, "species", conformer.smiles, conformer.smiles + ".thermo.py"), "w") as f:
+        with open(os.path.join(self.species_directory, conformer.smiles, conformer.smiles + ".thermo.py"), "w") as f:
             f.write(input_string)
 
     def write_files(self):
@@ -472,14 +538,10 @@ class StatMech():
         - None
         """
 
-        for mol in self.reaction.reactants:
-            for smiles, confs in list(mol.conformers.items()):
+        for mol in self.reaction.reactants + self.reaction.products:
+            for smiles, confs in mol.conformers.items:
                 conf = confs[0]
-                self.write_conformer_file(conf)
-
-        for mol in self.reaction.products:
-            for smiles, confs in list(mol.conformers.items()):
-                conf = confs[0]
+                self.species[smiles] = conf
                 self.write_conformer_file(conf)
 
         self.write_ts_input(
@@ -499,9 +561,9 @@ class StatMech():
         """
 
         self.kinetics_job.input_file = os.path.join(
-            self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
+            self.ts_directory, self.reaction.label, self.reaction.label + ".kinetics.py")
         self.kinetics_job.plot = False
-        self.kinetics_job.output_directory = os.path.join(self.directory, "ts", self.reaction.label)
+        self.kinetics_job.output_directory = os.path.join(self.ts_directory, self.reaction.label)
 
         self.kinetics_job.execute()
 
