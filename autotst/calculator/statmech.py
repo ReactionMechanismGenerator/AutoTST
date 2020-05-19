@@ -47,10 +47,7 @@ class StatMech():
 
     def __init__(
             self,
-            reaction,
-            directory=".",
-            model_chemistry="M06-2X/cc-pVTZ",
-            freq_scale_factor=0.982):
+            reaction = None,
         """
         A class to perform Arkane calculations:
         :param: reaction: (Reaction) The reaction of interest
@@ -59,8 +56,14 @@ class StatMech():
         :param: freq_scale_factor: (float) The scaling factor corresponding to the model chemistry - source:https://comp.chem.umn.edu/freqscale/version3b1.htm
         """
 
-        self.reaction = reaction
-        self.directory = directory
+        if isinstance(reaction,str):
+            self.reaction = Reaction(reaction)
+        elif isinstance(reaction, Reaction):
+            self.reaction = reaction
+        else:
+            raise TypeError(
+                "reaction provided must be class :str: or class :autotst.reaction.Reaction:, not "
+                f"{type(reaction)}")
 
         self.kinetics_job = arkane.main.Arkane()
         self.thermo_job = arkane.main.Arkane()
