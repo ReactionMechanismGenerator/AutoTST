@@ -112,7 +112,7 @@ class StatMech():
             e_zpe = parser.load_zero_point_energy()
         except:
             e_zpe = 0
-        E0 = (e_elect + e_zpe) * 1000.0 # kJ/mol
+        E0 = (e_elect + e_zpe) / 1000.0 # kJ/mol
 
         return E0
 
@@ -125,7 +125,7 @@ class StatMech():
             for smiles in list(react.conformers.keys()):
                 path = os.path.join(self.species_directory,
                                     smiles, smiles + ".log")
-                e0 = self._calculate_e0(self, path)
+                e0 = self._calculate_e0(path)
                 if e0 is None:
                     continue
 
@@ -140,7 +140,7 @@ class StatMech():
         # Determine energy of TS
         label = self.reaction.label
         path = os.path.join(self.ts_directory, label, label + ".log")
-        e0 = self._calculate_e0(self, path)
+        e0 = self._calculate_e0(path)
         self.energies[1] = e0
         self.ts[label] = (path, e0)
         
@@ -150,7 +150,7 @@ class StatMech():
             for smiles in list(prod.conformers.keys()):
                 path = os.path.join(self.species_directory,
                                     smiles, smiles + ".log")
-                e0 = self._calculate_e0(self, path)
+                e0 = self._calculate_e0(path)
                 if e0 is None:
                     continue
 
@@ -438,7 +438,7 @@ class StatMech():
             self._calculate_wells()
         
         r_labels = []
-        p_lables = []
+        p_labels = []
         if self.direction == "forward":
             for i, (smiles, (path, energy)) in enumerate(self.reactants.items()):
                 label = f"react_{i}"
@@ -539,13 +539,11 @@ class StatMech():
         """
 
         for mol in self.reaction.reactants + self.reaction.products:
-            for smiles, confs in mol.conformers.items:
+            for smiles, confs in mol.conformers.items():
                 conf = confs[0]
-                self.species[smiles] = conf
                 self.write_conformer_file(conf)
 
-        self.write_ts_input(
-            self.reaction.ts["forward"][0])
+        self.write_ts_input()
 
         self.write_kinetics_input()
 
