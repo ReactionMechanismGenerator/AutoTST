@@ -32,6 +32,7 @@ import os
 import logging
 import ase
 import cclib.io
+from typing import List, Set, Dict, Tuple, Optional, Callable, Iterator, Union
 
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
@@ -47,10 +48,10 @@ class StatMech():
 
     def __init__(
             self,
-            reaction,
-            directory=".",
-            model_chemistry="M06-2X/cc-pVTZ",
-            freq_scale_factor=0.982):
+            reaction: Reaction,
+            directory: str = ".",
+            model_chemistry: str = "M06-2X/cc-pVTZ",
+            freq_scale_factor:float = 0.982):
         """
         A class to perform Arkane calculations:
         :param: reaction: (Reaction) The reaction of interest
@@ -67,7 +68,7 @@ class StatMech():
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
 
-    def write_species_files(self, species):
+    def write_species_files(self, species:Species):
         """
         A method to write Arkane files for all conformers in a Species object
 
@@ -88,7 +89,7 @@ class StatMech():
                 logging.info(
                     f"Lowest energy conformer log file DOES NOT exist for {smiles}")
 
-    def write_conformer_file(self, conformer):
+    def write_conformer_file(self, conformer: Conformer)->bool:
         """
         A method to write Arkane files for a single Conformer object
 
@@ -97,7 +98,7 @@ class StatMech():
         - scratch (str): the directory where you want to write arkane files to, there should be a 'species/SMILES/' subdirectory
 
         Returns:
-        - None
+        - True
         """
         label = conformer.smiles
 
@@ -159,7 +160,7 @@ class StatMech():
             f.write(input_string)
         return True
 
-    def get_rotor_info(self, conformer, torsion_index):
+    def get_rotor_info(self, conformer:Conformer, torsion_index: int)->str:
         """
         Formats and returns info about torsion as it should appear in an Arkane species.py
 
@@ -170,7 +171,7 @@ class StatMech():
 
         Parameters:
         - conformer (Conformer): autotst conformer object
-        - torsion (Torsion): autotst torsion object 
+        - torsion_index : index of the torsion 
 
 
         Returns:
@@ -216,7 +217,7 @@ class StatMech():
 
         return info
 
-    def write_ts_input(self, transitionstate):
+    def write_ts_input(self, transitionstate:TS)->bool:
         """
         A method to write Arkane files for a single TS object
 
@@ -225,7 +226,7 @@ class StatMech():
         - scratch (str): the directory where you want to write arkane files to, there should be a 'ts/REACTION_LABEL/' subdirectory
 
         Returns:
-        - None
+        - boolean
         """
 
         label = transitionstate.reaction_label
@@ -419,7 +420,7 @@ class StatMech():
         with open(os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py"), "w") as f:
             f.write(input_string)
 
-    def write_thermo_input(self, conformer):
+    def write_thermo_input(self, conformer:Conformer):
         """
         A method to write Arkane file to obtain thermochemistry for a Conformer object
 

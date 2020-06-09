@@ -34,15 +34,18 @@ import pandas as pd
 import numpy as np
 import ase
 import cclib.io 
+from typing import List, Set, Dict, Tuple, Optional, Callable, Iterator, Union
+
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
+
 import rmgpy
 import rmgpy.molecule
 
 
-def percent_change(original, new):
+def percent_change(original: Union[int, float], new: Union[int, float])-> float:
     "A function to calculate the percent change between two values"
-    percent_change = (abs(new - original) / original) * 100
+    percent_change = (abs(new - original) / original) * 100.
     return percent_change
 
 
@@ -54,12 +57,14 @@ class VibrationalAnalysis():
     displacement from the imaginary frequency.
     """
 
-    def __init__(self, transitionstate=None, directory=".", log_file=None):
+    def __init__(self, transitionstate:TS, 
+                directory:str = ".", 
+                log_file: Optional[str] = None):
         """
         Variables:
         - ts (TS): A TS object that you want to run vibratinal analysis on
         - directory (str): the directory where log files of the TS are located
-        - log_file (str): path to the TS log file
+        - log_file (optional, str): path to the TS log file
         """
         self.ts = transitionstate
         self.ts.get_geometries()
@@ -82,7 +87,7 @@ class VibrationalAnalysis():
             label = self.ts.reaction_label
         return f'<Vibrational Analysis "{label}">'
 
-    def get_log_file(self):
+    def get_log_file(self)->str:
         """
         This method obtains the logfile name from the TS
 
@@ -101,7 +106,7 @@ class VibrationalAnalysis():
             f"{self.ts.reaction_label}_{self.ts.direction}_{self.ts.index}.log")
         return self.log_file
 
-    def parse_vibrations(self):
+    def parse_vibrations(self)->List[float]:
         """
         This method obtains the vibrations from the log file of interest using
         cclib. It then creates a zipped list with the vibrational frequencies
@@ -123,7 +128,7 @@ class VibrationalAnalysis():
         
         return self.vibrations
 
-    def obtain_geometries(self):
+    def obtain_geometries(self)->Tuple[ase.Atoms, ase.Atoms]:
         """
         This method obtains the previbrational geometry (the geometry returned
         by a quantum optimizer), and the postvibrational geometry.
@@ -166,7 +171,7 @@ class VibrationalAnalysis():
 
         return self.pre_geometry, self.post_geometry
 
-    def obtain_percent_changes(self):
+    def obtain_percent_changes(self)->pandas.DataFrame:
         """
         This method takes the connectivity of a TS and then uses
         that to identify the percent change of the bonds
@@ -217,7 +222,7 @@ class VibrationalAnalysis():
 
         return self.percent_changes
 
-    def validate_ts(self):
+    def validate_ts(self)->bool:
         """
         A method designed to run the above and return a bool that states if we
         have arrived at a TS. We say we have arrived at a TS if the average
@@ -269,7 +274,7 @@ class VibrationalAnalysis():
             logging.info("Cannot verify via vibrational analysis")
             return False
 
-    def _get_complexes_from_rxn_label(self):
+    def _get_complexes_from_rxn_label(self)->Tuple[rmgpy.molecule.Molecule, rmgpy.molecule.Molecule]:
         """
         Returns a tuple of rmgpy.molecule.Molecule objects of
         reactant and product complexes from the TS reaction label.
@@ -294,7 +299,7 @@ class VibrationalAnalysis():
         return complexes
 
 
-    def validate_by_connecting_the_dots(self):
+    def validate_by_connecting_the_dots(self)->bool:
         """
         Validates TS by:
         1) Creating 2 'freq' rmgpy.molecule complexes from negative frequency atom displacements
@@ -317,7 +322,7 @@ class VibrationalAnalysis():
 
         rxn_label_complexes = self._get_complexes_from_rxn_label()
 
-        def make_complexes(coeff):
+        def make_complexes(coeff:List[int, float]):
             """
             make the reactant and product complexes from the vibrational displacements
             for the negative frequency.

@@ -31,16 +31,17 @@
 import os, logging
 from ..species import Species, Conformer
 from ..reaction import Reaction, TS
+from typing import List, Set, Dict, Tuple, Optional, Callable, Iterator, Union
 
 class Orca():
     """
     A class for writing and reading Orca jobs.
     """
     def __init__(self,
-                conformer=None,
-                directory='.',
-                nprocs=4,
-                mem=5):
+                conformer:Conformer = None,
+                directory:str = '.',
+                nprocs: int = 4,
+                mem :str = '5'):
         
         self.command = 'orca'
         self.directory = directory
@@ -55,10 +56,11 @@ class Orca():
             self.conformer = None
 
         self.nprocs = int(nprocs)
-        self.mem = str(mem).upper()
+        self.mem = mem.upper()
         self.mem_per_proc = self.get_mem_per_proc()
         
-    def get_mem_per_proc(self,mem=None,nprocs=None):
+    def get_mem_per_proc(self,mem:Optional[Union[str, int]] = None,
+                         nprocs:Optional[Union[str, int]] = None) -> int :
         """
         A method to calculate the memory per processor (in MB) for an Orca calculation.
         Returns mem_per_proc (int)
@@ -69,16 +71,16 @@ class Orca():
         If not specified, self.nprocs will be used.
         """
 
-        # Use mem is specified, else use self.mem
+        # Use mem if specified, else use self.mem
         if mem is None:
-            assert self.mem is not None
+            assert self.mem is not None, f"Default memory should be specified, the current value is {self.mem}"
             mem = str(self.mem).upper()
         else:
             mem = str(mem).upper()
 
-        # Use nprocs is specified, else use self.nprocs
+        # Use nprocs if specified, else use self.nprocs
         if nprocs is None:
-            assert self.nprocs is not None
+            assert self.nprocs is not None, f"Default nprocs should be specified, the current value is {self.nprocs}"
             nprocs = int(self.nprocs)
         else:
             nprocs = int(nprocs)
@@ -134,7 +136,7 @@ class Orca():
             self.coords = None
 
 
-    def write_fod_input(self,directory=None):
+    def write_fod_input(self,directory:Optional[str] = None):
         """
         Generates input files to run finite temperaure DFT to determine the Fractional Occupation number weighted Density (FOD number).
         Uses the default functional, basis set, and SmearTemp (TPSS, def2-TZVP, 5000 K) in Orca.
@@ -168,7 +170,7 @@ class Orca():
             f.write(self.coords)
             f.write('*\n')
 
-    def check_normal_termination(self,path):
+    def check_normal_termination(self,path:str) -> bool:
         """
         checks if an Orca job terminated normally.
         Returns True is normal termination and False if something went wrong.
@@ -183,7 +185,7 @@ class Orca():
                 break
         return complete
         
-    def read_fod_log(self,path):
+    def read_fod_log(self,path: str) -> float:
         """
         Reads an FOD log to get the FOD number.
         Returns FOD number if log terminated normally and FOD number can be found.

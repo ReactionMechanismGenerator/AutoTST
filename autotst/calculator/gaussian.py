@@ -449,7 +449,7 @@ class Gaussian():
 
         return ase_gaussian
 
-    def verify_output_file(self, path:str)->Tuple([bool, bool]):
+    def verify_output_file(self, path:str)->Tuple[bool, bool]:
         """
         A method to verify output files and make sure that they successfully converged, if not, re-running them
 
