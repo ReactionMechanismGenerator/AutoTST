@@ -33,6 +33,7 @@ import itertools
 import logging
 import numpy as np
 import cclib.io
+from typing import Tuple, Union
 
 import autotst
 from ..reaction import Reaction, TS
@@ -49,16 +50,16 @@ import rmgpy.reaction
 class Gaussian():
 
     def __init__(self,
-                 conformer=None, # Either a transition state or a conformer
-                 settings={
+                 conformer: Conformer = None, # Either a transition state or a conformer
+                 settings: dict = {
                      "method": "m062x",
                      "basis": "cc-pVTZ",
                      "mem": "5GB",
                      "nprocshared": 24,
                  },
-                 convergence="",
-                 directory=".", #where you want input and log files to be written, default is current directory
-                 scratch=None  #where you want temporary files to be written
+                 convergence: str = "",
+                 directory:str =".", #where you want input and log files to be written, default is current directory
+                 scratch:str = None  #where you want temporary files to be written
                  ):
 
         default_settings = {
@@ -107,9 +108,9 @@ class Gaussian():
             return '<Gaussian Calculator>'
 
     def get_rotor_calc(self,
-                       torsion_index=0,
-                       steps=36,
-                       step_size=10.0):
+                       torsion_index:int = 0,
+                       steps:int = 36,
+                       step_size:float = 10.0) -> ase.calculators.gaussian.Gaussian:
         """
         A method to create all of the calculators needed to perform hindered rotor calculations given a `Conformer` and a `Torsion`.
 
@@ -182,7 +183,7 @@ class Gaussian():
         del ase_gaussian.parameters['force']
         return ase_gaussian
 
-    def get_conformer_calc(self):
+    def get_conformer_calc(self)->ase.calculators.gaussian.Gaussian:
         """
         A method that creates a calculator for a `Conformer` that will perform a geometry optimization
 
@@ -235,7 +236,7 @@ class Gaussian():
         del ase_gaussian.parameters['force']
         return ase_gaussian
 
-    def get_shell_calc(self):
+    def get_shell_calc(self)->ase.calculators.gaussian.Gaussian:
         """
         A method to create a calculator that optimizes the reaction shell of a `TS` object
 
@@ -297,7 +298,7 @@ class Gaussian():
 
         return ase_gaussian
 
-    def get_center_calc(self):
+    def get_center_calc(self)->ase.calculators.gaussian.Gaussian:
         """
         A method to create a calculator that optimizes the reaction center of a `TS` object
 
@@ -357,7 +358,7 @@ class Gaussian():
 
         return ase_gaussian
 
-    def get_overall_calc(self):
+    def get_overall_calc(self)->ase.calculators.gaussian.Gaussian:
         """
         A method to create a calculator that optimizes the overall geometry of a `TS` object
 
@@ -403,7 +404,7 @@ class Gaussian():
 
         return ase_gaussian
 
-    def get_irc_calc(self):
+    def get_irc_calc(self)->ase.calculators.gaussian.Gaussian:
         """
         A method to create a calculator that runs an IRC calculation the overall geometry of a `TS` object
 
@@ -448,7 +449,7 @@ class Gaussian():
 
         return ase_gaussian
 
-    def verify_output_file(self, path):
+    def verify_output_file(self, path:str)->Tuple([bool, bool]):
         """
         A method to verify output files and make sure that they successfully converged, if not, re-running them
 
@@ -470,7 +471,7 @@ class Gaussian():
 
         return verified
 
-    def validate_irc(self):
+    def validate_irc(self)->bool:
         """
         A method to verify an IRC calc
         """
