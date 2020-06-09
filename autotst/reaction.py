@@ -617,6 +617,13 @@ class TS(Conformer):
 
         self._rdkit_molecule = None
         self._ase_molecule = None
+        self._pseudo_geometry = None
+        self.bonds = []
+        self.angles = []
+        self.torsions = []
+        self.cistrans = []
+        self.chiral_centers = []
+        self._symmetry_number = None
 
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
@@ -639,15 +646,6 @@ class TS(Conformer):
         else:
             self.smiles = None
             self.rmg_molecule = None
-            self._rdkit_molecule = None
-            self._pseudo_geometry = None
-            self._ase_molecule = None
-            self.bonds = []
-            self.angles = []
-            self.torsions = []
-            self.cistrans = []
-            self.chiral_centers = []
-            self._symmetry_number = None
 
     def __repr__(self):
         return f'<TS "{self.smiles}">'
