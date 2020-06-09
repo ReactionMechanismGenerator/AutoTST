@@ -683,20 +683,16 @@ class TS(Conformer):
             self._ase_molecule = self.get_ase_mol()
         return self._ase_molecule
 
-    def get_rdkit_mol(self):
+    def get_pseudo_geometry(self):
         """
-        A method to create an rdkit geometry... slightly different than that of the conformer method
-        returns both the rdkit_molecule and the bm
+        A method to create a _pseduo_geometry. Essentailly an RDKit molecule with a fake bond drawn
+        between reacting atoms which are not bound to be used in other processes 
         """
-        self._rdkit_molecule = Conformer(rmg_molecule=self.rmg_molecule).get_rdkit_mol()
-
-        self.get_labels()
-        for i, atom in enumerate(self.rmg_molecule.atoms):
-            assert atom.number == self.rdkit_molecule.GetAtoms()[i].GetAtomicNum()
-
+        if self.labels is None:
+            self.get_labels()
         if len(self.labels) == 3:
 
-            rd_copy = rdkit.Chem.RWMol(self.rdkit_molecule.__copy__())
+            rd_copy = rdkit.Chem.RWMol(self._rdkit_molecule.__copy__())
 
             for a in self.action:
                 if 'BOND' in a[0]:
@@ -707,6 +703,23 @@ class TS(Conformer):
                         rd_copy.AddBond(sorting_label_1, sorting_label_2, order=rdkit.Chem.rdchem.BondType.SINGLE)
 
             self._pseudo_geometry = rd_copy
+        else:
+            logging.warning('There are not 3 labels, setting the _pseudo_geometry to the unedited rdkit molecule')
+            self._pseudo_geometry =  self.rdkit_molecule
+        return self._pseudo_geometry
+        
+
+    def get_rdkit_mol(self):
+        """
+        A method to create an rdkit geometry... slightly different than that of the conformer method
+        returns both the rdkit_molecule and the bm
+        """
+        self._rdkit_molecule = Conformer(rmg_molecule=self.rmg_molecule).get_rdkit_mol()
+
+        if self.labels is None:
+            self.get_labels()
+        for i, atom in enumerate(self.rmg_molecule.atoms):
+            assert atom.number == self.rdkit_molecule.GetAtoms()[i].GetAtomicNum()
 
         logging.info("Initially embedded molecule")
 
