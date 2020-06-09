@@ -32,6 +32,7 @@ import os
 import logging
 import ase
 import cclib.io
+import shutil
 
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
@@ -106,8 +107,12 @@ class StatMech():
             return False
 
         if os.path.exists(os.path.join(self.directory, "species", label, label + '.py')):
-            logging.info("Species input file already written... Not doing anything")
-            return True
+            old_path = os.path.join(self.directory, "species", label, label + '.py')
+            logging.info(f"Species input file already written... Renaming it {old_path} and creating a new one.")
+            shutil.move(
+                old_path,
+                old_path.replace('py', 'old.py')
+            )
 
         parser = cclib.io.ccread(os.path.join(
             self.directory, "species", label, label + ".log"), loglevel=logging.ERROR)
@@ -231,9 +236,13 @@ class StatMech():
         label = transitionstate.reaction_label
 
         if os.path.exists(os.path.join(self.directory, "ts", label, label + '.py')):
-            logging.info("TS input file already written... Not doing anything")
-            return True
-
+            old_path = os.path.join(self.directory, "ts", label, label + '.py')
+            logging.info(f"TS input file already written... Renaming it {old_path} and creating a new one.")
+            shutil.move(
+                old_path,
+                old_path.replace('py', 'old.py')
+            )
+            
         if not os.path.exists(os.path.join(self.directory, "ts", label, label + ".log")):
             logging.info("There is no lowest energy conformer file...")
             return False
