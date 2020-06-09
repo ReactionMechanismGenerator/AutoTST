@@ -31,16 +31,18 @@
 import os, sys, logging, itertools
 import pandas as pd
 import numpy as np
+from typing import List, Set, Dict, Tuple, Optional, Callable, Iterator, Union
+
 import autotst
 from ..reaction import Reaction, TS
-from ..species import Species
+from ..species import Species, Conformer
 from ..geometry import Bond, Angle, Torsion, CisTrans
 import ase
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 
-def get_energy(conformer):
+def get_energy(conformer: Conformer) -> float:
     """
     A function to find the potential energy of a conformer
 
@@ -57,7 +59,7 @@ def get_energy(conformer):
     return energy
 
 
-def find_terminal_torsions(conformer):
+def find_terminal_torsions(conformer: Conformer)->Tuple[List, List] :
     """
     A function that can find the terminal and non terminal torsions in a conformer object
 

@@ -28,6 +28,7 @@
 #
 ##########################################################################
 
+from typing import List, Set, Dict, Tuple, Optional, Callable, Iterator, Union
 
 class Bond:
     """
@@ -42,7 +43,11 @@ class Bond:
     - mask (list): a list of bools that describe if atoms are on the right side of the bond
     """
 
-    def __init__(self, index, atom_indices, length, mask=None, reaction_center=False):
+    def __init__(self, index: int, 
+                atom_indices:List[int] , 
+                length: float, 
+                mask: Optional[List[bool]] = None, 
+                reaction_center: bool = False):
         self.index = index
         self.atom_indices = atom_indices
         self.length = length
@@ -68,11 +73,11 @@ class Angle():
 
     def __init__(
             self,
-            index,
-            atom_indices,
-            degree,
-            mask,
-            reaction_center=False):
+            index: int,
+            atom_indices: List[int],
+            degree: float,
+            mask: Optional[List[bool]],
+            reaction_center: bool =False):
         self.index = index
         self.atom_indices = atom_indices
         self.degree = degree
@@ -86,7 +91,7 @@ class Angle():
 class Torsion():
     """
     A class that acts as a container for torsion information.
-
+    Krishna: update the doc string?
     Variables:
     - index (int): the unique torsion index
     - atom_indicies (list): indicies of atoms that describe the torsion
@@ -98,13 +103,13 @@ class Torsion():
 
     def __init__(
             self,
-            atom_indices,
-            dihedral,
-            index = -1,
-            mask = [],
-            center_atoms = [],
-            description = 'hindered',
-            reaction_center = False
+            atom_indices: List[int],
+            dihedral: float,
+            index: int = -1,
+            mask:  Optional[List[bool]] = [],
+            center_atoms: List = [],
+            description :str = 'hindered',
+            reaction_center :bool = False
             ):
 
         self.atom_indices = atom_indices
@@ -135,12 +140,12 @@ class CisTrans():
 
     def __init__(
             self,
-            index,
-            atom_indices,
-            dihedral,
-            mask,
-            stero=None,
-            reaction_center=False):
+            index: int,
+            atom_indices: List[int],
+            dihedral: float,
+            mask:List[bool],
+            stero: Optional[str] = None,
+            reaction_center: bool = False):
         self.index = index
         self.atom_indices = atom_indices
         self.dihedral = dihedral
@@ -162,7 +167,10 @@ class ChiralCenter():
     - chirality (str): the sterochemistry of this chiralcenter bond
     """
 
-    def __init__(self, index, atom_index, chirality):
+    def __init__(self, 
+                index: int, 
+                atom_index: int,
+                chirality:str):
         self.index = index
         self.atom_index = atom_index
         self.chirality = chirality

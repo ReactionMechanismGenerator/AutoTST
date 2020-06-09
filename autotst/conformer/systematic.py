@@ -33,6 +33,7 @@ import pandas as pd
 import numpy as np
 import multiprocessing
 from copy import deepcopy
+from typing import List, Set, Dict, Tuple, Optional, Callable, Iterator, Union
 
 import ase
 import ase.units
@@ -51,10 +52,10 @@ from ..reaction import TS
 from .utilities import get_energy, find_terminal_torsions
 
 def find_all_combos(
-        conformer,
-        delta=float(120),
-        cistrans=True,
-        chiral_centers=True):
+        conformer: Conformer,
+        delta: float = 120. ,
+        cistrans: bool = True,
+        chiral_centers: bool = True)->List[tuple]:
     """
     A function to find all possible conformer combinations for a given conformer
 
@@ -102,7 +103,7 @@ def find_all_combos(
     return all_combos
 
 
-def opt_conf(i):
+def opt_conf(i: int)->float:
         """
         A helper function to optimize the geometry of a conformer.
         param i: index of the conformer or a conformer object
@@ -199,14 +200,15 @@ def opt_conf(i):
         except:
             logging.error('Could not add updated conformer to conformers dict')
         return energy #return energy
-def systematic_search(conformer,
-                      delta=float(120),
-                      energy_cutoff = 10.0, #kcal/mol
-                      rmsd_cutoff = 0.5, #angstroms
-                      cistrans = True,
-                      chiral_centers = True,
-                      multiplicity = False,
-                      ):
+
+def systematic_search(conformer: Conformer,
+                      delta:float = 120.,
+                      energy_cutoff:float = 10.0, #kcal/mol
+                      rmsd_cutoff:float = 0.5, #angstroms
+                      cistrans:bool = True,
+                      chiral_centers:bool = True,
+                      multiplicity:bool = False,
+                      )->List[Conformer]:
     """
     Perfoms a systematic conformer analysis of a `Conformer` or a `TS` object
 

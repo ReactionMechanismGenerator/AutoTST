@@ -171,7 +171,7 @@ class VibrationalAnalysis():
 
         return self.pre_geometry, self.post_geometry
 
-    def obtain_percent_changes(self)->pandas.DataFrame:
+    def obtain_percent_changes(self)->pd.DataFrame:
         """
         This method takes the connectivity of a TS and then uses
         that to identify the percent change of the bonds
