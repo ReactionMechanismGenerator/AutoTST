@@ -31,6 +31,7 @@
 from .geometry import CisTrans, Torsion, Angle, Bond, ChiralCenter
 import numpy as np
 import os, logging
+from typing import List, Set, Dict, Tuple, Optional, Callable, Iterator, Union
 
 import rdkit
 import rdkit.Chem
@@ -38,6 +39,7 @@ import rdkit.Chem.AllChem
 import rdkit.Chem.rdchem
 import autotst
 import ase
+import ase.calculators.gaussian
 import rmgpy
 import rmgpy.molecule
 import rmgpy.species 
@@ -56,7 +58,7 @@ class Species():
     A class for handling molecules in AutoTST
     """
 
-    def __init__(self, smiles=[], rmg_species=None):
+    def __init__(self, smiles:List = [], rmg_species:rmgpy.species.Species = None):
         """
         A class that holds information for Species object
         """
@@ -176,7 +178,7 @@ class Species():
             self._conformers = self.generate_structures()
         return self._conformers
 
-    def generate_structures(self):
+    def generate_structures(self)->Dict[str, Conformer]:
         conformers = {}
         for smile in self.smiles:
             conf = Conformer(smiles=smile)
@@ -184,7 +186,7 @@ class Species():
 
         return conformers
 
-    def generate_conformers(self, ase_calculator):
+    def generate_conformers(self, ase_calculator:ase.calculators.gaussian.Gaussian)->Dict[str, Conformer]:
 
         from .conformer.systematic import systematic_search, find_all_combos
 
@@ -202,7 +204,10 @@ class Conformer():
     A class for generating and editing 3D conformers of molecules
     """
 
-    def __init__(self, smiles=None, rmg_molecule=None, index=0):
+    def __init__(self, 
+                smiles: Optional[str] = None, 
+                rmg_molecule: Optional[rmgpy.molecule.Molecule] = None, 
+                index: int = 0):
 
         self.energy = None
         self.index = index
@@ -270,7 +275,7 @@ class Conformer():
             self._ase_molecule = self.get_ase_mol()
         return self._ase_molecule
 
-    def get_rdkit_mol(self):
+    def get_rdkit_mol(self)->rdkit.Chem.Mol:
         """
         A method for creating an rdkit geometry from an rmg mol
         """
@@ -291,7 +296,7 @@ class Conformer():
 
         return self._rdkit_molecule
 
-    def get_ase_mol(self):
+    def get_ase_mol(self)->ase.Atoms:
         """
         A method for creating an ase atoms object from an rdkit mol
         """
@@ -323,7 +328,7 @@ class Conformer():
 
         return self.ase_molecule
 
-    def get_xyz_block(self):
+    def get_xyz_block(self)->str:
         """
         A method for retrieving an XYZ coodinate block from an ase mol
         
@@ -343,7 +348,7 @@ class Conformer():
         self.xyzcoords = string
         return string
 
-    def get_molecules(self):
+    def get_molecules(self)->Tuple[rdkit.Chem.Mol, ase.Atoms]:
         if not self.rmg_molecule:
             self.rmg_molecule = rmgpy.molecule.Molecule(smiles=self.smiles)
         self._rdkit_molecule = self.get_rdkit_mol()
@@ -364,7 +369,7 @@ class Conformer():
         p.zoomTo()
         return p.show()
 
-    def get_bonds(self):
+    def get_bonds(self)->List[Bond]:
         """
         A method for identifying all of the bonds in a conformer
         """
@@ -392,7 +397,7 @@ class Conformer():
 
         return self.bonds
 
-    def get_angles(self):
+    def get_angles(self)->List[Angle]:
         """
         A method for identifying all of the angles in a conformer
         """
@@ -430,7 +435,7 @@ class Conformer():
         self.angles = angles
         return self.angles
 
-    def get_torsions(self,tol=5.0):
+    def get_torsions(self,tol: float = 5.0)->List[Torsion]:
         """
         A method for identifying all of the torsions in a conformer
         """
@@ -590,7 +595,7 @@ class Conformer():
         self.torsions = torsion_list
         return torsion_list
 
-    def get_cistrans(self):
+    def get_cistrans(self)->List[CisTrans]:
         """
         A method for identifying all possible cistrans bonds in a molecule
         """
@@ -748,7 +753,8 @@ class Conformer():
         self.cistrans = cistrans
         return self.cistrans
 
-    def get_mask(self, geometry):
+    def get_mask(self, 
+                geometry:Union[Bond, Angle, Torsion])->List[int]:
         """
         Getting the right hand mask for a geometry object:
 
@@ -806,7 +812,7 @@ class Conformer():
 
         return mask
 
-    def get_chiral_centers(self):
+    def get_chiral_centers(self)->List[ChiralCenter]:
         """
         A method to identify
         """
@@ -827,7 +833,7 @@ class Conformer():
         self.chiral_centers = chiral_centers
         return self.chiral_centers
 
-    def get_geometries(self):
+    def get_geometries(self)->Tuple[List[Bond], List[Angle], List[Torsion], List[CisTrans], List[ChiralCenter]]:
         """
         A helper method to obtain all geometry things
         """
@@ -845,7 +851,7 @@ class Conformer():
             self.cistrans,
             self.chiral_centers)
 
-    def update_coords(self):
+    def update_coords(self)->Union[Tuple[bool, None], Tuple[bool, str]]:
         """
         A function that creates distance matricies for the RMG, ASE, and RDKit molecules and finds which
         (if any) are different. If one is different, this will update the coordinates of the other two
@@ -883,7 +889,7 @@ class Conformer():
         else:
             return True, None
 
-    def update_coords_from(self, mol_type="ase"):
+    def update_coords_from(self, mol_type:str = "ase"):
         """
         A method to update the coordinates of the RMG, RDKit, and ASE objects with a chosen object.
         """
@@ -927,7 +933,7 @@ class Conformer():
             self.get_ase_mol()
             # self.calculate_symmetry_number()
 
-    def set_bond_length(self, bond_index, length):
+    def set_bond_length(self, bond_index:int, length:Union[float, int]):
         """
         This is a method to set bond lengths
         Variabels:
@@ -961,7 +967,7 @@ class Conformer():
         self.update_coords_from(mol_type="ase")
         return self
 
-    def set_angle(self, angle_index, angle):
+    def set_angle(self, angle_index: int, angle: Union[float, int]):
         """
         A method that will set the angle of an Angle object accordingly
         """
@@ -994,7 +1000,7 @@ class Conformer():
 
         return self
 
-    def set_torsion(self, torsion_index, dihedral):
+    def set_torsion(self, torsion_index:int , dihedral: Union[float, int]):
         """
         A method that will set the diehdral angle of a Torsion object accordingly.
         """
@@ -1027,7 +1033,7 @@ class Conformer():
 
         return self
 
-    def set_cistrans(self, cistrans_index, stero="E"):
+    def set_cistrans(self, cistrans_index: int, stero: str = "E"):
         """
         A module that will set a corresponding cistrans bond to the proper E/Z config
         """
@@ -1065,7 +1071,7 @@ class Conformer():
             self.update_coords_from(mol_type="ase")
             return self
 
-    def set_chirality(self, chiral_center_index, stero="R"):
+    def set_chirality(self, chiral_center_index:int , stero: str = "R"):
         """
         A module that can set the orientation of a chiral center.
         """
@@ -1119,7 +1125,7 @@ class Conformer():
 
         return self
 
-    def calculate_symmetry_number(self):
+    def calculate_symmetry_number(self)->Union[float, importing]:
 
         numbers = self.ase_molecule.numbers
         positions = self.ase_molecule.positions

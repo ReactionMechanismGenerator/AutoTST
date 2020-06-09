@@ -31,6 +31,7 @@
 import os, itertools, logging
 import numpy as np
 from copy import deepcopy
+from typing import List, Set, Dict, Tuple, Optional, Callable, Iterator, Union
 
 import rdkit
 import rdkit.Chem 
@@ -39,6 +40,7 @@ import rdkit.Chem.Pharm3D.EmbedLib
 import rdkit.DistanceGeometry
 
 import ase 
+import ase.calculators.gaussian
 
 import rmgpy
 import rmgpy.molecule
@@ -69,9 +71,9 @@ class Reaction():
 
     def __init__(
             self,
-            label=None,
-            rmg_reaction=None,
-            reaction_family="H_Abstraction"):
+            label:Optional[str] = None,
+            rmg_reaction:Optional[rmgpy.reaction.Reaction] = None,
+            reaction_family:str = "H_Abstraction"):
 
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
             "R_Addition_MultipleBond",
@@ -91,7 +93,7 @@ class Reaction():
         return f'<Reaction "{self.label}">'
 
     @property
-    def ts(self):
+    def ts(self)->Dict[str, TS]:
         """ #TODO: DOESN'T WORK RN
         The TS transition state for this reaction.
 
@@ -123,7 +125,7 @@ class Reaction():
         return self._ts
 
     @property
-    def distance_data(self):
+    def distance_data(self)->DistanceData:
         """
         The distance data.
 
@@ -141,7 +143,9 @@ class Reaction():
         return self._distance_data
 
     @classmethod
-    def load_databases(self, rmg_database_path=None, force_reload=False):
+    def load_databases(self, 
+                      rmg_database_path:str = None, 
+                      force_reload: str = False)-> Tuple[rmgpy.data.base.Database]:
         """
         Load the RMG and AutoTST databases, if they have not already been loaded,
         into the class level variables where they are stored.
@@ -152,7 +156,7 @@ class Reaction():
           loaded from rmgpy.settings['database.directory']
 
         Returns:
-        - None
+        - Tuple of RMG Database classes
         """
         if self.rmg_database and self.ts_databases and not force_reload:
             return self.rmg_database, self.ts_databases
@@ -234,7 +238,7 @@ class Reaction():
 
         return self.rmg_database, self.ts_databases
 
-    def generate_distance_data(self):
+    def generate_distance_data(self)->DistanceData:
         """
         Generates the distance estimates using group additivity.
         Requires self.rmg_reaction
@@ -264,7 +268,7 @@ class Reaction():
 
         return self._distance_data
 
-    def generate_reactants_and_products(self):
+    def generate_reactants_and_products(self)->Tuple[List[rmg.species.Species]]:
         """
         A module that will generate AutoTST Species for a given reaction's 
         reactants and products
@@ -293,7 +297,7 @@ class Reaction():
 
         return self.reactants, self.products
 
-    def get_labeled_reaction(self):
+    def get_labeled_reaction(self)->Tuple[rmgpy.reaction.Reaction, str]:
         """
         A method that will return a labeled reaction given a reaction label or rmg_reaction
         A label or an rmg_reaction needs to be provided in order for this method to work.
@@ -468,7 +472,7 @@ class Reaction():
         self.reaction_family = final_name
         return self.rmg_reaction, self.reaction_family
 
-    def get_label(self):
+    def get_label(self)->str:
         """
         A method to get the reaction label corresponding to an rmg_reaction
 
@@ -497,7 +501,7 @@ class Reaction():
         self.label = string[:-1]
         return self.label
 
-    def get_rmg_reaction(self):
+    def get_rmg_reaction(self)->rmgpy.reaction.Reaction:
 
         if self.rmg_reaction:
             return self.rmg_reaction
@@ -514,7 +518,7 @@ class Reaction():
         self.rmg_reaction = rmgpy.reaction.Reaction(reactants=reactants, products=products)
         return self.rmg_reaction
 
-    def get_rmg_complexes(self):
+    def get_rmg_complexes(self)->Dict[str, rmgpy.molecule.Molecule]:
         """
         A method to create a forward and reverse TS complexes used to initialize transition state geometries
 
@@ -558,7 +562,7 @@ class Reaction():
 
         return self.complexes
 
-    def generate_conformers(self, ase_calculator=None):
+    def generate_conformers(self, ase_calculator:Optional[ase.calculators.gaussian.Gaussian]=None)->Dict[str, TS]:
         """
         A method to generate an ensemble of low energy conformers.
         Currently only supports a systematic search with the goal of adding evolutionary searches
@@ -594,14 +598,14 @@ class TS(Conformer):
 
     def __init__(
             self,
-            smiles=None,
-            reaction_label=None,
-            direction='forward',
-            rmg_molecule=None,
-            reaction_family="H_Abstraction",
-            distance_data=None,
-            action=[],
-            index=0):
+            smiles:Optional[str] = None,
+            reaction_label:Optional[str] = None,
+            direction: str = 'forward',
+            rmg_molecule:str = None,
+            reaction_family:str = "H_Abstraction",
+            distance_data:Optional[DistanceData] = None,
+            action:List = [],
+            index:int = 0):
 
         self.energy = None
         self.reaction_label = reaction_label
@@ -685,7 +689,7 @@ class TS(Conformer):
             self._ase_molecule = self.get_ase_mol()
         return self._ase_molecule
 
-    def get_rdkit_mol(self):
+    def get_rdkit_mol(self)->rdkit.Chem.Mol:
         """
         A method to create an rdkit geometry... slightly different than that of the conformer method
         returns both the rdkit_molecule and the bm
@@ -730,18 +734,20 @@ class TS(Conformer):
             self.rd_embed()
         return self.rdkit_molecule
 
-    def get_bounds_matrix(self):
+    def get_bounds_matrix(self)->np.ndarray:
         """
         A method to obtain the bounds matrix
         """
         self.bm = rdkit.Chem.rdDistGeom.GetMoleculeBoundsMatrix(self.rdkit_molecule)
         return self.bm
 
-    def set_limits(self, lbl1, lbl2, value, uncertainty):
+    def set_limits(self, lbl1: str, 
+                   lbl2: str, 
+                   value: float, 
+                   uncertainty:float)->np.ndarray:
         """
         A method to set the limits of a particular distance between two atoms
 
-        :param bm: an array of arrays corresponding to the bounds matrix
         :param lbl1: the label of one atom
         :param lbl2: the label of another atom
         :param value: the distance from a distance data object (float)
@@ -759,7 +765,7 @@ class TS(Conformer):
 
         return self.bm
 
-    def bm_pre_edit(self, sect):
+    def bm_pre_edit(self, sect: List[int])->np.ndarray:
         """
         Clean up some of the atom distance limits before attempting triangle smoothing.
         This ensures any edits made do not lead to unsolvable scenarios for the molecular
@@ -789,11 +795,10 @@ class TS(Conformer):
 
         return self.bm
 
-    def get_labels(self):
+    def get_labels(self)->Tuple[List, List[Tuple]]:
         """
         A method to get the labeled atoms from a reaction
 
-        :param reactants: a combined rmg_molecule object
         :return labels: the atom labels corresponding to the reaction center
         :return atomMatch: a tuple of tuples the atoms labels corresponding to the reaction center
         """
@@ -825,7 +830,7 @@ class TS(Conformer):
         self.atom_match = atom_match
         return self.labels, self.atom_match
 
-    def edit_matrix(self):
+    def edit_matrix(self)->np.ndarray:
         """
         A method to edit the bounds matrix using labels and distance data
         """
@@ -858,15 +863,12 @@ class TS(Conformer):
 
         return self.bm
 
-    def optimize_rdkit_molecule(self):
+    def optimize_rdkit_molecule(self)->Tuple[rdkit.Chem.Mol,int]:
         """
         Optimizes the rdmol object using UFF.
         Determines the energy level for each of the conformers identified in rdmol.GetConformer.
 
 
-        :param rdmol:
-        :param boundsMatrix:
-        :param atomMatch:
         :return rdmol, minEid (index of the lowest energy conformer)
         """
 
@@ -889,7 +891,7 @@ class TS(Conformer):
 
         return self.rdkit_molecule, min_eid
 
-    def rd_embed(self):
+    def rd_embed(self)->Union[Tuple[None], Tuple[rdkit.Chem.Mol,int]]:
         """
         This portion of the script is literally taken from rmgpy but hacked to work without defining a geometry object
 
@@ -931,6 +933,7 @@ class TS(Conformer):
         return self._rdkit_molecule, min_eid
 
     def get_bonds(self):
+        #Why are there two methods? : Krishna
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
@@ -940,7 +943,7 @@ class TS(Conformer):
             test_conf._rdkit_molecule = self._pseudo_geometry
         test_conf._ase_molecule = self.ase_molecule
 
-    def get_bonds(self):
+    def get_bonds(self)-> List[Bond]:
         """
         A method for identifying all of the bonds in a conformer
         """
@@ -977,7 +980,7 @@ class TS(Conformer):
 
         return self.bonds
 
-    def get_torsions(self):
+    def get_torsions(self)->List[Torsion]:
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
@@ -988,7 +991,7 @@ class TS(Conformer):
         test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_torsions()
 
-    def get_angles(self):
+    def get_angles(self)-List[Angle]:
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
