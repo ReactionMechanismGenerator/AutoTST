@@ -610,6 +610,7 @@ class TS(Conformer):
         self.distance_data = distance_data
         self.index = index
         self.bm = None
+        self.labels = None
         self.action = action
 
         assert direction in ["forward",
@@ -675,6 +676,8 @@ class TS(Conformer):
     def rdkit_molecule(self):
         if (self._rdkit_molecule is None) and self.distance_data:
             self._rdkit_molecule = self.get_rdkit_mol()
+        if (self._pseudo_geometry is None):
+            self.get_pseudo_geometry()
         return self._rdkit_molecule
 
     @property
