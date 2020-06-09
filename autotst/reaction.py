@@ -991,7 +991,7 @@ class TS(Conformer):
         test_conf._ase_molecule = self.ase_molecule
         return test_conf.get_torsions()
 
-    def get_angles(self)-List[Angle]:
+    def get_angles(self)->List[Angle]:
         test_conf = Conformer()
         test_conf.rmg_molecule = self.rmg_molecule
         try:
