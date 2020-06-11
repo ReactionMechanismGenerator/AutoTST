@@ -52,6 +52,7 @@ class TestGaussian(unittest.TestCase):
         rxn = Reaction(label='C+[O]O_[CH3]+OO')
         ts = rxn.ts["forward"][0]
         ts.get_molecules()
+        ts.get_geometries()
         self.gaussian = Gaussian(conformer=ts)
     def test_rotor_calc(self):
         autotst_gaussian_rotor = self.gaussian.get_rotor_calc()
