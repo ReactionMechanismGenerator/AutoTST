@@ -348,7 +348,6 @@ class Conformer():
             self.rmg_molecule = rmgpy.molecule.Molecule(smiles=self.smiles)
         self._rdkit_molecule = self.get_rdkit_mol()
         self._ase_molecule = self.get_ase_mol()
-        self.get_geometries()
 
         return self.rdkit_molecule, self.ase_molecule
 

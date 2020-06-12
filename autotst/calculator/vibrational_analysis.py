@@ -62,6 +62,7 @@ class VibrationalAnalysis():
         - log_file (str): path to the TS log file
         """
         self.ts = transitionstate
+        self.ts.get_molecules()
         self.ts.get_geometries()
         self.directory = directory
 
