@@ -39,7 +39,6 @@ logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 from ..calculator.gaussian import Gaussian
 from ..calculator.vibrational_analysis import VibrationalAnalysis, percent_change
-from ..calculator.statmech import StatMech
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
 from ..geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
