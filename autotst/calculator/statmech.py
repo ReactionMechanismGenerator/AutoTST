@@ -512,6 +512,21 @@ class StatMech():
         Returns:
         - None
         """
+        try:
+            self.kinetics_job.input_file = os.path.join(
+                self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
+            self.kinetics_job.plot = False
+            self.kinetics_job.output_directory = os.path.join(self.directory, "ts", self.reaction.label)
+
+            self.kinetics_job.execute()
+
+            for job in self.kinetics_job.job_list:
+                if isinstance(job, arkane.main.KineticsJob):
+                    self.kinetics_job = job
+                elif isinstance(job, arkane.main.ThermoJob):
+                    self.thermo_job = job
+        except:
+            self.write_kinetics_input(include_rotors=False)
 
         self.kinetics_job.input_file = os.path.join(
             self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
