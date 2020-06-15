@@ -188,20 +188,22 @@ class StatMech():
 
         if isinstance(conformer, TS):
             tor_log = os.path.join(
-                scratch,
+                self.directory,
                 "ts",
                 conformer.reaction_label,
-                "torsions",
+                "rotors",
                 comformer.reaction_label + f"_36by10_{j}_{k}.log"
             )
-        else:
+            label = comformer.reaction_label + f"_36by10_{j}_{k}"
+        elif isinstance(conformer, Conformer):
             tor_log = os.path.join(
-                scratch,
+                self.directory,
                 "species",
                 conformer.smiles,
-                "torsions",
+                "rotors",
                 conformer.smiles + f'_36by10_{j}_{k}.log'
             )
+            label = conformer.smiles + f'_36by10_{j}_{k}'
 
         if not os.path.exists(tor_log):
             logging.info(
