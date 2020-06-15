@@ -163,7 +163,7 @@ class StatMech():
             f.write(input_string)
         return True
 
-    def get_rotor_info(self, conformer, torsion_index):
+    def get_rotor_info(self, conformer, torsion):
         """
         Formats and returns info about torsion as it should appear in an Arkane species.py
 
@@ -180,7 +180,7 @@ class StatMech():
         Returns:
         - info (str): a string containing all of the relevant information for a hindered rotor scan
         """
-        torsion = conformer.torsions[torsion_index]
+        #torsion = conformer.torsions[torsion_index]
         _, j, k, _ = torsion.atom_indices
 
         # Adjusted since mol's IDs start from 0 while Arkane's start from 1
