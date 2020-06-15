@@ -36,6 +36,7 @@ import shutil
 
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
+from autotst.job.job import Job
 
 import rmgpy
 import arkane.main
@@ -209,6 +210,10 @@ class StatMech():
             logging.info(
                 f"Torsion log file does not exist for {torsion}")
             return ""
+
+        if not all(Job(directory=self.directory).verify_rotor(conformer=conformer, label=label)):
+            logging.error(f'Rotor {label} could not be verified, using RRHO approximation instead.')
+            return ''
 
         top_IDs = []
         for num, tf in enumerate(torsion.mask):
