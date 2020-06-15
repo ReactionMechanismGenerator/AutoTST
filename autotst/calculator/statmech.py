@@ -90,7 +90,7 @@ class StatMech():
                 logging.info(
                     f"Lowest energy conformer log file DOES NOT exist for {smiles}")
 
-    def write_conformer_file(self, conformer):
+    def write_conformer_file(self, conformer, include_rotors=True):
         """
         A method to write Arkane files for a single Conformer object
 
@@ -149,10 +149,13 @@ class StatMech():
         output += [
             f"frequencies = Log('{label}.log')", ""]
 
-        
-        output += ["rotors = ["]
-        for torsion in conf.torsions:
-            output += [self.get_rotor_info(conf, torsion)]
+        if include_rotors:
+            output += ["rotors = ["]
+            if len(conformer.torsions) ==0:
+                conformer.get_molecules()
+                conformer.get_geometries() 
+            for torsion in conformer.torsions:
+                output += [self.get_rotor_info(conformer, torsion)]
         output += ["]"]
         
         input_string = ""
@@ -297,7 +300,7 @@ class StatMech():
             f.write(input_string)
         return True
 
-    def write_kinetics_input(self):
+    def write_kinetics_input(self, include_rotors=True):
         """
         A method to write Arkane file to obtain kinetics for a Reaction object
 
@@ -315,7 +318,7 @@ class StatMech():
             "",
             f'modelChemistry = "{self.model_chemistry}"',  # fix this
             f"frequencyScaleFactor = {self.freq_scale_factor}",  # fix this
-            "useHinderedRotors = True",  # fix this @carl
+            f"useHinderedRotors = {include_rotors}",  # fix this @carl
             "useBondCorrections = False",
             ""]
 
