@@ -71,7 +71,6 @@ def find_all_combos(
     conformer.get_geometries()
 
     _, torsions = find_terminal_torsions(conformer)
-    chiral_centers = conformer.chiral_centers
 
     torsion_angles = np.arange(0, 360, delta)
     torsion_combos = list(itertools.product(
@@ -98,9 +97,20 @@ def find_all_combos(
         cistrans_combos = [()]
 
     if chiral_centers:
+        chiral_centerss = []
         chiral_options = ["R", "S"]
+        try:
+            ring_info = conformer._pseudo_geometry.GetRingInfo()
+        except AttributeError:
+            ring_info = conformer.rdkit_molecule.GetRingInfo()
+
+        for center in conformer.chiral_centers:
+            if ring_info.NumAtomRings(center.atom_index) != 0:
+                continue
+            chiral_centerss.append(center)
+
         chiral_combos = list(itertools.product(
-            chiral_options, repeat=len(chiral_centers)))
+            chiral_options, repeat=len(chiral_centerss)))
 
     else:
         chiral_combos = [()]
