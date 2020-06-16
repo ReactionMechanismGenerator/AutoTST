@@ -40,6 +40,9 @@ from autotst.job.job import Job
 
 import rmgpy
 import arkane.main
+import arkane.thermo
+import arkane.kinetics
+import arkane.statmech
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -535,10 +538,16 @@ class StatMech():
 
         self.kinetics_job.execute()
 
-        for job in self.kinetics_job.job_list:
-            if isinstance(job, arkane.main.KineticsJob):
+        try:
+            for job in self.kinetics_job.job_list:
+                if isinstance(job, arkane.kinetics.KineticsJob):
+                    self.kinetics_job = job
+                elif isinstance(job, arkane.thermo.ThermoJob):
+                    self.thermo_job = job
+        except:
+            if isinstance(self.kinetics_job, arkane.kinetics.KineticsJob):
                 self.kinetics_job = job
-            elif isinstance(job, arkane.main.ThermoJob):
+            elif isinstance(self.kinetics_job, arkane.thermo.ThermoJob):
                 self.thermo_job = job
 
     def set_results(self):
