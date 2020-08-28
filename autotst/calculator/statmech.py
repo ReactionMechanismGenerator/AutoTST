@@ -216,8 +216,11 @@ class StatMech():
             logging.info(
                 f"Torsion log file does not exist for {torsion}")
             return ""
-
-        if not all(Job(directory=self.directory).verify_rotor(conformer=conformer, label=label)):
+        try:
+            validated = all(Job(directory=self.directory).verify_rotor(conformer=conformer, label=label))
+        except:
+            validated = False
+        if not validated:
             logging.error(f'Rotor {label} could not be verified, using RRHO approximation instead.')
             return ''
 
@@ -528,7 +531,8 @@ class StatMech():
                     self.kinetics_job = job
                 elif isinstance(job, arkane.main.ThermoJob):
                     self.thermo_job = job
-        except:
+        except: #TODO double check this and make this mroe robust / better at catching errors
+            logging.warming('')
             self.write_kinetics_input(include_rotors=False)
 
         self.kinetics_job.input_file = os.path.join(

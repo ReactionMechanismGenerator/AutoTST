@@ -221,6 +221,7 @@ class InputOutput():
                     'True': True,
                     'False': False,
                     'Reaction': rmgpy.reaction.Reaction,
+                    'TemplateReaction' : rmgpy.data.kinetics.TemplateReaction,
                     'Species': rmgpy.species.Species,
                     'TransitionState': rmgpy.species.TransitionState,
                     'Arrhenius': rmgpy.kinetics.Arrhenius,
