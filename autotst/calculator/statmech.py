@@ -111,11 +111,11 @@ class StatMech():
             return False
 
         if os.path.exists(os.path.join(self.directory, "species", label, label + '.py')):
-            old_path = os.path.join(self.directory, "species", label, label + '.py')
-            logging.info(f"Species input file already written... Renaming it {old_path} and creating a new one.")
+            PATH = os.path.join(self.directory, "species", label, label + '.py')
+            logging.info(f"Species input file already written... Renaming it {PATH} and creating a new one.")
             shutil.move(
-                old_path,
-                old_path.replace('py', 'old.py')
+                PATH,
+                PATH.replace('py', 'old.py')
             )
 
         parser = cclib.io.ccread(os.path.join(
@@ -218,7 +218,7 @@ class StatMech():
             return ""
         try:
             validated = all(Job(directory=self.directory).verify_rotor(conformer=conformer, label=label))
-        except:
+        except AttributeError:
             validated = False
         if not validated:
             logging.error(f'Rotor {label} could not be verified, using RRHO approximation instead.')
@@ -251,11 +251,11 @@ class StatMech():
         label = transitionstate.reaction_label
 
         if os.path.exists(os.path.join(self.directory, "ts", label, label + '.py')):
-            old_path = os.path.join(self.directory, "ts", label, label + '.py')
-            logging.info(f"TS input file already written... Renaming it {old_path} and creating a new one.")
+            PATH = os.path.join(self.directory, "ts", label, label + '.py')
+            logging.info(f"TS input file already written... Renaming it {PATH} and creating a new one.")
             shutil.move(
-                old_path,
-                old_path.replace('py', 'old.py')
+                PATH,
+                PATH.replace('py', 'old.py')
             )
             
         if not os.path.exists(os.path.join(self.directory, "ts", label, label + ".log")):
@@ -548,7 +548,7 @@ class StatMech():
                     self.kinetics_job = job
                 elif isinstance(job, arkane.thermo.ThermoJob):
                     self.thermo_job = job
-        except:
+        except AttributeError:
             if isinstance(self.kinetics_job, arkane.kinetics.KineticsJob):
                 self.kinetics_job = job
             elif isinstance(self.kinetics_job, arkane.thermo.ThermoJob):
