@@ -33,6 +33,7 @@ import logging
 import ase
 import cclib.io
 import shutil
+import numpy as np
 from scipy.interpolate import interp1d, interp2d
 
 from ..reaction import Reaction, TS
@@ -45,6 +46,8 @@ import arkane.thermo
 import arkane.kinetics
 import arkane.statmech
 
+import rmgpy.constants as constants
+from rmgpy.kinetics import Arrhenius
 from arkane.ess.gaussian import GaussianLog
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
@@ -177,6 +180,9 @@ class StatMech():
         self.thermo_job = arkane.main.Arkane()
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
+
+        self._vib_interpolation = None
+        self._hr_interpolation = None
 
     def write_species_files(self, species):
         """
@@ -659,6 +665,53 @@ class StatMech():
                 self.kinetics_job = job
             elif isinstance(self.kinetics_job, arkane.thermo.ThermoJob):
                 self.thermo_job = job
+
+    def find_closest_vibrational_arrhenius(self, w):
+        """
+        A method that will find the arrhenius expression corresponding to 
+        the vibrational contribution to the rate expression. This will 
+        build the linear interplation if need be and use that interpolation
+        to find values of A, Ea, and n. 
+
+        Inputs:
+        - w (float): vibration in cm^-1
+
+        Returns:
+        - arrhenius (rmgpy.kinetics.Arrhenius): the vibration contribution 
+            to the rate expression
+        """
+        if not self._vib_interpolation:
+            self._vib_interpolation = build_vibrational_interpolation()
+        logA, n, B = self._vib_interpolation(w)
+        A = 10**logA * 1000
+        Ea = B / constants.R
+        return Arrhenius(A=(A, 'cm^3/(mol*s)'), n=n, Ea=(Ea, 'J/mol'))
+
+    def find_closest_hindered_arrhenius(self, V, Q):
+        """
+        A method that will find the Arrhenius expression corresponding to 
+        the hindered rotor contribution to the rate expression. This will
+        build the linear interpolations if need be and use those to find 
+        values of A, Ea and n.
+
+        Inputs:
+        - V (float): the barrier to rotation in kcal/mol
+        - Q (float): the free rotor partiton function
+
+        Returns:
+        - arrhenius (rmgpy.kinetics.Arrhenius): the hindered rotor 
+            contribution to the rate expression
+        """
+        if not self._hr_interpolation:
+            self._hr_interpolation = build_hr_interpolations()
+
+        logQ = np.log10(Q)
+        logA = self._hr_interpolation[0](V,logQ)[0]
+        n = self._hr_interpolation[1](V,logQ)[0]
+        B = self._hr_interpolation[2](V,logQ)[0]
+        A = 10**logA * 1000
+        Ea = B / constants.R
+        return Arrhenius(A=(A, 'cm^3/(mol*s)'), n=n, Ea=(Ea, 'J/mol'))
 
     def set_results(self):
         """
