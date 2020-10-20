@@ -207,6 +207,15 @@ class Conformer():
         self.energy = None
         self.index = index
 
+        self._rdkit_molecule = None
+        self._ase_molecule = None
+        self.bonds = []
+        self.angles = []
+        self.torsions = []
+        self.cistrans = []
+        self.chiral_centers = []
+        self._symmetry_number = None
+
         if (smiles or rmg_molecule):
             if smiles and rmg_molecule:
                 assert rmg_molecule.is_isomorphic(rmgpy.molecule.Molecule(
@@ -225,19 +234,10 @@ class Conformer():
             self.rmg_molecule.update_multiplicity()
             self.get_molecules()
             self.get_geometries()
-            self._symmetry_number = None
 
         else:
             self.smiles = None
             self.rmg_molecule = None
-            self._rdkit_molecule = None
-            self._ase_molecule = None
-            self.bonds = []
-            self.angles = []
-            self.torsions = []
-            self.cistrans = []
-            self.chiral_centers = []
-            self._symmetry_number = None
 
     def __repr__(self):
         return f'<Conformer "{self.smiles}">'

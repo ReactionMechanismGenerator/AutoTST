@@ -32,12 +32,17 @@ import os
 import logging
 import ase
 import cclib.io
+import shutil
 
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
+from autotst.job.job import Job
 
 import rmgpy
 import arkane.main
+import arkane.thermo
+import arkane.kinetics
+import arkane.statmech
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -88,7 +93,7 @@ class StatMech():
                 logging.info(
                     f"Lowest energy conformer log file DOES NOT exist for {smiles}")
 
-    def write_conformer_file(self, conformer):
+    def write_conformer_file(self, conformer, include_rotors=True):
         """
         A method to write Arkane files for a single Conformer object
 
@@ -106,8 +111,12 @@ class StatMech():
             return False
 
         if os.path.exists(os.path.join(self.directory, "species", label, label + '.py')):
-            logging.info("Species input file already written... Not doing anything")
-            return True
+            PATH = os.path.join(self.directory, "species", label, label + '.py')
+            logging.info(f"Species input file already written... Renaming it {PATH} and creating a new one.")
+            shutil.move(
+                PATH,
+                PATH.replace('py', 'old.py')
+            )
 
         parser = cclib.io.ccread(os.path.join(
             self.directory, "species", label, label + ".log"), loglevel=logging.ERROR)
@@ -143,13 +152,15 @@ class StatMech():
         output += [
             f"frequencies = Log('{label}.log')", ""]
 
-        """
-        TODO: add rotor information @carl
-        output += ["rotors = ["]
-        for torsion in conf.torsions:
-            output += [self.get_rotor_info(conf, torsion)]
+        if include_rotors:
+            output += ["rotors = ["]
+            if len(conformer.torsions) ==0:
+                conformer.get_molecules()
+                conformer.get_geometries() 
+            for torsion in conformer.torsions:
+                output += [self.get_rotor_info(conformer, torsion)]
         output += ["]"]
-        """
+        
         input_string = ""
 
         for t in output:
@@ -159,7 +170,7 @@ class StatMech():
             f.write(input_string)
         return True
 
-    def get_rotor_info(self, conformer, torsion_index):
+    def get_rotor_info(self, conformer, torsion):
         """
         Formats and returns info about torsion as it should appear in an Arkane species.py
 
@@ -176,7 +187,7 @@ class StatMech():
         Returns:
         - info (str): a string containing all of the relevant information for a hindered rotor scan
         """
-        torsion = conformer.torsions[torsion_index]
+        #torsion = conformer.torsions[torsion_index]
         _, j, k, _ = torsion.atom_indices
 
         # Adjusted since mol's IDs start from 0 while Arkane's start from 1
@@ -184,25 +195,34 @@ class StatMech():
 
         if isinstance(conformer, TS):
             tor_log = os.path.join(
-                scratch,
+                self.directory,
                 "ts",
                 conformer.reaction_label,
-                "torsions",
+                "rotors",
                 comformer.reaction_label + f"_36by10_{j}_{k}.log"
             )
-        else:
+            label = comformer.reaction_label + f"_36by10_{j}_{k}"
+        elif isinstance(conformer, Conformer):
             tor_log = os.path.join(
-                scratch,
+                self.directory,
                 "species",
                 conformer.smiles,
-                "torsions",
+                "rotors",
                 conformer.smiles + f'_36by10_{j}_{k}.log'
             )
+            label = conformer.smiles + f'_36by10_{j}_{k}'
 
         if not os.path.exists(tor_log):
             logging.info(
                 f"Torsion log file does not exist for {torsion}")
             return ""
+        try:
+            validated = all(Job(directory=self.directory).verify_rotor(conformer=conformer, label=label))
+        except AttributeError:
+            validated = False
+        if not validated:
+            logging.error(f'Rotor {label} could not be verified, using RRHO approximation instead.')
+            return ''
 
         top_IDs = []
         for num, tf in enumerate(torsion.mask):
@@ -231,9 +251,13 @@ class StatMech():
         label = transitionstate.reaction_label
 
         if os.path.exists(os.path.join(self.directory, "ts", label, label + '.py')):
-            logging.info("TS input file already written... Not doing anything")
-            return True
-
+            PATH = os.path.join(self.directory, "ts", label, label + '.py')
+            logging.info(f"TS input file already written... Renaming it {PATH} and creating a new one.")
+            shutil.move(
+                PATH,
+                PATH.replace('py', 'old.py')
+            )
+            
         if not os.path.exists(os.path.join(self.directory, "ts", label, label + ".log")):
             logging.info("There is no lowest energy conformer file...")
             return False
@@ -282,7 +306,7 @@ class StatMech():
             f.write(input_string)
         return True
 
-    def write_kinetics_input(self):
+    def write_kinetics_input(self, include_rotors=True):
         """
         A method to write Arkane file to obtain kinetics for a Reaction object
 
@@ -300,7 +324,7 @@ class StatMech():
             "",
             f'modelChemistry = "{self.model_chemistry}"',  # fix this
             f"frequencyScaleFactor = {self.freq_scale_factor}",  # fix this
-            "useHinderedRotors = False",  # fix this @carl
+            f"useHinderedRotors = {include_rotors}",  # fix this @carl
             "useBondCorrections = False",
             ""]
 
@@ -440,7 +464,7 @@ class StatMech():
             "",
             f'modelChemistry = "{model_chemistry}"',  # fix this
             f"frequencyScaleFactor = {freq_scale_factor}",  # fix this
-            "useHinderedRotors = False",  # fix this @carl
+            "useHinderedRotors = True",
             "useBondCorrections = False",
             ""]
         p = os.path.join(conformer.smiles + ".py")
@@ -494,6 +518,22 @@ class StatMech():
         Returns:
         - None
         """
+        try:
+            self.kinetics_job.input_file = os.path.join(
+                self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
+            self.kinetics_job.plot = False
+            self.kinetics_job.output_directory = os.path.join(self.directory, "ts", self.reaction.label)
+
+            self.kinetics_job.execute()
+
+            for job in self.kinetics_job.job_list:
+                if isinstance(job, arkane.main.KineticsJob):
+                    self.kinetics_job = job
+                elif isinstance(job, arkane.main.ThermoJob):
+                    self.thermo_job = job
+        except: #TODO double check this and make this mroe robust / better at catching errors
+            logging.warming('')
+            self.write_kinetics_input(include_rotors=False)
 
         self.kinetics_job.input_file = os.path.join(
             self.directory, "ts", self.reaction.label, self.reaction.label + ".kinetics.py")
@@ -502,10 +542,16 @@ class StatMech():
 
         self.kinetics_job.execute()
 
-        for job in self.kinetics_job.job_list:
-            if isinstance(job, arkane.main.KineticsJob):
+        try:
+            for job in self.kinetics_job.job_list:
+                if isinstance(job, arkane.kinetics.KineticsJob):
+                    self.kinetics_job = job
+                elif isinstance(job, arkane.thermo.ThermoJob):
+                    self.thermo_job = job
+        except AttributeError:
+            if isinstance(self.kinetics_job, arkane.kinetics.KineticsJob):
                 self.kinetics_job = job
-            elif isinstance(job, arkane.main.ThermoJob):
+            elif isinstance(self.kinetics_job, arkane.thermo.ThermoJob):
                 self.thermo_job = job
 
     def set_results(self):
