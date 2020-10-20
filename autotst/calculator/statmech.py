@@ -45,6 +45,8 @@ import arkane.thermo
 import arkane.kinetics
 import arkane.statmech
 
+from arkane.ess.gaussian import GaussianLog
+
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
@@ -129,6 +131,28 @@ def build_hr_interpolations():
     n_interpolation = interp2d(barriers, partition, n)
     B_interpolation = interp2d(barriers, partition, B)
     return (loga_interpolation, n_interpolation, B_interpolation)
+
+def read_arkane_conformer(path):
+    """
+    Given a path to a Gaussian log file, reads it in and returns 
+    a RMG / Arkane conformer which will be used in other functions
+    
+    Inputs:
+    - path (str): the path to the log file
+    
+    Returns:
+    - arkane_conformer (rmgpy.statmech.conformer.Conformer):
+        the RMG conformer corresponding to the log file 
+    """
+    log = GaussianLog(path)
+    arkane_conformer, *_ = log.load_conformer()
+    coords, numbers, mass = log.load_geometry()
+
+    arkane_conformer.coordinates = (coords * 10 ** -10, 'm')
+    arkane_conformer.number = numbers
+    arkane_conformer.mass = (mass, 'amu')
+    
+    return arkane_conformer
 
 class StatMech():
 
