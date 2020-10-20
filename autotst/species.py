@@ -1132,3 +1132,35 @@ class Conformer():
             self._symmetry_number = mol.get_symmetry_number() 
 
         return self._symmetry_number
+
+    def get_internal_reduced_moment_of_inertia(self, torsion_index, arkane_conformer):
+        """
+        This method uses an RMG-Py conformer object and the torsion inforamtion
+        to calculate the internal ruduced moment of interia. This is used
+        in Statmech when calculating the rotational partition function.
+        """
+        torsion = self.torsions[torsion_index]
+        i,j,k,l = np.array(torsion.atom_indices) + 1
+        top1 = np.arange(len(torsion.mask))[torsion.mask] +1
+
+        I = arkane_conformer.get_internal_reduced_moment_of_inertia((j,k), list(top1))
+        return I
+
+    def get_bond_symmetry(self, torsion_index):
+        """
+        This method used RMG-Py to calculate the bond symmetry for a conformer. 
+        If it's unable to calcuate the bond symmetry because of a KeyError
+        (often seen when calculating bonds symmetry around reaction centers), 
+        it will return a symmetry of 1.
+        """
+        from rmgpy.molecule.symmetry import calculate_bond_symmetry_number
+        try:
+            torsion = self.torsions[torsion_index]
+            i,j,k,l = np.array(torsion.atom_indices)
+            symm = calculate_bond_symmetry_number(
+                self.rmg_molecule, 
+                self.rmg_molecule.atoms[j], 
+                self.rmg_molecule.atoms[k])
+        except KeyError:
+            symm = 1.0
+        return symm
