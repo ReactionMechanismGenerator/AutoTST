@@ -33,6 +33,7 @@ import logging
 import ase
 import cclib.io
 import shutil
+from scipy.interpolate import interp1d, interp2d
 
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
@@ -47,6 +48,87 @@ import arkane.statmech
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
+# The following dicts are tables that were taken from 
+# `Predicting the Preexponential Temperature Dependence
+# of Bimolecular Metathesis Reaction Rate Coefficients 
+# using Transition State Theory` by N. Cohen, 1989
+
+VIBRATIONAL_CONTRIBUTION = {
+    # Table II 
+    #  w: {kinetics}
+     100: {'logA':-2.91, 'n':1.00, 'B':300},
+     200: {'logA':-2.90, 'n':1.00, 'B':306},
+     300: {'logA':-2.88, 'n':0.99, 'B':314},
+     400: {'logA':-2.87, 'n':0.97, 'B':326},
+     500: {'logA':-2.85, 'n':0.96, 'B':338},
+     700: {'logA':-2.60, 'n':0.87, 'B':301},
+    1000: {'logA':-2.35, 'n':0.78, 'B':292},
+    1500: {'logA':-1.88, 'n':0.61, 'B':251},
+    2000: {'logA':-1.46, 'n':0.47, 'B':202},
+    2500: {'logA':-1.36, 'n':0.43, 'B':209},
+    3000: {'logA':-1.08, 'n':0.34, 'B':168},
+    3500: {'logA':-0.84, 'n':0.26, 'B':133},
+    4000: {'logA':-0.66, 'n':0.20, 'B':104}
+}
+
+def build_vibrational_interpolation():
+    """
+    This function builds a linear interpolation of the above dictionary
+    """
+    frequencies = []
+    kinetics = []
+    for w, d in VIBRATIONAL_CONTRIBUTION.items():
+        frequencies.append(w)
+        kinetics.append(np.fromiter(d.values(), float))
+
+    frequencies = np.array(frequencies)
+    kinetics = np.array(kinetics)
+
+    interpolation = interp1d(frequencies, kinetics.T, fill_value="extrapolate")
+    return interpolation
+
+HINDERED_CONTRIBUTION = {
+    # Table III
+    #V:{  Q: {kinetics}}
+     0:{  3: {'logA':-1.45, 'n':0.50, 'B':150},
+         10: {'logA':-1.45, 'n':0.50, 'B':150},
+        100: {'logA':-1.45, 'n':0.50, 'B':150}},
+     2:{  3: {'logA':-2.00, 'n':0.70, 'B':190},
+         10: {'logA':-1.98, 'n':0.70, 'B':175},
+        100: {'logA':-1.98, 'n':0.70, 'B':175}},
+     5:{  3: {'logA':-2.57, 'n':0.90, 'B':240},
+         10: {'logA':-2.88, 'n':1.00, 'B':280},
+        100: {'logA':-2.87, 'n':1.00, 'B':275}},
+    10:{  3: {'logA':-2.93, 'n':1.00, 'B':315},
+         10: {'logA':-3.21, 'n':1.10, 'B':335},
+        100: {'logA':-3.20, 'n':1.10, 'B':330}} 
+}
+
+def build_hr_interpolations():
+    """
+    This function builds multipe 2-D interpolations for LogA,
+    n and B. It will return 3 interpolations, one for each 
+    parameter.
+    """
+    barriers = []
+    partition = []
+
+    logA = []
+    n = []
+    B = []
+    for i, (V, partition_dict) in enumerate(HINDERED_CONTRIBUTION.items()):
+        for j, (Q, d) in enumerate(partition_dict.items()):
+            barriers.append(V)
+            partition.append(np.log10(Q))
+            
+            logA.append(d['logA'])
+            n.append(d['n'])
+            B.append(d['B'])
+
+    loga_interpolation = interp2d(barriers, partition, logA)
+    n_interpolation = interp2d(barriers, partition, n)
+    B_interpolation = interp2d(barriers, partition, B)
+    return (loga_interpolation, n_interpolation, B_interpolation)
 
 class StatMech():
 
