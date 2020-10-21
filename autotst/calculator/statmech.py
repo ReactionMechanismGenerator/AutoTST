@@ -666,6 +666,39 @@ class StatMech():
             elif isinstance(self.kinetics_job, arkane.thermo.ThermoJob):
                 self.thermo_job = job
 
+
+    def estimate_rotational_barrier(self, conformer, torsion_index):
+        """
+        A method to quickly estimate the barrier to internal rotation for complexes.
+        This rule of thumb was taken from the textbook: Section 2.9 of `Thermochemical 
+        Kinetics: Methods for the Estimation of Thermochemical Data and Rate Parameters` 
+        by Sidney W. Benson.
+        
+        
+        Inputs:
+        - conformer (autotst.species.Conformer): the conformer of interest
+        - torsion_index (int): the index corresponding to the rotor of interest
+        
+        Returns:
+        - estimated_barrier (float): the estimated barrier to rotation in kcal
+        """
+        
+        # Keys are number of substituents
+        # Values are barriers in kcal
+        ESTIMATED_BARRIERS = {
+            0: 0,
+            1: 1.1,
+            2: 2.2,
+            3: 3.5
+        }
+        
+        torsion = conformer.torsions[torsion_index]
+        i,j,k,l = torsion.atom_indices
+        j_neighbors = len(conformer.rmg_molecule.atoms[j].bonds) - 1
+        k_neighbors = len(conformer.rmg_molecule.atoms[k].bonds) - 1
+    
+        return ESTIMATED_BARRIERS[min([j_neighbors, k_neighbors])]
+
     def find_closest_vibrational_arrhenius(self, w):
         """
         A method that will find the arrhenius expression corresponding to 
