@@ -39,6 +39,7 @@ from scipy.interpolate import interp1d, interp2d
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
 from autotst.job.job import Job
+from autotst.data.inputoutput import get_possible_names
 
 import rmgpy
 import arkane.main
@@ -47,6 +48,7 @@ import arkane.kinetics
 import arkane.statmech
 
 import rmgpy.constants as constants
+from rmgpy.quantity import Units
 from rmgpy.kinetics import Arrhenius
 from arkane.ess.gaussian import GaussianLog
 
@@ -790,6 +792,78 @@ class StatMech():
         symm = conformer.get_bond_symmetry(torsion_index)
 
         return (constants.pi**0.5 / symm) * ((8*constants.pi*I*constants.kB*temperature) / constants.h**2)** 0.5
+
+    def apply_hr_correction(self, origional_kinetics, conformer):
+        """
+        A function that corrects the kinetics using a HR approximation for TSs.
+        This uses the above functions to remove the vibrational contribution 
+        and apply the HR contribution at many temperatures.
+        
+        Inputs:
+        - original_kinetics (rmgpy.kinetics.Arrhenius): the kinetics that you 
+            want to modify
+        - conformer (autotst.reaction.TS): the TS corresponding to the reaction
+            of interest
+        - logpath (str): the path to the log file fo the TS
+        
+        Returns: 
+        - arrhenius (rmgpy.kinetis.Arrhenius): the modified kinetics
+        """
+        
+        if isinstance(conformer, TS):
+            r, p = conformer.reaction_label.split('_')
+            possible_names = get_possible_names(r.split('+'), p.split('+'))
+            kind = 'ts'
+        elif isinstance(conformer, Conformer):
+            possible_names = [conformer.smiles]
+            kind = 'species'
+            
+        for name in possible_names:
+            logpath = os.path.join(self.directory, kind, name, f'{name}.log')
+            if os.path.exists(logpath):
+                break
+        assert os.path.exists(logpath), "The log file for {} does not exist".format(conformer)
+        arkane_conformer = read_arkane_conformer(logpath)
+        
+        rates = []
+        temperatures = 1/np.linspace(1/298,1/2500)
+        for temp in temperatures:
+            # calculate the original rate in SI units
+            rate = origional_kinetics.get_rate_coefficient(temp)
+            for torsion in conformer.torsions:
+                # calculate a few of the parameters you need
+                torsion_index = torsion.index
+                I = conformer.get_internal_reduced_moment_of_inertia(torsion_index, arkane_conformer)
+
+                symm = conformer.get_bond_symmetry(torsion_index)
+                V = self.estimate_rotational_barrier(conformer, torsion_index)
+                #V = 0
+                Q  = self.calculate_free_rotor_partition_function(arkane_conformer, conformer, torsion_index, temp)
+                #w = approximate_vibration(symm, I, V)
+                w = approximate_vibration(Q,V,temp)
+                #print(w)
+                # calculate the vibrational and HR contribution to k
+                k_vib = self.find_closest_vibrational_arrhenius(w)
+                k_hr = self.find_closest_hindered_arrhenius(V, Q)
+                
+                # modify k 
+                if isinstance(conformer, TS):
+                    rate /= k_vib.get_rate_coefficient(temp)
+                    rate *= k_hr.get_rate_coefficient(temp)
+                else:
+                    rate *= k_vib.get_rate_coefficient(temp)
+                    rate /= k_hr.get_rate_coefficient(temp)
+
+            rates.append(rate)
+        
+        # Modify the units of the rate and fit
+        # to an Arrhenius expression
+        kunits =  Units(origional_kinetics.A.units)
+        arrhenius = Arrhenius().fit_to_data(
+            temperatures, 
+            np.array(rates) * kunits.get_conversion_factor_from_si_to_cm_mol_s(), 
+            kunits=origional_kinetics.A.units)
+        return arrhenius
 
     def set_results(self):
         """
