@@ -746,6 +746,33 @@ class StatMech():
         Ea = B / constants.R
         return Arrhenius(A=(A, 'cm^3/(mol*s)'), n=n, Ea=(Ea, 'J/mol'))
 
+    def calculate_free_rotor_partition_function(self, arkane_conformer, conformer, torsion_index, temperature):
+        """
+        A method to calculate the partition function of a free rotor. This is based on 
+        equation 2.17 from `Thermochemical Kinetics: Methods for the Estimation 
+        of Thermochemical Data and Rate Parameters` by Sidney W. Benson.
+        
+        Inputs:
+        - arkane_conformer (rmgpy.statmech.conformer.Conformer): an RMG conformer
+            of interest
+        - conformer (autotst.species.Conformer): an AutoTST conformer object 
+        - torsion_index (int): the index of the torsion we want to calculate the
+            partition function for
+        - temperature (float): the temperature we want to calculate the partition fucntion at
+        
+        Returns:
+        - Q (float): the partition function of the free rotor
+        """
+        torsion = conformer.torsions[torsion_index]
+        i,j,k,l = np.array(torsion.atom_indices) + 1
+        top1 = np.arange(len(torsion.mask))[torsion.mask] + 1
+
+        I = calculate_I(conformer, torsion_index, arkane_conformer)
+        
+        symm = symmetry(conformer, torsion_index)
+
+        return (constants.pi**0.5 / symm) * ((8*constants.pi*I*constants.kB*temperature) / constants.h**2)** 0.5
+
     def set_results(self):
         """
         A method to set the RMGReaction from the kinetics job to the RMGReaction of the input Reaction
