@@ -157,6 +157,24 @@ def read_arkane_conformer(path):
     
     return arkane_conformer
 
+def approximate_vibration(Q, V, T):
+    '''
+    A way to approximate the RRHO vibration corresponding to
+    a hindered rotor contribution. Based on equation 27 from 
+    `Predicting the Preexponential Temperature Dependence of 
+    Bimolecular Metathesis Reaction Rate Coeffieicents using 
+    Transition State Theory` by N. Cohen, 1989
+    
+    Inputs:
+    - Q (float): the free rotor partition function
+    - V (float): the barrier to rotation in kcal
+    - T (float): the temperature of interest
+    
+    Returns:
+    - w (float): the approximate vibration
+    '''
+    return 360 * (T / 298) * (1/Q) * (V / (constants.R / 4184 * T))**0.5
+
 class StatMech():
 
     def __init__(
@@ -767,9 +785,9 @@ class StatMech():
         i,j,k,l = np.array(torsion.atom_indices) + 1
         top1 = np.arange(len(torsion.mask))[torsion.mask] + 1
 
-        I = calculate_I(conformer, torsion_index, arkane_conformer)
+        I = conformer.get_internal_reduced_moment_of_inertia(torsion_index, arkane_conformer)
         
-        symm = symmetry(conformer, torsion_index)
+        symm = conformer.get_bond_symmetry(torsion_index)
 
         return (constants.pi**0.5 / symm) * ((8*constants.pi*I*constants.kB*temperature) / constants.h**2)** 0.5
 
