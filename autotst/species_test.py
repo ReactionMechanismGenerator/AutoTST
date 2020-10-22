@@ -40,6 +40,7 @@ import rmgpy.molecule
 import autotst
 from .geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
 from .species import Species, Conformer
+from .calculator.statmech import read_arkane_conformer
 
 class TestConformer(unittest.TestCase):
     def setUp(self):
@@ -106,6 +107,16 @@ class TestConformer(unittest.TestCase):
         for n in range(len(positions)):
             self.assertTrue((np.array([float(x) for x in xyz_block.split('\n')[n].split()[1:]]) == positions[n]).all())
 
+    def test_get_internal_reduced_moment_of_inertia(self):
+        path = os.path.expandvars('$AUTOTST/test/bin/log-files/CC_0.log')
+        arkane_conformer =  read_arkane_conformer(path)
+        I = self.conformer.get_internal_reduced_moment_of_inertia(0, arkane_conformer)
+        self.assertAlmostEqual(I, 2.0e-47, -46)
+
+    def test_get_bond_symmetry(self):
+        symm = self.conformer.get_bond_symmetry(0)
+        self.assertEqual(symm, 2.0)
+    
 class TestSpecies(unittest.TestCase):
     def setUp(self):
         self.species = Species(smiles=["CC"])
