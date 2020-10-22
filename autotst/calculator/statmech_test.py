@@ -29,8 +29,12 @@
 ##########################################################################
 
 import unittest, os, sys, shutil
+import numpy as np
 from ..reaction import Reaction
 from .statmech import StatMech
+from .statmech import VIBRATIONAL_CONTRIBUTION, HINDERED_CONTRIBUTION, \
+    build_vibrational_interpolation, build_hr_interpolations, \
+    read_arkane_conformer, approximate_vibration
 import rmgpy.reaction
 import rmgpy.kinetics
 
@@ -173,6 +177,40 @@ class TestStatMech(unittest.TestCase):
                 self.statmech.kinetics_job.reaction
             )
         )
+
+    def test_build_interpolation1(self):
+        vib_interpolation = build_vibrational_interpolation()
+        logA, n, B = vib_interpolation(500)
+        self.assertAlmostEqual(logA, VIBRATIONAL_CONTRIBUTION[500]['logA'], 2)
+        self.assertAlmostEqual(n, VIBRATIONAL_CONTRIBUTION[500]['n'], 2)
+        self.assertAlmostEqual(B, VIBRATIONAL_CONTRIBUTION[500]['B'], 0)
+
+    def test_build_interpolation2(self):
+        loga_hr, n_hr, b_hr = build_hr_interpolations()
+        V = 2
+        Q = 10
+        logA = loga_hr(V,Q)[0]
+        n = n_hr(V,Q)[0]
+        B = b_hr(V,Q)[0]
+
+        self.assertAlmostEqual(logA, HINDERED_CONTRIBUTION[V][Q]['logA'], 2)
+        self.assertAlmostEqual(n, HINDERED_CONTRIBUTION[V][Q]['n'], 2)
+        self.assertAlmostEqual(B, HINDERED_CONTRIBUTION[V][Q]['B'], 0)
+
+    def test_read_arkane_conformer(self):
+        path = os.path.expandvars('$AUTOTST/test/bin/log-files/CC_0.log')
+        arkane_conformer = read_arkane_conformer(path)
+        value = np.array([12., 12., 1.00782503, 1.00782503, 1.00782503, 1.00782503, 1.00782503, 1.00782503])
+        for i,j in zip(value, arkane_conformer.mass.value):
+            self.assertAlmostEqual(i,j,2)
+
+    def test_approximate_vibration(self):
+        Q = 10
+        V = 2
+        T = 298
+        w = approximate_vibration(Q, V, T)
+        self.assertAlmostEqual(w, 66.1588, 2)
+        
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
 
