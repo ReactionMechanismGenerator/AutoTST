@@ -438,7 +438,7 @@ class StatMech():
             f.write(input_string)
         return True
 
-    def write_kinetics_input(self, include_rotors=True):
+    def write_kinetics_input(self, include_rotors=False):
         """
         A method to write Arkane file to obtain kinetics for a Reaction object
 
