@@ -865,6 +865,32 @@ class StatMech():
             kunits=origional_kinetics.A.units)
         return arrhenius
 
+    def correct_for_hr(self, inplace=False):
+        """
+        A method that will use the above method to apply the hindered rotor
+        corrections for a modified hindered rotor method. This step should
+        be run after one runs `run` method
+        """
+        try:
+            modified_kinetics = self.kinetics_job.reaction.kinetics
+        except AttributeError:
+            logging.error('It appears that Arkane has not been run.')
+            logging.error('Run Arkane first before running `correct_for_hr`.')
+            return None
+
+        if 'modified with AutoTST 1DHR approximation' in modified_kinetics.comment:
+            logging.info('These kientics have already been modified. Not doing it again.')
+            return modified_kinetics
+
+        reactans, _ = self.reaction.get_label().split('_')
+        conformers = [Conformer(smile) for smile in reactans.split('+')] + self.reaction.ts['forward']
+        for conformer in conformers:
+            modified_kinetics = self.apply_hr_correction(modified_kinetics, conformer)
+        modified_kinetics.comment += '; modified with AutoTST 1DHR approximation'
+        if inplace:
+            self.kinetics_job.reaction.kinetics = modified_kinetics
+        return modified_kinetics
+
     def set_results(self):
         """
         A method to set the RMGReaction from the kinetics job to the RMGReaction of the input Reaction
