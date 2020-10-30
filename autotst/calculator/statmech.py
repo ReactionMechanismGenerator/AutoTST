@@ -640,7 +640,7 @@ class StatMech():
 
         self.write_kinetics_input()
 
-    def run(self):
+    def run_kinetics_job(self):
         """
         A method to write run a kinetics job from all of the files written `write_files`
 
@@ -664,7 +664,7 @@ class StatMech():
                 elif isinstance(job, arkane.main.ThermoJob):
                     self.thermo_job = job
         except: #TODO double check this and make this mroe robust / better at catching errors
-            logging.warming('')
+            logging.warning('')
             self.write_kinetics_input(include_rotors=False)
 
         self.kinetics_job.input_file = os.path.join(
@@ -885,6 +885,7 @@ class StatMech():
         reactans, _ = self.reaction.get_label().split('_')
         conformers = [Conformer(smile) for smile in reactans.split('+')] + self.reaction.ts['forward']
         for conformer in conformers:
+            logging.info(f'Applying HR correction for {conformer} which has {len(conformer.torsions)} rotors')
             modified_kinetics = self.apply_hr_correction(modified_kinetics, conformer)
         modified_kinetics.comment += '; modified with AutoTST 1DHR approximation'
         if inplace:
@@ -912,6 +913,16 @@ class StatMech():
                 if product.to_smiles() == p.label:
                     p.molecule = [product]
 
-        self.reaction.rmg_reaction = self.kinetics_job.reaction
+        self.reaction.rmg_reaction.kinetics = self.kinetics_job.reaction.kinetics
 
         return self.reaction
+
+    def run(self, use_hindered_rotors=True):
+        """
+        A method to calculate kientics with the modified hindered rotor correction.
+        The old version of this method was renamed to `run_kinetics_job`. 
+        """
+        logging.warning('StatMech.run is deprecated, you may want to use `run_kinetics_job` in the future.')
+        self.run_kinetics_job()
+        if use_hindered_rotors:
+            self.correct_for_hr(inplace=True)

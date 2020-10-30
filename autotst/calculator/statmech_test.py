@@ -167,16 +167,11 @@ class TestStatMech(unittest.TestCase):
     def test_set_results(self):
         self.test_run()
         self.statmech.set_results()
-        self.assertTrue(
-            self.reaction.rmg_reaction.is_isomorphic(
-                self.statmech.kinetics_job.reaction
-            )
-        )
-        self.assertTrue(
-            self.statmech.reaction.rmg_reaction.is_isomorphic(
-                self.statmech.kinetics_job.reaction
-            )
-        )
+        reactions = [self.reaction.rmg_reaction, self.statmech.reaction.rmg_reaction]
+        for reaction in reactions:
+            self.assertTrue(self.statmech.kinetics_job.reaction.is_isomorphic(
+                reaction
+            ))
 
     def test_build_interpolation1(self):
         vib_interpolation = build_vibrational_interpolation()
