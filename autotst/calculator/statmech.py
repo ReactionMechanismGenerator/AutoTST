@@ -460,10 +460,11 @@ class StatMech():
             "useBondCorrections = False",
             ""]
 
-        labels = []
+        species = {}
         r_smiles = []
         p_smiles = []
-        for i, react in enumerate(self.reaction.reactants):
+        i = 0
+        for react in self.reaction.reactants:
             lowest_energy = 1e5
             lowest_energy_conf = None
 
@@ -496,17 +497,19 @@ class StatMech():
                 lowest_energy_conf = list(react.conformers.values())[0][0]
 
             # r_smiles.append(lowest_energy_conf.smiles)
-            r_smiles.append(f"react_{i}")
             label = lowest_energy_conf.smiles
-            if label in labels:
-                continue
+            if label in species.keys():
+                name = species[label]
             else:
-                labels.append(label)
-            p = os.path.join(self.directory, "species", label, label + ".py")
-            line = f"species('react_{i}', '{p}', structure=SMILES('{label}'))"
-            top.append(line)
+                name = f'spec_{i}'
+                species[label] = name
+                i+= 1
+                p = os.path.join(self.directory, "species", label, label + ".py")
+                line = f"species('{name}', '{p}', structure=SMILES('{label}'))"
+                top.append(line)
+            r_smiles.append(name)
 
-        for i, prod in enumerate(self.reaction.products):
+        for prod in self.reaction.products:
 
             lowest_energy = 1e5
             lowest_energy_conf = None
@@ -540,15 +543,18 @@ class StatMech():
                 lowest_energy_conf = list(prod.conformers.values())[0][0]
 
             # p_smiles.append(lowest_energy_conf.smiles)
-            p_smiles.append(f"prod_{i}")
             label = lowest_energy_conf.smiles
-            if label in labels:
-                continue
+            if label in species.keys():
+                name = species[label]
             else:
-                labels.append(label)
-            p = os.path.join(self.directory, "species", label, label + ".py")
-            line = f"species('prod_{i}', '{p}', structure=SMILES('{label}'))"
-            top.append(line)
+                name = f'spec_{i}'
+                species[label] = name
+                i+= 1
+                p = os.path.join(self.directory, "species", label, label + ".py")
+                line = f"species('{name}', '{p}', structure=SMILES('{label}'))"
+                top.append(line)
+            p_smiles.append(name)
+        
         p = os.path.join(self.directory, "ts", self.reaction.label, self.reaction.label + ".py")
         line = f"transitionState('TS', '{p}')"
         top.append(line)
