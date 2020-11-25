@@ -215,9 +215,11 @@ class InputOutput():
         try:
             with open(path) as result_file:
                 logging.info(f'Reading existing kinetics file {path}')
-                global_context = {'__builtins__': None}
+                global_context = {
+                    #'__builtins__': None
+                }
                 local_context = {
-                    '__builtins__': None,
+                    #'__builtins__': None,
                     'True': True,
                     'False': False,
                     'Reaction': rmgpy.reaction.Reaction,
@@ -233,7 +235,8 @@ class InputOutput():
                     'LinearRotor': rmgpy.statmech.LinearRotor,
                     'array': np.array,
                     'int32': np.int32,
-                    'Molecule': rmgpy.molecule.Molecule
+                    'Molecule': rmgpy.molecule.Molecule,
+                    'SingleExponentialDown':rmgpy.pdep.SingleExponentialDown
                 }
                 exec(result_file.read(), global_context, local_context)
         except IOError as e:
