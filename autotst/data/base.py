@@ -689,7 +689,7 @@ class TSGroups(rmgpy.data.base.Database):
         # matched
         if len(template) != len(forward_template):
             logging.warning(
-                f'Unable to find matching template for reaction {reactin!s} in reaction family {self!s}')
+                f'Unable to find matching template for reaction {reaction!s} in reaction family {self!s}')
             logging.warning(" Trying to match " + str(forward_template))
             logging.warning(" Matched " + str(template))
             print(str(self), template, forward_template)
