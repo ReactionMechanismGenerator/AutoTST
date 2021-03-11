@@ -76,6 +76,9 @@ class Reaction():
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
             "R_Addition_MultipleBond",
             "H_Abstraction",
+            "F_Abstraction",
+            "Cl_Abstraction",
+            "Br_Abstraction",
             "intra_H_migration"
         ]
 
@@ -169,8 +172,12 @@ class Reaction():
         self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
             "R_Addition_MultipleBond",
             "H_Abstraction",
+            "F_Abstraction",
+            "Cl_Abstraction",
+            "Br_Abstraction",
             "intra_H_migration"
         ]
+        
         try:
             rmg_database.load(
                 database_path,
@@ -818,6 +825,9 @@ class TS(Conformer):
 
         if self.reaction_family.lower() in [
             'h_abstraction',
+            'f_abstraction',
+            'cl_abstraction',
+            'br_abstraction',
             'r_addition_multiplebond',
             'intra_h_migration']:
             # for i, atom in enumerate(reactants.atoms):
