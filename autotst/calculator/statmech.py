@@ -33,10 +33,13 @@ import logging
 import ase
 import cclib.io
 import shutil
+import numpy as np
+from scipy.interpolate import interp1d, interp2d
 
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
 from autotst.job.job import Job
+from autotst.data.inputoutput import get_possible_names
 
 import rmgpy
 import arkane.main
@@ -44,9 +47,135 @@ import arkane.thermo
 import arkane.kinetics
 import arkane.statmech
 
+import rmgpy.constants as constants
+from rmgpy.quantity import Units
+from rmgpy.kinetics import Arrhenius
+from arkane.ess.gaussian import GaussianLog
+
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
+# The following dicts are tables that were taken from 
+# `Predicting the Preexponential Temperature Dependence
+# of Bimolecular Metathesis Reaction Rate Coefficients 
+# using Transition State Theory` by N. Cohen, 1989
+
+VIBRATIONAL_CONTRIBUTION = {
+    # Table II 
+    #  w: {kinetics}
+     100: {'logA':-2.91, 'n':1.00, 'B':300},
+     200: {'logA':-2.90, 'n':1.00, 'B':306},
+     300: {'logA':-2.88, 'n':0.99, 'B':314},
+     400: {'logA':-2.87, 'n':0.97, 'B':326},
+     500: {'logA':-2.85, 'n':0.96, 'B':338},
+     700: {'logA':-2.60, 'n':0.87, 'B':301},
+    1000: {'logA':-2.35, 'n':0.78, 'B':292},
+    1500: {'logA':-1.88, 'n':0.61, 'B':251},
+    2000: {'logA':-1.46, 'n':0.47, 'B':202},
+    2500: {'logA':-1.36, 'n':0.43, 'B':209},
+    3000: {'logA':-1.08, 'n':0.34, 'B':168},
+    3500: {'logA':-0.84, 'n':0.26, 'B':133},
+    4000: {'logA':-0.66, 'n':0.20, 'B':104}
+}
+
+def build_vibrational_interpolation():
+    """
+    This function builds a linear interpolation of the above dictionary
+    """
+    frequencies = []
+    kinetics = []
+    for w, d in VIBRATIONAL_CONTRIBUTION.items():
+        frequencies.append(w)
+        kinetics.append(np.fromiter(d.values(), float))
+
+    frequencies = np.array(frequencies)
+    kinetics = np.array(kinetics)
+
+    interpolation = interp1d(frequencies, kinetics.T, fill_value="extrapolate")
+    return interpolation
+
+HINDERED_CONTRIBUTION = {
+    # Table III
+    #V:{  Q: {kinetics}}
+     0:{  3: {'logA':-1.45, 'n':0.50, 'B':150},
+         10: {'logA':-1.45, 'n':0.50, 'B':150},
+        100: {'logA':-1.45, 'n':0.50, 'B':150}},
+     2:{  3: {'logA':-2.00, 'n':0.70, 'B':190},
+         10: {'logA':-1.98, 'n':0.70, 'B':175},
+        100: {'logA':-1.98, 'n':0.70, 'B':175}},
+     5:{  3: {'logA':-2.57, 'n':0.90, 'B':240},
+         10: {'logA':-2.88, 'n':1.00, 'B':280},
+        100: {'logA':-2.87, 'n':1.00, 'B':275}},
+    10:{  3: {'logA':-2.93, 'n':1.00, 'B':315},
+         10: {'logA':-3.21, 'n':1.10, 'B':335},
+        100: {'logA':-3.20, 'n':1.10, 'B':330}} 
+}
+
+def build_hr_interpolations():
+    """
+    This function builds multipe 2-D interpolations for LogA,
+    n and B. It will return 3 interpolations, one for each 
+    parameter.
+    """
+    barriers = []
+    partition = []
+
+    logA = []
+    n = []
+    B = []
+    for i, (V, partition_dict) in enumerate(HINDERED_CONTRIBUTION.items()):
+        for j, (Q, d) in enumerate(partition_dict.items()):
+            barriers.append(V)
+            partition.append(np.log10(Q))
+            
+            logA.append(d['logA'])
+            n.append(d['n'])
+            B.append(d['B'])
+
+    loga_interpolation = interp2d(barriers, partition, logA)
+    n_interpolation = interp2d(barriers, partition, n)
+    B_interpolation = interp2d(barriers, partition, B)
+    return (loga_interpolation, n_interpolation, B_interpolation)
+
+def read_arkane_conformer(path):
+    """
+    Given a path to a Gaussian log file, reads it in and returns 
+    a RMG / Arkane conformer which will be used in other functions
+    
+    Inputs:
+    - path (str): the path to the log file
+    
+    Returns:
+    - arkane_conformer (rmgpy.statmech.conformer.Conformer):
+        the RMG conformer corresponding to the log file 
+    """
+    log = GaussianLog(path)
+    arkane_conformer, *_ = log.load_conformer()
+    coords, numbers, mass = log.load_geometry()
+
+    arkane_conformer.coordinates = (coords * 10 ** -10, 'm')
+    arkane_conformer.number = numbers
+    arkane_conformer.mass = (mass, 'amu')
+    
+    return arkane_conformer
+
+def approximate_vibration(Q, V, T):
+    '''
+    A way to approximate the RRHO vibration corresponding to
+    a hindered rotor contribution. Based on equation 27 from 
+    `Predicting the Preexponential Temperature Dependence of 
+    Bimolecular Metathesis Reaction Rate Coeffieicents using 
+    Transition State Theory` by N. Cohen, 1989
+    
+    Inputs:
+    - Q (float): the free rotor partition function
+    - V (float): the barrier to rotation in kcal
+    - T (float): the temperature of interest
+    
+    Returns:
+    - w (float): the approximate vibration
+    '''
+    return 360 * (T / 298) * (1/Q) * (V / (constants.R / 4184 * T))**0.5
 
 class StatMech():
 
@@ -71,6 +200,9 @@ class StatMech():
         self.thermo_job = arkane.main.Arkane()
         self.model_chemistry = model_chemistry
         self.freq_scale_factor = freq_scale_factor
+
+        self._vib_interpolation = None
+        self._hr_interpolation = None
 
     def write_species_files(self, species):
         """
@@ -306,7 +438,7 @@ class StatMech():
             f.write(input_string)
         return True
 
-    def write_kinetics_input(self, include_rotors=True):
+    def write_kinetics_input(self, include_rotors=False):
         """
         A method to write Arkane file to obtain kinetics for a Reaction object
 
@@ -508,7 +640,7 @@ class StatMech():
 
         self.write_kinetics_input()
 
-    def run(self):
+    def run_kinetics_job(self):
         """
         A method to write run a kinetics job from all of the files written `write_files`
 
@@ -532,7 +664,7 @@ class StatMech():
                 elif isinstance(job, arkane.main.ThermoJob):
                     self.thermo_job = job
         except: #TODO double check this and make this mroe robust / better at catching errors
-            logging.warming('')
+            logging.warning('')
             self.write_kinetics_input(include_rotors=False)
 
         self.kinetics_job.input_file = os.path.join(
@@ -553,6 +685,212 @@ class StatMech():
                 self.kinetics_job = job
             elif isinstance(self.kinetics_job, arkane.thermo.ThermoJob):
                 self.thermo_job = job
+
+
+    def estimate_rotational_barrier(self, conformer, torsion_index):
+        """
+        A method to quickly estimate the barrier to internal rotation for complexes.
+        This rule of thumb was taken from the textbook: Section 2.9 of `Thermochemical 
+        Kinetics: Methods for the Estimation of Thermochemical Data and Rate Parameters` 
+        by Sidney W. Benson.
+        
+        
+        Inputs:
+        - conformer (autotst.species.Conformer): the conformer of interest
+        - torsion_index (int): the index corresponding to the rotor of interest
+        
+        Returns:
+        - estimated_barrier (float): the estimated barrier to rotation in kcal
+        """
+        
+        # Keys are number of substituents
+        # Values are barriers in kcal
+        ESTIMATED_BARRIERS = {
+            0: 0,
+            1: 1.1,
+            2: 2.2,
+            3: 3.5
+        }
+        
+        torsion = conformer.torsions[torsion_index]
+        i,j,k,l = torsion.atom_indices
+        j_neighbors = len(conformer.rmg_molecule.atoms[j].bonds) - 1
+        k_neighbors = len(conformer.rmg_molecule.atoms[k].bonds) - 1
+    
+        return ESTIMATED_BARRIERS[min([j_neighbors, k_neighbors])]
+
+    def find_closest_vibrational_arrhenius(self, w):
+        """
+        A method that will find the arrhenius expression corresponding to 
+        the vibrational contribution to the rate expression. This will 
+        build the linear interplation if need be and use that interpolation
+        to find values of A, Ea, and n. 
+
+        Inputs:
+        - w (float): vibration in cm^-1
+
+        Returns:
+        - arrhenius (rmgpy.kinetics.Arrhenius): the vibration contribution 
+            to the rate expression
+        """
+        if not self._vib_interpolation:
+            self._vib_interpolation = build_vibrational_interpolation()
+        logA, n, B = self._vib_interpolation(w)
+        A = 10**logA * 1000
+        Ea = B / constants.R
+        return Arrhenius(A=(A, 'cm^3/(mol*s)'), n=n, Ea=(Ea, 'J/mol'))
+
+    def find_closest_hindered_arrhenius(self, V, Q):
+        """
+        A method that will find the Arrhenius expression corresponding to 
+        the hindered rotor contribution to the rate expression. This will
+        build the linear interpolations if need be and use those to find 
+        values of A, Ea and n.
+
+        Inputs:
+        - V (float): the barrier to rotation in kcal/mol
+        - Q (float): the free rotor partiton function
+
+        Returns:
+        - arrhenius (rmgpy.kinetics.Arrhenius): the hindered rotor 
+            contribution to the rate expression
+        """
+        if not self._hr_interpolation:
+            self._hr_interpolation = build_hr_interpolations()
+
+        logQ = np.log10(Q)
+        logA = self._hr_interpolation[0](V,logQ)[0]
+        n = self._hr_interpolation[1](V,logQ)[0]
+        B = self._hr_interpolation[2](V,logQ)[0]
+        A = 10**logA * 1000
+        Ea = B / constants.R
+        return Arrhenius(A=(A, 'cm^3/(mol*s)'), n=n, Ea=(Ea, 'J/mol'))
+
+    def calculate_free_rotor_partition_function(self, arkane_conformer, conformer, torsion_index, temperature):
+        """
+        A method to calculate the partition function of a free rotor. This is based on 
+        equation 2.17 from `Thermochemical Kinetics: Methods for the Estimation 
+        of Thermochemical Data and Rate Parameters` by Sidney W. Benson.
+        
+        Inputs:
+        - arkane_conformer (rmgpy.statmech.conformer.Conformer): an RMG conformer
+            of interest
+        - conformer (autotst.species.Conformer): an AutoTST conformer object 
+        - torsion_index (int): the index of the torsion we want to calculate the
+            partition function for
+        - temperature (float): the temperature we want to calculate the partition fucntion at
+        
+        Returns:
+        - Q (float): the partition function of the free rotor
+        """
+        torsion = conformer.torsions[torsion_index]
+        i,j,k,l = np.array(torsion.atom_indices) + 1
+        top1 = np.arange(len(torsion.mask))[torsion.mask] + 1
+
+        I = conformer.get_internal_reduced_moment_of_inertia(torsion_index, arkane_conformer)
+        
+        symm = conformer.get_bond_symmetry(torsion_index)
+
+        return (constants.pi**0.5 / symm) * ((8*constants.pi*I*constants.kB*temperature) / constants.h**2)** 0.5
+
+    def apply_hr_correction(self, origional_kinetics, conformer):
+        """
+        A function that corrects the kinetics using a HR approximation for TSs.
+        This uses the above functions to remove the vibrational contribution 
+        and apply the HR contribution at many temperatures.
+        
+        Inputs:
+        - original_kinetics (rmgpy.kinetics.Arrhenius): the kinetics that you 
+            want to modify
+        - conformer (autotst.reaction.TS): the TS corresponding to the reaction
+            of interest
+        - logpath (str): the path to the log file fo the TS
+        
+        Returns: 
+        - arrhenius (rmgpy.kinetis.Arrhenius): the modified kinetics
+        """
+        
+        if isinstance(conformer, TS):
+            r, p = conformer.reaction_label.split('_')
+            possible_names = get_possible_names(r.split('+'), p.split('+'))
+            kind = 'ts'
+        elif isinstance(conformer, Conformer):
+            possible_names = [conformer.smiles]
+            kind = 'species'
+            
+        for name in possible_names:
+            logpath = os.path.join(self.directory, kind, name, f'{name}.log')
+            if os.path.exists(logpath):
+                break
+        assert os.path.exists(logpath), "The log file for {} does not exist".format(conformer)
+        arkane_conformer = read_arkane_conformer(logpath)
+        
+        rates = []
+        temperatures = 1/np.linspace(1/298,1/2500)
+        for temp in temperatures:
+            # calculate the original rate in SI units
+            rate = origional_kinetics.get_rate_coefficient(temp)
+            for torsion in conformer.torsions:
+                # calculate a few of the parameters you need
+                torsion_index = torsion.index
+                I = conformer.get_internal_reduced_moment_of_inertia(torsion_index, arkane_conformer)
+
+                symm = conformer.get_bond_symmetry(torsion_index)
+                V = self.estimate_rotational_barrier(conformer, torsion_index)
+                #V = 0
+                Q  = self.calculate_free_rotor_partition_function(arkane_conformer, conformer, torsion_index, temp)
+                #w = approximate_vibration(symm, I, V)
+                w = approximate_vibration(Q,V,temp)
+                #print(w)
+                # calculate the vibrational and HR contribution to k
+                k_vib = self.find_closest_vibrational_arrhenius(w)
+                k_hr = self.find_closest_hindered_arrhenius(V, Q)
+                
+                # modify k 
+                if isinstance(conformer, TS):
+                    rate /= k_vib.get_rate_coefficient(temp)
+                    rate *= k_hr.get_rate_coefficient(temp)
+                else:
+                    rate *= k_vib.get_rate_coefficient(temp)
+                    rate /= k_hr.get_rate_coefficient(temp)
+
+            rates.append(rate)
+        
+        # Modify the units of the rate and fit
+        # to an Arrhenius expression
+        kunits =  Units(origional_kinetics.A.units)
+        arrhenius = Arrhenius().fit_to_data(
+            temperatures, 
+            np.array(rates) * kunits.get_conversion_factor_from_si_to_cm_mol_s(), 
+            kunits=origional_kinetics.A.units)
+        return arrhenius
+
+    def correct_for_hr(self, inplace=False):
+        """
+        A method that will use the above method to apply the hindered rotor
+        corrections for a modified hindered rotor method. This step should
+        be run after one runs `run` method
+        """
+        try:
+            modified_kinetics = self.kinetics_job.reaction.kinetics
+        except AttributeError:
+            logging.error('It appears that Arkane has not been run.')
+            logging.error('Run Arkane first before running `correct_for_hr`.')
+            return None
+
+        if 'modified with AutoTST 1DHR approximation' in modified_kinetics.comment:
+            logging.info('These kientics have already been modified. Not doing it again.')
+            return modified_kinetics
+
+        reactans, _ = self.reaction.get_label().split('_')
+        conformers = [Conformer(smile) for smile in reactans.split('+')] + self.reaction.ts['forward']
+        for conformer in conformers:
+            logging.info(f'Applying HR correction for {conformer} which has {len(conformer.torsions)} rotors')
+            modified_kinetics = self.apply_hr_correction(modified_kinetics, conformer)
+        modified_kinetics.comment += '; modified with AutoTST 1DHR approximation'
+        if inplace:
+            self.kinetics_job.reaction.kinetics = modified_kinetics
+        return modified_kinetics
 
     def set_results(self):
         """
@@ -575,6 +913,16 @@ class StatMech():
                 if product.to_smiles() == p.label:
                     p.molecule = [product]
 
-        self.reaction.rmg_reaction = self.kinetics_job.reaction
+        self.reaction.rmg_reaction.kinetics = self.kinetics_job.reaction.kinetics
 
         return self.reaction
+
+    def run(self, use_hindered_rotors=True):
+        """
+        A method to calculate kientics with the modified hindered rotor correction.
+        The old version of this method was renamed to `run_kinetics_job`. 
+        """
+        logging.warning('StatMech.run is deprecated, you may want to use `run_kinetics_job` in the future.')
+        self.run_kinetics_job()
+        if use_hindered_rotors:
+            self.correct_for_hr(inplace=True)
