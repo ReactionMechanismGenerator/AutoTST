@@ -12,7 +12,7 @@ dependencies:
   - python
   - rmg == 3.0.0
   - ase
-  - cclib == 1.6.2 
+  - cclib >= 1.7.0
   - py3dmol
   - rdkit >= 2019.03.4
   - nose
