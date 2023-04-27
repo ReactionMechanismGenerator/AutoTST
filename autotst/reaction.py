@@ -31,6 +31,7 @@
 import os, itertools, logging
 import numpy as np
 from copy import deepcopy
+import re
 
 import rdkit
 import rdkit.Chem 
@@ -323,12 +324,16 @@ class Reaction():
             smiles_conversions = {
                 "[CH]":"[CH...]"
             }
+
             def get_rmg_mol(smile):
                 if smile.upper() in list(smiles_conversions.keys()):
                     smile = smiles_conversions[smile.upper()]
                 return rmgpy.molecule.Molecule(smiles=smile).generate_resonance_structures()
-            rmg_reactants = [get_rmg_mol(smile) for smile in r.split("+")]
-            rmg_products = [get_rmg_mol(smile) for smile in p.split("+")]
+            # regex split at a '+' but make sure there isn't a ']' after it
+            r_smiles = re.split(r"\+(?![^\[]*\])", r)
+            p_smiles = re.split(r"\+(?![^\[]*\])", p)
+            rmg_reactants = [get_rmg_mol(smile) for smile in r_smiles]
+            rmg_products = [get_rmg_mol(smile) for smile in p_smiles]
 
             combos_to_try = list(itertools.product(
                 list(itertools.product(*rmg_reactants)),
