@@ -7,7 +7,7 @@ channels:
   - conda-forge
 dependencies:
   - python
-  - rmg::rmg == 3.0.0
+  - rmg::rmg
   - conda-forge::ase
   - conda-forge::cclib >= 1.7.0
   - conda-forge::py3dmol
@@ -15,3 +15,6 @@ dependencies:
   - codecov
   - nose
   - matplotlib
+  - pip:
+    # The current version of descriptastorus on conda-forge is 2.6.0, which is not compatible with the version of scipy that is included with rmg
+    - descriptastorus==2.6.0
