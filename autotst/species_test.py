@@ -38,8 +38,8 @@ import rmgpy
 import rmgpy.molecule
 
 import autotst
-from .geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
-from .species import Species, Conformer
+from autotst.geometry import Bond, Angle, Torsion, CisTrans, ChiralCenter
+from autotst.species import Species, Conformer
 
 class TestConformer(unittest.TestCase):
     def setUp(self):

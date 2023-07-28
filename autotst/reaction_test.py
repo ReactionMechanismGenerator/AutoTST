@@ -35,8 +35,8 @@ import rdkit.Chem.rdchem
 import rmgpy.reaction
 import rmgpy.molecule
 import rmgpy.data.rmg
-from .reaction import Reaction, TS
-from .data.base import TransitionStates
+from autotst.reaction import Reaction, TS
+from autotst.data.base import TransitionStates
 
 class TestReaction(unittest.TestCase):
     def setUp(self):

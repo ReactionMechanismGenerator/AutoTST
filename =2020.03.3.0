@@ -1,0 +1,19 @@
+conda-forge/linux-64                                        Using cache
+conda-forge/noarch                                          Using cache
+
+Looking for: ['rmg::rdkit']
+
+
+Pinned packages:
+  - python 3.7.*
+
+
+Could not solve for environment specs
+The following packages are incompatible
+└─ rdkit   is uninstallable because there are no viable options
+   ├─ rdkit [2015.03.1|2015.09.2] would require
+   │  └─ python 2.7* , which conflicts with any installable versions previously reported;
+   ├─ rdkit 2015.03.1 would require
+   │  └─ python 3.4* , which conflicts with any installable versions previously reported;
+   └─ rdkit 2020.03.3.0 would require
+      └─ py-boost  , which does not exist (perhaps a missing channel).

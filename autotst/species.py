@@ -28,7 +28,7 @@
 #
 ##########################################################################
 
-from .geometry import CisTrans, Torsion, Angle, Bond, ChiralCenter
+from autotst.geometry import CisTrans, Torsion, Angle, Bond, ChiralCenter
 import numpy as np
 import os, logging
 

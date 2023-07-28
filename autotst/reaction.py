@@ -49,9 +49,9 @@ import rmgpy.data.rmg
 import rmgpy.exceptions 
 
 import autotst
-from .data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
-from .species import Species, Conformer
-from .geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
+from autotst.data.base import DistanceData, TransitionStateDepository, TSGroups, TransitionStates
+from autotst.species import Species, Conformer
+from autotst.geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
 
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
