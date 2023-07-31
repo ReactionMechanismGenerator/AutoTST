@@ -83,6 +83,6 @@ jobs:
       
       - name: Unittest
         run: |
-          mamba activate rmg_env
+          conda activate tst_env
           make unittests
         
