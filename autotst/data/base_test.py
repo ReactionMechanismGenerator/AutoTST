@@ -34,7 +34,7 @@ import os
 import logging
 import numpy as np
 import autotst
-from autotst.common import AUTOTST_PATH
+from autotst.common import AUTOTST_PATH, AUTOTST_DATABASE_PATH
 from autotst.reaction import Reaction
 from autotst.data.base import QMData, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
 import rmgpy
@@ -156,7 +156,7 @@ class TestTransitionStateDepository(unittest.TestCase):
 
         self.settings = {
             "file_path": os.path.join(
-                os.path.join(AUTOTST_PATH, "test", "database", "H_Abstraction", "TS_training", "reactions.py")
+                os.path.join(AUTOTST_DATABASE_PATH, "database", "H_Abstraction", "TS_training", "reactions.py")
             ),
             "local_context": {"DistanceData":DistanceData},
             "global_context": {'__builtins__': None}
@@ -178,7 +178,7 @@ class TestTSGroups(unittest.TestCase):
 
         self.settings = {
             "file_path": os.path.join(
-                os.path.join(AUTOTST_PATH, "database", "H_Abstraction", "TS_training", "TS_groups.py")
+                os.path.join(AUTOTST_DATABASE_PATH, "database", "H_Abstraction", "TS_groups.py")
             ),
             "local_context": {"DistanceData":DistanceData},
             "global_context": {'__builtins__': None}

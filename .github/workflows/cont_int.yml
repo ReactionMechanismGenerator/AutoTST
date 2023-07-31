@@ -77,6 +77,8 @@ jobs:
           echo 'export PATH=$PATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
           echo 'export PATH=$PATH:'"$(pwd)" >> ~/.bashrc
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          export PATH=$PATH:$(pwd)
           echo $(pwd)
           make
           cd ..

@@ -12,6 +12,8 @@ import rmgpy
 
 # Absolute path to the AutoTST directory
 AUTOTST_PATH = os.path.dirname(os.path.abspath(__file__))
+# Absolute path to the AutoTST database directory - One directory above AUTOTST_PATH
+AUTOTST_DATABASE_PATH = os.path.abspath(os.path.join(AUTOTST_PATH, os.pardir))
 # Abolsute path to RMG-Py directory
 RMG_PY_PATH = os.path.abspath(os.path.dirname(os.path.dirname(rmgpy.__file__)))
 # Absolute path to the RMG-database directory
