@@ -67,14 +67,17 @@ jobs:
         run: |
           cd RMG-Py
           mamba env create -f environment.yml
+          cd ..
 
       - name: Cythonize RMG-Py
         run: |
+          cd RMG-Py
           conda activate rmg_env
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PATH=$PATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
           echo 'export PATH=$PATH:'"$(pwd)" >> ~/.bashrc
+          echo $(pwd)
           make
           cd ..
       
