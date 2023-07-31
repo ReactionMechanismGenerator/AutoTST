@@ -33,6 +33,6 @@
 *.symm
 *.ase
 *.com
-*.log
+
 *.ts
 *.kinetics
