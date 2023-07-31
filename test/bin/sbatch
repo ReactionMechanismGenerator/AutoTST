@@ -1,5 +1,0 @@
-#!/usr/bin/env python
-
-import os, sys, subprocess
-
-subprocess.call(["g16", os.environ["FILE_PATH"]])
