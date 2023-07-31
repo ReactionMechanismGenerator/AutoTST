@@ -65,6 +65,7 @@ jobs:
       
       - name: Cythonize RMG-Py
         run: |
+          cd RMG-Py
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PATH=$PATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
