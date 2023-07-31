@@ -25,6 +25,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Checkout RMG-Py
+        uses: actions/checkout@v3
+        with:
+          repository: ReactionMechanismGenerator/RMG-Py
+          path: RMG-Py
+          ref: main
+          fetch-depth: 1
+      
+      - name: Checkout RMG-database
+        uses: actions/checkout@v3
+        with:
+          repository: ReactionMechanismGenerator/RMG-database
+          path: RMG-database
+          ref: main
+          fetch-depth: 1
+
       - name: Set up AutoTST
         uses: conda-incubator/setup-miniconda@v2
         with:
@@ -46,6 +62,15 @@ jobs:
           echo 'export PATH=$PATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
           echo 'export PATH=$PATH:'"$(pwd)" >> ~/.bashrc
+      
+      - name: Cythonize RMG-Py
+        run: |
+          echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> $GITHUB_ENV
+          echo 'export PATH=$PATH:'"$(pwd)" >> $GITHUB_ENV
+          echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
+          echo 'export PATH=$PATH:'"$(pwd)" >> ~/.bashrc
+          make
+          cd ..
       
       - name: Unittest
         run: make unittests
