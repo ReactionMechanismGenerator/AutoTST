@@ -63,9 +63,13 @@ jobs:
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
           echo 'export PATH=$PATH:'"$(pwd)" >> ~/.bashrc
       
-      - name: Cythonize RMG-Py
+      - name: Install RMG-Py
         run: |
           cd RMG-Py
+          mamba env install -f environment.yml
+
+      - name: Cythonize RMG-Py
+        run: |
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PATH=$PATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
