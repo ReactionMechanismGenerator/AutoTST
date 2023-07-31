@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened, ready_for_review]
+  schedule:
+    - cron: '0 0 * * *'
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up AutoTST
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: environment.yml
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
+          activate-environment: tst_env
+          use-mamba: true
+        
+      - name: Update Environment
+        run: |
+          mamba env update -f environment.yml
+      
+      - name: Add AUTOTST to ENV
+        run: |
+          export AUTOTST=$(pwd)
+          export PYTHONPATH=$PYTHONPATH:$AUTOTST
+          echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> $GITHUB_ENV
+          echo 'export PATH=$PATH:'"$(pwd)" >> $GITHUB_ENV
+          echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
+          echo 'export PATH=$PATH:'"$(pwd)" >> ~/.bashrc
+      
+      - name: Unittest
+        run: make unittests
+        

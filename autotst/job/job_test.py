@@ -30,6 +30,7 @@
 
 import os, sys, subprocess, shutil
 import unittest
+from autotst.common import AUTOTST_PATH
 from autotst.reaction import Reaction, TS
 from autotst.species import Species, Conformer
 from autotst.data.base import TransitionStates
@@ -42,10 +43,11 @@ import time
 class JobTest(unittest.TestCase):
 
     def setUp(self):
-        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
+        os.environ["PATH"] = os.path.join(AUTOTST_PATH, "test/bin") + os.pathsep + os.environ["PATH"]
+    
         os.environ["TEST_STATUS"] = "None"
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
-        self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
+        self.calculator = Gaussian(directory=os.path.join(AUTOTST_PATH, "test"))
         self.job = Job(
             reaction=self.reaction,
             calculator=self.calculator,
@@ -77,7 +79,7 @@ class JobTest(unittest.TestCase):
 
     def test_read_log(self):
 
-        path = os.path.expandvars("$AUTOTST/test/bin/log-files/CC_0.log")
+        path = os.path.join(AUTOTST_PATH, "test/bin/log-files/CC_0.log")
 
         atoms = self.job.read_log(path)
 
@@ -133,7 +135,8 @@ class JobTest(unittest.TestCase):
             self.job.calculate_species(species)
             for smiles in species.conformers.keys():
                 self.assertTrue(os.path.exists(os.path.join(
-                    os.path.expandvars("$AUTOTST/test/species/"),
+                    AUTOTST_PATH,
+                    "test/species",
                     smiles,
                     smiles + ".log"
                 )))

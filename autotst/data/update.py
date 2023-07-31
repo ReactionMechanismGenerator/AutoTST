@@ -34,9 +34,10 @@ import scipy.stats
 import pandas as pd
 import numpy as np
 from collections import defaultdict, OrderedDict
-from ..species import Species, Conformer
-from ..reaction import Reaction, TS
-from .base import *
+from autotst.common import AUTOTST_PATH
+from autotst.species import Species, Conformer
+from autotst.reaction import Reaction, TS
+from autotst.data.base import *
 import rmgpy
 import rmgpy.molecule
 import rmgpy.data.base
@@ -395,8 +396,7 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
     #    logging.warning(
     #        'Defaulting to reaction family of {}'.format(reaction_family))
 
-    general_path = os.path.join(os.path.expandvars(
-        '$AUTOTST'), 'database', reaction_family, 'TS_training')
+    general_path = os.path.join(AUTOTST_PATH, 'database', reaction_family, 'TS_training')
 
     dict_path = os.path.join(general_path, 'dictionary.txt')
     old_reactions_path = os.path.join(general_path, 'reactions.py')
@@ -469,7 +469,7 @@ def TS_Database_Update(families, path=None, auto_save=False):
     assert isinstance(
         families, list), "Families must be a list. If singular family, still keep it in list"
     acceptable_families = os.listdir(os.path.join(
-        os.path.expandvars("$AUTOTST"), "database"))
+        AUTOTST_PATH, "database"))
     for family in families:
         assert isinstance(
             family, str), "Family names must be provided as strings"
@@ -555,8 +555,7 @@ class DatabaseUpdater:
         if path is not None:
             self.path = path
         else:
-            self.path = os.path.join(os.path.expandvars(
-                "$AUTOTST"), "database", family)
+            self.path = os.path.join(AUTOTST_PATH, "database", family)
 
         self.family = family
 

@@ -35,9 +35,9 @@ import numpy as np
 import cclib.io
 
 import autotst
-from ..reaction import Reaction, TS
-from ..species import Species, Conformer
-from ..geometry import Torsion
+from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
+from autotst.geometry import Torsion
 
 import ase
 import ase.calculators.gaussian
@@ -179,7 +179,8 @@ class Gaussian():
             addsec=[addsec[:-1]])
 
         ase_gaussian.atoms = self.conformer.ase_molecule
-        del ase_gaussian.parameters['force']
+        if 'force' in ase_gaussian.parameters:
+            del ase_gaussian.parameters['force']
         return ase_gaussian
 
     def get_conformer_calc(self):
@@ -232,7 +233,8 @@ class Gaussian():
             extra=f"opt=(calcfc,maxcycles=900,{self.convergence}) freq IOP(7/33=1,2/16=3) scf=(maxcycle=900)",
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
-        del ase_gaussian.parameters['force']
+        if 'force' in ase_gaussian.parameters:
+            del ase_gaussian.parameters['force']
         return ase_gaussian
 
     def get_shell_calc(self):
@@ -293,7 +295,8 @@ class Gaussian():
             addsec=[combos]
         )
         ase_gaussian.atoms = self.conformer.ase_molecule
-        del ase_gaussian.parameters['force']
+        if 'force' in ase_gaussian.parameters:
+            del ase_gaussian.parameters['force']
 
         return ase_gaussian
 
@@ -353,7 +356,9 @@ class Gaussian():
             addsec=[addsec[:-1]]
         )
         ase_gaussian.atoms = self.conformer.ase_molecule
-        del ase_gaussian.parameters['force']
+
+        if 'force' in ase_gaussian.parameters:
+            del ase_gaussian.parameters['force']
 
         return ase_gaussian
 
@@ -399,7 +404,8 @@ class Gaussian():
             extra="opt=(ts,calcfc,noeigentest,maxcycles=900) freq scf=(maxcycle=900) IOP(7/33=1,2/16=3)",
             multiplicity=self.conformer.rmg_molecule.multiplicity)
         ase_gaussian.atoms = self.conformer.ase_molecule
-        del ase_gaussian.parameters['force']
+        if 'force' in ase_gaussian.parameters:
+            del ase_gaussian.parameters['force']
 
         return ase_gaussian
 
@@ -444,7 +450,8 @@ class Gaussian():
             multiplicity=self.conformer.rmg_molecule.multiplicity
         )
         ase_gaussian.atoms = self.conformer.ase_molecule
-        del ase_gaussian.parameters['force']
+        if 'force' in ase_gaussian.parameters:
+            del ase_gaussian.parameters['force']
 
         return ase_gaussian
 
