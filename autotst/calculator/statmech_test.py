@@ -29,8 +29,9 @@
 ##########################################################################
 
 import unittest, os, sys, shutil
-from ..reaction import Reaction
-from .statmech import StatMech
+from autotst.common import AUTOTST_PATH
+from autotst.reaction import Reaction
+from autotst.calculator.statmech import StatMech
 import rmgpy.reaction
 import rmgpy.kinetics
 
@@ -40,7 +41,7 @@ class TestStatMech(unittest.TestCase):
         self.reaction.get_labeled_reaction()
         self.reaction.generate_reactants_and_products()
 
-        directory = os.path.expandvars("$AUTOTST/test")
+        directory = os.path.join(AUTOTST_PATH, "test")
         if not os.path.exists(os.path.join(directory, "ts", self.reaction.label)):
             os.makedirs(os.path.join(directory, "ts", self.reaction.label))
         if not os.path.exists(os.path.join(directory, "ts", self.reaction.label, self.reaction.label + ".log")):
@@ -66,13 +67,13 @@ class TestStatMech(unittest.TestCase):
 
     def tearDown(self):
         try:
-            directory = os.path.expandvars("$AUTOTST/test")
+            directory = os.path.join(AUTOTST_PATH, "test")
             if os.path.exists(os.path.join(directory, "ts")):
                 shutil.rmtree(os.path.join(directory, "ts"))
             if os.path.exists(os.path.join(directory, "species")):
                 shutil.rmtree(os.path.join(directory, "species"))
 
-            for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+            for head, _, files in os.walk(AUTOTST_PATH):
                 for fi in files:
                     if fi.endswith(".symm"):
                         os.remove(os.path.join(head, fi))

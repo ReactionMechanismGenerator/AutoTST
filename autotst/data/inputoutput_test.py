@@ -35,9 +35,10 @@ import logging
 import shutil
 import numpy as np
 import autotst
-from ..reaction import Reaction
-from .base import QMData, DistanceData
-from .inputoutput import InputOutput
+from autotst.common import AUTOTST_PATH
+from autotst.reaction import Reaction
+from autotst.data.base import QMData, DistanceData
+from autotst.data.inputoutput import InputOutput
 import rmgpy.kinetics
 
 class TestInputOutput(unittest.TestCase):
@@ -46,11 +47,11 @@ class TestInputOutput(unittest.TestCase):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.io = InputOutput(
             reaction=self.reaction, 
-            directory=os.path.expandvars("$AUTOTST/test/")
+            directory=os.path.join(AUTOTST_PATH, "test")
         )
         try:
             os.makedirs(os.path.join(
-                os.path.expandvars("$AUTOTST/test/"),
+                AUTOTST_PATH,
                 "ts",
                 self.reaction.label
             ))
@@ -58,11 +59,12 @@ class TestInputOutput(unittest.TestCase):
             try:
                 shutil.copy(
                     os.path.join(
-                        os.path.expandvars("$AUTOTST/test/bin/log-files"), 
+                        os.path.join(AUTOTST_PATH,"test","bin","log-files"),
                         self.reaction.label + "_forward_0.log"
                         ),
                     os.path.join(
-                        os.path.expandvars("$AUTOTST/test/"),
+                        AUTOTST_PATH,
+                        "test",
                         "ts",
                         self.reaction.label,
                         self.reaction.label + ".log"
@@ -77,7 +79,8 @@ class TestInputOutput(unittest.TestCase):
         self.assertEqual(
             path,
             os.path.join(
-                os.path.expandvars("$AUTOTST/test/"),
+                AUTOTST_PATH,
+                "test",
                 "ts",
                 self.reaction.label,
                 self.reaction.label + ".ts"
@@ -89,7 +92,8 @@ class TestInputOutput(unittest.TestCase):
         self.assertEqual(
             path,
             os.path.join(
-                os.path.expandvars("$AUTOTST/test/"),
+                AUTOTST_PATH,
+                "test",
                 "ts",
                 self.reaction.label,
                 self.reaction.label + ".kinetics"

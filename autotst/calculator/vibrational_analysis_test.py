@@ -36,9 +36,10 @@ import ase
 import cclib.io
 import rmgpy
 import rmgpy.molecule
-from ..reaction import Reaction, TS
-from ..species import Species, Conformer
-from .vibrational_analysis import percent_change, VibrationalAnalysis
+from autotst.common import AUTOTST_PATH
+from autotst.reaction import Reaction, TS
+from autotst.species import Species, Conformer
+from autotst.calculator.vibrational_analysis import percent_change, VibrationalAnalysis
 
 class VibrationalAnalysisTest(unittest.TestCase):
 
@@ -48,7 +49,7 @@ class VibrationalAnalysisTest(unittest.TestCase):
         self.ts = self.reaction.ts["forward"][0]
         self.ts.get_molecules()
 
-        directory = os.path.expandvars("$AUTOTST/test")
+        directory = os.path.join(AUTOTST_PATH,"test")
         if not os.path.exists(os.path.join(directory, "ts", self.reaction.label, "conformers")):
             os.makedirs(os.path.join(directory, "ts", self.reaction.label, "conformers"))
         if not os.path.exists(os.path.join(directory, "ts", self.reaction.label, self.reaction.label + ".log")):
@@ -140,11 +141,11 @@ class VibrationalAnalysisTest(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
     try:
-        directory = os.path.expandvars("$AUTOTST/test")
+        directory = os.path.join(AUTOTST_PATH, "test")
         if os.path.exists(os.path.join(directory, "ts")):
             shutil.rmtree(os.path.join(directory, "ts"))
 
-        for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+        for head, _, files in os.walk(AUTOTST_PATH):
             for fi in files:
                 if fi.endswith(".symm"):
                     os.remove(os.path.join(head, fi))
