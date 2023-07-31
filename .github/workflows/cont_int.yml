@@ -70,6 +70,7 @@ jobs:
 
       - name: Cythonize RMG-Py
         run: |
+          mamba activate rmg_env
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PATH=$PATH:'"$(pwd)" >> $GITHUB_ENV
           echo 'export PYTHONPATH=$PYTHONPATH:'"$(pwd)" >> ~/.bashrc
@@ -78,5 +79,7 @@ jobs:
           cd ..
       
       - name: Unittest
-        run: make unittests
+        run: |
+          mamba activate rmg_env
+          make unittests
         
