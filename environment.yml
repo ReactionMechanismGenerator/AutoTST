@@ -8,7 +8,7 @@ channels:
 dependencies:
   - python
   - rmg::rmg == 3.0.0
-  - conda-forge::ase
+  - conda-forge::ase == 3.22.1
   - conda-forge::cclib >= 1.7.0
   - conda-forge::py3dmol
   - rmg::rdkit >= 2019.03.4
