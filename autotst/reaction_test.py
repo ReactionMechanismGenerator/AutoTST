@@ -30,6 +30,7 @@
 
 import os, sys
 import unittest
+import numpy as np
 import ase
 import rdkit.Chem.rdchem
 import rmgpy.reaction
@@ -211,6 +212,16 @@ class TestReaction(unittest.TestCase):
         _, family = reaction.get_labeled_reaction()
         self.assertEqual(family.lower(), "intra_H_migration".lower())
 
+    def test_initial_ts_geometry_is_deterministic(self):
+        list_of_coords = []
+        my_reaction_smiles = 'CCCC+[OH]_O+[CH2]CCC'
+        for i in range(3):
+            my_reaction = Reaction(label=my_reaction_smiles)
+            list_of_coords.append(my_reaction.ts['forward'][0].ase_molecule)
+
+        for i in range(1, 3):
+            self.assertTrue(np.all(list_of_coords[i].positions == list_of_coords[0].positions))
+
 class TestTS(unittest.TestCase):
 
     def setUp(self):
@@ -242,7 +253,7 @@ class TestTS(unittest.TestCase):
         self.assertIsInstance(rdkit_molecule, rdkit.Chem.rdchem.Mol)
         self.assertEquals(len(rdkit_molecule.GetAtoms()), 11)
         self.assertEquals(len(rdkit_molecule.GetBonds()), 9)
-    
+
     def test_pseudo_geometry(self):
         self.assertIsInstance(self.ts._pseudo_geometry, rdkit.Chem.rdchem.RWMol)
         self.assertEquals(len(self.ts._pseudo_geometry.GetBonds()), 10)

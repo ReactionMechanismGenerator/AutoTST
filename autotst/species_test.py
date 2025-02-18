@@ -45,6 +45,7 @@ class TestConformer(unittest.TestCase):
     def setUp(self):
         self.conformer = Conformer(smiles='CC')
         self.conformer_torsion_test = Conformer(smiles='CC#CC')
+        self.chiral_conformer = Conformer(smiles='ClC=C(C(Cl)N)O')
     def test_rmg_molecules(self):
         self.assertIsInstance(self.conformer.rmg_molecule,rmgpy.molecule.Molecule)
     def test_rdkit_mol(self):
@@ -105,6 +106,18 @@ class TestConformer(unittest.TestCase):
         positions = self.conformer.ase_molecule.arrays["positions"]
         for n in range(len(positions)):
             self.assertTrue((np.array([float(x) for x in xyz_block.split('\n')[n].split()[1:]]) == positions[n]).all())
+    def test_chiral_determinism(self):
+        list_of_coords = []
+        my_chiral_smiles = 'ClC=C(C(Cl)N)O'
+        for i in range(3):
+            my_chiral_conf = autotst.species.Conformer(smiles=my_chiral_smiles)
+            chiral_centers = my_chiral_conf.get_chiral_centers()
+            my_chiral_conf.set_chirality(chiral_centers[0].index, 'R')
+            list_of_coords.append(my_chiral_conf.get_ase_mol())
+        for i in range(1, 3):
+            self.assertTrue(np.all(list_of_coords[i].positions == list_of_coords[0].positions))
+
+
 
 class TestSpecies(unittest.TestCase):
     def setUp(self):
@@ -112,6 +125,13 @@ class TestSpecies(unittest.TestCase):
     def test_generate_structures(self):
         self.assertIsInstance(self.species.generate_structures(),dict)
         self.assertIsInstance(list(self.species.generate_structures().values())[0][0],Conformer)
+    def test_initial_mol_is_deterministic(self):
+        list_of_coords = []
+        for i in range(3):
+            new_sp = Species(smiles=["CCC"])
+            list_of_coords.append(new_sp.conformers['CCC'][0].get_ase_mol())
+        for i in range(1, 3):
+            self.assertTrue(np.all(list_of_coords[i].positions == list_of_coords[0].positions))
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))

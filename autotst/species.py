@@ -278,7 +278,7 @@ class Conformer():
         assert self.rmg_molecule, "Cannot create an RDKit geometry without an RMG molecule object"
 
         RDMol = self.rmg_molecule.to_rdkit_mol(remove_h=False)
-        rdkit.Chem.AllChem.EmbedMolecule(RDMol)
+        rdkit.Chem.AllChem.EmbedMolecule(RDMol, randomSeed=400)
         self._rdkit_molecule = RDMol
 
         mol_list = rdkit.Chem.AllChem.MolToMolBlock(self.rdkit_molecule).split('\n')
@@ -1093,7 +1093,7 @@ class Conformer():
         rdmol.GetAtomWithIdx(chiral_center.atom_index).SetChiralTag(
             centers_dict[stero.upper()])
 
-        rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol)
+        rdkit.Chem.rdDistGeom.EmbedMolecule(rdmol, randomSeed=400)
 
         old_torsions = self.torsions[:] + self.cistrans[:]
 

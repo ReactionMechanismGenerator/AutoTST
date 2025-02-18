@@ -916,7 +916,7 @@ class TS(Conformer):
         """
         num_conf_attempts = 10000
         if (self.bm is None) or (self.atom_match is None):
-            rdkit.Chem.AllChem.EmbedMultipleConfs(self._rdkit_molecule, num_conf_attempts, randomSeed=1)
+            rdkit.Chem.AllChem.EmbedMultipleConfs(self._rdkit_molecule, num_conf_attempts, randomSeed=400)
 
             self._rdkit_molecule, minEid = self.optimize_rdkit_molecule()
         else:
@@ -927,7 +927,7 @@ class TS(Conformer):
             self._rdkit_molecule.RemoveAllConformers()
             for i in range(0, num_conf_attempts):
                 try:
-                    rdkit.Chem.Pharm3D.EmbedLib.EmbedMol(self._rdkit_molecule, self.bm, atomMatch=self.atom_match)
+                    rdkit.Chem.Pharm3D.EmbedLib.EmbedMol(self._rdkit_molecule, self.bm, atomMatch=self.atom_match, randomSeed=400)
                     break
                 except ValueError:
                     logging.info(
