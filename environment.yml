@@ -1,17 +1,19 @@
 name: tst_env
 channels:
-  - defaults
-  - cantera
-  - pytorch
-  - anaconda
   - conda-forge
+  - rmg
+  - nodefaults
 dependencies:
-  - python
-  - rmg::rmg == 3.0.0
-  - conda-forge::ase == 3.22.1
-  - conda-forge::cclib >= 1.7.0
+  - python >=3.9,<3.10
+  - rmg::rmg == 3.3.0
+  - rmg::rmgdatabase == 3.3.0
+  - conda-forge::coolprop == 6.7.0
+  - conda-forge::ase
+  - conda-forge::cclib >=1.6.3,<1.9
   - conda-forge::py3dmol
-  - rmg::rdkit >= 2019.03.4
+  - conda-forge::rdkit >=2022.09.1
+  - conda-forge::numpy >=1.10.0,<2
   - codecov
   - nose
-  - matplotlib
+  - conda-forge::matplotlib >=1.5
+  - blas=*=openblas
