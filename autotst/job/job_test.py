@@ -35,6 +35,7 @@ from autotst.species import Species, Conformer
 from autotst.data.base import TransitionStates
 from autotst.job.job import Job
 from autotst.calculator.gaussian import Gaussian
+from autotst.utils.paths import test_bin_dir, test_data_dir, test_dir
 import multiprocessing
 import subprocess
 import time
@@ -42,17 +43,18 @@ import time
 class JobTest(unittest.TestCase):
 
     def setUp(self):
-        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
+        os.environ["PATH"] = f"{test_bin_dir()}:{os.environ['PATH']}"
         os.environ["TEST_STATUS"] = "None"
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
-        self.calculator = Gaussian(directory=os.path.expandvars("$AUTOTST/test"))
+        self.calculator = Gaussian(directory=str(test_dir()))
         self.job = Job(
             reaction=self.reaction,
             calculator=self.calculator,
             partition="test",
             username="test",
             exclude="test",
-            account="test"
+            account="test",
+            poll_interval=0
         )
         self.job2 = Job(
             reaction=self.reaction,
@@ -60,7 +62,8 @@ class JobTest(unittest.TestCase):
             partition="test",
             username="test",
             exclude="test",
-            account=["test"]
+            account=["test"],
+            poll_interval=0
         )
 
     def test_setup(self):
@@ -77,9 +80,9 @@ class JobTest(unittest.TestCase):
 
     def test_read_log(self):
 
-        path = os.path.expandvars("$AUTOTST/test/bin/log-files/CC_0.log")
+        path = test_data_dir() / "CC_0.log"
 
-        atoms = self.job.read_log(path)
+        atoms = self.job.read_log(str(path))
 
         self.assertEqual(len(atoms), 8)
 
@@ -95,7 +98,18 @@ class JobTest(unittest.TestCase):
         self.assertEqual(carbon_count, 2)
 
     def test_write_input(self):
-        self.assertTrue(True)
+        conformer = Conformer(smiles='CC', index=0)
+        self.calculator.conformer = conformer
+        ase_calculator = self.calculator.get_conformer_calc()
+
+        scratch = self.job._get_scratch(ase_calculator)
+        label = ase_calculator.label
+
+        self.job.write_input(conformer, ase_calculator)
+
+        self.assertTrue(os.path.exists(os.path.join(scratch, f"{label}.com")))
+        self.assertFalse(os.path.exists(f"{label}.com"))
+
 
     def test_check_complete(self):
         ### I don't know how to create alaises in a python script
@@ -132,11 +146,8 @@ class JobTest(unittest.TestCase):
         for species in self.reaction.reactants + self.reaction.products:
             self.job.calculate_species(species)
             for smiles in species.conformers.keys():
-                self.assertTrue(os.path.exists(os.path.join(
-                    os.path.expandvars("$AUTOTST/test/species/"),
-                    smiles,
-                    smiles + ".log"
-                )))
+                log_path = test_dir() / "species" / smiles / f"{smiles}.log"
+                self.assertTrue(log_path.exists())
     
     def test_submit_transitionstate(self):
         ts = self.reaction.ts["forward"][0]
@@ -172,5 +183,4 @@ class JobTest(unittest.TestCase):
     
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
-
 
