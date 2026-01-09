@@ -39,6 +39,7 @@ import rmgpy.molecule
 from ..reaction import Reaction, TS
 from ..species import Species, Conformer
 from .vibrational_analysis import percent_change, VibrationalAnalysis
+from ..utils.paths import project_root, test_data_dir, test_dir
 
 class VibrationalAnalysisTest(unittest.TestCase):
 
@@ -48,29 +49,28 @@ class VibrationalAnalysisTest(unittest.TestCase):
         self.ts = self.reaction.ts["forward"][0]
         self.ts.get_molecules()
 
-        directory = os.path.expandvars("$AUTOTST/test")
+        directory = test_dir()
         if not os.path.exists(os.path.join(directory, "ts", self.reaction.label, "conformers")):
             os.makedirs(os.path.join(directory, "ts", self.reaction.label, "conformers"))
         if not os.path.exists(os.path.join(directory, "ts", self.reaction.label, self.reaction.label + ".log")):
             shutil.copy(
-                os.path.join(directory, "bin", "log-files", self.reaction.label + "_forward_0.log"),
+                test_data_dir() / f"{self.reaction.label}_forward_0.log",
                 os.path.join(directory, "ts", self.reaction.label, "conformers", self.reaction.label + "_forward_0.log")
             )
 
         self.directory = directory
         self.vibrational_analysis = VibrationalAnalysis(
             transitionstate = self.ts,
-            directory = self.directory
+            directory = str(self.directory)
         )
 
         self.reaction2 = Reaction("[CH3]+CC(F)(F)F_C+[CH2]C(F)(F)F")
         self.reaction2.get_labeled_reaction()
         self.ts2 = self.reaction2.ts["forward"][0]
-        log_file = os.path.join(
-            directory, "bin", "log-files", "[CH3]+CC(F)(F)F_C+[CH2]C(F)(F)F.log")
+        log_file = test_data_dir() / "[CH3]+CC(F)(F)F_C+[CH2]C(F)(F)F.log"
         self.vibrational_analysis2 = VibrationalAnalysis(
             transitionstate = self.ts2,
-            log_file = log_file
+            log_file = str(log_file)
         )
 
     def test_get_log_file(self):
@@ -140,14 +140,13 @@ class VibrationalAnalysisTest(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
     try:
-        directory = os.path.expandvars("$AUTOTST/test")
+        directory = test_dir()
         if os.path.exists(os.path.join(directory, "ts")):
             shutil.rmtree(os.path.join(directory, "ts"))
 
-        for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+        for head, _, files in os.walk(project_root()):
             for fi in files:
                 if fi.endswith(".symm"):
                     os.remove(os.path.join(head, fi))
-    except:
+    except Exception:
         None
-

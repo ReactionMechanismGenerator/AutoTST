@@ -33,13 +33,16 @@ import os, shutil
 
 from .orca import Orca
 from ..species import Conformer
+from ..utils.paths import project_root, test_data_dir
 
 class TestOrca(unittest.TestCase):
 
     def setUp(self):
         conf = Conformer(smiles='C')
-        self.orca = Orca(conformer=conf, directory=os.path.expandvars(
-            "$AUTOTST/autotst/calculator/fod"))
+        self.orca = Orca(
+            conformer=conf,
+            directory=str(project_root() / "autotst" / "calculator" / "fod")
+        )
 
     def test_load_conformer_attributes(self):
         charge = 0
@@ -59,21 +62,19 @@ class TestOrca(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(self.orca.directory,'C_fod.inp')))
 
     def test_check_normal_termination(self):
-        path = os.path.expandvars(
-            "$AUTOTST/test/bin/log-files/C_fod.log")
-        self.assertTrue(self.orca.check_normal_termination(path))
+        path = test_data_dir() / "C_fod.log"
+        self.assertTrue(self.orca.check_normal_termination(str(path)))
 
     def test_read_fod_log(self):
-        path = os.path.expandvars(
-            "$AUTOTST/test/bin/log-files/C_fod.log")
-        fod = self.orca.read_fod_log(path)
+        path = test_data_dir() / "C_fod.log"
+        fod = self.orca.read_fod_log(str(path))
         self.assertEquals(float(0.000025),fod)
 
     def tearDown(self):
 
-        if os.path.exists(os.path.expandvars("$AUTOTST/autotst/calculator/fod")):
-            shutil.rmtree(os.path.expandvars(
-                "$AUTOTST/autotst/calculator/fod"))
+        fod_dir = project_root() / "autotst" / "calculator" / "fod"
+        if os.path.exists(fod_dir):
+            shutil.rmtree(fod_dir)
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))

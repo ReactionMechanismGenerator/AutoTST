@@ -31,6 +31,7 @@
 import unittest, os, sys, shutil
 from ..reaction import Reaction
 from .statmech import StatMech
+from ..utils.paths import project_root, test_data_dir, test_dir
 import rmgpy.reaction
 import rmgpy.kinetics
 
@@ -40,12 +41,12 @@ class TestStatMech(unittest.TestCase):
         self.reaction.get_labeled_reaction()
         self.reaction.generate_reactants_and_products()
 
-        directory = os.path.expandvars("$AUTOTST/test")
+        directory = test_dir()
         if not os.path.exists(os.path.join(directory, "ts", self.reaction.label)):
             os.makedirs(os.path.join(directory, "ts", self.reaction.label))
         if not os.path.exists(os.path.join(directory, "ts", self.reaction.label, self.reaction.label + ".log")):
             shutil.copy(
-                os.path.join(directory, "bin", "log-files", self.reaction.label + "_forward_0.log"),
+                test_data_dir() / f"{self.reaction.label}_forward_0.log",
                 os.path.join(directory, "ts", self.reaction.label, self.reaction.label + ".log")
             )
 
@@ -55,24 +56,24 @@ class TestStatMech(unittest.TestCase):
                     os.makedirs(os.path.join(directory, "species", smiles))
                 if not os.path.exists(os.path.join(directory, "species", smiles, smiles+".log")):
                     shutil.copy(
-                        os.path.join(directory, "bin", "log-files", smiles + "_0.log"),
+                        test_data_dir() / f"{smiles}_0.log",
                         os.path.join(directory, "species", smiles, smiles+".log")
                     )
 
         self.statmech = StatMech(
             reaction = self.reaction,
-            directory = directory
+            directory = str(directory)
         )
 
     def tearDown(self):
         try:
-            directory = os.path.expandvars("$AUTOTST/test")
+            directory = test_dir()
             if os.path.exists(os.path.join(directory, "ts")):
                 shutil.rmtree(os.path.join(directory, "ts"))
             if os.path.exists(os.path.join(directory, "species")):
                 shutil.rmtree(os.path.join(directory, "species"))
 
-            for head, _, files in os.walk(os.path.expandvars("$AUTOTST")):
+            for head, _, files in os.walk(project_root()):
                 for fi in files:
                     if fi.endswith(".symm"):
                         os.remove(os.path.join(head, fi))
