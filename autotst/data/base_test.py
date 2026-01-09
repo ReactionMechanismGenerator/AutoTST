@@ -36,6 +36,7 @@ import numpy as np
 import autotst
 from ..reaction import Reaction
 from .base import QMData, DistanceData, TransitionStates, TransitionStateDepository, TSGroups
+from ..utils.paths import database_dir, test_data_dir
 import rmgpy
 import rmgpy.data.rmg
 
@@ -61,7 +62,8 @@ class TestQMData(unittest.TestCase):
         A method that is designed to obtain the QM data for a transitionstate or molecule
         Returns a qmdata object
         """
-        self.qmdata.get_qmdata(os.path.expandvars("$AUTOTST/test/bin/log-files/CC+[O]O_[CH2]C+OO_forward_0.log"))
+        log_path = test_data_dir() / "CC+[O]O_[CH2]C+OO_forward_0.log"
+        self.qmdata.get_qmdata(str(log_path))
 
         self.assertEqual(self.qmdata.ground_state_degeneracy, 2)
         self.assertAlmostEqual(self.qmdata.molecular_mass[0], 126.1, places=1)
@@ -154,9 +156,7 @@ class TestTransitionStateDepository(unittest.TestCase):
         self.ts_depository = TransitionStateDepository(label="test")
 
         self.settings = {
-            "file_path": os.path.join(
-                os.path.expandvars("$AUTOTST"), "database", "H_Abstraction", "TS_training", "reactions.py"
-            ),
+            "file_path": str(database_dir() / "H_Abstraction" / "TS_training" / "reactions.py"),
             "local_context": {"DistanceData":DistanceData},
             "global_context": {'__builtins__': None}
         }
@@ -176,9 +176,7 @@ class TestTSGroups(unittest.TestCase):
         self.ts_groups = TSGroups(label="test")
 
         self.settings = {
-            "file_path": os.path.join(
-                os.path.expandvars("$AUTOTST"), "database", "H_Abstraction", "TS_groups.py"
-            ),
+            "file_path": str(database_dir() / "H_Abstraction" / "TS_groups.py"),
             "local_context": {"DistanceData":DistanceData},
             "global_context": {'__builtins__': None}
         }

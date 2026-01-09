@@ -37,6 +37,7 @@ from collections import defaultdict, OrderedDict
 from ..species import Species, Conformer
 from ..reaction import Reaction, TS
 from .base import *
+from ..utils.paths import database_dir
 import rmgpy
 import rmgpy.molecule
 import rmgpy.data.base
@@ -395,25 +396,24 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
     #    logging.warning(
     #        'Defaulting to reaction family of {}'.format(reaction_family))
 
-    general_path = os.path.join(os.path.expandvars(
-        '$AUTOTST'), 'database', reaction_family, 'TS_training')
+    general_path = database_dir() / reaction_family / "TS_training"
 
-    dict_path = os.path.join(general_path, 'dictionary.txt')
-    old_reactions_path = os.path.join(general_path, 'reactions.py')
+    dict_path = general_path / "dictionary.txt"
+    old_reactions_path = general_path / "reactions.py"
 
     if overwrite:
-        new_dict_path = os.path.join(general_path, 'dictionary.txt')
-        new_reactions_path = os.path.join(general_path, 'reactions.py')
+        new_dict_path = general_path / "dictionary.txt"
+        new_reactions_path = general_path / "reactions.py"
     else:
-        new_dict_path = os.path.join(general_path, 'updated_dictionary.txt')
-        new_reactions_path = os.path.join(general_path, 'updated_reactions.py')
+        new_dict_path = general_path / "updated_dictionary.txt"
+        new_reactions_path = general_path / "updated_reactions.py"
 
-    known_species = rmgpy.data.base.Database().get_species(dict_path)
+    known_species = rmgpy.data.base.Database().get_species(str(dict_path))
     unknown_species = get_unknown_species(reactions, known_species)
 
     updated_known_species = []
     if len(unknown_species) > 0:
-        old_dict_entries = rote_load_dict(dict_path)
+        old_dict_entries = rote_load_dict(str(dict_path))
 
         assert len(known_species) == len(old_dict_entries)
 
@@ -424,15 +424,15 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
             len(unknown_species) == len(all_dict_entries)
 
         if check_dictionary_entries(all_dict_entries):
-            rote_save_dictionary(new_dict_path, all_dict_entries)
+            rote_save_dictionary(str(new_dict_path), all_dict_entries)
 
-        updated_known_species = rmgpy.data.base.Database().get_species(new_dict_path)
+        updated_known_species = rmgpy.data.base.Database().get_species(str(new_dict_path))
         unk_spec = get_unknown_species(reactions, updated_known_species)
         assert len(unk_spec) == 0, f'{len(unk_spec)} unknown species found after updating'
     else:
         updated_known_species = known_species
 
-    r_db, old_db, new_db = update_known_reactions(old_reactions_path,
+    r_db, old_db, new_db = update_known_reactions(str(old_reactions_path),
                                                   reactions,
                                                   updated_known_species,
                                                   method=method,
@@ -443,7 +443,7 @@ def update_databases(reactions, method='', short_desc='', reaction_family='', ov
     # if check_reactions_database():
     if True:
         logging.warning('No duplicate check for reactions database')
-        r_db.save(new_reactions_path)
+        r_db.save(str(new_reactions_path))
         if len(reactions) < 5:
             for reaction in reactions:
                 logging.info(
@@ -468,8 +468,7 @@ def TS_Database_Update(families, path=None, auto_save=False):
 
     assert isinstance(
         families, list), "Families must be a list. If singular family, still keep it in list"
-    acceptable_families = os.listdir(os.path.join(
-        os.path.expandvars("$AUTOTST"), "database"))
+    acceptable_families = os.listdir(database_dir())
     for family in families:
         assert isinstance(
             family, str), "Family names must be provided as strings"
@@ -555,8 +554,7 @@ class DatabaseUpdater:
         if path is not None:
             self.path = path
         else:
-            self.path = os.path.join(os.path.expandvars(
-                "$AUTOTST"), "database", family)
+            self.path = database_dir() / family
 
         self.family = family
 
