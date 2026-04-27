@@ -342,7 +342,7 @@ class Reaction():
 
             # looping though each reaction family and each combination of reactants and products
             for name, family in list(self.rmg_database.kinetics.families.items()):
-                logging.info(f"Trying to match reacction to {family}")
+                logging.info(f"Trying to match reaction to {family}")
                 for rmg_reactants, rmg_products in combos_to_try:
                     # Making a test reaction
                     test_reaction = rmgpy.reaction.Reaction(
@@ -676,6 +676,22 @@ class TS(Conformer):
         if not self._symmetry_number:
             self._symmetry_number = self.calculate_symmetry_number()
         return self._symmetry_number
+
+    def calculate_symmetry_number(self):
+        try:
+            return super(TS, self).calculate_symmetry_number()
+        except rmgpy.exceptions.AtomTypeError:
+            logging.info("AtomTypeError in symmetry calculation (likely TS bond). Using RMG molecule graph for symmetry.")
+            if self.rmg_molecule:
+                try:
+                    species = rmgpy.species.Species(molecule=[self.rmg_molecule])
+                    self._symmetry_number = species.get_symmetry_number()
+                except (ValueError, rmgpy.exceptions.AtomTypeError) as e:
+                    logging.warning(f"Species symmetry calculation failed ({e}), falling back to molecule graph.")
+                    self._symmetry_number = self.rmg_molecule.get_symmetry_number()
+            else:
+                raise
+            return self._symmetry_number
 
     @property
     def rdkit_molecule(self):

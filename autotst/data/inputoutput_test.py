@@ -38,6 +38,7 @@ import autotst
 from ..reaction import Reaction
 from .base import QMData, DistanceData
 from .inputoutput import InputOutput
+from ..utils.paths import test_data_dir, test_dir
 import rmgpy.kinetics
 
 class TestInputOutput(unittest.TestCase):
@@ -46,29 +47,17 @@ class TestInputOutput(unittest.TestCase):
         self.reaction = Reaction("CC+[O]O_[CH2]C+OO")
         self.io = InputOutput(
             reaction=self.reaction, 
-            directory=os.path.expandvars("$AUTOTST/test/")
+            directory=str(test_dir())
         )
         try:
-            os.makedirs(os.path.join(
-                os.path.expandvars("$AUTOTST/test/"),
-                "ts",
-                self.reaction.label
-            ))
+            os.makedirs(test_dir() / "ts" / self.reaction.label)
         except OSError:
             try:
                 shutil.copy(
-                    os.path.join(
-                        os.path.expandvars("$AUTOTST/test/bin/log-files"), 
-                        self.reaction.label + "_forward_0.log"
-                        ),
-                    os.path.join(
-                        os.path.expandvars("$AUTOTST/test/"),
-                        "ts",
-                        self.reaction.label,
-                        self.reaction.label + ".log"
-                    )
+                    test_data_dir() / f"{self.reaction.label}_forward_0.log",
+                    test_dir() / "ts" / self.reaction.label / f"{self.reaction.label}.log"
                 )
-            except:
+            except Exception:
                 pass
             
 
@@ -76,24 +65,14 @@ class TestInputOutput(unittest.TestCase):
         path = self.io.get_ts_file_path()
         self.assertEqual(
             path,
-            os.path.join(
-                os.path.expandvars("$AUTOTST/test/"),
-                "ts",
-                self.reaction.label,
-                self.reaction.label + ".ts"
-            )
+            str(test_dir() / "ts" / self.reaction.label / f"{self.reaction.label}.ts")
         )
 
     def test_kinetics_file_path(self):
         path = self.io.get_kinetics_file_path()
         self.assertEqual(
             path,
-            os.path.join(
-                os.path.expandvars("$AUTOTST/test/"),
-                "ts",
-                self.reaction.label,
-                self.reaction.label + ".kinetics"
-            )
+            str(test_dir() / "ts" / self.reaction.label / f"{self.reaction.label}.kinetics")
         )
     
     def test_get_qmdata(self):

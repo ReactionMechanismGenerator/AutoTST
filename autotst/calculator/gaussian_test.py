@@ -38,6 +38,7 @@ from ..reaction import Reaction, TS
 from ..species import Species, Conformer
 from ..geometry import Torsion
 from .gaussian import Gaussian
+from ..utils.paths import project_root, test_bin_dir
 
 import ase
 import ase.calculators.gaussian
@@ -48,7 +49,7 @@ import rmgpy.reaction
 
 class TestGaussian(unittest.TestCase):
     def setUp(self):
-        os.environ["PATH"] = os.path.expandvars("$AUTOTST/test/bin:") + os.environ["PATH"]
+        os.environ["PATH"] = f"{test_bin_dir()}:{os.environ['PATH']}"
         rxn = Reaction(label='C+[O]O_[CH3]+OO')
         ts = rxn.ts["forward"][0]
         ts.get_molecules()
@@ -105,10 +106,12 @@ class TestGaussian(unittest.TestCase):
         self.assertIsInstance(calc_dict,dict)
 
     def tearDown(self):
-        if os.path.exists(os.path.expandvars("$AUTOTST/autotst/calculator/ts")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/autotst/calculator/ts"))
-        if os.path.exists(os.path.expandvars("$AUTOTST/autotst/calculator/species")):
-            shutil.rmtree(os.path.expandvars("$AUTOTST/autotst/calculator/species"))
+        ts_dir = project_root() / "autotst" / "calculator" / "ts"
+        species_dir = project_root() / "autotst" / "calculator" / "species"
+        if os.path.exists(ts_dir):
+            shutil.rmtree(ts_dir)
+        if os.path.exists(species_dir):
+            shutil.rmtree(species_dir)
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
