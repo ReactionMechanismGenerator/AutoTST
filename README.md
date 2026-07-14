@@ -10,10 +10,11 @@ AutoTST is a framework to perform automated transition state theory calculations
 It is based off of the frame work of [**RMG**](rmg.mit.edu), [**RDKit**](http://www.rdkit.org/), and [**ASE**](https://wiki.fysik.dtu.dk/ase/) to automatically create three dimentional geometries of transition states, reactants, and products;
 optimize them using the [**Gaussian 09**](http://gaussian.com/) quantum chemistry package; and obtain kinetic parameters using **Arkane** (a canonical calculator included in RMG).
 
-Currently, AutoTST supports three reaction families:
+Currently, AutoTST supports four reaction families:
 - Hydrogen Abstraction
-- Disproportination
+- Disproportionation
 - Intra Hydrogen Migration
+- Radical Addition to Multiple Bonds
 
 For general templates of these reaction families, click [here](https://github.com/ReactionMechanismGenerator/RMG-database/blob/master/families/rmg_reaction_families.pdf)
 

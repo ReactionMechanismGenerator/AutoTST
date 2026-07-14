@@ -214,12 +214,25 @@ class TransitionStates(rmgpy.data.base.Database):
         groups = TSGroups(label=f"{path.split('/')[-1]}/TS_groups")
         groups.load(fpath, local_context, global_context)
 
-        self.family.forward_template.reactants = [
-            groups.entries[entry.label] for entry in self.family.forward_template.reactants]
-        # self.family.forward_template.products = [groups.entries[entry.label] for entry in self.family.forward_template.products]
+        # Historically the AutoTST TS group roots had the same names as the
+        # RMG family forward-template reactants, so this code rewrote RMG's
+        # template to point at the TS entries.  That assumption is not true
+        # for Disproportionation in RMG 3.3: its RMG forward template is
+        # ``Root`` whereas the AutoTST TS tree has the independent roots
+        # ``Y_rad_birad_trirad_quadrad`` and ``XH_Rrad_birad``.  TSGroups
+        # already uses its own ``top`` entries to match a labelled reaction,
+        # so retain the old wiring only when the names actually agree.
+        template_reactants = self.family.forward_template.reactants
+        if all(entry.label in groups.entries for entry in template_reactants):
+            self.family.forward_template.reactants = [
+                groups.entries[entry.label] for entry in template_reactants]
+        else:
+            logging.info(
+                "Using independent AutoTST TS-group roots for %s; RMG "
+                "template labels do not match TS-group labels.", self.family.label)
         self.family.entries = groups.entries
         self.family.groups = groups
-        groups.num_reactants = len(self.family.forward_template.reactants)
+        groups.num_reactants = len(groups.top)
         self.groups = groups
 
     def estimate_distances(self, reaction):

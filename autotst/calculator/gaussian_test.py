@@ -83,6 +83,22 @@ class TestGaussian(unittest.TestCase):
         calc_dict = autotst_gaussian_shell.todict()
         self.assertIsInstance(autotst_gaussian_shell,ase.calculators.gaussian.Gaussian)
         self.assertIsInstance(calc_dict,dict)
+
+    def test_disproportionation_shell_constraints(self):
+        """The shell calculation freezes donor-H-acceptor coordinates."""
+        ts = Reaction(label='[CH3]+C[CH2]_C+C=C').ts["forward"][0]
+        ts.get_molecules()
+        ts.get_geometries()
+
+        shell = Gaussian(conformer=ts).get_shell_calc()
+        donor = ts.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label + 1
+        hydrogen = ts.rmg_molecule.get_labeled_atoms("*4")[0].sorting_label + 1
+        acceptor = ts.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label + 1
+        self.assertEqual(shell.parameters["addsec"], [
+            f"{donor} {hydrogen} F\n"
+            f"{hydrogen} {acceptor} F\n"
+            f"{donor} {hydrogen} {acceptor} F"
+        ])
     
     def test_center_calc(self):
         "Test that we create a Gaussian calculator for a TS Center optimization"

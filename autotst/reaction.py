@@ -56,6 +56,17 @@ from .geometry import Torsion, Angle, Bond, CisTrans, ChiralCenter
 FORMAT = "%(filename)s:%(lineno)d %(funcName)s %(levelname)s %(message)s"
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 
+
+# Keep the RMG kinetics families and the matching AutoTST TS databases in one
+# place.  Loading only a subset is deliberate: each family listed here must
+# have both an RMG family and an AutoTST ``database/<family>`` directory.
+SUPPORTED_FAMILIES = (
+    "R_Addition_MultipleBond",
+    "H_Abstraction",
+    "intra_H_migration",
+    "Disproportionation",
+)
+
 try:
     import py3Dmol
 except ImportError:
@@ -74,11 +85,7 @@ class Reaction():
             rmg_reaction=None,
             reaction_family="H_Abstraction"):
 
-        self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
-            "R_Addition_MultipleBond",
-            "H_Abstraction",
-            "intra_H_migration"
-        ]
+        self.possible_families = list(SUPPORTED_FAMILIES)
 
         self.label = label
         self.rmg_reaction = rmg_reaction
@@ -167,11 +174,7 @@ class Reaction():
 
         logging.info(f"Loading RMG database from '{database_path}'")
 
-        self.possible_families = [  # These families (and only these) will be loaded from both RMG and AutoTST databases
-            "R_Addition_MultipleBond",
-            "H_Abstraction",
-            "intra_H_migration"
-        ]
+        self.possible_families = list(SUPPORTED_FAMILIES)
         try:
             rmg_database.load(
                 database_path,
