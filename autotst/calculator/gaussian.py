@@ -272,6 +272,12 @@ class Gaussian():
             ind1 = self.conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
             ind2 = self.conformer.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
             ind3 = self.conformer.rmg_molecule.get_labeled_atoms("*3")[0].sorting_label
+        elif self.conformer.reaction_family.lower() == "disproportionation":
+            # The TS distance order is donor center, transferred H, radical
+            # acceptor (RMG labels *2, *4, *1 respectively).
+            ind1 = self.conformer.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label
+            ind2 = self.conformer.rmg_molecule.get_labeled_atoms("*4")[0].sorting_label
+            ind3 = self.conformer.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label
         else:
             logging.error(f"Reaction family {self.conformer.reaction_family} is not supported...")
             raise AssertionError

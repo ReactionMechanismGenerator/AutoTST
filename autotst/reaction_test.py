@@ -74,12 +74,44 @@ class TestReaction(unittest.TestCase):
         self.assertIsInstance(rmg_database, rmgpy.data.rmg.RMGDatabase)
         self.assertIsInstance(ts_databases, dict)
         self.assertIsInstance(ts_databases["H_Abstraction"], TransitionStates)
+        self.assertIsInstance(ts_databases["Disproportionation"], TransitionStates)
 
         rmg_database, ts_databases = self.reaction2.load_databases()
 
         self.assertIsInstance(rmg_database, rmgpy.data.rmg.RMGDatabase)
         self.assertIsInstance(ts_databases, dict)
         self.assertIsInstance(ts_databases["H_Abstraction"], TransitionStates)
+        self.assertIsInstance(ts_databases["Disproportionation"], TransitionStates)
+
+    def test_disproportionation_classification_and_ts_geometry(self):
+        """Disproportionation uses an AutoTST tree independent of RMG's Root."""
+        reaction = Reaction("[CH3]+C[CH2]_C+C=C")
+        labeled_reaction, family = reaction.get_labeled_reaction()
+
+        self.assertEqual(family, "Disproportionation")
+        self.assertEqual(reaction.reaction_family, "Disproportionation")
+        self.assertIn("Disproportionation", reaction.ts_databases)
+        self.assertEqual(
+            [entry.label for entry in reaction.ts_databases["Disproportionation"].groups.top],
+            ["Y_rad_birad_trirad_quadrad", "XH_Rrad_birad"],
+        )
+        self.assertEqual(
+            set().union(*(molecule.get_all_labeled_atoms() for molecule in labeled_reaction.reactants)),
+            {"*1", "*2", "*3", "*4"},
+        )
+
+        distances = reaction.distance_data.distances
+        self.assertTrue(all(key in distances for key in ("d12", "d13", "d23")))
+
+        ts = reaction.ts["forward"][0]
+        ts.get_molecules()
+        self.assertEqual(ts.get_labels()[0], [
+            ts.rmg_molecule.get_labeled_atoms("*2")[0].sorting_label,
+            ts.rmg_molecule.get_labeled_atoms("*4")[0].sorting_label,
+            ts.rmg_molecule.get_labeled_atoms("*1")[0].sorting_label,
+        ])
+        ts.get_geometries()
+        self.assertGreater(len(ts.ase_molecule), 0)
 
     def test_disance_data(self):
         d12 = 1.38
@@ -370,4 +402,3 @@ class TestTS(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
-
